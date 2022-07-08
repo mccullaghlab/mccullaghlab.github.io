@@ -1,0 +1,83 @@
+Traceback (most recent call last):
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 1112, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 553, in async_execute
+    await self.async_execute_cell(
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 857, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+h = 6.626E-34  # J*s
+c = 3.0E8      # m/s
+kB = 1.380E-23 # J/K
+nm_to_m = 1.0E-9 # convert nm to m
+
+solar = np.loadtxt("solarspectrum_nrel.txt",skiprows=1)
+
+# classical spectral distribution function
+def classicalB(x,T):
+    return 2*c*kB*T/(x*nm_to_m)**4
+
+# quantum spectral distribution function
+def quantumB(x,T):
+    return 2*h*c**2/(x*nm_to_m)**5/(np.exp(h*c/(x*nm_to_m*kB*T))-1)
+
+# initialize a figure
+ax = define_figure(xlabel="$\lambda$ (nm)",ylabel="Spectral density")
+# make an array containing domain of wavelengths to consider
+x = np.arange(1.0,3000,1)
+plt.ylim((0.0,np.amax(quantumB(x,5100))*1.25))
+ax.plot(solar[:,0],solar[:,3]*1E13,label="data")
+# plot quantum result
+ax.plot(x,quantumB(x,5100),label="quantum T=5100K",lw=3)
+ax.plot(x,quantumB(x,4000),label="quantum T=4000K",lw=3)
+ax.plot(x,quantumB(x,3000),label="quantum T=300K",lw=3)
+# plot classical result
+ax.plot(x,classicalB(x,3000),label="classical T=3000K",lw=3)
+# make legend
+ax.legend(fontsize=20,markerscale=5.0)
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mOSError[0m                                   Traceback (most recent call last)
+[0;32m<ipython-input-3-7a9eb1e6e89c>[0m in [0;36m<module>[0;34m[0m
+[1;32m      4[0m [0mnm_to_m[0m [0;34m=[0m [0;36m1.0E-9[0m [0;31m# convert nm to m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0;34m[0m[0m
+[0;32m----> 6[0;31m [0msolar[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0mloadtxt[0m[0;34m([0m[0;34m"solarspectrum_nrel.txt"[0m[0;34m,[0m[0mskiprows[0m[0;34m=[0m[0;36m1[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      7[0m [0;34m[0m[0m
+[1;32m      8[0m [0;31m# classical spectral distribution function[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.8/site-packages/numpy/lib/npyio.py[0m in [0;36mloadtxt[0;34m(fname, dtype, comments, delimiter, converters, skiprows, usecols, unpack, ndmin, encoding, max_rows)[0m
+[1;32m    979[0m             [0mfname[0m [0;34m=[0m [0mos_fspath[0m[0;34m([0m[0mfname[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    980[0m         [0;32mif[0m [0m_is_string_like[0m[0;34m([0m[0mfname[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 981[0;31m             [0mfh[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0mlib[0m[0;34m.[0m[0m_datasource[0m[0;34m.[0m[0mopen[0m[0;34m([0m[0mfname[0m[0;34m,[0m [0;34m'rt'[0m[0;34m,[0m [0mencoding[0m[0;34m=[0m[0mencoding[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    982[0m             [0mfencoding[0m [0;34m=[0m [0mgetattr[0m[0;34m([0m[0mfh[0m[0;34m,[0m [0;34m'encoding'[0m[0;34m,[0m [0;34m'latin1'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    983[0m             [0mfh[0m [0;34m=[0m [0miter[0m[0;34m([0m[0mfh[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.8/site-packages/numpy/lib/_datasource.py[0m in [0;36mopen[0;34m(path, mode, destpath, encoding, newline)[0m
+[1;32m    267[0m [0;34m[0m[0m
+[1;32m    268[0m     [0mds[0m [0;34m=[0m [0mDataSource[0m[0;34m([0m[0mdestpath[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 269[0;31m     [0;32mreturn[0m [0mds[0m[0;34m.[0m[0mopen[0m[0;34m([0m[0mpath[0m[0;34m,[0m [0mmode[0m[0;34m,[0m [0mencoding[0m[0;34m=[0m[0mencoding[0m[0;34m,[0m [0mnewline[0m[0;34m=[0m[0mnewline[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    270[0m [0;34m[0m[0m
+[1;32m    271[0m [0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.8/site-packages/numpy/lib/_datasource.py[0m in [0;36mopen[0;34m(self, path, mode, encoding, newline)[0m
+[1;32m    621[0m                                       encoding=encoding, newline=newline)
+[1;32m    622[0m         [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 623[0;31m             [0;32mraise[0m [0mIOError[0m[0;34m([0m[0;34m"%s not found."[0m [0;34m%[0m [0mpath[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    624[0m [0;34m[0m[0m
+[1;32m    625[0m [0;34m[0m[0m
+
+[0;31mOSError[0m: solarspectrum_nrel.txt not found.
+OSError: solarspectrum_nrel.txt not found.
+
