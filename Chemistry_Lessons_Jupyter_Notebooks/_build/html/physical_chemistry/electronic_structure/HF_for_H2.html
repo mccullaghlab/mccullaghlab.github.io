@@ -1,0 +1,1100 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.3.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="2.3.1. Hartree-Fock" href="Hartree_Fock_Helium_Atom.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Chemistry Lessons with Jupyter Notebooks</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">
+   1. Jupyter Notebook Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">
+     1.1. Jupyter Notebook Tutorial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">
+     1.2. Advanced Jupyter Notebook Tutorial
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   2. Physical Chemistry
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../thermodynamics/intro.html">
+     2.1. Thermodynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">
+       2.1.1. The First Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">
+       2.1.2. Heat Work and Calculating
+       <span class="math notranslate nohighlight">
+        \(\Delta U\)
+       </span>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">
+       2.1.4. Thermodynamic Cycles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles_Day_2.html">
+       2.1.5. Thermodynamic Cycles Day 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">
+       2.1.6. Second Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">
+       2.1.7. Heat Engine Diagrams
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">
+       2.1.9. The Third Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">
+       2.1.10. First Derivative and Maxwell Relations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">
+       2.1.11. Free Energy and Legendre Transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">
+       2.1.12. Thermodynamics of Solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../quantum_mechanics/intro.html">
+     2.2. Quantum Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/history_of_quantum_mechanics.html">
+       2.2.1. The History of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/postulates_of_quantum_mechanics.html">
+       2.2.2. The Postulates and Formalism of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/harmonic_oscillator.html">
+       2.2.3. Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">
+       2.2.4. Vibrational Spectroscopy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">
+       2.2.5. Variational Method in Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/harmonic_oscillator_using_variational_method.html">
+       2.2.6. Variational Solution to the Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/morse_oscillator.html">
+       2.2.7. The Morse Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/rigid_rotator.html">
+       2.2.8. Rigid Rotator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/rigid_rotator_using_variational_method.html">
+       2.2.9. Rigid Rotator Variational Solution…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/rigid_rotator_selection_rules.html">
+       2.2.10. Rigid Rotator Continued…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom.html">
+       2.2.12. The Hydrogen Atom
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/the_helium_atom.html">
+       2.2.13. The Helium Atom
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="intro.html">
+     2.3. Electronic Structure
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3">
+      <a class="reference internal" href="Hartree_Fock_Helium_Atom.html">
+       2.3.1. Hartree-Fock
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       2.3.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/physical_chemistry/electronic_structure/HF_for_H2.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/physical_chemistry/electronic_structure/HF_for_H2.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/physical_chemistry/electronic_structure/HF_for_H2.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#subroutines">
+   2.3.2.1. Subroutines
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basis-function-overlap-calculation">
+     2.3.2.1.1. Basis Function Overlap Calculation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kinetic-energy-matrix-elements">
+     2.3.2.1.2. Kinetic Energy Matrix Elements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#one-electron-potential-energy-matrix-elements">
+     2.3.2.1.3. One-electron Potential Energy Matrix Elements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#two-electron-integrals">
+     2.3.2.1.4. Two-electron Integrals
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#main-program">
+   2.3.2.2. Main Program
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#subroutines">
+   2.3.2.1. Subroutines
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basis-function-overlap-calculation">
+     2.3.2.1.1. Basis Function Overlap Calculation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#kinetic-energy-matrix-elements">
+     2.3.2.1.2. Kinetic Energy Matrix Elements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#one-electron-potential-energy-matrix-elements">
+     2.3.2.1.3. One-electron Potential Energy Matrix Elements
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#two-electron-integrals">
+     2.3.2.1.4. Two-electron Integrals
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#main-program">
+   2.3.2.2. Main Program
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="hartree-fock-code-for-the-h2-molecule-in-a-minimal-sto-3g-basis">
+<h1><span class="section-number">2.3.2. </span>Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis<a class="headerlink" href="#hartree-fock-code-for-the-h2-molecule-in-a-minimal-sto-3g-basis" title="Permalink to this headline">#</a></h1>
+<p>The following notebook will attempt to follow along with the model H<span class="math notranslate nohighlight">\(_{2}\)</span> calculations in Szabo and Ostlund section 3.5.</p>
+<ol class="simple">
+<li><p>Setup system - position molecule and define basis</p></li>
+<li><p>Define coefficient matrix, <span class="math notranslate nohighlight">\(\mathbf{C}\)</span>, and compute density matrix, <span class="math notranslate nohighlight">\(\mathbf{P}\)</span>.</p></li>
+<li><p>Compute <span class="math notranslate nohighlight">\(\mathbf{S}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{H_{core}} = \mathbf{T} + \mathbf{V}\)</span> and two-electron integrals.</p></li>
+<li><p>Populate the two-electron matrix, <span class="math notranslate nohighlight">\(\mathbf{G}\)</span>, and then compute the Fock matrix <span class="math notranslate nohighlight">\(\mathbf{F} = \mathbf{H_{core}} + \mathbf{G}\)</span></p></li>
+<li><p>Diagonalize <span class="math notranslate nohighlight">\(\mathbf{S}^{-1}\mathbf{F}\)</span> to obtain orbital energies</p></li>
+<li><p>Compute total energy</p></li>
+</ol>
+<div class="section" id="subroutines">
+<h2><span class="section-number">2.3.2.1. </span>Subroutines<a class="headerlink" href="#subroutines" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load some libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">erf</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="basis-function-overlap-calculation">
+<h3><span class="section-number">2.3.2.1.1. </span>Basis Function Overlap Calculation<a class="headerlink" href="#basis-function-overlap-calculation" title="Permalink to this headline">#</a></h3>
+<p>For this calculation we are using and STO-3G minimal basis for H2.  This means there are two basis functions of the form</p>
+<p><span class="math notranslate nohighlight">\(\phi_i(r) = \sum_{k=1}^{3} g_{i,k}\phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A})\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{R_A}\)</span> (typically an atomic nucleus) is the center of the primitive gaussian given by</p>
+<p><span class="math notranslate nohighlight">\(\phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) = \left(\frac{2\alpha_{i,k}}{\pi}\right)^{3/4}e^{-\alpha_{i,k} (\mathbf{r}-\mathbf{R_A})^2}\)</span>.</p>
+<p>The basis set overlap integral is given by</p>
+<p><span class="math notranslate nohighlight">\(S_{ij} = \langle \phi_i | \phi_j \rangle  = \langle\sum_{k=1}^{3} g_{i,k}\phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) | \sum_{l=1}^{3} g_{j,l}\phi^{GF}_{1s}(\alpha_{j,l},\mathbf{r}-\mathbf{R_B})\rangle \)</span></p>
+<p><span class="math notranslate nohighlight">\( = \sum_{k,l} g_{i,k}g_{j,l} \langle \phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) | \phi^{GF}_{1s}(\alpha_{j,l},\mathbf{r}-\mathbf{R_B}) \rangle \)</span>.</p>
+<p>Thus we must determine the form of the primitive gaussian integral</p>
+<p><span class="math notranslate nohighlight">\(\langle \phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) | \phi^{GF}_{1s}(\alpha_{j,l},\mathbf{r}-\mathbf{R_B}) \rangle  = \left(\frac{2}{\pi}\right)^{1.5}\left(\alpha_{i,k}\alpha_{j,l}\right)^{3/4}\int e^{-\alpha_{i,k} (\mathbf{r}-\mathbf{R_A})^2} e^{-\alpha_{j,l} (\mathbf{r}-\mathbf{R_B})^2} d\mathbf{r}\)</span></p>
+<p>The integral on the right-hand side is of the product of two gaussian functions.  Recall that the product of two-gaussians is itself a new gaussian.  Namely:</p>
+<p><span class="math notranslate nohighlight">\(\int e^{-\alpha_{i,k} (\mathbf{r}-\mathbf{R_A})^2} e^{-\alpha_{j,l} (\mathbf{r}-\mathbf{R_B})^2} d\mathbf{r} = K \int e^{-p(\mathbf{r}-\mathbf{R_p})^2}\mathbf{r}\)</span></p>
+<p>where K is a constant (known form),</p>
+<p><span class="math notranslate nohighlight">\(R_p = \frac{\alpha_{i,k}\mathbf{R_A}+\alpha_{j,l}\mathbf{R_B}}{\alpha_{i,k}+\alpha_{j,l}}\)</span></p>
+<p>and</p>
+<p><span class="math notranslate nohighlight">\( p = \alpha_{i,k}+\alpha_{j,l}\)</span>.</p>
+<p>It can be shown that this ultimately yields</p>
+<p><span class="math notranslate nohighlight">\(\langle \phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) | \phi^{GF}_{1s}(\alpha_{j,l},\mathbf{r}-\mathbf{R_B}) \rangle  = \left(\alpha_{i,k}\alpha_{j,l}\right)^{3/4} \left( \frac{2}{\alpha_{i,k}+\alpha_{j,l}}\right)^{1.5}e^{-\alpha_{i,k}\alpha_{j,l}/(\alpha_{i,k}+\alpha_{j,l})(\mathbf{R_A}-\mathbf{R_B})^2}\)</span></p>
+<p>Thus we get for STO-3G Hydrogen 1s basis:</p>
+<p><span class="math notranslate nohighlight">\(S_{ij} = \sum_{k,l} g_{i,k}g_{j,l}\left(\alpha_{i,k}\alpha_{j,l}\right)^{3/4} \left( \frac{2}{\alpha_{i,k}+\alpha_{j,l}}\right)^{1.5}e^{-\alpha_{i,k}\alpha_{j,l}/(\alpha_{i,k}+\alpha_{j,l})(\mathbf{R_A}-\mathbf{R_B})^2}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">basis_overlap</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">dA</span><span class="p">,</span><span class="n">RA</span><span class="p">,</span><span class="n">beta</span><span class="p">,</span><span class="n">dB</span><span class="p">,</span><span class="n">RB</span><span class="p">):</span>
+    <span class="n">overlap</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alpha</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">beta</span><span class="p">)):</span>
+            <span class="n">overlap</span> <span class="o">+=</span> <span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mf">0.75</span><span class="o">*</span><span class="n">beta</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">**</span><span class="mf">0.75</span><span class="o">*</span><span class="n">dA</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">dB</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">gaussian_overlap</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">RA</span><span class="p">,</span><span class="n">beta</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">RB</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">overlap</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span>
+
+<span class="k">def</span> <span class="nf">gaussian_overlap</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">RA</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">RB</span><span class="p">):</span>
+    <span class="n">prefactor</span> <span class="o">=</span> <span class="p">((</span><span class="n">alpha</span><span class="o">+</span><span class="n">beta</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">RA</span> <span class="o">-</span> <span class="n">RB</span>
+    <span class="n">dist2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span><span class="n">diff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prefactor</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="o">*</span><span class="n">beta</span><span class="o">/</span><span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="n">beta</span><span class="p">)</span><span class="o">*</span><span class="n">dist2</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="kinetic-energy-matrix-elements">
+<h3><span class="section-number">2.3.2.1.2. </span>Kinetic Energy Matrix Elements<a class="headerlink" href="#kinetic-energy-matrix-elements" title="Permalink to this headline">#</a></h3>
+<p>For the kinetic energy matrix element</p>
+<p><span class="math notranslate nohighlight">\(T_{ij} = \langle \phi_i | -0.5\nabla^2| \phi_j \rangle  = \langle\sum_{k=1}^{3} g_{i,k}\phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) | -0.5\nabla^2| \sum_{l=1}^{3} g_{j,l}\phi^{GF}_{1s}(\alpha_{j,l},\mathbf{r}-\mathbf{R_B})\rangle \)</span></p>
+<p><span class="math notranslate nohighlight">\( = \sum_{k,l} -0.5 g_{i,k}g_{j,l}\langle \phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) |\nabla^2| \phi^{GF}_{1s}(\alpha_{j,l},\mathbf{r}-\mathbf{R_B}) \rangle\)</span></p>
+<p>Thus we examine the primitive gaussian term</p>
+<p><span class="math notranslate nohighlight">\(\langle \phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) |\nabla^2| \phi^{GF}_{1s}(\alpha_{j,l},\mathbf{r}-\mathbf{R_B}) \rangle = \left(\frac{2}{\pi}\right)^{1.5}\left(\alpha_{i,k}\alpha_{j,l}\right)^{3/4} \int e^{-\alpha_{i,k} (\mathbf{r}-\mathbf{R_A})^2} \nabla^2 e^{-\alpha_{j,l} (\mathbf{r}-\mathbf{R_B})^2} d\mathbf{r}\)</span></p>
+<p><span class="math notranslate nohighlight">\( = \left(\frac{2}{\pi}\right)^{1.5}\left(\alpha_{i,k}\alpha_{j,l}\right)^{3/4}\frac{\alpha_{i,k}\alpha_{j,l}}{\alpha_{i,k}+\alpha_{j,l}} \left[ 3 - 2\alpha_{i,k}\alpha_{j,l}/(\alpha_{i,k}+\alpha_{j,l}) (\mathbf{R_A}-\mathbf{R_B})^2\right] [\pi/(\alpha_{i,k}+\alpha_{j,l})]^{3/2}e^{-\alpha_{i,k}\alpha_{j,l}/(\alpha_{i,k}+\alpha_{j,l}) (\mathbf{R_A}-\mathbf{R_B})^2}\)</span></p>
+<p>provided here without derivation.  See Ostlund and Szabo Page 412 for the derivation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">basis_kinetic</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">dA</span><span class="p">,</span><span class="n">RA</span><span class="p">,</span><span class="n">beta</span><span class="p">,</span><span class="n">dB</span><span class="p">,</span><span class="n">RB</span><span class="p">):</span>
+    <span class="n">kinetic</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alpha</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">beta</span><span class="p">)):</span>
+            <span class="n">kinetic</span> <span class="o">+=</span> <span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">beta</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">**</span><span class="mf">0.75</span><span class="o">*</span><span class="n">dA</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">dB</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">gaussian_kinetic</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">RA</span><span class="p">,</span><span class="n">beta</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">RB</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">kinetic</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span>
+
+<span class="k">def</span> <span class="nf">gaussian_kinetic</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">RA</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">RB</span><span class="p">):</span>
+    <span class="n">AplusB</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">RA</span> <span class="o">-</span> <span class="n">RB</span>
+    <span class="n">dist2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span><span class="n">diff</span><span class="p">)</span>
+    <span class="n">prefactor</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">*</span><span class="n">beta</span><span class="o">/</span><span class="n">AplusB</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">alpha</span><span class="o">*</span><span class="n">beta</span><span class="o">/</span><span class="n">AplusB</span><span class="o">*</span><span class="n">dist2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">AplusB</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span>
+    <span class="k">return</span> <span class="n">prefactor</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="o">*</span><span class="n">beta</span><span class="o">/</span><span class="n">AplusB</span><span class="o">*</span><span class="n">dist2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="one-electron-potential-energy-matrix-elements">
+<h3><span class="section-number">2.3.2.1.3. </span>One-electron Potential Energy Matrix Elements<a class="headerlink" href="#one-electron-potential-energy-matrix-elements" title="Permalink to this headline">#</a></h3>
+<p>For the one-electron potential energy matrix element</p>
+<p><span class="math notranslate nohighlight">\(V_{ij} = \langle \phi_i | -\sum_C\frac{Z_C}{|\mathbf{r}-\mathbf{R_C}|}| \phi_j \rangle  = \langle\sum_{k=1}^{3} g_{i,k}\phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) | -\sum_C\frac{Z_C}{|\mathbf{r}-\mathbf{R_C}|}| \sum_{l=1}^{3} g_{j,l}\phi^{GF}_{1s}(\alpha_{j,l},\mathbf{r}-\mathbf{R_B})\rangle \)</span></p>
+<p><span class="math notranslate nohighlight">\( = -\sum_{k,l,C} g_{i,k}g_{j,l}\langle \phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) |\frac{Z_C}{|\mathbf{r}-\mathbf{R_C}|}| \phi^{GF}_{1s}(\alpha_{j,l},\mathbf{r}-\mathbf{R_B}) \rangle\)</span></p>
+<p>Thus we examine the primitive gaussian term</p>
+<p><span class="math notranslate nohighlight">\(\langle \phi^{GF}_{1s}(\alpha_{i,k},\mathbf{r}-\mathbf{R_A}) |\frac{Z_C}{|\mathbf{r}-\mathbf{R_C}|}| \phi^{GF}_{1s}(\alpha_{j,l},\mathbf{r}-\mathbf{R_B}) \rangle = Z_C\left(\frac{2}{\pi}\right)^{1.5}\left(\alpha_{i,k}\alpha_{j,l}\right)^{3/4} \int e^{-\alpha_{i,k} (\mathbf{r}-\mathbf{R_A})^2}\frac{1}{|\mathbf{r}-\mathbf{R_C}|} e^{-\alpha_{j,l} (\mathbf{r}-\mathbf{R_B})^2} d\mathbf{r}\)</span></p>
+<p><span class="math notranslate nohighlight">\( = \frac{-2\pi Z_C}{\alpha_{i,k} + \alpha_{j,l}}\exp\left[\frac{-\alpha_{i,k}\alpha_{j,l}}{\alpha_{i,k} + \alpha_{j,l}} |\mathbf{R_A} - \mathbf{R_B}|^2\right]\frac{1}{2}\sqrt{\frac{\pi}{p|\mathbf{R_P}-\mathbf{R_C}|^2}}erf(p^{1/2}|\mathbf{R_P}-\mathbf{R_C}|)\)</span></p>
+<p>provided here without derivation.  See Ostlund and Szabo Page 413-414 for the derivation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">basis_potential</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">dA</span><span class="p">,</span><span class="n">RA</span><span class="p">,</span><span class="n">beta</span><span class="p">,</span><span class="n">dB</span><span class="p">,</span><span class="n">RB</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+    <span class="n">potential</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">nAtoms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nAtoms</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alpha</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">beta</span><span class="p">)):</span>
+                <span class="n">prefactor</span> <span class="o">=</span> <span class="o">-</span><span class="n">Z</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">beta</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="o">**</span><span class="mf">0.75</span><span class="o">*</span><span class="n">dA</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">dB</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">potential</span> <span class="o">+=</span> <span class="n">prefactor</span><span class="o">*</span><span class="n">gaussian_erf</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">RA</span><span class="p">,</span><span class="n">beta</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">RB</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">atom</span><span class="p">,:])</span>
+    <span class="k">return</span> <span class="n">potential</span>
+
+<span class="k">def</span> <span class="nf">gaussian_erf</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">RA</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">RB</span><span class="p">,</span> <span class="n">RC</span><span class="p">):</span>
+    <span class="n">AplusB</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span>
+    <span class="n">RP</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="n">RA</span><span class="o">+</span><span class="n">beta</span><span class="o">*</span><span class="n">RB</span><span class="p">)</span><span class="o">/</span><span class="n">AplusB</span>
+    <span class="n">RPminusRC</span> <span class="o">=</span> <span class="n">RP</span> <span class="o">-</span> <span class="n">RC</span>
+    <span class="n">RPRC2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">RPminusRC</span><span class="p">,</span><span class="n">RPminusRC</span><span class="p">)</span>
+    <span class="n">RAminusRB</span> <span class="o">=</span> <span class="n">RA</span> <span class="o">-</span> <span class="n">RB</span>
+    <span class="n">RARB2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">RAminusRB</span><span class="p">,</span><span class="n">RAminusRB</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">RPRC2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">RARB2</span> <span class="o">==</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">AplusB</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">AplusB</span><span class="o">*</span><span class="n">RPRC2</span><span class="p">)</span>
+        <span class="n">prefactor</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mf">0.5</span><span class="o">/</span><span class="n">AplusB</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">t</span><span class="o">*</span><span class="n">erf</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">prefactor</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="o">*</span><span class="n">beta</span><span class="o">/</span><span class="n">AplusB</span><span class="o">*</span><span class="n">RARB2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="two-electron-integrals">
+<h3><span class="section-number">2.3.2.1.4. </span>Two-electron Integrals<a class="headerlink" href="#two-electron-integrals" title="Permalink to this headline">#</a></h3>
+<p>For the one-electron potential energy matrix element</p>
+<p><span class="math notranslate nohighlight">\(\langle \mu\nu | \frac{1}{|\mathbf{r}_{12}|}| \lambda\sigma \rangle= \langle \phi_\mu \phi_\nu| \frac{1}{|\mathbf{r}_{12}|}| \phi_\lambda\phi_\sigma \rangle  = \langle\sum_{i=1}^{3} g_{\mu,i}\phi^{GF}_{1s}(\alpha_{\mu,i},\mathbf{r}-\mathbf{R_A})\sum_{j=1}^{3} g_{\nu,j}\phi^{GF}_{1s}(\alpha_{\nu,j},\mathbf{r}-\mathbf{R_B}) | \frac{1}{|\mathbf{r}_{12}|}| \sum_{k=1}^{3} g_{\lambda,k}\phi^{GF}_{1s}(\alpha_{\lambda,k},\mathbf{r}-\mathbf{R_C})\sum_{l=1}^{3} g_{\sigma,l}\phi^{GF}_{1s}(\alpha_{\sigma,l},\mathbf{r}-\mathbf{R_D})\rangle \)</span></p>
+<p><span class="math notranslate nohighlight">\( = \sum_{i,j,k,l} g_{\mu,i}g_{\nu,j}g_{\lambda,k}g_{\sigma,l}\langle \phi^{GF}_{1s}(\alpha_{\mu,i},\mathbf{r}-\mathbf{R_A}) \phi^{GF}_{1s}(\alpha_{\nu,j},\mathbf{r}-\mathbf{R_B})|\frac{1}{|\mathbf{r}_{12}|}| \phi^{GF}_{1s}(\alpha_{\lambda,k},\mathbf{r}-\mathbf{R_C}) \phi^{GF}_{1s}(\alpha_{\sigma,l},\mathbf{r}-\mathbf{R_D})\rangle\)</span></p>
+<p>Thus we examine the primitive gaussian term</p>
+<p><span class="math notranslate nohighlight">\(\langle \phi^{GF}_{1s}(\alpha_{\mu,i},\mathbf{r}-\mathbf{R_A}) \phi^{GF}_{1s}(\alpha_{\nu,j},\mathbf{r}-\mathbf{R_B})|\frac{1}{|\mathbf{r}_{12}|}| \phi^{GF}_{1s}(\alpha_{\lambda,k},\mathbf{r}-\mathbf{R_C}) \phi^{GF}_{1s}(\alpha_{\sigma,l},\mathbf{r}-\mathbf{R_D})\rangle \)</span></p>
+<p><span class="math notranslate nohighlight">\( = \frac{2\pi^{5/2}}{(\alpha_{\mu,i}+\alpha_{\nu,j}) (\alpha_{\lambda,k}+\alpha_{\sigma,l}) (\alpha_{\mu,i}+\alpha_{\nu,j} + \alpha_{\lambda,k}+\alpha_{\sigma,l})^{1/2}} \exp\left[ \frac{-\alpha_{\mu,i}\alpha_{\nu,j}}{\alpha_{\mu,i}+\alpha_{\nu,j}} |\mathbf{R}_A-\mathbf{R}_B|^2 -\frac{\alpha_{\lambda,k}\alpha_{\sigma,l}}{\alpha_{\lambda,k}+\alpha_{\sigma,l}} |\mathbf{R}_C-\mathbf{R}_D|^2  \right]F_0\left[ \frac{(\alpha_{\mu,i}+\alpha_{\nu,j}) (\alpha_{\lambda,k}+\alpha_{\sigma,l})}{(\alpha_{\mu,i}+\alpha_{\nu,j} + \alpha_{\lambda,k}+\alpha_{\sigma,l})}|\mathbf{R}_P-\mathbf{R}_Q|^2 \right]\)</span></p>
+<p>provided here without derivation.  See Ostlund and Szabo Page 415-416 for the derivation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># two electron integrals</span>
+<span class="k">def</span> <span class="nf">basis_2e</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">dA</span><span class="p">,</span><span class="n">RA</span><span class="p">,</span><span class="n">beta</span><span class="p">,</span><span class="n">dB</span><span class="p">,</span><span class="n">RB</span><span class="p">,</span><span class="n">gamma</span><span class="p">,</span><span class="n">dC</span><span class="p">,</span><span class="n">RC</span><span class="p">,</span><span class="n">delta</span><span class="p">,</span><span class="n">dD</span><span class="p">,</span><span class="n">RD</span><span class="p">):</span>
+    <span class="n">twoE</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alpha</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">beta</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gamma</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">delta</span><span class="p">)):</span>
+                    <span class="n">prefactor</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">beta</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">gamma</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">delta</span><span class="p">[</span><span class="n">l</span><span class="p">])</span><span class="o">**</span><span class="mf">0.75</span><span class="o">*</span><span class="n">dA</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">dB</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">dC</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">dD</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+                    <span class="n">twoE</span> <span class="o">+=</span> <span class="n">prefactor</span><span class="o">*</span><span class="n">gaussian_2e</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">RA</span><span class="p">,</span><span class="n">beta</span><span class="p">[</span><span class="n">j</span><span class="p">],</span><span class="n">RB</span><span class="p">,</span><span class="n">gamma</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">RC</span><span class="p">,</span><span class="n">delta</span><span class="p">[</span><span class="n">l</span><span class="p">],</span><span class="n">RD</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">twoE</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>  
+
+<span class="k">def</span> <span class="nf">gaussian_2e</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">RA</span><span class="p">,</span><span class="n">beta</span><span class="p">,</span><span class="n">RB</span><span class="p">,</span><span class="n">gamma</span><span class="p">,</span><span class="n">RC</span><span class="p">,</span><span class="n">delta</span><span class="p">,</span><span class="n">RD</span><span class="p">):</span>
+    <span class="n">AplusB</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span>
+    <span class="c1"># weighted average of RA and RB</span>
+    <span class="n">RP</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="n">RA</span><span class="o">+</span><span class="n">beta</span><span class="o">*</span><span class="n">RB</span><span class="p">)</span><span class="o">/</span><span class="n">AplusB</span>
+    <span class="n">GplusD</span> <span class="o">=</span> <span class="n">gamma</span> <span class="o">+</span> <span class="n">delta</span>
+    <span class="c1"># weighted average of RC and RD</span>
+    <span class="n">RQ</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span><span class="o">*</span><span class="n">RC</span><span class="o">+</span><span class="n">delta</span><span class="o">*</span><span class="n">RD</span><span class="p">)</span><span class="o">/</span><span class="n">GplusD</span>
+    <span class="n">RAminusRB</span> <span class="o">=</span> <span class="n">RA</span> <span class="o">-</span> <span class="n">RB</span>
+    <span class="n">RARB2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">RAminusRB</span><span class="p">,</span><span class="n">RAminusRB</span><span class="p">)</span>
+    <span class="n">RCminusRD</span> <span class="o">=</span> <span class="n">RC</span> <span class="o">-</span> <span class="n">RD</span>
+    <span class="n">RCRD2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">RCminusRD</span><span class="p">,</span><span class="n">RCminusRD</span><span class="p">)</span>
+    <span class="n">RPminusRQ</span> <span class="o">=</span> <span class="n">RP</span> <span class="o">-</span> <span class="n">RQ</span>
+    <span class="n">RPRQ2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">RPminusRQ</span><span class="p">,</span><span class="n">RPminusRQ</span><span class="p">)</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">AplusB</span><span class="o">*</span><span class="n">GplusD</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">AplusB</span><span class="o">+</span><span class="n">GplusD</span><span class="p">)</span>
+    <span class="n">prefactor</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mf">2.5</span><span class="o">/</span><span class="n">denom</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">AplusB</span><span class="o">*</span><span class="n">GplusD</span><span class="o">/</span><span class="p">(</span><span class="n">AplusB</span><span class="o">+</span><span class="n">GplusD</span><span class="p">)</span><span class="o">*</span><span class="n">RPRQ2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">RPRQ2</span> <span class="o">!=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">prefactor</span> <span class="o">*=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">t</span><span class="o">*</span><span class="n">erf</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prefactor</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="o">-</span><span class="n">alpha</span><span class="o">*</span><span class="n">beta</span><span class="o">/</span><span class="n">AplusB</span><span class="o">*</span><span class="n">RARB2</span> <span class="o">-</span> <span class="n">gamma</span><span class="o">*</span><span class="n">delta</span><span class="o">/</span><span class="n">GplusD</span><span class="o">*</span><span class="n">RCRD2</span><span class="p">)</span>
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">constructDensityMat</span><span class="p">(</span><span class="n">C</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">M</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="o">//</span><span class="mi">2</span><span class="p">):</span>
+                <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">a</span><span class="p">]</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">a</span><span class="p">]</span>
+            <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">*=</span> <span class="mf">2.0</span>
+            <span class="n">P</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">P</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="main-program">
+<h2><span class="section-number">2.3.2.2. </span>Main Program<a class="headerlink" href="#main-program" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define some system parameters</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>    <span class="c1"># nuclear charge in electron charge units</span>
+<span class="n">M</span> <span class="o">=</span> <span class="mi">2</span>                  <span class="c1"># number of basis functions</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set STO-3G basis for zeta = 1.24</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.168856</span><span class="p">,</span><span class="mf">0.623913</span><span class="p">,</span><span class="mf">3.42525</span><span class="p">])</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.444635</span><span class="p">,</span><span class="mf">0.535328</span><span class="p">,</span><span class="mf">0.154329</span><span class="p">])</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.4</span>
+<span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot basis function and compare to STO</span>
+<span class="c1"># define function for making figures</span>
+<span class="k">def</span> <span class="nf">define_figure</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">):</span>
+    <span class="c1"># setup plot parameters</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span>
+<span class="c1"># define the radially symmetric slater type orbitals</span>
+<span class="k">def</span> <span class="nf">sto</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">zeta</span><span class="p">,</span><span class="n">r</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">zeta</span><span class="o">**</span><span class="mi">3</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">zeta</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span> 
+<span class="c1"># approximation of STO with n gaussians</span>
+<span class="k">def</span> <span class="nf">sto_ng</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">r</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">g</span> <span class="o">+=</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">0.75</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">r</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">g</span> 
+<span class="c1"># initialize a figure</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">define_figure</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;$r$&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;$\phi$&quot;</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">alphaSTO1G</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.270950</span><span class="p">]</span>
+<span class="n">alphaSTO2G</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.151623</span><span class="p">,</span><span class="mf">0.851819</span><span class="p">]</span>
+<span class="n">dSTO2G</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.678914</span><span class="p">,</span><span class="mf">0.430129</span><span class="p">]</span>
+<span class="n">alphaSTO3G</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.109818</span><span class="p">,</span><span class="mf">0.405771</span><span class="p">,</span><span class="mf">2.22766</span><span class="p">]</span>
+<span class="n">dSTO3G</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.444635</span><span class="p">,</span><span class="mf">0.535328</span><span class="p">,</span><span class="mf">0.154329</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">sto</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">r</span><span class="p">),</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;STO&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">sto_ng</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">alphaSTO1G</span><span class="p">,[</span><span class="mf">1.0</span><span class="p">],</span><span class="n">r</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;STO-1G&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">sto_ng</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">alphaSTO2G</span><span class="p">,</span><span class="n">dSTO2G</span><span class="p">,</span><span class="n">r</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;STO-2G&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">sto_ng</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">alphaSTO3G</span><span class="p">,</span><span class="n">dSTO3G</span><span class="p">,</span><span class="n">r</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;STO-3G&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff0d8a29280&gt;
+</pre></div>
+</div>
+<img alt="../../_images/HF_for_H2_15_1.png" src="../../_images/HF_for_H2_15_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute S, the overlap matrix</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">basis_overlap</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">j</span><span class="p">,:])</span>
+<span class="n">Sinv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1.00000134 0.65931916]
+ [0.65931916 1.00000134]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we dictate the coefficient matrix, <span class="math notranslate nohighlight">\(\mathbf{C}\)</span>, and then compute the density matrix, <span class="math notranslate nohighlight">\(\mathbf{P}\)</span>.  The density matrix is given as</p>
+<p><span class="math notranslate nohighlight">\(P_{\mu\nu} = 2\sum_{a}^{N/2}C_{\mu a}C^*_{\nu a}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># basis set coefficient matrix</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="c1"># in this case we know the answer so can set it to be</span>
+<span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">P</span> <span class="o">=</span> <span class="n">constructDensityMat</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.60265682 0.60265682]
+ [0.60265682 0.60265682]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute T, the kinetic energy matrix</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">basis_kinetic</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">j</span><span class="p">,:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.76003235 0.23645527]
+ [0.23645527 0.76003235]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute V, the potential energy matrix</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">basis_potential</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">j</span><span class="p">,:],</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-1.88044303 -1.19483649]
+ [-1.19483649 -1.88044303]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save H-core</span>
+<span class="n">Hcore</span> <span class="o">=</span> <span class="n">T</span> <span class="o">+</span> <span class="n">V</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Hcore</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-1.12041067 -0.95838123]
+ [-0.95838123 -1.12041067]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute and save all two-electron integrals</span>
+<span class="n">twoE</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+                <span class="n">twoE</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">basis_2e</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">j</span><span class="p">,:],</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">k</span><span class="p">,:],</span><span class="n">alpha</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">R</span><span class="p">[</span><span class="n">l</span><span class="p">,:])</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;|1/r12|&quot;</span><span class="p">,</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span><span class="n">twoE</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt; 1 1 |1/r12| 1 1 &gt;= 0.7746079055149173
+&lt; 1 1 |1/r12| 1 2 &gt;= 0.44410895821293
+&lt; 1 1 |1/r12| 2 1 &gt;= 0.44410895821292995
+&lt; 1 1 |1/r12| 2 2 &gt;= 0.5696774985883132
+&lt; 1 2 |1/r12| 1 1 &gt;= 0.4441089582129298
+&lt; 1 2 |1/r12| 1 2 &gt;= 0.29702949599279366
+&lt; 1 2 |1/r12| 2 1 &gt;= 0.2970294959927937
+&lt; 1 2 |1/r12| 2 2 &gt;= 0.4441089582129301
+&lt; 2 1 |1/r12| 1 1 &gt;= 0.4441089582129301
+&lt; 2 1 |1/r12| 1 2 &gt;= 0.29702949599279366
+&lt; 2 1 |1/r12| 2 1 &gt;= 0.29702949599279366
+&lt; 2 1 |1/r12| 2 2 &gt;= 0.4441089582129298
+&lt; 2 2 |1/r12| 1 1 &gt;= 0.5696774985883132
+&lt; 2 2 |1/r12| 1 2 &gt;= 0.44410895821292995
+&lt; 2 2 |1/r12| 2 1 &gt;= 0.44410895821293
+&lt; 2 2 |1/r12| 2 2 &gt;= 0.7746079055149173
+</pre></div>
+</div>
+</div>
+</div>
+<p>The two electron matrix, <span class="math notranslate nohighlight">\(\mathbf{G}\)</span>, has the form:</p>
+<p><span class="math notranslate nohighlight">\(G_{\mu\nu} = \sum_{\lambda\sigma}P_{\mu\nu}\left(\langle \mu\nu |\frac{1}{r_{12}}| \lambda\sigma\rangle - \langle \mu\lambda |\frac{1}{r_{12}}| \sigma\nu \rangle \right)\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># populate G matrix using two-electron integrals and density matrix</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+                <span class="n">G</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">P</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">twoE</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">twoE</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.75487326 0.36449555]
+ [0.36449555 0.75487326]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">F</span> <span class="o">=</span> <span class="n">Hcore</span> <span class="o">+</span> <span class="n">G</span>
+
+<span class="n">e</span><span class="p">,</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Sinv</span><span class="p">,</span><span class="n">F</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.5782024   0.67026769]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Etotal</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="n">Etotal</span> <span class="o">+=</span> <span class="n">P</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">Hcore</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+<span class="n">Etotal</span><span class="o">*=</span><span class="mf">0.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ground-state Electronic Energy:&quot;</span><span class="p">,</span><span class="n">Etotal</span><span class="p">)</span>
+<span class="n">Etotal</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">/</span><span class="n">R</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ground-state Total Energy:&quot;</span><span class="p">,</span><span class="n">Etotal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ground-state Electronic Energy: -1.8310009691491826
+Ground-state Total Energy: -1.1167152548634682
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./physical_chemistry/electronic_structure"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="Hartree_Fock_Helium_Atom.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2.3.1. </span>Hartree-Fock</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Martin McCullagh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

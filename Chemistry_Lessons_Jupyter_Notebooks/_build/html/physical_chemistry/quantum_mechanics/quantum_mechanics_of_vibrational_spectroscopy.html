@@ -1,0 +1,724 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.2.4. Vibrational Spectroscopy &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.2.5. Variational Method in Quantum Mechanics" href="variational_method_in_quantum_mechanics.html" />
+    <link rel="prev" title="2.2.3. Harmonic Oscillator" href="harmonic_oscillator.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Chemistry Lessons with Jupyter Notebooks</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">
+   1. Jupyter Notebook Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">
+     1.1. Jupyter Notebook Tutorial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">
+     1.2. Advanced Jupyter Notebook Tutorial
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   2. Physical Chemistry
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../thermodynamics/intro.html">
+     2.1. Thermodynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">
+       2.1.1. The First Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">
+       2.1.2. Heat Work and Calculating
+       <span class="math notranslate nohighlight">
+        \(\Delta U\)
+       </span>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">
+       2.1.4. Thermodynamic Cycles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles_Day_2.html">
+       2.1.5. Thermodynamic Cycles Day 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">
+       2.1.6. Second Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">
+       2.1.7. Heat Engine Diagrams
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">
+       2.1.9. The Third Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">
+       2.1.10. First Derivative and Maxwell Relations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">
+       2.1.11. Free Energy and Legendre Transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">
+       2.1.12. Thermodynamics of Solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="intro.html">
+     2.2. Quantum Mechanics
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3">
+      <a class="reference internal" href="history_of_quantum_mechanics.html">
+       2.2.1. The History of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="postulates_of_quantum_mechanics.html">
+       2.2.2. The Postulates and Formalism of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="harmonic_oscillator.html">
+       2.2.3. Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       2.2.4. Vibrational Spectroscopy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="variational_method_in_quantum_mechanics.html">
+       2.2.5. Variational Method in Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="harmonic_oscillator_using_variational_method.html">
+       2.2.6. Variational Solution to the Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="morse_oscillator.html">
+       2.2.7. The Morse Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="rigid_rotator.html">
+       2.2.8. Rigid Rotator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="rigid_rotator_using_variational_method.html">
+       2.2.9. Rigid Rotator Variational Solution…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="rigid_rotator_selection_rules.html">
+       2.2.10. Rigid Rotator Continued…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="the_hydrogen_atom.html">
+       2.2.12. The Hydrogen Atom
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="the_helium_atom.html">
+       2.2.13. The Helium Atom
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../electronic_structure/intro.html">
+     2.3. Electronic Structure
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../electronic_structure/Hartree_Fock_Helium_Atom.html">
+       2.3.1. Hartree-Fock
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../electronic_structure/HF_for_H2.html">
+       2.3.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transition-dipole-moment">
+   2.2.4.1. Transition dipole moment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selection-rules">
+   2.2.4.2. Selection Rules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#normal-modes">
+   2.2.4.3. Normal Modes
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Vibrational Spectroscopy</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#transition-dipole-moment">
+   2.2.4.1. Transition dipole moment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selection-rules">
+   2.2.4.2. Selection Rules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#normal-modes">
+   2.2.4.3. Normal Modes
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="vibrational-spectroscopy">
+<h1><span class="section-number">2.2.4. </span>Vibrational Spectroscopy<a class="headerlink" href="#vibrational-spectroscopy" title="Permalink to this headline">#</a></h1>
+<p>In order to probe the vibrations of a molecule using experiment, we must shine a light on the molecule.  Light produces an electromagnetic field, <span class="math notranslate nohighlight">\(\mathbf{E}\)</span>, which can be approximatly written as</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{E} = \mathbf{E}_0 cos2\pi\nu t\)</span>,</p>
+<p>where <span class="math notranslate nohighlight">\(\nu\)</span> is the frequency of the radiation and <span class="math notranslate nohighlight">\(\mathbf{E}_0\)</span> is the electric field vector.  Note that this field is for monochromatic light and has an explicit time dependence.</p>
+<p>Hitting a system with this light leads to a change in the Hamiltonian of the system.  That is, the wavefunction of the molecule is perturbed by the presence of the electromagnetic field.  The perturbation to the Hamiltonian can be written as</p>
+<p><span class="math notranslate nohighlight">\(\hat{H}^{(1)} = -\mathbf{\mu}\cdot\mathbf{E} = -\mathbf{\mu}\mathbf{E}_0 cos2\pi\nu t\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the dipole moment of the molecule.  The complete Hamiltonian for the system is then</p>
+<p><span class="math notranslate nohighlight">\(\hat{H} = \hat{H}^{(0)} + \hat{H}^{(1)}\)</span>,</p>
+<p>where <span class="math notranslate nohighlight">\(\hat{H}^{(0)}\)</span> is the Hamiltonian of the isolated molecule.   This Hamiltonian has explicit time dependence so we cannot solve the stationary state Schrodinger equation.  This problem can be solved using <em>time-dependent perturbation theory</em> but we will not do so now.  Instead we will use some of the results from this solution.</p>
+<div class="section" id="transition-dipole-moment">
+<h2><span class="section-number">2.2.4.1. </span>Transition dipole moment<a class="headerlink" href="#transition-dipole-moment" title="Permalink to this headline">#</a></h2>
+<p>Time-dependent perturbation theory on the above Hamiltonian leads to defining what is called the <em>transition dipole moment</em> for a molecule.  This is defined as</p>
+<p><span class="math notranslate nohighlight">\(\langle \nu | \mu_z | \nu'\rangle = \int_{-\infty}^{\infty} \psi_\nu(x)\mu_z(x)\psi_{\nu'}(x)dx\)</span>,</p>
+<p>where <span class="math notranslate nohighlight">\(\nu\rangle\)</span> are stationary state solutions of the <span class="math notranslate nohighlight">\(\hat{H}^{(0)}\)</span> Hamiltonian (isolated molecule).  This quantity dictates the absorpition of a transition from state <span class="math notranslate nohighlight">\(\nu\)</span> to a state <span class="math notranslate nohighlight">\(\nu'\)</span>.</p>
+<p>We now expand <span class="math notranslate nohighlight">\(\mu_z(x)\)</span> about the equilibrium position (<span class="math notranslate nohighlight">\(x=0\)</span>)</p>
+<p><span class="math notranslate nohighlight">\(\mu_z(x) = \mu_0 + \left( \frac{d\mu}{dx}\right)_0x + ...\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(\mu_0\)</span> is the dipole moment at the equilibrium position and <span class="math notranslate nohighlight">\(x\)</span> is the displacement from that position.  Substituting this expansion truncated to second order into the transition dipole moment we get</p>
+<p><span class="math notranslate nohighlight">\(\langle \nu | \mu_z | \nu'\rangle = \mu_0 \langle \nu | \nu'\rangle + \left( \frac{d\mu}{dx}\right)_0 \langle \nu |x| \nu'\rangle \)</span>.</p>
+<p><strong>Harmonic Oscillator</strong></p>
+<p>The above expression is for a general <span class="math notranslate nohighlight">\(\hat{H}^{(0)}\)</span>.  We now investigate the Harmonic Oscillator (HO) system with <span class="math notranslate nohighlight">\(\hat{H}^{(0)} = -\frac{\hbar^2}{2\mu}\frac{d^2}{dx^2}\)</span>.  The first term on the right-hand side of the above equality is zero for <span class="math notranslate nohighlight">\(\nu \neq \nu'\)</span> due to the orthogonality of HO wavefunctions.  In order to assess the value of the second term, we must recall that the generic HO wavefunction is given as</p>
+<p><span class="math notranslate nohighlight">\(\psi_\nu(x) = N_\nu H_\nu(\alpha^{1/2}x)e^{-\alpha x^2/2}\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(H_\nu(\alpha^{1/2}x)\)</span> is a Hermite polynomial.  There are a few properties of Hermite polynomials that are quite important.  One is that they are orthogonal.  The one we will use to investigate the transition dipole moment is</p>
+<p><span class="math notranslate nohighlight">\(xH_\nu(x) = \nu H_{\nu-1}(x) + \frac{1}{2}H_{\nu+1}(x)\)</span>.</p>
+<p>If we plug this relationship into the integral above we get</p>
+<p><span class="math notranslate nohighlight">\(\langle \nu | \mu_z | \nu'\rangle =  \left( \frac{d\mu}{dx}\right)_0 \langle \nu |x| \nu'\rangle = \frac{N_\nu N_{\nu'}}{\alpha}\left( \frac{d\mu}{dx}\right)_0\int_{-\infty}^{\infty} H_{\nu'}(\xi)\left[\nu H_{\nu-1}(\xi) + \frac{1}{2}H_{\nu+1}(\xi)\right]e^{-\xi^2}d\xi\)</span>,</p>
+<p>where we have made the substition <span class="math notranslate nohighlight">\(\xi = \alpha^{1/2}x\)</span>.  Observe that the above equation is nonzero except when <span class="math notranslate nohighlight">\(\nu' = \nu \pm 1\)</span>.  This demonstrates the selection rule for a harmonic oscillator.</p>
+</div>
+<div class="section" id="selection-rules">
+<h2><span class="section-number">2.2.4.2. </span>Selection Rules<a class="headerlink" href="#selection-rules" title="Permalink to this headline">#</a></h2>
+<p><span class="math notranslate nohighlight">\(\Delta \nu = \pm 1\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets quantify this for HO wavefunctions</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">hermite</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="c1"># start by defining N function for analytic solution to HO wavefunctions</span>
+<span class="k">def</span> <span class="nf">Nn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">alpha</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">0.25</span>
+<span class="k">def</span> <span class="nf">ho_psi</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">Nn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">hermite</span><span class="p">(</span><span class="n">n</span><span class="p">)(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="o">*</span><span class="n">x2</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">hbar</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">m</span><span class="p">)</span><span class="o">/</span><span class="n">hbar</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">psi0</span> <span class="o">=</span> <span class="n">ho_psi</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">psi1</span> <span class="o">=</span> <span class="n">ho_psi</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">psi2</span> <span class="o">=</span> <span class="n">ho_psi</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&lt;0|x|0&gt; = &quot;</span><span class="p">,</span> <span class="n">integrate</span><span class="o">.</span><span class="n">simps</span><span class="p">(</span><span class="n">psi0</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">psi0</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&lt;0|x|1&gt; = &quot;</span><span class="p">,</span> <span class="n">integrate</span><span class="o">.</span><span class="n">simps</span><span class="p">(</span><span class="n">psi0</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">psi1</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&lt;0|x|2&gt; = &quot;</span><span class="p">,</span> <span class="n">integrate</span><span class="o">.</span><span class="n">simps</span><span class="p">(</span><span class="n">psi0</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">psi2</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&lt;1|x|2&gt; = &quot;</span><span class="p">,</span> <span class="n">integrate</span><span class="o">.</span><span class="n">simps</span><span class="p">(</span><span class="n">psi1</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">psi2</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;0|x|0&gt; =  5.551115123125783e-17
+&lt;0|x|1&gt; =  -0.7071067811865475
+&lt;0|x|2&gt; =  2.7755575615628914e-17
+&lt;1|x|2&gt; =  -1.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="normal-modes">
+<h2><span class="section-number">2.2.4.3. </span>Normal Modes<a class="headerlink" href="#normal-modes" title="Permalink to this headline">#</a></h2>
+<p>In a polyatomic molecule we can write out each bond as a harmonic oscillator.  This leads to an energy function</p>
+<p><span class="math notranslate nohighlight">\(\hat{H}(\mathbf{R}) = 0.5 \sum_{i=1}^N k_ix_i^2\)</span>,</p>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{R}\)</span> are the coordinates of all atoms, <span class="math notranslate nohighlight">\(N\)</span> is the number of bonds in the molecule, <span class="math notranslate nohighlight">\(k_i\)</span> is the force constant of bond <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(x_i\)</span> is the displacement from equilibrium position for bond <span class="math notranslate nohighlight">\(i\)</span>.  This equation is for a set of coupled harmonic oscillators, multiple <span class="math notranslate nohighlight">\(x_i\)</span>s will depend on the position of one atom, making it quite a challenging problem to solve.  If, instead, we can change our basis and write this as sum over independent harmonic oscillators</p>
+<p><span class="math notranslate nohighlight">\(\hat{H}(\mathbf{Q}) = 0.5 \sum_{i=1}^N k_iq_i^2\)</span>,</p>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> are the transformed coordinates and <span class="math notranslate nohighlight">\(q_i\)</span> is the displacement from equilibrium for oscillator <span class="math notranslate nohighlight">\(i\)</span>.  <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>  are typically reffered to as the normal modes of the system.  These are found by diagonlizing the Hessian matrix.  The Hessian matrix, <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>, is the second derivative matrix an element of which is defined as</p>
+<p><span class="math notranslate nohighlight">\(H_{ij} = \frac{d^2E}{dx_idx_j}\)</span>.</p>
+<p><em>Example: Coupled Oscillators in 1D</em></p>
+<p>Consider a system with two masses, <span class="math notranslate nohighlight">\(m_1\)</span> and <span class="math notranslate nohighlight">\(m_2\)</span>, <span class="math notranslate nohighlight">\(m_1\)</span> is connected to a wall by a sprint, <span class="math notranslate nohighlight">\(m_2\)</span> is connected to a wall by another spring and the two masses are connected together with a third spring.  The Hamiltonian for the system can be written as</p>
+<p><span class="math notranslate nohighlight">\(H(\mathbf{x}_1,\mathbf{x}_2) = 1/2k_1(x_1-x_1^0)^2 + 1/2k_2(x_2-x_2^0)^2 + 1/2k_3((x_2-x_1) - x_{12}^0)^2\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(x_1\)</span> is the position of mass 1, <span class="math notranslate nohighlight">\(x_1^0\)</span> is the equilibrium position of spring 1 etc.  We note that the last term in the Hamiltonian couples the positions of masses 1 and 2 and is what makes this problem somewhat challenging.  We will use normal modes to decouple these.  We need to compute and then diagonalize the Hessian matrix.  In this case the Hessian matrix is a 2x2 matrix:</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{H} = \begin{bmatrix} \frac{d^2E}{dx_1^2} &amp; \frac{d^2E}{dx_1dx_2} \\ \frac{d^2E}{dx_2dx_1}&amp; \frac{d^2E}{dx_2^2}\end{bmatrix} = \begin{bmatrix} k_1 + k_2 &amp; -k_3 \\ -k_3 &amp; k_2+k_3\end{bmatrix}\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># toy problem</span>
+<span class="n">k1</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">k2</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">k3</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="n">k1</span><span class="o">+</span><span class="n">k2</span><span class="p">,</span><span class="o">-</span><span class="n">k3</span><span class="p">],[</span><span class="o">-</span><span class="n">k3</span><span class="p">,</span><span class="n">k2</span><span class="o">+</span><span class="n">k3</span><span class="p">]],</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">e</span><span class="p">,</span><span class="n">v</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0.70710678  0.70710678]
+ [-0.70710678  0.70710678]]
+[3. 1.]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./physical_chemistry/quantum_mechanics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="harmonic_oscillator.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2.2.3. </span>Harmonic Oscillator</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="variational_method_in_quantum_mechanics.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.2.5. </span>Variational Method in Quantum Mechanics</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Martin McCullagh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

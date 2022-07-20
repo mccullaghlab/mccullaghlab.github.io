@@ -1,0 +1,767 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.2.5. Variational Method in Quantum Mechanics &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.2.6. Variational Solution to the Harmonic Oscillator" href="harmonic_oscillator_using_variational_method.html" />
+    <link rel="prev" title="2.2.4. Vibrational Spectroscopy" href="quantum_mechanics_of_vibrational_spectroscopy.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Chemistry Lessons with Jupyter Notebooks</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">
+   1. Jupyter Notebook Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">
+     1.1. Jupyter Notebook Tutorial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">
+     1.2. Advanced Jupyter Notebook Tutorial
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   2. Physical Chemistry
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../thermodynamics/intro.html">
+     2.1. Thermodynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">
+       2.1.1. The First Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">
+       2.1.2. Heat Work and Calculating
+       <span class="math notranslate nohighlight">
+        \(\Delta U\)
+       </span>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">
+       2.1.4. Thermodynamic Cycles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles_Day_2.html">
+       2.1.5. Thermodynamic Cycles Day 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">
+       2.1.6. Second Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">
+       2.1.7. Heat Engine Diagrams
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">
+       2.1.9. The Third Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">
+       2.1.10. First Derivative and Maxwell Relations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">
+       2.1.11. Free Energy and Legendre Transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">
+       2.1.12. Thermodynamics of Solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="intro.html">
+     2.2. Quantum Mechanics
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3">
+      <a class="reference internal" href="history_of_quantum_mechanics.html">
+       2.2.1. The History of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="postulates_of_quantum_mechanics.html">
+       2.2.2. The Postulates and Formalism of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="harmonic_oscillator.html">
+       2.2.3. Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="quantum_mechanics_of_vibrational_spectroscopy.html">
+       2.2.4. Vibrational Spectroscopy
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       2.2.5. Variational Method in Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="harmonic_oscillator_using_variational_method.html">
+       2.2.6. Variational Solution to the Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="morse_oscillator.html">
+       2.2.7. The Morse Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="rigid_rotator.html">
+       2.2.8. Rigid Rotator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="rigid_rotator_using_variational_method.html">
+       2.2.9. Rigid Rotator Variational Solution…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="rigid_rotator_selection_rules.html">
+       2.2.10. Rigid Rotator Continued…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="the_hydrogen_atom.html">
+       2.2.12. The Hydrogen Atom
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="the_helium_atom.html">
+       2.2.13. The Helium Atom
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../electronic_structure/intro.html">
+     2.3. Electronic Structure
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../electronic_structure/Hartree_Fock_Helium_Atom.html">
+       2.3.1. Hartree-Fock
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../electronic_structure/HF_for_H2.html">
+       2.3.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#in-practice">
+   2.2.5.1. In practice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-particle-in-a-box">
+   2.2.5.2. Example: Particle in a Box
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Variational Method in Quantum Mechanics</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#in-practice">
+   2.2.5.1. In practice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-particle-in-a-box">
+   2.2.5.2. Example: Particle in a Box
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="variational-method-in-quantum-mechanics">
+<h1><span class="section-number">2.2.5. </span>Variational Method in Quantum Mechanics<a class="headerlink" href="#variational-method-in-quantum-mechanics" title="Permalink to this headline">#</a></h1>
+<p>The variational principle applied to the Schrodinger equations results in that if</p>
+<p><span class="math notranslate nohighlight">\(\hat{H}\psi_0 = E_0\psi_0\)</span></p>
+<p>is the Schrodinger equation for the Hamiltonian of interest then</p>
+<p><span class="math notranslate nohighlight">\(E_\phi = \frac{\langle\phi|\hat{H}|\phi\rangle}{\langle\phi|\phi\rangle} &gt; E_0\)</span></p>
+<p>for any function <span class="math notranslate nohighlight">\(\phi\neq\psi_0\)</span>.</p>
+<p><em>Proof:</em></p>
+<p>We can express <span class="math notranslate nohighlight">\(\phi\)</span> as a linear combination of <span class="math notranslate nohighlight">\(\psi_n\)</span>s because <span class="math notranslate nohighlight">\(\psi_n\)</span>s span the space of interest</p>
+<p><span class="math notranslate nohighlight">\(\phi = \sum_n c_n \psi_n\)</span>.</p>
+<p>This allows us to write</p>
+<p><span class="math notranslate nohighlight">\(E_\phi = \frac{\langle\phi|\hat{H}|\phi\rangle}{\langle\phi|\phi\rangle}\)</span></p>
+<p><span class="math notranslate nohighlight">\( = \frac{\langle\sum_n c_n \psi_n|\hat{H}|\sum_n c_n \psi_n\rangle}{\langle\sum_n c_n \psi_n|\sum_n c_n \psi_n \rangle} \)</span></p>
+<p><span class="math notranslate nohighlight">\(= \frac{\sum_n c_n^*c_n\langle \psi_n|\hat{H}| \psi_n\rangle}{\sum_n c_n ^*c_n\langle\psi_n| \psi_n \rangle} \)</span></p>
+<p><span class="math notranslate nohighlight">\( = \frac{\sum_n c_n^*c_nE_n}{\sum_n c_n ^*c_n} \)</span>.</p>
+<p>Subtract <span class="math notranslate nohighlight">\(E_0\)</span> from both sides to get</p>
+<p><span class="math notranslate nohighlight">\(E_\phi - E_0 = \frac{\sum_n c_n^*c_nE_n}{\sum_n c_n ^*c_n} - E_0\)</span>.</p>
+<p>multiply <span class="math notranslate nohighlight">\(E_0\)</span> on the right by <span class="math notranslate nohighlight">\(\frac{\sum_n c_n ^*c_n}{\sum_n c_n ^*c_n}\)</span> to combine terms</p>
+<p><span class="math notranslate nohighlight">\(E_\phi - E_0 = \frac{\sum_n c_n^*c_n(E_n-E_0)}{\sum_n c_n ^*c_n}\)</span>.</p>
+<p>We note that, on the right-hand side, <span class="math notranslate nohighlight">\(E_n-E_0\geq0\)</span> and <span class="math notranslate nohighlight">\(c_n^*c_n\geq0\)</span> so</p>
+<p><span class="math notranslate nohighlight">\(E_\phi - E_0 \geq 0\)</span></p>
+<p>or</p>
+<p><span class="math notranslate nohighlight">\(E_\phi \geq E_0\)</span></p>
+<p>where equality only holds for <span class="math notranslate nohighlight">\(\phi = \psi_0\)</span>.</p>
+<div class="section" id="in-practice">
+<h2><span class="section-number">2.2.5.1. </span>In practice<a class="headerlink" href="#in-practice" title="Permalink to this headline">#</a></h2>
+<p>How does this help us in practice?  In a typical QM problem, we are attempting to solve for the wavefunction(s) and energy(ies) for a given Hamiltonian.  If the Hamiltonian is such that solving the problem exactly is too challenging (e.g. any two or more electron problem) we can expand the wavefunction in a basis and attempt to solve the problem that way.  We start with</p>
+<p><span class="math notranslate nohighlight">\(\psi \approx \phi = \sum_n^N c_nf_n\)</span>.</p>
+<p>Truncating this expansion at any finite <span class="math notranslate nohighlight">\(n\)</span> leads to an approximate solution.  Also, what the variational principle tells us is that we can minimize the energy with respect to variational paramters <span class="math notranslate nohighlight">\({c_n}\)</span> and still have <span class="math notranslate nohighlight">\(E_\phi \geq E_0\)</span>.</p>
+<p>We will illustrate this idea and the general matrix construction with a simple example of two basis functions (<span class="math notranslate nohighlight">\(N=2\)</span>)</p>
+<p><span class="math notranslate nohighlight">\(\phi = c_1f_1 + c_2f_2\)</span>.</p>
+<p>There is currently no need to define these functions explicitly so we will leave them as generic functions <span class="math notranslate nohighlight">\(f_1\)</span> and <span class="math notranslate nohighlight">\(f_2\)</span>.  We now solve for the energy</p>
+<p><span class="math notranslate nohighlight">\(E_\phi = \frac{\langle\phi|\hat{H}|\phi\rangle}{\langle\phi|\phi\rangle}\)</span></p>
+<p><span class="math notranslate nohighlight">\( = \frac{\langle c_1f_1 + c_2f_2|\hat{H}|c_1f_1 + c_2f_2 \rangle}{\langle c_1f_1 + c_2f_2|c_1f_1 + c_2f_2 \rangle}\)</span>.</p>
+<p>Let’s investigate the numerator and denomenator separately.  We start with the numerator</p>
+<p><span class="math notranslate nohighlight">\(\langle c_1f_1 + c_2f_2|\hat{H}|c_1f_1 + c_2f_2 \rangle = \langle c_1f_1|\hat{H}|c_1f_1\rangle + \langle c_1f_1|\hat{H}|c_2f_2\rangle +\langle c_2f_2|\hat{H}|c_1f_1\rangle + \langle c_2f_2|\hat{H}|c_2f_2\rangle\)</span></p>
+<p><span class="math notranslate nohighlight">\( = c_1^*c_1\langle f_1|\hat{H}|f_1\rangle + c_1^*c_2\langle f_1|\hat{H}|f_2\rangle +c_2^*c_1\langle f_2|\hat{H}|f_1\rangle + c_2^*c_2\langle f_2|\hat{H}|f_2\rangle\)</span>.</p>
+<p>We note that <span class="math notranslate nohighlight">\(c_i\)</span>s are real and thus <span class="math notranslate nohighlight">\(c_1^*c_1=c_1^2\)</span> and <span class="math notranslate nohighlight">\(c_1c_2=c_2c_1\)</span> thus</p>
+<p><span class="math notranslate nohighlight">\(Numerator = c_1^2 \langle f_1|\hat{H}|f_1\rangle + c_1c_2\langle f_1|\hat{H}|f_2\rangle +c_2c_1\langle f_2|\hat{H}|f_1\rangle + c_2^2\langle f_2|\hat{H}|f_2\rangle\)</span>.</p>
+<p>Finally we recognize that since <span class="math notranslate nohighlight">\(\hat{H}\)</span> is Hermitian, we have <span class="math notranslate nohighlight">\(\langle f_2|\hat{H}|f_1\rangle = \langle f_1|\hat{H}|f_2\rangle\)</span> yielding</p>
+<p><span class="math notranslate nohighlight">\(Numerator = c_1^2 \langle f_1|\hat{H}|f_1\rangle + 2c_1c_2\langle f_1|\hat{H}|f_2\rangle + c_2^2\langle f_2|\hat{H}|f_2\rangle\)</span>.</p>
+<p>We will refer to the integrals above as <em>matrix elements</em> with, generically, <span class="math notranslate nohighlight">\(H_{ij} = \langle f_i|\hat{H}|f_j\rangle\)</span>.</p>
+<p>We now consider the denominator of the energy equation above and we utilize similar algebra for the numerator to get</p>
+<p><span class="math notranslate nohighlight">\(\langle c_1f_1 + c_2f_2|c_1f_1 + c_2f_2 \rangle = c_1^2S_{11} + 2c_1c_2S_{12} + c_2^2S_{22}\)</span></p>
+<p>where</p>
+<p><span class="math notranslate nohighlight">\(S_{ij} = \langle f_i|f_j\rangle\)</span></p>
+<p>is another matrix element but this time referred to as the basis function overlap.</p>
+<p>Now we have that the energy of the trial wavefunction is</p>
+<p><span class="math notranslate nohighlight">\(E_\phi = \frac{c_1^2 H_{11} + 2c_1c_2H_{12} + c_2^2H_{22}}{c_1^2S_{11} + 2c_1c_2S_{12} + c_2^2S_{22}}\)</span>.</p>
+<p>Since <span class="math notranslate nohighlight">\(E_\phi \geq E_0\)</span> for any function <span class="math notranslate nohighlight">\(\phi\)</span> we can minimize the energy, <span class="math notranslate nohighlight">\(E_\phi\)</span>, with respect to variational paramters <span class="math notranslate nohighlight">\(c_1\)</span> and <span class="math notranslate nohighlight">\(c_2\)</span>.  We start by minimizing with respect to <span class="math notranslate nohighlight">\(c_1\)</span> which equates to differentiating the energy with respect to <span class="math notranslate nohighlight">\(c_1\)</span> and setting that derivative to zero</p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial E_\phi}{\partial c_1} = 0 = c_1(H_{11}-ES_{11}) + c_2(H_{12}-ES_{12})\)</span>.</p>
+<p>Similarly, minimizing with respect to <span class="math notranslate nohighlight">\(c_2\)</span> we get</p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial E_\phi}{\partial c_2} = 0 = c_1(H_{12}-ES_{12}) + c_2(H_{22}-ES_{22})\)</span>.</p>
+<p>We can rewrite the above two coupled linear equations as a matrix equation</p>
+<p><span class="math notranslate nohighlight">\(\begin{bmatrix} H_{11}-ES_{11} &amp; H_{12}-ES_{12} \\ H_{12}-ES_{12} &amp; H_{22}-ES_{22} \end{bmatrix}\begin{bmatrix} c_1 \\ c_2 \end{bmatrix} = 0\)</span>.</p>
+<p>We can rewrite the left most matrix as a difference of two matrices and then add to both sides:</p>
+<p><span class="math notranslate nohighlight">\( \left(\begin{bmatrix} H_{11} &amp; H_{12} \\ H_{12} &amp; H_{22} \end{bmatrix} - \begin{bmatrix} ES_{11} &amp; ES_{12} \\ ES_{12} &amp; ES_{22} \end{bmatrix} \right) \begin{bmatrix} c_1 \\ c_2 \end{bmatrix} = 0\)</span></p>
+<p><span class="math notranslate nohighlight">\( \Rightarrow \begin{bmatrix} H_{11} &amp; H_{12} \\ H_{12} &amp; H_{22} \end{bmatrix} \begin{bmatrix} c_1 \\ c_2 \end{bmatrix} = \begin{bmatrix} ES_{11} &amp; ES_{12} \\ ES_{12} &amp; ES_{22} \end{bmatrix} \begin{bmatrix} c_1 \\ c_2 \end{bmatrix} \)</span></p>
+<p><span class="math notranslate nohighlight">\( \begin{bmatrix} H_{11} &amp; H_{12} \\ H_{12} &amp; H_{22} \end{bmatrix} \begin{bmatrix} c_1 \\ c_2 \end{bmatrix} = E\begin{bmatrix} S_{11} &amp; S_{12} \\ S_{12} &amp; S_{22} \end{bmatrix} \begin{bmatrix} c_1 \\ c_2 \end{bmatrix} \)</span></p>
+<p>or, written in more general matrix notation,</p>
+<p><span class="math notranslate nohighlight">\( \mathbf{H}\mathbf{c} = E\mathbf{S}\mathbf{c}\)</span>.</p>
+<p>If we now left multiply both sides of the above equation by <span class="math notranslate nohighlight">\(\mathbf{S}^{-1}\)</span> we see that we have an eigenvalue-eigenvector problem</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{S}^{-1}\mathbf{H}\mathbf{c} = E\mathbf{I}\mathbf{c}\)</span>.</p>
+<p>Thus the minimum energies are the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{S}^{-1}\mathbf{H}\)</span> and the variational parameters that minimize the energies are the eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{S}^{-1}\mathbf{H}\)</span>.</p>
+</div>
+<div class="section" id="example-particle-in-a-box">
+<h2><span class="section-number">2.2.5.2. </span>Example: Particle in a Box<a class="headerlink" href="#example-particle-in-a-box" title="Permalink to this headline">#</a></h2>
+<p>Let’s consider a free particle in 1D bounded to <span class="math notranslate nohighlight">\(0\leq x\leq a\)</span>.  The Hamiltonian for such a system is simply the kinetic energy operator</p>
+<p><span class="math notranslate nohighlight">\(\hat{H} = -\frac{\hbar^2}{2m}\frac{d^2}{dx^2}\)</span>.</p>
+<p>While we can (/have) solved this problem analytically, it will be instructive to see how the variational solution works.  We start by approximating <span class="math notranslate nohighlight">\(\psi(x)\)</span> as an expansion in two basis functions</p>
+<p><span class="math notranslate nohighlight">\(\psi(x) \approx c_1x(a-x) + c_2x^2(a-x)^2\)</span>.</p>
+<p>where the basis functions are <span class="math notranslate nohighlight">\(f_1(x) = x(a-x)\)</span> and <span class="math notranslate nohighlight">\(f_2(x) = x^2(a-x)^2\)</span> and <span class="math notranslate nohighlight">\(c_1\)</span> and <span class="math notranslate nohighlight">\(c_2\)</span> are the variational parameters (/linear coefficients of basis functions).  In order to solve for the variational energies and wavefunctions given this expansion we must construct the Hamiltonian matrix, <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>, and the basis function overlap matrix, <span class="math notranslate nohighlight">\(\mathbf{S}\)</span>.  We will then compute and diagonlize the <span class="math notranslate nohighlight">\(\mathbf{S}^{-1}\mathbf{H}\)</span> matrix.  Recall,</p>
+<p><span class="math notranslate nohighlight">\( H_{ij} = \langle f_i|\hat{H}|f_j\rangle\)</span></p>
+<p>and</p>
+<p><span class="math notranslate nohighlight">\( S_{ij} = \langle f_i|f_j\rangle \)</span>.</p>
+<p>In this problem, we have two basis functions</p>
+<p><span class="math notranslate nohighlight">\(f_1(x) = x(a-x)\)</span></p>
+<p>and</p>
+<p><span class="math notranslate nohighlight">\(f_2(x) = x^2(a-x)^2\)</span>.</p>
+<p>We can now compute the matrix elements:</p>
+<p><span class="math notranslate nohighlight">\(H_{11} = \langle x(a-x)|\hat{H}|x(a-x)\rangle\)</span></p>
+<p><span class="math notranslate nohighlight">\( = \langle ax|\hat{H}|ax\rangle -\langle ax|\hat{H}|x^2\rangle - \langle x^2|\hat{H}|ax\rangle + \langle x^2|\hat{H}|x^2\rangle\)</span></p>
+<p><span class="math notranslate nohighlight">\( = -a\langle x|\hat{H}|x^2\rangle + \langle x^2|\hat{H}|x^2\rangle \)</span></p>
+<p>where the last equality holds because the second derivative of <span class="math notranslate nohighlight">\(x\)</span> with respect to x is zero. Let’s now investigate each of these integrals</p>
+<p><span class="math notranslate nohighlight">\( \langle x|\hat{H}|x^2\rangle = \int_0^ax \frac{-\hbar^2}{2m}\frac{d^2}{dx^2} x^2dx \\ = \frac{-\hbar^2}{m}\int_0^axdx = \frac{-\hbar^2a^2}{2m} \)</span></p>
+<p>Similarly we should get</p>
+<p><span class="math notranslate nohighlight">\( \langle x^2|\hat{H}|x^2\rangle =\frac{-\hbar^2a^3}{3m} \)</span>.</p>
+<p>Thus</p>
+<p><span class="math notranslate nohighlight">\(H_{11} = -a\frac{-\hbar^2a^2}{2m} + \frac{-\hbar^2a^3}{3m} = \frac{\hbar^2a^3}{6m}\)</span></p>
+<p><span class="math notranslate nohighlight">\(H_{22} = \langle x^2(a-x)^2|\hat{H}|x^2(a-x)^2\rangle\)</span></p>
+<p><span class="math notranslate nohighlight">\( = \langle a^2x^2|\hat{H}|a^2x^2\rangle -2\langle a^2x^2|\hat{H}|2ax^3\rangle + \langle a^2x^2|\hat{H}|x^4\rangle -2\langle ax^3|\hat{H}|a^2x^2\rangle + 4\langle ax^3|\hat{H}|ax^3\rangle -2\langle ax^3|\hat{H}|x^4\rangle + \langle x^4|\hat{H}|a^2x^2\rangle - 2\langle x^4|\hat{H}|ax^3\rangle + \langle x^4|\hat{H}|x^4\rangle\)</span></p>
+<p><span class="math notranslate nohighlight">\( = \frac{-\hbar^2a^7}{3m} +\frac{3\hbar^2 a^7}{m} - \frac{6\hbar^2 a^7}{5m} +\frac{\hbar^2 a^7}{2m} - \frac{12\hbar^2 a^7}{5m} +\frac{2\hbar^2 a^7}{m} - \frac{\hbar^2 a^7}{5m} + \frac{\hbar^2 a^7}{m} - \frac{6\hbar^2 a^7}{7m}\)</span></p>
+<p><span class="math notranslate nohighlight">\( = \frac{\hbar^2a^7}{105m} \)</span></p>
+<p><span class="math notranslate nohighlight">\(H_{12} = H_{21} = \frac{\hbar^2a^5}{30m}\)</span></p>
+<p>We can now complete the Hamiltonian matrix, <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>,</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{H} = \frac{\hbar^2a^3}{m} \begin{bmatrix} \frac{1}{6} &amp; \frac{a^2}{30}\\ \frac{a^2}{30} &amp; \frac{a^4}{105} \end{bmatrix} \)</span></p>
+<p>It can also be shown that <span class="math notranslate nohighlight">\(\mathbf{S}\)</span> is</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{S} = \frac{a^5}{10} \begin{bmatrix} \frac{1}{3} &amp; \frac{a^2}{14}\\ \frac{a^2}{14} &amp; \frac{a^4}{63} \end{bmatrix} \)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># to code this up we are going to set a=1</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">hbar</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="mf">1.0</span><span class="o">/</span><span class="mf">30.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="o">/</span><span class="mf">140.0</span><span class="p">],[</span><span class="mf">1.0</span><span class="o">/</span><span class="mf">140.0</span><span class="p">,</span><span class="mf">1.0</span><span class="o">/</span><span class="mf">630.0</span><span class="p">]])</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="mf">1.0</span><span class="o">/</span><span class="mf">6.0</span><span class="p">,</span><span class="mf">1.0</span><span class="o">/</span><span class="mf">30.0</span><span class="p">],[</span><span class="mf">1.0</span><span class="o">/</span><span class="mf">30.0</span><span class="p">,</span><span class="mf">1.0</span><span class="o">/</span><span class="mf">105.0</span><span class="p">]])</span>
+
+<span class="n">e</span><span class="p">,</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">),</span><span class="n">H</span><span class="p">))</span>
+
+<span class="nb">print</span> <span class="n">e</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-1-cf18bbdef098&gt;&quot;</span><span class="gt">, line </span><span class="mi">12</span>
+    <span class="nb">print</span> <span class="n">e</span>
+          <span class="o">^</span>
+<span class="ne">SyntaxError</span>: Missing parentheses in call to &#39;print&#39;. Did you mean print(e)?
+</pre></div>
+</div>
+</div>
+</div>
+<p>So we see that the smallest energy in this basis is</p>
+<p><span class="math notranslate nohighlight">\(E_\phi = 4.9349 \frac{\hbar^2}{m}\)</span>.</p>
+<p>How does this compare to the analytic solution?  We need to recall that for particle in a box we have:</p>
+<p><span class="math notranslate nohighlight">\(E_n = \frac{n^2\pi^2\hbar^2}{2ma^2} \)</span>.</p>
+<p>Plugging in for the ground state, <span class="math notranslate nohighlight">\(n=1\)</span>, and <span class="math notranslate nohighlight">\(a=1\)</span> since that is what we used numerically above we get</p>
+<p><span class="math notranslate nohighlight">\(E_1 = \frac{\pi^2\hbar^2}{2} \approx 4.9348 \frac{\hbar^2}{m} \)</span>.</p>
+<p>So we can see that our variational solution worked out well for the energy.  Now how about the wavefunction?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot wavefunction</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="c1"># x values</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="c1"># exact wavefunction</span>
+<span class="n">psi1Exact</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi1Exact</span><span class="p">,</span><span class="s1">&#39;k-&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exact&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># variational basis function wavefunction</span>
+<span class="n">psi1Var</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">integrate</span><span class="o">.</span><span class="n">simps</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">psi1Var</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">-</span><span class="n">psi1Var</span><span class="o">/</span><span class="n">norm</span><span class="p">,</span><span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Variational&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x151dbd9e50&gt;
+</pre></div>
+</div>
+<img alt="../../_images/variational_method_in_quantum_mechanics_14_1.png" src="../../_images/variational_method_in_quantum_mechanics_14_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./physical_chemistry/quantum_mechanics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="quantum_mechanics_of_vibrational_spectroscopy.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2.2.4. </span>Vibrational Spectroscopy</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="harmonic_oscillator_using_variational_method.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.2.6. </span>Variational Solution to the Harmonic Oscillator</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Martin McCullagh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

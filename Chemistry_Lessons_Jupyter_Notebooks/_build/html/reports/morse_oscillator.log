@@ -1,0 +1,79 @@
+Traceback (most recent call last):
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 1112, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/util.py", line 74, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/util.py", line 53, in just_run
+    return loop.run_until_complete(coro)
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 553, in async_execute
+    await self.async_execute_cell(
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 857, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/nbclient/client.py", line 760, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# This code will compute the Harmonic and Anharmonic Oscillator solutions using the Variational gaussian basis routine above
+
+e0 =
+e =
+me = 
+De = 0.4891265
+beta = 1.208173
+xvals = np.arange(-4,4,0.1)
+
+# second order Taylor series expansion of Morse potential
+def harmonic(x):
+    return De*beta**2*x**2
+# fourth order Taylor series expansion of Morse potential
+def anharmonic(x):
+    return De*beta**2*x**2 - De*beta**3*(x)**3 + 7./12.*De*beta**4*x**4
+
+
+#fig, ax = plt.subplots(figsize=(12,8))
+# initialize a figure
+ax = define_figure(xlabel="$x$",ylabel="$V(x)$")
+# compute potentials
+U_h = harmonic(xvals)
+U_ah = anharmonic(xvals)
+# plot potentials
+ax.plot(xvals, U_h, 'k',lw=2,label="harmonic")
+ax.plot(xvals, U_ah, 'b',lw=2,label="anharmonic")
+ax.plot(xvals, morse(xvals), 'r',lw=2,label="morse")
+# calculate wavefunctions and energy levels using variational principle and basis functions:
+psi_h, E_h = basis_V(18,harmonic,xvals)
+psi_ah, E_ah = basis_V(18,anharmonic,xvals)
+# plot harmonic energy levels and wavefunctions
+for n in range(10):
+    # plot the energy level
+    mask = np.where(E_h[n] > U_h)  
+    ax.plot(xvals[mask], E_h[n] * np.ones(np.shape(xvals))[mask], 'k--')
+    # plot the wavefunction
+    Y = psi_h[:,n]+E_h[n]
+    mask = np.where(Y > U_h-2.0)
+    ax.plot(xvals[mask], Y[mask].real)
+# plot anharmonic energy levels and wavefunctions
+for n in range(10):
+    # plot the energy level
+    mask = np.where(E_ah[n] > U_ah)  
+    ax.plot(xvals[mask], E_ah[n] * np.ones(np.shape(xvals))[mask], 'b--')
+    # plot the wavefunction
+    Y = psi_ah[:,n]+E_ah[n]
+    mask = np.where(Y > U_ah-2.0)
+    ax.plot(xvals[mask], Y[mask].real)      
+ax.set_xlim(-3, 3)
+ax.set_ylim(0, 50)
+ax.legend(loc=3,fontsize=18)
+------------------
+
+[0;36m  File [0;32m"<ipython-input-5-dbfb42371261>"[0;36m, line [0;32m3[0m
+[0;31m    e0 =[0m
+[0m        ^[0m
+[0;31mSyntaxError[0m[0;31m:[0m invalid syntax
+
+SyntaxError: invalid syntax (<ipython-input-5-dbfb42371261>, line 3)
+
