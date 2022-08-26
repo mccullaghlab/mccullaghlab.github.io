@@ -48,7 +48,7 @@
 
 # We now consider the question, what is the probability that my system has a particular energy?  Quantum mechanically, this would be what is the probability of observing a particular value for $E_j(N,V)$.  Classically, it would be what the probability of observing a particular value of $H(R^N)$.  To address this question, we consider an ensemble of identical systems.  Each of these systems is in contact with the same thermal bath and thus it can be considered that each system maintains a constant $N$, $V$, and $T$.  
 # 
-# We start by asking the probability that a system takes on an energy $E_1$ compared to probability the system takes on an energy $E_2$.  We denote the total number of systems with energy $E_1$ as $a_1$ and the total number of systems with energy $E_2$ as $a_2$.  The relative number of systems in these two states is
+# We start by asking a related but slighly simpler question: what is the probability that a system takes on an energy $E_1$ compared to probability the system takes on an energy $E_2$?  We denote the total number of systems with energy $E_1$ as $a_1$ and the total number of systems with energy $E_2$ as $a_2$.  The relative number of systems in these two states is
 # \begin{equation}
 # \frac{a_2}{a_1} = f(E_1,E_2) = f(E_1-E_2),
 # \end{equation}

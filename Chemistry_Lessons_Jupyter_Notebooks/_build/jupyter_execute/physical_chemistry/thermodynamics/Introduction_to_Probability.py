@@ -30,7 +30,7 @@
 # 
 # For example, if we flipped a coin nine times we might get:
 
-# In[6]:
+# In[1]:
 
 
 import random  # library to generate random integer
@@ -108,7 +108,7 @@ coinToss(9)
 # \end{eqnarray}
 # Since $\sum P = 1$, the probability distribution is normalized.
 
-# In[7]:
+# In[2]:
 
 
 import numpy as np
@@ -121,7 +121,7 @@ print(norm)
 
 # 2. Plot P(x).  See plot below.
 
-# In[14]:
+# In[3]:
 
 
 import matplotlib.pyplot as plt
@@ -144,7 +144,7 @@ plt.vlines(x,0,p,lw=3)
 #     &=& -0.3
 #     \end{eqnarray}
 
-# In[17]:
+# In[4]:
 
 
 print(np.round(np.sum(p*x),2))
@@ -156,7 +156,7 @@ print(np.round(np.sum(p*x),2))
 #     &=& 2.5
 #     \end{eqnarray}
 
-# In[18]:
+# In[5]:
 
 
 print(np.round(np.sum(x**2*p),2))
@@ -197,7 +197,7 @@ print(np.round(np.sum(x**2*p),2))
 # \end{equation}
 # where $x_0$ is the center/mean of the distribution, $C$ is the normalization factor, and $\sigma^2$ is the variance of the distribution ($\sigma = \sqrt{\sigma^2}$ is the standard deviation).  A 1D Gaussian distribution centered at $x_0=2$ and with a standard deviation of $\sigma = 1$ is plotted below.
 
-# In[23]:
+# In[6]:
 
 
 from scipy.stats import norm
@@ -256,7 +256,7 @@ plt.plot(x,norm.pdf(x,loc=2,scale=1),lw=3)
 # 
 # Examples of even functions include even powers of $x$, e.g. $f(x) = x^2$.  Examples of odd functions include the odd powers of $x$, e.g. $f(x) = x^3$.  These two functions are plotted below.
 
-# In[26]:
+# In[7]:
 
 
 from scipy.stats import norm
@@ -301,16 +301,22 @@ plt.legend(fontsize=fontsize)
 # 
 # Plugging back in for $\alpha$ we get
 # \begin{eqnarray}
-# \int_{-\infty}^{\infty} e^{-\frac{(x-x_0)^2}{2\sigma^2}}dx &=&  2 \left( \frac{2\sigma\pi}{4}\right)^{1/2} \\
-# &=&  2 \left( \frac{\sigma\pi}{2}\right)^{1/2} \\
-# &=& \sqrt{2\sigma\pi}
+# \int_{-\infty}^{\infty} e^{-\frac{(x-x_0)^2}{2\sigma^2}}dx &=&  2 \left( \frac{2\sigma^2\pi}{4}\right)^{1/2} \\
+# &=&  2 \left( \frac{\sigma^2\pi}{2}\right)^{1/2} \\
+# &=& \sqrt{2\sigma^2\pi}
 # \end{eqnarray}
 # or
 # \begin{equation}
-# C = \sqrt{\frac{1}{2\sigma\pi}}
+# C = \sqrt{\frac{1}{2\sigma^2\pi}} = \frac{1}{\sigma\sqrt{2\pi}}
 # \end{equation}
 # 
 # And finally our normalized Gaussian distribution:
 # \begin{equation}
-# f(x) = \sqrt{\frac{1}{2\sigma\pi}}e^{-\frac{(x-x_0)^2}{2\sigma^2}}
+# f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-x_0)^2}{2\sigma^2}}
 # \end{equation}
+
+# In[ ]:
+
+
+
+
