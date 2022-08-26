@@ -152,7 +152,7 @@ print(np.round(np.sum(p*x),2))
 
 # 3. Compute $\langle x^2 \rangle$:
 #     \begin{eqnarray}
-#     \langle x \rangle &=& \sum_{j=1}^4 x_j^2P(x_j) = (-2)^2\cdot 0.3 + (-1)^2\cdot 0.3 + (1)^2\cdot 0.2 + (2)^2\cdot 0.2 \\
+#     \langle x^2 \rangle &=& \sum_{j=1}^4 x_j^2P(x_j) = (-2)^2\cdot 0.3 + (-1)^2\cdot 0.3 + (1)^2\cdot 0.2 + (2)^2\cdot 0.2 \\
 #     &=& 2.5
 #     \end{eqnarray}
 
@@ -277,13 +277,13 @@ plt.legend(fontsize=fontsize)
 
 # Even functions have the property that
 # \begin{equation}
-# \int_{\-infty}^\infty f_{even}(x)dx = 2\int_{0}^\infty f_{even}(x)dx.
+# \int_{-\infty}^\infty f_{even}(x)dx = 2\int_{0}^\infty f_{even}(x)dx.
 # \end{equation}
 # We will employ this property for the Gaussian function.
 # 
 # Odd functions have the property that 
 # \begin{equation}
-# \int_{\-infty}^\infty f_{odd}(x)dx = 0.
+# \int_{-\infty}^\infty f_{odd}(x)dx = 0.
 # \end{equation}
 
 # Now back to the Guassian function, we had that
