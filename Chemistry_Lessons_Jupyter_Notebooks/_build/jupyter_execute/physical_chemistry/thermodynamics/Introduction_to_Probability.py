@@ -230,7 +230,7 @@ plt.plot(x,norm.pdf(x,loc=2,scale=1),lw=3)
 # 
 # So how to we compute the integral $\int_{-\infty}^{\infty} e^{-\frac{(x-x_0)^2}{2\sigma^2}}dx$?  We will use integral tables (such as https://en.wikipedia.org/wiki/List_of_definite_integrals).  If you look for definite integrals involving exponential functions, you will find the following as the one that most closely resembles the Guassian integral
 # \begin{equation}
-# \int_0^\infty e^{-\alpha x^2} = \frac{\pi}{4\alpha}^{1/2}
+# \int_0^\infty e^{-\alpha x^2}dx = \left(\frac{\pi}{4\alpha}\right)^{1/2}
 # \end{equation}
 # but note the difference in limits of integration and that the argument of the exponent does not exactly match the Guassian integral above.
 # 

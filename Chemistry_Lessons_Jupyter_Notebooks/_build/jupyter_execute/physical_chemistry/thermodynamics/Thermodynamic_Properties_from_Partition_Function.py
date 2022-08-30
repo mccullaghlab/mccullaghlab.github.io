@@ -9,7 +9,7 @@
 
 # ## Learning Goals
 
-# After reading this notes and attending lecture, students should be able to:
+# After reading these notes and attending lecture, students should be able to:
 # 1. Write out the expression for internal energy as a function of the Canonical partition function,
 # 2. Write out the expression for pressure in terms of the Canonical partition function,
 # 3. Write out the expression for heat capacity at constant volumne in terms of the Canonical partition function.
@@ -145,3 +145,72 @@
 # C_V &=& -k_B \beta^2 \left(\frac{\partial}{\partial \beta} \left(- \frac{\partial \ln Q}{\partial \beta}\right)\right)_V \\
 # &=&k_B \beta^2 \left( \frac{\partial^2 \ln Q}{\partial \beta^2}\right)_V
 # \end{eqnarray}
+
+# ## Example 1: Average Energy of a Monatomic Ideal Gas
+
+# The partition function for an ideal gas is with fixed number of particles, $N$, volume, $V$, and temperature, $T$, is
+# 
+# \begin{equation}
+# Q=\frac{q^N}{N!}.
+# \end{equation}
+# 
+# For a monatomic gas, we have that
+# 
+# \begin{equation}
+# q=\left(\frac{2\pi mk_BT}{h^2}\right)^{\frac{3}{2}}V
+# \end{equation}
+# 
+# What is the average energy, $\langle E \rangle$, of a monatomic ideal gas?
+
+# From the notes above, we know that
+# \begin{equation}
+# \langle E \rangle = -\left( \frac{\partial \ln Q}{\partial \beta}\right)
+# \end{equation}
+# So, the strategy to solve this problem will be:
+# 
+# 1. get an equation for $\ln Q$ in terms of $\beta$ 
+# 2. differentiate that equation with respect to $\beta$.  
+# 
+# 
+# Doing this problem stepwise, in particular taking the $\ln Q$ outside of the derivative can really help simplify things as we will have quite a few terms that do not dependend on $\beta$
+
+# ### 1. Equation for $\ln Q$
+
+# We start by getting an overall equation for $Q$ and then taking the natural log
+# 
+# \begin{eqnarray}
+# Q &=& \frac{q^N}{N!} \\
+# &=&\frac{\left[ \left(\frac{2\pi mk_BT}{h^2}\right)^{\frac{3}{2}}V \right]^N}{N!} \\
+# &=& \frac{\left[ \left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3}{2}}V \right]^N}{N!} \\
+# &=& \frac{ \left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3N}{2}}V^N }{N!},
+# \end{eqnarray}
+# where I substituted that $k_BT = \frac{1}{\beta}$ to get Q in terms of $\beta$ and then distributed the power of $N$.  Now we take the natural log and isolate term(s) that depend on $\beta$ (we will make heavy use of the rules of logarithms $\ln(A\cdot B) = \ln A + \ln B$ and $\ln(A^N) = N\ln A$)
+# \begin{eqnarray}
+# \ln Q &=& \ln \left[\frac{\left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3N}{2}}V^N }{N!}\right] \\
+# &=& \ln\left[ \left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3N}{2}}\right] + \ln V^N - \ln N! \\
+# &=& \frac{3N}{2}\ln \left(\frac{2\pi m}{\beta h^2}\right) + \ln V^N - \ln N! \\
+# &=& \frac{3N}{2}\ln\frac{1}{\beta} + \frac{3N}{2}\ln \left(\frac{2\pi m}{h^2}\right)+ \ln V^N - \ln N! \\
+# &=& -\frac{3N}{2}\ln\beta + \frac{3N}{2}\ln \left(\frac{2\pi m}{h^2}\right)+ \ln V^N - \ln N!
+# \end{eqnarray}
+# 
+# Notice that only the first term of the last equation for $\ln Q$ depends on $\beta$.  Thus, when we differentiate with respect to (w.r.t) $\beta$ the last three terms will all yield zeros.  
+
+# ### 2. Differentiate with respect to $\beta$
+
+# \begin{eqnarray}
+# \langle E \rangle &=& - \left( \frac{\partial \ln Q}{\partial \beta}\right) \\
+# &=& -\frac{\partial}{\partial \beta} \left[ -\frac{3N}{2}\ln\beta + \frac{3N}{2}\ln \left(\frac{2\pi m}{h^2}\right)+ \ln V^N - \ln N! \right] \\
+# &=& \frac{3N}{2}\frac{\partial}{\partial \beta} \ln\beta \\
+# &=& \frac{3N}{2}\frac{1}{\beta} \\
+# &=& \frac{3Nk_BT}{2}
+# \end{eqnarray}
+
+# ## Example 2: Heat Capacity of a Monatomic Ideal Gas
+# <div class="alert alert-block alert-info">
+# What is the heat capacity at constant volume, $C_V$, of a monoatomic ideal gas?
+# </div>
+
+# ## Example 3: Pressure of a Monatomic Ideal Gas
+# <div class="alert alert-block alert-info">
+# What is the pressure, $p$, of a monoatomic ideal gas?
+# </div>
