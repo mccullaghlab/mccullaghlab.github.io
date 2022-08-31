@@ -180,10 +180,10 @@
 
 
 import numpy as np
-T = 10
+T = 300
 kB = 1.380649e-23 # m2 kg s-2 K-1 
 m = 1.66e-26  # Kg 
-a = 1e-6 # m 
+a = 1e-1 # m 
 h = 6.62607015e-34 # m2 kg / s 
 prefactor = h**2/(8*m*a**2*kB*T)
 print(prefactor)
@@ -195,6 +195,7 @@ def f(n):
 
 
 from scipy.integrate import quad
+n = np.arange(1e9,1.001e9,1)
 summation = np.sum(f(n))
 numeric_integral = quad(f,1e9,1.001e9)[0]
 print("Sum:", summation)
@@ -202,7 +203,7 @@ print("Integral:", numeric_integral)
 print("Percent Error:", np.abs(summation-numeric_integral)/summation*100)
 
 
-# In[12]:
+# In[3]:
 
 
 import matplotlib.pyplot as plt
