@@ -1,0 +1,872 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2.1.1. Boltzmann Factor &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.1.2. Introduction to Probability" href="Introduction_to_Probability.html" />
+    <link rel="prev" title="2.1. Welcome to the Statistical Thermodynamics Lessons" href="intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Chemistry Lessons with Jupyter Notebooks</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">
+   1. Jupyter Notebook Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">
+     1.1. Jupyter Notebook Tutorial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">
+     1.2. Advanced Jupyter Notebook Tutorial
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   2. Physical Chemistry
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="intro.html">
+     2.1. Statiscial Thermodynamics
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       2.1.1. Boltzmann Factor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Introduction_to_Probability.html">
+       2.1.2. Introduction to Probability
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Thermodynamic_Properties_from_Partition_Function.html">
+       2.1.3. Thermodynamic Properties from the Partition Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Partition_Function_Monatomic_Ideal_Gas.html">
+       2.1.4. Partition Function for a Monatomic Ideal Gas
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../thermodynamics/intro.html">
+     2.2. Thermodynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Boltzmann_Factor.html">
+       2.2.1. Boltzmann Factor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Introduction_to_Probability.html">
+       2.2.2. Introduction to Probability
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">
+       2.2.3. Thermodynamic Properties from the Partition Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">
+       2.2.4. The First Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">
+       2.2.5. Heat Work and Calculating
+       <span class="math notranslate nohighlight">
+        \(\Delta U\)
+       </span>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">
+       2.2.7. Thermodynamic Cycles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles_Day_2.html">
+       2.2.8. Thermodynamic Cycles Day 2
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">
+       2.2.9. Second Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">
+       2.2.10. Heat Engine Diagrams
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">
+       2.2.12. The Third Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">
+       2.2.13. First Derivative and Maxwell Relations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Maxwell_Relations_Applied.html">
+       2.2.14. Maxwell Relations Applied
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">
+       2.2.15. Free Energy and Legendre Transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">
+       2.2.16. Thermodynamics of Solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../quantum_mechanics/intro.html">
+     2.3. Quantum Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/history_of_quantum_mechanics.html">
+       2.3.1. The History of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/postulates_of_quantum_mechanics.html">
+       2.3.2. The Postulates and Formalism of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/harmonic_oscillator.html">
+       2.3.3. Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">
+       2.3.4. Vibrational Spectroscopy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">
+       2.3.5. Variational Method in Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/basis_functions.html">
+       2.3.6. Basis Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/harmonic_oscillator_using_variational_method.html">
+       2.3.7. Variational Solution to the Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/morse_oscillator.html">
+       2.3.8. The Morse Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/rigid_rotator.html">
+       2.3.9. Rigid Rotator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/rigid_rotator_using_variational_method.html">
+       2.3.10. Rigid Rotator Variational Solution…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/rigid_rotator_selection_rules.html">
+       2.3.11. Rigid Rotator Continued…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom.html">
+       2.3.13. The Hydrogen Atom
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/the_helium_atom.html">
+       2.3.14. The Helium Atom
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../electronic_structure/intro.html">
+     2.4. Electronic Structure
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../electronic_structure/Hartree_Fock_Helium_Atom.html">
+       2.4.1. Hartree-Fock
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../electronic_structure/HF_for_H2.html">
+       2.4.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-goals">
+   2.1.1.1. Learning Goals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction-and-motivation">
+   2.1.1.2. Introduction and Motivation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-energy-of-a-macroscopic-system">
+   2.1.1.3. The Energy of a Macroscopic System
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#an-ensemble-of-systems">
+   2.1.1.4. An Ensemble of Systems
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#partition-function">
+   2.1.1.5. Partition Function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-quantized-states">
+   2.1.1.6. Example: Quantized States
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Boltzmann Factor</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-goals">
+   2.1.1.1. Learning Goals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction-and-motivation">
+   2.1.1.2. Introduction and Motivation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-energy-of-a-macroscopic-system">
+   2.1.1.3. The Energy of a Macroscopic System
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#an-ensemble-of-systems">
+   2.1.1.4. An Ensemble of Systems
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#partition-function">
+   2.1.1.5. Partition Function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-quantized-states">
+   2.1.1.6. Example: Quantized States
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="boltzmann-factor">
+<h1><span class="section-number">2.1.1. </span>Boltzmann Factor<a class="headerlink" href="#boltzmann-factor" title="Permalink to this headline">#</a></h1>
+<section id="learning-goals">
+<h2><span class="section-number">2.1.1.1. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
+<p>After going through these notes, students should be able to:</p>
+<ol class="simple">
+<li><p>Write out the Boltzmann factor for a given state of a system,</p></li>
+<li><p>Define all of the terms/variables in a Boltzmann factor,</p></li>
+<li><p>Determine the relative probability of two or more states given distributions and energies,</p></li>
+<li><p>Determine the partition function for a system given complete set of states.</p></li>
+</ol>
+</section>
+<section id="introduction-and-motivation">
+<h2><span class="section-number">2.1.1.2. </span>Introduction and Motivation<a class="headerlink" href="#introduction-and-motivation" title="Permalink to this headline">#</a></h2>
+<p>Our goal for learning Thermodynamics is to be able to predict if a process (e.g. chemical reaction) occurs under certain conditions.  The tools/laws of Thermodynamics will help us do this but classical Thermodynamics deals with macroscopic quantities (e.g. temperature, heat, or work for a mole of a substance).  As chemists, we are more used to thinking about chemicals and chemical reactions on the molecular level so first we must come up with a way to going from molecular properties to macroscopic properties.  This is the field of statistical Thermodynamics and the Boltzmann factor is one of the most fundamental concepts in this discipline.</p>
+</section>
+<section id="the-energy-of-a-macroscopic-system">
+<h2><span class="section-number">2.1.1.3. </span>The Energy of a Macroscopic System<a class="headerlink" href="#the-energy-of-a-macroscopic-system" title="Permalink to this headline">#</a></h2>
+<p>Consider a macroscopic system such a liter of gas with a fixed number of particles, <span class="math notranslate nohighlight">\(N\)</span>, and volume, <span class="math notranslate nohighlight">\(V\)</span>.  Even though there may be almost a mole of molecules of this gas, we can still consider determining the energy of the system.  This can be done either using the Schrodinger equation if we want to model the system quantum mechanically,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-74539bc0-8d8c-4a1a-94fb-60947df0b0e0">
+<span class="eqno">(2.1)<a class="headerlink" href="#equation-74539bc0-8d8c-4a1a-94fb-60947df0b0e0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{H}_N \Psi_j = E_j \Psi_j
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(j\)</span> denotes the energy level and the energy is a function of <span class="math notranslate nohighlight">\(N\)</span> and <span class="math notranslate nohighlight">\(V\)</span> (<span class="math notranslate nohighlight">\(E(N,V)\)</span>), or we can define a classic <span class="math notranslate nohighlight">\(N\)</span>-body Hamiltoninan/energy function</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4c25a5f9-60cf-4e4c-886c-22bdd79b1d4d">
+<span class="eqno">(2.2)<a class="headerlink" href="#equation-4c25a5f9-60cf-4e4c-886c-22bdd79b1d4d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+H(R^N, p^N) = \sum_{i}^N \frac{p_i^2}{2m_i} + \sum_{i}^N U_1(R_i) + \sum_{i,j&gt;i}^N U_2(R_{i},R_j) + ...
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(R^N\)</span> are the 3D coordinates of the <span class="math notranslate nohighlight">\(N\)</span> particles and <span class="math notranslate nohighlight">\(p^N\)</span> are the momenta of the <span class="math notranslate nohighlight">\(N\)</span> particles.</p>
+<p>In the special case that the gas in an ideal gas, the energy of the system will simply be a sum of individual particle energies.  Quantum mechanically that would be</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b7b7fddd-adda-4c54-9fab-d4525f2aa234">
+<span class="eqno">(2.3)<a class="headerlink" href="#equation-b7b7fddd-adda-4c54-9fab-d4525f2aa234" title="Permalink to this equation">#</a></span>\[\begin{equation}
+E_j(N,V) = \sum_{i}^N \epsilon_i,
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is the energy of particle <span class="math notranslate nohighlight">\(i\)</span>.  If the gas is monatomic (no internal potential energy terms) then <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is solution to the particle in the 3D box</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4213d83a-9ce0-4c21-8ff4-28fc9397c930">
+<span class="eqno">(2.4)<a class="headerlink" href="#equation-4213d83a-9ce0-4c21-8ff4-28fc9397c930" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\epsilon_{n_x,n_y,n_z} = \frac{h^2}{8ma^2}\left(n_x^2+n_y^2+n_z^2\right),
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n_x, n_y, n_z = 1, 2, ...\)</span> are the quantum numbers in the three directions, <span class="math notranslate nohighlight">\(h\)</span> is Planck’s constant, <span class="math notranslate nohighlight">\(m\)</span> is the mass of the particle, and <span class="math notranslate nohighlight">\(a = V^{1/3}\)</span> is related to the volume of the box.</p>
+<p>In classical mechanics, the energy of a monatomic ideal gas is simply the kinetic energy.  Each particle has a kinetic energy and that is it, thus the classical Hamiltonian is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b73b6eae-dcad-47c9-9fe7-39cc9e8fb8b9">
+<span class="eqno">(2.5)<a class="headerlink" href="#equation-b73b6eae-dcad-47c9-9fe7-39cc9e8fb8b9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+H(R^N,p^N) = \sum_{i}^N \frac{p_i^2}{2m_i}
+\end{equation}\]</div>
+</section>
+<section id="an-ensemble-of-systems">
+<h2><span class="section-number">2.1.1.4. </span>An Ensemble of Systems<a class="headerlink" href="#an-ensemble-of-systems" title="Permalink to this headline">#</a></h2>
+<p>We now consider the question, what is the probability that my system has a particular energy?  Quantum mechanically, this would be what is the probability of observing a particular value for <span class="math notranslate nohighlight">\(E_j(N,V)\)</span>.  Classically, it would be what the probability of observing a particular value of <span class="math notranslate nohighlight">\(H(R^N)\)</span>.  To address this question, we consider an ensemble of identical systems.  Each of these systems is in contact with the same thermal bath and thus it can be considered that each system maintains a constant <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(V\)</span>, and <span class="math notranslate nohighlight">\(T\)</span>.</p>
+<p>We start by asking a related but slighly simpler question: what is the probability that a system takes on an energy <span class="math notranslate nohighlight">\(E_1\)</span> compared to probability the system takes on an energy <span class="math notranslate nohighlight">\(E_2\)</span>?  We denote the total number of systems with energy <span class="math notranslate nohighlight">\(E_1\)</span> as <span class="math notranslate nohighlight">\(a_1\)</span> and the total number of systems with energy <span class="math notranslate nohighlight">\(E_2\)</span> as <span class="math notranslate nohighlight">\(a_2\)</span>.  The relative number of systems in these two states is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-65f438de-f3e1-477f-ba0f-e11407e4c8ed">
+<span class="eqno">(2.6)<a class="headerlink" href="#equation-65f438de-f3e1-477f-ba0f-e11407e4c8ed" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\frac{a_2}{a_1} = f(E_1,E_2) = f(E_1-E_2),
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(f\)</span> is some function of both energies and the last equality must hold because only differences in energies matter.</p>
+<p>We can also compare a state 3 to states 1 and 2 to get:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-53f51df4-2fb4-401f-b615-ee43f27f7e50">
+<span class="eqno">(2.7)<a class="headerlink" href="#equation-53f51df4-2fb4-401f-b615-ee43f27f7e50" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+\frac{a_3}{a_1} &amp;=&amp; f(E_1-E_3) \\
+\frac{a_3}{a_2} &amp;=&amp; f(E_2-E_3).
+\end{eqnarray}\]</div>
+<p>We can combine these results with above to demonstrate</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1cd1cec1-04fc-4f5d-8765-07afe70fe484">
+<span class="eqno">(2.8)<a class="headerlink" href="#equation-1cd1cec1-04fc-4f5d-8765-07afe70fe484" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\frac{a_3}{a_1} = \frac{a_2}{a_1}\cdot\frac{a_3}{a_2},
+\end{equation}\]</div>
+<p>or</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ff2cee10-0209-4217-a50f-aa7c226056eb">
+<span class="eqno">(2.9)<a class="headerlink" href="#equation-ff2cee10-0209-4217-a50f-aa7c226056eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+f(E_1-E_3) = f(E_1-E_2)f(E_2-E_3).
+\end{equation}\]</div>
+<p>We see that multiplication of <span class="math notranslate nohighlight">\(f\)</span> functions leads to addition of their arguments (<span class="math notranslate nohighlight">\(E_1-E_2 + E_2-E_3 = E_1-E_3\)</span>).  A function for which this is true is the exponential function. Thus, we can see that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-019cc98b-b91d-403c-9ab5-454b343599bd">
+<span class="eqno">(2.10)<a class="headerlink" href="#equation-019cc98b-b91d-403c-9ab5-454b343599bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+f(E) = e^{\beta E},
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\beta\)</span> is an arbitrary constant.  And</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a276dc0b-1742-41e5-841f-3ec67fa93ffd">
+<span class="eqno">(2.11)<a class="headerlink" href="#equation-a276dc0b-1742-41e5-841f-3ec67fa93ffd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+a_j = Ce^{-\beta E_j},
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(C\)</span> is an arbitrary constant.</p>
+<p>In this form, <span class="math notranslate nohighlight">\(a_j\)</span> is known as the Boltzmann factor for state <span class="math notranslate nohighlight">\(j\)</span>.</p>
+</section>
+<section id="partition-function">
+<h2><span class="section-number">2.1.1.5. </span>Partition Function<a class="headerlink" href="#partition-function" title="Permalink to this headline">#</a></h2>
+<p>The Boltzmann factor given above has two components that need to be defined: <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(C\)</span>.  Presented without derivation,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7dfbe9f9-2a9f-4457-9fc6-da0044b8d2f1">
+<span class="eqno">(2.12)<a class="headerlink" href="#equation-7dfbe9f9-2a9f-4457-9fc6-da0044b8d2f1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\beta = \frac{1}{k_BT},
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(k_B\)</span> is the Boltzmann constant and <span class="math notranslate nohighlight">\(T\)</span> is the temperature in Kelvin.</p>
+<p><span class="math notranslate nohighlight">\(C\)</span> is determined by summing (integrating in classical mechanics) over all possible states</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0c7c675e-3a05-4a8c-bad3-234b5f1b5ce7">
+<span class="eqno">(2.13)<a class="headerlink" href="#equation-0c7c675e-3a05-4a8c-bad3-234b5f1b5ce7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\sum_i a_i = C\sum_i e^{-\beta E_i}.
+\end{equation}\]</div>
+<p>The sum of all states/systems must be equal to the total number of systems, <span class="math notranslate nohighlight">\(A\)</span>, thus we have</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9a3b8b36-4edb-4305-ae11-5174bbe40910">
+<span class="eqno">(2.14)<a class="headerlink" href="#equation-9a3b8b36-4edb-4305-ae11-5174bbe40910" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+A &amp;=&amp; C\sum_i e^{-\beta E_i} \\
+\Rightarrow C &amp;=&amp; \frac{A}{\sum_i e^{-\beta E_i}}
+\end{eqnarray}\]</div>
+<p>Plugging this back into the equation for <span class="math notranslate nohighlight">\(a_j\)</span> we get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-912274f7-c962-4ad0-85f4-413036588b5f">
+<span class="eqno">(2.15)<a class="headerlink" href="#equation-912274f7-c962-4ad0-85f4-413036588b5f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\frac{a_j}{A} = \frac{e^{-\beta E_j}}{\sum_i e^{-\beta E_i}}
+\end{equation}\]</div>
+<p><span class="math notranslate nohighlight">\(\frac{a_j}{A}\)</span> is the fraction of systems with energy <span class="math notranslate nohighlight">\(E_j\)</span> and thus we recognize this as a probability, or written as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ac696279-0e6b-4482-8b55-c1f555d62f5f">
+<span class="eqno">(2.16)<a class="headerlink" href="#equation-ac696279-0e6b-4482-8b55-c1f555d62f5f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+P_j = \frac{e^{-\beta E_j}}{\sum_i e^{-\beta E_i}}
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(P_j\)</span> is now the probability of observing a system with energy <span class="math notranslate nohighlight">\(E_j\)</span>.</p>
+<p>The denominator of the probability equation, <span class="math notranslate nohighlight">\(\sum_i e^{-\beta E_i}\)</span>, is referred to as the Canoncial partition function and is denoted <span class="math notranslate nohighlight">\(Q\)</span>.  This function is depdent on <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(T\)</span> and is often written as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e6ccc976-d45c-4907-9449-32bdc02ee9a1">
+<span class="eqno">(2.17)<a class="headerlink" href="#equation-e6ccc976-d45c-4907-9449-32bdc02ee9a1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+Q(N,V,T) = \sum_i e^{-\frac{E_i}{k_B T}},
+\end{equation}\]</div>
+<p>or</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0e5f307e-3ab1-469f-bdfc-52b9db113403">
+<span class="eqno">(2.18)<a class="headerlink" href="#equation-0e5f307e-3ab1-469f-bdfc-52b9db113403" title="Permalink to this equation">#</a></span>\[\begin{equation}
+Q(N,V,\beta) = \sum_i e^{-\beta E_i},
+\end{equation}\]</div>
+</section>
+<section id="example-quantized-states">
+<h2><span class="section-number">2.1.1.6. </span>Example: Quantized States<a class="headerlink" href="#example-quantized-states" title="Permalink to this headline">#</a></h2>
+<p>Consider a single monoatomic ideal gas particle with the mass of helium.  The system is kept at a temperature that allows it to populate two states: <span class="math notranslate nohighlight">\((n_x, n_y, n_z) = (1,1,1)\)</span> and <span class="math notranslate nohighlight">\((n_x, n_y, n_z) = (2,1,1)\)</span>. Compute the Boltzmann factors and relative probability of these two states.  Leave your answers in terms of <span class="math notranslate nohighlight">\(\beta\)</span>, <span class="math notranslate nohighlight">\(a\)</span>, and <span class="math notranslate nohighlight">\(m\)</span>.</p>
+<p>We start by writing out the energy of the system from above:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2c8c3935-f73e-483c-9a21-ee409f5e1108">
+<span class="eqno">(2.19)<a class="headerlink" href="#equation-2c8c3935-f73e-483c-9a21-ee409f5e1108" title="Permalink to this equation">#</a></span>\[\begin{equation}
+E_j(N,V) = \epsilon_i,
+\end{equation}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e1c2bc11-97a4-4da8-b2b3-5caef0769bee">
+<span class="eqno">(2.20)<a class="headerlink" href="#equation-e1c2bc11-97a4-4da8-b2b3-5caef0769bee" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\epsilon_{n_x,n_y,n_z} = \frac{h^2}{8ma^2}\left(n_x^2+n_y^2+n_z^2\right).
+\end{equation}\]</div>
+<p>Plugging in the two allowed sets of quantum numbers we get two possible total energies of the system:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-71588ee9-4d4b-44c7-956b-2cd4edbc61c8">
+<span class="eqno">(2.21)<a class="headerlink" href="#equation-71588ee9-4d4b-44c7-956b-2cd4edbc61c8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+E_1 &amp;=&amp; \frac{3h^2}{8ma^2} \\
+E_2 &amp;=&amp; \frac{6h^2}{8ma^2}
+\end{eqnarray}\]</div>
+<p>The partition function is:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c1882110-1365-4200-a6fc-0f150e9551c8">
+<span class="eqno">(2.22)<a class="headerlink" href="#equation-c1882110-1365-4200-a6fc-0f150e9551c8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+Q &amp;=&amp; e^{-\beta E_1} + e^{-\beta E_2} \\
+&amp;=&amp; e^{-\beta \frac{3h^2}{8ma^2}} + e^{-\beta\frac{6h^2}{8ma^2}} \\
+&amp;=&amp; e^{-\beta \frac{3h^2}{8ma^2}} \left(e + e^{2} \right)
+\end{eqnarray}\]</div>
+<p>The Boltzmann factors are:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-677d5bdc-68c1-46d1-b89f-994153dcb63b">
+<span class="eqno">(2.23)<a class="headerlink" href="#equation-677d5bdc-68c1-46d1-b89f-994153dcb63b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+e^{-\beta E_1} &amp;=&amp; e^{-\beta \frac{3h^2}{8ma^2}} \\
+e^{-\beta E_2} &amp;=&amp; e^{-\beta \frac{6h^2}{8ma^2}}
+\end{eqnarray}\]</div>
+<p>Relative probability is:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d36fcc5b-51ea-49d1-b10b-9eb47ecff8f1">
+<span class="eqno">(2.24)<a class="headerlink" href="#equation-d36fcc5b-51ea-49d1-b10b-9eb47ecff8f1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+\frac{a_1}{a_2} &amp;=&amp; \frac{e^{-\beta E_1}}{e^{-\beta E_2}} \\
+&amp;=&amp; \frac{e^{-\beta \frac{3h^2}{8ma^2}}}{e^{-\beta \frac{6h^2}{8ma^2}}} \\
+&amp;=&amp; e^{\beta \frac{3h^2}{8ma^2}}
+\end{eqnarray}\]</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./physical_chemistry/statistical_thermodynamics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2.1. </span>Welcome to the Statistical Thermodynamics Lessons</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Introduction_to_Probability.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.1.2. </span>Introduction to Probability</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Martin McCullagh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
