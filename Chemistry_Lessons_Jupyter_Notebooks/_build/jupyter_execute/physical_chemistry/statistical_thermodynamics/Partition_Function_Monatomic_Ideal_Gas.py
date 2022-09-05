@@ -14,6 +14,13 @@
 # 2. Recognize the translational molecular partition function
 # 3. Understand the steps to go from translational energy to a translational partition function
 
+# ## Coding Concepts
+
+# 1. Plotting with matplotlib
+# 2. Variables
+# 3. Functions
+# 4. Numeric integration
+
 # ## Energy of a Monatomic Ideal Gas
 
 # The energy of an ideal gas with constant number of particles, $N$, volume, $V$, and temperature, $T$, is a sum of energies of individual ideal gas particles.  A macroscopic state, $j$, is a sum of particle energies in that particular macroscopic state
@@ -157,7 +164,7 @@
 # Q = \frac{\left( \frac{2\pi m k_BT}{ h^2} \right)^{3N/2}V^N}{N!}
 # \end{equation}
 
-# ## Example: Integration vs Summation
+# ## Example 1: Integration vs Summation
 
 # Consider the following function of $n$:
 # \begin{equation}
@@ -176,7 +183,7 @@
 # \int_{1\times10^9}^{1.001\times10^9} f(n)dn
 # \end{equation}
 
-# In[1]:
+# In[5]:
 
 
 import numpy as np
@@ -191,7 +198,7 @@ def f(n):
     return np.exp(-prefactor * n**2)
 
 
-# In[2]:
+# In[6]:
 
 
 from scipy.integrate import quad
@@ -203,16 +210,126 @@ print("Integral:", numeric_integral)
 print("Percent Error:", np.abs(summation-numeric_integral)/summation*100)
 
 
-# In[3]:
+# In[7]:
 
 
 import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'inline')
+# setup plot 
+fontsize=14
+fig = plt.figure(figsize=(6,6), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_xlabel("$n$",size=fontsize)
+ax.set_ylabel("$P(n)$",size=fontsize)
 plt.plot(n,f(n))
 
 
-# In[ ]:
+# ## Example 2: Average $n$
+
+# Consider a monatomic ideal gas particle in 1D with m = 1.66x10$^{-26}$ kg, a = 1x10$^{-6}$ m, and T=10 K.  What is the average value of the translational quantum number $n$ assuming that it is continuous. 
+# 
+# Some relevant equations, first the translational partition function in 1D
+# 
+# \begin{equation}
+# q_{}\left(a,T\right)=\left(\frac{2\pi mk_{B}T}{h^2}\right)^{\frac{1}{2}}a
+# \end{equation}
+# 
+# Next a potentially useful integral
+# 
+# \begin{equation}
+# \int_0^{\infty}ne^{-\alpha n^2}dn=\frac{1}{2\alpha}
+# \end{equation}
+
+# We will also need that:
+# 
+# \begin{eqnarray}
+# h &=& 6.626\times10^{-34} \quad m^2\cdot kg \cdot s^{-1}\\
+# k_B &=& 1.381 \times10^{-23} \quad m^2\cdot kg \cdot s^{-2} \cdot K^{-1}\\
+# \epsilon_n &=& \frac{h^2n^2}{8ma^2}
+# \end{eqnarray}
+# 
+# where the equation for $\epsilon_n$ is the particle in a box energy for 1D.
+
+# The problem asks for the average $n$, for continuous variable $n$.  This can be written as a standard weighted average
+# \begin{equation}
+# \langle n \rangle = \int_0^\infty nP(n)dn,
+# \end{equation}
+# where $P(n)$ is the probability density of variable $n$.  $P(n)$ can be determined as the ratio of the Boltzmann factor of a particular $n$ releative to the parition function, $q$,
+# \begin{eqnarray}
+# P(n) &=& \frac{e^{-\beta \epsilon_n}}{q} \\
+#    &=& \frac{e^{-\beta \frac{h^2n^2}{8ma^2}}}{q}
+# \end{eqnarray}
+# 
+# Plug this equation into the integral for $\langle n \rangle$ yields
+# \begin{eqnarray}
+# \langle n \rangle &=& \int_0^\infty nP(n)dn \\
+# &=& \int_0^\infty n frac{e^{-\beta \frac{h^2n^2}{8ma^2}}}{q} dn \\
+# &=& \frac{1}{q} \int_0^\infty n e^{-\beta \frac{h^2n^2}{8ma^2}} dn
+# \end{eqnarray}
+# 
+# Now, let $\alpha = \beta \frac{h^2}{8ma^2}$ yields
+# \begin{eqnarray}
+# \langle n \rangle &=& \frac{1}{q} \int_0^\infty n e^{-\alpha n^2} dn \\
+# &=& \frac{1}{q} \frac{1}{2\alpha} \\
+# &=& \frac{1}{q} \frac{8ma^2}{2\beta h^2} \\
+# &=& \frac{1}{q} \frac{4ma^2k_BT}{ h^2}
+# \end{eqnarray}
+# 
+# Now we can either plug in numbers or put in $q$ as variables, simplify and then plug in numbers.  Here I will do that latter:
+# 
+# \begin{eqnarray}
+# \langle n \rangle &=& \frac{1}{q} \frac{4ma^2k_BT}{ h^2} \\
+# &=& \left(\frac{2\pi mk_{B}T}{h^2}\right)^{\frac{-1}{2}}a^{-1} \frac{4ma^2k_BT}{ h^2} \\
+# &=& \frac{4\sqrt{mk_BT}a}{ \sqrt{2\pi}h} \\
+# &=& \frac{4a}{h}\sqrt{\frac{mk_BT}{2\pi}}
+# \end{eqnarray}
+
+# In[9]:
 
 
+T = 10
+kB = 1.380649e-23 # m2 kg s-2 K-1 
+m = 1.66e-26  # Kg 
+a = 1e-6 # m 
+h = 6.62607015e-34 # m2 kg / s 
+print("<n> = ", np.round(4*a/h*np.sqrt(m*kB*T/(2*np.pi)),2))
 
+
+# ## Example 3: Order of magnitude of $n$
+
+# Consider a monatomic ideal gas particle in 1D with m = 1.66x10$^{-26}$ kg, a = 1x10$^{-6}$ m, and T=10 K.  What is the order of magnitude of the typical of the translational quantum number $n$ assuming that it is continuous? 
+# 
+# Additional information you will need: 
+# \begin{eqnarray}
+# h &=& 6.626\times10^{-34} \quad m^2\cdot kg \cdot s^{-1}\\
+# k_B &=& 1.381 \times10^{-23} \quad m^2\cdot kg \cdot s^{-2} \cdot K^{-1}\\
+# \epsilon_n &=& \frac{h^2n^2}{8ma^2} \\
+# \langle \epsilon_{1D} \rangle &=& \frac{1}{2}k_BT
+# \end{eqnarray}
+
+# To address this problem one could:
+# 
+# 1. Compute $\langle n \rangle$ as we did in the previous example
+# 2. Determine the value of $n$ that corresponds to $\langle \epsilon \rangle$.
+# 
+# We will do option 2 here.  
+# 
+# \begin{eqnarray}
+# \langle \epsilon_{1D} \rangle &=& \frac{1}{2}k_BT \\
+# &=& \frac{h^2n_{typical}^2}{8ma^2} \\
+# \Rightarrow n_{typical} &=& \sqrt{\frac{4ma^2k_BT}{h^2}}
+# \end{eqnarray}
+# 
+# We plug-in numbers below using a code snippet.
+
+# In[12]:
+
+
+T = 10 # K
+kB = 1.380649e-23 # m2 kg s-2 K-1 
+m = 1.66e-26  # Kg 
+a = 1e-6 # m 
+h = 6.62607015e-34 # m2 kg / s 
+print("n_typical = ", np.round(np.sqrt(4*m*a**2*kB*T/h**2),2))
 
