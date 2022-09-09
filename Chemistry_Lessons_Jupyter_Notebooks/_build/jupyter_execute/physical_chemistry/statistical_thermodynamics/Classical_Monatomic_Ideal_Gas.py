@@ -42,7 +42,7 @@
 # \end{equation}
 # where $|\vec{r}^{12}| = \sqrt{(r^1_x - r^2_x)^2 + (r^1_y - r^2_y)^2 + (r^1_z - r^2_z)^2}$ is the distance between particles 1 and 2.  Consider this potential to be in units of $\epsilon$.  Compute the potential energy when the particle have postitions $\vec{r}^1 = (0.25, 0.6, 1.0)$ and $\vec{r}^2 = (3.0, 1.2, 0.8)$
 
-# In[5]:
+# In[1]:
 
 
 import numpy as np
@@ -117,3 +117,50 @@ print("Potential energy (units of epsilon):", np.round(lj(r1,r2,2,2),2))
 # ## A Note on Units of $Q$
 # 
 # You will notice above that the classical p.f. has units of $V$^N $p$^{3N}.  The quantum p.f. is unitless.  It is typical to introduce $h^{-1}$ in each direction for classical p.f.s so that it is unitless and there is greater correspondance between classical and quantum.
+
+# ## Example 2: Classical Particle with a Potential
+# 
+# Consider a single 1D classical particle tethered to the origin with a spring of force constant $k$.  The energy for such a system is given as 
+# \begin{equation}
+# H(x,p) = \frac{1}{2}kx^2 + \frac{p^2}{2m}
+# \end{equation}
+# 
+# Derive an expression for the partition function for this system.
+
+# \begin{eqnarray}
+# Q &=& \frac{1}{h} \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} e^{-\beta\left( \frac{1}{2}kx^2 + \frac{p^2}{2m}\right)}dxdp \\
+# &=& \frac{1}{h} \int_{-\infty}^{\infty}e^{-\frac{\beta kx^2}{2}}dx\int_{-\infty}^{\infty}e^{\frac{-\beta p^2}{2m}}dp \\
+# &=& \frac{4}{h} \int_{0}^{\infty}e^{-\frac{\beta kx^2}{2}}dx\int_{0}^{\infty}e^{\frac{-\beta p^2}{2m}}dp \\
+# &=& \frac{1}{h} \sqrt{\frac{2\pi k_B T}{k}}\sqrt{2\pi m k_B T} \\
+# &=& \frac{2\pi k_B T}{h}\sqrt{\frac{m}{k}}
+# \end{eqnarray}
+
+# In[2]:
+
+
+T = 300
+kB = 1.380649e-23 # m2 kg s-2 K-1 
+m = 1.66e-27  # kg 
+h = 6.62607015e-34 # m2 kg / s 
+k = 2.0 # kg s^-2
+import numpy as np
+print(2*np.pi*kB*T/h*np.sqrt(m))
+
+
+# In[3]:
+
+
+1.600230045478023/np.sqrt(2.410)
+
+
+# In[4]:
+
+
+1.600230045478023/np.sqrt(1.876)
+
+
+# In[ ]:
+
+
+
+
