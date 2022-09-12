@@ -43,7 +43,7 @@
 # 
 # We derived this by utilizing an integral overall all phase space (phase space is composed of position and momenta)
 # \begin{equation}
-# Q = \frac{\int_0^L\int_{-\infty}^{\infty} H(\vec{R}^N,\vec{P}^N)d\vec{R}^Nd\vec{P}^N}{N!}
+# Q = \frac{\int_0^L\int_{-\infty}^{\infty} e^{-\beta H(\vec{R}^N,\vec{P}^N)}d\vec{R}^Nd\vec{P}^N}{h^{3N}N!}
 # \end{equation}
 
 # ## Temperature is related to average squared velocity for a gas
