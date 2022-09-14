@@ -91,7 +91,7 @@
 # S = k\ln120
 # \end{equation}
 
-# In[3]:
+# In[1]:
 
 
 import scipy.special
@@ -140,7 +140,7 @@ print(k*np.log(scipy.special.binom(16,2)))
 # =& 924 \cdot 70 = 64680
 # \end{align}
 
-# In[4]:
+# In[2]:
 
 
 print(scipy.special.binom(12,6))
@@ -172,7 +172,7 @@ print(scipy.special.binom(12,6)*scipy.special.binom(8,4))
 # W_f = 560560
 # \end{equation}
 
-# In[5]:
+# In[3]:
 
 
 print(scipy.special.binom(16,6))
@@ -189,10 +189,48 @@ print(scipy.special.binom(16,6)*scipy.special.binom(8,4))
 # &\approx 17.95 \quad J/(K\cdot mol)
 # \end{align}
 
-# In[7]:
+# In[4]:
 
 
 print(560560/64680)
 print(np.log(560560/64680))
 print(8.314*np.log(560560/64680))
+
+
+# In[5]:
+
+
+print(8.314*np.log(scipy.special.binom(18,3)/(scipy.special.binom(9,3))))
+
+
+# In[6]:
+
+
+import scipy.special as sc
+1/sc.beta(2, 3)
+
+
+# In[7]:
+
+
+from scipy.integrate import quad
+def beta_dist(x,alpha,beta):
+    return 1/sc.beta(alpha,beta)*x**(alpha-1)*(1-x)**(beta-1)
+numeric_integral = quad(beta_dist,0,1,args=(2,3))[0]
+print(numeric_integral)
+
+
+# In[8]:
+
+
+def x_beta_dist(x,alpha,beta):
+    return 1/sc.beta(alpha,beta)*x**(alpha-1)*(1-x)**(beta-1)
+numeric_integral = quad(x_beta_dist,0.2,0.6,args=(2,3))[0]
+print(numeric_integral)
+
+
+# In[ ]:
+
+
+
 
