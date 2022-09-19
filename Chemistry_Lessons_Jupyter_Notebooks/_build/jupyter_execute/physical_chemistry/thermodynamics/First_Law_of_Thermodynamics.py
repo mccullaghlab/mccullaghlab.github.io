@@ -7,11 +7,20 @@
 
 # ## Learning goals for today:
 
+# After these notes, you should be able to:
+# 
 # 1. Be able to state the first law of Thermodynamics
 # 2. Define the internal energy of a chemical system
 # 3. Define how a state function differs from a non-state function
 # 4. Give at least three examples of state functions
 # 5. Define a Thermodynamic system
+
+# ## Coding Concepts
+# 
+# The following coding concepts are used in this notebook:
+# 
+# 1. Numeric integration
+# 2. Plotting with matplotlib
 
 # ## Statement of the first law
 
@@ -36,6 +45,82 @@
 # 1. Elevation, $Z$, is a state function: the elevations at points $A$ and $B$ only depend on where those points not how you got from point $A$ to point $B$.  The change in elevation, $\Delta Z$, is also then a state function.  
 # 
 # 2. Distance traveled is not a state function. There may be many different ways to get from point $A$ to point $B$ some of which will require traveling a greater distance.  We say that distance traveled is path dependent.  
+
+# ### Example of a State Function
+
+# Consider going from and elevation of $E(0) = 0$ to $E(1)=10$ using two different paths:
+# 
+# 1. $E(x) = 10x$
+# 2. $E(x) = 10x^2$
+# 
+# Compute the change in elevation and distance traveled along these two paths.
+
+# In[1]:
+
+
+# We start by plotting the two different paths
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+# setup plot parameters
+fontsize=12
+fig = plt.figure(figsize=(4,4), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_xlabel("$x$",size=fontsize)
+ax.set_ylabel("$E(x)$",size=fontsize)
+plt.tick_params(axis='both',labelsize=fontsize)
+# plot two curves
+x = np.arange(0,1,0.0001)
+plt.plot(x,10*x,lw=2)
+plt.plot(x,10*x**2,lw=2)
+
+
+# The change in elevation is clearly 10 in both cases but we will show that here.  
+# 
+# For the first path:
+# \begin{eqnarray}
+# \Delta E_1 &=& \int_{0}^{1}\frac{dE_1}{dx}dx \\
+# &=& E_1(1) - E_1(0) \\
+# &=& 10 - 0 =10
+# \end{eqnarray}
+# 
+# For the second path:
+# \begin{eqnarray}
+# \Delta E_2 &=& \int_{0}^{1}\frac{dE_2}{dx}dx \\
+# &=& E_2(1) - E_2(0) \\
+# &=& 10 - 0 =10
+# \end{eqnarray}
+# 
+# For distance traveled, we need to compute path/arc length. This is easy enough for $E_1$:
+# 
+# For the first path:
+# \begin{eqnarray}
+# L_1 &=& \int_{0}^{1} \sqrt{1+\left(\frac{dE_1}{dx}\right)^2}dx \\
+# &=& \int_{0}^{1} \sqrt{1+\left(10\right)^2}dx \\
+# &=& \sqrt{101} \\
+# &\approx& 10.05
+# \end{eqnarray}
+# where we could also determine this using Pythagorean's theorem.
+# 
+# For $E_2$:
+# \begin{eqnarray}
+# L_2 &=& \int_{0}^{1} \sqrt{1+\left(\frac{dE_2}{dx}\right)^2}dx \\
+# &=& \int_{0}^{1} \sqrt{1+\left(20x\right)^2}dx \\
+# &=& \int_{0}^{1} \sqrt{1+400x^2}dx \\
+# &\approx& 10.10
+# \end{eqnarray}
+# where I used numeric integration to estimate the last integral (see code below).
+
+# In[5]:
+
+
+from scipy.integrate import quad
+def integrand(x):
+    return np.sqrt(1+400*x**2)
+numeric_integral = quad(integrand,0,1)[0]
+print(numeric_integral)
+
 
 # ## Thermodynamic system
 
