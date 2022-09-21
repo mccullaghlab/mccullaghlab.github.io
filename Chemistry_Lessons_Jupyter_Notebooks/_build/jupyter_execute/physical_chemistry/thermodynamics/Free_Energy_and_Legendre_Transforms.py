@@ -5,13 +5,21 @@
 
 # ## Learning Goals:
 # 
-# After this material, students should be able to:
+# After this material, you should be able to:
 # 
 # 1. Define a spontaneous process in terms of free energy change of the system
 # 2. Compute the Helmholtz Free Energy given internal energy, entropy and temperature
 # 3. Compute the Gibbs Free Energy given enthalpy, entropy and temperature
 # 4. Define a Legendre Transform
 # 5. Identify the "natural variables" of each of the four Thermodynamic Energy Functions
+
+# ## Coding Concepts:
+# 
+# The following coding concepts are used in this notebook:
+# 
+# 1. Variables
+# 2. Functions
+# 3. Plotting with matplotlib
 
 # ## Free Energy
 # 
@@ -224,10 +232,4 @@ def make_legendre_transform_interactive_plot():
 
 
 make_legendre_transform_interactive_plot()
-
-
-# In[ ]:
-
-
-
 

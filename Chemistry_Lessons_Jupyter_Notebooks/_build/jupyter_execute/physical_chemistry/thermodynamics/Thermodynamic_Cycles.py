@@ -1,22 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
-import numpy as np
-import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'notebook')
-import plotting as myplt
-
-
 # # Thermodynamic Cycles
 
 # We have discussed, briefly, the idea of gasses expanding and contracting and how to compute internal energy, work, and heat along different expansion/contraction paths.  Today we will discuss combining multiple steps into a cycle and computing internal energy, enthalpy, work and heat along this cycle.
 
 # ## Learning goals:
 
-# After this lesson, students should be able to:
+# After this lesson, you should be able to:
 # 1. Descrine a four step thermodynamic cycle of an ideal gas
 # 2. Compute $\Delta U$, $\Delta H$, $q$ and $w$ for a four step thermodynamic cycle of an ideal gas
 # 3. Compute $\Delta U$, $\Delta H$, $q$ and $w$ for isochoric heating/cooling of an ideal gas
@@ -33,28 +24,41 @@ import plotting as myplt
 
 # For Thermodynamic cycles of a gas, such as an ideal gas that we will consider today, the pressure ($P$), volume ($V$), and temperature ($T$) completely dictate everything about the gas.  As in, the ordered triplet $(V_1, P_1, T_1)$ represents a particular point in the state space of an ideal gas. It is common to use $P$ vs $V$ plots, or $PV$ diagrams, to represent Thermodynamic cycles of a gas.  
 
-# In[2]:
+# In[1]:
 
+
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'notebook')
 
 def plot_PV_diagram(n=1,R=0.08206,V=np.arange(1,5,0.1),pUnit="atm",vUnit="L",T1=100,T2=200):
+    fontsize = 16
     xlabel = "V (" + vUnit + ")"
     ylabel = "P (" + pUnit + ")"
-    fig, ax = myplt.define_figure(xlabel=xlabel,ylabel=ylabel)
+    # setup plot parameters
+    fig = plt.figure(figsize=(8,6), dpi= 80, facecolor='w', edgecolor='k')
+    ax = plt.subplot(111)
+    ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+    ax.set_xlabel(xlabel,size=fontsize)
+    ax.set_ylabel(ylabel,size=fontsize)
+    plt.tick_params(axis='both',labelsize=fontsize)
+    # plot isotherms
     label = "T=" + str(T1)+" K"
     ax.plot(V,n*R*T1/V,label=label,lw=3)
     label = "T=" + str(T2)+" K"
     ax.plot(V,n*R*T2/V,label=label,lw=3)
+    # add points
     label = "(" + str(1.5) +","+ str(np.round(n*R*T1/1.5,decimals=1)) + "," +str(T1)+")"
     plt.scatter(1.5,n*R*T1/1.5)
-    ax.annotate(label,xy=(0.9,n*R*T1/1.5-1),fontsize=16)
+    ax.annotate(label,xy=(0.9,n*R*T1/1.5-1),fontsize=fontsize)
     label = "(" + str(2.5) +","+ str(np.round(n*R*T2/2.5,decimals=1)) + "," +str(T2)+")"
     plt.scatter(2.5,n*R*T2/2.5)
-    ax.annotate(label,xy=(2.5,n*R*T2/2.5),fontsize=16)
+    ax.annotate(label,xy=(2.5,n*R*T2/2.5),fontsize=fontsize)
     ax.annotate('',xy=(1.5,n*R*T1/1.5),xytext=(2.5,n*R*T2/2.5),arrowprops={'arrowstyle':"<->",'lw': 2, 'color': 'black'})
-    plt.legend(fontsize=16)
+    plt.legend(fontsize=fontsize)
 
 
-# In[3]:
+# In[2]:
 
 
 plot_PV_diagram()
@@ -64,17 +68,26 @@ plot_PV_diagram()
 
 # Two points are insufficient to extract work.  We need at least one intermediate point.  In fact, we will use two intermediate points.
 
-# In[4]:
+# In[3]:
 
 
 def plot_PV_diagram(n=1,R=0.08206,V=np.arange(1,4,0.1),pUnit="atm",vUnit="L",T1=100,T2=200):
+    fontsize = 16
     xlabel = "V (" + vUnit + ")"
     ylabel = "P (" + pUnit + ")"
-    fig, ax = myplt.define_figure(xlabel=xlabel,ylabel=ylabel)
+    # setup plot parameters
+    fig = plt.figure(figsize=(8,6), dpi= 80, facecolor='w', edgecolor='k')
+    ax = plt.subplot(111)
+    ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+    ax.set_xlabel(xlabel,size=fontsize)
+    ax.set_ylabel(ylabel,size=fontsize)
+    plt.tick_params(axis='both',labelsize=fontsize)
+    # plot isotherms
     label = "T$_1$=" + str(T1)+" K"
     ax.plot(V,n*R*T1/V,label=label,lw=4)
     label = "T$_2$=" + str(T2)+" K"
     ax.plot(V,n*R*T2/V,label=label,lw=4)
+    # add point
     label = "(" + str(1.5) +","+ str(np.round(n*R*T1/1.5,decimals=1)) + "," +str(T1)+")"
     label = "(V$_1$,P$_1$,T$_1$)"
     ax.annotate(label,xy=(1.0,n*R*T1/1.5-1),fontsize=16)
@@ -106,7 +119,7 @@ def plot_PV_diagram(n=1,R=0.08206,V=np.arange(1,4,0.1),pUnit="atm",vUnit="L",T1=
     plt.legend(fontsize=16)
 
 
-# In[5]:
+# In[4]:
 
 
 plot_PV_diagram()
