@@ -14,6 +14,11 @@
 # 4. Indicate/plot a four step thermodynamic cycle on a PV diagram
 # 5. Indicate the work extracted during a thermodynamic cycle in a PV diagram
 
+# ## Coding Concepts
+# 
+# 1. Variables
+# 2. Plotting with matplotlib
+
 # ## Example: A Car Engine
 
 # A car engine uses expansion of a gas to move pistons.  The piston is pushed up during the expansion of a gas due to the combustion of gasoline.  The piston must also return to the lowered position to be cycled again.  This is an example of a "cycle" and we wish to be able to compute the work (mechanical energy) provided by such a cycle.
