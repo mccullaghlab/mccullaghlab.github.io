@@ -75,66 +75,67 @@ plt.show()
 
 # Two points are insufficient to extract work.  We need at least one intermediate point.  In fact, we will use two intermediate points.
 
-# In[2]:
+# In[8]:
 
 
 import numpy as np
 import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'inline')
 
-def plot_PV_diagram(n=1,R=0.08206,V=np.arange(1,4,0.1),pUnit="atm",vUnit="L",T1=100,T2=200):
-    fontsize = 16
-    xlabel = "V (" + vUnit + ")"
-    ylabel = "P (" + pUnit + ")"
-    # setup plot parameters
-    fig = plt.figure(figsize=(8,6), dpi= 80, facecolor='w', edgecolor='k')
-    ax = plt.subplot(111)
-    ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
-    ax.set_xlabel(xlabel,size=fontsize)
-    ax.set_ylabel(ylabel,size=fontsize)
-    plt.tick_params(axis='both',labelsize=fontsize)
-    # plot isotherms
-    label = "T$_1$=" + str(T1)+" K"
-    ax.plot(V,n*R*T1/V,label=label,lw=4)
-    label = "T$_2$=" + str(T2)+" K"
-    ax.plot(V,n*R*T2/V,label=label,lw=4)
-    # add point
-    label = "(" + str(1.5) +","+ str(np.round(n*R*T1/1.5,decimals=1)) + "," +str(T1)+")"
-    label = "(V$_1$,P$_1$,T$_1$)"
-    ax.annotate(label,xy=(1.0,n*R*T1/1.5-1),fontsize=16)
-    plt.scatter(1.5,n*R*T1/1.5,s=50,color="tab:blue")
-    label = "(" + str(1.5) +","+ str(np.round(n*R*T2/1.5,decimals=1)) + "," +str(T2)+")"
-    label = "(V$_1$,P$_2$,T$_2$)"
-    plt.scatter(1.5,n*R*T2/1.5,s=50,color="tab:orange")
-    ax.annotate(label,xy=(1.5+0.05,n*R*T2/1.5),fontsize=16)
-    ax.annotate("A",xy=(1.35,n*R*T1/1.5+ 0.5*(n*R*T2/1.5-n*R*T1/1.5)),fontsize=24)
-    label = "(" + str(2.5) +","+ str(np.round(n*R*T2/2.5,decimals=1)) + "," +str(T2)+")"
-    label = "(V$_2$,P$_3$,T$_2$)"
-    plt.scatter(2.5,n*R*T2/2.5,s=50,color="tab:orange")
-    ax.annotate(label,xy=(2.6,n*R*T2/2.5),fontsize=16)
-    ax.annotate("B",xy=(2,n*R*T2/2+0.2),fontsize=24)
-    label = "(" + str(2.5) +","+ str(np.round(n*R*T1/2.5,decimals=1)) + "," +str(T1)+")"
-    label = "(V$_2$,P$_4$,T$_1$)"
-    plt.scatter(2.5,n*R*T1/2.5,s=50,color="tab:blue")
-    ax.annotate(label,xy=(2.6,n*R*T1/2.5),fontsize=16)
-    ax.annotate("C",xy=(2.55,n*R*T1/2.5+ 0.4*(n*R*T2/2.5-n*R*T1/2.5)),fontsize=24)
-    ax.annotate("D",xy=(2,n*R*T1/2-1.0),fontsize=24)
-    ax.annotate('',xytext=(1.5,n*R*T1/1.5),xy=(1.5,n*R*T2/1.5),arrowprops={'arrowstyle':"-",'lw': 2, 'color': 'black'})
-    ax.annotate('',xytext=(2.5,n*R*T1/2.5),xy=(2.5,n*R*T2/2.5),arrowprops={'arrowstyle':"-",'lw': 2, 'color': 'black'})
-    ax.annotate('',xy=(2.5,5.0),xytext=(2.5,5.1),arrowprops={'arrowstyle': 'simple','lw': 2, 'color': 'black'})
-    ax.annotate('',xy=(1.5,8.2),xytext=(1.5,8.1),arrowprops={'arrowstyle': 'simple','lw': 2, 'color': 'black'})
-    vsub = np.arange(1.5,2.51,0.01)
-    ax.plot(vsub,n*R*T1/vsub,lw=2,c="k")
-    ax.plot(vsub,n*R*T2/vsub,lw=2,c="k")
-    ax.fill_between(vsub,n*R*T1/vsub,n*R*T2/vsub,facecolor="green",alpha=0.5,interpolate=True)
-    plt.legend(fontsize=16)
-    plt.show()
-
-
-# In[3]:
-
-
-plot_PV_diagram()
+n=1
+R=0.08206
+V=np.arange(1,4,0.1)
+pUnit="atm"
+vUnit="L"
+T1=100
+T2=200
+fontsize = 16
+xlabel = "V (" + vUnit + ")"
+ylabel = "P (" + pUnit + ")"
+# setup plot parameters
+fig = plt.figure(figsize=(8,6), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_xlabel(xlabel,size=fontsize)
+ax.set_ylabel(ylabel,size=fontsize)
+plt.tick_params(axis='both',labelsize=fontsize)
+# plot isotherms
+label = "T$_1$=" + str(T1)+" K"
+ax.plot(V,n*R*T1/V,label=label,lw=4)
+label = "T$_2$=" + str(T2)+" K"
+ax.plot(V,n*R*T2/V,label=label,lw=4)
+# add point
+label = "(" + str(1.5) +","+ str(np.round(n*R*T1/1.5,decimals=1)) + "," +str(T1)+")"
+label = "(V$_1$,P$_1$,T$_1$)"
+ax.annotate(label,xy=(1.0,n*R*T1/1.5-1),fontsize=16)
+plt.scatter(1.5,n*R*T1/1.5,s=50,color="tab:blue")
+label = "(" + str(1.5) +","+ str(np.round(n*R*T2/1.5,decimals=1)) + "," +str(T2)+")"
+label = "(V$_1$,P$_2$,T$_2$)"
+plt.scatter(1.5,n*R*T2/1.5,s=50,color="tab:orange")
+ax.annotate(label,xy=(1.5+0.05,n*R*T2/1.5),fontsize=16)
+ax.annotate("A",xy=(1.35,n*R*T1/1.5+ 0.5*(n*R*T2/1.5-n*R*T1/1.5)),fontsize=24)
+label = "(" + str(2.5) +","+ str(np.round(n*R*T2/2.5,decimals=1)) + "," +str(T2)+")"
+label = "(V$_2$,P$_3$,T$_2$)"
+plt.scatter(2.5,n*R*T2/2.5,s=50,color="tab:orange")
+ax.annotate(label,xy=(2.6,n*R*T2/2.5),fontsize=16)
+ax.annotate("B",xy=(1.95,n*R*T2/2+0.5),fontsize=24)
+label = "(" + str(2.5) +","+ str(np.round(n*R*T1/2.5,decimals=1)) + "," +str(T1)+")"
+label = "(V$_2$,P$_4$,T$_1$)"
+plt.scatter(2.5,n*R*T1/2.5,s=50,color="tab:blue")
+ax.annotate(label,xy=(2.6,n*R*T1/2.5),fontsize=16)
+ax.annotate("C",xy=(2.55,n*R*T1/2.5+ 0.4*(n*R*T2/2.5-n*R*T1/2.5)),fontsize=24)
+ax.annotate("D",xy=(1.95,n*R*T1/2-1.1),fontsize=24)
+ax.annotate('',xytext=(1.5,n*R*T1/1.5),xy=(1.5,n*R*T2/1.5),arrowprops={'arrowstyle':"-",'lw': 2, 'color': 'black'})
+ax.annotate('',xytext=(2.5,n*R*T1/2.5),xy=(2.5,n*R*T2/2.5),arrowprops={'arrowstyle':"-",'lw': 2, 'color': 'black'})
+ax.annotate('',xy=(2.5,5.0),xytext=(2.5,5.1),arrowprops={'arrowstyle': 'simple','lw': 2, 'color': 'black'})
+ax.annotate('',xy=(1.5,8.2),xytext=(1.5,8.1),arrowprops={'arrowstyle': 'simple','lw': 2, 'color': 'black'})
+vsub = np.arange(1.5,2.51,0.01)
+ax.plot(vsub,n*R*T1/vsub,lw=2,c="k")
+ax.plot(vsub,n*R*T2/vsub,lw=2,c="k")
+# shade work
+ax.fill_between(vsub,n*R*T1/vsub,n*R*T2/vsub,facecolor="green",alpha=0.5,interpolate=True)
+plt.legend(fontsize=16)
+plt.show()
 
 
 # There are four points and four processes on the above plot.  We will define them as:
