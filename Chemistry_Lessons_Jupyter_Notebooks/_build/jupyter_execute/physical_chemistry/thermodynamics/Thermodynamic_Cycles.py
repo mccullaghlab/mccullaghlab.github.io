@@ -34,7 +34,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'notebook')
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 # variables for plot
 n=1
@@ -77,6 +77,10 @@ plt.show()
 
 # In[2]:
 
+
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 def plot_PV_diagram(n=1,R=0.08206,V=np.arange(1,4,0.1),pUnit="atm",vUnit="L",T1=100,T2=200):
     fontsize = 16
