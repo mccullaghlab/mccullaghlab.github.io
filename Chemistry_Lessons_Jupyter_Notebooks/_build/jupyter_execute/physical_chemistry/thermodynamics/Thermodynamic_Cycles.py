@@ -36,45 +36,46 @@ import numpy as np
 import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'notebook')
 
-def plot_PV_diagram(n=1,R=0.08206,V=np.arange(1,5,0.1),pUnit="atm",vUnit="L",T1=100,T2=200):
-    fontsize = 16
-    xlabel = "V (" + vUnit + ")"
-    ylabel = "P (" + pUnit + ")"
-    # setup plot parameters
-    fig = plt.figure(figsize=(8,6), dpi= 80, facecolor='w', edgecolor='k')
-    ax = plt.subplot(111)
-    ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
-    ax.set_xlabel(xlabel,size=fontsize)
-    ax.set_ylabel(ylabel,size=fontsize)
-    plt.tick_params(axis='both',labelsize=fontsize)
-    # plot isotherms
-    label = "T=" + str(T1)+" K"
-    ax.plot(V,n*R*T1/V,label=label,lw=3)
-    label = "T=" + str(T2)+" K"
-    ax.plot(V,n*R*T2/V,label=label,lw=3)
-    # add points
-    label = "(" + str(1.5) +","+ str(np.round(n*R*T1/1.5,decimals=1)) + "," +str(T1)+")"
-    plt.scatter(1.5,n*R*T1/1.5)
-    ax.annotate(label,xy=(0.9,n*R*T1/1.5-1),fontsize=fontsize)
-    label = "(" + str(2.5) +","+ str(np.round(n*R*T2/2.5,decimals=1)) + "," +str(T2)+")"
-    plt.scatter(2.5,n*R*T2/2.5)
-    ax.annotate(label,xy=(2.5,n*R*T2/2.5),fontsize=fontsize)
-    ax.annotate('',xy=(1.5,n*R*T1/1.5),xytext=(2.5,n*R*T2/2.5),arrowprops={'arrowstyle':"<->",'lw': 2, 'color': 'black'})
-    plt.legend(fontsize=fontsize)
-    plt.show()
-
-
-# In[2]:
-
-
-plot_PV_diagram()
+# variables for plot
+n=1
+R=0.08206
+V=np.arange(1,5,0.1)
+pUnit="atm"
+vUnit="L"
+T1=100
+T2=200
+fontsize = 16
+xlabel = "V (" + vUnit + ")"
+ylabel = "P (" + pUnit + ")"
+# setup plot parameters
+fig = plt.figure(figsize=(8,6), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_xlabel(xlabel,size=fontsize)
+ax.set_ylabel(ylabel,size=fontsize)
+plt.tick_params(axis='both',labelsize=fontsize)
+# plot isotherms
+label = "T=" + str(T1)+" K"
+ax.plot(V,n*R*T1/V,label=label,lw=3)
+label = "T=" + str(T2)+" K"
+ax.plot(V,n*R*T2/V,label=label,lw=3)
+# add points
+label = "(" + str(1.5) +","+ str(np.round(n*R*T1/1.5,decimals=1)) + "," +str(T1)+")"
+plt.scatter(1.5,n*R*T1/1.5)
+ax.annotate(label,xy=(0.9,n*R*T1/1.5-1),fontsize=fontsize)
+label = "(" + str(2.5) +","+ str(np.round(n*R*T2/2.5,decimals=1)) + "," +str(T2)+")"
+plt.scatter(2.5,n*R*T2/2.5)
+ax.annotate(label,xy=(2.5,n*R*T2/2.5),fontsize=fontsize)
+ax.annotate('',xy=(1.5,n*R*T1/1.5),xytext=(2.5,n*R*T2/2.5),arrowprops={'arrowstyle':"<->",'lw': 2, 'color': 'black'})
+plt.legend(fontsize=fontsize)
+plt.show()
 
 
 # ## Cycles on a PV diagram
 
 # Two points are insufficient to extract work.  We need at least one intermediate point.  In fact, we will use two intermediate points.
 
-# In[3]:
+# In[2]:
 
 
 def plot_PV_diagram(n=1,R=0.08206,V=np.arange(1,4,0.1),pUnit="atm",vUnit="L",T1=100,T2=200):
@@ -126,7 +127,7 @@ def plot_PV_diagram(n=1,R=0.08206,V=np.arange(1,4,0.1),pUnit="atm",vUnit="L",T1=
     plt.show()
 
 
-# In[4]:
+# In[3]:
 
 
 plot_PV_diagram()
