@@ -61,6 +61,7 @@ def plot_PV_diagram(n=1,R=0.08206,V=np.arange(1,5,0.1),pUnit="atm",vUnit="L",T1=
     ax.annotate(label,xy=(2.5,n*R*T2/2.5),fontsize=fontsize)
     ax.annotate('',xy=(1.5,n*R*T1/1.5),xytext=(2.5,n*R*T2/2.5),arrowprops={'arrowstyle':"<->",'lw': 2, 'color': 'black'})
     plt.legend(fontsize=fontsize)
+    plt.show()
 
 
 # In[2]:
@@ -122,6 +123,7 @@ def plot_PV_diagram(n=1,R=0.08206,V=np.arange(1,4,0.1),pUnit="atm",vUnit="L",T1=
     ax.plot(vsub,n*R*T2/vsub,lw=2,c="k")
     ax.fill_between(vsub,n*R*T1/vsub,n*R*T2/vsub,facecolor="green",alpha=0.5,interpolate=True)
     plt.legend(fontsize=16)
+    plt.show()
 
 
 # In[4]:
