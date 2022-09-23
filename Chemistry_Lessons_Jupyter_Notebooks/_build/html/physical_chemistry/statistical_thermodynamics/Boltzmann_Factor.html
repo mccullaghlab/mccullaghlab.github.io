@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>2.1.1. Boltzmann Factor &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="2.1.2. Introduction to Probability" href="Introduction_to_Probability.html" />
@@ -235,43 +236,48 @@ const thebe_selector_output = ".output, .cell_output"
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles_Day_2.html">
-       2.2.5. Thermodynamic Cycles Day 2
+      <a class="reference internal" href="../thermodynamics/Enthalpy.html">
+       2.2.5. Enthalpy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/The_Carnot_Cycle.html">
+       2.2.6. The Carnot Cycle
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">
-       2.2.6. Second Law of Thermodynamics
+       2.2.7. Second Law of Thermodynamics
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">
-       2.2.7. Heat Engine Diagrams
+       2.2.8. Heat Engine Diagrams
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">
-       2.2.9. The Third Law of Thermodynamics
+       2.2.10. The Third Law of Thermodynamics
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">
-       2.2.10. First Derivative and Maxwell Relations
+       2.2.11. First Derivative and Maxwell Relations
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../thermodynamics/Maxwell_Relations_Applied.html">
-       2.2.11. Maxwell Relations Applied
+       2.2.12. Maxwell Relations Applied
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">
-       2.2.12. Free Energy and Legendre Transforms
+       2.2.13. Free Energy and Legendre Transforms
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">
-       2.2.13. Thermodynamics of Solutions
+       2.2.14. Thermodynamics of Solutions
       </a>
      </li>
     </ul>
@@ -645,9 +651,9 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="boltzmann-factor">
+  <section class="tex2jax_ignore mathjax_ignore" id="boltzmann-factor">
 <h1><span class="section-number">2.1.1. </span>Boltzmann Factor<a class="headerlink" href="#boltzmann-factor" title="Permalink to this headline">#</a></h1>
-<div class="section" id="learning-goals">
+<section id="learning-goals">
 <h2><span class="section-number">2.1.1.1. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After going through these notes, students should be able to:</p>
 <ol class="simple">
@@ -656,161 +662,161 @@ title="Print to PDF"
 <li><p>Determine the relative probability of two or more states given distributions and energies,</p></li>
 <li><p>Determine the partition function for a system given complete set of states.</p></li>
 </ol>
-</div>
-<div class="section" id="introduction-and-motivation">
+</section>
+<section id="introduction-and-motivation">
 <h2><span class="section-number">2.1.1.2. </span>Introduction and Motivation<a class="headerlink" href="#introduction-and-motivation" title="Permalink to this headline">#</a></h2>
 <p>Our goal for learning Thermodynamics is to be able to predict if a process (e.g. chemical reaction) occurs under certain conditions.  The tools/laws of Thermodynamics will help us do this but classical Thermodynamics deals with macroscopic quantities (e.g. temperature, heat, or work for a mole of a substance).  As chemists, we are more used to thinking about chemicals and chemical reactions on the molecular level so first we must come up with a way to going from molecular properties to macroscopic properties.  This is the field of statistical Thermodynamics and the Boltzmann factor is one of the most fundamental concepts in this discipline.</p>
-</div>
-<div class="section" id="the-energy-of-a-macroscopic-system">
+</section>
+<section id="the-energy-of-a-macroscopic-system">
 <h2><span class="section-number">2.1.1.3. </span>The Energy of a Macroscopic System<a class="headerlink" href="#the-energy-of-a-macroscopic-system" title="Permalink to this headline">#</a></h2>
 <p>Consider a macroscopic system such a liter of gas with a fixed number of particles, <span class="math notranslate nohighlight">\(N\)</span>, and volume, <span class="math notranslate nohighlight">\(V\)</span>.  Even though there may be almost a mole of molecules of this gas, we can still consider determining the energy of the system.  This can be done either using the Schrodinger equation if we want to model the system quantum mechanically,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-178dde06-8f82-43a6-b007-fc8f2ee446ce">
-<span class="eqno">(2.1)<a class="headerlink" href="#equation-178dde06-8f82-43a6-b007-fc8f2ee446ce" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ea96db7a-e822-4a1a-85b1-d67d9161115b">
+<span class="eqno">(2.1)<a class="headerlink" href="#equation-ea96db7a-e822-4a1a-85b1-d67d9161115b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H}_N \Psi_j = E_j \Psi_j
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(j\)</span> denotes the energy level and the energy is a function of <span class="math notranslate nohighlight">\(N\)</span> and <span class="math notranslate nohighlight">\(V\)</span> (<span class="math notranslate nohighlight">\(E(N,V)\)</span>), or we can define a classic <span class="math notranslate nohighlight">\(N\)</span>-body Hamiltoninan/energy function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e1cec96c-485e-499d-819c-f225eda5611a">
-<span class="eqno">(2.2)<a class="headerlink" href="#equation-e1cec96c-485e-499d-819c-f225eda5611a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0c6c1c2b-85f8-4ec4-8ac5-3749994ef0f3">
+<span class="eqno">(2.2)<a class="headerlink" href="#equation-0c6c1c2b-85f8-4ec4-8ac5-3749994ef0f3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 H(R^N, p^N) = \sum_{i}^N \frac{p_i^2}{2m_i} + \sum_{i}^N U_1(R_i) + \sum_{i,j&gt;i}^N U_2(R_{i},R_j) + ...
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(R^N\)</span> are the 3D coordinates of the <span class="math notranslate nohighlight">\(N\)</span> particles and <span class="math notranslate nohighlight">\(p^N\)</span> are the momenta of the <span class="math notranslate nohighlight">\(N\)</span> particles.</p>
 <p>In the special case that the gas in an ideal gas, the energy of the system will simply be a sum of individual particle energies.  Quantum mechanically that would be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b7d8f1ea-46e2-4781-9541-7ac43013d08d">
-<span class="eqno">(2.3)<a class="headerlink" href="#equation-b7d8f1ea-46e2-4781-9541-7ac43013d08d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-16b8e8e0-33fb-4f86-85d1-30b6309e7083">
+<span class="eqno">(2.3)<a class="headerlink" href="#equation-16b8e8e0-33fb-4f86-85d1-30b6309e7083" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_j(N,V) = \sum_{i}^N \epsilon_i,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is the energy of particle <span class="math notranslate nohighlight">\(i\)</span>.  If the gas is monatomic (no internal potential energy terms) then <span class="math notranslate nohighlight">\(\epsilon_i\)</span> is solution to the particle in the 3D box</p>
-<div class="amsmath math notranslate nohighlight" id="equation-78f243bd-327e-4350-bb9f-7d98a59aec28">
-<span class="eqno">(2.4)<a class="headerlink" href="#equation-78f243bd-327e-4350-bb9f-7d98a59aec28" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a04584a2-7d2a-48b4-b775-f03d1afc981c">
+<span class="eqno">(2.4)<a class="headerlink" href="#equation-a04584a2-7d2a-48b4-b775-f03d1afc981c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \epsilon_{n_x,n_y,n_z} = \frac{h^2}{8ma^2}\left(n_x^2+n_y^2+n_z^2\right),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(n_x, n_y, n_z = 1, 2, ...\)</span> are the quantum numbers in the three directions, <span class="math notranslate nohighlight">\(h\)</span> is Planck’s constant, <span class="math notranslate nohighlight">\(m\)</span> is the mass of the particle, and <span class="math notranslate nohighlight">\(a = V^{1/3}\)</span> is related to the volume of the box.</p>
 <p>In classical mechanics, the energy of a monatomic ideal gas is simply the kinetic energy.  Each particle has a kinetic energy and that is it, thus the classical Hamiltonian is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-76680a85-9610-4b8d-83e9-17f888eda520">
-<span class="eqno">(2.5)<a class="headerlink" href="#equation-76680a85-9610-4b8d-83e9-17f888eda520" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6e7d0075-73b7-442e-baa7-eb0a0369d895">
+<span class="eqno">(2.5)<a class="headerlink" href="#equation-6e7d0075-73b7-442e-baa7-eb0a0369d895" title="Permalink to this equation">#</a></span>\[\begin{equation}
 H(R^N,p^N) = \sum_{i}^N \frac{p_i^2}{2m_i}
 \end{equation}\]</div>
-</div>
-<div class="section" id="an-ensemble-of-systems">
+</section>
+<section id="an-ensemble-of-systems">
 <h2><span class="section-number">2.1.1.4. </span>An Ensemble of Systems<a class="headerlink" href="#an-ensemble-of-systems" title="Permalink to this headline">#</a></h2>
 <p>We now consider the question, what is the probability that my system has a particular energy?  Quantum mechanically, this would be what is the probability of observing a particular value for <span class="math notranslate nohighlight">\(E_j(N,V)\)</span>.  Classically, it would be what the probability of observing a particular value of <span class="math notranslate nohighlight">\(H(R^N)\)</span>.  To address this question, we consider an ensemble of identical systems.  Each of these systems is in contact with the same thermal bath and thus it can be considered that each system maintains a constant <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(V\)</span>, and <span class="math notranslate nohighlight">\(T\)</span>.</p>
 <p>We start by asking a related but slighly simpler question: what is the probability that a system takes on an energy <span class="math notranslate nohighlight">\(E_1\)</span> compared to probability the system takes on an energy <span class="math notranslate nohighlight">\(E_2\)</span>?  We denote the total number of systems with energy <span class="math notranslate nohighlight">\(E_1\)</span> as <span class="math notranslate nohighlight">\(a_1\)</span> and the total number of systems with energy <span class="math notranslate nohighlight">\(E_2\)</span> as <span class="math notranslate nohighlight">\(a_2\)</span>.  The relative number of systems in these two states is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a60e7e77-3f88-4e85-86b4-7b0f4be57140">
-<span class="eqno">(2.6)<a class="headerlink" href="#equation-a60e7e77-3f88-4e85-86b4-7b0f4be57140" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1285d317-321b-4608-9279-c83d81829624">
+<span class="eqno">(2.6)<a class="headerlink" href="#equation-1285d317-321b-4608-9279-c83d81829624" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{a_2}{a_1} = f(E_1,E_2) = f(E_1-E_2),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(f\)</span> is some function of both energies and the last equality must hold because only differences in energies matter.</p>
 <p>We can also compare a state 3 to states 1 and 2 to get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae237fb4-3b6b-4583-a385-ffc82075ac07">
-<span class="eqno">(2.7)<a class="headerlink" href="#equation-ae237fb4-3b6b-4583-a385-ffc82075ac07" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-31a39e93-53c0-475c-8fd7-6ecef01be119">
+<span class="eqno">(2.7)<a class="headerlink" href="#equation-31a39e93-53c0-475c-8fd7-6ecef01be119" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{a_3}{a_1} &amp;=&amp; f(E_1-E_3) \\
 \frac{a_3}{a_2} &amp;=&amp; f(E_2-E_3).
 \end{eqnarray}\]</div>
 <p>We can combine these results with above to demonstrate</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca2454bb-eb24-43ff-9863-81b70dbf4434">
-<span class="eqno">(2.8)<a class="headerlink" href="#equation-ca2454bb-eb24-43ff-9863-81b70dbf4434" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c4410baa-afb1-4baf-b215-2b2c9e6d5920">
+<span class="eqno">(2.8)<a class="headerlink" href="#equation-c4410baa-afb1-4baf-b215-2b2c9e6d5920" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{a_3}{a_1} = \frac{a_2}{a_1}\cdot\frac{a_3}{a_2},
 \end{equation}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-15e4db5d-ef1d-4438-9b7b-ec446328265c">
-<span class="eqno">(2.9)<a class="headerlink" href="#equation-15e4db5d-ef1d-4438-9b7b-ec446328265c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4fe9d763-a656-4a7b-9e32-d8ca0418d575">
+<span class="eqno">(2.9)<a class="headerlink" href="#equation-4fe9d763-a656-4a7b-9e32-d8ca0418d575" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(E_1-E_3) = f(E_1-E_2)f(E_2-E_3).
 \end{equation}\]</div>
 <p>We see that multiplication of <span class="math notranslate nohighlight">\(f\)</span> functions leads to addition of their arguments (<span class="math notranslate nohighlight">\(E_1-E_2 + E_2-E_3 = E_1-E_3\)</span>).  A function for which this is true is the exponential function. Thus, we can see that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e8cceb27-1028-464e-969c-b0eb1a146cb6">
-<span class="eqno">(2.10)<a class="headerlink" href="#equation-e8cceb27-1028-464e-969c-b0eb1a146cb6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-056d38c7-677c-4231-a477-2e5d4e1a8916">
+<span class="eqno">(2.10)<a class="headerlink" href="#equation-056d38c7-677c-4231-a477-2e5d4e1a8916" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(E) = e^{\beta E},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta\)</span> is an arbitrary constant.  And</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d9969fe6-03be-4c6d-907c-71f59eef3406">
-<span class="eqno">(2.11)<a class="headerlink" href="#equation-d9969fe6-03be-4c6d-907c-71f59eef3406" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bd63d1f8-3b3f-4c0a-a161-c5445f7e1de7">
+<span class="eqno">(2.11)<a class="headerlink" href="#equation-bd63d1f8-3b3f-4c0a-a161-c5445f7e1de7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 a_j = Ce^{-\beta E_j},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(C\)</span> is an arbitrary constant.</p>
 <p>In this form, <span class="math notranslate nohighlight">\(a_j\)</span> is known as the Boltzmann factor for state <span class="math notranslate nohighlight">\(j\)</span>.</p>
-</div>
-<div class="section" id="partition-function">
+</section>
+<section id="partition-function">
 <h2><span class="section-number">2.1.1.5. </span>Partition Function<a class="headerlink" href="#partition-function" title="Permalink to this headline">#</a></h2>
 <p>The Boltzmann factor given above has two components that need to be defined: <span class="math notranslate nohighlight">\(\beta\)</span> and <span class="math notranslate nohighlight">\(C\)</span>.  Presented without derivation,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c6b01b38-b945-448d-8b36-b76daa8764ec">
-<span class="eqno">(2.12)<a class="headerlink" href="#equation-c6b01b38-b945-448d-8b36-b76daa8764ec" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-05bc1b18-3614-46fd-88e1-4e2115bf4a6a">
+<span class="eqno">(2.12)<a class="headerlink" href="#equation-05bc1b18-3614-46fd-88e1-4e2115bf4a6a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \beta = \frac{1}{k_BT},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(k_B\)</span> is the Boltzmann constant and <span class="math notranslate nohighlight">\(T\)</span> is the temperature in Kelvin.</p>
 <p><span class="math notranslate nohighlight">\(C\)</span> is determined by summing (integrating in classical mechanics) over all possible states</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f204d612-5703-46dc-90e6-5c5c206e8396">
-<span class="eqno">(2.13)<a class="headerlink" href="#equation-f204d612-5703-46dc-90e6-5c5c206e8396" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3cfc3106-d39e-4d37-9d7c-c3caf3208e21">
+<span class="eqno">(2.13)<a class="headerlink" href="#equation-3cfc3106-d39e-4d37-9d7c-c3caf3208e21" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sum_i a_i = C\sum_i e^{-\beta E_i}.
 \end{equation}\]</div>
 <p>The sum of all states/systems must be equal to the total number of systems, <span class="math notranslate nohighlight">\(A\)</span>, thus we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-faf69a55-a851-4054-9ec1-ec5f696b5acc">
-<span class="eqno">(2.14)<a class="headerlink" href="#equation-faf69a55-a851-4054-9ec1-ec5f696b5acc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-34f53b06-4ced-47ae-9650-3a31173a2bd8">
+<span class="eqno">(2.14)<a class="headerlink" href="#equation-34f53b06-4ced-47ae-9650-3a31173a2bd8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 A &amp;=&amp; C\sum_i e^{-\beta E_i} \\
 \Rightarrow C &amp;=&amp; \frac{A}{\sum_i e^{-\beta E_i}}
 \end{eqnarray}\]</div>
 <p>Plugging this back into the equation for <span class="math notranslate nohighlight">\(a_j\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dbad9172-ef7a-4f44-a520-6913bb58542b">
-<span class="eqno">(2.15)<a class="headerlink" href="#equation-dbad9172-ef7a-4f44-a520-6913bb58542b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fd19ce5c-3f36-45dc-baed-e63044ab7c9e">
+<span class="eqno">(2.15)<a class="headerlink" href="#equation-fd19ce5c-3f36-45dc-baed-e63044ab7c9e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{a_j}{A} = \frac{e^{-\beta E_j}}{\sum_i e^{-\beta E_i}}
 \end{equation}\]</div>
 <p><span class="math notranslate nohighlight">\(\frac{a_j}{A}\)</span> is the fraction of systems with energy <span class="math notranslate nohighlight">\(E_j\)</span> and thus we recognize this as a probability, or written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d19f2239-24f1-47a6-a0af-d67348b20d12">
-<span class="eqno">(2.16)<a class="headerlink" href="#equation-d19f2239-24f1-47a6-a0af-d67348b20d12" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ff7065ce-a950-4fe3-910e-8738e56cb8c0">
+<span class="eqno">(2.16)<a class="headerlink" href="#equation-ff7065ce-a950-4fe3-910e-8738e56cb8c0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P_j = \frac{e^{-\beta E_j}}{\sum_i e^{-\beta E_i}}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(P_j\)</span> is now the probability of observing a system with energy <span class="math notranslate nohighlight">\(E_j\)</span>.</p>
 <p>The denominator of the probability equation, <span class="math notranslate nohighlight">\(\sum_i e^{-\beta E_i}\)</span>, is referred to as the Canoncial partition function and is denoted <span class="math notranslate nohighlight">\(Q\)</span>.  This function is depdent on <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(T\)</span> and is often written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-61616414-a2d8-4541-8a0b-49e977e76bb8">
-<span class="eqno">(2.17)<a class="headerlink" href="#equation-61616414-a2d8-4541-8a0b-49e977e76bb8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bba9b5e6-595f-4d65-9571-65ca1371ed72">
+<span class="eqno">(2.17)<a class="headerlink" href="#equation-bba9b5e6-595f-4d65-9571-65ca1371ed72" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q(N,V,T) = \sum_i e^{-\frac{E_i}{k_B T}},
 \end{equation}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-09bc8099-8375-4860-9353-440ff444e96f">
-<span class="eqno">(2.18)<a class="headerlink" href="#equation-09bc8099-8375-4860-9353-440ff444e96f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fb0e7a21-0838-490c-8c2f-36576ffcc909">
+<span class="eqno">(2.18)<a class="headerlink" href="#equation-fb0e7a21-0838-490c-8c2f-36576ffcc909" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q(N,V,\beta) = \sum_i e^{-\beta E_i},
 \end{equation}\]</div>
-</div>
-<div class="section" id="example-quantized-states">
+</section>
+<section id="example-quantized-states">
 <h2><span class="section-number">2.1.1.6. </span>Example: Quantized States<a class="headerlink" href="#example-quantized-states" title="Permalink to this headline">#</a></h2>
 <p>Consider a single monoatomic ideal gas particle with the mass of helium.  The system is kept at a temperature that allows it to populate two states: <span class="math notranslate nohighlight">\((n_x, n_y, n_z) = (1,1,1)\)</span> and <span class="math notranslate nohighlight">\((n_x, n_y, n_z) = (2,1,1)\)</span>. Compute the Boltzmann factors and relative probability of these two states.  Leave your answers in terms of <span class="math notranslate nohighlight">\(\beta\)</span>, <span class="math notranslate nohighlight">\(a\)</span>, and <span class="math notranslate nohighlight">\(m\)</span>.</p>
 <p>We start by writing out the energy of the system from above:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bca1f330-7d9e-42a4-9e8b-539a4c7e50fd">
-<span class="eqno">(2.19)<a class="headerlink" href="#equation-bca1f330-7d9e-42a4-9e8b-539a4c7e50fd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a0de53bc-71d3-4eec-ab72-cdca9597bbb2">
+<span class="eqno">(2.19)<a class="headerlink" href="#equation-a0de53bc-71d3-4eec-ab72-cdca9597bbb2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_j(N,V) = \epsilon_i,
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0b2652dd-bdd2-4762-a9f9-3c685fe6984e">
-<span class="eqno">(2.20)<a class="headerlink" href="#equation-0b2652dd-bdd2-4762-a9f9-3c685fe6984e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c5e08db1-ec2e-4d0f-a911-9664535640c6">
+<span class="eqno">(2.20)<a class="headerlink" href="#equation-c5e08db1-ec2e-4d0f-a911-9664535640c6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \epsilon_{n_x,n_y,n_z} = \frac{h^2}{8ma^2}\left(n_x^2+n_y^2+n_z^2\right).
 \end{equation}\]</div>
 <p>Plugging in the two allowed sets of quantum numbers we get two possible total energies of the system:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-486937cf-6210-417a-85fb-35dac7c86d9a">
-<span class="eqno">(2.21)<a class="headerlink" href="#equation-486937cf-6210-417a-85fb-35dac7c86d9a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-8e31deb7-b807-4098-bd11-a547e0c9b537">
+<span class="eqno">(2.21)<a class="headerlink" href="#equation-8e31deb7-b807-4098-bd11-a547e0c9b537" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 E_1 &amp;=&amp; \frac{3h^2}{8ma^2} \\
 E_2 &amp;=&amp; \frac{6h^2}{8ma^2}
 \end{eqnarray}\]</div>
 <p>The partition function is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c9018cb4-15a4-44f4-bb84-bc8ed4f35005">
-<span class="eqno">(2.22)<a class="headerlink" href="#equation-c9018cb4-15a4-44f4-bb84-bc8ed4f35005" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-0d448550-d1cc-4393-8e88-76d974f60ab1">
+<span class="eqno">(2.22)<a class="headerlink" href="#equation-0d448550-d1cc-4393-8e88-76d974f60ab1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; e^{-\beta E_1} + e^{-\beta E_2} \\
 &amp;=&amp; e^{-\beta \frac{3h^2}{8ma^2}} + e^{-\beta\frac{6h^2}{8ma^2}} \\
 &amp;=&amp; e^{-\beta \frac{3h^2}{8ma^2}} \left(e + e^{2} \right)
 \end{eqnarray}\]</div>
 <p>The Boltzmann factors are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6cd11272-ad07-434a-83c3-b3fb21fa6f9e">
-<span class="eqno">(2.23)<a class="headerlink" href="#equation-6cd11272-ad07-434a-83c3-b3fb21fa6f9e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-b35494ed-9792-47b4-aa03-dcd5c0fb1fed">
+<span class="eqno">(2.23)<a class="headerlink" href="#equation-b35494ed-9792-47b4-aa03-dcd5c0fb1fed" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 e^{-\beta E_1} &amp;=&amp; e^{-\beta \frac{3h^2}{8ma^2}} \\
 e^{-\beta E_2} &amp;=&amp; e^{-\beta \frac{6h^2}{8ma^2}}
 \end{eqnarray}\]</div>
 <p>Relative probability is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae3a5c84-744a-4f84-9b20-787ec224ab52">
-<span class="eqno">(2.24)<a class="headerlink" href="#equation-ae3a5c84-744a-4f84-9b20-787ec224ab52" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2af8f786-3992-41f6-82fc-af3e20630b07">
+<span class="eqno">(2.24)<a class="headerlink" href="#equation-2af8f786-3992-41f6-82fc-af3e20630b07" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{a_1}{a_2} &amp;=&amp; \frac{e^{-\beta E_1}}{e^{-\beta E_2}} \\
 &amp;=&amp; \frac{e^{-\beta \frac{3h^2}{8ma^2}}}{e^{-\beta \frac{6h^2}{8ma^2}}} \\
 &amp;=&amp; e^{\beta \frac{3h^2}{8ma^2}}
 \end{eqnarray}\]</div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

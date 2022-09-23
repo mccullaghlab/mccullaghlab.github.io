@@ -233,3 +233,9 @@ def make_legendre_transform_interactive_plot():
 
 make_legendre_transform_interactive_plot()
 
+
+# In[ ]:
+
+
+
+
