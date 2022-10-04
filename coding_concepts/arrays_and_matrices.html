@@ -1,0 +1,1252 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.2. Jupyter Notebook Tutorial &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.3. Jupyter Notebook Tutorial" href="functions.html" />
+    <link rel="prev" title="2.1. Variables in Python" href="variables.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Chemistry Lessons with Jupyter Notebooks</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../jupyter_notebook_tutorials/intro.html">
+   1. Jupyter Notebook Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">
+     1.1. Jupyter Notebook Tutorial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">
+     1.2. Advanced Jupyter Notebook Tutorial
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="intro.html">
+   2. Coding Concepts
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="variables.html">
+     2.1. Variables in Python
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2.2. Jupyter Notebook Tutorial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="functions.html">
+     2.3. Jupyter Notebook Tutorial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="plotting_with_matplotlib.html">
+     2.4. Plotting with matplotlib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../physical_chemistry/intro.html">
+   3. Physical Chemistry
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/intro.html">
+     3.1. Statiscial Thermodynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.html">
+       3.1.1. Boltzmann Factor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Introduction_to_Probability.html">
+       3.1.2. Introduction to Probability
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">
+       3.1.3. Thermodynamic Properties from the Partition Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">
+       3.1.4. Partition Function for a Monatomic Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">
+       3.1.5. Partition Function for a Diatomic Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">
+       3.1.6. Classical Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">
+       3.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/microscopic_view_of_entropy.html">
+       3.1.8. Microscopic View of Entropy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">
+       3.1.9. Equations of State from Lattice Gas Models
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../physical_chemistry/thermodynamics/intro.html">
+     3.2. Thermodynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/First_Law_of_Thermodynamics.html">
+       3.2.1. The First Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/Heat_Work_and_Calculating_U.html">
+       3.2.2. Heat Work and Calculating
+       <span class="math notranslate nohighlight">
+        \(\Delta U\)
+       </span>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/Thermodynamic_Cycles.html">
+       3.2.4. Thermodynamic Cycles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/Enthalpy.html">
+       3.2.5. Enthalpy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/The_Carnot_Cycle.html">
+       3.2.6. The Carnot Cycle
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/Second_Law_of_Thermodynamics.html">
+       3.2.7. Second Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">
+       3.2.8. Heat Engine Diagrams
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/Third_Law_of_Thermodynamics.html">
+       3.2.10. The Third Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">
+       3.2.11. First Derivative and Maxwell Relations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/Maxwell_Relations_Applied.html">
+       3.2.12. Maxwell Relations Applied
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/Free_Energy_and_Legendre_Transforms.html">
+       3.2.13. Free Energy and Legendre Transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/thermodynamics/Thermodynamics_of_Solutions.html">
+       3.2.14. Thermodynamics of Solutions
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../physical_chemistry/quantum_mechanics/intro.html">
+     3.3. Quantum Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/history_of_quantum_mechanics.html">
+       3.3.1. The History of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/postulates_of_quantum_mechanics.html">
+       3.3.2. The Postulates and Formalism of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/harmonic_oscillator.html">
+       3.3.3. Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">
+       3.3.4. Vibrational Spectroscopy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">
+       3.3.5. Variational Method in Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/basis_functions.html">
+       3.3.6. Basis Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/harmonic_oscillator_using_variational_method.html">
+       3.3.7. Variational Solution to the Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/morse_oscillator.html">
+       3.3.8. The Morse Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/rigid_rotator.html">
+       3.3.9. Rigid Rotator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/rigid_rotator_using_variational_method.html">
+       3.3.10. Rigid Rotator Variational Solution…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/rigid_rotator_selection_rules.html">
+       3.3.11. Rigid Rotator Continued…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/the_hydrogen_atom.html">
+       3.3.13. The Hydrogen Atom
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/quantum_mechanics/the_helium_atom.html">
+       3.3.14. The Helium Atom
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../physical_chemistry/electronic_structure/intro.html">
+     3.4. Electronic Structure
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/electronic_structure/Hartree_Fock_Helium_Atom.html">
+       3.4.1. Hartree-Fock
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/electronic_structure/HF_for_H2.html">
+       3.4.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/coding_concepts/arrays_and_matrices.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/coding_concepts/arrays_and_matrices.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/coding_concepts/arrays_and_matrices.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#code-cells-python">
+   2.2.1. Code Cells (python)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basics">
+     2.2.1.1. Basics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-types">
+     2.2.1.2. Data types
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#operations">
+     2.2.1.3. Operations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vectors-and-matrices">
+     2.2.1.4. Vectors and matrices
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#for-loops-in-python">
+     2.2.1.5. For loops in python
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plotting-with-matplotlib">
+   2.2.2. Plotting with matplotlib
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Jupyter Notebook Tutorial</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#code-cells-python">
+   2.2.1. Code Cells (python)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#basics">
+     2.2.1.1. Basics
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-types">
+     2.2.1.2. Data types
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#operations">
+     2.2.1.3. Operations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vectors-and-matrices">
+     2.2.1.4. Vectors and matrices
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#for-loops-in-python">
+     2.2.1.5. For loops in python
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plotting-with-matplotlib">
+   2.2.2. Plotting with matplotlib
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="jupyter-notebook-tutorial">
+<h1><span class="section-number">2.2. </span>Jupyter Notebook Tutorial<a class="headerlink" href="#jupyter-notebook-tutorial" title="Permalink to this headline">#</a></h1>
+<p>Jupyter notebook is a collection of cells.  These cells can be one of three main types:</p>
+<ol>
+<li><p>Code</p>
+<p>This includes executable code (usually python).  You can have different snippets of code in different cells.</p>
+</li>
+<li><p>Markdown</p>
+<p>This is text with some formatting including numbered lists etc.  The current cell is an example.  You can google the text formatting syntax if interested.  Markdown also allows you to do headers by starting the cell with # (main header), ## (sub header), or ### (sub-sub header).  I use these in this and other notebooks.</p>
+</li>
+<li><p>Raw</p>
+<p>Literally prints what you type.  Looks like code.  Is often used to convey code without it being executable.</p>
+</li>
+</ol>
+<p>The cell type must be selected from dropdown menu in toolbar above.</p>
+<p>You can edit a cell by clicking or double clicking on it and simply deleting and/or typing.</p>
+<p>You execute markdown and code cells by hitting shift+enter.  Once you have edited a cell it must be run again for edits to take place</p>
+<p>Today we will go through basics of coding in code cells as well as using matplotlib for plotting.</p>
+<div class="section" id="code-cells-python">
+<h2><span class="section-number">2.2.1. </span>Code Cells (python)<a class="headerlink" href="#code-cells-python" title="Permalink to this headline">#</a></h2>
+<div class="section" id="basics">
+<h3><span class="section-number">2.2.1.1. </span>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># assigning a variable</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># addition</span>
+<span class="c1"># first we will just print the value 6 by adding 3 to a and printing.  </span>
+<span class="c1"># Note that the value of three is still stored in variable &#39;a&#39; from above</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># we did not save the value 6 to any variable.  We will now save that value into b and print (should get same result)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">+</span><span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
+6
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># note that variables previously defined in cells above will save their values in subsequent cells </span>
+<span class="c1">#(as long as cells above have been run)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3 6
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Subtraction and multiplication are similar to addition</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="mi">4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">3</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">3</span><span class="o">-</span><span class="mi">4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12
+12
+-1
+-1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># division is only slightly more challenging.  The division performed depends on the type of number (i.e. integer or real)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">3</span><span class="o">//</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mf">3.0</span><span class="o">/</span><span class="mf">4.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+0.75
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="data-types">
+<h3><span class="section-number">2.2.1.2. </span>Data types<a class="headerlink" href="#data-types" title="Permalink to this headline">#</a></h3>
+<p>As was pointed out in the division code cell above, there are different data types in python (and other) programming languages.  There are five main data types: integers, floats, complex, strings, and boolean.  Of these, the three number types (integer, float and complex) will be the most relevant for us.</p>
+<p>Integers are exactly what they sound like.  These are used in a variety of ways and will come up frequently.  A couple of things to keep in mind: (1) integer division is different than float (/real number) division and (2) array indeces must be integers.  Integer division gives the integer number of the quotient (truncation).  In the case of 3/4, the answer should be 0.75 but integer division yields 0 because it truncates 0.75 to 0.  What do you think 5/4 would be?  … try it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># assign an integer to a variable - the variable will now have int data type</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;int&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Floats are real numbers.  Float division is what you would expect.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># assign a float to a variable - the variable will now have float data type</span>
+<span class="n">a</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;float&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Complex numbers are exactly what they sound like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># assign a complext to a variable (use j instead of i and don&#39;t use * separator) - the variable will now have complex data type</span>
+<span class="n">j</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">5.0</span><span class="o">+</span><span class="mi">3</span><span class="n">j</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;complex&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="operations">
+<h3><span class="section-number">2.2.1.3. </span>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">#</a></h3>
+<p>In addition to addition, subtraction, multiplication and division there are some other operations that are commonly used in coding.  These include the remainder (or modulus) operation, %, and the add (subtract, divide, or multiply) by operation.  I will demonstrate these in code snippets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remainder operation is %</span>
+<span class="c1"># I will do 1 to 8 divided (integer division) by four and then compute the remained</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1 divided by 4 is&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot; remainder &quot;</span><span class="p">,</span> <span class="mi">1</span><span class="o">%</span><span class="k">4</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2 divided by 4 is&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot; remainder &quot;</span><span class="p">,</span> <span class="mi">2</span><span class="o">%</span><span class="k">4</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3 divided by 4 is&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot; remainder &quot;</span><span class="p">,</span> <span class="mi">3</span><span class="o">%</span><span class="k">4</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;4 divided by 4 is&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot; remainder &quot;</span><span class="p">,</span> <span class="mi">4</span><span class="o">%</span><span class="k">4</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;5 divided by 4 is&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot; remainder &quot;</span><span class="p">,</span> <span class="mi">5</span><span class="o">%</span><span class="k">4</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;6 divided by 4 is&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot; remainder &quot;</span><span class="p">,</span> <span class="mi">6</span><span class="o">%</span><span class="k">4</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;7 divided by 4 is&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot; remainder &quot;</span><span class="p">,</span> <span class="mi">7</span><span class="o">%</span><span class="k">4</span>)
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;8 divided by 4 is&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="o">//</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot; remainder &quot;</span><span class="p">,</span> <span class="mi">8</span><span class="o">%</span><span class="k">4</span>)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 divided by 4 is 0  remainder  1
+2 divided by 4 is 0  remainder  2
+3 divided by 4 is 0  remainder  3
+4 divided by 4 is 1  remainder  0
+5 divided by 4 is 1  remainder  1
+6 divided by 4 is 1  remainder  2
+7 divided by 4 is 1  remainder  3
+8 divided by 4 is 2  remainder  0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the add to or multiply by operation</span>
+<span class="c1"># start by assigning a variable</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a=&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="c1"># now add two to a:</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a=&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a= 4
+a= 6
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This operation can be achieved using a shorthand of +=</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a=&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="c1"># now add two to a:</span>
+<span class="n">a</span> <span class="o">+=</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a=&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a= 4
+a= 6
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="vectors-and-matrices">
+<h3><span class="section-number">2.2.1.4. </span>Vectors and matrices<a class="headerlink" href="#vectors-and-matrices" title="Permalink to this headline">#</a></h3>
+<p>The next math concepts to understand how to perform in code are vectors and matrices.  Python is a very common coding language and is actively developed in a variety of areas.  As such it has a number of ‘’libraries’’ or bits of code to do common things that are already written.  If we import those libraries we can utilize these functions.  The most common example it the numpy library (http://www.numpy.org/).  This library contains a lot of functions to perform vector, matrix and other common mathematical manipulations. The first step is to import numpy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># in this code cell we will import numpy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># defining an array/vector</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2 3 1]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># vectors have some attributes that might be of interest</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Size of array a:&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data type of array a:&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Size of array a: 3
+Data type of array a: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>For a list of all attributes of arrays see: https://docs.scipy.org/doc/numpy-1.13.0/reference/generated/numpy.ndarray.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># vector manipulations</span>
+<span class="c1"># for this I start by defining another vector in R3:</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a=&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;b=&quot;</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a+b=&quot;</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2a+3b=&quot;</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a*b=&quot;</span><span class="p">,</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a*b=&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+<span class="c1"># what are the differences between the last two lines?</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a x b =&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a= [2 3 1]
+b= [-1  0  7]
+a+b= [1 3 8]
+2a+3b= [ 1  6 23]
+a*b= [-2  0  7]
+a*b= 5
+a x b = [ 21 -15   3]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># defining a matrix - these are just 2D arrays</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]],</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;shape of a:&quot;</span><span class="p">,</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;size of a:&quot;</span><span class="p">,</span><span class="n">a</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;data type of a:&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="s2">&quot;data type of b:&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a.T=&quot;</span><span class="p">,</span><span class="n">a</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2]
+ [3 4]]
+shape of a: (2, 2)
+size of a: 4
+data type of a: int64 data type of b: float64
+a.T= [[1 3]
+ [2 4]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># manipulating matrices</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]],</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;b*c=&quot;</span><span class="p">,</span><span class="n">b</span><span class="o">*</span><span class="n">c</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;b*c=&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;b*cT=&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 5.  6.]
+ [-1.  0.]]
+b*c= [[ 3.  6.]
+ [11. 18.]]
+b*c= [[ 3.  6.]
+ [11. 18.]]
+b*cT= [[17. -1.]
+ [39. -3.]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># elements in a matrix</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="for-loops-in-python">
+<h3><span class="section-number">2.2.1.5. </span>For loops in python<a class="headerlink" href="#for-loops-in-python" title="Permalink to this headline">#</a></h3>
+<p>Loops are a common structure in coding/scripting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></div>
+</div>
+</div>
+</div>
+<p>Loops are often used to compute sums.  For example if we want to know <span class="math notranslate nohighlight">\(\sum_{i=0}^{10} i\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">partialSum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+    <span class="n">partialSum</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">partialSum</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final sum is:&quot;</span><span class="p">,</span> <span class="n">partialSum</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 0
+1 1
+2 3
+3 6
+4 10
+5 15
+6 21
+7 28
+8 36
+9 45
+10 55
+Final sum is: 55
+</pre></div>
+</div>
+</div>
+</div>
+<p>Loops are often used to compute sums.  For example if we want to know <span class="math notranslate nohighlight">\(\sum_{i=1}^{10} i\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">partialSum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+    <span class="n">partialSum</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">partialSum</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Final sum is:&quot;</span><span class="p">,</span> <span class="n">partialSum</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1 1
+2 3
+3 6
+4 10
+5 15
+6 21
+7 28
+8 36
+9 45
+10 55
+Final sum is: 55
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="plotting-with-matplotlib">
+<h2><span class="section-number">2.2.2. </span>Plotting with matplotlib<a class="headerlink" href="#plotting-with-matplotlib" title="Permalink to this headline">#</a></h2>
+<p>Let’s plot <span class="math notranslate nohighlight">\(f(x) = x^2\)</span>.  To have a computer do this, we must explicitly define our <span class="math notranslate nohighlight">\(x\)</span> values and compute the corresponding <span class="math notranslate nohighlight">\(f(x)\)</span> value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a list of x values</span>
+<span class="n">xValues</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># initialize list</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">xValues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">xValues</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.0, 0.1, 0.2, 0.30000000000000004, 0.4, 0.5, 0.6000000000000001, 0.7000000000000001, 0.8, 0.9, 1.0, 1.1, 1.2000000000000002, 1.3, 1.4000000000000001, 1.5, 1.6, 1.7000000000000002, 1.8, 1.9000000000000001, 2.0, 2.1, 2.2, 2.3000000000000003, 2.4000000000000004, 2.5, 2.6, 2.7, 2.8000000000000003, 2.9000000000000004, 3.0, 3.1, 3.2, 3.3000000000000003, 3.4000000000000004, 3.5, 3.6, 3.7, 3.8000000000000003, 3.9000000000000004, 4.0, 4.1000000000000005, 4.2, 4.3, 4.4, 4.5, 4.6000000000000005, 4.7, 4.800000000000001, 4.9, 5.0, 5.1000000000000005, 5.2, 5.300000000000001, 5.4, 5.5, 5.6000000000000005, 5.7, 5.800000000000001, 5.9, 6.0, 6.1000000000000005, 6.2, 6.300000000000001, 6.4, 6.5, 6.6000000000000005, 6.7, 6.800000000000001, 6.9, 7.0, 7.1000000000000005, 7.2, 7.300000000000001, 7.4, 7.5, 7.6000000000000005, 7.7, 7.800000000000001, 7.9, 8.0, 8.1, 8.200000000000001, 8.3, 8.4, 8.5, 8.6, 8.700000000000001, 8.8, 8.9, 9.0, 9.1, 9.200000000000001, 9.3, 9.4, 9.5, 9.600000000000001, 9.700000000000001, 9.8, 9.9]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># determine f(x) values</span>
+<span class="n">yValues</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># initialize list</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">yValues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xValues</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">xValues</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>   <span class="c1"># f(x) = x^2 = x*x</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">yValues</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.0, 0.010000000000000002, 0.04000000000000001, 0.09000000000000002, 0.16000000000000003, 0.25, 0.3600000000000001, 0.4900000000000001, 0.6400000000000001, 0.81, 1.0, 1.2100000000000002, 1.4400000000000004, 1.6900000000000002, 1.9600000000000004, 2.25, 2.5600000000000005, 2.8900000000000006, 3.24, 3.6100000000000003, 4.0, 4.41, 4.840000000000001, 5.290000000000001, 5.760000000000002, 6.25, 6.760000000000001, 7.290000000000001, 7.840000000000002, 8.410000000000002, 9.0, 9.610000000000001, 10.240000000000002, 10.890000000000002, 11.560000000000002, 12.25, 12.96, 13.690000000000001, 14.440000000000001, 15.210000000000003, 16.0, 16.810000000000006, 17.64, 18.49, 19.360000000000003, 20.25, 21.160000000000004, 22.090000000000003, 23.040000000000006, 24.010000000000005, 25.0, 26.010000000000005, 27.040000000000003, 28.090000000000007, 29.160000000000004, 30.25, 31.360000000000007, 32.49, 33.64000000000001, 34.81, 36.0, 37.21000000000001, 38.440000000000005, 39.69000000000001, 40.96000000000001, 42.25, 43.56000000000001, 44.89, 46.24000000000001, 47.61000000000001, 49.0, 50.41000000000001, 51.84, 53.29000000000001, 54.760000000000005, 56.25, 57.760000000000005, 59.290000000000006, 60.84000000000001, 62.410000000000004, 64.0, 65.61, 67.24000000000002, 68.89000000000001, 70.56, 72.25, 73.96, 75.69000000000001, 77.44000000000001, 79.21000000000001, 81.0, 82.80999999999999, 84.64000000000001, 86.49000000000001, 88.36000000000001, 90.25, 92.16000000000003, 94.09000000000002, 96.04000000000002, 98.01]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xValues</span><span class="p">,</span><span class="n">yValues</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fcd114d4be0&gt;]
+</pre></div>
+</div>
+<img alt="../_images/arrays_and_matrices_47_1.png" src="../_images/arrays_and_matrices_47_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./coding_concepts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="variables.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2.1. </span>Variables in Python</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="functions.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.3. </span>Jupyter Notebook Tutorial</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Martin McCullagh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
