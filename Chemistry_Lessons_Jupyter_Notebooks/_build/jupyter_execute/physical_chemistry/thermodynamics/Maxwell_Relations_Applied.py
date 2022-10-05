@@ -10,6 +10,15 @@
 # 1. Identify the Maxwell relations
 # 2. Utilize a Maxwell relation to calculate the change in internal energy of a non-ideal gas
 # 3. Utilize a Maxwell relation to show enthalpy is independent of pressure for an ideal gas
+# 4. Utilize a Maxwell relation to derive an expression for $\Delta S$ of a van der Waals gas
+# 5. Perform Legendre transforms and use Maxwell relations for a system with non-PV work
+
+# ## Coding concepts:
+# 
+# The following coding concepts are used in this notebook
+# 
+# 1. [Variables](../../coding_concepts/variables.ipynb)
+# 2. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.ipynb)
 
 # ## Maxwell Relations
 
@@ -28,7 +37,7 @@
 # 
 # $P(V-nb) = nRT$
 
-# Recall that for an ***ideal*** gas we always used the relationship $\Delta U_{ideal} = nC_V\Delta T$ and thus the change in internal energy for an ***ideal*** gas is zero for an isothermal process.  But what about this ***non-ideal*** gas?
+# Recall that for an ***ideal*** gas we always used the relationship $\Delta U_{ideal} = n\bar{C}_V\Delta T$ and thus the change in internal energy for an ***ideal*** gas is zero for an isothermal process.  But what about this ***non-ideal*** gas?
 # 
 # In order to compute $\Delta U$, we start with the differential form of the internal energy
 # 
@@ -146,3 +155,79 @@
 # &=\int_{P_i}^{P_f} \left[ -T\frac{nR}{P} + \frac{nRT}{P}\right]dP \\
 # &= 0
 # \end{align}
+
+# ## Example 3: Compute $\Delta S$ a reversible isothermal expansion of a non-ideal gas
+# 
+# Consider a van der Waals gas with the equation of state
+# \begin{equation}
+# P = \frac{nRT}{V-nb} - \frac{an^2}{V^2}
+# \end{equation}
+# 
+# Compute the change in entropy, $\Delta S$, during a reversible isothermal expansion of this gas.
+
+# For this we start with the Maxwell relation
+# 
+# \begin{equation}
+# \left(\frac{\partial S}{\partial V}\right)_T = \left(\frac{\partial P}{\partial T}\right)_V
+# \end{equation}
+# 
+# Which can be rearranged to yield
+# 
+# \begin{equation}
+# dS = \left(\frac{\partial P}{\partial T}\right)_V dV \quad \text{constant T}
+# \end{equation}
+# 
+# Integrating both sides will yield the desired solution.  We start by computing the partial derivative of $P$ w.r.t. $T$ from the equation of state:
+# \begin{equation}
+# \left(\frac{\partial P}{\partial T}\right)_V = \frac{nR}{V-nb}
+# \end{equation}
+# 
+# Now plug-in and do the integral w.r.t. V:
+# \begin{eqnarray}
+# \Delta S &=& \int_{V_1}^{V_2} \frac{nR}{V-nb} dV \\
+# &=& nR \ln\left( \frac{V_2-nb}{V_1-nb}\right)
+# \end{eqnarray}
+
+# ## Example 4: System with non-PV work
+# 
+# Consider a system composed of a stretchable/elastic solid.  The energy associated with stretching the solid is given as 
+# \begin{equation}
+# FdL
+# \end{equation}
+# where $F$ is the elastic coefficient of the system and $L$ is the length of the material.  In this case, the differential of internal energy, for example, is given as
+# \begin{equation}
+# dU = TdS - PdV + FdL
+# \end{equation}
+# 
+# (a) Derive an expression for $dD$ where $D = A-FL$ is a new thermodynamic energy function.
+# 
+# (b) Describe how you might measure the change in entropy w.r.t force for this system at constant $V$ and $T$. 
+
+# Part (a) is essentially asking us to perform a Legendre transform of $A$ to achieve a new function $D$ that swaps natural variales $F$ and $L$.
+# 
+# \begin{eqnarray}
+# D &=& A - FL \\
+# \Rightarrow dD &=& dA - FdL - LdF \\
+# &=& -SdT - PdV + FdL - FdL - LdF \\
+# &=& -SdT - PdV - LdF
+# \end{eqnarray}
+# 
+# From this expression we have the following Maxwell relation (among others)
+# \begin{equation}
+# \left( \frac{\partial S}{\partial F}\right)_{T,V} = \left( \frac{\partial L}{\partial T}\right)_{V,F}
+# \end{equation}
+# This equation states that the change in entropy with respect to force ($F$) is equal to the change in length of the material with respect to temperature (at constant force).  So you could measure the length of the material under constant volume and force conditions for various temperatures to estimate how entropy varies with respect to force.
+
+# In[7]:
+
+
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+import numpy as np
+
+T = np.arange(250,350,5.0)
+L = np.exp(T/60)
+plt.plot(T,L,'o')
+plt.xlabel("T")
+plt.ylabel("L")
+
