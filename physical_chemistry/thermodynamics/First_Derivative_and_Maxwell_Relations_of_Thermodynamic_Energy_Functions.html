@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.2.11. First Derivative and Maxwell Relations &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.12. Maxwell Relations Applied" href="Maxwell_Relations_Applied.html" />
@@ -156,17 +157,22 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">
-     2.2. Jupyter Notebook Tutorial
+     2.2. Arrays and Matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/for_loops.html">
+     2.3. for loops
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../coding_concepts/functions.html">
-     2.3. Jupyter Notebook Tutorial
+     2.4. Functions
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">
-     2.4. Plotting with matplotlib
+     2.5. Plotting with matplotlib
     </a>
    </li>
   </ul>
@@ -740,9 +746,9 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="first-derivative-and-maxwell-relations">
+  <section class="tex2jax_ignore mathjax_ignore" id="first-derivative-and-maxwell-relations">
 <h1><span class="section-number">3.2.11. </span>First Derivative and Maxwell Relations<a class="headerlink" href="#first-derivative-and-maxwell-relations" title="Permalink to this headline">#</a></h1>
-<div class="section" id="learning-goals">
+<section id="learning-goals">
 <h2><span class="section-number">3.2.11.1. </span>Learning goals:<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After this section, student’s should be able to:</p>
 <ol class="simple">
@@ -750,84 +756,84 @@ title="Print to PDF"
 <li><p>Define a Maxwell relation</p></li>
 <li><p>Identify the Maxwell relation in each Thermodynamic energy function (of two variables)</p></li>
 </ol>
-</div>
-<div class="section" id="first-partial-derivatives-of-thermodynamic-energy-functions">
+</section>
+<section id="first-partial-derivatives-of-thermodynamic-energy-functions">
 <h2><span class="section-number">3.2.11.2. </span>First Partial Derivatives of Thermodynamic Energy Functions<a class="headerlink" href="#first-partial-derivatives-of-thermodynamic-energy-functions" title="Permalink to this headline">#</a></h2>
 <p>We have already seen the differential forms of each of the four Thermodynamic energy function and how these can be transformed from one to the other using Legendre transformations.  As a reminder, here are the four differential forms:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aea8e984-65de-4807-8528-aebb1b9e32d2">
-<span class="eqno">(3.273)<a class="headerlink" href="#equation-aea8e984-65de-4807-8528-aebb1b9e32d2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-737134ca-a0e2-4a8a-b6ae-f2898f1a6c18">
+<span class="eqno">(3.273)<a class="headerlink" href="#equation-737134ca-a0e2-4a8a-b6ae-f2898f1a6c18" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU &amp;= TdS - PdV \\
 dH &amp;= TdS + VdP \\
 dA &amp;= -SdT - PdV \\
 dG &amp;= -SdT + VdP
 \end{align}\]</div>
 <p>Recall that for a differntiable function of two variables, e.g. <span class="math notranslate nohighlight">\(f(x,y)\)</span>, the <em>exact</em> or <em>total</em> differential is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-36973461-8b66-44cd-b1db-743e0fe3cf7a">
-<span class="eqno">(3.274)<a class="headerlink" href="#equation-36973461-8b66-44cd-b1db-743e0fe3cf7a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6ce6b92e-ab8d-4353-b804-eb5fd5772181">
+<span class="eqno">(3.274)<a class="headerlink" href="#equation-6ce6b92e-ab8d-4353-b804-eb5fd5772181" title="Permalink to this equation">#</a></span>\[\begin{align}
 df &amp;= \left( \frac{\partial f}{\partial x}\right)_ydx + \left( \frac{\partial f}{\partial y}\right)_xdy
 \end{align}\]</div>
 <p>Let’s consider each Thermodynamic energy function as a function of its natural variables and compare the two forms of its differential.</p>
-<div class="section" id="internal-energy">
+<section id="internal-energy">
 <h3><span class="section-number">3.2.11.2.1. </span>Internal Energy<a class="headerlink" href="#internal-energy" title="Permalink to this headline">#</a></h3>
 <p>For internal energy, <span class="math notranslate nohighlight">\(U(S,V)\)</span>, we have the following two forms for its differential:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3901fcbe-c7f3-4892-9fa7-3a3fea928757">
-<span class="eqno">(3.275)<a class="headerlink" href="#equation-3901fcbe-c7f3-4892-9fa7-3a3fea928757" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-98cbd34e-7e44-4b1b-877a-6cb3865d6584">
+<span class="eqno">(3.275)<a class="headerlink" href="#equation-98cbd34e-7e44-4b1b-877a-6cb3865d6584" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU &amp;= TdS - PdV \\
  &amp;= \left( \frac{\partial U}{\partial S}\right)_VdS + \left( \frac{\partial U}{\partial V}\right)_SdV
 \end{align}\]</div>
 <p>where the first one comes from the standard form of the internal energy and the second is just the mathematical relationship between a differential and the partials of the independent variables.  Notice what these equalities imply:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-04f8d0b1-ae65-4a84-a5a0-e6be4a476503">
-<span class="eqno">(3.276)<a class="headerlink" href="#equation-04f8d0b1-ae65-4a84-a5a0-e6be4a476503" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-881f9f08-701d-43a0-ad89-ca2b51db07c4">
+<span class="eqno">(3.276)<a class="headerlink" href="#equation-881f9f08-701d-43a0-ad89-ca2b51db07c4" title="Permalink to this equation">#</a></span>\[\begin{align}
 T &amp; = \left( \frac{\partial U}{\partial S}\right)_V \\
 -P &amp;=\left( \frac{\partial U}{\partial V}\right)_S
 \end{align}\]</div>
-</div>
-<div class="section" id="enthalpy">
+</section>
+<section id="enthalpy">
 <h3><span class="section-number">3.2.11.2.2. </span>Enthalpy<a class="headerlink" href="#enthalpy" title="Permalink to this headline">#</a></h3>
 <p>For enthalpy, <span class="math notranslate nohighlight">\(H(S,P)\)</span>, we have the following two forms for its differential:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1203fa0f-51d7-4c01-9789-12b4bfd49c16">
-<span class="eqno">(3.277)<a class="headerlink" href="#equation-1203fa0f-51d7-4c01-9789-12b4bfd49c16" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d3e7d213-9843-41e5-a19a-5de12fd7eeee">
+<span class="eqno">(3.277)<a class="headerlink" href="#equation-d3e7d213-9843-41e5-a19a-5de12fd7eeee" title="Permalink to this equation">#</a></span>\[\begin{align}
 dH &amp;= TdS + VdP \\
  &amp;= \left( \frac{\partial H}{\partial S}\right)_PdS + \left( \frac{\partial H}{\partial P}\right)_SdP
 \end{align}\]</div>
 <p>where the first one comes from the standard form of the enthalpy and the second is just the mathematical relationship between a differential and the partials of the independent variables.  Notice what these equalities imply:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5fc6e8b6-2b22-47fc-9059-1b383991ef99">
-<span class="eqno">(3.278)<a class="headerlink" href="#equation-5fc6e8b6-2b22-47fc-9059-1b383991ef99" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-519ad015-badf-4128-a716-77ee629dae5f">
+<span class="eqno">(3.278)<a class="headerlink" href="#equation-519ad015-badf-4128-a716-77ee629dae5f" title="Permalink to this equation">#</a></span>\[\begin{align}
 T &amp; = \left( \frac{\partial H}{\partial S}\right)_P \\
 V &amp;=\left( \frac{\partial H}{\partial P}\right)_S
 \end{align}\]</div>
-</div>
-<div class="section" id="helmholtz-free-energy">
+</section>
+<section id="helmholtz-free-energy">
 <h3><span class="section-number">3.2.11.2.3. </span>Helmholtz Free Energy<a class="headerlink" href="#helmholtz-free-energy" title="Permalink to this headline">#</a></h3>
 <p>For Helmholtz free energy, <span class="math notranslate nohighlight">\(A(T,V)\)</span>, we have the following two forms for its differential:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d7efbd4a-d2e5-4261-9925-f15f8e32e01c">
-<span class="eqno">(3.279)<a class="headerlink" href="#equation-d7efbd4a-d2e5-4261-9925-f15f8e32e01c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-20948db3-f128-44bb-bf17-59b1c7a81652">
+<span class="eqno">(3.279)<a class="headerlink" href="#equation-20948db3-f128-44bb-bf17-59b1c7a81652" title="Permalink to this equation">#</a></span>\[\begin{align}
 dA &amp;= -SdT - PdV \\
  &amp;= \left( \frac{\partial A}{\partial T}\right)_VdT + \left( \frac{\partial A}{\partial V}\right)_TdV
 \end{align}\]</div>
 <p>where the first one comes from the standard form of the Helmholtz free energy and the second is just the mathematical relationship between a differential and the partials of the independent variables.  Notice what these equalities imply:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e9ebc047-7cf9-4df5-8c12-3ac274a14f9c">
-<span class="eqno">(3.280)<a class="headerlink" href="#equation-e9ebc047-7cf9-4df5-8c12-3ac274a14f9c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b14c3f51-faf1-4729-9744-20ca477b3a6a">
+<span class="eqno">(3.280)<a class="headerlink" href="#equation-b14c3f51-faf1-4729-9744-20ca477b3a6a" title="Permalink to this equation">#</a></span>\[\begin{align}
 -S &amp; = \left( \frac{\partial A}{\partial T}\right)_V \\
 -P &amp;=\left( \frac{\partial A}{\partial V}\right)_T
 \end{align}\]</div>
-</div>
-<div class="section" id="gibbs-free-energy">
+</section>
+<section id="gibbs-free-energy">
 <h3><span class="section-number">3.2.11.2.4. </span>Gibbs Free Energy<a class="headerlink" href="#gibbs-free-energy" title="Permalink to this headline">#</a></h3>
 <p>For Gibbs free energy, <span class="math notranslate nohighlight">\(G(T,P)\)</span>, we have the following two forms for its differential:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-285bb2de-9f6e-45c3-abb2-c06c36696037">
-<span class="eqno">(3.281)<a class="headerlink" href="#equation-285bb2de-9f6e-45c3-abb2-c06c36696037" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-35262cad-294e-43db-9a36-f0c2afbae2c8">
+<span class="eqno">(3.281)<a class="headerlink" href="#equation-35262cad-294e-43db-9a36-f0c2afbae2c8" title="Permalink to this equation">#</a></span>\[\begin{align}
 dG &amp;= -SdT + VdP \\
  &amp;= \left( \frac{\partial G}{\partial T}\right)_PdT + \left( \frac{\partial G}{\partial P}\right)_TdP
 \end{align}\]</div>
 <p>where the first one comes from the standard form of the Helmholtz free energy and the second is just the mathematical relationship between a differential and the partials of the independent variables.  Notice what these equalities imply:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-02927be6-19ec-409c-a17e-fb28df5c64e8">
-<span class="eqno">(3.282)<a class="headerlink" href="#equation-02927be6-19ec-409c-a17e-fb28df5c64e8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-40c35ca5-1880-4aa8-8a83-270db4c661f9">
+<span class="eqno">(3.282)<a class="headerlink" href="#equation-40c35ca5-1880-4aa8-8a83-270db4c661f9" title="Permalink to this equation">#</a></span>\[\begin{align}
 -S &amp; = \left( \frac{\partial G}{\partial T}\right)_P \\
 V &amp;=\left( \frac{\partial G}{\partial P}\right)_T
 \end{align}\]</div>
-</div>
-<div class="section" id="summary-of-first-derivative-relationships">
+</section>
+<section id="summary-of-first-derivative-relationships">
 <h3><span class="section-number">3.2.11.2.5. </span>Summary of first derivative relationships<a class="headerlink" href="#summary-of-first-derivative-relationships" title="Permalink to this headline">#</a></h3>
 <table class="colwidths-auto table">
 <thead>
@@ -855,70 +861,70 @@ V &amp;=\left( \frac{\partial G}{\partial P}\right)_T
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="maxwell-relations">
+</section>
+</section>
+<section id="maxwell-relations">
 <h2><span class="section-number">3.2.11.3. </span>Maxwell Relations<a class="headerlink" href="#maxwell-relations" title="Permalink to this headline">#</a></h2>
 <p>The Maxwell relations are the equivalencies of the second cross partials of the Thermodynamic energy functions</p>
 <p>The Maxwell relations rely on an additional mathematical property of <em>exact</em> differentials. Namely, that for an exact differential of (at least) two independent variables, the <em><strong>second cross paritial derivatives</strong></em> are equivalent.</p>
 <p>What is a <em><strong>second cross partial derivative</strong></em>?  Let’s again consider a function, <span class="math notranslate nohighlight">\(f(x,y)\)</span>, of independent variables <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>.  The differential, <span class="math notranslate nohighlight">\(df\)</span>, is expressed in terms of first partial derivatives of each independent variable:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-00da4929-3b19-475c-b4a2-221e274192cc">
-<span class="eqno">(3.283)<a class="headerlink" href="#equation-00da4929-3b19-475c-b4a2-221e274192cc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-59dcc849-a037-44ab-87a5-4c711fb1852b">
+<span class="eqno">(3.283)<a class="headerlink" href="#equation-59dcc849-a037-44ab-87a5-4c711fb1852b" title="Permalink to this equation">#</a></span>\[\begin{align}
 df &amp;= \left( \frac{\partial f}{\partial x}\right)_ydx + \left( \frac{\partial f}{\partial y}\right)_xdy
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\left( \frac{\partial f}{\partial x}\right)\)</span> is the first partial derivative of <span class="math notranslate nohighlight">\(f\)</span> with respect to (wrt) <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(\left( \frac{\partial f}{\partial y}\right)\)</span> is the first partial derivative of <span class="math notranslate nohighlight">\(f\)</span> wrt <span class="math notranslate nohighlight">\(y\)</span>.  A <em><strong>second cross paritial derivative</strong></em> is the derivative of a first partial derivative wrt the other independent variable.  In this case, there are two cross partials:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-97fa5564-1fb5-44a0-af7c-2690f0c27fa5">
-<span class="eqno">(3.284)<a class="headerlink" href="#equation-97fa5564-1fb5-44a0-af7c-2690f0c27fa5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-049cfcae-be9c-40e7-afb4-de9855481dc5">
+<span class="eqno">(3.284)<a class="headerlink" href="#equation-049cfcae-be9c-40e7-afb4-de9855481dc5" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left(\frac{\partial}{\partial y} \left( \frac{\partial f}{\partial x}\right)_y\right)_x
 &amp;= \left( \frac{\partial^2 f}{\partial y\partial x}\right) \\
 \left(\frac{\partial}{\partial x} \left( \frac{\partial f}{\partial y}\right)_x\right)_y &amp;= \left( \frac{\partial^2 f}{\partial x\partial y}\right)
 \end{align}\]</div>
 <p>This is as opposed to the second partial derivatives wrt to the same variables</p>
-<div class="amsmath math notranslate nohighlight" id="equation-87ac32ca-68bf-4043-aa2a-651c38561cc5">
-<span class="eqno">(3.285)<a class="headerlink" href="#equation-87ac32ca-68bf-4043-aa2a-651c38561cc5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c134bf9a-b222-4200-870d-39db6b9dd29d">
+<span class="eqno">(3.285)<a class="headerlink" href="#equation-c134bf9a-b222-4200-870d-39db6b9dd29d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{\partial}{\partial x} \left( \frac{\partial f}{\partial x}\right) 
 &amp;= \left( \frac{\partial^2 f}{\partial x^2}\right) \\
 \frac{\partial}{\partial y} \left( \frac{\partial f}{\partial y}\right) &amp;= \left( \frac{\partial^2 f}{\partial y^2}\right)
 \end{align}\]</div>
 <p>The <em><strong>second cross paritial derivatives</strong></em> of an <em>exact</em> differential are equivalent, meaning:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cd69151b-921a-4954-af35-7f9f1542f368">
-<span class="eqno">(3.286)<a class="headerlink" href="#equation-cd69151b-921a-4954-af35-7f9f1542f368" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-78d545ea-5f8e-45a3-9e13-3238629814c6">
+<span class="eqno">(3.286)<a class="headerlink" href="#equation-78d545ea-5f8e-45a3-9e13-3238629814c6" title="Permalink to this equation">#</a></span>\[\begin{align}
  \left( \frac{\partial^2 f}{\partial y\partial x}\right) &amp;= \left( \frac{\partial^2 f}{\partial x\partial y}\right)
 \end{align}\]</div>
-<div class="section" id="example-second-cross-partials-are-equivalent">
+<section id="example-second-cross-partials-are-equivalent">
 <h3><span class="section-number">3.2.11.3.1. </span>Example: Second Cross Partials are Equivalent<a class="headerlink" href="#example-second-cross-partials-are-equivalent" title="Permalink to this headline">#</a></h3>
 <p>Consider the function <span class="math notranslate nohighlight">\(f(x,y) = 2xy + x^2 + \frac{y^3}{x}\)</span>.  Show that the second cross partials are equivalent.</p>
 <p>Strategy: Determine each cross partial by first determining the first partial derivatives and subsequently differentiating those wrt the other variable.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b27f53bb-966a-456c-984c-3c5b230a7ae6">
-<span class="eqno">(3.287)<a class="headerlink" href="#equation-b27f53bb-966a-456c-984c-3c5b230a7ae6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-955689cd-1ab4-463a-b56b-6680f12ed69f">
+<span class="eqno">(3.287)<a class="headerlink" href="#equation-955689cd-1ab4-463a-b56b-6680f12ed69f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left( \frac{\partial f}{\partial x}\right)_y &amp;= 2y + 2x - \frac{y^3}{x^2} \\
 \left( \frac{\partial f}{\partial y}\right)_y &amp;= 2x + \frac{3y^2}{x} \\
 \end{align}\]</div>
 <p>Now compute the second cross partials</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0757616c-ca18-4959-a6d8-109e98f809d0">
-<span class="eqno">(3.288)<a class="headerlink" href="#equation-0757616c-ca18-4959-a6d8-109e98f809d0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cbc64d51-b082-4897-8ae5-90018ac4c67f">
+<span class="eqno">(3.288)<a class="headerlink" href="#equation-cbc64d51-b082-4897-8ae5-90018ac4c67f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left( \frac{\partial ^2f}{\partial y\partial x}\right) &amp;= 2  - \frac{3y^2}{x^2} \\
 \left( \frac{\partial ^2f}{\partial x\partial y}\right)_y &amp;= 2 - \frac{3y^2}{x^2} \\
 \end{align}\]</div>
 <p>We see that these two are equivalent.</p>
-</div>
-<div class="section" id="thermodynamic-energy-functions">
+</section>
+<section id="thermodynamic-energy-functions">
 <h3><span class="section-number">3.2.11.3.2. </span>Thermodynamic Energy Functions<a class="headerlink" href="#thermodynamic-energy-functions" title="Permalink to this headline">#</a></h3>
 <p>So what does this mean for the Thermodynamic energy functions?  We will consider the internal energy and extrapolate to the rest</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a181227-c0bd-47f1-a650-39321e003eef">
-<span class="eqno">(3.289)<a class="headerlink" href="#equation-8a181227-c0bd-47f1-a650-39321e003eef" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3bd93e0c-9d5f-46d9-8edf-c2cdcbd5cd9b">
+<span class="eqno">(3.289)<a class="headerlink" href="#equation-3bd93e0c-9d5f-46d9-8edf-c2cdcbd5cd9b" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU =&amp;  \left( \frac{\partial U}{\partial S}\right)_VdS + \left( \frac{\partial U}{\partial V}\right)_SdV \\
 \Rightarrow \left(\frac{\partial}{\partial V}\left( \frac{\partial U}{\partial S}\right)_V\right)_S =&amp; \left(\frac{\partial}{\partial S}\left( \frac{\partial U}{\partial V}\right)_S\right)_V
 \end{align}\]</div>
 <p>The real power of this comes from plugging in for the first derivatives of the energy functions (namely <span class="math notranslate nohighlight">\(T  = \left( \frac{\partial U}{\partial S}\right)_V\)</span> and <span class="math notranslate nohighlight">\(-P =\left( \frac{\partial U}{\partial V}\right)_S\)</span> in this case)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-618bf0c2-8e92-4639-b8f4-e76d81b43df7">
-<span class="eqno">(3.290)<a class="headerlink" href="#equation-618bf0c2-8e92-4639-b8f4-e76d81b43df7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4987b794-5212-4e9f-b737-4bb246f7ed1e">
+<span class="eqno">(3.290)<a class="headerlink" href="#equation-4987b794-5212-4e9f-b737-4bb246f7ed1e" title="Permalink to this equation">#</a></span>\[\begin{align}
  \left(\frac{\partial}{\partial V}\left(T\right)\right)_S =&amp; \left(\frac{\partial}{\partial S}\left( -P\right)\right)_V\\
  \left(\frac{\partial T}{\partial V}\right)_S =&amp; -\left(\frac{\partial P}{\partial S}\right)_V
 \end{align}\]</div>
 <p>Similar relationship can be derived from the differential forms of <span class="math notranslate nohighlight">\(H\)</span>, <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(G\)</span>.  These are summmarized in following table.</p>
-</div>
-<div class="section" id="summary-of-maxwell-relations">
+</section>
+<section id="summary-of-maxwell-relations">
 <h3><span class="section-number">3.2.11.3.3. </span>Summary of Maxwell Relations<a class="headerlink" href="#summary-of-maxwell-relations" title="Permalink to this headline">#</a></h3>
 <table class="colwidths-auto table">
 <thead>
@@ -946,9 +952,9 @@ dU =&amp;  \left( \frac{\partial U}{\partial S}\right)_VdS + \left( \frac{\parti
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
