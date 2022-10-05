@@ -1,30 +1,31 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
-# import standard libraries
-import numpy as np
-import matplotlib.pyplot as plt
-
-
-# In[2]:
-
-
-# routine to initialize "pretty" plots
-def define_figure(xlabel="X",ylabel="Y"):
-    # setup plot parameters
-    fig = plt.figure(figsize=(10,8), dpi= 80, facecolor='w', edgecolor='k')
-    ax = plt.subplot(111)
-    ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
-    ax.set_xlabel(xlabel,size=20)
-    ax.set_ylabel(ylabel,size=20)
-    plt.tick_params(axis='both',labelsize=20)
-    return ax
-
-
 # # Variational Solution to the Harmonic Oscillator
+
+# ## Motivation
+# 
+# Let's see how to use the variatianol approach in QM to estimate solution to the quantum harmonic oscillator
+
+# ## Learning Goals
+# 
+# After going through these notes, you should be able to:
+# 
+# 1. Approximate the HO wavefunctions as a sum of Gaussians
+# 2. Compute the variational matrix elements for the HO given Gaussian basis functions
+# 3. Use code provided to estimate the variational solution for fixed number of Gaussians
+
+# ## Coding Concepts
+# 
+# The following coding concepts are used in this notebook
+# 
+# 1. [Variables](../../coding_concepts/variables.ipynb)
+# 2. [Matrices](../../coding_concepts/arrays_and_matrices.ipynb)
+# 3. [for loops](../../coding_concepts/for_loops.ipynb)
+# 4. [Functions](../../coding_concepts/functions.ipynb)
+# 5. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.pyplot)
+
+# ## Determing the Variational Solution to the HO Problem with Gaussian Basis Functions
 
 # Let's consider a harmonic oscillator with Hamiltonian
 # 
@@ -65,7 +66,25 @@ def define_figure(xlabel="X",ylabel="Y"):
 
 # ## Code to perform variational solution of HO
 
-# In[3]:
+# In[1]:
+
+
+# import standard libraries
+import numpy as np
+import matplotlib.pyplot as plt
+# routine to initialize "pretty" plots
+def define_figure(xlabel="X",ylabel="Y"):
+    # setup plot parameters
+    fig = plt.figure(figsize=(10,8), dpi= 80, facecolor='w', edgecolor='k')
+    ax = plt.subplot(111)
+    ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+    ax.set_xlabel(xlabel,size=20)
+    ax.set_ylabel(ylabel,size=20)
+    plt.tick_params(axis='both',labelsize=20)
+    return ax
+
+
+# In[2]:
 
 
 from scipy import integrate
@@ -126,7 +145,7 @@ def basis_ho(N): # N is half the number of basis functions
     return psi, H_eig_val
 
 
-# In[4]:
+# In[3]:
 
 
 # compute psis:
@@ -134,7 +153,7 @@ psi5, E5 = basis_ho(2)
 #psi10, E10 = basis_ho(10)
 
 
-# In[5]:
+# In[4]:
 
 
 # let's plot the energy levels and wave functions
@@ -177,7 +196,7 @@ for n in range(4):
 #plt.legend(fontsize=18)
 
 
-# In[6]:
+# In[5]:
 
 
 # run gaussian expansions
@@ -204,7 +223,7 @@ ax.plot(x,-psi40[:,9],label="n=9 41 gaussians",lw=3)
 ax.legend(fontsize=20,markerscale=5.0)
 
 
-# In[7]:
+# In[6]:
 
 
 # initialize a figure
@@ -221,16 +240,4 @@ ax.plot(x,psi20[:,9]**2,label="n=9 20 gaussians",lw=3)
 ax.plot(x,psi40[:,9]**2,label="n=9 40 gaussians",lw=3)
 # make legend
 ax.legend(fontsize=20,markerscale=5.0)
-
-
-# In[8]:
-
-
-plt.plot(x,x**3*np.exp(-(x-1)**2))
-
-
-# In[ ]:
-
-
-
 
