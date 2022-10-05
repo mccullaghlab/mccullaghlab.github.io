@@ -98,7 +98,7 @@ print("Length of a:", len(a))
 import numpy as np
 
 
-# ### Vectors and matrices
+# ### Vectors
 
 # In[7]:
 
@@ -134,26 +134,76 @@ print("a*b=",np.dot(a,b))
 print("a x b =",np.cross(a,b))
 
 
+# ### Matrices
+
+# We can define a matrix in a number of ways.  The first is to cast a list of lists as a numpy matrix.
+
 # In[10]:
 
 
 # defining a matrix - these are just 2D arrays
 a = np.matrix([[1,2],[3,4]])
 b = np.matrix([[1,2],[3,4]],dtype=float)
+c = np.matrix([[5,6],[-1,0]],dtype=float)
 print(a)
-print("shape of a:",a.shape)
-print("size of a:",a.size)
-print("data type of a:", a.dtype, "data type of b:", b.dtype)
-print("a.T=",a.T)
+print(b)
+print(c)
 
+
+# We can also declare the matrices and populate them element by element.
 
 # In[11]:
 
 
-# manipulating matrices
-c = np.matrix([[5,6],[-1,0]],dtype=float)
-print(c)
-print("b*c=",b*c)
-print("b*c=",np.dot(b,c))
-print("b*cT=",np.dot(b,c.T))
+a = np.empty((3,3),dtype=float)   # declare an empty matrix of size 3x3 and type float
+for i in range(3):
+    for j in range(3):
+        a[i,j] = i+j              # place the value of i+j into the i,jth element of the matrix
+print(a)
+
+
+# Elements in a matrix can be accessed by square brackets and the integer indeces
+
+# In[12]:
+
+
+print("a[0,0]=",a[0,0])
+print("a[1,2]=",a[1,2])
+
+
+# ### Manipulating Matrices
+
+# Numpy has a lot of built in functions to manipulate or assess a matrix.  
+
+# In[13]:
+
+
+# trace
+print("Tr(a)=",np.trace(a))
+# determinant
+print("|a|=det(a)=",np.linalg.det(a))
+# transpose
+print("a^T=",a.T)
+
+
+# More complicated matrix manipulations such as inverses and diagonalizations can also be done
+
+# In[14]:
+
+
+# inverse
+np.linalg.inv(a)
+
+
+# <div class="alert alert-success">
+# Note that not all matrices are invertible!
+# </div>
+
+# In[8]:
+
+
+# eigenvalues and eigenvectors
+e,v = np.linalg.eig(a)
+print("Eigenvalues:",e)
+print("Eigenvectors:",v)
 

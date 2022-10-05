@@ -5,12 +5,19 @@
 
 # ## Learning Goals
 
-# After going through these notes, students should be able to:
+# After going through these notes, you should be able to:
 # 
 # 1. Write out the Boltzmann factor for a given state of a system,
 # 2. Define all of the terms/variables in a Boltzmann factor,
 # 3. Determine the relative probability of two or more states given distributions and energies,
 # 4. Determine the partition function for a system given complete set of states.
+
+# ## Coding Concepts
+# 
+# The following coding concepts are used in this notebook:
+# 1. [Variables](../../coding_concepts/variables.ipynb)
+# 2. [Functions](../../coding_concepts/functions.ipynb)
+# 3. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.ipynb)
 
 # ## Introduction and Motivation
 
@@ -160,3 +167,33 @@
 # &=& \frac{e^{-\beta \frac{3h^2}{8ma^2}}}{e^{-\beta \frac{6h^2}{8ma^2}}} \\
 # &=& e^{\beta \frac{3h^2}{8ma^2}}
 # \end{eqnarray}
+
+# We see that the ratio of the first two translational states is an exponential function that depends on temperature, mass of the particle, and size of the box.  If we consider the particle to have the mass of a Helium atom (4.002 amu) and to be constrained in a micrometer length box, we get the following ratio of these as a function of temperature. 
+
+# In[1]:
+
+
+# import numpy library for use later
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+# define a function of a1/a2
+k = 1.38e-23
+h = 6.626e-34
+def a1_a2(T,m,a):
+    return np.exp(-3*h**2/(k*T*8*m*a**2))
+
+# define variables from the problem
+a = 1e-6             # in m
+m = 4.002*1.66e-27   # in kg
+# define temperature domain
+T = np.arange(1.0,100,0.1)
+# make a plot
+plt.plot(T,a1_a2(T,m,a))
+
+
+# In[ ]:
+
+
+
+

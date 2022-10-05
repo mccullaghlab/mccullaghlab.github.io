@@ -15,6 +15,15 @@
 # 2. Normalize continuous and discrete probability densities.
 # 3. Compute average quantities from probability densities.
 
+# ## Coding Concepts
+# 
+# The following coding concepts are used in this notebook:
+# 
+# 1. [Variables](../../coding_concepts/variables.ipynb)
+# 2. [Functions](../../coding_concepts/functions.ipynb)
+# 3. [Lists](../../coding_concepts/arrays_and_matrices.ipynb)
+# 4. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.ipynb)
+
 # ## Discrete Probability
 
 # Discrete probability or the probability of discrete events describes the likelihood of observing events such as flipping a coin or rolling a dice.  Consider flipping a coin.  We have intuition into this that, assuming the coin is "fair", we should have 
@@ -30,7 +39,7 @@
 # 
 # For example, if we flipped a coin nine times we might get:
 
-# In[1]:
+# In[6]:
 
 
 import random  # library to generate random integer
@@ -108,7 +117,7 @@ coinToss(9)
 # \end{eqnarray}
 # Since $\sum P = 1$, the probability distribution is normalized.
 
-# In[2]:
+# In[7]:
 
 
 import numpy as np
@@ -121,7 +130,7 @@ print(norm)
 
 # 2. Plot P(x).  See plot below.
 
-# In[3]:
+# In[14]:
 
 
 import matplotlib.pyplot as plt
@@ -144,7 +153,7 @@ plt.vlines(x,0,p,lw=3)
 #     &=& -0.3
 #     \end{eqnarray}
 
-# In[4]:
+# In[17]:
 
 
 print(np.round(np.sum(p*x),2))
@@ -156,7 +165,7 @@ print(np.round(np.sum(p*x),2))
 #     &=& 2.5
 #     \end{eqnarray}
 
-# In[5]:
+# In[18]:
 
 
 print(np.round(np.sum(x**2*p),2))
@@ -197,7 +206,7 @@ print(np.round(np.sum(x**2*p),2))
 # \end{equation}
 # where $x_0$ is the center/mean of the distribution, $C$ is the normalization factor, and $\sigma^2$ is the variance of the distribution ($\sigma = \sqrt{\sigma^2}$ is the standard deviation).  A 1D Gaussian distribution centered at $x_0=2$ and with a standard deviation of $\sigma = 1$ is plotted below.
 
-# In[6]:
+# In[23]:
 
 
 from scipy.stats import norm
@@ -256,7 +265,7 @@ plt.plot(x,norm.pdf(x,loc=2,scale=1),lw=3)
 # 
 # Examples of even functions include even powers of $x$, e.g. $f(x) = x^2$.  Examples of odd functions include the odd powers of $x$, e.g. $f(x) = x^3$.  These two functions are plotted below.
 
-# In[7]:
+# In[26]:
 
 
 from scipy.stats import norm
@@ -314,9 +323,3 @@ plt.legend(fontsize=fontsize)
 # \begin{equation}
 # f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-x_0)^2}{2\sigma^2}}
 # \end{equation}
-
-# In[ ]:
-
-
-
-

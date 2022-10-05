@@ -16,10 +16,11 @@
 
 # ## Coding Concepts
 
-# 1. Plotting with matplotlib
-# 2. Variables
-# 3. Functions
-# 4. Numeric integration
+# The following coding concepts are used in this notebook:
+# 1. [Variables](../../coding_concepts/variables.ipynb)
+# 2. [Functions](../../coding_concepts/functions.ipynb)
+# 3. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.ipynb)
+# 4. [Numeric Integration](../../coding_concepts/numeric_integration.ipynb)
 
 # ## Energy of a Monatomic Ideal Gas
 
