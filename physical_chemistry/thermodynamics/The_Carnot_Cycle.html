@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.2.6. The Carnot Cycle &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -52,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.7. Second Law of Thermodynamics" href="Second_Law_of_Thermodynamics.html" />
@@ -173,6 +172,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">
      2.5. Plotting with matplotlib
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/numeric_integration.html">
+     2.6. Numeric Integration
     </a>
    </li>
   </ul>
@@ -824,10 +828,10 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="the-carnot-cycle">
+  <div class="tex2jax_ignore mathjax_ignore section" id="the-carnot-cycle">
 <h1><span class="section-number">3.2.6. </span>The Carnot Cycle<a class="headerlink" href="#the-carnot-cycle" title="Permalink to this headline">#</a></h1>
 <p>We have discussed, briefly, the idea of gasses expanding and contracting and how to compute internal energy, work, and heat along different expansion/contraction paths.  Today we will discuss combining multiple steps into a cycle and computing internal energy, enthalpy, work and heat along this cycle.</p>
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.2.6.1. </span>Learning goals:<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After this lesson, students should be able to:</p>
 <ol class="simple">
@@ -839,50 +843,50 @@ title="Print to PDF"
 <li><p>Relate volumes along Carnot cycle</p></li>
 <li><p>Compute efficiency of a heat engine following Carnot cycle</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.2.6.2. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Variables</p></li>
 <li><p>Plotting with matplotlib</p></li>
 </ol>
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h2><span class="section-number">3.2.6.3. </span>The Carnot Cycle<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <p>The Carnot cycle is a special four point Thermodynamic cycle of an ideal gas.  It is the most efficient (can be shown when we learn about the second Law) cycle possible. It involves two types of reversible processes: (1) isothermal expansion/contration and (2) adiabatic expansion/contration.  We will derive some equations for (2) and use what we already know about (1).</p>
-<section id="adiabatic-expansion-contration">
+<div class="section" id="adiabatic-expansion-contration">
 <h3><span class="section-number">3.2.6.3.1. </span>Adiabatic expansion/contration<a class="headerlink" href="#adiabatic-expansion-contration" title="Permalink to this headline">#</a></h3>
 <p>Adiabatic expansion/contraction is defined as a process for which there is not heat exhange.  Meaning <span class="math notranslate nohighlight">\(q=0\)</span>.  This yields simple expressions for <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(\Delta U\)</span> and <span class="math notranslate nohighlight">\(\Delta H\)</span>:</p>
 <p><span class="math notranslate nohighlight">\(\Delta U = C_V\Delta T\)</span></p>
 <p><span class="math notranslate nohighlight">\(\Delta H = C_P\Delta T\)</span></p>
 <p><span class="math notranslate nohighlight">\(w = \Delta U = C_V\Delta T\)</span></p>
-</section>
-<section id="adiabatic-expansion-contraction-on-a-pv-diagram">
+</div>
+<div class="section" id="adiabatic-expansion-contraction-on-a-pv-diagram">
 <h3><span class="section-number">3.2.6.3.2. </span>Adiabatic expansion/contraction on a PV diagram<a class="headerlink" href="#adiabatic-expansion-contraction-on-a-pv-diagram" title="Permalink to this headline">#</a></h3>
 <p>But what does an adiabat look like on a PV diagram?   To determine this, we need to know what the restriction <span class="math notranslate nohighlight">\(q=0\)</span> puts on <span class="math notranslate nohighlight">\(P\)</span> as a function of <span class="math notranslate nohighlight">\(V\)</span>.</p>
 <p><span class="math notranslate nohighlight">\(P = \frac{nRT}{V}\)</span></p>
 <p>The restriction of <span class="math notranslate nohighlight">\(q=0\)</span> puts restrictions on <span class="math notranslate nohighlight">\(\frac{T}{V}\)</span>.  Let’s see what this will look like.</p>
 <p>We start by writing out the differential form of the internal energy equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0691aef1-e2ec-4332-b75a-80e0611752a1">
-<span class="eqno">(3.224)<a class="headerlink" href="#equation-0691aef1-e2ec-4332-b75a-80e0611752a1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-35918032-ba76-4fa9-a3d7-23381ea4d778">
+<span class="eqno">(3.224)<a class="headerlink" href="#equation-35918032-ba76-4fa9-a3d7-23381ea4d778" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU &amp;= \delta q + \delta w \\
 &amp;= \delta w
 \end{align}\]</div>
 <p>since no heat transfer in an adiabatic process.  We now plug in for internal energy of an ideal gas <span class="math notranslate nohighlight">\(\delta w = -PdV\)</span> (reversible):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5bffec79-0317-46db-adeb-c3605ab2d011">
-<span class="eqno">(3.225)<a class="headerlink" href="#equation-5bffec79-0317-46db-adeb-c3605ab2d011" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8232dc35-dfcb-463b-8fd2-34de9aa520d2">
+<span class="eqno">(3.225)<a class="headerlink" href="#equation-8232dc35-dfcb-463b-8fd2-34de9aa520d2" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU &amp;= \delta w \\
 C_V dT &amp;= -PdV \\
 C_V dT &amp; -\frac{nRT}{V}dV
 \end{align}\]</div>
 <p>where the last line I have used the ideal gas law (equation of state).  At this juncture we can integrate both sides.  But note that we cannot assume <span class="math notranslate nohighlight">\(T\)</span> is constant because the process is <em><strong>not</strong></em> isothermal.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a8af0a85-ec6c-44fe-a684-7b55a725e377">
-<span class="eqno">(3.226)<a class="headerlink" href="#equation-a8af0a85-ec6c-44fe-a684-7b55a725e377" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1c5cf805-0f13-4cdb-abba-0da133422f9e">
+<span class="eqno">(3.226)<a class="headerlink" href="#equation-1c5cf805-0f13-4cdb-abba-0da133422f9e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_{T_1}^{T_2}C_V dT &amp;= -\int_{V_1}^{V_2}\frac{nRT}{V}dV
 \end{align}\]</div>
 <p>Note that the left hand side of the previous equation is integrating over temperature and the right hand side is integrating over volume.  There is a <span class="math notranslate nohighlight">\(T\)</span> on the right hand side so we divide both sides of the equation to get it to the left hand side.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-53d64660-b1d2-4448-9840-052391a0cde2">
-<span class="eqno">(3.227)<a class="headerlink" href="#equation-53d64660-b1d2-4448-9840-052391a0cde2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0b7c6e76-8cbb-4392-89ea-790ab8335548">
+<span class="eqno">(3.227)<a class="headerlink" href="#equation-0b7c6e76-8cbb-4392-89ea-790ab8335548" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_{T_1}^{T_2}C_V dT &amp;= -\int_{V_1}^{V_2}\frac{nRT}{V}dV \\
 \Rightarrow \int_{T_1}^{T_2}\frac{C_V}{T} dT &amp;= -\int_{V_1}^{V_2}\frac{nR}{V}dV \\
 \Rightarrow C_V\ln\left( \frac{T_2}{T_1} \right) &amp;= -nR\ln\left( \frac{V_2}{V_1} \right) \\
@@ -974,8 +978,8 @@ C_V dT &amp; -\frac{nRT}{V}dV
 <p><span class="math notranslate nohighlight">\(B\)</span> : isothermal expansion from <span class="math notranslate nohighlight">\((V_2,P_2,T_2)\)</span> to <span class="math notranslate nohighlight">\((V_3,P_3,T_2)\)</span></p>
 <p><span class="math notranslate nohighlight">\(C\)</span> : adiabatic expansion from <span class="math notranslate nohighlight">\((V_3,P_3,T_2)\)</span> to <span class="math notranslate nohighlight">\((V_4,P_4,T_1)\)</span></p>
 <p><span class="math notranslate nohighlight">\(D\)</span> : isothermal contraction from <span class="math notranslate nohighlight">\((V_4,P_4,T_1)\)</span> to <span class="math notranslate nohighlight">\((V_1,P_1,T_1)\)</span></p>
-</section>
-<section id="a-adiabatic-contraction">
+</div>
+<div class="section" id="a-adiabatic-contraction">
 <h3><span class="section-number">3.2.6.3.3. </span><span class="math notranslate nohighlight">\(A\)</span>: Adiabatic Contraction<a class="headerlink" href="#a-adiabatic-contraction" title="Permalink to this headline">#</a></h3>
 <p>We want to compute <span class="math notranslate nohighlight">\(w_A\)</span>, <span class="math notranslate nohighlight">\(q_A\)</span>, <span class="math notranslate nohighlight">\(\Delta U_A\)</span>, and <span class="math notranslate nohighlight">\(\Delta H_A\)</span> for a reversible adiabatic contraction from <span class="math notranslate nohighlight">\((V_1,P_1,T_1)\)</span> to <span class="math notranslate nohighlight">\((V_2,P_2,T_2)\)</span>.</p>
 <p>Equations and results are from above derivation but one must be careful that we are starting at <span class="math notranslate nohighlight">\((V_1,P_1,T_1)\)</span> and ending at <span class="math notranslate nohighlight">\((V_2,P_2,T_2)\)</span>.</p>
@@ -983,8 +987,8 @@ C_V dT &amp; -\frac{nRT}{V}dV
 <p><span class="math notranslate nohighlight">\(\Delta H_C = C_P \Delta T = \frac{5}{2}nR(T_2-T_1)\)</span></p>
 <p><span class="math notranslate nohighlight">\(w_C = C_V \Delta T = \frac{3}{2}nR(T_2-T_1)\)</span></p>
 <p><span class="math notranslate nohighlight">\(q_C = 0\)</span></p>
-</section>
-<section id="b-isothermal-expansion">
+</div>
+<div class="section" id="b-isothermal-expansion">
 <h3><span class="section-number">3.2.6.3.4. </span><span class="math notranslate nohighlight">\(B\)</span>: Isothermal Expansion<a class="headerlink" href="#b-isothermal-expansion" title="Permalink to this headline">#</a></h3>
 <p>We want to compute <span class="math notranslate nohighlight">\(w_B\)</span>, <span class="math notranslate nohighlight">\(q_B\)</span>, <span class="math notranslate nohighlight">\(\Delta U_B\)</span>, and <span class="math notranslate nohighlight">\(\Delta H_B\)</span> for a reversible isothermal expansion from <span class="math notranslate nohighlight">\((V_2,P_2,T_2)\)</span> to <span class="math notranslate nohighlight">\((V_3,P_3,T_2)\)</span>.</p>
 <p>For an isothermal expansion/contraction of an ideal gas from <span class="math notranslate nohighlight">\((V_2,P_2,T_2)\)</span> to <span class="math notranslate nohighlight">\((V_3,P_3,T_2)\)</span>:</p>
@@ -992,8 +996,8 @@ C_V dT &amp; -\frac{nRT}{V}dV
 <p><span class="math notranslate nohighlight">\(\Delta H_B = 0\)</span></p>
 <p><span class="math notranslate nohighlight">\(w_B = nRT_2\ln\left(\frac{V_2}{V_3}\right)\)</span></p>
 <p><span class="math notranslate nohighlight">\(q_B = nRT_2\ln\left(\frac{V_3}{V_2}\right)\)</span></p>
-</section>
-<section id="c-adiabatic-expansion">
+</div>
+<div class="section" id="c-adiabatic-expansion">
 <h3><span class="section-number">3.2.6.3.5. </span><span class="math notranslate nohighlight">\(C\)</span>: Adiabatic Expansion<a class="headerlink" href="#c-adiabatic-expansion" title="Permalink to this headline">#</a></h3>
 <p>Compute <span class="math notranslate nohighlight">\(w_C\)</span>, <span class="math notranslate nohighlight">\(q_C\)</span>, <span class="math notranslate nohighlight">\(\Delta U_C\)</span>, and <span class="math notranslate nohighlight">\(\Delta H_C\)</span> for adiabatic expansion starting from <span class="math notranslate nohighlight">\((V_3,P_3,T_2)\)</span> and ending at <span class="math notranslate nohighlight">\((V_4,P_4,T_1)\)</span>.</p>
 <p>Equations and results are very comparable to process <span class="math notranslate nohighlight">\(A\)</span> but one must be careful that we are starting at <span class="math notranslate nohighlight">\((V_3,P_3,T_2)\)</span> and ending at <span class="math notranslate nohighlight">\((V_4,P_4,T_1)\)</span>.</p>
@@ -1001,8 +1005,8 @@ C_V dT &amp; -\frac{nRT}{V}dV
 <p><span class="math notranslate nohighlight">\(\Delta H_C = C_P \Delta T = \frac{5}{2}nR(T_1-T_2)\)</span></p>
 <p><span class="math notranslate nohighlight">\(w_C = C_V \Delta T = \frac{3}{2}nR(T_1-T_2)\)</span></p>
 <p><span class="math notranslate nohighlight">\(q_C = 0\)</span></p>
-</section>
-<section id="d-isothermal-contraction">
+</div>
+<div class="section" id="d-isothermal-contraction">
 <h3><span class="section-number">3.2.6.3.6. </span><span class="math notranslate nohighlight">\(D\)</span>: Isothermal Contraction<a class="headerlink" href="#d-isothermal-contraction" title="Permalink to this headline">#</a></h3>
 <p>We want to compute <span class="math notranslate nohighlight">\(w_D\)</span>, <span class="math notranslate nohighlight">\(q_D\)</span>, <span class="math notranslate nohighlight">\(\Delta U_D\)</span>, and <span class="math notranslate nohighlight">\(\Delta H_D\)</span> for a reversible isothermal expansion from <span class="math notranslate nohighlight">\((V_4,P_4,T_1)\)</span> to <span class="math notranslate nohighlight">\((V_1,P_1,T_1)\)</span>.</p>
 <p>We will use the same equations as the isothermal expansion process but take care about the beginning and end points.</p>
@@ -1010,8 +1014,8 @@ C_V dT &amp; -\frac{nRT}{V}dV
 <p><span class="math notranslate nohighlight">\(\Delta H_D = 0\)</span></p>
 <p><span class="math notranslate nohighlight">\(w_D = nRT_1\ln\left(\frac{V_4}{V_1}\right)\)</span></p>
 <p><span class="math notranslate nohighlight">\(q_D = nRT_1\ln\left(\frac{V_1}{V_4}\right)\)</span></p>
-</section>
-<section id="summary">
+</div>
+<div class="section" id="summary">
 <h3><span class="section-number">3.2.6.3.7. </span>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">#</a></h3>
 <table class="colwidths-auto table">
 <thead>
@@ -1055,8 +1059,8 @@ C_V dT &amp; -\frac{nRT}{V}dV
 <p><span class="math notranslate nohighlight">\(q_{total} = nRT_2\ln\left(\frac{V_3}{V_2}\right)  + nRT_1\ln\left(\frac{V_1}{V_4}\right) \)</span></p>
 <p><span class="math notranslate nohighlight">\(\Delta U_{total} = \frac{3}{2}nR(T_2-T_1) + \frac{3}{2}nR(T_1-T_2) =0 \)</span></p>
 <p><span class="math notranslate nohighlight">\(\Delta H_{total} = \frac{5}{2}nR(T_2-T_1) + \frac{5}{2}nR(T_1-T_2) =0 \)</span></p>
-</section>
-<section id="relationship-between-v-1-v-2-v-3-v-4">
+</div>
+<div class="section" id="relationship-between-v-1-v-2-v-3-v-4">
 <h3><span class="section-number">3.2.6.3.8. </span>Relationship between <span class="math notranslate nohighlight">\(V_1\)</span>, <span class="math notranslate nohighlight">\(V_2\)</span>, <span class="math notranslate nohighlight">\(V_3\)</span>, <span class="math notranslate nohighlight">\(V_4\)</span><a class="headerlink" href="#relationship-between-v-1-v-2-v-3-v-4" title="Permalink to this headline">#</a></h3>
 <p>We would like to know sign of <span class="math notranslate nohighlight">\(q\)</span> and <span class="math notranslate nohighlight">\(w\)</span>.  In order to combine the two terms in each, we need to figure out the relationship between the ratios in the logarithms.  Because this cycle involves <em>isothermal</em> and <em>adiabatic</em> process, there are restrictions on the relationships between the four volumes.  We will attempt to determine the relationship between</p>
 <p><span class="math notranslate nohighlight">\(\frac{V_2}{V_3}\)</span> and <span class="math notranslate nohighlight">\(\frac{V_4}{V_1}\)</span>.</p>
@@ -1074,25 +1078,25 @@ C_V dT &amp; -\frac{nRT}{V}dV
 <p>or, simply,</p>
 <p><span class="math notranslate nohighlight">\(\frac{V_1}{V_4} = \frac{V_2}{V_3}\)</span></p>
 <p>Now to plug back into <span class="math notranslate nohighlight">\(w_{total}\)</span> and <span class="math notranslate nohighlight">\(q_{total}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92b9aa38-36b1-48f5-aabe-d0895ae8e257">
-<span class="eqno">(3.228)<a class="headerlink" href="#equation-92b9aa38-36b1-48f5-aabe-d0895ae8e257" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7dea94c3-7c7a-4497-b6a6-8f467dfa4964">
+<span class="eqno">(3.228)<a class="headerlink" href="#equation-7dea94c3-7c7a-4497-b6a6-8f467dfa4964" title="Permalink to this equation">#</a></span>\[\begin{align}
 w_{total} =&amp; nRT_2\ln\left(\frac{V_2}{V_3}\right)  + nRT_1\ln\left(\frac{V_4}{V_1}\right)\\
 &amp; = nRT_2\ln\left(\frac{V_1}{V_4}\right)  + nRT_1\ln\left(\frac{V_4}{V_1}\right)\\ 
 &amp; = nR\ln\left(\frac{V_1}{V_4}\right)\Delta T
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-3d415127-e875-4f7e-b57f-9bdb9f63ac7f">
-<span class="eqno">(3.229)<a class="headerlink" href="#equation-3d415127-e875-4f7e-b57f-9bdb9f63ac7f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-104ccbb3-2b3d-4bc6-845f-b9e3927754fb">
+<span class="eqno">(3.229)<a class="headerlink" href="#equation-104ccbb3-2b3d-4bc6-845f-b9e3927754fb" title="Permalink to this equation">#</a></span>\[\begin{align}
 q_{total} =&amp; nRT_2\ln\left(\frac{V_3}{V_2}\right)  + nRT_1\ln\left(\frac{V_1}{V_4}\right) \\
  = &amp; nRT_2\ln\left(\frac{V_4}{V_1}\right)  + nRT_1\ln\left(\frac{V_1}{V_4}\right) \\
  = &amp; - nR\ln\left(\frac{V_1}{V_4}\right)\Delta T 
 \end{align}\]</div>
-</section>
-<section id="sign-of-heat-and-work">
+</div>
+<div class="section" id="sign-of-heat-and-work">
 <h3><span class="section-number">3.2.6.3.9. </span>Sign of heat and work<a class="headerlink" href="#sign-of-heat-and-work" title="Permalink to this headline">#</a></h3>
 <p><span class="math notranslate nohighlight">\(w_{total} &lt; 0\)</span> if (<span class="math notranslate nohighlight">\(\Delta T &lt; 0\)</span> and <span class="math notranslate nohighlight">\(\frac{V_1}{V_4} &gt; 1\)</span>) OR (<span class="math notranslate nohighlight">\(\Delta T &gt; 0\)</span> and <span class="math notranslate nohighlight">\(\frac{V_1}{V_4} &lt; 1\)</span>) <span class="math notranslate nohighlight">\(\Rightarrow\)</span> clockwise on PV diagram</p>
 <p><span class="math notranslate nohighlight">\(w_{total} &gt; 0\)</span> if (<span class="math notranslate nohighlight">\(\Delta T &lt; 0\)</span> and <span class="math notranslate nohighlight">\(\frac{V_1}{V_4} &lt; 1\)</span>) OR (<span class="math notranslate nohighlight">\(\Delta T &gt; 0\)</span> and <span class="math notranslate nohighlight">\(\frac{V_1}{V_4} &gt; 1\)</span>) <span class="math notranslate nohighlight">\(\Rightarrow\)</span> counter-clockwise on PV diagram</p>
-</section>
-<section id="efficiency">
+</div>
+<div class="section" id="efficiency">
 <h3><span class="section-number">3.2.6.3.10. </span>Efficiency<a class="headerlink" href="#efficiency" title="Permalink to this headline">#</a></h3>
 <p>For a heat engine (<span class="math notranslate nohighlight">\(w_{total}&lt;0\)</span>), the efficiency is the amount of work extracted, <span class="math notranslate nohighlight">\(w_{total}\)</span>, divided by the energy in put, <span class="math notranslate nohighlight">\(q_{in}\)</span>.</p>
 <p><span class="math notranslate nohighlight">\(\varepsilon = \frac{w_{total}}{q_{in}}\)</span></p>
@@ -1110,9 +1114,9 @@ q_{total} =&amp; nRT_2\ln\left(\frac{V_3}{V_2}\right)  + nRT_1\ln\left(\frac{V_1
 </div>
 </div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
