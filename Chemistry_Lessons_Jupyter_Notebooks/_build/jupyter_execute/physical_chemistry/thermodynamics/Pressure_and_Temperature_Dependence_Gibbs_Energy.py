@@ -94,10 +94,12 @@
 # \begin{equation}
 # \bar{G}(T,P) = G^\circ(T)+ RT \ln\frac{f(P,T)}{f^\circ}
 # \end{equation}
-# where $f$ is called the fugacity and is given by
+# where $f$ is called the fugacity and is given by (for virial expansion)
 # \begin{equation}
 # \frac{f(P,T)}{f^\circ} = \frac{P}{P^\circ}\exp\left[B(T)P + C(T)P^2 + ... \right]
 # \end{equation}
+# 
+# It can also be shown that $f^\circ = P^\circ$
 
 # ## Temperature Dependence of $G$
 
@@ -170,7 +172,7 @@
 # 
 # Below I will use code and numeric integration to make this plot.
 
-# In[19]:
+# In[1]:
 
 
 import numpy as np
@@ -196,7 +198,7 @@ int_cp_l = integrate.quad(cp_l,87.90,225.46)[0]
 print("int 87.90 to 225.46", int_cp_l, "J/mol")
 
 
-# In[30]:
+# In[10]:
 
 
 import matplotlib.pyplot as plt
@@ -216,18 +218,22 @@ def H(T_array):
     return np.array(f)
 
 # setup plot parameters
-fontsize=12
-fig = plt.figure(figsize=(6,6), dpi= 80, facecolor='w', edgecolor='k')
+fontsize=16
+fig = plt.figure(figsize=(8,8), dpi= 80, facecolor='w', edgecolor='k')
 ax = plt.subplot(111)
 ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
 ax.set_xlabel("$T$",size=fontsize)
 ax.set_ylabel("$H(T) - H(0)$ (kJ/mol)",size=fontsize)
 plt.tick_params(axis='both',labelsize=fontsize)
 T = np.arange(0.1,1000,0.1)
-plt.plot(T,H(T)/1000,lw=2)
+plt.plot(T,H(T)/1000,lw=3,c='k')
+ax.axvspan(0, 15, alpha=0.5, color='red')
+ax.axvspan(15, 87.90, alpha=0.5, color='blue')
+ax.axvspan(87.90, 225.46, alpha=0.5, color='green')
+ax.axvspan(225.46, 1000, alpha=0.5, color='yellow')
 
 
-# In[22]:
+# In[7]:
 
 
 import numpy as np
@@ -253,7 +259,7 @@ int_s_l = integrate.quad(s_l,87.90,225.46)[0]
 print("int 87.90 to 225.46", int_s_l, "J/mol/K")
 
 
-# In[31]:
+# In[9]:
 
 
 import matplotlib.pyplot as plt
@@ -273,18 +279,22 @@ def S(T_array):
     return np.array(f)
 
 # setup plot parameters
-fontsize=12
-fig = plt.figure(figsize=(6,6), dpi= 80, facecolor='w', edgecolor='k')
+fontsize=16
+fig = plt.figure(figsize=(8,8), dpi= 80, facecolor='w', edgecolor='k')
 ax = plt.subplot(111)
 ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
 ax.set_xlabel("$T$",size=fontsize)
 ax.set_ylabel("$S(T)$ (kJ/mol/K)",size=fontsize)
 plt.tick_params(axis='both',labelsize=fontsize)
 T = np.arange(0.1,1000,0.1)
-plt.plot(T,S(T)/1000,lw=2)
+plt.plot(T,S(T)/1000,lw=3,c='k')
+ax.axvspan(0, 15, alpha=0.5, color='red')
+ax.axvspan(15, 87.90, alpha=0.5, color='blue')
+ax.axvspan(87.90, 225.46, alpha=0.5, color='green')
+ax.axvspan(225.46, 1000, alpha=0.5, color='yellow')
 
 
-# In[29]:
+# In[11]:
 
 
 import matplotlib.pyplot as plt
@@ -294,13 +304,17 @@ def G(T):
     return H(T) - T*S(T)
 
 # setup plot parameters
-fontsize=12
-fig = plt.figure(figsize=(6,6), dpi= 80, facecolor='w', edgecolor='k')
+fontsize=16
+fig = plt.figure(figsize=(8,8), dpi= 80, facecolor='w', edgecolor='k')
 ax = plt.subplot(111)
 ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
 ax.set_xlabel("$T$",size=fontsize)
 ax.set_ylabel("$G(T) - H(0)$ (kJ/mol)",size=fontsize)
 plt.tick_params(axis='both',labelsize=fontsize)
 T = np.arange(0.1,1000,0.1)
-plt.plot(T,G(T)/1000,lw=2)
+plt.plot(T,G(T)/1000,lw=3,c='k')
+ax.axvspan(0, 15, alpha=0.5, color='red')
+ax.axvspan(15, 87.90, alpha=0.5, color='blue')
+ax.axvspan(87.90, 225.46, alpha=0.5, color='green')
+ax.axvspan(225.46, 1000, alpha=0.5, color='yellow')
 

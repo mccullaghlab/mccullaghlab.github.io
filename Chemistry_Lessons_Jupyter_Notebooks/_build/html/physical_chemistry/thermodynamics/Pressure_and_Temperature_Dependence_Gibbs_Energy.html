@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.2.14. The Pressure and Temperature Dependence of the Gibbs Energy &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -52,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.15. Thermodynamics of Solutions" href="Thermodynamics_of_Solutions.html" />
@@ -736,9 +735,9 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="the-pressure-and-temperature-dependence-of-the-gibbs-energy">
+  <div class="tex2jax_ignore mathjax_ignore section" id="the-pressure-and-temperature-dependence-of-the-gibbs-energy">
 <h1><span class="section-number">3.2.14. </span>The Pressure and Temperature Dependence of the Gibbs Energy<a class="headerlink" href="#the-pressure-and-temperature-dependence-of-the-gibbs-energy" title="Permalink to this headline">#</a></h1>
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.2.14.1. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After reading and understanding these notes, you will be able to</p>
 <ol class="simple">
@@ -747,8 +746,8 @@ title="Print to PDF"
 <li><p>Derive the relationship between Gibbs free energy and temperature (Gibbs-Helmholtz equation)</p></li>
 <li><p>Calculate <span class="math notranslate nohighlight">\(G(T)\)</span> from data on heat capacity and phase transitions for a substance.</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.2.14.2. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -757,91 +756,92 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/numeric_integration.html"><span class="doc std std-doc">Numeric integration</span></a></p></li>
 </ol>
-</section>
-<section id="differential-form-of-the-gibbs-energy">
+</div>
+<div class="section" id="differential-form-of-the-gibbs-energy">
 <h2><span class="section-number">3.2.14.3. </span>Differential Form of the Gibbs Energy<a class="headerlink" href="#differential-form-of-the-gibbs-energy" title="Permalink to this headline">#</a></h2>
 <p>The differential form of the Gibbs energy as a function of only two variables is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6f9b8e96-7ca2-452c-a1ac-28e9d216a152">
-<span class="eqno">(3.321)<a class="headerlink" href="#equation-6f9b8e96-7ca2-452c-a1ac-28e9d216a152" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cc9241dc-24af-4d3f-8a42-44aa51b116f9">
+<span class="eqno">(3.321)<a class="headerlink" href="#equation-cc9241dc-24af-4d3f-8a42-44aa51b116f9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dG = -SdT + VdP
 \end{equation}\]</div>
 <p>which implies the following first derivative relationships</p>
-<div class="amsmath math notranslate nohighlight" id="equation-783f8d45-8161-4fdc-bbec-16a68dd59929">
-<span class="eqno">(3.322)<a class="headerlink" href="#equation-783f8d45-8161-4fdc-bbec-16a68dd59929" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-00da11de-897d-4322-9600-45e20c25693b">
+<span class="eqno">(3.322)<a class="headerlink" href="#equation-00da11de-897d-4322-9600-45e20c25693b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial G}{\partial T} \right)_P &amp;=&amp; -S \\
 \left( \frac{\partial G}{\partial P} \right)_T &amp;=&amp; V
 \end{eqnarray}\]</div>
 <p>These two equations can be used to determine the pressure and temperature dependence of <span class="math notranslate nohighlight">\( G\)</span>.</p>
-</section>
-<section id="pressure-dependence-of-g">
+</div>
+<div class="section" id="pressure-dependence-of-g">
 <h2><span class="section-number">3.2.14.4. </span>Pressure Dependence of <span class="math notranslate nohighlight">\(G\)</span><a class="headerlink" href="#pressure-dependence-of-g" title="Permalink to this headline">#</a></h2>
 <p>The partial derivative relationship can be used to determine the pressure dependence of <span class="math notranslate nohighlight">\( G\)</span>.  The derivation is as follows</p>
-<div class="amsmath math notranslate nohighlight" id="equation-382d3995-2353-4cf9-95f4-303bc196e738">
-<span class="eqno">(3.323)<a class="headerlink" href="#equation-382d3995-2353-4cf9-95f4-303bc196e738" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a0d240b2-9a42-4d7b-b69f-1cf896894855">
+<span class="eqno">(3.323)<a class="headerlink" href="#equation-a0d240b2-9a42-4d7b-b69f-1cf896894855" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial G}{\partial P} \right)_T &amp;=&amp; V \\
 \Rightarrow dG &amp;=&amp; VdP \quad\text{constant T} \\
 \Rightarrow \Delta G &amp;=&amp; \int_{P_1}^{P_2}VdP \quad\text{constant T}
 \end{eqnarray}\]</div>
 <p>For an ideal gas we have <span class="math notranslate nohighlight">\(V = \frac{nRT}{P}\)</span> yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dc568235-31e6-430d-bdd8-90ad4d7488b3">
-<span class="eqno">(3.324)<a class="headerlink" href="#equation-dc568235-31e6-430d-bdd8-90ad4d7488b3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c997433f-f196-46ac-bfb1-e5ae199e487c">
+<span class="eqno">(3.324)<a class="headerlink" href="#equation-c997433f-f196-46ac-bfb1-e5ae199e487c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta G &amp;=&amp; \int_{P_1}^{P_2}\frac{nRT}{P}dP \quad\text{constant T} \\
 &amp;=&amp; nRT\ln\frac{P_2}{P_1}
 \end{eqnarray}\]</div>
 <p><span class="math notranslate nohighlight">\(P = 1\)</span> bar is used as a standard reference so if we set that as the initial state we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0ca12f98-7f3c-4c50-a433-6ce5ff11f0e3">
-<span class="eqno">(3.325)<a class="headerlink" href="#equation-0ca12f98-7f3c-4c50-a433-6ce5ff11f0e3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-0eccad70-2713-4393-9b87-73b0103876ab">
+<span class="eqno">(3.325)<a class="headerlink" href="#equation-0eccad70-2713-4393-9b87-73b0103876ab" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta G  &amp;=&amp; G(T,P_2) - G(T,1 \text{bar}) &amp;=&amp; nRT\ln\frac{P_2}{1 \text{bar}} \\
 \Rightarrow G(T,P_2) &amp;=&amp; G^\circ(T) + nRT\ln\frac{P_2}{1 \text{bar}}
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(G^\circ(T)\)</span> is the Gibbs free energy of the substance at <span class="math notranslate nohighlight">\(P=1\)</span> bar and the temperature of interest.</p>
 <p>The logarithmic dendence of <span class="math notranslate nohighlight">\(G\)</span> on <span class="math notranslate nohighlight">\(P\)</span> is an entirely entropic effect.</p>
 <p>The equation above is most commonly written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bd162b30-4af0-499b-a3ed-f16c6c4a8de2">
-<span class="eqno">(3.326)<a class="headerlink" href="#equation-bd162b30-4af0-499b-a3ed-f16c6c4a8de2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-1a0de5b9-3da2-40a3-911f-976bd7814a10">
+<span class="eqno">(3.326)<a class="headerlink" href="#equation-1a0de5b9-3da2-40a3-911f-976bd7814a10" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 G(T,P)  &amp;=&amp; G^\circ(T) + nRT\ln\frac{P}{P^\circ}
 \end{eqnarray}\]</div>
-<section id="for-a-non-ideal-gas">
+<div class="section" id="for-a-non-ideal-gas">
 <h3><span class="section-number">3.2.14.4.1. </span>For a Non-Ideal Gas<a class="headerlink" href="#for-a-non-ideal-gas" title="Permalink to this headline">#</a></h3>
 <p>The above equation was derived for an ideal gas.  It is useful to derive a similar expression for non-ideal gasses.  Here we will use the virial expansion for the equation of state of general non-ideal gas.  This has the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8eaa121e-8a5a-4b69-8c6c-a03eb95d3876">
-<span class="eqno">(3.327)<a class="headerlink" href="#equation-8eaa121e-8a5a-4b69-8c6c-a03eb95d3876" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1e2c9e54-7f36-44aa-b59f-a16b06e0e5e6">
+<span class="eqno">(3.327)<a class="headerlink" href="#equation-1e2c9e54-7f36-44aa-b59f-a16b06e0e5e6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{P\bar{V}}{RT} = 1 + B(T)P + C(T)P^2 + ...
 \end{equation}\]</div>
 <p>If we substitute this equation of state in for the volume in the above derivation we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8aca5b9b-422b-45c9-9ece-a71858c0dcfd">
-<span class="eqno">(3.328)<a class="headerlink" href="#equation-8aca5b9b-422b-45c9-9ece-a71858c0dcfd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b09bc5c9-e59d-4cf6-bf5e-96d29fa9c8b5">
+<span class="eqno">(3.328)<a class="headerlink" href="#equation-b09bc5c9-e59d-4cf6-bf5e-96d29fa9c8b5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{P^{id}}^Pd\bar{G} = RT\int_{P^{id}}^P\frac{dP'}{P'} + RTB(T)\int_{P^{id}}^PdP'+ RTC(T)\int_{P^{id}}^PP'dP'+...
 \end{equation}\]</div>
 <p>Doing the integrtion yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d8237f73-fb05-48a9-96ee-f313774738be">
-<span class="eqno">(3.329)<a class="headerlink" href="#equation-d8237f73-fb05-48a9-96ee-f313774738be" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-93a24f80-6d1c-41e7-a594-ed0f582f197f">
+<span class="eqno">(3.329)<a class="headerlink" href="#equation-93a24f80-6d1c-41e7-a594-ed0f582f197f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \bar{G}(T,P) = \bar{G}(T,P^{id}) + RT\ln\frac{P}{P^{id}} + RTB(T)P + \frac{RTC(T)P^2}{2} + ...
 \end{equation}\]</div>
 <p>This can be rewritten as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-26f68d67-98fc-4d88-8cf6-162a034d40e8">
-<span class="eqno">(3.330)<a class="headerlink" href="#equation-26f68d67-98fc-4d88-8cf6-162a034d40e8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d2d391b9-3d4b-4004-baa3-232217e75022">
+<span class="eqno">(3.330)<a class="headerlink" href="#equation-d2d391b9-3d4b-4004-baa3-232217e75022" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \bar{G}(T,P) = G^\circ(T)+ RT \ln\frac{f(P,T)}{f^\circ}
 \end{equation}\]</div>
-<p>where <span class="math notranslate nohighlight">\(f\)</span> is called the fugacity and is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6c8e106c-3b7f-4c58-a91c-13ef35b423cb">
-<span class="eqno">(3.331)<a class="headerlink" href="#equation-6c8e106c-3b7f-4c58-a91c-13ef35b423cb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<p>where <span class="math notranslate nohighlight">\(f\)</span> is called the fugacity and is given by (for virial expansion)</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5b375fd5-c4ca-437e-bc2b-ec133af87bd4">
+<span class="eqno">(3.331)<a class="headerlink" href="#equation-5b375fd5-c4ca-437e-bc2b-ec133af87bd4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{f(P,T)}{f^\circ} = \frac{P}{P^\circ}\exp\left[B(T)P + C(T)P^2 + ... \right]
 \end{equation}\]</div>
-</section>
-</section>
-<section id="temperature-dependence-of-g">
+<p>It can also be shown that <span class="math notranslate nohighlight">\(f^\circ = P^\circ\)</span></p>
+</div>
+</div>
+<div class="section" id="temperature-dependence-of-g">
 <h2><span class="section-number">3.2.14.5. </span>Temperature Dependence of <span class="math notranslate nohighlight">\(G\)</span><a class="headerlink" href="#temperature-dependence-of-g" title="Permalink to this headline">#</a></h2>
 <p>The partial derivative relationship can be used to determine the temperature dependence of <span class="math notranslate nohighlight">\( G\)</span>.  The derivation is as follows</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4f11898b-b1ef-49bb-873c-d50d73a835df">
-<span class="eqno">(3.332)<a class="headerlink" href="#equation-4f11898b-b1ef-49bb-873c-d50d73a835df" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-cafa5643-00ef-460e-b7a2-860934ff2239">
+<span class="eqno">(3.332)<a class="headerlink" href="#equation-cafa5643-00ef-460e-b7a2-860934ff2239" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial G}{\partial T} \right)_P &amp;=&amp; -S \\
 \Rightarrow dG &amp;=&amp; -SdT \quad\text{constant P} \\
 \Rightarrow \Delta G &amp;=&amp; -\int_{T_1}^{T_2}SdP \quad\text{constant P}
 \end{eqnarray}\]</div>
 <p>Unlike for the pressure dependence, this does not get us far because we cannot typically measure <span class="math notranslate nohighlight">\(S\)</span>.  Rather, we will do the following manipulations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e4e820b9-b223-4dd8-b173-bd174a4f4d87">
-<span class="eqno">(3.333)<a class="headerlink" href="#equation-e4e820b9-b223-4dd8-b173-bd174a4f4d87" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c1c06bdf-9566-41fe-9ba3-1fb80778e8c7">
+<span class="eqno">(3.333)<a class="headerlink" href="#equation-c1c06bdf-9566-41fe-9ba3-1fb80778e8c7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial G}{\partial T} \right)_P &amp;=&amp; -S \\
 \Rightarrow \frac{1}{T}\left( \frac{\partial G}{\partial T}\right)_P &amp;=&amp; -\frac{S}{T} \\
 \Rightarrow \left( \frac{\partial \frac{G}{T}}{\partial T}\right)_P + \frac{G}{T^2} &amp;=&amp; -\frac{S}{T} \\
@@ -849,16 +849,16 @@ G(T,P)  &amp;=&amp; G^\circ(T) + nRT\ln\frac{P}{P^\circ}
 \Rightarrow \left( \frac{\partial \frac{G}{T}}{\partial T}\right)_P &amp;=&amp; -\frac{H}{T^2}
 \end{eqnarray}\]</div>
 <p>This last equation is called the <em>Gibbs-Helmholtz</em> equation.  We will use it in subsequent parts of this course to investigate the temperature dependence of the Gibbs free energy of chemical equilibria.  Applied to a process, this becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa79d56e-3558-4035-97f7-9e687bc589a3">
-<span class="eqno">(3.334)<a class="headerlink" href="#equation-aa79d56e-3558-4035-97f7-9e687bc589a3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-cd1a5ea2-4c1a-4e05-aeb4-e7d1fe832d0d">
+<span class="eqno">(3.334)<a class="headerlink" href="#equation-cd1a5ea2-4c1a-4e05-aeb4-e7d1fe832d0d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial \frac{G}{T}}{\partial T}\right)_P &amp;=&amp; -\frac{\Delta H}{T^2}
 \end{eqnarray}\]</div>
 <p>The implications of this equation are that we can compute the Gibbs free energy of a substance at a given <span class="math notranslate nohighlight">\(T\)</span> from tabulated enthalpy and entropy information.  Or, equivalently</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a294781-e398-4d6a-9b77-6aa0290db2f6">
-<span class="eqno">(3.335)<a class="headerlink" href="#equation-8a294781-e398-4d6a-9b77-6aa0290db2f6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b2585b8b-bd05-4ebb-8721-bf3c6c2de37c">
+<span class="eqno">(3.335)<a class="headerlink" href="#equation-b2585b8b-bd05-4ebb-8721-bf3c6c2de37c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \bar{G}(T) - \bar{H}(0) = \bar{H}(T)-\bar{H}(0) - T\bar{S}(T)
 \end{equation}\]</div>
-<section id="example-temperature-dependence-of-g-for-propene">
+<div class="section" id="example-temperature-dependence-of-g-for-propene">
 <h3><span class="section-number">3.2.14.5.1. </span>Example: Temperature Dependence of <span class="math notranslate nohighlight">\(G\)</span> for Propene<a class="headerlink" href="#example-temperature-dependence-of-g-for-propene" title="Permalink to this headline">#</a></h3>
 <p>Given the following fata for propene, plot <span class="math notranslate nohighlight">\(\bar{G}(T) - \bar{H}(0)\)</span> versus <span class="math notranslate nohighlight">\(T\)</span>.  (assume ideal gas behavior)</p>
 <div class="amsmath math notranslate nohighlight">
@@ -877,19 +877,19 @@ T_{vap} &amp;=&amp; 225.46 \quad \text{K} \\
 \Delta \bar{H}_{vap} &amp;=&amp; 18.42 \quad \text{kJ}\cdot\text{mol}^{-1} \\
 \end{eqnarray*}\]</div>
 <p>We want <span class="math notranslate nohighlight">\(\bar{G}(T) - \bar{H}(0)\)</span> which we know to be equal to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2fc489f0-6f39-4a50-b6eb-dc2703b8e8ae">
-<span class="eqno">(3.336)<a class="headerlink" href="#equation-2fc489f0-6f39-4a50-b6eb-dc2703b8e8ae" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3ce55d35-4772-42cf-9b6e-f9245459c7ff">
+<span class="eqno">(3.336)<a class="headerlink" href="#equation-3ce55d35-4772-42cf-9b6e-f9245459c7ff" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \bar{G}(T) - \bar{H}(0) = \bar{H}(T)-\bar{H}(0) - T\bar{S}(T)
 \end{equation}\]</div>
 <p>So we calculate <span class="math notranslate nohighlight">\(\bar{H}(T)-\bar{H}(0)\)</span> and <span class="math notranslate nohighlight">\(\bar{S}(T)\)</span> separately.</p>
 <p>From previous discussions, we know that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-511604b4-3461-4a89-b7d9-56f3b8ccafff">
-<span class="eqno">(3.337)<a class="headerlink" href="#equation-511604b4-3461-4a89-b7d9-56f3b8ccafff" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a520febd-614d-41ad-8808-36a2ff446451">
+<span class="eqno">(3.337)<a class="headerlink" href="#equation-a520febd-614d-41ad-8808-36a2ff446451" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \bar{H}(T)-\bar{H}(0) = \Delta H = \int_0^{15} \bar{C}_p^s dT + \int_{15}^{87.90} \bar{C}_p^s dT + \Delta \bar{H}_{fusion} + \int_{87.90}^{225.46}\bar{C}_p^ldT + \Delta \bar{H}_{vap} + \int_{225.46}^{T}\bar{C}_p^gdT
 \end{eqnarray}\]</div>
 <p>Similarly, we know that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-475fbf85-f57a-40d9-b576-8b1509d848b8">
-<span class="eqno">(3.338)<a class="headerlink" href="#equation-475fbf85-f57a-40d9-b576-8b1509d848b8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-13f563c8-6b58-43cb-8b8f-2002fc0dc0c0">
+<span class="eqno">(3.338)<a class="headerlink" href="#equation-13f563c8-6b58-43cb-8b8f-2002fc0dc0c0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \bar{S}(T) = \int_0^{15} \frac{\bar{C}_p^s}{T} dT + \int_{15}^{87.90} \frac{\bar{C}_p^s}{T} dT + \frac{\Delta \bar{H}_{fusion}}{T} + \int_{87.90}^{225.46}\frac{\bar{C}_p^l}{T}dT + \frac{\Delta \bar{H}_{vap}}{T} + \int_{225.46}^{T}\frac{\bar{C}_p^g}{T}dT
 \end{eqnarray}\]</div>
 <p>Below I will use code and numeric integration to make this plot.</p>
@@ -946,20 +946,24 @@ int 87.90 to 225.46 12213.373101852707 J/mol
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
 <span class="c1"># setup plot parameters</span>
-<span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$T$&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$H(T) - H(0)$ (kJ/mol)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">H</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">H</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mf">87.90</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mf">87.90</span><span class="p">,</span> <span class="mf">225.46</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mf">225.46</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7ff5acbaffa0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.patches.Polygon at 0x7f8c587798b0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Pressure_and_Temperature_Dependence_Gibbs_Energy_14_1.png" src="../../_images/Pressure_and_Temperature_Dependence_Gibbs_Energy_14_1.png" />
@@ -1018,20 +1022,24 @@ int 87.90 to 225.46 83.74783642272298 J/mol/K
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
 <span class="c1"># setup plot parameters</span>
-<span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$T$&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$S(T)$ (kJ/mol/K)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">S</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">S</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mf">87.90</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mf">87.90</span><span class="p">,</span> <span class="mf">225.46</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mf">225.46</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7ff5ae9cdb80&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.patches.Polygon at 0x7f8c885f8fa0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Pressure_and_Temperature_Dependence_Gibbs_Energy_16_1.png" src="../../_images/Pressure_and_Temperature_Dependence_Gibbs_Energy_16_1.png" />
@@ -1046,28 +1054,32 @@ int 87.90 to 225.46 83.74783642272298 J/mol/K
     <span class="k">return</span> <span class="n">H</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">T</span><span class="o">*</span><span class="n">S</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
 
 <span class="c1"># setup plot parameters</span>
-<span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$T$&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$G(T) - H(0)$ (kJ/mol)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">1000</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">G</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">G</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mf">87.90</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mf">87.90</span><span class="p">,</span> <span class="mf">225.46</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mf">225.46</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7ff5ae6318e0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.patches.Polygon at 0x7f8c78a06c10&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Pressure_and_Temperature_Dependence_Gibbs_Energy_17_1.png" src="../../_images/Pressure_and_Temperature_Dependence_Gibbs_Energy_17_1.png" />
 </div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
