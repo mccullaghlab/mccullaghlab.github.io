@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.2.12. Maxwell Relations Applied &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.13. Free Energy and Legendre Transforms" href="Free_Energy_and_Legendre_Transforms.html" />
@@ -322,8 +323,13 @@ const thebe_selector_output = ".output, .cell_output"
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="Phase_Diagrams_and_Phase_Equilibria.html">
+       3.2.15. Phase Diagrams and Phase Equilibria
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="Thermodynamics_of_Solutions.html">
-       3.2.15. Thermodynamics of Solutions
+       3.2.16. Thermodynamics of Solutions
       </a>
      </li>
     </ul>
@@ -729,9 +735,9 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="maxwell-relations-applied">
+  <section class="tex2jax_ignore mathjax_ignore" id="maxwell-relations-applied">
 <h1><span class="section-number">3.2.12. </span>Maxwell Relations Applied<a class="headerlink" href="#maxwell-relations-applied" title="Permalink to this headline">#</a></h1>
-<div class="section" id="learning-goals">
+<section id="learning-goals">
 <h2><span class="section-number">3.2.12.1. </span>Learning goals:<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After this section, student’s should be able to:</p>
 <ol class="simple">
@@ -741,18 +747,18 @@ title="Print to PDF"
 <li><p>Utilize a Maxwell relation to derive an expression for <span class="math notranslate nohighlight">\(\Delta S\)</span> of a van der Waals gas</p></li>
 <li><p>Perform Legendre transforms and use Maxwell relations for a system with non-PV work</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.2.12.2. </span>Coding concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook</p>
 <ol class="simple">
 <li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="maxwell-relations">
+</section>
+<section id="maxwell-relations">
 <h2><span class="section-number">3.2.12.3. </span>Maxwell Relations<a class="headerlink" href="#maxwell-relations" title="Permalink to this headline">#</a></h2>
-<div class="section" id="summary-of-maxwell-relations">
+<section id="summary-of-maxwell-relations">
 <h3><span class="section-number">3.2.12.3.1. </span>Summary of Maxwell Relations<a class="headerlink" href="#summary-of-maxwell-relations" title="Permalink to this headline">#</a></h3>
 <table class="colwidths-auto table">
 <thead>
@@ -780,21 +786,21 @@ title="Print to PDF"
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div class="section" id="example-1-change-in-internal-energy-of-a-non-ideal-gas">
+</section>
+</section>
+<section id="example-1-change-in-internal-energy-of-a-non-ideal-gas">
 <h2><span class="section-number">3.2.12.4. </span>Example 1: Change in Internal Energy of a Non-Ideal Gas<a class="headerlink" href="#example-1-change-in-internal-energy-of-a-non-ideal-gas" title="Permalink to this headline">#</a></h2>
 <p>Compute the change in internal energy, <span class="math notranslate nohighlight">\(\Delta U\)</span>, for the isothermal expansion from <span class="math notranslate nohighlight">\(V_1\)</span> to <span class="math notranslate nohighlight">\(V_2\)</span> of a finite volume gas that has the equation of state:</p>
 <p><span class="math notranslate nohighlight">\(P(V-nb) = nRT\)</span></p>
 <p>Recall that for an <em><strong>ideal</strong></em> gas we always used the relationship <span class="math notranslate nohighlight">\(\Delta U_{ideal} = n\bar{C}_V\Delta T\)</span> and thus the change in internal energy for an <em><strong>ideal</strong></em> gas is zero for an isothermal process.  But what about this <em><strong>non-ideal</strong></em> gas?</p>
 <p>In order to compute <span class="math notranslate nohighlight">\(\Delta U\)</span>, we start with the differential form of the internal energy</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f165893f-b7b0-4085-8de5-a6f0f7107701">
-<span class="eqno">(3.291)<a class="headerlink" href="#equation-f165893f-b7b0-4085-8de5-a6f0f7107701" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7749c166-4985-474a-831d-2f2e40465986">
+<span class="eqno">(3.291)<a class="headerlink" href="#equation-7749c166-4985-474a-831d-2f2e40465986" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU = TdS - PdV
 \end{align}\]</div>
 <p>Integrate both sides to yield</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a7698f4e-c80a-4c5b-a208-bd44f9805017">
-<span class="eqno">(3.292)<a class="headerlink" href="#equation-a7698f4e-c80a-4c5b-a208-bd44f9805017" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a7e1cba0-a1ab-4c6a-90f8-8aa75e1be66f">
+<span class="eqno">(3.292)<a class="headerlink" href="#equation-a7e1cba0-a1ab-4c6a-90f8-8aa75e1be66f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta U = \int_{U_i}^{U_f}dU = \int_{S_i}^{S_f} TdS - \int_{V_i}^{V_f}PdV
 \end{align}\]</div>
 <p>Notice that we can handle the second term, <span class="math notranslate nohighlight">\(\int_{V_i}^{V_f}PdV\)</span>, by plugging in the equation of state for our finite volume gas but the first term, <span class="math notranslate nohighlight">\(\int_{S_i}^{S_f} TdS\)</span>, is a bit harder to handle; while <span class="math notranslate nohighlight">\(T\)</span> is constant we do not know the change in entropy.</p>
@@ -828,40 +834,40 @@ dU = TdS - PdV
 <p>We see that the Maxwell Relation from <span class="math notranslate nohighlight">\(A\)</span> is</p>
 <p><span class="math notranslate nohighlight">\(\left(\frac{\partial S}{\partial V}\right)_T = \left(\frac{\partial P}{\partial T}\right)_V\)</span></p>
 <p>The goal is now to rerrange this partial derivative to get <span class="math notranslate nohighlight">\(dS\)</span> as a function of <span class="math notranslate nohighlight">\(dV\)</span>.  To do this, we “cross multiply” by <span class="math notranslate nohighlight">\(dV\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0008bafa-a80e-4cf3-9591-e77207d26531">
-<span class="eqno">(3.293)<a class="headerlink" href="#equation-0008bafa-a80e-4cf3-9591-e77207d26531" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7f56b857-72c8-41c7-b4a6-ee645aa6494f">
+<span class="eqno">(3.293)<a class="headerlink" href="#equation-7f56b857-72c8-41c7-b4a6-ee645aa6494f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left(\frac{\partial S}{\partial V}\right)_T =&amp; \left(\frac{\partial P}{\partial T}\right)_V \\
 \Rightarrow dS = &amp; \left(\frac{\partial P}{\partial T}\right)_V dV
 \end{align}\]</div>
 <p>Note that even though the derivative infront of <span class="math notranslate nohighlight">\(dV\)</span> is taken at constant <span class="math notranslate nohighlight">\(V\)</span>, the resulting function could still be dependent on <span class="math notranslate nohighlight">\(V\)</span>.</p>
 <p>Now, let’s plug this into our <span class="math notranslate nohighlight">\(\Delta U\)</span> equation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1fca8dd7-5c35-4078-95c6-07e59a935d2b">
-<span class="eqno">(3.294)<a class="headerlink" href="#equation-1fca8dd7-5c35-4078-95c6-07e59a935d2b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7e48a41f-6ae6-4eab-81f1-156c6df996e5">
+<span class="eqno">(3.294)<a class="headerlink" href="#equation-7e48a41f-6ae6-4eab-81f1-156c6df996e5" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta U =&amp; \int_{S_i}^{S_f} TdS - \int_{V_i}^{V_f}PdV \\
 =&amp; \int_{V_i}^{V_f} T\left(\frac{\partial P}{\partial T}\right)_V dV - \int_{V_i}^{V_f}PdV \\
 =&amp; \int_{V_i}^{V_f} \left[ T\left(\frac{\partial P}{\partial T}\right)_V -P\right]dV  \\
 \end{align}\]</div>
 <p>Now we need to determine <span class="math notranslate nohighlight">\(\left(\frac{\partial P}{\partial T}\right)_V\)</span>, plug back into the integrand, and perform the integration.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-15fa16e6-0ce1-45fc-98c1-93409e53f577">
-<span class="eqno">(3.295)<a class="headerlink" href="#equation-15fa16e6-0ce1-45fc-98c1-93409e53f577" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8b4a7e7e-8656-4a5f-9945-9daca6506478">
+<span class="eqno">(3.295)<a class="headerlink" href="#equation-8b4a7e7e-8656-4a5f-9945-9daca6506478" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left(\frac{\partial P}{\partial T}\right)_V =&amp; \frac{\partial}{\partial T} \left( \frac{nRT}{V-nb}\right) \\
 =&amp; \frac{nR}{V-nb}
 \end{align}\]</div>
 <p>Now plug back into integral:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-591c5627-5efd-49f7-83a3-90b3c6bb6ebf">
-<span class="eqno">(3.296)<a class="headerlink" href="#equation-591c5627-5efd-49f7-83a3-90b3c6bb6ebf" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d4b963be-72b1-48d3-aeb1-d5ef5c0e0489">
+<span class="eqno">(3.296)<a class="headerlink" href="#equation-d4b963be-72b1-48d3-aeb1-d5ef5c0e0489" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta U =&amp;  \int_{V_i}^{V_f} \left[ T\left(\frac{\partial P}{\partial T}\right)_V -P\right]dV  \\
 =&amp; \int_{V_i}^{V_f} \left[ T\frac{nR}{V-nb} -\frac{nRT}{V-nb}\right]dV \\
 =&amp; 0
 \end{align}\]</div>
 <p>So we did all of that to see that the change in internal energy of a finite volume gas for an isothermal process is zero, just like it is for an ideal gas (which you could also show using a very similar derivation).</p>
-</div>
-<div class="section" id="example-2-enthalpy-and-pressure-for-an-ideal-gas">
+</section>
+<section id="example-2-enthalpy-and-pressure-for-an-ideal-gas">
 <h2><span class="section-number">3.2.12.5. </span>Example 2: Enthalpy and Pressure for an ideal gas<a class="headerlink" href="#example-2-enthalpy-and-pressure-for-an-ideal-gas" title="Permalink to this headline">#</a></h2>
 <p>Show that the enthlapy of an ideal gas is independent of pressure under isothermal conditions.</p>
 <p>We start with the differential form of enthalpy</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ab266ba4-a1fc-40f7-b638-8dcb2cf698f4">
-<span class="eqno">(3.297)<a class="headerlink" href="#equation-ab266ba4-a1fc-40f7-b638-8dcb2cf698f4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-676b2afe-9958-484e-91aa-e0b4f33eb55f">
+<span class="eqno">(3.297)<a class="headerlink" href="#equation-676b2afe-9958-484e-91aa-e0b4f33eb55f" title="Permalink to this equation">#</a></span>\[\begin{align}
 dH =&amp; TdS + VdP \\
 \Rightarrow \Delta H =&amp; \int_{H_i}^{H_f}dH = \int_{S_i}^{S_f}TdS + \int_{P_i}^{P_f}VdP \\
 \end{align}\]</div>
@@ -894,90 +900,90 @@ dH =&amp; TdS + VdP \\
 </tbody>
 </table>
 <p>We choose the following <em><strong>Maxwell</strong></em> relation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cd3a0319-f375-43c7-a0b0-6e6998b698b9">
-<span class="eqno">(3.298)<a class="headerlink" href="#equation-cd3a0319-f375-43c7-a0b0-6e6998b698b9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-eedcf0a6-9d60-446b-b752-c8d61f2f895a">
+<span class="eqno">(3.298)<a class="headerlink" href="#equation-eedcf0a6-9d60-446b-b752-c8d61f2f895a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left(\frac{\partial S}{\partial P}\right)_T &amp;= -\left(\frac{\partial V}{\partial T}\right)_P
 \end{align}\]</div>
 <p>from the Gibbs free energy row.  Rearrange that equation to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d8fa31fa-50d5-4bc7-bba7-eebefb549972">
-<span class="eqno">(3.299)<a class="headerlink" href="#equation-d8fa31fa-50d5-4bc7-bba7-eebefb549972" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-30425695-51d1-48a1-9d66-3ed3709b6a6a">
+<span class="eqno">(3.299)<a class="headerlink" href="#equation-30425695-51d1-48a1-9d66-3ed3709b6a6a" title="Permalink to this equation">#</a></span>\[\begin{align}
 dS &amp;= -\left(\frac{\partial V}{\partial T}\right)_PdP
 \end{align}\]</div>
 <p>Plug back into the integral</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3a85a622-547c-418f-a434-b1c4c5dd5de8">
-<span class="eqno">(3.300)<a class="headerlink" href="#equation-3a85a622-547c-418f-a434-b1c4c5dd5de8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-32a51759-7dd6-4a74-a060-996966697f47">
+<span class="eqno">(3.300)<a class="headerlink" href="#equation-32a51759-7dd6-4a74-a060-996966697f47" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta H &amp;= \int_{S_i}^{S_f}TdS + \int_{P_i}^{P_f}VdP \\
 &amp;= \int_{P_i}^{P_f} \left[ -T\left(\frac{\partial V}{\partial T}\right)_P + V\right]dP
 \end{align}\]</div>
 <p>Using the equation of state (<span class="math notranslate nohighlight">\(PV=nRT\)</span>), we will solve for <span class="math notranslate nohighlight">\(\left(\frac{\partial V}{\partial T}\right)_P\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d6f0dbbd-2f3f-4c03-8ebb-44f735472993">
-<span class="eqno">(3.301)<a class="headerlink" href="#equation-d6f0dbbd-2f3f-4c03-8ebb-44f735472993" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3a4a2d42-e151-4efc-ad6c-8dde1717a0c9">
+<span class="eqno">(3.301)<a class="headerlink" href="#equation-3a4a2d42-e151-4efc-ad6c-8dde1717a0c9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left(\frac{\partial V}{\partial T}\right)_P &amp;= \frac{\partial}{\partial T}\left(\frac{nRT}{P}\right) \\
 &amp;= \frac{nR}{P}
 \end{align}\]</div>
 <p>Plug back into the integral and substitute <span class="math notranslate nohighlight">\(V = \frac{nRT}{P}\)</span> to see:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c53abc58-ca8e-434c-965e-97d5b38f3490">
-<span class="eqno">(3.302)<a class="headerlink" href="#equation-c53abc58-ca8e-434c-965e-97d5b38f3490" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5e91d615-b96f-4bfd-9c7d-21e3570e8db4">
+<span class="eqno">(3.302)<a class="headerlink" href="#equation-5e91d615-b96f-4bfd-9c7d-21e3570e8db4" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta H &amp;= \int_{P_i}^{P_f} \left[ -T\left(\frac{\partial V}{\partial T}\right)_P + V\right]dP \\
 &amp;=\int_{P_i}^{P_f} \left[ -T\frac{nR}{P} + \frac{nRT}{P}\right]dP \\
 &amp;= 0
 \end{align}\]</div>
-</div>
-<div class="section" id="example-3-compute-delta-s-a-reversible-isothermal-expansion-of-a-non-ideal-gas">
+</section>
+<section id="example-3-compute-delta-s-a-reversible-isothermal-expansion-of-a-non-ideal-gas">
 <h2><span class="section-number">3.2.12.6. </span>Example 3: Compute <span class="math notranslate nohighlight">\(\Delta S\)</span> a reversible isothermal expansion of a non-ideal gas<a class="headerlink" href="#example-3-compute-delta-s-a-reversible-isothermal-expansion-of-a-non-ideal-gas" title="Permalink to this headline">#</a></h2>
 <p>Consider a van der Waals gas with the equation of state</p>
-<div class="amsmath math notranslate nohighlight" id="equation-10e4abe4-2f97-43e1-8ffe-05a51a915976">
-<span class="eqno">(3.303)<a class="headerlink" href="#equation-10e4abe4-2f97-43e1-8ffe-05a51a915976" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-87a76911-3119-43ed-9a11-34dfe7b6e25b">
+<span class="eqno">(3.303)<a class="headerlink" href="#equation-87a76911-3119-43ed-9a11-34dfe7b6e25b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P = \frac{nRT}{V-nb} - \frac{an^2}{V^2}
 \end{equation}\]</div>
 <p>Compute the change in entropy, <span class="math notranslate nohighlight">\(\Delta S\)</span>, during a reversible isothermal expansion of this gas.</p>
 <p>For this we start with the Maxwell relation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d0d6ef1d-48ee-46d2-8ed0-890a627d9476">
-<span class="eqno">(3.304)<a class="headerlink" href="#equation-d0d6ef1d-48ee-46d2-8ed0-890a627d9476" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f61c56c9-479c-425d-bf2c-f2722e22337f">
+<span class="eqno">(3.304)<a class="headerlink" href="#equation-f61c56c9-479c-425d-bf2c-f2722e22337f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \left(\frac{\partial S}{\partial V}\right)_T = \left(\frac{\partial P}{\partial T}\right)_V
 \end{equation}\]</div>
 <p>Which can be rearranged to yield</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae231409-ca01-40b0-b597-bcca8b0732bb">
-<span class="eqno">(3.305)<a class="headerlink" href="#equation-ae231409-ca01-40b0-b597-bcca8b0732bb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-10db837d-bda7-47ba-8aae-6f23d0c0b17e">
+<span class="eqno">(3.305)<a class="headerlink" href="#equation-10db837d-bda7-47ba-8aae-6f23d0c0b17e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dS = \left(\frac{\partial P}{\partial T}\right)_V dV \quad \text{constant T}
 \end{equation}\]</div>
 <p>Integrating both sides will yield the desired solution.  We start by computing the partial derivative of <span class="math notranslate nohighlight">\(P\)</span> w.r.t. <span class="math notranslate nohighlight">\(T\)</span> from the equation of state:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d40827ea-31fc-4cfe-a1ab-5b92659f35a8">
-<span class="eqno">(3.306)<a class="headerlink" href="#equation-d40827ea-31fc-4cfe-a1ab-5b92659f35a8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cf132bc4-cf47-439d-bd68-2c0df4d4e9da">
+<span class="eqno">(3.306)<a class="headerlink" href="#equation-cf132bc4-cf47-439d-bd68-2c0df4d4e9da" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \left(\frac{\partial P}{\partial T}\right)_V = \frac{nR}{V-nb}
 \end{equation}\]</div>
 <p>Now plug-in and do the integral w.r.t. V:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-62df92f7-20d7-4a46-a991-4fbb98fa945a">
-<span class="eqno">(3.307)<a class="headerlink" href="#equation-62df92f7-20d7-4a46-a991-4fbb98fa945a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5ecfbd04-f274-4b25-87ca-8494fe534486">
+<span class="eqno">(3.307)<a class="headerlink" href="#equation-5ecfbd04-f274-4b25-87ca-8494fe534486" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta S &amp;=&amp; \int_{V_1}^{V_2} \frac{nR}{V-nb} dV \\
 &amp;=&amp; nR \ln\left( \frac{V_2-nb}{V_1-nb}\right)
 \end{eqnarray}\]</div>
-</div>
-<div class="section" id="example-4-system-with-non-pv-work">
+</section>
+<section id="example-4-system-with-non-pv-work">
 <h2><span class="section-number">3.2.12.7. </span>Example 4: System with non-PV work<a class="headerlink" href="#example-4-system-with-non-pv-work" title="Permalink to this headline">#</a></h2>
 <p>Consider a system composed of a stretchable/elastic solid.  The energy associated with stretching the solid is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-11274dc4-9e8e-48b9-831c-b5b3c9bf3463">
-<span class="eqno">(3.308)<a class="headerlink" href="#equation-11274dc4-9e8e-48b9-831c-b5b3c9bf3463" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-73170583-2a70-4c48-8e98-a937648a18e9">
+<span class="eqno">(3.308)<a class="headerlink" href="#equation-73170583-2a70-4c48-8e98-a937648a18e9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 FdL
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(F\)</span> is the elastic coefficient of the system and <span class="math notranslate nohighlight">\(L\)</span> is the length of the material.  In this case, the differential of internal energy, for example, is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-317ecab6-bb26-4222-a33f-e46ef6a21fbb">
-<span class="eqno">(3.309)<a class="headerlink" href="#equation-317ecab6-bb26-4222-a33f-e46ef6a21fbb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-46dfdb09-bffc-4a56-bba9-f1622a7ee5c9">
+<span class="eqno">(3.309)<a class="headerlink" href="#equation-46dfdb09-bffc-4a56-bba9-f1622a7ee5c9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dU = TdS - PdV + FdL
 \end{equation}\]</div>
 <p>(a) Derive an expression for <span class="math notranslate nohighlight">\(dD\)</span> where <span class="math notranslate nohighlight">\(D = A-FL\)</span> is a new thermodynamic energy function.</p>
 <p>(b) Describe how you might measure the change in entropy w.r.t force for this system at constant <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(T\)</span>.</p>
 <p>Part (a) is essentially asking us to perform a Legendre transform of <span class="math notranslate nohighlight">\(A\)</span> to achieve a new function <span class="math notranslate nohighlight">\(D\)</span> that swaps natural variales <span class="math notranslate nohighlight">\(F\)</span> and <span class="math notranslate nohighlight">\(L\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-34734cde-b367-46df-a415-6bbf825572fb">
-<span class="eqno">(3.310)<a class="headerlink" href="#equation-34734cde-b367-46df-a415-6bbf825572fb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c3c9a410-9849-4c2a-b832-71413421a9f2">
+<span class="eqno">(3.310)<a class="headerlink" href="#equation-c3c9a410-9849-4c2a-b832-71413421a9f2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 D &amp;=&amp; A - FL \\
 \Rightarrow dD &amp;=&amp; dA - FdL - LdF \\
 &amp;=&amp; -SdT - PdV + FdL - FdL - LdF \\
 &amp;=&amp; -SdT - PdV - LdF
 \end{eqnarray}\]</div>
 <p>From this expression we have the following Maxwell relation (among others)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-76960362-1491-4458-a8d1-36a5b91c8e1f">
-<span class="eqno">(3.311)<a class="headerlink" href="#equation-76960362-1491-4458-a8d1-36a5b91c8e1f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-64c46eaf-95da-4aec-96c2-b945422219fd">
+<span class="eqno">(3.311)<a class="headerlink" href="#equation-64c46eaf-95da-4aec-96c2-b945422219fd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \left( \frac{\partial S}{\partial F}\right)_{T,V} = \left( \frac{\partial L}{\partial T}\right)_{V,F}
 \end{equation}\]</div>
 <p>This equation states that the change in entropy with respect to force (<span class="math notranslate nohighlight">\(F\)</span>) is equal to the change in length of the material with respect to temperature (at constant force).  So you could measure the length of the material under constant volume and force conditions for various temperatures to estimate how entropy varies with respect to force.</p>
@@ -1002,8 +1008,8 @@ D &amp;=&amp; A - FL \\
 <img alt="../../_images/Maxwell_Relations_Applied_19_1.png" src="../../_images/Maxwell_Relations_Applied_19_1.png" />
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
