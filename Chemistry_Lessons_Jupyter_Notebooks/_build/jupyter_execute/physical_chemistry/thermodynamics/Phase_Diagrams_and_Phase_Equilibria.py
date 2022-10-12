@@ -3,9 +3,18 @@
 
 # # Phase Diagrams and Phase Equilibria
 
+# ## Motivation
+# 
+# Matter exists in three phases.  It can be useful to measure and ultimately predict the pressure and temperatures at which we expect matter to undergo a phase transition (e.g. at what temperature will water boil?  Does that depend on elevation?  Why?).  The Thermoydamic relationship that we have derived in previous notebooks allow us to predict this behavior.
+
 # ## Learning Goals
+#  
+# After working through this notebook, you will be able to:
 # 
-# 
+# 1. Identify states of matter and phase coexistence curves on a phase diagram,
+# 2. Define triple point and critical point 
+# 3. Predict phase coexistence relationships using the Clapeyron equation
+# 4. Predict phase coexistence relatinships for solid-vapor and liquid-vapor using the Clausius-Clapeyron equation
 
 # ## Coding Concepts
 # 
@@ -229,27 +238,108 @@ print(1 + 34.2*(300-278.7) )
 # \begin{equation}
 # \ln(P/atm) = -\frac{8090.0\text{K}}{T} - 2.013\ln(T/\text{K}) + 32.908
 # \end{equation}
-# Use this equation to calculate the molar enthalpy of sublimation of I$_2$ at 25$\circ$C.  The experimental value is 62.23 kJ/mol.
+# Use this equation to calculate the normal sublimation temperature and the molar enthalpy of sublimation of I$_2$ at 25$^\circ$C ($\Delta\bar{H}(25^\circ\text{C})$).  The experimental value is $\Delta\bar{H}(25^\circ\text{C})=62.23$ kJ/mol.
 
 # *Solution:*
 # 
-# We will use the Clausius-Clapeyron equation
+# To find the *normal* sublimation temperature, we set $P=1$ atm in the above equation and solve for $T$:
+# \begin{eqnarray}
+# \ln(1) &=& -\frac{8090.0}{T_{sub}} - 2.013\ln(T_{sub}) + 32.908 \\
+# 0 &=& -\frac{8090.0}{T_{sub}} - 2.013\ln(T_{sub}) + 32.908
+# \end{eqnarray}
+# This is a non-linear equation for $T_{sub}$ and not straightforward to solve.  Below I will use an iterative non-linear roots solver to get an answer.
+
+# In[4]:
+
+
+from scipy.optimize import fsolve
+import numpy as np
+f = lambda T : -8090/T -2.013*np.log(T) + 32.908
+guess = 300.0
+print("Normal sublimation temperature:", np.round(fsolve(f,guess)[0],1), "K")
+
+
+# 
+# To solve for $\Delta\bar{H}_{vap}(25^\circ\text{C})$ will use the Clausius-Clapeyron equation
 # \begin{eqnarray}
 # \frac{d\ln P}{dT}&=& \frac{\Delta\bar{H}_{sub}}{RT^2} \\
-# &=& \frac{8090}{T^2} - \frac{2.013}{T} \\
-# &=& \frac{8090-2.013T}{T^2} \\
+# &=& \frac{8090.0}{T^2} - \frac{2.013}{T} \\
+# &=& \frac{8090.0-2.013T}{T^2} \\
 # \Rightarrow
-# \Delta\bar{H}_{sub} &=& R(8090-2.013T)
+# \Delta\bar{H}_{sub} &=& R(8090.0-2.013T)
 # \end{eqnarray}
 # 
 # Now sub in 25$^\circ$C to get
 # 
 # \begin{equation}
-# \Delta\bar{H}_{sub}(298.15\text{K}) = 62.3\quad \text{kJ}\cdot\text{mol}^{-1}
+# \Delta\bar{H}_{sub}(298.15\text{K}) = 62.27\quad \text{kJ}\cdot\text{mol}^{-1}
 # \end{equation}
+# 
+# We see that this value is not far off from the experimental value of $\Delta\bar{H}(25^\circ\text{C})=62.23$ kJ/mol
 
 # In[34]:
 
 
 print(8.314/1000*(8090-2.013*(25+273.15)), "kJ/mol")
+
+
+# ### Example 3: Molar Enthalpy of Vaporization for Palladium
+# 
+# Use the following data to estimate the molar enthalpy of vaporization ($\Delta\bar{H}_{vap}$) for palladium
+# 
+# | T/K   |             P/bar   |
+# |:------|:--------------------|
+# | 1587  | $1.002\times10^{-9}$|
+# | 1624  | $2.152\times10^{-9}$|
+# | 1841  | $7.499\times10^{-8}$|
+
+# *Solution:*
+# 
+# We will use the Clausius-Clapeyron equation of the form
+# \begin{equation}
+# \ln(P/bar) = -\frac{\Delta\bar{H}_{vap}}{RT} + C
+# \end{equation}
+# From this equation, we expect a plot of $\ln(P)$ vs. $1/T$ to be relatively linear (assuming $\Delta\bar{H}_{vap}$ is independent of $T$) with a slope of $-\frac{\Delta\bar{H}_{vap}}{R}$.  In the code cell below I will make the plot and fit the line.
+# 
+# You will see that we get
+# \begin{equation}
+# \Delta\bar{H}_{vap} = 410.8 \quad \text{kJ}\cdot\text{mol}^{-1}
+# \end{equation}
+# 
+# This is as compared to a value of $380$ $\text{kJ}\cdot\text{mol}^{-1}$ (https://webelements.com/palladium/thermochemistry.html).
+
+# In[11]:
+
+
+# import libraries
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+from sklearn.linear_model import LinearRegression     # library to perform line fit
+# Input data
+T = np.array([1587,1624,1841])
+P = np.array([1.002e-9,2.152e-9,7.499e-8])
+# Manipulate data to perform fit
+lnP = np.log(P)
+X = (1/T).reshape((T.size,1))
+# Fit linear model:
+reg = LinearRegression().fit(X, lnP)
+# setup plot parameters
+fontsize=16
+fig = plt.figure(figsize=(8,8), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_xlabel("$100/T$ ($\cdot$K)",size=fontsize)
+ax.set_ylabel("$ln(P/bar)$",size=fontsize)
+plt.tick_params(axis='both',labelsize=fontsize)
+plt.scatter(100/T,lnP)
+label = "y = " + str(np.round(reg.coef_[0],3)) + "x + " + str(np.round(reg.intercept_,3)) + "  R$^2=$" + str(np.round(reg.score(X,lnP),2)) 
+plt.plot(100/T,reg.predict(X),lw=2, label=label)
+plt.legend(fontsize=fontsize)
+
+
+# In[10]:
+
+
+print("Delta H = ", np.round(-reg.coef_[0]*8.314/1000,1), "kJ/mol")
 
