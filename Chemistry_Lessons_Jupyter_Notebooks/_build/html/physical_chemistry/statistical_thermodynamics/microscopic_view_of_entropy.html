@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.1.8. Microscopic View of Entropy &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.1.9. Equations of State from Lattice Gas Models" href="Equations_of_State_From_Lattice_Gas.html" />
@@ -327,8 +328,13 @@ const thebe_selector_output = ".output, .cell_output"
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Chemical_Potential_from_Partition_Function.html">
+       3.2.16. Chemical Potential from the Partition Function
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">
-       3.2.16. Thermodynamics of Solutions
+       3.2.17. Thermodynamics of Solutions
       </a>
      </li>
     </ul>
@@ -744,13 +750,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="microscopic-view-of-entropy">
+  <section class="tex2jax_ignore mathjax_ignore" id="microscopic-view-of-entropy">
 <h1><span class="section-number">3.1.8. </span>Microscopic View of Entropy<a class="headerlink" href="#microscopic-view-of-entropy" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.1.8.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>In classical Thermodynamics, entropy is introduced as another state function and/or as a partial derivative of the internal energy, or as something that can be used to indicate spontaneous processes.  Here we look at a more molecular/statistical explanation of what entropy is.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.1.8.2. </span>Learning goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After this class, students should be able to:</p>
 <ol class="simple">
@@ -758,16 +764,16 @@ title="Print to PDF"
 <li><p>Compute entropy of a simple lattice gas</p></li>
 <li><p>Compute the entropy of mixing lattice gasses</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.1.8.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Functions</p></li>
 <li><p>Numpy</p></li>
 <li><p>Scipy</p></li>
 </ol>
-</div>
-<div class="section" id="example-galton-board">
+</section>
+<section id="example-galton-board">
 <h2><span class="section-number">3.1.8.4. </span>Example: Galton Board<a class="headerlink" href="#example-galton-board" title="Permalink to this headline">#</a></h2>
 <p>To see how entropy, or disorder, plays a role in determining outcome let us consider the example of a galton board.  In a Galton Board, balls are dropped from the top, through a peg board, finally landing in different bins on the bottom.  This is likely familiar to you as a gameshow style game.</p>
 <p>In the case of a Galton board, it is the gravitational potential energy difference between the top and the bottom that causes the balls to fall.  There is no difference in potential energy, however, between any of the bins at the bottom.  So why are certain bins (middle ones) favored?</p>
@@ -778,27 +784,27 @@ title="Print to PDF"
 <p>In the case of a single peg, the are a total of two paths (left and right) and one path goes to the left (thus <span class="math notranslate nohighlight">\(P_{left} = \frac{1}{2}\)</span> and one path goes to the right.</p>
 <a class="reference internal image-reference" href="../../_images/GaltonPuzzle_8Bin-Board.jpg"><img alt="../../_images/GaltonPuzzle_8Bin-Board.jpg" class="align-center" src="../../_images/GaltonPuzzle_8Bin-Board.jpg" style="width: 250px;" /></a>
 <p>If we go to the next level, there are two additional pegs followed by three bins at the bottom.  The probability of each bin is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57d655d5-6459-4b17-b0e9-a7af1d7ab102">
-<span class="eqno">(3.164)<a class="headerlink" href="#equation-57d655d5-6459-4b17-b0e9-a7af1d7ab102" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6ccbbb0b-6834-47e5-a8c2-7a2d849274f6">
+<span class="eqno">(3.164)<a class="headerlink" href="#equation-6ccbbb0b-6834-47e5-a8c2-7a2d849274f6" title="Permalink to this equation">#</a></span>\[\begin{align}
 P_{left} =&amp; \frac{1}{4} \\
 P_{left} =&amp; \frac{2}{4} = \frac{1}{2} \\
 P_{left} =&amp; \frac{1}{4} 
 \end{align}\]</div>
 <p>Now, more generally, since these follow the binomal distribution, we can compute the probability of bin <span class="math notranslate nohighlight">\(i\)</span> given that there are <span class="math notranslate nohighlight">\(n\)</span> rows in the</p>
-<div class="amsmath math notranslate nohighlight" id="equation-72b11750-fe70-41ab-a459-a52f1d21464f">
-<span class="eqno">(3.165)<a class="headerlink" href="#equation-72b11750-fe70-41ab-a459-a52f1d21464f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-869377e4-d519-4462-af3b-55dac9568a6c">
+<span class="eqno">(3.165)<a class="headerlink" href="#equation-869377e4-d519-4462-af3b-55dac9568a6c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P^n_i = \frac{nCi}{\sum_j^n nCj}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(nCi\)</span> is said as “<span class="math notranslate nohighlight">\(n\)</span> choose <span class="math notranslate nohighlight">\(i\)</span>” and <span class="math notranslate nohighlight">\(nCi = \frac{n!}{(n-i)!i!}\)</span>.</p>
-</div>
-<div class="section" id="entropy-and-counting">
+</section>
+<section id="entropy-and-counting">
 <h2><span class="section-number">3.1.8.5. </span>Entropy and Counting<a class="headerlink" href="#entropy-and-counting" title="Permalink to this headline">#</a></h2>
 <p>So how does this relate to entropy?  Entropy is not just the number of ways to get a certain outcome nor is it the probability of a certain outcome.   It is, however, related to these quantities via the Boltzmann equation:</p>
 <p><span class="math notranslate nohighlight">\(S = k\ln\Omega\)</span></p>
 <p>where <span class="math notranslate nohighlight">\(k\)</span> is the Boltzmann constant and <span class="math notranslate nohighlight">\(\Omega\)</span> is the number of ways of arranging the system.</p>
 <p>As a note, it is somtimes written <span class="math notranslate nohighlight">\(S=k\ln W\)</span> where <span class="math notranslate nohighlight">\(W\)</span> is substituted for <span class="math notranslate nohighlight">\(\Omega\)</span>.  There is no substantive difference between these equations.</p>
-</div>
-<div class="section" id="lattice-gas">
+</section>
+<section id="lattice-gas">
 <h2><span class="section-number">3.1.8.6. </span>Lattice Gas<a class="headerlink" href="#lattice-gas" title="Permalink to this headline">#</a></h2>
 <p>A lattice gas is a common example to see how the ideas of counting can be used to compute/estimate entropy for a molecular system.  We will uses these examples to estimate entropy of mixing, for example.  But we start by simply describing the lattice gas model.</p>
 <p>Estimate the entropy of two molecules of an excluded volume gas in a fixed volume.</p>
@@ -808,12 +814,12 @@ P^n_i = \frac{nCi}{\sum_j^n nCj}
 <p>The gas particles can move around but cannot overlap (finite volume).  So how many ways can we arrange them?  Currently, their motion is on a continuous space and not possible to count.  Instead, we discretize the space in some manner and say that the gas particles can occupy a single grid (or lattice) position</p>
 <a class="reference internal image-reference" href="../../_images/gas_lattice_gas.png"><img alt="../../_images/gas_lattice_gas.png" class="align-center" src="../../_images/gas_lattice_gas.png" style="width: 700px;" /></a>
 <p>Now, the number of ways of arranging the gas particles (<span class="math notranslate nohighlight">\(W\)</span> or <span class="math notranslate nohighlight">\(\Omega\)</span> in the Boltzmann equation) can be computed using the binomial coefficient</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f36936c9-109d-4c64-b017-547921676eca">
-<span class="eqno">(3.166)<a class="headerlink" href="#equation-f36936c9-109d-4c64-b017-547921676eca" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-58d89323-3a92-4acd-87fa-d24c6f1c475b">
+<span class="eqno">(3.166)<a class="headerlink" href="#equation-58d89323-3a92-4acd-87fa-d24c6f1c475b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W = 16C2 = \frac{16!}{14! 2!} = 8\cdot15 = 120
 \end{equation}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-09b0fddc-de45-4705-a218-137be1db41fc">
-<span class="eqno">(3.167)<a class="headerlink" href="#equation-09b0fddc-de45-4705-a218-137be1db41fc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8256d31d-1837-45c7-85c9-0b291e26683a">
+<span class="eqno">(3.167)<a class="headerlink" href="#equation-8256d31d-1837-45c7-85c9-0b291e26683a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S = k\ln120
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -832,20 +838,20 @@ S = k\ln120
 </div>
 </div>
 </div>
-<div class="section" id="a-note-on-units-of-k-boltzmann-constant">
+<section id="a-note-on-units-of-k-boltzmann-constant">
 <h3><span class="section-number">3.1.8.6.1. </span>A Note on Units of <span class="math notranslate nohighlight">\(k\)</span> (Boltzmann constant)<a class="headerlink" href="#a-note-on-units-of-k-boltzmann-constant" title="Permalink to this headline">#</a></h3>
 <p><span class="math notranslate nohighlight">\(k = 1.38\times10^{-23}\)</span> <span class="math notranslate nohighlight">\(J/K\)</span> is a typical value and units of <span class="math notranslate nohighlight">\(k\)</span>.  Note that this is an extremely small value and that it is on the order of magnitude of a single particle/molecule.  i.e. <span class="math notranslate nohighlight">\(10^{-23}\)</span> when Avogadro’s number is <span class="math notranslate nohighlight">\(10^{23}\)</span>.</p>
 <p><span class="math notranslate nohighlight">\(k\)</span> can be thought of as the molecular value of the gas constant.  So, if you want to compute a molar quantity, i.e. <span class="math notranslate nohighlight">\(J/(K\cdot mol)\)</span>, you would use <span class="math notranslate nohighlight">\(R = 8.314\)</span> <span class="math notranslate nohighlight">\(J/(K\cdot mol)\)</span> for <span class="math notranslate nohighlight">\(k\)</span>.</p>
-</div>
-<div class="section" id="entropy-of-mixing-of-two-or-more-lattice-gasses">
+</section>
+<section id="entropy-of-mixing-of-two-or-more-lattice-gasses">
 <h3><span class="section-number">3.1.8.6.2. </span>Entropy of Mixing of Two (or more) Lattice Gasses<a class="headerlink" href="#entropy-of-mixing-of-two-or-more-lattice-gasses" title="Permalink to this headline">#</a></h3>
 <p>Given that we can now estimate the entropy of a lattice gas in a given volume, we can compute the change in entropy upon expansion, contraction or mixing of lattice gasses.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ded55261-3a20-470e-ad97-057cbee00e04">
-<span class="eqno">(3.168)<a class="headerlink" href="#equation-ded55261-3a20-470e-ad97-057cbee00e04" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9f6d52b2-78dd-48d2-b233-03adbbd62d80">
+<span class="eqno">(3.168)<a class="headerlink" href="#equation-9f6d52b2-78dd-48d2-b233-03adbbd62d80" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta S = S_f - S_i = k\ln W_f - k \ln W_i = k\ln\left(\frac{W_f}{W_i}\right)
 \end{equation}\]</div>
-</div>
-<div class="section" id="example">
+</section>
+<section id="example">
 <h3><span class="section-number">3.1.8.6.3. </span>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h3>
 <p>Consider the system of two distinguishable excluded volume gasses initially separated by a barrier indicated by the dashed line.  Compute the change in entropy for the following system if the dashed line is made to be:</p>
 <ol class="simple">
@@ -855,13 +861,13 @@ S = k\ln120
 <a class="reference internal image-reference" href="../../_images/gas_mix.png"><img alt="../../_images/gas_mix.png" class="align-center" src="../../_images/gas_mix.png" style="width: 500px;" /></a>
 <p>Permeable only to solid particles from Side L.</p>
 <p>We start writing the entropy of mixing as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8c7eae41-f7c4-4554-846b-5a0fabbc1129">
-<span class="eqno">(3.169)<a class="headerlink" href="#equation-8c7eae41-f7c4-4554-846b-5a0fabbc1129" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7976413a-aa72-4831-8911-affed05db885">
+<span class="eqno">(3.169)<a class="headerlink" href="#equation-7976413a-aa72-4831-8911-affed05db885" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta S = S_f - S_i = k\ln W_f - k\ln W_i = k\ln\left(\frac{W_f}{W_i}\right)
 \end{equation}\]</div>
 <p>So we need to compute <span class="math notranslate nohighlight">\(W_f\)</span> and <span class="math notranslate nohighlight">\(W_i\)</span>.  We start with <span class="math notranslate nohighlight">\(W_i\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3a745d0b-2f72-455a-9481-008aa154c0b6">
-<span class="eqno">(3.170)<a class="headerlink" href="#equation-3a745d0b-2f72-455a-9481-008aa154c0b6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f5352e09-5f39-4a12-85b1-90d4208472b9">
+<span class="eqno">(3.170)<a class="headerlink" href="#equation-f5352e09-5f39-4a12-85b1-90d4208472b9" title="Permalink to this equation">#</a></span>\[\begin{align}
 W_i =&amp; W_L \cdot W_R \\
 =&amp; 12C6 \cdot 8C4 \\
 =&amp; 924 \cdot 70 = 64680
@@ -883,23 +889,23 @@ W_i =&amp; W_L \cdot W_R \\
 </div>
 </div>
 <p>Now for <span class="math notranslate nohighlight">\(W_f\)</span>.  There are many ways to correctly think about and compute the number of ways to arrange this system.  Here, I will consider the following decomposition</p>
-<div class="amsmath math notranslate nohighlight" id="equation-acf31e1f-55f8-41c5-8a3a-3569d1ca32d1">
-<span class="eqno">(3.171)<a class="headerlink" href="#equation-acf31e1f-55f8-41c5-8a3a-3569d1ca32d1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-28c24661-95a7-4f9b-8950-58e427490e84">
+<span class="eqno">(3.171)<a class="headerlink" href="#equation-28c24661-95a7-4f9b-8950-58e427490e84" title="Permalink to this equation">#</a></span>\[\begin{align}
 W_f =&amp; W_{solid} \cdot W_{open} 
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(W_{open}\)</span> is the number of ways to arrange the open circles.  Since the open circles cannot diffuse across the barrier, this is identical to the initial situation.  Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-937cffd7-96ec-43bc-b1f3-b2db1bab9d47">
-<span class="eqno">(3.172)<a class="headerlink" href="#equation-937cffd7-96ec-43bc-b1f3-b2db1bab9d47" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-efcb91a5-87df-45ed-baa0-b8aa88fe6757">
+<span class="eqno">(3.172)<a class="headerlink" href="#equation-efcb91a5-87df-45ed-baa0-b8aa88fe6757" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_{open} = 8C4 = 70
 \end{equation}\]</div>
 <p><span class="math notranslate nohighlight">\(W_{solid}\)</span> is only slighty more complicated.  Since the barrier is permeable to the solid particles, they can diffuse across it.  Thus, nominally, the solid circles can be in any one of the 20 lattice positions.  But, we know that the open circles are occupying four of these lattice positions, so really the solid circles have 16 lattice positions to choose from. Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2133d214-1017-46ad-b4a5-58325ece0351">
-<span class="eqno">(3.173)<a class="headerlink" href="#equation-2133d214-1017-46ad-b4a5-58325ece0351" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5789ca40-429b-42dd-9da4-4172e4f15339">
+<span class="eqno">(3.173)<a class="headerlink" href="#equation-5789ca40-429b-42dd-9da4-4172e4f15339" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_{solid} = 16C6 = 8008
 \end{equation}\]</div>
 <p>and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0eb539e3-0e5f-4f64-9f9a-64c3581f0ee0">
-<span class="eqno">(3.174)<a class="headerlink" href="#equation-0eb539e3-0e5f-4f64-9f9a-64c3581f0ee0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2484f59e-a1cb-4a5c-ab87-08baee703f04">
+<span class="eqno">(3.174)<a class="headerlink" href="#equation-2484f59e-a1cb-4a5c-ab87-08baee703f04" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_f = 560560
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -917,8 +923,8 @@ W_f = 560560
 </div>
 </div>
 <p>Finally, we compute <span class="math notranslate nohighlight">\(\Delta S_{mix}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1c24363c-d0ab-4b49-a5c8-a255877069f8">
-<span class="eqno">(3.175)<a class="headerlink" href="#equation-1c24363c-d0ab-4b49-a5c8-a255877069f8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a9c0d841-328a-48d5-89f4-004e93a68b9c">
+<span class="eqno">(3.175)<a class="headerlink" href="#equation-a9c0d841-328a-48d5-89f4-004e93a68b9c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta S_{mix} &amp;= k\ln\left(\frac{W_f}{W_i}\right) \\
 &amp;= k\ln\left(\frac{560560}{64680}\right)\\
 &amp;= k\ln\left(8.6666\right)\\
@@ -997,9 +1003,9 @@ W_f = 560560
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
