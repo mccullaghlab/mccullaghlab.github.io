@@ -1,23 +1,22 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
-import numpy as np
-import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
-
-
 # # Thermodynamics of Solutions
 
 # ## Learning goals
 # 
+# After working through this notebook, you will be able to:
+# 
 # 1. Express each of the four Thermodynamic energy functions for multicomponent systems
 # 2. Define chemical potential both mathematically and qualitatively
-# 3. Recognize that two component systems tend toward the component with the smaller chemical potential
-# 4. Demonstrate that the equilibrium condition of a two component system requires that the chemical potentials of each component be equivalent
-# 5. Recognize the Gibbs-Duhem equation and state its implication.
+# 3. Derive the Gibbs-Duhem equation.
+# 4. Use the Gibbs-Duhem equation to relate the chemical potentials of two component solutions.
+
+# ## Coding Concepts:
+# 
+# The following coding concepts are used in this notebook:
+# 
+# 1. [Variables](../../coding_concepts/variables.ipynb)
 
 # ## What makes solutions different from gasses?
 # 
@@ -27,6 +26,12 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # 2. Solutions contain multiple species (by definition).
 # 3. PV work doesn't seem so relevant for solutions as compared to gasses.
 # 4. Solutions are typically held under constant $P$ and $T$ conditions.
+
+# ## A Two Component Solution
+# 
+# Consider a two component solution with components $A$ (e.g. H$_2$O(l)) and $B$ (e.g. CH$_3$OH(l)).  How does the chemical potential of one component compare to the other under constant $T$ and $P$ conditions?
+# 
+# Unlike the case of a two phase equilibrium, the components of this solution cannot interconvert.  Thus, we do not necessarily have that the chemical potentials are equal at equilibrium.
 
 # ## Thermodynamic Energy Functions for Multicomponent Systems
 
@@ -74,62 +79,6 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # \mu_i = \left(\frac{\partial G}{\partial N_i}\right)_{T,P,N_{j\neq i}}
 # \end{equation}
 
-# ## Example: Chemical potential of a two component system
-# 
-# Consider a two component system with components $A$ (e.g. H$_2$O(l)) and $B$ (e.g. H$_2$O(g)) that can exchange between one another.  Show that, under constant temperature, pressure, and total number of moles, the following two statements hold. 
-# 
-# (a) The system will proceed towards the component with the lower chemical potential.
-# 
-# (b) The chemical potentials of each component are equal at equilibrium.
-
-# We start by thinking about the physical system.  We can consider a phase equilibrium between water vapor and liquid water.  The liquid water molecules can become vapor and the vapor molecules can condense to become liquid.  The total number of molecules or moles ($N$) is fixed, however.  We can write that
-# 
-# \begin{align}
-# N = N_A + N_B
-# \end{align}
-# 
-# We also know that total number of moles is fixed meaning that
-# 
-# \begin{align}
-# dN =& 0 \\
-#  =& dN_A + dN_B \\
-#  \Rightarrow dN_A =& -dN_B
-# \end{align}
-# 
-# where the last equality simply tells us that the change in amount of A is negative the change in amount of B (which is true if there are only these two components in the system).
-
-# Now onto part (a).  The key to this statement is that the "system will proceed".  What does that mean?  Under constant $P$ and $T$ it means that $dG < 0$.  So let's write out our expression for dG
-# 
-# \begin{align}
-# dG =& -SdT + VdP + \mu_AdN_A + \mu_BdN_B \\
-#  =& \mu_AdN_A + \mu_BdN_B \\
-#  <& 0
-# \end{align}
-# 
-# where I have used that $dT = dP = 0$.  We can now use the relationship $dN_A = -dN_B$ to yield
-# 
-# \begin{align}
-# dG =& \mu_AdN_A - \mu_BdN_A < 0 \\
-#  = & (\mu_A-\mu_B)dN_A < 0
-# \end{align}
-# 
-# The last inequality can be achieved only if $dN_A < 0$ and $(\mu_A-\mu_B)>0$ or $dN_A > 0$ and $(\mu_A-\mu_B)<0$.  Mathematically, this is equivalent to saying that if the number of moles of component $A$ decreases ($dN_A < 0$), then the chemical potential of component $B$ must be less than that of $A$ ($(\mu_A-\mu_B)>0$ or, equivalently, $\mu_A>\mu_B$).  Similarly, if the number of moles of $A$ increases ($dN_A > 0$), then the chemical potential of $A$ must be less than that of $B$.
-
-# No for part (b).  The solution to this is quite similar but we must recognize that, under these conditions, the condition of equilibirium dictates that $dG=0$.  Again, we start with the differential form of $G$:
-# 
-# \begin{align}
-# dG = \mu_AdN_A + \mu_BdN_B = 0
-# \end{align}
-# 
-# again, we plug in the relationship $dN_A = -dN_B$ to yield
-# 
-# \begin{align}
-# dG &= \mu_AdN_A - \mu_BdN_A = 0 \\
-# &= (\mu_A-\mu_B)dN_A = 0
-# \end{align}
-# 
-# For the last equality to hold $dN_A$ could be zero and/or $(\mu_A-\mu_B)$ could be zero.  While $dN_A$ could be zero, it need not be zero under dynamic equilibrium.  At equilibrium, moleules of liquid water will be converting to vapor and vis versa.  Thus, $(\mu_A-\mu_B)=0$ or $\mu_A=\mu_B$ at equilibrium.
-
 # ## The Gibbs-Duhem Equation
 # 
 # The Gibbs-Duhem equation demonstrates the relationship between all intensive variables of a system.  The implication of this is that if there are $M$ intesive variables of a system, you need only measure $M-1$ of them to get all of them.  Seems unimportant but it isn't.
@@ -161,3 +110,67 @@ get_ipython().run_line_magic('matplotlib', 'inline')
 # \end{align}
 # 
 # where $T$, $P$ and all of the $\mu_i$s are the intensive variables of the system.  The Gibbs-Duhem equation suggest that state functions exist.
+
+# ## The Gibbs-Duhem Equation for a Two Component Solution
+# 
+# For a two component system the Gibbs-Duhem equation is
+# 
+# \begin{align}
+# 0 =& -SdT + VdP - N_Ad\mu_A - N_Bd\mu_B
+# \end{align}
+# 
+# Under constant $T$ and $P$ conditions this yields
+# 
+# \begin{align}
+# N_Ad\mu_A &=- N_Bd\mu_B 
+# \end{align}
+# 
+# If we now divide by $N = N_A + N_B$ (constant total number of moles) we get
+# 
+# \begin{align}
+# x_Ad\mu_A &=- x_Bd\mu_B 
+# \end{align}
+# 
+# where $x_A = \frac{N_A}{N}$ is the mole fraction of component $A$ and $x_B = \frac{N_B}{N}$ is the mole fraction of component $B$.  This equation can be rearranged to solve for $d\mu_A$ or $d\mu_B$ which is one of the more common forms of the Gibbs-Duhem equation.
+# 
+# \begin{align}
+# d\mu_A &=- \frac{x_B}{x_A}d\mu_B 
+# \end{align}
+# 
+# This equation can be used to solve for the chemical potential of one species if you know the chemical potential of the other species as a function of composition ($x_A$ and/or $x_B$).
+
+# ## Example: The Chemical Potentials of a Two Component Solution
+# 
+# Consider a solution of two components held under constant $T$ and $P$.  The chemical potential of component $A$ is determined to obey the functional form $\mu_A = \mu_A^* + RT\ln x_A$, where $\mu_A^*$ is the chemical potential of pure A, and $x_A$ is the mole fraction of species A.  Show that the chemical potential of species $B$ must be given as $\mu_B = \mu_B^* + RT\ln x_B$, where $\mu_B^*$ is the chemical potential of pure B, and $x_B$ is the mole fraction of species B. 
+# 
+
+# We start with the Gibbs-Duhem relation at constant $P$ and $T$ for a binary system:
+# 	\begin{eqnarray}
+# 	d\mu_B = -\frac{x_A}{x_B}d\mu_A
+# 	\end{eqnarray}
+# We now determine the differential of $\mu_A$ from the equation given:
+# 	\begin{eqnarray}
+# 	d\mu_A &=& d(\mu_A^* + RT\ln x_A) \\
+# 	&=& \frac{RT}{x_A}dx_A \\
+# 	&=& -\frac{RT}{x_A}dx_B,
+# 	\end{eqnarray}
+# where the last equality holds because $x_A + x_B = 1$, or $dx_A = -dx_B$.  Now plug into Gibbs-Duhem and integrate:
+# \begin{eqnarray}
+# 	d\mu_B &=& -\frac{x_A}{x_B}\left( -\frac{RT}{x_A}dx_B \right) \\
+# 	&=& \frac{RT}{x_B}dx_B \\
+# 	\Rightarrow \int_1^{x_B}d\mu_B &=& \int_1^{x_B} \frac{RT}{x_B}dx_B \\
+# 	\mu_B - \mu^*_B &=& RT\ln(x_B) \\
+# 	\Rightarrow \mu_B  &=& \mu^*_B + RT\ln(x_B)
+# \end{eqnarray}
+
+# ## Solutions in Equilibria with their Vapors
+
+# The discussion thus far has been focused on single phase solutions.  But solutions can also be in equilibrium with their vapors.  Take the example of a solution of water and methanol.  The vapor above this solution will contain both water and methanol.  But, again, clearly water and methanol are not inter converting so what can we say about this situation?
+# 
+# In this case, at constant $T$ and $P$ and at equilibrium, the chemical potentials of the vapor and the liquid will be equal for each component.  
+
+# In[ ]:
+
+
+
+
