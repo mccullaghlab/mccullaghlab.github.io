@@ -145,15 +145,17 @@
 # 
 
 # We start with the Gibbs-Duhem relation at constant $P$ and $T$ for a binary system:
-# 	\begin{eqnarray}
-# 	d\mu_B = -\frac{x_A}{x_B}d\mu_A
-# 	\end{eqnarray}
+# \begin{eqnarray}
+# d\mu_B = -\frac{x_A}{x_B}d\mu_A
+# \end{eqnarray}
+# 
 # We now determine the differential of $\mu_A$ from the equation given:
-# 	\begin{eqnarray}
+# \begin{eqnarray}
 # 	d\mu_A &=& d(\mu_A^* + RT\ln x_A) \\
 # 	&=& \frac{RT}{x_A}dx_A \\
 # 	&=& -\frac{RT}{x_A}dx_B,
-# 	\end{eqnarray}
+# \end{eqnarray}
+# 
 # where the last equality holds because $x_A + x_B = 1$, or $dx_A = -dx_B$.  Now plug into Gibbs-Duhem and integrate:
 # \begin{eqnarray}
 # 	d\mu_B &=& -\frac{x_A}{x_B}\left( -\frac{RT}{x_A}dx_B \right) \\
@@ -165,12 +167,34 @@
 
 # ## Solutions in Equilibria with their Vapors
 
-# The discussion thus far has been focused on single phase solutions.  But solutions can also be in equilibrium with their vapors.  Take the example of a solution of water and methanol.  The vapor above this solution will contain both water and methanol.  But, again, clearly water and methanol are not inter converting so what can we say about this situation?
+# The discussion thus far has been focused on single phase solutions.  But solutions can also be in equilibrium with their vapors.  Take the example of a solution of water and methanol.  The vapor above this solution will contain both water and methanol (or benzene and toluene).  But, again, clearly water and methanol are not inter converting so what can we say about this situation?
 # 
-# In this case, at constant $T$ and $P$ and at equilibrium, the chemical potentials of the vapor and the liquid will be equal for each component.  
-
-# In[ ]:
-
-
-
-
+# In this case, at constant $T$ and $P$ and at equilibrium, the chemical potentials of the vapor and the liquid will be equal for each component.  That is
+# \begin{eqnarray}
+# \mu^{sln}_i = \mu^{vap}_i
+# \end{eqnarray}
+# or, in the specific case of the binary solution of water and methanol 
+# \begin{eqnarray}
+# \mu^{sln}_{water} &=& \mu^{vap}_{water} \\
+# \mu^{sln}_{methanol} &=& \mu^{vap}_{methanol}
+# \end{eqnarray}
+# 
+# Notice that we do not equate the chemical potentials of species $i$ with species $j\neq i$ (e.g. chemical potentials of water and methanol are not necessarily the same).  
+# 
+# Since we have discussed the chemical potential of a gas, and assuming that the vapor behaves as an ideal gas, we know that we can write
+# \begin{eqnarray}
+# \mu^{sln}_i = \mu^{vap}_i = \mu_i^\circ(T) + RT\ln\frac{P_i}{P^\circ},
+# \end{eqnarray}
+# where $\mu_i^\circ(T)$ is the chemical potential of species $i$ under standard conditions ($P^\circ = 1$ bar). 
+# 
+# 
+# For pure component $i$ we have that
+# \begin{eqnarray}
+# \mu^{*}_i(l) = \mu^{*}_i(vap) = \mu_i^\circ(T) + RT\ln\frac{P_i^*}{P^\circ},
+# \end{eqnarray}
+# where, again, $\mu_i^\circ(T)$ is the chemical potential of species $i$ under standard conditions ($P^\circ = 1$ bar) and $P_i^*$ is the vapor pressure of pure $i$.
+# 
+# We can solve the above two equations for $\mu_i^\circ(T)$ and equate the resulting relationships to get
+# \begin{eqnarray}
+# \mu^{sln}_i = \mu^{*}_i(l) + RT\ln\frac{P_i}{P_i^*}
+# \end{eqnarray}
