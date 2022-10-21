@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.2.5. Enthalpy &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.6. The Carnot Cycle" href="The_Carnot_Cycle.html" />
@@ -751,10 +752,10 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="enthalpy">
+  <section class="tex2jax_ignore mathjax_ignore" id="enthalpy">
 <h1><span class="section-number">3.2.5. </span>Enthalpy<a class="headerlink" href="#enthalpy" title="Permalink to this headline">#</a></h1>
 <p>Enthalpy, <span class="math notranslate nohighlight">\(H\)</span>, is another Thermodynamic energy (and state) function.  It is an important quantity in thermochemistry.  In these notes, we will see how it is related to internal energy and how it is used in the context of chemical reactions.</p>
-<div class="section" id="learning-goals">
+<section id="learning-goals">
 <h2><span class="section-number">3.2.5.1. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After these notes, you should be able to:</p>
 <ol class="simple">
@@ -764,8 +765,8 @@ title="Print to PDF"
 <li><p>Compute relative enthalpies from heat capacities</p></li>
 <li><p>Compute enthalpy changes for chemical reactions</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.2.5.2. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -773,124 +774,124 @@ title="Print to PDF"
 <li><p>Functions</p></li>
 <li><p>Plotting with matplotlib</p></li>
 </ol>
-</div>
-<div class="section" id="enthalpy-and-heat-at-constant-pressure">
+</section>
+<section id="enthalpy-and-heat-at-constant-pressure">
 <h2><span class="section-number">3.2.5.3. </span>Enthalpy and Heat at Constant Pressure<a class="headerlink" href="#enthalpy-and-heat-at-constant-pressure" title="Permalink to this headline">#</a></h2>
 <p>Heat at constant volume is equal to <span class="math notranslate nohighlight">\(\Delta U\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6203271b-23aa-4d00-b3be-623682bb94f6">
-<span class="eqno">(3.198)<a class="headerlink" href="#equation-6203271b-23aa-4d00-b3be-623682bb94f6" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-495f8563-b503-48d0-af76-2db136b34c6e">
+<span class="eqno">(3.198)<a class="headerlink" href="#equation-495f8563-b503-48d0-af76-2db136b34c6e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta U &amp;=&amp; q + w \\
 &amp;=&amp; q - \int_{V_1}^{V_2}P_{ext}dV \\
 &amp;=&amp; q_V
 \end{eqnarray}\]</div>
 <p>where the last equality holds for a constant volume process.</p>
 <p>At constant pressure, heat is not equal to <span class="math notranslate nohighlight">\(\Delta U\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d8ea2de0-61f2-48f3-a8fa-e3091b39d346">
-<span class="eqno">(3.199)<a class="headerlink" href="#equation-d8ea2de0-61f2-48f3-a8fa-e3091b39d346" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-11e9b7c1-6e1a-4854-872c-76db1a7996d1">
+<span class="eqno">(3.199)<a class="headerlink" href="#equation-11e9b7c1-6e1a-4854-872c-76db1a7996d1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta U &amp;=&amp; q_P + w_P \\
 &amp;=&amp; q_P - \int_{V_1}^{V_2}P_{ext}dV \\
 &amp;=&amp; q_P - P\Delta V 
 \end{eqnarray}\]</div>
 <p>where the last equality holds because <span class="math notranslate nohighlight">\(P = P_{ext} = constant\)</span>.  We can rearrange this equation to solve for <span class="math notranslate nohighlight">\(q_P\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-915e1e68-3461-48cd-98d6-8abbdeb64b5c">
-<span class="eqno">(3.200)<a class="headerlink" href="#equation-915e1e68-3461-48cd-98d6-8abbdeb64b5c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-fbeb4958-3d16-417c-ab54-7a6204289e72">
+<span class="eqno">(3.200)<a class="headerlink" href="#equation-fbeb4958-3d16-417c-ab54-7a6204289e72" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 q_P = \Delta U + P\Delta V
 \end{eqnarray}\]</div>
 <p>We notice that both terms on the right-hand side of this equation only depend on the initial and final state (i.e. <span class="math notranslate nohighlight">\(\Delta U = U_{final} - U_{initial}\)</span> and <span class="math notranslate nohighlight">\(P\Delta V = P(V_{final} - V_{initial})\)</span> and thus <span class="math notranslate nohighlight">\(q_P\)</span> is a state function.  We call this state function the change in enthalpy and denote it <span class="math notranslate nohighlight">\(\Delta H\)</span>.  Enthalpy is thus defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5484e717-c01f-4d50-92a8-f2bd3bee9906">
-<span class="eqno">(3.201)<a class="headerlink" href="#equation-5484e717-c01f-4d50-92a8-f2bd3bee9906" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a09d23fe-9ee0-4c9b-a213-0b50fe168030">
+<span class="eqno">(3.201)<a class="headerlink" href="#equation-a09d23fe-9ee0-4c9b-a213-0b50fe168030" title="Permalink to this equation">#</a></span>\[\begin{equation}
 H = U + PV
 \end{equation}\]</div>
-</div>
-<div class="section" id="legendre-transformation">
+</section>
+<section id="legendre-transformation">
 <h2><span class="section-number">3.2.5.4. </span>Legendre Transformation<a class="headerlink" href="#legendre-transformation" title="Permalink to this headline">#</a></h2>
 <p>Enthalpy and Internal Energy are related by a mathematical manipulation called a Legendre transformation.  Legendre transforms are used to determine a new function that depends on the other of a conjugate pair of variables.  The transformation specifically swaps the dependence of a function, <span class="math notranslate nohighlight">\(f(x)\)</span>, on <span class="math notranslate nohighlight">\(x\)</span> to a new function, <span class="math notranslate nohighlight">\(g\left(\frac{\partial f}{\partial x}\right)\)</span>, on the derivative of <span class="math notranslate nohighlight">\(f\)</span> w.r.t <span class="math notranslate nohighlight">\(x\)</span>.  The transformation is achieved by simply substracting the product of the variable times the derivative.  For example</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3aca1581-73eb-443d-9f51-d30df756c2cb">
-<span class="eqno">(3.202)<a class="headerlink" href="#equation-3aca1581-73eb-443d-9f51-d30df756c2cb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-bfd32e5b-dcb0-42d4-b357-9fbbd17ad902">
+<span class="eqno">(3.202)<a class="headerlink" href="#equation-bfd32e5b-dcb0-42d4-b357-9fbbd17ad902" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 g\left(\frac{\partial f}{\partial x},y\right) = L(f(x,y))_x = f(x,y) - x\frac{\partial f}{\partial x}
 \end{eqnarray}\]</div>
 <p>In the context of Enthalpy and Internal Energy, we say that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ff7c5be9-ed96-487b-9528-e122b8d51433">
-<span class="eqno">(3.203)<a class="headerlink" href="#equation-ff7c5be9-ed96-487b-9528-e122b8d51433" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-4531a95c-73de-4d96-b371-69c2d883240f">
+<span class="eqno">(3.203)<a class="headerlink" href="#equation-4531a95c-73de-4d96-b371-69c2d883240f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 H(S,P) = L(U(S,V))_V &amp;=&amp; U(S,V) - V\frac{\partial U}{\partial V}\\
 &amp;=&amp; U + PV
 \end{eqnarray}\]</div>
 <p>We have not yet shown that <span class="math notranslate nohighlight">\(\frac{\partial U}{\partial V} = -P\)</span> but it does and we will discuss that later.</p>
-</div>
-<div class="section" id="example-computing-internal-energy-from-enthalpy">
+</section>
+<section id="example-computing-internal-energy-from-enthalpy">
 <h2><span class="section-number">3.2.5.5. </span>Example: Computing Internal Energy From Enthalpy<a class="headerlink" href="#example-computing-internal-energy-from-enthalpy" title="Permalink to this headline">#</a></h2>
 <p>The value of <span class="math notranslate nohighlight">\(\Delta H\)</span> at 298 K and one bar for the reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-65f9ef82-e45e-4f41-a26c-2b5187d53d53">
-<span class="eqno">(3.204)<a class="headerlink" href="#equation-65f9ef82-e45e-4f41-a26c-2b5187d53d53" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-54f4c19c-3742-4973-922c-65eb7b976685">
+<span class="eqno">(3.204)<a class="headerlink" href="#equation-54f4c19c-3742-4973-922c-65eb7b976685" title="Permalink to this equation">#</a></span>\[\begin{equation}
 2H_2(g) + O_2(g) \rightarrow 2H_2O(l)
 \end{equation}\]</div>
 <p>is -572 kJ.  Compute <span class="math notranslate nohighlight">\(\Delta U\)</span> assuming gasses are all ideal.</p>
 <p>For this problem we will need to use that, at constant pressure</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b2e72db8-e775-4d99-8fc4-4e7f8e89623a">
-<span class="eqno">(3.205)<a class="headerlink" href="#equation-b2e72db8-e775-4d99-8fc4-4e7f8e89623a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f5ea13fc-5c4f-4e1a-bce7-68fc83661a12">
+<span class="eqno">(3.205)<a class="headerlink" href="#equation-f5ea13fc-5c4f-4e1a-bce7-68fc83661a12" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta H = \Delta U + P\Delta V.
 \end{equation}\]</div>
 <p>We have <span class="math notranslate nohighlight">\(\Delta H\)</span> and that <span class="math notranslate nohighlight">\(P = 1\)</span> bar, so we just need to compute <span class="math notranslate nohighlight">\(\Delta V\)</span>.  For this problem, <span class="math notranslate nohighlight">\(\Delta V\)</span> is the change in volume for the reaction.  So</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9f96924e-33cd-4a0d-bd6f-2d9e24fadca5">
-<span class="eqno">(3.206)<a class="headerlink" href="#equation-9f96924e-33cd-4a0d-bd6f-2d9e24fadca5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cb7bcb27-4d43-4e54-9a95-e67445298c3f">
+<span class="eqno">(3.206)<a class="headerlink" href="#equation-cb7bcb27-4d43-4e54-9a95-e67445298c3f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta V = V_{products} - V_{reactants}
 \end{equation}\]</div>
 <p>For <span class="math notranslate nohighlight">\(V_{reactants}\)</span>, we have three moles of ideal gas at <span class="math notranslate nohighlight">\(P = 1\)</span> bar so we can use the ideal gas law to compute</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c46311f1-df1f-4580-b9da-7b82ca5d8af1">
-<span class="eqno">(3.207)<a class="headerlink" href="#equation-c46311f1-df1f-4580-b9da-7b82ca5d8af1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-4704e74e-c09a-4d10-b9bb-778dab0b1585">
+<span class="eqno">(3.207)<a class="headerlink" href="#equation-4704e74e-c09a-4d10-b9bb-778dab0b1585" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 V_{reactants} &amp;=&amp; \frac{nRT}{P} \\
 &amp;=&amp; \frac{3\cdot0.08314\cdot298}{1} \\
 &amp;=&amp; 74.3 L
 \end{eqnarray}\]</div>
 <p>where I have chosen to use <span class="math notranslate nohighlight">\(R = 0.08314\)</span> <span class="math notranslate nohighlight">\(L\cdot bar\cdot K^{-1}\cdot mol^{-1}\)</span> to cancel the <span class="math notranslate nohighlight">\(P = 1\)</span> bar.</p>
 <p>You could compute the volume of <span class="math notranslate nohighlight">\(2\)</span> moles of liquid water but you will find it to be so small that it is negligble compared to <span class="math notranslate nohighlight">\(V_{reactants} = 74.3\)</span> L.  Thus we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4b216be8-7d6a-4a60-ba7f-48e3c7d21353">
-<span class="eqno">(3.208)<a class="headerlink" href="#equation-4b216be8-7d6a-4a60-ba7f-48e3c7d21353" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ba01bfb3-2cad-4ccb-84f1-9dfadf989d2d">
+<span class="eqno">(3.208)<a class="headerlink" href="#equation-ba01bfb3-2cad-4ccb-84f1-9dfadf989d2d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta V = -74.3 L
 \end{equation}\]</div>
 <p>Solving for <span class="math notranslate nohighlight">\(\Delta U\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cbcad322-a9b7-415b-8db7-cfec5c6aa104">
-<span class="eqno">(3.209)<a class="headerlink" href="#equation-cbcad322-a9b7-415b-8db7-cfec5c6aa104" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2dde0223-0eea-4465-9e2f-d7121137447c">
+<span class="eqno">(3.209)<a class="headerlink" href="#equation-2dde0223-0eea-4465-9e2f-d7121137447c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta U &amp;=&amp; \Delta H - P\Delta V \\
 &amp;=&amp; -572 kJ - 1 bar\cdot(-74 L) \cdot\left( \frac{1 kJ}{10 bar\cdot K}\right) \\
 &amp;=&amp; -565 kJ
 \end{eqnarray}\]</div>
 <p>In general, for reactions that involve ideal gasses, you get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7536a2f3-b4ce-4a75-ac09-774bf964e772">
-<span class="eqno">(3.210)<a class="headerlink" href="#equation-7536a2f3-b4ce-4a75-ac09-774bf964e772" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-789beadd-bbb3-4d95-aa7e-f4f9499ec39f">
+<span class="eqno">(3.210)<a class="headerlink" href="#equation-789beadd-bbb3-4d95-aa7e-f4f9499ec39f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta H = \Delta U + RT\Delta n_{gas}
 \end{equation}\]</div>
-</div>
-<div class="section" id="heat-capacity-at-constant-pressure">
+</section>
+<section id="heat-capacity-at-constant-pressure">
 <h2><span class="section-number">3.2.5.6. </span>Heat Capacity at Constant Pressure<a class="headerlink" href="#heat-capacity-at-constant-pressure" title="Permalink to this headline">#</a></h2>
 <p>Heat capacity for a constant volume process is defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2f1d34f0-0174-4a2c-8427-fead5dd7bc27">
-<span class="eqno">(3.211)<a class="headerlink" href="#equation-2f1d34f0-0174-4a2c-8427-fead5dd7bc27" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-14d5d247-6cbc-48ee-b6f9-deb753a15d8a">
+<span class="eqno">(3.211)<a class="headerlink" href="#equation-14d5d247-6cbc-48ee-b6f9-deb753a15d8a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 C_V = \left( \frac{\partial U}{\partial T}\right)_V \approx \frac{\Delta U}{\Delta T} = \frac{q_V}{\Delta T}
 \end{equation}\]</div>
 <p>This is is not the heat capacity at constant pressure.  Thus, heat capacities are path dependent.  The heat capacity at constant pressure is the amount of heat it takes to raise a material/substance one Kelvin while the substance is maintained at constant pressure.  The amount of heat for a constant pressure is <span class="math notranslate nohighlight">\(q_P = \Delta H\)</span>.  Thus, by analogy to constant volume, the heat capacity at constant pressure is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7bcf537b-d35b-49e7-97b2-1866e55fd94a">
-<span class="eqno">(3.212)<a class="headerlink" href="#equation-7bcf537b-d35b-49e7-97b2-1866e55fd94a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-30c5f534-3739-4424-b116-d714c7c61ef1">
+<span class="eqno">(3.212)<a class="headerlink" href="#equation-30c5f534-3739-4424-b116-d714c7c61ef1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 C_P = \left( \frac{\partial H}{\partial T}\right)_P \approx \frac{\Delta H}{\Delta T} = \frac{q_P}{\Delta T}
 \end{equation}\]</div>
-</div>
-<div class="section" id="relative-enthalpies-can-be-computed-from-heat-capacities">
+</section>
+<section id="relative-enthalpies-can-be-computed-from-heat-capacities">
 <h2><span class="section-number">3.2.5.7. </span>Relative Enthalpies can be Computed from Heat Capacities<a class="headerlink" href="#relative-enthalpies-can-be-computed-from-heat-capacities" title="Permalink to this headline">#</a></h2>
 <p>The definition of heat capacity at constant pressure can be rearranged to give</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2f83ba76-d9b0-4ec9-8fe2-4a7e56c6166a">
-<span class="eqno">(3.213)<a class="headerlink" href="#equation-2f83ba76-d9b0-4ec9-8fe2-4a7e56c6166a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f3e7913a-e662-411b-95b8-97230547a184">
+<span class="eqno">(3.213)<a class="headerlink" href="#equation-f3e7913a-e662-411b-95b8-97230547a184" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dH = C_P dT.
 \end{equation}\]</div>
 <p>Integrating both sides of this equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f8e48804-2dd8-41ac-b606-94e067762e1a">
-<span class="eqno">(3.214)<a class="headerlink" href="#equation-f8e48804-2dd8-41ac-b606-94e067762e1a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-875f54a3-f611-4c78-96c1-b3167d0401e1">
+<span class="eqno">(3.214)<a class="headerlink" href="#equation-875f54a3-f611-4c78-96c1-b3167d0401e1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int_{H_i}^{H_f}dH  &amp;=&amp; \int_{T_i}^{T_f}C_PdT \\
 \Delta H &amp;=&amp; \int_{T_i}^{T_f}C_PdT
 \end{eqnarray}\]</div>
 <p>If <span class="math notranslate nohighlight">\(C_P\)</span> is constant, it can be taken out of the integral and you get the standard general chemistry expression that <span class="math notranslate nohighlight">\(\Delta H = C_P \Delta T\)</span>.  Generally, however, <span class="math notranslate nohighlight">\(C_P\)</span> will be a non-constant function of temperature and thus we will not be able to take it out of the integral.</p>
 <p>Another difficult situation that arises is at a phase transition (e.g. vaporization or fusion/melting).  At this point, the heat capacity is discontinuous and thus you cannot integrate at that temperature.  If we have a situation like that, say around fusion/melting, we get that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ce41e8d8-5928-40b3-80e2-1d5bc4195409">
-<span class="eqno">(3.215)<a class="headerlink" href="#equation-ce41e8d8-5928-40b3-80e2-1d5bc4195409" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-6cddde13-b0bc-4840-bee3-5b1fcb75e1ee">
+<span class="eqno">(3.215)<a class="headerlink" href="#equation-6cddde13-b0bc-4840-bee3-5b1fcb75e1ee" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta H &amp;=&amp; \int_{T_i}^{T_{fusion}}C^s_PdT + \Delta H_{fusion} + \int_{T_{fusion}}^{T_{f}}C^l_PdT
 \end{eqnarray}\]</div>
 <div class="cell tag_hide_input docutils container">
@@ -938,8 +939,8 @@ dH = C_P dT.
 <img alt="../../_images/Enthalpy_14_1.png" src="../../_images/Enthalpy_14_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="enthalpy-changes-for-chemical-reactions">
+</section>
+<section id="enthalpy-changes-for-chemical-reactions">
 <h2><span class="section-number">3.2.5.8. </span>Enthalpy Changes for Chemical Reactions<a class="headerlink" href="#enthalpy-changes-for-chemical-reactions" title="Permalink to this headline">#</a></h2>
 <p>The enthalpy change for a chemical reaction is an important quantity in particular for thermochemistry.  An exothermic reaction is defined as one that has <span class="math notranslate nohighlight">\(\Delta H_{rxn} &lt; 0\)</span> and an endothermic reaction is defined as one that has <span class="math notranslate nohighlight">\(\Delta H_{rxn} &gt; 0\)</span>.</p>
 <p>Enthalpies of reactions can be estimated in a number of ways.  Here we will consider two implementations of Hess’s law:</p>
@@ -947,32 +948,32 @@ dH = C_P dT.
 <li><p>Calculating enthalpies of reactions by adding enthalpies of known reactions</p></li>
 <li><p>Calculating enthalpies of reactions from tabulated heats of formation</p></li>
 </ol>
-<div class="section" id="enthalpy-of-reaction-by-adding-enthalpies-of-known-reactions">
+<section id="enthalpy-of-reaction-by-adding-enthalpies-of-known-reactions">
 <h3><span class="section-number">3.2.5.8.1. </span>Enthalpy of reaction by adding enthalpies of known reactions<a class="headerlink" href="#enthalpy-of-reaction-by-adding-enthalpies-of-known-reactions" title="Permalink to this headline">#</a></h3>
 <p>The heat of combustion of isobutane is <span class="math notranslate nohighlight">\(-2869\)</span> kJ/mol and the heat of combustion of n-butane is <span class="math notranslate nohighlight">\(-2877\)</span> kJ/mol.  Compute the enthalpy of isomerization from n-butane to isobutane.</p>
 <p>Start by writing out the two combustion reactions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-187a37b5-ce15-43e6-aeba-497b0f90f40d">
-<span class="eqno">(3.216)<a class="headerlink" href="#equation-187a37b5-ce15-43e6-aeba-497b0f90f40d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f3676bfa-4793-4a00-8e41-6dbac93e9b78">
+<span class="eqno">(3.216)<a class="headerlink" href="#equation-f3676bfa-4793-4a00-8e41-6dbac93e9b78" title="Permalink to this equation">#</a></span>\[\begin{equation}
 i-C_4H_{10}(g) + \frac{13}{2}O_2(g) \rightarrow 4CO_2(g) + 5H_2O(l) \quad \Delta H = -2869\quad kJ\cdot mol^{-1}
 \end{equation}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-e234c894-02ec-4257-a1a8-da9117e93848">
-<span class="eqno">(3.217)<a class="headerlink" href="#equation-e234c894-02ec-4257-a1a8-da9117e93848" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-73834cad-303d-49bb-8efa-67f800977f93">
+<span class="eqno">(3.217)<a class="headerlink" href="#equation-73834cad-303d-49bb-8efa-67f800977f93" title="Permalink to this equation">#</a></span>\[\begin{equation}
 n-C_4H_{10}(g) + \frac{13}{2}O_2(g) \rightarrow 4CO_2(g) + 5H_2O(l) \quad \Delta H = -2877\quad kJ\cdot mol^{-1}
 \end{equation}\]</div>
 <p>Now we write out the final reaction that we want</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3f8f628e-efc1-4d2f-92ae-28ecd1e2c3c6">
-<span class="eqno">(3.218)<a class="headerlink" href="#equation-3f8f628e-efc1-4d2f-92ae-28ecd1e2c3c6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6eb4815b-7e7f-4114-a973-239a85edc956">
+<span class="eqno">(3.218)<a class="headerlink" href="#equation-6eb4815b-7e7f-4114-a973-239a85edc956" title="Permalink to this equation">#</a></span>\[\begin{equation}
 n-C_4H_{10}(g) \rightarrow i-C_4H_{10}(g) \quad \Delta H_{isomerization} = ?
 \end{equation}\]</div>
 <p>In order to add the two reactions to net the reaction we want, we need to flip the second reaction and then add</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dcc4abc2-20f1-4489-9c26-75338dee952f">
-<span class="eqno">(3.219)<a class="headerlink" href="#equation-dcc4abc2-20f1-4489-9c26-75338dee952f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-6af23d35-fcfc-403e-bd67-799cdd2695e4">
+<span class="eqno">(3.219)<a class="headerlink" href="#equation-6af23d35-fcfc-403e-bd67-799cdd2695e4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 n-C_4H_{10}(g) + \frac{13}{2}O_2(g) &amp;\rightarrow&amp; 4CO_2(g) + 5H_2O(l) \quad \Delta H = -2877\quad kJ\cdot mol^{-1} \\
 4CO_2(g) + 5H_2O(l) &amp;\rightarrow&amp; i-C_4H_{10}(g) + \frac{13}{2}O_2(g)  \quad \Delta H = 2869\quad kJ\cdot mol^{-1}
 \end{eqnarray}\]</div>
 <p>The sum of these two nets the exact reaction we want and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8cae668a-b646-4a39-bc3e-4c3b92364d96">
-<span class="eqno">(3.220)<a class="headerlink" href="#equation-8cae668a-b646-4a39-bc3e-4c3b92364d96" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2c0520b6-307e-415b-8e46-8761f6a5e177">
+<span class="eqno">(3.220)<a class="headerlink" href="#equation-2c0520b6-307e-415b-8e46-8761f6a5e177" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta H_{isomerization}  = -2877 + 2869 = -8 \quad kJ\cdot mol^{-1} 
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -987,8 +988,8 @@ n-C_4H_{10}(g) + \frac{13}{2}O_2(g) &amp;\rightarrow&amp; 4CO_2(g) + 5H_2O(l) \q
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="enthalpy-of-reaction-from-heats-of-formation">
+</section>
+<section id="enthalpy-of-reaction-from-heats-of-formation">
 <h3><span class="section-number">3.2.5.8.2. </span>Enthalpy of Reaction from Heats of Formation<a class="headerlink" href="#enthalpy-of-reaction-from-heats-of-formation" title="Permalink to this headline">#</a></h3>
 <p>Estimate the standard heat of combustion, <span class="math notranslate nohighlight">\(\Delta H^0_c\)</span> of glucose (<span class="math notranslate nohighlight">\(C_6H_{12}O_6\)</span>(s)) given the following heats of formation</p>
 <table class="colwidths-auto table">
@@ -1010,20 +1011,20 @@ n-C_4H_{10}(g) + \frac{13}{2}O_2(g) &amp;\rightarrow&amp; 4CO_2(g) + 5H_2O(l) \q
 </tbody>
 </table>
 <p>We start by writing out the balanced chemical reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9685c5d7-c54f-47e6-be3c-c22432a2d5ba">
-<span class="eqno">(3.221)<a class="headerlink" href="#equation-9685c5d7-c54f-47e6-be3c-c22432a2d5ba" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9ba5bd15-c7ce-4e15-a378-e2ecc6b64a0d">
+<span class="eqno">(3.221)<a class="headerlink" href="#equation-9ba5bd15-c7ce-4e15-a378-e2ecc6b64a0d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 C_6H_{12}O_6 (s) + 6O_2(g) \rightarrow 6CO_2(g) + 6H_2O(l)
 \end{equation}\]</div>
 <p>Now we compute <span class="math notranslate nohighlight">\(\Delta H_{rxn}\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-29ac0567-0b85-4291-b364-e3ae70d21f68">
-<span class="eqno">(3.222)<a class="headerlink" href="#equation-29ac0567-0b85-4291-b364-e3ae70d21f68" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-e98ac259-8941-4252-804a-581434c97996">
+<span class="eqno">(3.222)<a class="headerlink" href="#equation-e98ac259-8941-4252-804a-581434c97996" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta H_{rxn} &amp;=&amp; 6\cdot\Delta H^0_f(CO_2(g)) + 6\cdot\Delta H^0_f(H_2O(l)) - \Delta H^0_f(C_6H_{12}O_6 (s)) \\
 &amp;=&amp; 6(-393.509) + 6(-285.83) - (-1260) \\
 &amp;=&amp; -2820 \quad kJ
 \end{eqnarray}\]</div>
 <p>Since the balanced reaction has one mol of <span class="math notranslate nohighlight">\(C_6H_{12}O_6 (s)\)</span> we can say that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8cd52f1a-cefb-4165-ada5-fd352335c2a0">
-<span class="eqno">(3.223)<a class="headerlink" href="#equation-8cd52f1a-cefb-4165-ada5-fd352335c2a0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-30e126f0-d959-4ab3-84ef-a0e4b34ddea4">
+<span class="eqno">(3.223)<a class="headerlink" href="#equation-30e126f0-d959-4ab3-84ef-a0e4b34ddea4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta H^0_c &amp;=&amp; -2820 \quad kJ/mol
 \end{eqnarray}\]</div>
 <div class="cell docutils container">
@@ -1038,9 +1039,9 @@ C_6H_{12}O_6 (s) + 6O_2(g) \rightarrow 6CO_2(g) + 6H_2O(l)
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
