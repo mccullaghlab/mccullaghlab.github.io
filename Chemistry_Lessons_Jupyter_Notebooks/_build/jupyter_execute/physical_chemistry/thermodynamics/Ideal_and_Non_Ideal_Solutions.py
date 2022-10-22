@@ -127,6 +127,36 @@ plt.annotate("Liquid + vapor",(0.4,32.5),fontsize=24)
 plt.annotate("Vapor",(0.1,30),fontsize=24)
 
 
+# In[4]:
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+# setup plot parameters
+fontsize=16
+fig = plt.figure(figsize=(8,8), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_xlabel("Mole Fraction of 2-proponal",size=fontsize)
+ax.set_ylabel("$P$ (torr)",size=fontsize)
+plt.tick_params(axis='both',labelsize=fontsize)
+# draw lines
+x2 = np.arange(0,1.01,0.01)
+P1 = 20.9*(1-x2)
+P2 = 40.5*x2
+Ptotal_liquid = P1+P2
+y2 = P2/Ptotal_liquid
+Ptotal_vapor = 20.9*(1-y2) + 40.5*y2
+ax.plot(x1,Ptotal_liquid,lw=2,label="liquid")
+ax.plot(x1,Ptotal_vapor,lw=2,label="vapor")
+plt.legend(fontsize=fontsize)
+# Annotations
+plt.annotate("Liquid",(0.6,35),fontsize=24)
+plt.annotate("Liquid + vapor",(0.4,32.5),fontsize=24)
+plt.annotate("Vapor",(0.1,30),fontsize=24)
+
+
 # ### Free Energy of Mixing Ideal Solutions
 
 # The Gibbs free energy of mixing of a binary ideal solution at constant $T$ and $P$ can be computed as follows
