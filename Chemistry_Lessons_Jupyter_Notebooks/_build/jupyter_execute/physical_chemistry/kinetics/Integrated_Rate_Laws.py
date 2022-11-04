@@ -21,7 +21,7 @@
 # 
 # 1. [Variables](../../coding_concepts/variables.ipynb)
 # 2. [Functions](../../coding_concepts/functions.ipynb)
-# 3. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.pyplot)
+# 3. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.ipynb)
 
 # ## A Rate Law is a Differential Equation
 
@@ -149,13 +149,22 @@ plt.annotate("$2t_{1/2}$",(2*np.log(2)/k,-0.02),fontsize=24)
 # In[2]:
 
 
+import numpy as np
 A = np.array([2.197-0.035, 2.197-0.295, 2.197-0.715, 2.197-1.055, 2.197-1.505, 2.197-1.725])
 t = np.array([0, 1, 3, 5, 9, 12])
 
 
+# In[3]:
+
+
+print(A)
+print(np.log(A))
+print(1/A)
+
+
 # **Plot [] vs t to check zeroth order**
 
-# In[3]:
+# In[4]:
 
 
 import numpy as np
@@ -184,7 +193,7 @@ plt.legend(fontsize=fontsize)
 
 # **Plot ln[] vs t to check first order**
 
-# In[4]:
+# In[5]:
 
 
 import numpy as np
@@ -213,7 +222,7 @@ plt.legend(fontsize=fontsize)
 
 # **Plot 1/[] vs t to check second order**
 
-# In[5]:
+# In[6]:
 
 
 import numpy as np
@@ -260,13 +269,13 @@ plt.legend(fontsize=fontsize)
 # \frac{0.784}{2.197-0.035} = 0.362
 # \end{equation}
 
-# In[6]:
+# In[7]:
 
 
 np.exp(-0.127*8+0.771)
 
 
-# In[7]:
+# In[8]:
 
 
 np.exp(-0.127*8+0.771)/(2.197-0.035)
