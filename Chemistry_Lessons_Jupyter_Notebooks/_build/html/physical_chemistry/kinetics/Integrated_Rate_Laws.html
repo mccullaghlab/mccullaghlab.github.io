@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.3.2. Integrated Rate Laws &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,11 +52,11 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3.4. Welcome to the lessons on Quantum Mechanics" href="../quantum_mechanics/intro.html" />
+    <link rel="next" title="3.3.3. Reversible Reactions and Transition State Theory" href="Reversible_Reactions_and_Transition_State_Theory.html" />
     <link rel="prev" title="3.3.1. Chemical Kinetics and Rate Laws" href="Chemical_Kinetics_and_Rate_Laws.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -366,6 +367,11 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
        3.3.2. Integrated Rate Laws
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Reversible_Reactions_and_Transition_State_Theory.html">
+       3.3.3. Reversible Reactions and Transition State Theory
       </a>
      </li>
     </ul>
@@ -777,13 +783,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="integrated-rate-laws">
+  <section class="tex2jax_ignore mathjax_ignore" id="integrated-rate-laws">
 <h1><span class="section-number">3.3.2. </span>Integrated Rate Laws<a class="headerlink" href="#integrated-rate-laws" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.3.2.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>The concentration of reactants as a function of time can tell you the order of the reaction with respect to that reactant.  To understand how this works, we must determine the integrated rate laws.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.3.2.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you should be able to:</p>
 <ol class="simple">
@@ -791,8 +797,8 @@ title="Print to PDF"
 <li><p>Determine the half-life from an integrated rate law.</p></li>
 <li><p>Use integrated rate laws to determine order of reaction.</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.3.2.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -800,34 +806,34 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="a-rate-law-is-a-differential-equation">
+</section>
+<section id="a-rate-law-is-a-differential-equation">
 <h2><span class="section-number">3.3.2.4. </span>A Rate Law is a Differential Equation<a class="headerlink" href="#a-rate-law-is-a-differential-equation" title="Permalink to this headline">#</a></h2>
 <p>Consider a generic reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec9f98dd-979a-4281-82b4-e90eb5c973cf">
-<span class="eqno">(3.469)<a class="headerlink" href="#equation-ec9f98dd-979a-4281-82b4-e90eb5c973cf" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8e60e0e0-0119-4b67-a488-cbcefb149cd6">
+<span class="eqno">(3.469)<a class="headerlink" href="#equation-8e60e0e0-0119-4b67-a488-cbcefb149cd6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A \rightarrow B
 \end{equation}\]</div>
 <p>Suppose this reaction is found to be first order.  In that case we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f4a93972-22c9-4524-9888-0abf13fb2ce7">
-<span class="eqno">(3.470)<a class="headerlink" href="#equation-f4a93972-22c9-4524-9888-0abf13fb2ce7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c1e149d2-4f1e-451c-88bf-6aa8184f4f03">
+<span class="eqno">(3.470)<a class="headerlink" href="#equation-c1e149d2-4f1e-451c-88bf-6aa8184f4f03" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = -\frac{d[A]}{dt} = k[A]
 \end{equation}\]</div>
 <p>This equation is a differential equation relating the change in concentration of reactant <span class="math notranslate nohighlight">\(A\)</span> with respect to time to the concentration of that species.</p>
 <p>In general, the equating of rate laws and differential rate equations yields a differential equation in the concentration of reactants.  Below we will solve this for first order and provide the results for other orders.</p>
-</div>
-<div class="section" id="integrated-rate-law-for-first-order-reaction">
+</section>
+<section id="integrated-rate-law-for-first-order-reaction">
 <h2><span class="section-number">3.3.2.5. </span>Integrated Rate Law for First Order Reaction<a class="headerlink" href="#integrated-rate-law-for-first-order-reaction" title="Permalink to this headline">#</a></h2>
 <p>Here we consider the generic reaction given above and start with the differential equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c6f69288-8150-4072-9bae-a13f188df7e3">
-<span class="eqno">(3.471)<a class="headerlink" href="#equation-c6f69288-8150-4072-9bae-a13f188df7e3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-cb0e7ba0-a3f7-4e67-91a5-67cf2dac0a2b">
+<span class="eqno">(3.471)<a class="headerlink" href="#equation-cb0e7ba0-a3f7-4e67-91a5-67cf2dac0a2b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 -\frac{d[A]}{dt} &amp;=&amp; k[A] \\
 \Rightarrow d[A] &amp;=&amp; -k[A]dt \\
 \Rightarrow \frac{d[A]}{[A]} &amp;=&amp; -kdt
 \end{eqnarray}\]</div>
 <p>where in the last step we divided both sides of the equation by <span class="math notranslate nohighlight">\([A]\)</span> to achieve a separation of variables.  We can now <em><strong>integrate</strong></em> this equation from time <span class="math notranslate nohighlight">\(t=0\)</span> and concentration <span class="math notranslate nohighlight">\([A]_0\)</span> to arbitrary time <span class="math notranslate nohighlight">\(t\)</span> and concentration <span class="math notranslate nohighlight">\([A]_t\)</span> to yield our first order integrated rate law.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-26d12989-876c-4c7d-a4ab-b5bba8535e60">
-<span class="eqno">(3.472)<a class="headerlink" href="#equation-26d12989-876c-4c7d-a4ab-b5bba8535e60" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-11b71800-acc7-467b-8edb-1c71d1be3b4a">
+<span class="eqno">(3.472)<a class="headerlink" href="#equation-11b71800-acc7-467b-8edb-1c71d1be3b4a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{d[A]}{[A]} &amp;=&amp; -kdt \\
 \Rightarrow \int_{[A]_0}^{[A]_t}\frac{d[A]}{[A]} &amp;=&amp; -k\int_0^t dt \\
 \ln[A]_t - \ln[A]_0 = -kt \\
@@ -835,16 +841,16 @@ v(t) = -\frac{d[A]}{dt} = k[A]
 \end{eqnarray}\]</div>
 <p>This last equality is known as the <em><strong>first order integrated rate law</strong></em>.  It demonstrates that the natural log of concentration will be linear as a function of time for first order processes.  A plot of <span class="math notranslate nohighlight">\(\ln[A]\)</span> vs <span class="math notranslate nohighlight">\(t\)</span> for a first order process will have a slope if <span class="math notranslate nohighlight">\(-k\)</span> and an intercept of <span class="math notranslate nohighlight">\(\ln[A]_0\)</span>.</p>
 <p>The first first order integrated rate law can also be written in the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4b749308-ba7f-4cae-b3bb-a78d45f11b56">
-<span class="eqno">(3.473)<a class="headerlink" href="#equation-4b749308-ba7f-4cae-b3bb-a78d45f11b56" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-42ffaf9f-f711-4898-912a-260fc0c8f2ed">
+<span class="eqno">(3.473)<a class="headerlink" href="#equation-42ffaf9f-f711-4898-912a-260fc0c8f2ed" title="Permalink to this equation">#</a></span>\[\begin{equation}
 [A]_t = [A]_0e^{-kt}
 \end{equation}\]</div>
-<div class="section" id="half-life-for-a-first-order-process">
+<section id="half-life-for-a-first-order-process">
 <h3><span class="section-number">3.3.2.5.1. </span>Half-life for a First Order Process<a class="headerlink" href="#half-life-for-a-first-order-process" title="Permalink to this headline">#</a></h3>
 <p>For a variety of applications, a quantity called <em><strong>half-life</strong></em> is useful.  This value represents the time is takes for the concentration to be half of the starting concentration.  Equations for half-life can be determined from the integrated rate laws by simply plugging in <span class="math notranslate nohighlight">\([A]_{t_{1/2}} = \frac{1}{2}[A]_0\)</span> and solving for <span class="math notranslate nohighlight">\(t_{1/2}\)</span>.  The resulting equations will depend on the order of reaction.</p>
 <p>Here we will determine the half-life equation for a first order process based on the first order integrated rate law above</p>
-<div class="amsmath math notranslate nohighlight" id="equation-31bc06b1-c80a-4e2c-82d2-aff8f92157b5">
-<span class="eqno">(3.474)<a class="headerlink" href="#equation-31bc06b1-c80a-4e2c-82d2-aff8f92157b5" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-09d40895-3808-47ca-9e75-867d1a36616c">
+<span class="eqno">(3.474)<a class="headerlink" href="#equation-09d40895-3808-47ca-9e75-867d1a36616c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \ln[A]_t - \ln[A]_0 &amp;=&amp; -kt \\
 \ln\frac{[A]_t}{[A]_0} &amp;=&amp; -kt \\
 \Rightarrow \ln\frac{\frac{1}{2}[A]_0}{[A]_0} &amp;=&amp; -kt_{1/2} \\
@@ -891,13 +897,13 @@ v(t) = -\frac{d[A]}{dt} = k[A]
 <img alt="../../_images/Integrated_Rate_Laws_10_1.png" src="../../_images/Integrated_Rate_Laws_10_1.png" />
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="summary-of-integrated-rate-laws">
+</section>
+</section>
+<section id="summary-of-integrated-rate-laws">
 <h2><span class="section-number">3.3.2.6. </span>Summary of Integrated Rate Laws<a class="headerlink" href="#summary-of-integrated-rate-laws" title="Permalink to this headline">#</a></h2>
 <p>Integrated rate laws for all orders can be derived in a similar manner to the first order derivation above.  Instead of deriving the rest, here we summarize the important results all assuming a generic reaction of the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-23f1b57b-df43-4dea-be89-245aa63aed10">
-<span class="eqno">(3.475)<a class="headerlink" href="#equation-23f1b57b-df43-4dea-be89-245aa63aed10" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a1f3e1fd-1e5f-4a4d-9007-e8abc933c01d">
+<span class="eqno">(3.475)<a class="headerlink" href="#equation-a1f3e1fd-1e5f-4a4d-9007-e8abc933c01d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A \rightarrow B
 \end{equation}\]</div>
 <table class="colwidths-auto table">
@@ -922,12 +928,12 @@ A \rightarrow B
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="order-of-reaction-using-integrated-rate-laws">
+</section>
+<section id="order-of-reaction-using-integrated-rate-laws">
 <h2><span class="section-number">3.3.2.7. </span>Order of Reaction Using Integrated Rate Laws<a class="headerlink" href="#order-of-reaction-using-integrated-rate-laws" title="Permalink to this headline">#</a></h2>
 <p>The order of reaction can be estimated using concentration vs time data.  The procedure to do so is to fit the various linear integrated rate laws and choose the one that fits the data the best (has the largest <span class="math notranslate nohighlight">\(R^2\)</span> value from the fit).</p>
 <p>Here we will use in an example to demonstrate this idea.</p>
-<div class="section" id="example-order-of-reaction-from-vs-t-data">
+<section id="example-order-of-reaction-from-vs-t-data">
 <h3><span class="section-number">3.3.2.7.1. </span>Example: Order of Reaction from [ ] vs t Data<a class="headerlink" href="#example-order-of-reaction-from-vs-t-data" title="Permalink to this headline">#</a></h3>
 <p>The hydrolysis of 1-chloro-1-methylcycloundecane (<span class="math notranslate nohighlight">\(C_12H_25_Cl\)</span>) can be monitored by titrating the result with NaOH to measure the amount of acid present.  The following data of the concentration of NaOH needed to neutralize the reaction as a function of time was measured.  What is the rate of reaction, rate constant for reaction, and what fraction will be left unhydrolyzed after 8hrs?</p>
 <table class="colwidths-auto table">
@@ -988,7 +994,7 @@ A \rightarrow B
 </div>
 </div>
 <p><strong>Plot [] vs t to check zeroth order</strong></p>
-<div class="cell docutils container">
+<div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1016,14 +1022,14 @@ A \rightarrow B
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fde58c6ad90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f9ab65de2b0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Integrated_Rate_Laws_20_1.png" src="../../_images/Integrated_Rate_Laws_20_1.png" />
 </div>
 </div>
 <p><strong>Plot ln[] vs t to check first order</strong></p>
-<div class="cell docutils container">
+<div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1051,14 +1057,14 @@ A \rightarrow B
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fde3877ed90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f9ab666dd00&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Integrated_Rate_Laws_22_1.png" src="../../_images/Integrated_Rate_Laws_22_1.png" />
 </div>
 </div>
 <p><strong>Plot 1/[] vs t to check second order</strong></p>
-<div class="cell docutils container">
+<div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -1086,7 +1092,7 @@ A \rightarrow B
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fde3891a9d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f9ab695fb80&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Integrated_Rate_Laws_24_1.png" src="../../_images/Integrated_Rate_Laws_24_1.png" />
@@ -1094,23 +1100,23 @@ A \rightarrow B
 </div>
 <p>If we consider only up to second order, the <span class="math notranslate nohighlight">\(R^2\)</span> values for the respective linear fits are 0.961, 1.0, and 0.962 for zeroth, first and second order fits respectively.  Thus, the data is most consistent with the process being first order in reactant.</p>
 <p>The rate constant is negative the slope, so the rate constant is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7a8f6684-89cc-4e8e-abf5-17c40857ec6c">
-<span class="eqno">(3.476)<a class="headerlink" href="#equation-7a8f6684-89cc-4e8e-abf5-17c40857ec6c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6a3a9946-bd14-49df-8bbb-885cad3fe16b">
+<span class="eqno">(3.476)<a class="headerlink" href="#equation-6a3a9946-bd14-49df-8bbb-885cad3fe16b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 k = 0.127 \text{ hr}^{-1}
 \end{equation}\]</div>
 <p>The natural log of concentration of the reactant as a function of time is given as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dbe654f0-c21a-4130-bf35-2bcc601cf3d0">
-<span class="eqno">(3.477)<a class="headerlink" href="#equation-dbe654f0-c21a-4130-bf35-2bcc601cf3d0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0fcc63d7-9c3d-48a2-a9d4-ddd6edd66b33">
+<span class="eqno">(3.477)<a class="headerlink" href="#equation-0fcc63d7-9c3d-48a2-a9d4-ddd6edd66b33" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln A = -0.127 t +0.771
 \end{equation}\]</div>
 <p>thus, the concentration of reactant at 8 hrs is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-11707e45-e11c-4b77-9449-df157304ef13">
-<span class="eqno">(3.478)<a class="headerlink" href="#equation-11707e45-e11c-4b77-9449-df157304ef13" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0e207cc0-41b7-497e-9053-e862c21d0003">
+<span class="eqno">(3.478)<a class="headerlink" href="#equation-0e207cc0-41b7-497e-9053-e862c21d0003" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A(8\text{hrs}) = e^{-0.127\cdot8 +0.771} = 0.784 \text{x/cm}^3
 \end{equation}\]</div>
 <p>The fraction unhydrolyzed after 8hrs is thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d6a5de37-7468-4a01-b6dc-3b5e21fa57cf">
-<span class="eqno">(3.479)<a class="headerlink" href="#equation-d6a5de37-7468-4a01-b6dc-3b5e21fa57cf" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b3a189ca-07b7-442f-b800-04fa6f2fa20d">
+<span class="eqno">(3.479)<a class="headerlink" href="#equation-b3a189ca-07b7-442f-b800-04fa6f2fa20d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{0.784}{2.197-0.035} = 0.362
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1137,9 +1143,9 @@ A(8\text{hrs}) = e^{-0.127\cdot8 +0.771} = 0.784 \text{x/cm}^3
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1175,10 +1181,10 @@ A(8\text{hrs}) = e^{-0.127\cdot8 +0.771} = 0.784 \text{x/cm}^3
             <p class="prev-next-title"><span class="section-number">3.3.1. </span>Chemical Kinetics and Rate Laws</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../quantum_mechanics/intro.html" title="next page">
+    <a class='right-next' id="next-link" href="Reversible_Reactions_and_Transition_State_Theory.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3.4. </span>Welcome to the lessons on Quantum Mechanics</p>
+        <p class="prev-next-title"><span class="section-number">3.3.3. </span>Reversible Reactions and Transition State Theory</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
