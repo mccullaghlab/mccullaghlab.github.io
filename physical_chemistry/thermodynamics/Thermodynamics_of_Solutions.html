@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.2.17. Thermodynamics of Solutions &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.18. Ideal and Non-ideal Solutions" href="Ideal_and_Non_Ideal_Solutions.html" />
@@ -366,6 +367,11 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toctree-l3">
       <a class="reference internal" href="../kinetics/Integrated_Rate_Laws.html">
        3.3.2. Integrated Rate Laws
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Reversible_Reactions_and_Transition_State_Theory.html">
+       3.3.3. Reversible Reactions and Transition State Theory
       </a>
      </li>
     </ul>
@@ -769,9 +775,9 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="thermodynamics-of-solutions">
+  <section class="tex2jax_ignore mathjax_ignore" id="thermodynamics-of-solutions">
 <h1><span class="section-number">3.2.17. </span>Thermodynamics of Solutions<a class="headerlink" href="#thermodynamics-of-solutions" title="Permalink to this headline">#</a></h1>
-<div class="section" id="learning-goals">
+<section id="learning-goals">
 <h2><span class="section-number">3.2.17.1. </span>Learning goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through this notebook, you will be able to:</p>
 <ol class="simple">
@@ -780,15 +786,15 @@ title="Print to PDF"
 <li><p>Derive the Gibbs-Duhem equation.</p></li>
 <li><p>Use the Gibbs-Duhem equation to relate the chemical potentials of two component solutions.</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.2.17.2. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
 <li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="what-makes-solutions-different-from-gasses">
+</section>
+<section id="what-makes-solutions-different-from-gasses">
 <h2><span class="section-number">3.2.17.3. </span>What makes solutions different from gasses?<a class="headerlink" href="#what-makes-solutions-different-from-gasses" title="Permalink to this headline">#</a></h2>
 <p>Any number of things.  But here are a few:</p>
 <ol class="simple">
@@ -797,160 +803,160 @@ title="Print to PDF"
 <li><p>PV work doesn’t seem so relevant for solutions as compared to gasses.</p></li>
 <li><p>Solutions are typically held under constant <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(T\)</span> conditions.</p></li>
 </ol>
-</div>
-<div class="section" id="a-two-component-solution">
+</section>
+<section id="a-two-component-solution">
 <h2><span class="section-number">3.2.17.4. </span>A Two Component Solution<a class="headerlink" href="#a-two-component-solution" title="Permalink to this headline">#</a></h2>
 <p>Consider a two component solution with components <span class="math notranslate nohighlight">\(A\)</span> (e.g. H<span class="math notranslate nohighlight">\(_2\)</span>O(l)) and <span class="math notranslate nohighlight">\(B\)</span> (e.g. CH<span class="math notranslate nohighlight">\(_3\)</span>OH(l)).  How does the chemical potential of one component compare to the other under constant <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(P\)</span> conditions?</p>
 <p>Unlike the case of a two phase equilibrium, the components of this solution cannot interconvert.  Thus, we do not necessarily have that the chemical potentials are equal at equilibrium.</p>
-</div>
-<div class="section" id="thermodynamic-energy-functions-for-multicomponent-systems">
+</section>
+<section id="thermodynamic-energy-functions-for-multicomponent-systems">
 <h2><span class="section-number">3.2.17.5. </span>Thermodynamic Energy Functions for Multicomponent Systems<a class="headerlink" href="#thermodynamic-energy-functions-for-multicomponent-systems" title="Permalink to this headline">#</a></h2>
 <p>Though it was never (or at least not frequently) stated, the Thermodynamic energy functions we have encountered so far are only for single component systems.  e.g. a single type of gas.  For a multicomponent system, we must consider the energy associated with each component to, for example, compute the energy difference between two different concentrations of a solution.</p>
 <p>We start by looking at the differential form of the internal energy</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0d029dcd-2ac6-4e05-956b-10aecee30560">
-<span class="eqno">(3.388)<a class="headerlink" href="#equation-0d029dcd-2ac6-4e05-956b-10aecee30560" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c46bb9cd-f202-4b16-b7f5-88deb000a022">
+<span class="eqno">(3.388)<a class="headerlink" href="#equation-c46bb9cd-f202-4b16-b7f5-88deb000a022" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dU = TdS - PdV
 \end{equation}\]</div>
 <p>We now say that the infintesimal change in internal energy, <span class="math notranslate nohighlight">\(dU\)</span>, can be changed by changes in the number of moles/molecules of each component.  We will write this for a general <span class="math notranslate nohighlight">\(M\)</span>-component system</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a8dffb7b-a048-4caa-a723-96bb363801cd">
-<span class="eqno">(3.389)<a class="headerlink" href="#equation-a8dffb7b-a048-4caa-a723-96bb363801cd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-501c53d7-2925-4943-8990-472af9161699">
+<span class="eqno">(3.389)<a class="headerlink" href="#equation-501c53d7-2925-4943-8990-472af9161699" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dU = TdS - PdV + \sum_{i=1}^M \mu_idN_i
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu_i\)</span> is call the <em><strong>chemical potential</strong></em> of component <span class="math notranslate nohighlight">\(i\)</span> because it is the energy per mole/molecule of component <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(dN_i\)</span> is the infintesimal change in the amount (number of molecules/moles) of component <span class="math notranslate nohighlight">\(i\)</span>.</p>
 <p>Notice that the formula</p>
-<div class="amsmath math notranslate nohighlight" id="equation-057d7c23-f097-4ce7-a33d-1f2692a8e451">
-<span class="eqno">(3.390)<a class="headerlink" href="#equation-057d7c23-f097-4ce7-a33d-1f2692a8e451" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ed1654bb-2d73-42b2-9d48-f967aa6ec93b">
+<span class="eqno">(3.390)<a class="headerlink" href="#equation-ed1654bb-2d73-42b2-9d48-f967aa6ec93b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dU = TdS - PdV + \sum_{i=1}^M \mu_idN_i
 \end{equation}\]</div>
 <p>dictates that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1a507d87-7361-4a33-b742-c2cb7750fae2">
-<span class="eqno">(3.391)<a class="headerlink" href="#equation-1a507d87-7361-4a33-b742-c2cb7750fae2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1737c6d5-7566-4f6e-b869-1122bdad0a32">
+<span class="eqno">(3.391)<a class="headerlink" href="#equation-1737c6d5-7566-4f6e-b869-1122bdad0a32" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mu_i = \left(\frac{\partial U}{\partial N_i}\right)_{S,V,N_{j\neq i}}
 \end{equation}\]</div>
 <p>or <span class="math notranslate nohighlight">\(\mu_i\)</span> is the slope in internal energy along the dimension <span class="math notranslate nohighlight">\(N_i\)</span>.  i.e. <span class="math notranslate nohighlight">\(\mu_i\)</span> is the internal energy per molecule of component <span class="math notranslate nohighlight">\(i\)</span>.</p>
 <p>Also notice that conversion to the other three Thermodynamic energy functions (<span class="math notranslate nohighlight">\(H\)</span>, <span class="math notranslate nohighlight">\(A\)</span>, and <span class="math notranslate nohighlight">\(G\)</span>) will not affect the chemical potential terms.  More to the point, given these chemical potential terms in <span class="math notranslate nohighlight">\(dU\)</span>, we can write the three other differential forms:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-66f8129d-9e15-4763-943a-8c45b91f4931">
-<span class="eqno">(3.392)<a class="headerlink" href="#equation-66f8129d-9e15-4763-943a-8c45b91f4931" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8f20f5ad-8624-4b98-b866-34e67a475dc3">
+<span class="eqno">(3.392)<a class="headerlink" href="#equation-8f20f5ad-8624-4b98-b866-34e67a475dc3" title="Permalink to this equation">#</a></span>\[\begin{align}
 dH &amp;= TdS + VdP + \sum_{i=1}^M \mu_idN_i \\
 dA &amp;= -SdT - PdV + \sum_{i=1}^M \mu_idN_i \\
 dG &amp;= -SdT + VdP + \sum_{i=1}^M \mu_idN_i
 \end{align}\]</div>
 <p>Due to many solutions being held under constant <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(T\)</span>, the Gibbs free energy function is the most useful Thermoydnamic energy function.  As such, the most common definition of the chemical potential is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e19f604-5242-4a36-a6e7-217e1ebbcb18">
-<span class="eqno">(3.393)<a class="headerlink" href="#equation-5e19f604-5242-4a36-a6e7-217e1ebbcb18" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-293b1134-f6b4-4933-b47c-0ad80cbbb5bd">
+<span class="eqno">(3.393)<a class="headerlink" href="#equation-293b1134-f6b4-4933-b47c-0ad80cbbb5bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mu_i = \left(\frac{\partial G}{\partial N_i}\right)_{T,P,N_{j\neq i}}
 \end{equation}\]</div>
-</div>
-<div class="section" id="the-gibbs-duhem-equation">
+</section>
+<section id="the-gibbs-duhem-equation">
 <h2><span class="section-number">3.2.17.6. </span>The Gibbs-Duhem Equation<a class="headerlink" href="#the-gibbs-duhem-equation" title="Permalink to this headline">#</a></h2>
 <p>The Gibbs-Duhem equation demonstrates the relationship between all intensive variables of a system.  The implication of this is that if there are <span class="math notranslate nohighlight">\(M\)</span> intesive variables of a system, you need only measure <span class="math notranslate nohighlight">\(M-1\)</span> of them to get all of them.  Seems unimportant but it isn’t.</p>
 <p>To derive the Gibbs-Duhem equation, we start with the fact that the chemical potential of component is the Gibbs free energy per molecule (or mole) of that component.  Thus, we can write the total Gibbs free energy as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b17a7d26-4462-4220-a2be-a6f35ed9aa3c">
-<span class="eqno">(3.394)<a class="headerlink" href="#equation-b17a7d26-4462-4220-a2be-a6f35ed9aa3c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-225a58ae-975e-4305-b316-5a1c2d88f173">
+<span class="eqno">(3.394)<a class="headerlink" href="#equation-225a58ae-975e-4305-b316-5a1c2d88f173" title="Permalink to this equation">#</a></span>\[\begin{align}
 G = \sum_i \mu_iN_i
 \end{align}\]</div>
 <p>We now take the differential of both sides to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-66227942-ea4a-4496-aef3-dbb3e706c393">
-<span class="eqno">(3.395)<a class="headerlink" href="#equation-66227942-ea4a-4496-aef3-dbb3e706c393" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5078ca3e-49b7-4b13-ba51-93e54dd85f83">
+<span class="eqno">(3.395)<a class="headerlink" href="#equation-5078ca3e-49b7-4b13-ba51-93e54dd85f83" title="Permalink to this equation">#</a></span>\[\begin{align}
 dG = \sum_i \left[ \mu_idN_i + N_id\mu_i\right]
 \end{align}\]</div>
 <p>where we use the product rule on each term of the sum.  We now split this into two sums and relate it to the other equation for <span class="math notranslate nohighlight">\(dG\)</span> that we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-548fcba6-95cb-4c60-b04a-8a940869fcd3">
-<span class="eqno">(3.396)<a class="headerlink" href="#equation-548fcba6-95cb-4c60-b04a-8a940869fcd3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5efa1b54-6a34-4395-9be6-b5ed6c294887">
+<span class="eqno">(3.396)<a class="headerlink" href="#equation-5efa1b54-6a34-4395-9be6-b5ed6c294887" title="Permalink to this equation">#</a></span>\[\begin{align}
 dG =&amp; \sum_i  \mu_idN_i +\sum_i N_id\mu_i \\
  =&amp; -SdT + VdP + \sum_i  \mu_idN_i
 \end{align}\]</div>
 <p>now substract <span class="math notranslate nohighlight">\(\sum_i  \mu_idN_i\)</span> from both sides to get the Gibbs-Duhem equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8f25c3b9-c151-4a73-a328-e368c6db3d38">
-<span class="eqno">(3.397)<a class="headerlink" href="#equation-8f25c3b9-c151-4a73-a328-e368c6db3d38" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6c1974ee-423a-4c44-bd50-76cb0a0b23a8">
+<span class="eqno">(3.397)<a class="headerlink" href="#equation-6c1974ee-423a-4c44-bd50-76cb0a0b23a8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \sum_i N_id\mu_i =&amp; -SdT + VdP \\
 \Rightarrow 0 =&amp; -SdT + VdP - \sum_i N_id\mu_i
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(T\)</span>, <span class="math notranslate nohighlight">\(P\)</span> and all of the <span class="math notranslate nohighlight">\(\mu_i\)</span>s are the intensive variables of the system.  The Gibbs-Duhem equation suggest that state functions exist.</p>
-</div>
-<div class="section" id="the-gibbs-duhem-equation-for-a-two-component-solution">
+</section>
+<section id="the-gibbs-duhem-equation-for-a-two-component-solution">
 <h2><span class="section-number">3.2.17.7. </span>The Gibbs-Duhem Equation for a Two Component Solution<a class="headerlink" href="#the-gibbs-duhem-equation-for-a-two-component-solution" title="Permalink to this headline">#</a></h2>
 <p>For a two component system the Gibbs-Duhem equation is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2e15ecf0-9ce5-480a-82a5-b0d2601181ca">
-<span class="eqno">(3.398)<a class="headerlink" href="#equation-2e15ecf0-9ce5-480a-82a5-b0d2601181ca" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fbf73a37-dc52-4d6e-acfe-5ebc230aa387">
+<span class="eqno">(3.398)<a class="headerlink" href="#equation-fbf73a37-dc52-4d6e-acfe-5ebc230aa387" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 =&amp; -SdT + VdP - N_Ad\mu_A - N_Bd\mu_B
 \end{align}\]</div>
 <p>Under constant <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(P\)</span> conditions this yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8d59b74c-429d-4ba8-a7dd-d5e6f91dc1a0">
-<span class="eqno">(3.399)<a class="headerlink" href="#equation-8d59b74c-429d-4ba8-a7dd-d5e6f91dc1a0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b8ed66b3-549f-427b-844e-cf50e449a33a">
+<span class="eqno">(3.399)<a class="headerlink" href="#equation-b8ed66b3-549f-427b-844e-cf50e449a33a" title="Permalink to this equation">#</a></span>\[\begin{align}
 N_Ad\mu_A &amp;=- N_Bd\mu_B 
 \end{align}\]</div>
 <p>If we now divide by <span class="math notranslate nohighlight">\(N = N_A + N_B\)</span> (constant total number of moles) we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-34b17645-ae88-48ff-b6e9-a845944321de">
-<span class="eqno">(3.400)<a class="headerlink" href="#equation-34b17645-ae88-48ff-b6e9-a845944321de" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3ce8b339-3d33-43a5-a00a-e8cabcb7664e">
+<span class="eqno">(3.400)<a class="headerlink" href="#equation-3ce8b339-3d33-43a5-a00a-e8cabcb7664e" title="Permalink to this equation">#</a></span>\[\begin{align}
 x_Ad\mu_A &amp;=- x_Bd\mu_B 
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x_A = \frac{N_A}{N}\)</span> is the mole fraction of component <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(x_B = \frac{N_B}{N}\)</span> is the mole fraction of component <span class="math notranslate nohighlight">\(B\)</span>.  This equation can be rearranged to solve for <span class="math notranslate nohighlight">\(d\mu_A\)</span> or <span class="math notranslate nohighlight">\(d\mu_B\)</span> which is one of the more common forms of the Gibbs-Duhem equation.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eff804e5-8766-43e6-a68f-620d1ce9183f">
-<span class="eqno">(3.401)<a class="headerlink" href="#equation-eff804e5-8766-43e6-a68f-620d1ce9183f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c50ea83e-284e-4ca0-a287-65183fa72a67">
+<span class="eqno">(3.401)<a class="headerlink" href="#equation-c50ea83e-284e-4ca0-a287-65183fa72a67" title="Permalink to this equation">#</a></span>\[\begin{align}
 d\mu_A &amp;=- \frac{x_B}{x_A}d\mu_B 
 \end{align}\]</div>
 <p>This equation can be used to solve for the chemical potential of one species if you know the chemical potential of the other species as a function of composition (<span class="math notranslate nohighlight">\(x_A\)</span> and/or <span class="math notranslate nohighlight">\(x_B\)</span>).</p>
-</div>
-<div class="section" id="example-the-chemical-potentials-of-a-two-component-solution">
+</section>
+<section id="example-the-chemical-potentials-of-a-two-component-solution">
 <h2><span class="section-number">3.2.17.8. </span>Example: The Chemical Potentials of a Two Component Solution<a class="headerlink" href="#example-the-chemical-potentials-of-a-two-component-solution" title="Permalink to this headline">#</a></h2>
 <p>Consider a solution of two components held under constant <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(P\)</span>.  The chemical potential of component <span class="math notranslate nohighlight">\(A\)</span> is determined to obey the functional form <span class="math notranslate nohighlight">\(\mu_A = \mu_A^* + RT\ln x_A\)</span>, where <span class="math notranslate nohighlight">\(\mu_A^*\)</span> is the chemical potential of pure A, and <span class="math notranslate nohighlight">\(x_A\)</span> is the mole fraction of species A.  Show that the chemical potential of species <span class="math notranslate nohighlight">\(B\)</span> must be given as <span class="math notranslate nohighlight">\(\mu_B = \mu_B^* + RT\ln x_B\)</span>, where <span class="math notranslate nohighlight">\(\mu_B^*\)</span> is the chemical potential of pure B, and <span class="math notranslate nohighlight">\(x_B\)</span> is the mole fraction of species B.</p>
 <p>We start with the Gibbs-Duhem relation at constant <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(T\)</span> for a binary system:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0343f44d-e54a-4015-8337-e092d5c7b3b8">
-<span class="eqno">(3.402)<a class="headerlink" href="#equation-0343f44d-e54a-4015-8337-e092d5c7b3b8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-7923f49b-5a8d-4e60-b77e-993a8c8fed86">
+<span class="eqno">(3.402)<a class="headerlink" href="#equation-7923f49b-5a8d-4e60-b77e-993a8c8fed86" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 d\mu_B = -\frac{x_A}{x_B}d\mu_A
 \end{eqnarray}\]</div>
 <p>We now determine the differential of <span class="math notranslate nohighlight">\(\mu_A\)</span> from the equation given:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d7f400db-6067-4cbe-b497-0fea81b82dbd">
-<span class="eqno">(3.403)<a class="headerlink" href="#equation-d7f400db-6067-4cbe-b497-0fea81b82dbd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-4dd7ee42-582d-4106-98ce-dec17cbf2cb9">
+<span class="eqno">(3.403)<a class="headerlink" href="#equation-4dd7ee42-582d-4106-98ce-dec17cbf2cb9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	d\mu_A &amp;=&amp; d(\mu_A^* + RT\ln x_A) \\
 	&amp;=&amp; \frac{RT}{x_A}dx_A \\
 	&amp;=&amp; -\frac{RT}{x_A}dx_B,
 \end{eqnarray}\]</div>
 <p>where the last equality holds because <span class="math notranslate nohighlight">\(x_A + x_B = 1\)</span>, or <span class="math notranslate nohighlight">\(dx_A = -dx_B\)</span>.  Now plug into Gibbs-Duhem and integrate:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-44d1ab2b-47f8-45a7-97ca-bedc4f0733e7">
-<span class="eqno">(3.404)<a class="headerlink" href="#equation-44d1ab2b-47f8-45a7-97ca-bedc4f0733e7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2bc11bd0-b25e-42fe-b87d-3bd95f280e91">
+<span class="eqno">(3.404)<a class="headerlink" href="#equation-2bc11bd0-b25e-42fe-b87d-3bd95f280e91" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 	d\mu_B &amp;=&amp; -\frac{x_A}{x_B}\left( -\frac{RT}{x_A}dx_B \right) \\
 	&amp;=&amp; \frac{RT}{x_B}dx_B \\
 	\Rightarrow \int_1^{x_B}d\mu_B &amp;=&amp; \int_1^{x_B} \frac{RT}{x_B}dx_B \\
 	\mu_B - \mu^*_B &amp;=&amp; RT\ln(x_B) \\
 	\Rightarrow \mu_B  &amp;=&amp; \mu^*_B + RT\ln(x_B)
 \end{eqnarray}\]</div>
-</div>
-<div class="section" id="solutions-in-equilibria-with-their-vapors">
+</section>
+<section id="solutions-in-equilibria-with-their-vapors">
 <h2><span class="section-number">3.2.17.9. </span>Solutions in Equilibria with their Vapors<a class="headerlink" href="#solutions-in-equilibria-with-their-vapors" title="Permalink to this headline">#</a></h2>
 <p>The discussion thus far has been focused on single phase solutions.  But solutions can also be in equilibrium with their vapors.  Take the example of a solution of water and methanol.  The vapor above this solution will contain both water and methanol (or benzene and toluene).  But, again, clearly water and methanol are not inter converting so what can we say about this situation?</p>
 <p>In this case, at constant <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(P\)</span> and at equilibrium, the chemical potentials of the vapor and the liquid will be equal for each component.  That is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70187edd-375f-4e7b-9d3d-7590b6ffd11f">
-<span class="eqno">(3.405)<a class="headerlink" href="#equation-70187edd-375f-4e7b-9d3d-7590b6ffd11f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-08d72e37-0e42-4618-b394-60f38d3fcbe0">
+<span class="eqno">(3.405)<a class="headerlink" href="#equation-08d72e37-0e42-4618-b394-60f38d3fcbe0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \mu^{sln}_i = \mu^{vap}_i
 \end{eqnarray}\]</div>
 <p>or, in the specific case of the binary solution of water and methanol</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92086aa8-cff7-47dc-bc26-fed715d49d56">
-<span class="eqno">(3.406)<a class="headerlink" href="#equation-92086aa8-cff7-47dc-bc26-fed715d49d56" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5168afbf-e6cb-4da8-8524-97068edcbcae">
+<span class="eqno">(3.406)<a class="headerlink" href="#equation-5168afbf-e6cb-4da8-8524-97068edcbcae" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \mu^{sln}_{water} &amp;=&amp; \mu^{vap}_{water} \\
 \mu^{sln}_{methanol} &amp;=&amp; \mu^{vap}_{methanol}
 \end{eqnarray}\]</div>
 <p>Notice that we do not equate the chemical potentials of species <span class="math notranslate nohighlight">\(i\)</span> with species <span class="math notranslate nohighlight">\(j\neq i\)</span> (e.g. chemical potentials of water and methanol are not necessarily the same).</p>
 <p>Since we have discussed the chemical potential of a gas, and assuming that the vapor behaves as an ideal gas, we know that we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-18356599-c494-4211-b253-a57b65bb4a43">
-<span class="eqno">(3.407)<a class="headerlink" href="#equation-18356599-c494-4211-b253-a57b65bb4a43" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-b29d45e3-a169-4e99-b413-2daa18e4695d">
+<span class="eqno">(3.407)<a class="headerlink" href="#equation-b29d45e3-a169-4e99-b413-2daa18e4695d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \mu^{sln}_i = \mu^{vap}_i = \mu_i^\circ(T) + RT\ln\frac{P_i}{P^\circ},
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu_i^\circ(T)\)</span> is the chemical potential of species <span class="math notranslate nohighlight">\(i\)</span> under standard conditions (<span class="math notranslate nohighlight">\(P^\circ = 1\)</span> bar).</p>
 <p>For pure component <span class="math notranslate nohighlight">\(i\)</span> we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92419242-1894-4a80-8ea0-67563789c739">
-<span class="eqno">(3.408)<a class="headerlink" href="#equation-92419242-1894-4a80-8ea0-67563789c739" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-47f42f5d-af07-4835-ac13-ba28c12a1b1e">
+<span class="eqno">(3.408)<a class="headerlink" href="#equation-47f42f5d-af07-4835-ac13-ba28c12a1b1e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \mu^{*}_i(l) = \mu^{*}_i(vap) = \mu_i^\circ(T) + RT\ln\frac{P_i^*}{P^\circ},
 \end{eqnarray}\]</div>
 <p>where, again, <span class="math notranslate nohighlight">\(\mu_i^\circ(T)\)</span> is the chemical potential of species <span class="math notranslate nohighlight">\(i\)</span> under standard conditions (<span class="math notranslate nohighlight">\(P^\circ = 1\)</span> bar) and <span class="math notranslate nohighlight">\(P_i^*\)</span> is the vapor pressure of pure <span class="math notranslate nohighlight">\(i\)</span>.</p>
 <p>We can solve the above two equations for <span class="math notranslate nohighlight">\(\mu_i^\circ(T)\)</span> and equate the resulting relationships to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb87d9da-0e1b-4f81-99bb-72ea23223bfa">
-<span class="eqno">(3.409)<a class="headerlink" href="#equation-eb87d9da-0e1b-4f81-99bb-72ea23223bfa" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-4570500d-6ec9-4e59-9536-33cc4a43db89">
+<span class="eqno">(3.409)<a class="headerlink" href="#equation-4570500d-6ec9-4e59-9536-33cc4a43db89" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \mu^{sln}_i = \mu^{*}_i(l) + RT\ln\frac{P_i}{P_i^*}
 \end{eqnarray}\]</div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

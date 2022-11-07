@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.3.1. Chemical Kinetics and Rate Laws &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.3.2. Integrated Rate Laws" href="Integrated_Rate_Laws.html" />
@@ -366,6 +367,11 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toctree-l3">
       <a class="reference internal" href="Integrated_Rate_Laws.html">
        3.3.2. Integrated Rate Laws
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Reversible_Reactions_and_Transition_State_Theory.html">
+       3.3.3. Reversible Reactions and Transition State Theory
       </a>
      </li>
     </ul>
@@ -767,13 +773,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="chemical-kinetics-and-rate-laws">
+  <section class="tex2jax_ignore mathjax_ignore" id="chemical-kinetics-and-rate-laws">
 <h1><span class="section-number">3.3.1. </span>Chemical Kinetics and Rate Laws<a class="headerlink" href="#chemical-kinetics-and-rate-laws" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.3.1.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>The rate of a chemical reaction is a measure of how fast the reaction occurs.  This rate will not be the same for all reactions and will not stay constant as a reaction progresses.  How fast a reaction happens is an extremely important aspect of a reaction for all sorts of things.  For example, how fast food rots/decays is important in our daily lives.  All food will rot/decay but we often choose to slow this down by putting it in the refrigerator.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.3.1.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working throught these notes, you should be able to:</p>
 <ol class="simple">
@@ -783,31 +789,31 @@ title="Print to PDF"
 <li><p>Identify the correct units for the rate constant based on overall rate of reaction</p></li>
 <li><p>Use the mehtod of initial rates to estimate the orders of reaction with respect to reactants and the rate constant</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.3.1.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
 <li><p>numpy</p></li>
 </ol>
-</div>
-<div class="section" id="the-differential-rate-law">
+</section>
+<section id="the-differential-rate-law">
 <h2><span class="section-number">3.3.1.4. </span>The Differential Rate Law<a class="headerlink" href="#the-differential-rate-law" title="Permalink to this headline">#</a></h2>
 <p>The rate of a chemical reaction, denoted <span class="math notranslate nohighlight">\(v(t)\)</span>, is related the rate of dissapearance of the reactants and appearance of the products.  The equation relating all of these things is called the differential rate law.</p>
 <p>The rate of disappearance and appearance of products in a certain reaction will depend on their stoichiometric coefficients.  In the reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-adb96cbe-d204-4706-9e4f-37db71695704">
-<span class="eqno">(3.447)<a class="headerlink" href="#equation-adb96cbe-d204-4706-9e4f-37db71695704" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fd2350f0-9e0b-4357-ad27-b0820408e330">
+<span class="eqno">(3.447)<a class="headerlink" href="#equation-fd2350f0-9e0b-4357-ad27-b0820408e330" title="Permalink to this equation">#</a></span>\[\begin{equation}
 2NO(g) + O_2(g) \rightarrow 2NO_2(g),
 \end{equation}\]</div>
 <p>for example, <span class="math notranslate nohighlight">\(NO(g)\)</span> will dissapear twice as fast as <span class="math notranslate nohighlight">\(O_2(g)\)</span> because two moles of <span class="math notranslate nohighlight">\(NO\)</span> are required to react with one mole of <span class="math notranslate nohighlight">\(O_2\)</span> to form <span class="math notranslate nohighlight">\(2NO_2\)</span>.  Thus, when we define a rate of reaction, we must do so in a consistent manner with regards to the stoichiometric coefficients.</p>
 <p>Consider the general reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0acf1f9e-7098-484c-a782-573068e1871a">
-<span class="eqno">(3.448)<a class="headerlink" href="#equation-0acf1f9e-7098-484c-a782-573068e1871a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-251d8766-07ef-4ac6-8dc0-fb282cac9033">
+<span class="eqno">(3.448)<a class="headerlink" href="#equation-251d8766-07ef-4ac6-8dc0-fb282cac9033" title="Permalink to this equation">#</a></span>\[\begin{equation}
 aA + bB \rightarrow cC + dD
 \end{equation}\]</div>
 <p>We define the extent of reaction, <span class="math notranslate nohighlight">\(\xi\)</span> using the moles of each reactant and product</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa6c617b-a744-4a63-bc60-fc385f99eb46">
-<span class="eqno">(3.449)<a class="headerlink" href="#equation-aa6c617b-a744-4a63-bc60-fc385f99eb46" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2d892871-5edd-48a1-a5f9-b1f4de0b8a07">
+<span class="eqno">(3.449)<a class="headerlink" href="#equation-2d892871-5edd-48a1-a5f9-b1f4de0b8a07" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 n_A(t) &amp;=&amp; n_A(0) - a\xi(t) \\
 n_B(t) &amp;=&amp; n_B(0) - b\xi(t) \\
 n_C(t) &amp;=&amp; n_C(0) + c\xi(t) \\
@@ -815,61 +821,61 @@ n_D(t) &amp;=&amp; n_D(0) + d\xi(t)
 \end{eqnarray}\]</div>
 <p>This is similar to what we did in our discussion of Chemical Equilibria but here we have noted that the number of moles of reactants/products and the extent of reaction are time dependent quantities.</p>
 <p>The rate of disappearance of reactants <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> as well as the rate of appearance of <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(D\)</span> can be related to the single rate of change of the extent of reaction.  To see this, we differentiate the four equations above with respect to time, <span class="math notranslate nohighlight">\(t\)</span>,:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0c70bc60-cc8b-498a-9577-b0551c762dfd">
-<span class="eqno">(3.450)<a class="headerlink" href="#equation-0c70bc60-cc8b-498a-9577-b0551c762dfd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-27f40767-3ece-41bd-abdc-1c11cfdd2ed8">
+<span class="eqno">(3.450)<a class="headerlink" href="#equation-27f40767-3ece-41bd-abdc-1c11cfdd2ed8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{dn_A(t)}{t} &amp;=&amp; - a\frac{d\xi(t)}{dt} \\
 \frac{dn_B(t)}{t} &amp;=&amp; - b\frac{d\xi(t)}{dt} \\
 \frac{dn_C(t)}{t} &amp;=&amp;  c\frac{d\xi(t)}{dt} \\
 \frac{dn_D(t)}{t} &amp;=&amp;  d\frac{d\xi(t)}{dt} 
 \end{eqnarray}\]</div>
 <p>Each equation can be rearranged to solve for <span class="math notranslate nohighlight">\(\frac{d\xi(t)}{dt}\)</span> to yield:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cd6dd9d5-a559-4834-bc47-00b86b7ab058">
-<span class="eqno">(3.451)<a class="headerlink" href="#equation-cd6dd9d5-a559-4834-bc47-00b86b7ab058" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5609f157-4a20-4713-9246-8d38b51a9b45">
+<span class="eqno">(3.451)<a class="headerlink" href="#equation-5609f157-4a20-4713-9246-8d38b51a9b45" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 -\frac{1}{a}\frac{dn_A(t)}{t} &amp;=&amp; \frac{d\xi(t)}{dt} \\
 -\frac{1}{b}\frac{dn_B(t)}{t} &amp;=&amp; \frac{d\xi(t)}{dt} \\
 \frac{1}{c}\frac{dn_C(t)}{t} &amp;=&amp;  \frac{d\xi(t)}{dt} \\
 \frac{1}{d}\frac{dn_D(t)}{t} &amp;=&amp;  \frac{d\xi(t)}{dt} 
 \end{eqnarray}\]</div>
 <p>The rate of reaction is defined as the rate of change of extent of the reaction yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a43c743e-4c76-4bbf-a001-92c9dfe30337">
-<span class="eqno">(3.452)<a class="headerlink" href="#equation-a43c743e-4c76-4bbf-a001-92c9dfe30337" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-46f897b6-f5d7-43c3-b542-bb08023a380c">
+<span class="eqno">(3.452)<a class="headerlink" href="#equation-46f897b6-f5d7-43c3-b542-bb08023a380c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = \frac{d\xi(t)}{dt} = -\frac{1}{a}\frac{dn_A(t)}{t} = -\frac{1}{b}\frac{dn_B(t)}{t} = \frac{1}{c}\frac{dn_C(t)}{t} = \frac{1}{d}\frac{dn_D(t)}{t}
 \end{equation}\]</div>
 <p>We typically measure amount of reactants and/or products in concentration, so we typically write the differential rate law in terms of these by dividing the above equation by volumne, <span class="math notranslate nohighlight">\(V\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa015be1-5bbc-4e60-bb21-8fd5cfa4a41b">
-<span class="eqno">(3.453)<a class="headerlink" href="#equation-aa015be1-5bbc-4e60-bb21-8fd5cfa4a41b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9053214f-9ae9-4eec-84ad-557f6860af35">
+<span class="eqno">(3.453)<a class="headerlink" href="#equation-9053214f-9ae9-4eec-84ad-557f6860af35" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = \frac{1}{V}\frac{d\xi(t)}{dt} = -\frac{1}{a}\frac{d[A]}{t} = -\frac{1}{b}\frac{d[B]}{t} = \frac{1}{c}\frac{d[C]}{t} = \frac{1}{d}\frac{d[D]}{t}
 \end{equation}\]</div>
 <p>This equation is what is called the <em><strong>differential rate law</strong></em> as it relates the rate of reaction to the time derivatives of the concentrations of products and reactants.</p>
-<div class="section" id="example-determine-the-differential-rate-law">
+<section id="example-determine-the-differential-rate-law">
 <h3><span class="section-number">3.3.1.4.1. </span>Example: Determine the Differential Rate Law<a class="headerlink" href="#example-determine-the-differential-rate-law" title="Permalink to this headline">#</a></h3>
 <p>Write out the differential rate law for the following balanced chemical reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5dee364d-7f3b-4144-9db9-118bdfc9d3fb">
-<span class="eqno">(3.454)<a class="headerlink" href="#equation-5dee364d-7f3b-4144-9db9-118bdfc9d3fb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6e99a36d-5a14-4db4-99b4-9f7dc5906365">
+<span class="eqno">(3.454)<a class="headerlink" href="#equation-6e99a36d-5a14-4db4-99b4-9f7dc5906365" title="Permalink to this equation">#</a></span>\[\begin{equation}
 2NO(g) + 2H_2(g) \rightarrow N_2(g) + 2H_2O(g)
 \end{equation}\]</div>
 <p>The differential rate law equates the rate of reaction to the rate of dissappearance of <em>all reactants</em> and the rate of appearance of <em>all products</em>.  For this reaction it looks like:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-451072eb-0a9a-4555-91e3-4b8c987f5c0c">
-<span class="eqno">(3.455)<a class="headerlink" href="#equation-451072eb-0a9a-4555-91e3-4b8c987f5c0c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8b491f7f-17c0-4892-99be-784c267c14cb">
+<span class="eqno">(3.455)<a class="headerlink" href="#equation-8b491f7f-17c0-4892-99be-784c267c14cb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = -\frac{1}{2}\frac{d[NO]}{dt} = -\frac{1}{2}\frac{d[H_2]}{dt} = \frac{d[N_2]}{dt} = \frac{1}{2}\frac{d[H_2O]}{dt}
 \end{equation}\]</div>
-</div>
-</div>
-<div class="section" id="the-rate-law">
+</section>
+</section>
+<section id="the-rate-law">
 <h2><span class="section-number">3.3.1.5. </span>The Rate Law<a class="headerlink" href="#the-rate-law" title="Permalink to this headline">#</a></h2>
 <p>The rate law for a chemical reaction is an equation that relates the rate of a reaction to the concentrations of the reactants.  For example, our reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1122405f-7a2e-46a7-a6ad-fca98d054af4">
-<span class="eqno">(3.456)<a class="headerlink" href="#equation-1122405f-7a2e-46a7-a6ad-fca98d054af4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-245f2b23-3ccc-4315-88b1-9284cd154e22">
+<span class="eqno">(3.456)<a class="headerlink" href="#equation-245f2b23-3ccc-4315-88b1-9284cd154e22" title="Permalink to this equation">#</a></span>\[\begin{equation}
 2NO(g) + O_2(g) \rightarrow 2NO_2(g) 
 \end{equation}\]</div>
 <p>Has the <em><strong>differential rate law</strong></em></p>
-<div class="amsmath math notranslate nohighlight" id="equation-13547555-2c91-433e-9044-3da3661c6d89">
-<span class="eqno">(3.457)<a class="headerlink" href="#equation-13547555-2c91-433e-9044-3da3661c6d89" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ef4b9f3b-01be-4621-a174-04eb43f0f27a">
+<span class="eqno">(3.457)<a class="headerlink" href="#equation-ef4b9f3b-01be-4621-a174-04eb43f0f27a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = -\frac{1}{2}\frac{d[NO]}{dt} = -\frac{d[O_2]}{dt} = \frac{1}{2}\frac{d[NO_2]}{dt}
 \end{equation}\]</div>
 <p>but the <em><strong>rate law</strong></em> for this reaction, one that relates the rate, <span class="math notranslate nohighlight">\(v(t)\)</span>, to the concentrations of reactants cannot be inferred from the balanced chemical reaction.  The rate law for this reaction has been experimentally determined to be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-48a70a48-1100-4819-9dbc-4e92b034db19">
-<span class="eqno">(3.458)<a class="headerlink" href="#equation-48a70a48-1100-4819-9dbc-4e92b034db19" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-07acd8fe-ffcb-436b-b6ad-ae9c92a5f1d0">
+<span class="eqno">(3.458)<a class="headerlink" href="#equation-07acd8fe-ffcb-436b-b6ad-ae9c92a5f1d0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = k[NO]^2[O_2]
 \end{equation}\]</div>
 <p>The rate law introduces a few new quantities and concepts to our discussion of rate of reaction.  One of these, <span class="math notranslate nohighlight">\(k\)</span>, is called the rate constant.  This important quantity determines the proportionality or scaling between the concentrations of reactants to their appropriate power and the rate of a reaction.</p>
@@ -902,27 +908,27 @@ v(t) = k[NO]^2[O_2]
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="rate-laws-must-be-determined-experimentally">
+</section>
+<section id="rate-laws-must-be-determined-experimentally">
 <h2><span class="section-number">3.3.1.6. </span>Rate Laws Must be Determined Experimentally<a class="headerlink" href="#rate-laws-must-be-determined-experimentally" title="Permalink to this headline">#</a></h2>
 <p>Rate laws must be determined experimentally.  The order of a reaction cannot be inferred by the stoichiometry of the balanced chemical reaction or any other <em>a priori</em> information about the reaction.</p>
 <p>To see how we might go about determining an order of reaction consider the generic reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7734408e-e570-4738-af7a-3d5eebc8df36">
-<span class="eqno">(3.459)<a class="headerlink" href="#equation-7734408e-e570-4738-af7a-3d5eebc8df36" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-15cb93c9-da04-4955-a650-fa7bf5503de4">
+<span class="eqno">(3.459)<a class="headerlink" href="#equation-15cb93c9-da04-4955-a650-fa7bf5503de4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 aA + bB \rightarrow cC + dD
 \end{equation}\]</div>
 <p>The generic rate law can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cdb10315-8383-431e-8490-6d1ec069421e">
-<span class="eqno">(3.460)<a class="headerlink" href="#equation-cdb10315-8383-431e-8490-6d1ec069421e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a23904e3-b5b4-4a8e-99f6-55150e1d88bb">
+<span class="eqno">(3.460)<a class="headerlink" href="#equation-a23904e3-b5b4-4a8e-99f6-55150e1d88bb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = k[A]^{m_A}[B]^{m_B}
 \end{equation}\]</div>
 <p>It is our goal to determine the powers <span class="math notranslate nohighlight">\(m_A\)</span> and <span class="math notranslate nohighlight">\(m_B\)</span>.</p>
 <p>Here we consider the method of measuring initial rate (with some experimental technique) and varying the initial concentrations of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> in different trials.  It is easiest to see how this method works in an example given below.</p>
-<div class="section" id="example-rate-law-from-initial-rates">
+<section id="example-rate-law-from-initial-rates">
 <h3><span class="section-number">3.3.1.6.1. </span>Example: Rate Law from Initial Rates<a class="headerlink" href="#example-rate-law-from-initial-rates" title="Permalink to this headline">#</a></h3>
 <p>Consider the following initial rate data for the reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ac39a3b0-b824-47ea-88d4-753cfd8dd4cc">
-<span class="eqno">(3.461)<a class="headerlink" href="#equation-ac39a3b0-b824-47ea-88d4-753cfd8dd4cc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6f01a555-d5c3-43d7-ae8e-654c7fabdc19">
+<span class="eqno">(3.461)<a class="headerlink" href="#equation-6f01a555-d5c3-43d7-ae8e-654c7fabdc19" title="Permalink to this equation">#</a></span>\[\begin{equation}
 2NO_2(g) + F_2(g) \rightarrow 2NO_2F(g)
 \end{equation}\]</div>
 <table class="colwidths-auto table">
@@ -953,24 +959,24 @@ v(t) = k[A]^{m_A}[B]^{m_B}
 </table>
 <p>Determine the reaction rate law and value of the rate constant.</p>
 <p>We start by writing out the generic form of the rate law</p>
-<div class="amsmath math notranslate nohighlight" id="equation-38dcb20a-fd2f-45cc-90dd-2936c54d9efe">
-<span class="eqno">(3.462)<a class="headerlink" href="#equation-38dcb20a-fd2f-45cc-90dd-2936c54d9efe" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8795496f-93c1-4022-8bf8-e607ed32167d">
+<span class="eqno">(3.462)<a class="headerlink" href="#equation-8795496f-93c1-4022-8bf8-e607ed32167d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v = k[NO_2]^{m_{NO_2}}[F_2]^{m_{F_2}}
 \end{equation}\]</div>
 <p>Here, we are using initial rates which can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6940a789-0c6a-429d-ae47-20cfa348f8c2">
-<span class="eqno">(3.463)<a class="headerlink" href="#equation-6940a789-0c6a-429d-ae47-20cfa348f8c2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5ae425f3-9c53-4963-a9f5-bb810f0f184e">
+<span class="eqno">(3.463)<a class="headerlink" href="#equation-5ae425f3-9c53-4963-a9f5-bb810f0f184e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v_0 = k[NO_2]_0^{m_{NO_2}}[F_2]_0^{m_{F_2}}
 \end{equation}\]</div>
 <p>We now look at the trials/runs provided and recognize that the concentration of <span class="math notranslate nohighlight">\(NO_2\)</span> is held constant for trials 1 and 3.  Thus, the change in initial rate between these two runs must be due to the change in initial concentration of <span class="math notranslate nohighlight">\(F_2\)</span>.  We start by writing out the initial rate law for each of these trials</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a277b356-4515-43a1-9b1a-d192b081d71d">
-<span class="eqno">(3.464)<a class="headerlink" href="#equation-a277b356-4515-43a1-9b1a-d192b081d71d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-d57e4c3d-bddf-4ec9-9927-f6a7ac858ee1">
+<span class="eqno">(3.464)<a class="headerlink" href="#equation-d57e4c3d-bddf-4ec9-9927-f6a7ac858ee1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \text{Run 1: } 6.12\times10^{-4} &amp;=&amp; k (1.15)^{m_{NO_2}}(1.15)^{m_{F_2}} \\
 \text{Run 3: } 1.22\times10^{-3} &amp;=&amp; k (1.15)^{m_{NO_2}}(2.30)^{m_{F_2}}
 \end{eqnarray}\]</div>
 <p>We now divide the initial rate law from Run 3 by that of Run 1 to get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-82e14753-158a-4304-9d7b-fbc0cf682276">
-<span class="eqno">(3.465)<a class="headerlink" href="#equation-82e14753-158a-4304-9d7b-fbc0cf682276" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-be13d812-f0da-40d0-87b2-4f08b1fe5b77">
+<span class="eqno">(3.465)<a class="headerlink" href="#equation-be13d812-f0da-40d0-87b2-4f08b1fe5b77" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{1.22\times10^{-3}}{6.12\times10^{-4}} &amp;=&amp; \frac{k (1.15)^{m_{NO_2}}(2.30)^{m_{F_2}}}{k (1.15)^{m_{NO_2}}(1.15)^{m_{F_2}}} \\
 &amp;=&amp; \left( \frac{2.30}{1.15}\right)^{m_{F_2}} \\
 \Rightarrow \ln \frac{1.22\times10^{-3}}{6.12\times10^{-4}} &amp;=&amp; m_{F_2}\ln\frac{2.30}{1.15} \\
@@ -991,14 +997,14 @@ v_0 = k[NO_2]_0^{m_{NO_2}}[F_2]_0^{m_{F_2}}
 </div>
 </div>
 <p>To now determine <span class="math notranslate nohighlight">\(m_{NO_2}\)</span> we use runs 1 and 2</p>
-<div class="amsmath math notranslate nohighlight" id="equation-55fe4c08-7c59-436f-931f-341e93e0b1eb">
-<span class="eqno">(3.466)<a class="headerlink" href="#equation-55fe4c08-7c59-436f-931f-341e93e0b1eb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2ef49806-6af6-4034-87de-ce015b21c223">
+<span class="eqno">(3.466)<a class="headerlink" href="#equation-2ef49806-6af6-4034-87de-ce015b21c223" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \text{Run 1: } 6.12\times10^{-4} &amp;=&amp; k (1.15)^{m_{NO_2}}(1.15)^{m_{F_2}} \\
 \text{Run 2: } 1.36\times10^{-3} &amp;=&amp; k (1.72)^{m_{NO_2}}(1.15)^{m_{F_2}}
 \end{eqnarray}\]</div>
 <p>We now divide the initial rate law from Run 2 by that of Run 1 to get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca370ff8-f594-41ca-a075-96cdba46bd7f">
-<span class="eqno">(3.467)<a class="headerlink" href="#equation-ca370ff8-f594-41ca-a075-96cdba46bd7f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-1a1ab5bc-888a-4abc-91b5-cbacc35d353f">
+<span class="eqno">(3.467)<a class="headerlink" href="#equation-1a1ab5bc-888a-4abc-91b5-cbacc35d353f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{1.36\times10^{-3}}{6.12\times10^{-4}} &amp;=&amp; \frac{k (1.72)^{m_{NO_2}}(1.15)^{m_{F_2}}}{k (1.15)^{m_{NO_2}}(1.15)^{m_{F_2}}} \\
 &amp;=&amp; \left( \frac{1.72}{1.15}\right)^{m_{NO_2}} \\
 \Rightarrow \ln \frac{1.36\times10^{-3}}{6.12\times10^{-4}} &amp;=&amp; m_{NO_2}\ln\frac{1.72}{1.15} \\
@@ -1019,8 +1025,8 @@ v_0 = k[NO_2]_0^{m_{NO_2}}[F_2]_0^{m_{F_2}}
 </div>
 </div>
 <p>With the orders of reaction determined with respect to all reactants we can now determine the value of the rate constant.  This can be done for with any run.  Here I choose to use Run 1:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d073dc60-c9ee-4a8e-be67-97de5e9eab47">
-<span class="eqno">(3.468)<a class="headerlink" href="#equation-d073dc60-c9ee-4a8e-be67-97de5e9eab47" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-8a42d8ee-ca52-41d9-a86a-c23885b59065">
+<span class="eqno">(3.468)<a class="headerlink" href="#equation-8a42d8ee-ca52-41d9-a86a-c23885b59065" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \text{Run 1: } 6.12\times10^{-4} &amp;=&amp; k (1.15)^{2}(1.15)^{1} \\
 \Rightarrow k &amp;=&amp; \frac{6.12\times10^{-4}}{1.15^3} \\
 &amp;=&amp; 4.02\times10^{-4} \text{ dm}^6\cdot\text{mol}^{-2}\text{s}^{-1}
@@ -1037,9 +1043,9 @@ v_0 = k[NO_2]_0^{m_{NO_2}}[F_2]_0^{m_{F_2}}
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
