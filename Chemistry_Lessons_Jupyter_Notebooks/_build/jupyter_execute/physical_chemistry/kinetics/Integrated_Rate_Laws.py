@@ -120,7 +120,7 @@ plt.annotate("$2t_{1/2}$",(2*np.log(2)/k,-0.02),fontsize=24)
 # | :---  | :----------------------    | :----------  |
 # | 0     | $[A]_t = -kt + [A]_0$      | $t_{1/2} = \frac{[A]_0}{2k}$ |
 # | 1     | $\ln[A]_t  = -kt + \ln[A]_0$      | $t_{1/2} = \frac{\ln2}{k}$ |
-# | 2     | $\frac{1}{[A]_t}  = kt + \frac{1}{\ln[A]_0}$      | $t_{1/2} = \frac{1}{k[A]_0}$ |
+# | 2     | $\frac{1}{[A]_t}  = kt + \frac{1}{[A]_0}$      | $t_{1/2} = \frac{1}{k[A]_0}$ |
 
 # ## Order of Reaction Using Integrated Rate Laws
 
