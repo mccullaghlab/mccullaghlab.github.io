@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.1.6. Classical Ideal Gas &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas" href="Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html" />
@@ -775,13 +776,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="classical-ideal-gas">
+  <section class="tex2jax_ignore mathjax_ignore" id="classical-ideal-gas">
 <h1><span class="section-number">3.1.6. </span>Classical Ideal Gas<a class="headerlink" href="#classical-ideal-gas" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.1.6.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>So far we have considered monatomic and diatomic ideal gasses composed of quantum particles.  The energy levels of the various aspects of the particles is quantized (though we introduced some continuous approximations).  Here we ask what happens when we consider classical particles?  How does this affect the partition function for a system?</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.1.6.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After these notes, students should be able to:</p>
 <ol class="simple">
@@ -789,32 +790,32 @@ title="Print to PDF"
 <li><p>Write out the classical energy for a system of a monatomic ideal gas</p></li>
 <li><p>Discuss the units of a p.f.</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.1.6.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>Variables</p></li>
 <li><p>Functions</p></li>
 <li><p>Numpy</p></li>
 </ol>
-</div>
-<div class="section" id="introduction-to-classical-particles">
+</section>
+<section id="introduction-to-classical-particles">
 <h2><span class="section-number">3.1.6.4. </span>Introduction to Classical Particles<a class="headerlink" href="#introduction-to-classical-particles" title="Permalink to this headline">#</a></h2>
 <p>If we consider a gas to be made up of classical particles, we can no longer describe its energy using the quantized energy functions.  Instead, we must consider what it means for a particle to be “classical” and how we describe the energy of such particles.</p>
 <p>A classical particle will have a position, <span class="math notranslate nohighlight">\(\vec{r} = (r_x, r_y, r_z)\)</span>, and a momentum, <span class="math notranslate nohighlight">\(\vec{p} = (p_x, p_y, p_z) = m\vec{v}\)</span>.  If the particle is in a box with linear dimension <span class="math notranslate nohighlight">\(L\)</span> (cubic box such that <span class="math notranslate nohighlight">\(L^3=V\)</span>) then each component of <span class="math notranslate nohighlight">\(\vec{r}\)</span> can take on values of <span class="math notranslate nohighlight">\(0 &lt; r_x,r_y,r_z &lt; L\)</span>.  The components of the momentum of the particle are not limited in the same manner.  Each component of the momentum can take on values of <span class="math notranslate nohighlight">\(-\infty &lt; p_x,p_y,p_z &lt; \infty\)</span>.</p>
 <p>In a system of <span class="math notranslate nohighlight">\(N\)</span> classical particles, we can denote the collection of particle positions as <span class="math notranslate nohighlight">\(\vec{R}^N\)</span> and particle momenta as <span class="math notranslate nohighlight">\(\vec{P}^N\)</span>.  Each of these collections is made up of <span class="math notranslate nohighlight">\(N\)</span> different three dimensional vectors denoting the position or momentum of each particle.</p>
 <p>The energy of a system of classical particles may depend on the particular configuration of the particles, <span class="math notranslate nohighlight">\(\vec{R}^N\)</span>, and values of the momenta, <span class="math notranslate nohighlight">\(\vec{P}^N\)</span>.  We might write that the energy, denoted <span class="math notranslate nohighlight">\(H\)</span>, is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a6fd4409-45d5-49a3-8ce1-304c27a0aa21">
-<span class="eqno">(3.133)<a class="headerlink" href="#equation-a6fd4409-45d5-49a3-8ce1-304c27a0aa21" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-63ba4c3c-3a22-4ca8-860a-306a8f8579d2">
+<span class="eqno">(3.133)<a class="headerlink" href="#equation-63ba4c3c-3a22-4ca8-860a-306a8f8579d2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 H(\vec{R}^N,\vec{P}^N) = K(\vec{P}^N) + U(\vec{R}^N),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(K(\vec{P}^N)\)</span> is the kinetic energy and <span class="math notranslate nohighlight">\(U(\vec{R}^N)\)</span> is the potential energy.</p>
-</div>
-<div class="section" id="example-1-position-and-potential-energy-with-classical-particles">
+</section>
+<section id="example-1-position-and-potential-energy-with-classical-particles">
 <h2><span class="section-number">3.1.6.5. </span>Example 1: Position and Potential Energy with Classical Particles<a class="headerlink" href="#example-1-position-and-potential-energy-with-classical-particles" title="Permalink to this headline">#</a></h2>
 <p>Consider a system of two classical particles that interact with a Lennard-Jones potential of the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dd9bd29c-bb4e-4104-9590-0fe760458aea">
-<span class="eqno">(3.134)<a class="headerlink" href="#equation-dd9bd29c-bb4e-4104-9590-0fe760458aea" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-564fc458-dd50-42cb-aa55-0a64e147c7e8">
+<span class="eqno">(3.134)<a class="headerlink" href="#equation-564fc458-dd50-42cb-aa55-0a64e147c7e8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 U(\vec{r}^1,\vec{r}^2) = 4\left[ \left( \frac{2}{|\vec{r}^{12}|}\right)^{12} -  \left( \frac{2}{|\vec{r}^{12}|}\right)^{6} \right]
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(|\vec{r}^{12}| = \sqrt{(r^1_x - r^2_x)^2 + (r^1_y - r^2_y)^2 + (r^1_z - r^2_z)^2}\)</span> is the distance between particles 1 and 2.  Consider this potential to be in units of <span class="math notranslate nohighlight">\(\epsilon\)</span>.  Compute the potential energy when the particle have postitions <span class="math notranslate nohighlight">\(\vec{r}^1 = (0.25, 0.6, 1.0)\)</span> and <span class="math notranslate nohighlight">\(\vec{r}^2 = (3.0, 1.2, 0.8)\)</span></p>
@@ -836,43 +837,43 @@ U(\vec{r}^1,\vec{r}^2) = 4\left[ \left( \frac{2}{|\vec{r}^{12}|}\right)^{12} -  
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="partition-function-for-a-classical-monatomic-ideal-gas">
+</section>
+<section id="partition-function-for-a-classical-monatomic-ideal-gas">
 <h2><span class="section-number">3.1.6.6. </span>Partition Function for a Classical Monatomic Ideal Gas<a class="headerlink" href="#partition-function-for-a-classical-monatomic-ideal-gas" title="Permalink to this headline">#</a></h2>
 <p>If we consider a collection of ideal particles to be an ideal gas then there is no potential energy between the particles.  That is, <span class="math notranslate nohighlight">\(U(\vec{R}^N) = 0\)</span> for all configurations of the particles.  This allows us to write that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a8db8e1a-484b-4979-90a6-7223c6976daf">
-<span class="eqno">(3.135)<a class="headerlink" href="#equation-a8db8e1a-484b-4979-90a6-7223c6976daf" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e9f9fec0-20b1-4048-944a-987753058d3b">
+<span class="eqno">(3.135)<a class="headerlink" href="#equation-e9f9fec0-20b1-4048-944a-987753058d3b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 H(\vec{R}^N,\vec{P}^N) = K(\vec{P}^N).
 \end{equation}\]</div>
 <p>Furthermore, the kinetic energy of a classical particle is simply <span class="math notranslate nohighlight">\(\frac{\vec{p}^2}{2m} = \frac{1}{2}m\vec{v}^2\)</span>.  The kinetic energy of a collection of classical particles is just the sum over individual particle kinetic energies</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c5a9a643-d73b-49bb-9f6e-b37a13092662">
-<span class="eqno">(3.136)<a class="headerlink" href="#equation-c5a9a643-d73b-49bb-9f6e-b37a13092662" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f2306f1e-8a8e-4e70-8846-3346a73f7f01">
+<span class="eqno">(3.136)<a class="headerlink" href="#equation-f2306f1e-8a8e-4e70-8846-3346a73f7f01" title="Permalink to this equation">#</a></span>\[\begin{equation}
 H(\vec{R}^N,\vec{P}^N) = K(\vec{P}^N) = \sum_{i=1}^N \frac{\vec{p}_i^2}{2m_i}.
 \end{equation}\]</div>
 <p>Note that <span class="math notranslate nohighlight">\(\vec{p}^2 = p_x^2 + p_y^2 + p_z^2\)</span> is the squared norm of the momentum.  Also note that if the mass is the ame for all particles it can be factored out of the sum.</p>
 <p>If we wish to estimate the partition function for this ideal gas, we must estimate the Boltzmann factor for all possible configurations for the system.  Since phase space, positions and momenta of the particles, is continuous,  we must consider an integral (rather than a sum) over all of these variables.  That is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-15bc0daa-a199-4a22-a611-fe38c16e65d0">
-<span class="eqno">(3.137)<a class="headerlink" href="#equation-15bc0daa-a199-4a22-a611-fe38c16e65d0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-bd1dea58-47ac-4d22-9eb2-c7f432396b98">
+<span class="eqno">(3.137)<a class="headerlink" href="#equation-bd1dea58-47ac-4d22-9eb2-c7f432396b98" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q = \int e^{-\beta H(\vec{R}^N,\vec{P}^N)} d\vec{R}^Nd\vec{P}^N,
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(d\vec{R}^N = dr_{x1}dr_{y1}dr_{z1}...dr_{xN}dr_{yN}dr_{zN}\)</span> and <span class="math notranslate nohighlight">\(d\vec{P}^N = dp_{x1}dp_{y1}dp_{z1}...dp_{xN}dp_{yN}dp_{zN}\)</span>.  So this is a <span class="math notranslate nohighlight">\(6N\)</span> dimensional integral.</p>
 <p>Now we plug in the equation above for <span class="math notranslate nohighlight">\(H(\vec{R}^N,\vec{P}^N)\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-623b3050-4436-47cb-99df-9c7ab85a5d41">
-<span class="eqno">(3.138)<a class="headerlink" href="#equation-623b3050-4436-47cb-99df-9c7ab85a5d41" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2f8e8168-a4cd-4d2e-a8d7-ce4ef77866de">
+<span class="eqno">(3.138)<a class="headerlink" href="#equation-2f8e8168-a4cd-4d2e-a8d7-ce4ef77866de" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; \int e^{-\beta \sum_{i=1}^N \frac{\vec{p}_i^2}{2m_i} } d\vec{R}^Nd\vec{P}^N,\\
  &amp;=&amp; \int d\vec{R}^N\int e^{-\beta \sum_{i=1}^N \frac{\vec{p}_i^2}{2m_i} } d\vec{P}^N
 \end{eqnarray}\]</div>
 <p>where the last equality holds because the integrand, <span class="math notranslate nohighlight">\(e^{-\beta \sum_{i=1}^N \frac{\vec{p}_i^2}{2m_i} }\)</span>, does not depend on any of the particle positions and thus can be pulled out of those integrals.  We now must talk about bounds of integration for the <span class="math notranslate nohighlight">\(3N\)</span> positional integrals.  Since we consider this to be a cubic box, all positions are resricted to be in the domain <span class="math notranslate nohighlight">\(0 &lt; r_x &lt; L\)</span> thus yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5f17321f-6704-4085-a7cb-d41029e8fca8">
-<span class="eqno">(3.139)<a class="headerlink" href="#equation-5f17321f-6704-4085-a7cb-d41029e8fca8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-b0a31d2a-58cc-40ea-8489-072d9d4c2350">
+<span class="eqno">(3.139)<a class="headerlink" href="#equation-b0a31d2a-58cc-40ea-8489-072d9d4c2350" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int d\vec{R}^N &amp;=&amp; \int_0^L dr_{x1} \int_0^L dr_{y1} \int_0^Ldr_{z1}...\int_0^Ldr_{xN}\int_0^Ldr_{yN}\int_0^Ldr_{zN} \\
 &amp;=&amp; L\cdot L\cdot L\cdot ... L\cdot L\cdot L\cdot \\
 &amp;=&amp; V\cdot ... \cdot V \\
 &amp;=&amp; V^{N}
 \end{eqnarray}\]</div>
 <p>Each one of these integrals is simply equal to <span class="math notranslate nohighlight">\(L = \int_0^L dr_{x1}\)</span> and <span class="math notranslate nohighlight">\(L^3 = V\)</span>.  The integral for <span class="math notranslate nohighlight">\(Q\)</span> is now</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f8eb23e5-86c0-4e2e-a619-35c4bf21a5a9">
-<span class="eqno">(3.140)<a class="headerlink" href="#equation-f8eb23e5-86c0-4e2e-a619-35c4bf21a5a9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-1be96629-70e8-4176-9814-c7e44c5aa2d7">
+<span class="eqno">(3.140)<a class="headerlink" href="#equation-1be96629-70e8-4176-9814-c7e44c5aa2d7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; V^N\int e^{-\beta \sum_{i=1}^N \frac{\vec{p}_i^2}{2m_i} } d\vec{P}^N \\
 &amp;=&amp; V^N \int \prod_{i=1}^N e^{-\beta \frac{\vec{p}_i^2}{2m_i} } d\vec{P}^N \\
 &amp;=&amp; V^N \int\int\int e^{-\beta \frac{\vec{p}_1^2}{2m_1} } dp_{x1}dp_{y1}dp_{z1}\int\int\int e^{-\beta \frac{\vec{p}_2^2}{2m_2} } dp_{x2}dp_{y2}dp_{z2}...\int\int\int e^{-\beta \frac{\vec{p}_N^2}{2m_N} } dp_{xN}dp_{yN}dp_{zN} \\
@@ -880,38 +881,38 @@ Q &amp;=&amp; V^N\int e^{-\beta \sum_{i=1}^N \frac{\vec{p}_i^2}{2m_i} } d\vec{P}
 \end{eqnarray}\]</div>
 <p>where the last equality holds because we consider all particles to be the same mass and indistinguishable.</p>
 <p>We can simplify this even further if we consider that <span class="math notranslate nohighlight">\(\vec{p}^2 = p_x^2 + p_y^2 + p_z^2\)</span> to get that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e1c3332a-e31d-4af1-a387-9fd0f9abd7cc">
-<span class="eqno">(3.141)<a class="headerlink" href="#equation-e1c3332a-e31d-4af1-a387-9fd0f9abd7cc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a4944b0e-636e-4256-b1f5-b326cdece3ec">
+<span class="eqno">(3.141)<a class="headerlink" href="#equation-a4944b0e-636e-4256-b1f5-b326cdece3ec" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int\int\int e^{-\beta \frac{\vec{p}^2}{2m} } dp_{x}dp_{y}dp_{z} &amp;=&amp; \int\int\int e^{-\beta \frac{p_x^2}{2m} }e^{-\beta \frac{p_y^2}{2m} }e^{-\beta \frac{p_z^2}{2m} }dp_{x}dp_{y}dp_{z} \\
 &amp;=&amp; \int_{-\infty}^{\infty} e^{-\beta \frac{p_x^2}{2m}}dp_x\int_{-\infty}^{\infty} e^{-\beta \frac{p_y^2}{2m} }dp_y\int_{-\infty}^{\infty} e^{-\beta \frac{p_z^2}{2m} }dp_{z} \\
 &amp;=&amp; \left( \int_{-\infty}^{\infty} e^{-\beta \frac{p^2}{2m}}dp \right)^3,
 \end{eqnarray}\]</div>
 <p>where the last equality holds because there is no reason to consider the momentum in the <span class="math notranslate nohighlight">\(x\)</span> direction to be different than that of the <span class="math notranslate nohighlight">\(y\)</span> or <span class="math notranslate nohighlight">\(z\)</span> directions.</p>
 <p>Finally, we plug this back into the equation for <span class="math notranslate nohighlight">\(Q\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f7ced057-fbaa-48ff-846f-86f467a08fbb">
-<span class="eqno">(3.142)<a class="headerlink" href="#equation-f7ced057-fbaa-48ff-846f-86f467a08fbb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ef35fd09-0c45-4893-9c1c-8b0e5a15ef8d">
+<span class="eqno">(3.142)<a class="headerlink" href="#equation-ef35fd09-0c45-4893-9c1c-8b0e5a15ef8d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; V^N \left( \int_{-\infty}^{\infty} e^{-\beta \frac{p^2}{2m}}dp \right)^{3N}\cdot\frac{1}{N!}
 \end{eqnarray}\]</div>
 <p>The solution to <span class="math notranslate nohighlight">\(\int_{-\infty}^{\infty} e^{-\beta \frac{p^2}{2m}}dp\)</span> is left for homework (problem 1a).  Ultimately you will get that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5be3ca70-6532-4483-be18-71809bb3303f">
-<span class="eqno">(3.143)<a class="headerlink" href="#equation-5be3ca70-6532-4483-be18-71809bb3303f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2093427d-70a3-4cf1-b100-4123556cf739">
+<span class="eqno">(3.143)<a class="headerlink" href="#equation-2093427d-70a3-4cf1-b100-4123556cf739" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; \frac{V^N \left( 2\pi m k_BT \right)^{3N/2}}{N!}
 \end{eqnarray}\]</div>
-</div>
-<div class="section" id="a-note-on-units-of-q">
+</section>
+<section id="a-note-on-units-of-q">
 <h2><span class="section-number">3.1.6.7. </span>A Note on Units of <span class="math notranslate nohighlight">\(Q\)</span><a class="headerlink" href="#a-note-on-units-of-q" title="Permalink to this headline">#</a></h2>
 <p>You will notice above that the classical p.f. has units of <span class="math notranslate nohighlight">\(V\)</span>^N <span class="math notranslate nohighlight">\(p\)</span>^{3N}.  The quantum p.f. is unitless.  It is typical to introduce <span class="math notranslate nohighlight">\(h^{-1}\)</span> in each direction for classical p.f.s so that it is unitless and there is greater correspondance between classical and quantum.</p>
-</div>
-<div class="section" id="example-2-classical-particle-with-a-potential">
+</section>
+<section id="example-2-classical-particle-with-a-potential">
 <h2><span class="section-number">3.1.6.8. </span>Example 2: Classical Particle with a Potential<a class="headerlink" href="#example-2-classical-particle-with-a-potential" title="Permalink to this headline">#</a></h2>
 <p>Consider a single 1D classical particle tethered to the origin with a spring of force constant <span class="math notranslate nohighlight">\(k\)</span>.  The energy for such a system is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f355de6f-2fd4-4e47-90b3-6fa0d33817d0">
-<span class="eqno">(3.144)<a class="headerlink" href="#equation-f355de6f-2fd4-4e47-90b3-6fa0d33817d0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b55db0df-2a2f-4e97-bf5f-77704528b2b2">
+<span class="eqno">(3.144)<a class="headerlink" href="#equation-b55db0df-2a2f-4e97-bf5f-77704528b2b2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 H(x,p) = \frac{1}{2}kx^2 + \frac{p^2}{2m}
 \end{equation}\]</div>
 <p>Derive an expression for the partition function for this system.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-13253648-3154-4078-a519-86abfb537257">
-<span class="eqno">(3.145)<a class="headerlink" href="#equation-13253648-3154-4078-a519-86abfb537257" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-b1b0a261-5a92-40d5-a8bf-3ce5ef600ee5">
+<span class="eqno">(3.145)<a class="headerlink" href="#equation-b1b0a261-5a92-40d5-a8bf-3ce5ef600ee5" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; \frac{1}{h} \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} e^{-\beta\left( \frac{1}{2}kx^2 + \frac{p^2}{2m}\right)}dxdp \\
 &amp;=&amp; \frac{1}{h} \int_{-\infty}^{\infty}e^{-\frac{\beta kx^2}{2}}dx\int_{-\infty}^{\infty}e^{\frac{-\beta p^2}{2m}}dp \\
 &amp;=&amp; \frac{4}{h} \int_{0}^{\infty}e^{-\frac{\beta kx^2}{2}}dx\int_{0}^{\infty}e^{\frac{-\beta p^2}{2m}}dp \\
@@ -960,8 +961,8 @@ Q &amp;=&amp; \frac{1}{h} \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} e^{-\be
 </div>
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
