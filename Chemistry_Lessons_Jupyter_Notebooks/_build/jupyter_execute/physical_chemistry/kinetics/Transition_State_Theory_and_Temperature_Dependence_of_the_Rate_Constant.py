@@ -47,7 +47,7 @@
 # 
 # The species $AB^\ddagger$ denotes the transition state and is a considered the molecular "species" at the saddle point in the free energy surface between reactants and products.  The initial equilibrium has equilibrium constant
 # \begin{equation}
-# K^\ddagger = \frac{[AB^\ddagger]}{[A][B]}
+# K_C^\ddagger = \frac{[AB^\ddagger]c^\circ}{[A][B]}
 # \end{equation}
 # 
 # The rate of product formation, under the current proposed mechanism, is
@@ -56,13 +56,37 @@
 # \end{equation}
 # When developing rate laws from mechanisms, we avoid writing the overall rate law in terms of intermediates.  Thus, we replace $[AB^\ddagger]$ with the equilibrium constant expression above to get
 # \begin{equation}
-# \frac{d[P]}{dt} = k_2K^\ddagger[A][B]
+# \frac{d[P]}{dt} = k_2K_C^\ddagger(c^\circ)^{-1}[A][B]
 # \end{equation}
 # 
 # If we compare this to the overall rate law we see that or TST mechanism suggests that
 # \begin{equation}
-# k = k_2K^\ddagger
+# k = k_2K_C^\ddagger(c^\circ)^{-1}
 # \end{equation}
+# 
+# To further investigate the physical underpinnings of $k_2$ and $K_C^\ddagger$ we will use aspects of Statistical Thermodynamics.  First, we recognize that $k_2$ is related to the frequency of motion along the reaction coordinate (rc), $\nu_{rc}$:
+# \begin{equation}
+# k_2 = \nu_{rc}
+# \end{equation}
+# Sometimes it is stated that $k_2 = \kappa \nu_{rc}$ where $\kappa$ is the transmission coefficient that dictates the fraction of vibrations in this direction that lead to product formation.  Here will will simply use that $\kappa = 1$.  
+# 
+# Second, we will express the equilibrium constant in terms of partition functions
+# \begin{eqnarray}
+# K_C^\ddagger = \frac{\left(\frac{q_{AB^\ddagger}}{V}\right)c^\circ}{\left(\frac{q_{A}}{V}\right)\left(\frac{q_{B}}{V}\right)}
+# \end{eqnarray}
+# we will then extract from $q_{AB^\ddagger}$ the motion along the reaction coordinate.  That is we will dictate that $q_{AB^\ddagger} = q_{rc}q_{int}$ yielding
+# \begin{eqnarray}
+# K_C^\ddagger = q_{rc}\frac{\left(\frac{q_{int}}{V}\right)c^\circ}{\left(\frac{q_{A}}{V}\right)\left(\frac{q_{B}}{V}\right)} = q_{rc} K_C^{\ddagger*}
+# \end{eqnarray}
+# where $K_C^{\ddagger*}$ is the equilibrium constant between TS and reactants with the 1D motion along the reaction coordinate of the TS removed.  It can be shown that
+# \begin{equation}
+# \nu_{rc}q_{rc} = \frac{k_BT}{h}
+# \end{equation}
+# Thus yielding 
+# \begin{equation}
+# k_{TST} = \frac{k_BT}{h}K_C^{\ddagger*}(c^\circ)^{-1}
+# \end{equation}
+# 
 # Recall that the equlibrium constant can be expressed as $K^\ddagger = e^{-\Delta G^{\ddagger\circ}/RT}$ yielding
 # \begin{eqnarray}
 # k &=& k_2e^{-\Delta G^{\ddagger\circ}RT} \\
@@ -118,7 +142,7 @@
 # 
 # | T/K | 273 | 298 | 308 | 318 | 328 | 338 |
 # | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
-# k/$10^{-5}$ s$^{-1}$ | 0.787 | 3.46 | 13.5 | 49.8 | 150 | 487 |
+# k/$10^{-5}$ s$^{-1}$ | 0.0787 | 3.46 | 13.5 | 49.8 | 150 | 487 |
 
 # To determine the activation energy, $E_a$, and the Arhenius prefactor, $A$, we will fit the following linear equation
 # \begin{equation}
