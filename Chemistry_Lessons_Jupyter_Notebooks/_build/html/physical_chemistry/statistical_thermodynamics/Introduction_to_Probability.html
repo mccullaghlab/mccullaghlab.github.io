@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.1.2. Introduction to Probability &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.1.3. Thermodynamic Properties from the Partition Function" href="Thermodynamic_Properties_from_Partition_Function.html" />
@@ -376,6 +377,16 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toctree-l3">
       <a class="reference internal" href="../kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">
        3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Reaction_Mechanisms_Part_I.html">
+       3.3.5. Reaction Mechanisms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Catalysts.html">
+       3.3.6. Catalysts
       </a>
      </li>
     </ul>
@@ -797,13 +808,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-probability">
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-probability">
 <h1><span class="section-number">3.1.2. </span>Introduction to Probability<a class="headerlink" href="#introduction-to-probability" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.1.2.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>We have seen that the concepts of statistical Thermodynamics, such as the Boltzmann factor and the partition function, require the use of probability.  These notes will introduce some fundamental concepts of discrete and continuous probability that we have/will use.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.1.2.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After using these notes (/attending lecture), students should be able to:</p>
 <ol class="simple">
@@ -811,8 +822,8 @@ title="Print to PDF"
 <li><p>Normalize continuous and discrete probability densities.</p></li>
 <li><p>Compute average quantities from probability densities.</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.1.2.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -821,17 +832,17 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html"><span class="doc std std-doc">Lists</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="discrete-probability">
+</section>
+<section id="discrete-probability">
 <h2><span class="section-number">3.1.2.4. </span>Discrete Probability<a class="headerlink" href="#discrete-probability" title="Permalink to this headline">#</a></h2>
 <p>Discrete probability or the probability of discrete events describes the likelihood of observing events such as flipping a coin or rolling a dice.  Consider flipping a coin.  We have intuition into this that, assuming the coin is “fair”, we should have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6a3fbb53-9022-4ea9-9ee5-a535f6e1c85b">
-<span class="eqno">(3.25)<a class="headerlink" href="#equation-6a3fbb53-9022-4ea9-9ee5-a535f6e1c85b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6ff22c78-1845-40d6-83aa-72b508c3c5a1">
+<span class="eqno">(3.25)<a class="headerlink" href="#equation-6ff22c78-1845-40d6-83aa-72b508c3c5a1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P_{Heads} = P_{Tails} = 0.5.
 \end{equation}\]</div>
 <p>More generally, for a discrete event <span class="math notranslate nohighlight">\(j\)</span> (e.g. getting heads when flipping a coin), we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7f01de49-5edb-4b50-b435-b35e8259a47a">
-<span class="eqno">(3.26)<a class="headerlink" href="#equation-7f01de49-5edb-4b50-b435-b35e8259a47a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a88f8f74-c72e-47f1-a3a1-b17c29e7f4e0">
+<span class="eqno">(3.26)<a class="headerlink" href="#equation-a88f8f74-c72e-47f1-a3a1-b17c29e7f4e0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P_j = \lim_{N\rightarrow\infty} \frac{N_j}{N},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N_j\)</span> is the number of <span class="math notranslate nohighlight">\(j\)</span> events and <span class="math notranslate nohighlight">\(N\)</span> is the total number of events.</p>
@@ -865,44 +876,44 @@ Number of Tails: 4
 </div>
 </div>
 <p>From this data we would say that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8396c733-7e0c-420e-a79f-8c6dcd847370">
-<span class="eqno">(3.27)<a class="headerlink" href="#equation-8396c733-7e0c-420e-a79f-8c6dcd847370" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5d1b332f-a384-4673-83a3-8683d5e724bf">
+<span class="eqno">(3.27)<a class="headerlink" href="#equation-5d1b332f-a384-4673-83a3-8683d5e724bf" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P_{Heads} &amp;=&amp; \frac{5}{9} \\
 P_{Tails} &amp;=&amp; \frac{4}{9}.
 \end{eqnarray}\]</div>
 <p>In this case we don’t quite get the expected <span class="math notranslate nohighlight">\(P_{Heads} = P_{Tails} = 0.5\)</span> but that value is only guaranteed from a sample of infinite coin flips.</p>
 <p>Some notes on general discrete probabilites.  We say that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0e5bec97-ae42-4436-adf1-bb89268e7d42">
-<span class="eqno">(3.28)<a class="headerlink" href="#equation-0e5bec97-ae42-4436-adf1-bb89268e7d42" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5005ec81-acf3-4da3-b02f-4e01001c748f">
+<span class="eqno">(3.28)<a class="headerlink" href="#equation-5005ec81-acf3-4da3-b02f-4e01001c748f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P_j = 1
 \end{equation}\]</div>
 <p>indicates that event <span class="math notranslate nohighlight">\(j\)</span> will happen with complete certainty.  Similarly,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d1a99b20-11b3-453b-bc78-f3d9730c33d7">
-<span class="eqno">(3.29)<a class="headerlink" href="#equation-d1a99b20-11b3-453b-bc78-f3d9730c33d7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9e38771a-171b-4631-b255-c7e57b8ef4de">
+<span class="eqno">(3.29)<a class="headerlink" href="#equation-9e38771a-171b-4631-b255-c7e57b8ef4de" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P_j = 0
 \end{equation}\]</div>
 <p>implies that event <span class="math notranslate nohighlight">\(j\)</span> is impossible.</p>
 <p>Additionally, the following must be true</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fa22e0b7-40dc-407f-97be-fc54462b47a9">
-<span class="eqno">(3.30)<a class="headerlink" href="#equation-fa22e0b7-40dc-407f-97be-fc54462b47a9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bd99b748-7579-4d99-9fff-866765bad357">
+<span class="eqno">(3.30)<a class="headerlink" href="#equation-bd99b748-7579-4d99-9fff-866765bad357" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sum_j N_j = N
 \end{equation}\]</div>
 <p>and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f7d08f62-e558-41da-a11c-9efa1c2b18a5">
-<span class="eqno">(3.31)<a class="headerlink" href="#equation-f7d08f62-e558-41da-a11c-9efa1c2b18a5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-de81044a-6eeb-4acf-b3e2-17db587fedc8">
+<span class="eqno">(3.31)<a class="headerlink" href="#equation-de81044a-6eeb-4acf-b3e2-17db587fedc8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sum_j P_j = 1.
 \end{equation}\]</div>
 <p>The first of these statements simply says that the sum over all events of the number of events of each type must be equal to the total number of events. The second states that the probabilities of events must sum to 1.  This is equivalent to the normalization condition.</p>
-<div class="section" id="computing-average-quantities-from-discrete-probability-densities">
+<section id="computing-average-quantities-from-discrete-probability-densities">
 <h3><span class="section-number">3.1.2.4.1. </span>Computing Average Quantities from Discrete Probability Densities<a class="headerlink" href="#computing-average-quantities-from-discrete-probability-densities" title="Permalink to this headline">#</a></h3>
 <p>If we consider discrete events for which a number if an outcome, we can compute the expected average value of this outcome.  Events like this could be rolling a dice or measuring quantized energy levels.  In this case, we can compute an average value of the discrete quantity, <span class="math notranslate nohighlight">\(x\)</span>, as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1db209d0-207c-426f-b8eb-07b813b11b6f">
-<span class="eqno">(3.32)<a class="headerlink" href="#equation-1db209d0-207c-426f-b8eb-07b813b11b6f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c7fcb12d-fcbe-4e84-8a93-22727b06f5bc">
+<span class="eqno">(3.32)<a class="headerlink" href="#equation-c7fcb12d-fcbe-4e84-8a93-22727b06f5bc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle x \rangle = \sum_{j=1}^n x_jP_j = \sum_{j=1}^n x_jP(x_j),
 \end{equation}\]</div>
 <p>where there are a total of <span class="math notranslate nohighlight">\(n\)</span> possible outcomes and the <span class="math notranslate nohighlight">\(j\)</span>th outcome has probability <span class="math notranslate nohighlight">\(P_j\)</span> or <span class="math notranslate nohighlight">\(P_j = P(x_j)\)</span>.  The last version of <span class="math notranslate nohighlight">\(P\)</span>, <span class="math notranslate nohighlight">\(P(x_j)\)</span>, introduces the idea that <span class="math notranslate nohighlight">\(P\)</span> is a function of <span class="math notranslate nohighlight">\(x\)</span> that returns the probabilty of observing that outcome.  <span class="math notranslate nohighlight">\(P(x)\)</span> is referred to as a probability density.</p>
-</div>
-<div class="section" id="example-of-a-discrete-probability-density">
+</section>
+<section id="example-of-a-discrete-probability-density">
 <h3><span class="section-number">3.1.2.4.2. </span>Example of a Discrete Probability Density<a class="headerlink" href="#example-of-a-discrete-probability-density" title="Permalink to this headline">#</a></h3>
 <p>Consider the following data:</p>
 <table class="colwidths-auto table">
@@ -935,8 +946,8 @@ P_j = 0
 <ol class="simple">
 <li><p>Is <span class="math notranslate nohighlight">\(P\)</span> normalized?  To address this, we compute</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-803d0076-1c5d-4c38-89f3-9354368ce82e">
-<span class="eqno">(3.33)<a class="headerlink" href="#equation-803d0076-1c5d-4c38-89f3-9354368ce82e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-906855f1-4157-4f0a-bd99-7667a9f66e5a">
+<span class="eqno">(3.33)<a class="headerlink" href="#equation-906855f1-4157-4f0a-bd99-7667a9f66e5a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \sum_{j=1}^4 P(x_j) &amp;=&amp; 0.3 + 0.3 + 0.2 + 0.2 \\
 &amp;=&amp; 1
 \end{eqnarray}\]</div>
@@ -987,8 +998,8 @@ P_j = 0
 </div>
 <ol>
 <li><p>Compute <span class="math notranslate nohighlight">\(\langle x \rangle\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0d76b40c-642c-41ed-80c7-bf3c0981875e">
-<span class="eqno">(3.34)<a class="headerlink" href="#equation-0d76b40c-642c-41ed-80c7-bf3c0981875e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-8e15f4f7-1578-4f78-8dff-b2012217879a">
+<span class="eqno">(3.34)<a class="headerlink" href="#equation-8e15f4f7-1578-4f78-8dff-b2012217879a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
     \langle x \rangle &amp;=&amp; \sum_{j=1}^4 x_jP(x_j) = (-2)\cdot 0.3 + (-1)\cdot 0.3 + (1)\cdot 0.2 + (2)\cdot 0.2 \\
     &amp;=&amp; -0.3
     \end{eqnarray}\]</div>
@@ -1008,8 +1019,8 @@ P_j = 0
 </div>
 <ol>
 <li><p>Compute <span class="math notranslate nohighlight">\(\langle x^2 \rangle\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-966a61a7-f3c7-4858-9f57-e595d1e8bf5f">
-<span class="eqno">(3.35)<a class="headerlink" href="#equation-966a61a7-f3c7-4858-9f57-e595d1e8bf5f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-cbda4b4a-d176-4a9f-a7b9-8dda814ecc5e">
+<span class="eqno">(3.35)<a class="headerlink" href="#equation-cbda4b4a-d176-4a9f-a7b9-8dda814ecc5e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
     \langle x^2 \rangle &amp;=&amp; \sum_{j=1}^4 x_j^2P(x_j) = (-2)^2\cdot 0.3 + (-1)^2\cdot 0.3 + (1)^2\cdot 0.2 + (2)^2\cdot 0.2 \\
     &amp;=&amp; 2.5
     \end{eqnarray}\]</div>
@@ -1027,40 +1038,40 @@ P_j = 0
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="continuous-probability">
+</section>
+</section>
+<section id="continuous-probability">
 <h2><span class="section-number">3.1.2.5. </span>Continuous Probability<a class="headerlink" href="#continuous-probability" title="Permalink to this headline">#</a></h2>
 <p>If <span class="math notranslate nohighlight">\(x\)</span> is a continuous variable, e.g. positions or momenta, then the probability distribution <span class="math notranslate nohighlight">\(P(x)\)</span> will be a continuous probability density.  In this case, the sums of discrete values is replaced with an integral over the continuous variable.  Take the normalization condition, for example.  For a continous probability density <span class="math notranslate nohighlight">\(P(x)\)</span>, we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-32362042-298b-4c84-8c5a-99cfb92ca1f4">
-<span class="eqno">(3.36)<a class="headerlink" href="#equation-32362042-298b-4c84-8c5a-99cfb92ca1f4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0a4b2e00-8cd8-42da-af88-18dd328a3c85">
+<span class="eqno">(3.36)<a class="headerlink" href="#equation-0a4b2e00-8cd8-42da-af88-18dd328a3c85" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^\infty P(x)dx = 1.
 \end{equation}\]</div>
 <p>Note that the limits of integration are from <span class="math notranslate nohighlight">\(-\infty\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> indicating that <span class="math notranslate nohighlight">\(x\)</span> can take on values anywhere in this domain.</p>
 <p>We might be interested in the probability of observing a particular subdomain of <span class="math notranslate nohighlight">\(x\)</span>.  For example, if we are interested in the probability of observing <span class="math notranslate nohighlight">\(x\)</span> in the domain <span class="math notranslate nohighlight">\(a \leq x \leq b\)</span>, we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-99129f80-5966-4e7a-ad41-7b84e199c517">
-<span class="eqno">(3.37)<a class="headerlink" href="#equation-99129f80-5966-4e7a-ad41-7b84e199c517" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b3bfd1cb-d817-461b-9f30-c3980a2be107">
+<span class="eqno">(3.37)<a class="headerlink" href="#equation-b3bfd1cb-d817-461b-9f30-c3980a2be107" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(a \leq x \leq b) = \int_{a}^{b}P(x)dx
 \end{equation}\]</div>
 <p>A note on units.  <span class="math notranslate nohighlight">\(P(x)dx\)</span> is a unitless quantity.  This can be observed by looking at the normaliztion condition.  The integral <span class="math notranslate nohighlight">\(\int P(x)dx=1\)</span> is a unitless quantity this <span class="math notranslate nohighlight">\(P(x)dx\)</span> must be unitless.  <span class="math notranslate nohighlight">\(dx\)</span> will have the same units as <span class="math notranslate nohighlight">\(x\)</span> since it is the infinitesimal change in <span class="math notranslate nohighlight">\(x\)</span>. Thus, <span class="math notranslate nohighlight">\(P(x)\)</span> will have units of inverse, or reciprocal, <span class="math notranslate nohighlight">\(x\)</span>.</p>
-</div>
-<div class="section" id="computing-average-quantities-from-continuous-probability-densities">
+</section>
+<section id="computing-average-quantities-from-continuous-probability-densities">
 <h2><span class="section-number">3.1.2.6. </span>Computing Average Quantities from Continuous Probability Densities<a class="headerlink" href="#computing-average-quantities-from-continuous-probability-densities" title="Permalink to this headline">#</a></h2>
 <p>The average value of <span class="math notranslate nohighlight">\(x\)</span> for a continuous variable is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-938aeb27-a955-4897-be8b-4afba823560a">
-<span class="eqno">(3.38)<a class="headerlink" href="#equation-938aeb27-a955-4897-be8b-4afba823560a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ca729cd4-81ff-4bfe-bcff-13fe79ace0d9">
+<span class="eqno">(3.38)<a class="headerlink" href="#equation-ca729cd4-81ff-4bfe-bcff-13fe79ace0d9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle x \rangle = \int_{-\infty}^{\infty} x P(x) dx
 \end{equation}\]</div>
 <p>Similarly, the average value of <span class="math notranslate nohighlight">\(x^2\)</span>, or the second moment of the distribution, is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3ace9308-e132-4f12-8c94-2a29f52a960b">
-<span class="eqno">(3.39)<a class="headerlink" href="#equation-3ace9308-e132-4f12-8c94-2a29f52a960b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d80dc9f2-0031-4413-86f0-fe1333a6a9c5">
+<span class="eqno">(3.39)<a class="headerlink" href="#equation-d80dc9f2-0031-4413-86f0-fe1333a6a9c5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle x^2 \rangle = \int_{-\infty}^{\infty} x^2 P(x) dx
 \end{equation}\]</div>
-<div class="section" id="example-a-gaussian-distribution-in-1d">
+<section id="example-a-gaussian-distribution-in-1d">
 <h3><span class="section-number">3.1.2.6.1. </span>Example: A Gaussian Distribution in 1D<a class="headerlink" href="#example-a-gaussian-distribution-in-1d" title="Permalink to this headline">#</a></h3>
 <p>A Gaussian distribution is one of the most widely used continuous probability distributions.  In 1D, it has the general form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8ff0346f-3a72-40cf-8080-370b81f72a70">
-<span class="eqno">(3.40)<a class="headerlink" href="#equation-8ff0346f-3a72-40cf-8080-370b81f72a70" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e0cd7c18-b2c1-4fd7-8c2b-2e646fe256e9">
+<span class="eqno">(3.40)<a class="headerlink" href="#equation-e0cd7c18-b2c1-4fd7-8c2b-2e646fe256e9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(x) = C e^{-\frac{(x-x_0)^2}{2\sigma^2}},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x_0\)</span> is the center/mean of the distribution, <span class="math notranslate nohighlight">\(C\)</span> is the normalization factor, and <span class="math notranslate nohighlight">\(\sigma^2\)</span> is the variance of the distribution (<span class="math notranslate nohighlight">\(\sigma = \sqrt{\sigma^2}\)</span> is the standard deviation).  A 1D Gaussian distribution centered at <span class="math notranslate nohighlight">\(x_0=2\)</span> and with a standard deviation of <span class="math notranslate nohighlight">\(\sigma = 1\)</span> is plotted below.</p>
@@ -1091,45 +1102,45 @@ P(x) = C e^{-\frac{(x-x_0)^2}{2\sigma^2}},
 <ol class="simple">
 <li><p>We need to normalize this function.  To do so, we enfore the normalization condition</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-28af4814-a94a-4741-ab83-821884b3c27e">
-<span class="eqno">(3.41)<a class="headerlink" href="#equation-28af4814-a94a-4741-ab83-821884b3c27e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-baa1db70-00c3-4e3e-8fee-a508c3c22067">
+<span class="eqno">(3.41)<a class="headerlink" href="#equation-baa1db70-00c3-4e3e-8fee-a508c3c22067" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^{\infty} P(x)dx = 1
 \end{equation}\]</div>
 <p>Plugging in the equation for a Gaussian we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cd4476cb-3b11-440e-92d7-2ab13876a71a">
-<span class="eqno">(3.42)<a class="headerlink" href="#equation-cd4476cb-3b11-440e-92d7-2ab13876a71a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8cded339-811e-4a0b-8db0-d47412349b9b">
+<span class="eqno">(3.42)<a class="headerlink" href="#equation-8cded339-811e-4a0b-8db0-d47412349b9b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^{\infty} C e^{-\frac{(x-x_0)^2}{2\sigma^2}}dx = 1
 \end{equation}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8f8952c-c195-4500-b2c3-4a26f1fbbc48">
-<span class="eqno">(3.43)<a class="headerlink" href="#equation-b8f8952c-c195-4500-b2c3-4a26f1fbbc48" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f4dddf35-9518-4812-ab13-128f8561bdd8">
+<span class="eqno">(3.43)<a class="headerlink" href="#equation-f4dddf35-9518-4812-ab13-128f8561bdd8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 C= \frac{1}{\int_{-\infty}^{\infty} e^{-\frac{(x-x_0)^2}{2\sigma^2}}dx}
 \end{equation}\]</div>
 <p>So how to we compute the integral <span class="math notranslate nohighlight">\(\int_{-\infty}^{\infty} e^{-\frac{(x-x_0)^2}{2\sigma^2}}dx\)</span>?  We will use integral tables (such as https://en.wikipedia.org/wiki/List_of_definite_integrals).  If you look for definite integrals involving exponential functions, you will find the following as the one that most closely resembles the Guassian integral</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7e3caebd-d2d9-4670-80a7-343245cea0dd">
-<span class="eqno">(3.44)<a class="headerlink" href="#equation-7e3caebd-d2d9-4670-80a7-343245cea0dd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6aa34e43-7d55-4f7a-901a-a66d8afe1fba">
+<span class="eqno">(3.44)<a class="headerlink" href="#equation-6aa34e43-7d55-4f7a-901a-a66d8afe1fba" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_0^\infty e^{-\alpha x^2}dx = \left(\frac{\pi}{4\alpha}\right)^{1/2}
 \end{equation}\]</div>
 <p>but note the difference in limits of integration and that the argument of the exponent does not exactly match the Guassian integral above.</p>
 <p>Our goal now is to manipulate the Gaussian integral to look like the one from the table.  We start by performing some <span class="math notranslate nohighlight">\(u\)</span>-like substituions.  Start with <span class="math notranslate nohighlight">\(u = x-x_0\)</span> which implies that <span class="math notranslate nohighlight">\(du = dx\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8765784c-621f-48d1-b6c9-550105e2fff8">
-<span class="eqno">(3.45)<a class="headerlink" href="#equation-8765784c-621f-48d1-b6c9-550105e2fff8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-41e732df-1615-4924-8393-bf8ed8d81aac">
+<span class="eqno">(3.45)<a class="headerlink" href="#equation-41e732df-1615-4924-8393-bf8ed8d81aac" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int_{-\infty}^{\infty} e^{-\frac{(x-x_0)^2}{2\sigma^2}}dx &amp;=&amp; \int_{-\infty}^{\infty} e^{-\frac{u^2}{2\sigma^2}}du \\
 &amp;=&amp; \int_{-\infty}^{\infty} e^{-\alpha u^2}du,
 \end{eqnarray}\]</div>
 <p>where in the second step we made the substitution that <span class="math notranslate nohighlight">\(\alpha = \frac{1}{2\sigma^2}\)</span>.  Note that we never changed the limits of integration.  The <span class="math notranslate nohighlight">\(u\)</span> substitution should require this but since <span class="math notranslate nohighlight">\(\infty - x0 = \infty\)</span> we didn’t have to make any change.</p>
-</div>
-<div class="section" id="even-and-odd-functions">
+</section>
+<section id="even-and-odd-functions">
 <h3><span class="section-number">3.1.2.6.2. </span>Even and Odd Functions<a class="headerlink" href="#even-and-odd-functions" title="Permalink to this headline">#</a></h3>
 <p>The last manipulation of the Guassian integral that we need to make is to change the limits of integration from <span class="math notranslate nohighlight">\(-\infty \rightarrow \infty\)</span> to <span class="math notranslate nohighlight">\(0 \rightarrow \infty\)</span>.  We do this by employing the fact that the Guassian function is an even function.  Specifcally, <span class="math notranslate nohighlight">\(f(u) = e^{-\alpha u^2}\)</span>, is an even function of <span class="math notranslate nohighlight">\(u\)</span>.  But what is an even function, and by contrast what is an odd function?</p>
 <p>An even function has the property that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a848672e-508c-4827-abfe-3fa0cce03070">
-<span class="eqno">(3.46)<a class="headerlink" href="#equation-a848672e-508c-4827-abfe-3fa0cce03070" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-61c8d42e-305d-4435-aae3-384827b233f1">
+<span class="eqno">(3.46)<a class="headerlink" href="#equation-61c8d42e-305d-4435-aae3-384827b233f1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f_{even}(-x) = f_{even}(x)
 \end{equation}\]</div>
 <p>An odd function has the property that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5425cdda-5b70-4521-a3c3-c88c1dfce34e">
-<span class="eqno">(3.47)<a class="headerlink" href="#equation-5425cdda-5b70-4521-a3c3-c88c1dfce34e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d37c6087-b1c1-4703-8084-5ddf5c858bbf">
+<span class="eqno">(3.47)<a class="headerlink" href="#equation-d37c6087-b1c1-4703-8084-5ddf5c858bbf" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f_{odd}(-x) = -f_{odd}(x)
 \end{equation}\]</div>
 <p>Examples of even functions include even powers of <span class="math notranslate nohighlight">\(x\)</span>, e.g. <span class="math notranslate nohighlight">\(f(x) = x^2\)</span>.  Examples of odd functions include the odd powers of <span class="math notranslate nohighlight">\(x\)</span>, e.g. <span class="math notranslate nohighlight">\(f(x) = x^3\)</span>.  These two functions are plotted below.</p>
@@ -1160,50 +1171,50 @@ f_{odd}(-x) = -f_{odd}(x)
 </div>
 </div>
 <p>Even functions have the property that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6cadb541-ab92-4901-b6f2-08247b452c9c">
-<span class="eqno">(3.48)<a class="headerlink" href="#equation-6cadb541-ab92-4901-b6f2-08247b452c9c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6b3c646e-4277-46f5-9bf0-cb8235e369da">
+<span class="eqno">(3.48)<a class="headerlink" href="#equation-6b3c646e-4277-46f5-9bf0-cb8235e369da" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^\infty f_{even}(x)dx = 2\int_{0}^\infty f_{even}(x)dx.
 \end{equation}\]</div>
 <p>We will employ this property for the Gaussian function.</p>
 <p>Odd functions have the property that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8c2ad81-c2ba-4bfb-b128-8bcea6b085c0">
-<span class="eqno">(3.49)<a class="headerlink" href="#equation-b8c2ad81-c2ba-4bfb-b128-8bcea6b085c0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c0ff85b1-5c51-4d89-9a8c-5afb716534d8">
+<span class="eqno">(3.49)<a class="headerlink" href="#equation-c0ff85b1-5c51-4d89-9a8c-5afb716534d8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^\infty f_{odd}(x)dx = 0.
 \end{equation}\]</div>
 <p>Now back to the Guassian function, we had that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aca23e00-8709-4282-8c11-2318d3e8ced2">
-<span class="eqno">(3.50)<a class="headerlink" href="#equation-aca23e00-8709-4282-8c11-2318d3e8ced2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2aafcf5b-5335-4da5-8f53-070f0c9053b9">
+<span class="eqno">(3.50)<a class="headerlink" href="#equation-2aafcf5b-5335-4da5-8f53-070f0c9053b9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int_{-\infty}^{\infty} e^{-\frac{(x-x_0)^2}{2\sigma^2}}dx &amp;=&amp; \int_{-\infty}^{\infty} e^{-\frac{u^2}{2\sigma^2}}du \\
 &amp;=&amp; \int_{-\infty}^{\infty} e^{-\alpha u^2}du,
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\alpha = \frac{1}{2\sigma^2}\)</span>.  Using the fact that <span class="math notranslate nohighlight">\(e^{-\alpha u^2}\)</span> is an even function of <span class="math notranslate nohighlight">\(u\)</span> (demonstrate that to yourself) we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d83ed0ee-555b-443d-8768-9dd8fc07a700">
-<span class="eqno">(3.51)<a class="headerlink" href="#equation-d83ed0ee-555b-443d-8768-9dd8fc07a700" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2bc251c3-6f4d-4e86-8d19-cb3332271d8c">
+<span class="eqno">(3.51)<a class="headerlink" href="#equation-2bc251c3-6f4d-4e86-8d19-cb3332271d8c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int_{-\infty}^{\infty} e^{-\frac{(x-x_0)^2}{2\sigma^2}}dx &amp;=&amp; \int_{-\infty}^{\infty} e^{-\frac{u^2}{2\sigma^2}}du \\
 &amp;=&amp; \int_{-\infty}^{\infty} e^{-\alpha u^2}du \\
 &amp;=&amp; 2 \int_{0}^{\infty} e^{-\alpha u^2}du \\
 &amp;=&amp; 2 \left( \frac{\pi}{4\alpha}\right)^{1/2}
 \end{eqnarray}\]</div>
 <p>Plugging back in for <span class="math notranslate nohighlight">\(\alpha\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-efaa08e1-8ccf-4b69-a0de-3f387b397f57">
-<span class="eqno">(3.52)<a class="headerlink" href="#equation-efaa08e1-8ccf-4b69-a0de-3f387b397f57" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-d7a8f895-f163-460e-b9a7-79414511f46a">
+<span class="eqno">(3.52)<a class="headerlink" href="#equation-d7a8f895-f163-460e-b9a7-79414511f46a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int_{-\infty}^{\infty} e^{-\frac{(x-x_0)^2}{2\sigma^2}}dx &amp;=&amp;  2 \left( \frac{2\sigma^2\pi}{4}\right)^{1/2} \\
 &amp;=&amp;  2 \left( \frac{\sigma^2\pi}{2}\right)^{1/2} \\
 &amp;=&amp; \sqrt{2\sigma^2\pi}
 \end{eqnarray}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7525a3bc-6516-4027-8c9d-be41deb1615d">
-<span class="eqno">(3.53)<a class="headerlink" href="#equation-7525a3bc-6516-4027-8c9d-be41deb1615d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f84da2ea-e674-43ab-97e9-db8219bf3186">
+<span class="eqno">(3.53)<a class="headerlink" href="#equation-f84da2ea-e674-43ab-97e9-db8219bf3186" title="Permalink to this equation">#</a></span>\[\begin{equation}
 C = \sqrt{\frac{1}{2\sigma^2\pi}} = \frac{1}{\sigma\sqrt{2\pi}}
 \end{equation}\]</div>
 <p>And finally our normalized Gaussian distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2bb52eca-6ca4-4a38-a23c-54c7e5faaf7a">
-<span class="eqno">(3.54)<a class="headerlink" href="#equation-2bb52eca-6ca4-4a38-a23c-54c7e5faaf7a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0e489582-4f6f-4afc-8327-e7cd039b80c2">
+<span class="eqno">(3.54)<a class="headerlink" href="#equation-0e489582-4f6f-4afc-8327-e7cd039b80c2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-x_0)^2}{2\sigma^2}}
 \end{equation}\]</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

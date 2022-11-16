@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -49,11 +50,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3.4. Welcome to the lessons on Quantum Mechanics" href="../quantum_mechanics/intro.html" />
+    <link rel="next" title="3.3.5. Reaction Mechanisms" href="Reaction_Mechanisms_Part_I.html" />
     <link rel="prev" title="3.3.3. Reversible Reactions" href="Reversible_Reactions.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -374,6 +377,16 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
        3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Reaction_Mechanisms_Part_I.html">
+       3.3.5. Reaction Mechanisms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Catalysts.html">
+       3.3.6. Catalysts
       </a>
      </li>
     </ul>
@@ -771,13 +784,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="transition-state-theory-and-temperature-dependence-of-the-rate-constant">
+  <section class="tex2jax_ignore mathjax_ignore" id="transition-state-theory-and-temperature-dependence-of-the-rate-constant">
 <h1><span class="section-number">3.3.4. </span>Transition State Theory and Temperature Dependence of the Rate Constant<a class="headerlink" href="#transition-state-theory-and-temperature-dependence-of-the-rate-constant" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.3.4.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>In these notes we will start to investigate some of the quantities that affect the rate constant.  We will start by deriving the Transition State Theory version of the rate constant and then look at how this equation depends on temperature.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.3.4.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you should be able to:</p>
 <ol class="simple">
@@ -787,8 +800,8 @@ title="Print to PDF"
 <li><p>Compute the activation energy for a reaction from rate constant vs temperature data</p></li>
 <li><p>Compute the Arhenius prefactor from rate constant vs temperature data</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.3.4.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -796,91 +809,91 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="transition-state-theory-expression-for-the-rate-constant">
+</section>
+<section id="transition-state-theory-expression-for-the-rate-constant">
 <h2><span class="section-number">3.3.4.4. </span>Transition State Theory Expression for the Rate Constant<a class="headerlink" href="#transition-state-theory-expression-for-the-rate-constant" title="Permalink to this headline">#</a></h2>
 <p>So far we have more or less ignored the rate constants and yet the values of these constants has a dramatic effect on the rate of reaction.  What are the molecular origins oof these values and why are some reactions faster than others?</p>
 <p>Transition State Theory, first developed by Henry Eyring in the early 20th century, provides a model for the rate constant that matches experimental data.  This result provides us with some insight into why certain reaction are faster than others.</p>
 <p>For this derivation we consider a generic reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7e589c26-0d85-4718-9554-eac10c290877">
-<span class="eqno">(3.493)<a class="headerlink" href="#equation-7e589c26-0d85-4718-9554-eac10c290877" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-053f9b3c-0392-49f1-9791-231b77d3a503">
+<span class="eqno">(3.493)<a class="headerlink" href="#equation-053f9b3c-0392-49f1-9791-231b77d3a503" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A + B \rightarrow P
 \end{equation}\]</div>
 <p>where the rate law is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-93f3b125-0528-48b0-bbcc-6c3f23842c7f">
-<span class="eqno">(3.494)<a class="headerlink" href="#equation-93f3b125-0528-48b0-bbcc-6c3f23842c7f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f6a4facf-6d22-427c-96a2-72d44f353e8a">
+<span class="eqno">(3.494)<a class="headerlink" href="#equation-f6a4facf-6d22-427c-96a2-72d44f353e8a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d[P]}{dt} = k[A][B]
 \end{equation}\]</div>
 <p>Transition State Theory postulates the existence of an activated complex (or transition state species) that must be populated before the product is formed.  That is, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are in an initial equilibrium with a high energy intermediate, or transition state, before forming the product, <span class="math notranslate nohighlight">\(P\)</span>.  The proposed mechanism is written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6cd2112a-4e84-4027-8c46-93db2dfdefc8">
-<span class="eqno">(3.495)<a class="headerlink" href="#equation-6cd2112a-4e84-4027-8c46-93db2dfdefc8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8bd970ff-c067-4a1f-91cf-c5f9350fa847">
+<span class="eqno">(3.495)<a class="headerlink" href="#equation-8bd970ff-c067-4a1f-91cf-c5f9350fa847" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A + B \overset{k_1}{\underset{k_{-1}}{\rightleftharpoons}} AB^{\ddagger} \overset{k_2}{\rightarrow} P
 \end{equation}\]</div>
 <p>The species <span class="math notranslate nohighlight">\(AB^\ddagger\)</span> denotes the transition state and is a considered the molecular “species” at the saddle point in the free energy surface between reactants and products.  The initial equilibrium has equilibrium constant</p>
-<div class="amsmath math notranslate nohighlight" id="equation-143cda9e-bf11-4825-8969-955959d3414f">
-<span class="eqno">(3.496)<a class="headerlink" href="#equation-143cda9e-bf11-4825-8969-955959d3414f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3f3d991b-5286-4b1a-acaf-be969170baab">
+<span class="eqno">(3.496)<a class="headerlink" href="#equation-3f3d991b-5286-4b1a-acaf-be969170baab" title="Permalink to this equation">#</a></span>\[\begin{equation}
 K_C^\ddagger = \frac{[AB^\ddagger]c^\circ}{[A][B]}
 \end{equation}\]</div>
 <p>The rate of product formation, under the current proposed mechanism, is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2352c056-5a68-4175-a304-04333edd59cc">
-<span class="eqno">(3.497)<a class="headerlink" href="#equation-2352c056-5a68-4175-a304-04333edd59cc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5af80951-14c3-4c9c-b70d-2ff0e2be1960">
+<span class="eqno">(3.497)<a class="headerlink" href="#equation-5af80951-14c3-4c9c-b70d-2ff0e2be1960" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d[P]}{dt} = k_2[AB^\ddagger]
 \end{equation}\]</div>
 <p>When developing rate laws from mechanisms, we avoid writing the overall rate law in terms of intermediates.  Thus, we replace <span class="math notranslate nohighlight">\([AB^\ddagger]\)</span> with the equilibrium constant expression above to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dc953b96-e140-49d4-9bd5-75e095c296fd">
-<span class="eqno">(3.498)<a class="headerlink" href="#equation-dc953b96-e140-49d4-9bd5-75e095c296fd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c1356210-b149-4051-808f-d88a5a01cdb0">
+<span class="eqno">(3.498)<a class="headerlink" href="#equation-c1356210-b149-4051-808f-d88a5a01cdb0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d[P]}{dt} = k_2K_C^\ddagger(c^\circ)^{-1}[A][B]
 \end{equation}\]</div>
 <p>If we compare this to the overall rate law we see that or TST mechanism suggests that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4770704e-89bb-41a4-88f9-ef01a71b5cef">
-<span class="eqno">(3.499)<a class="headerlink" href="#equation-4770704e-89bb-41a4-88f9-ef01a71b5cef" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c30ea6a0-25ee-4ae7-8d4f-f30523d2032a">
+<span class="eqno">(3.499)<a class="headerlink" href="#equation-c30ea6a0-25ee-4ae7-8d4f-f30523d2032a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 k = k_2K_C^\ddagger(c^\circ)^{-1}
 \end{equation}\]</div>
 <p>To further investigate the physical underpinnings of <span class="math notranslate nohighlight">\(k_2\)</span> and <span class="math notranslate nohighlight">\(K_C^\ddagger\)</span> we will use aspects of Statistical Thermodynamics.  First, we recognize that <span class="math notranslate nohighlight">\(k_2\)</span> is related to the frequency of motion along the reaction coordinate (rc), <span class="math notranslate nohighlight">\(\nu_{rc}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb75fd6e-725a-4ec2-b4e7-b39111c69761">
-<span class="eqno">(3.500)<a class="headerlink" href="#equation-eb75fd6e-725a-4ec2-b4e7-b39111c69761" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4817e785-68b0-4f67-959f-8d6c13406ad2">
+<span class="eqno">(3.500)<a class="headerlink" href="#equation-4817e785-68b0-4f67-959f-8d6c13406ad2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 k_2 = \nu_{rc}
 \end{equation}\]</div>
 <p>Sometimes it is stated that <span class="math notranslate nohighlight">\(k_2 = \kappa \nu_{rc}\)</span> where <span class="math notranslate nohighlight">\(\kappa\)</span> is the transmission coefficient that dictates the fraction of vibrations in this direction that lead to product formation.  Here will will simply use that <span class="math notranslate nohighlight">\(\kappa = 1\)</span>.</p>
 <p>Second, we will express the equilibrium constant in terms of partition functions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a6d812fa-8724-4daf-a7ec-53fe1b42231e">
-<span class="eqno">(3.501)<a class="headerlink" href="#equation-a6d812fa-8724-4daf-a7ec-53fe1b42231e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-f188699e-1602-4e27-8b54-8ef5b62973e8">
+<span class="eqno">(3.501)<a class="headerlink" href="#equation-f188699e-1602-4e27-8b54-8ef5b62973e8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 K_C^\ddagger = \frac{\left(\frac{q_{AB^\ddagger}}{V}\right)c^\circ}{\left(\frac{q_{A}}{V}\right)\left(\frac{q_{B}}{V}\right)}
 \end{eqnarray}\]</div>
 <p>we will then extract from <span class="math notranslate nohighlight">\(q_{AB^\ddagger}\)</span> the motion along the reaction coordinate.  That is we will dictate that <span class="math notranslate nohighlight">\(q_{AB^\ddagger} = q_{rc}q_{int}\)</span> yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7833f368-19e0-4ef9-8d03-abb4fdef54fa">
-<span class="eqno">(3.502)<a class="headerlink" href="#equation-7833f368-19e0-4ef9-8d03-abb4fdef54fa" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5e261e86-9b8a-4a3e-aaaf-bfb588ce3b46">
+<span class="eqno">(3.502)<a class="headerlink" href="#equation-5e261e86-9b8a-4a3e-aaaf-bfb588ce3b46" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 K_C^\ddagger = q_{rc}\frac{\left(\frac{q_{int}}{V}\right)c^\circ}{\left(\frac{q_{A}}{V}\right)\left(\frac{q_{B}}{V}\right)} = q_{rc} K_C^{\ddagger*}
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(K_C^{\ddagger*}\)</span> is the equilibrium constant between TS and reactants with the 1D motion along the reaction coordinate of the TS removed.  It can be shown that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9252bc59-5515-4eb9-9979-6428de25981b">
-<span class="eqno">(3.503)<a class="headerlink" href="#equation-9252bc59-5515-4eb9-9979-6428de25981b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bdd142f7-e0f5-4a0e-96da-0b273fbe22d8">
+<span class="eqno">(3.503)<a class="headerlink" href="#equation-bdd142f7-e0f5-4a0e-96da-0b273fbe22d8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \nu_{rc}q_{rc} = \frac{k_BT}{h}
 \end{equation}\]</div>
 <p>Thus yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8b70d4c-4be3-4443-bf48-6b5b2afaeb16">
-<span class="eqno">(3.504)<a class="headerlink" href="#equation-b8b70d4c-4be3-4443-bf48-6b5b2afaeb16" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e9a0bb4d-692a-4812-9af0-a63316777e77">
+<span class="eqno">(3.504)<a class="headerlink" href="#equation-e9a0bb4d-692a-4812-9af0-a63316777e77" title="Permalink to this equation">#</a></span>\[\begin{equation}
 k_{TST} = \frac{k_BT}{h}K_C^{\ddagger*}(c^\circ)^{-1}
 \end{equation}\]</div>
 <p>Recall that the equlibrium constant can be expressed as <span class="math notranslate nohighlight">\(K^\ddagger = e^{-\Delta G^{\ddagger\circ}/RT}\)</span> yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-113bcec2-0019-403c-948a-7e2fbfe96189">
-<span class="eqno">(3.505)<a class="headerlink" href="#equation-113bcec2-0019-403c-948a-7e2fbfe96189" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-d49fb23e-4382-4b4d-b6ed-626d14abb970">
+<span class="eqno">(3.505)<a class="headerlink" href="#equation-d49fb23e-4382-4b4d-b6ed-626d14abb970" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 k &amp;=&amp; k_2e^{-\Delta G^{\ddagger\circ}RT} \\
 &amp;=&amp; k_2e^{\Delta S^{\ddagger\circ}/R}e^{-\Delta H^{\ddagger\circ}/RT}
 \end{eqnarray}\]</div>
 <p><span class="math notranslate nohighlight">\(k_2\)</span>, the rate constant of the second step in the TST mechanism, is related to the frequency that the complexes cross over the barrier.  It can be shown that, under consideration of one dimensional motion at the TS, that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b0d5ba4d-34ba-4fbd-9256-511efb5e04a2">
-<span class="eqno">(3.506)<a class="headerlink" href="#equation-b0d5ba4d-34ba-4fbd-9256-511efb5e04a2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6a4b0811-a30f-415f-9e90-3230a5a2335e">
+<span class="eqno">(3.506)<a class="headerlink" href="#equation-6a4b0811-a30f-415f-9e90-3230a5a2335e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 k_2 = \frac{k_BT}{hc^\circ}
 \end{equation}\]</div>
 <p>Thus yielding the final expression for the TST rate constant of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9099c4d4-de89-4b82-a723-a8f2cb53f9e1">
-<span class="eqno">(3.507)<a class="headerlink" href="#equation-9099c4d4-de89-4b82-a723-a8f2cb53f9e1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6a2650d5-7732-4def-8d39-3b8aa68ca3ce">
+<span class="eqno">(3.507)<a class="headerlink" href="#equation-6a2650d5-7732-4def-8d39-3b8aa68ca3ce" title="Permalink to this equation">#</a></span>\[\begin{equation}
 k = \frac{k_BT}{hc^\circ}e^{\Delta S^{\ddagger\circ}/R}e^{-\Delta H^{\ddagger\circ}/RT}
 \end{equation}\]</div>
 <p>This form of the TST rate constant expression is for a second order reaction.  More generally, we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2954169c-12d3-4f6c-8214-c0f55711f57b">
-<span class="eqno">(3.508)<a class="headerlink" href="#equation-2954169c-12d3-4f6c-8214-c0f55711f57b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7fee467f-cf25-40de-9756-78a93fa064ec">
+<span class="eqno">(3.508)<a class="headerlink" href="#equation-7fee467f-cf25-40de-9756-78a93fa064ec" title="Permalink to this equation">#</a></span>\[\begin{equation}
 k = \frac{k_BT}{h}(c^\circ)^{1-m}e^{\Delta S^{\ddagger\circ}/R}e^{-\Delta H^{\ddagger\circ}/RT},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(m\)</span> is the order of the reaction.</p>
@@ -891,29 +904,29 @@ k = \frac{k_BT}{h}(c^\circ)^{1-m}e^{\Delta S^{\ddagger\circ}/R}e^{-\Delta H^{\dd
 <li><p>Increasing <span class="math notranslate nohighlight">\(\Delta S^\ddagger\)</span>.</p></li>
 </ol>
 <p><span class="math notranslate nohighlight">\(\Delta H^\ddagger\)</span> is related to the activation energy of the reaction and <span class="math notranslate nohighlight">\(\Delta S^\ddagger\)</span> is related to the relative disorder of the TS and reactants.</p>
-</div>
-<div class="section" id="the-temperature-depedence-of-the-rate-constant">
+</section>
+<section id="the-temperature-depedence-of-the-rate-constant">
 <h2><span class="section-number">3.3.4.5. </span>The Temperature Depedence of the Rate Constant<a class="headerlink" href="#the-temperature-depedence-of-the-rate-constant" title="Permalink to this headline">#</a></h2>
-<div class="section" id="arhenius-expression">
+<section id="arhenius-expression">
 <h3><span class="section-number">3.3.4.5.1. </span>Arhenius Expression<a class="headerlink" href="#arhenius-expression" title="Permalink to this headline">#</a></h3>
 <p>A simpler expression for the rate constant come from Arhenius.  He expressed the rate constant as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c936016e-fd26-47cf-a5f8-27fec6d3daef">
-<span class="eqno">(3.509)<a class="headerlink" href="#equation-c936016e-fd26-47cf-a5f8-27fec6d3daef" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b30f032a-b36e-417e-a225-e5e54746157a">
+<span class="eqno">(3.509)<a class="headerlink" href="#equation-b30f032a-b36e-417e-a225-e5e54746157a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 k = Ae^{-\frac{E_a}{RT}}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A\)</span> is the Arhenius prefactor and assumed to be temperature independent and <span class="math notranslate nohighlight">\(E_a\)</span> is the activation energy of the reaction.  The linear form of the Arhenius equation is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52f274b6-39e9-4190-8e8b-92ee7da68437">
-<span class="eqno">(3.510)<a class="headerlink" href="#equation-52f274b6-39e9-4190-8e8b-92ee7da68437" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1f8f30d6-9ac6-48ac-989d-a093e6de8e41">
+<span class="eqno">(3.510)<a class="headerlink" href="#equation-1f8f30d6-9ac6-48ac-989d-a093e6de8e41" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln k = -\frac{E_a}{RT} + \ln A.
 \end{equation}\]</div>
 <p>This expression demonstrates that the log of a rate constant following the Arhenius expression will be linear with respect to <span class="math notranslate nohighlight">\(1/T\)</span>.</p>
 <p>Arhenius plots can be used to estimate the activation energy for a reaction.</p>
-</div>
-<div class="section" id="example-activation-energy-from-arhenius-plot">
+</section>
+<section id="example-activation-energy-from-arhenius-plot">
 <h3><span class="section-number">3.3.4.5.2. </span>Example: Activation Energy from Arhenius Plot<a class="headerlink" href="#example-activation-energy-from-arhenius-plot" title="Permalink to this headline">#</a></h3>
 <p>The rate constant for the first order reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8b014ae3-17f7-485b-bff7-d227cc9dbc27">
-<span class="eqno">(3.511)<a class="headerlink" href="#equation-8b014ae3-17f7-485b-bff7-d227cc9dbc27" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-84060118-65aa-4adf-8436-598f09ed1c03">
+<span class="eqno">(3.511)<a class="headerlink" href="#equation-84060118-65aa-4adf-8436-598f09ed1c03" title="Permalink to this equation">#</a></span>\[\begin{equation}
 N_2O_5(g) \rightarrow 2NO_2(g) + \frac{1}{2}O_2(g)
 \end{equation}\]</div>
 <p>is measured as a function of temperature.  From the table blelow determine the activation and Arhenius prexponential factor assuming Arhenius behavior.</p>
@@ -940,8 +953,8 @@ N_2O_5(g) \rightarrow 2NO_2(g) + \frac{1}{2}O_2(g)
 </tbody>
 </table>
 <p>To determine the activation energy, <span class="math notranslate nohighlight">\(E_a\)</span>, and the Arhenius prefactor, <span class="math notranslate nohighlight">\(A\)</span>, we will fit the following linear equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-16c14293-6a92-4f32-82f8-df26e4c6f3c8">
-<span class="eqno">(3.512)<a class="headerlink" href="#equation-16c14293-6a92-4f32-82f8-df26e4c6f3c8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8427b78e-65bc-424d-b623-85cef69b72fb">
+<span class="eqno">(3.512)<a class="headerlink" href="#equation-8427b78e-65bc-424d-b623-85cef69b72fb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln k = -\frac{E_a}{RT} + \ln A.
 \end{equation}\]</div>
 <p>To do so, we will plot <span class="math notranslate nohighlight">\(\ln k\)</span> vs <span class="math notranslate nohighlight">\(1/T\)</span></p>
@@ -1012,40 +1025,40 @@ Prefactor: 38163368393980.85 1/s
 </div>
 </div>
 <p>From the fit to the line we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d3948fde-1848-4925-b0f6-3def06ff9827">
-<span class="eqno">(3.513)<a class="headerlink" href="#equation-d3948fde-1848-4925-b0f6-3def06ff9827" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-de501d2e-3294-4a43-97da-98f20332faa2">
+<span class="eqno">(3.513)<a class="headerlink" href="#equation-de501d2e-3294-4a43-97da-98f20332faa2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \text{slope} = -12375.768 &amp;=&amp; -\frac{E_a}{R} \\
 \Rightarrow E_a &amp;=&amp; 12375.768\cdot R = 103 \text{ kJ}\cdot\text{mol}^{-1}
 \end{eqnarray}\]</div>
 <p>and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-29330b23-4eef-4d5c-bc22-fc9356ef763d">
-<span class="eqno">(3.514)<a class="headerlink" href="#equation-29330b23-4eef-4d5c-bc22-fc9356ef763d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-56a4ca2e-c6eb-4904-af3c-531449fcaf52">
+<span class="eqno">(3.514)<a class="headerlink" href="#equation-56a4ca2e-c6eb-4904-af3c-531449fcaf52" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \text{intercept} = 31.273 &amp;=&amp; \ln A \\
 \Rightarrow A &amp;=&amp; e^{31.273} = 3.82\times10^{13} \text{ s}^{-1}
 \end{eqnarray}\]</div>
-</div>
-<div class="section" id="tst-and-arhenius">
+</section>
+<section id="tst-and-arhenius">
 <h3><span class="section-number">3.3.4.5.3. </span>TST and Arhenius<a class="headerlink" href="#tst-and-arhenius" title="Permalink to this headline">#</a></h3>
 <p>The TST expression for the rate constant demonstrates a temperature dependence of both the exponential term and the prefactor.  To demonstrate this we must start with a definition of activation energy from the Arhenius equation.  That is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d2dfae98-50da-4edf-a30e-1849ce4185ee">
-<span class="eqno">(3.515)<a class="headerlink" href="#equation-d2dfae98-50da-4edf-a30e-1849ce4185ee" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5db0d82b-d9ed-4faf-8d45-11b4f021371c">
+<span class="eqno">(3.515)<a class="headerlink" href="#equation-5db0d82b-d9ed-4faf-8d45-11b4f021371c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_a = RT^2\frac{d\ln k}{dT}
 \end{equation}\]</div>
 <p>Now let’s determine <span class="math notranslate nohighlight">\(\frac{d\ln k_{TST}}{dT}\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-c5fed152-df68-4988-b29b-f28b356e606d">
-<span class="eqno">(3.516)<a class="headerlink" href="#equation-c5fed152-df68-4988-b29b-f28b356e606d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-b379c75d-2ce0-48d9-956f-477cc0def2bc">
+<span class="eqno">(3.516)<a class="headerlink" href="#equation-b379c75d-2ce0-48d9-956f-477cc0def2bc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \ln k_{TST} &amp;=&amp; \ln T - \frac{\Delta H^{\ddagger\circ}}{RT} + \ln\frac{k_B}{hc^\circ} + \frac{\Delta S^{\ddagger\circ}}{R} \\
 \Rightarrow \frac{d \ln k_{TST}}{dT} &amp;=&amp; \frac{1}{T} + \frac{\Delta H^{\ddagger\circ}}{RT^2} \\
 \Rightarrow E_{a,TST} &amp;=&amp; RT + \Delta H^{\ddagger\circ}
 \end{eqnarray}\]</div>
 <p>By analogy we can also say that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9265b63b-3800-456c-9b1f-61f038aec738">
-<span class="eqno">(3.517)<a class="headerlink" href="#equation-9265b63b-3800-456c-9b1f-61f038aec738" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c235df9e-a483-4925-a1b6-cd413f16ee03">
+<span class="eqno">(3.517)<a class="headerlink" href="#equation-c235df9e-a483-4925-a1b6-cd413f16ee03" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A_{TST} = \frac{k_BT}{h}(c^\circ)^{1-m}e^{\Delta S^{\ddagger\circ}/R}
 \end{equation}\]</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1081,10 +1094,10 @@ A_{TST} = \frac{k_BT}{h}(c^\circ)^{1-m}e^{\Delta S^{\ddagger\circ}/R}
             <p class="prev-next-title"><span class="section-number">3.3.3. </span>Reversible Reactions</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../quantum_mechanics/intro.html" title="next page">
+    <a class='right-next' id="next-link" href="Reaction_Mechanisms_Part_I.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3.4. </span>Welcome to the lessons on Quantum Mechanics</p>
+        <p class="prev-next-title"><span class="section-number">3.3.5. </span>Reaction Mechanisms</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.2.14. The Pressure and Temperature Dependence of the Gibbs Energy &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.15. Phase Diagrams and Phase Equilibria" href="Phase_Diagrams_and_Phase_Equilibria.html" />
@@ -376,6 +377,16 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toctree-l3">
       <a class="reference internal" href="../kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">
        3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Reaction_Mechanisms_Part_I.html">
+       3.3.5. Reaction Mechanisms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Catalysts.html">
+       3.3.6. Catalysts
       </a>
      </li>
     </ul>
@@ -787,9 +798,9 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="the-pressure-and-temperature-dependence-of-the-gibbs-energy">
+  <section class="tex2jax_ignore mathjax_ignore" id="the-pressure-and-temperature-dependence-of-the-gibbs-energy">
 <h1><span class="section-number">3.2.14. </span>The Pressure and Temperature Dependence of the Gibbs Energy<a class="headerlink" href="#the-pressure-and-temperature-dependence-of-the-gibbs-energy" title="Permalink to this headline">#</a></h1>
-<div class="section" id="learning-goals">
+<section id="learning-goals">
 <h2><span class="section-number">3.2.14.1. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After reading and understanding these notes, you will be able to</p>
 <ol class="simple">
@@ -798,8 +809,8 @@ title="Print to PDF"
 <li><p>Derive the relationship between Gibbs free energy and temperature (Gibbs-Helmholtz equation)</p></li>
 <li><p>Calculate <span class="math notranslate nohighlight">\(G(T)\)</span> from data on heat capacity and phase transitions for a substance.</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.2.14.2. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -808,92 +819,92 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/numeric_integration.html"><span class="doc std std-doc">Numeric integration</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="differential-form-of-the-gibbs-energy">
+</section>
+<section id="differential-form-of-the-gibbs-energy">
 <h2><span class="section-number">3.2.14.3. </span>Differential Form of the Gibbs Energy<a class="headerlink" href="#differential-form-of-the-gibbs-energy" title="Permalink to this headline">#</a></h2>
 <p>The differential form of the Gibbs energy as a function of only two variables is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1ff43f37-4e82-421c-aefd-09c8e8b144f5">
-<span class="eqno">(3.321)<a class="headerlink" href="#equation-1ff43f37-4e82-421c-aefd-09c8e8b144f5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cd4f223d-f0ee-441d-bfe9-49a51c941c88">
+<span class="eqno">(3.321)<a class="headerlink" href="#equation-cd4f223d-f0ee-441d-bfe9-49a51c941c88" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dG = -SdT + VdP
 \end{equation}\]</div>
 <p>which implies the following first derivative relationships</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b92d86f0-2977-44d3-8fde-f5483812f2af">
-<span class="eqno">(3.322)<a class="headerlink" href="#equation-b92d86f0-2977-44d3-8fde-f5483812f2af" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c26b4763-f814-47fd-a37f-4c8806cde8f5">
+<span class="eqno">(3.322)<a class="headerlink" href="#equation-c26b4763-f814-47fd-a37f-4c8806cde8f5" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial G}{\partial T} \right)_P &amp;=&amp; -S \\
 \left( \frac{\partial G}{\partial P} \right)_T &amp;=&amp; V
 \end{eqnarray}\]</div>
 <p>These two equations can be used to determine the pressure and temperature dependence of <span class="math notranslate nohighlight">\( G\)</span>.</p>
-</div>
-<div class="section" id="pressure-dependence-of-g">
+</section>
+<section id="pressure-dependence-of-g">
 <h2><span class="section-number">3.2.14.4. </span>Pressure Dependence of <span class="math notranslate nohighlight">\(G\)</span><a class="headerlink" href="#pressure-dependence-of-g" title="Permalink to this headline">#</a></h2>
 <p>The partial derivative relationship can be used to determine the pressure dependence of <span class="math notranslate nohighlight">\( G\)</span>.  The derivation is as follows</p>
-<div class="amsmath math notranslate nohighlight" id="equation-55154985-945d-4a83-82f4-1d7254cb09e1">
-<span class="eqno">(3.323)<a class="headerlink" href="#equation-55154985-945d-4a83-82f4-1d7254cb09e1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2ec7ee93-654a-4354-b0fc-20fe0176c78a">
+<span class="eqno">(3.323)<a class="headerlink" href="#equation-2ec7ee93-654a-4354-b0fc-20fe0176c78a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial G}{\partial P} \right)_T &amp;=&amp; V \\
 \Rightarrow dG &amp;=&amp; VdP \quad\text{constant T} \\
 \Rightarrow \Delta G &amp;=&amp; \int_{P_1}^{P_2}VdP \quad\text{constant T}
 \end{eqnarray}\]</div>
 <p>For an ideal gas we have <span class="math notranslate nohighlight">\(V = \frac{nRT}{P}\)</span> yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2692f8b6-4913-4e11-a2aa-365da34edfd6">
-<span class="eqno">(3.324)<a class="headerlink" href="#equation-2692f8b6-4913-4e11-a2aa-365da34edfd6" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5837dbe2-be9e-436d-b3b5-a74a15b78814">
+<span class="eqno">(3.324)<a class="headerlink" href="#equation-5837dbe2-be9e-436d-b3b5-a74a15b78814" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta G &amp;=&amp; \int_{P_1}^{P_2}\frac{nRT}{P}dP \quad\text{constant T} \\
 &amp;=&amp; nRT\ln\frac{P_2}{P_1}
 \end{eqnarray}\]</div>
 <p><span class="math notranslate nohighlight">\(P = 1\)</span> bar is used as a standard reference so if we set that as the initial state we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b22d5b32-34fd-4e75-9dfc-87b80e635147">
-<span class="eqno">(3.325)<a class="headerlink" href="#equation-b22d5b32-34fd-4e75-9dfc-87b80e635147" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-80b91222-dbc1-4689-8ac1-c8397358082e">
+<span class="eqno">(3.325)<a class="headerlink" href="#equation-80b91222-dbc1-4689-8ac1-c8397358082e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta G  &amp;=&amp; G(T,P_2) - G(T,1 \text{bar}) &amp;=&amp; nRT\ln\frac{P_2}{1 \text{bar}} \\
 \Rightarrow G(T,P_2) &amp;=&amp; G^\circ(T) + nRT\ln\frac{P_2}{1 \text{bar}}
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(G^\circ(T)\)</span> is the Gibbs free energy of the substance at <span class="math notranslate nohighlight">\(P=1\)</span> bar and the temperature of interest.</p>
 <p>The logarithmic dendence of <span class="math notranslate nohighlight">\(G\)</span> on <span class="math notranslate nohighlight">\(P\)</span> is an entirely entropic effect.</p>
 <p>The equation above is most commonly written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-137c3133-4429-43f5-be89-4fbfd7dcb054">
-<span class="eqno">(3.326)<a class="headerlink" href="#equation-137c3133-4429-43f5-be89-4fbfd7dcb054" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-50693222-b4bf-4e8e-9b33-891812726aca">
+<span class="eqno">(3.326)<a class="headerlink" href="#equation-50693222-b4bf-4e8e-9b33-891812726aca" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 G(T,P)  &amp;=&amp; G^\circ(T) + nRT\ln\frac{P}{P^\circ}
 \end{eqnarray}\]</div>
-<div class="section" id="for-a-non-ideal-gas">
+<section id="for-a-non-ideal-gas">
 <h3><span class="section-number">3.2.14.4.1. </span>For a Non-Ideal Gas<a class="headerlink" href="#for-a-non-ideal-gas" title="Permalink to this headline">#</a></h3>
 <p>The above equation was derived for an ideal gas.  It is useful to derive a similar expression for non-ideal gasses.  Here we will use the virial expansion for the equation of state of general non-ideal gas.  This has the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1974fc52-ba29-4b0a-923d-a08611ffed9d">
-<span class="eqno">(3.327)<a class="headerlink" href="#equation-1974fc52-ba29-4b0a-923d-a08611ffed9d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cb121814-dc0c-4a2b-a05a-3e4d41f7c85c">
+<span class="eqno">(3.327)<a class="headerlink" href="#equation-cb121814-dc0c-4a2b-a05a-3e4d41f7c85c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{P\bar{V}}{RT} = 1 + B(T)P + C(T)P^2 + ...
 \end{equation}\]</div>
 <p>If we substitute this equation of state in for the volume in the above derivation we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-33aabf30-77d8-4916-a380-f987cfb3f156">
-<span class="eqno">(3.328)<a class="headerlink" href="#equation-33aabf30-77d8-4916-a380-f987cfb3f156" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4bcfa078-1ed7-4c60-b80b-c5440a71eedd">
+<span class="eqno">(3.328)<a class="headerlink" href="#equation-4bcfa078-1ed7-4c60-b80b-c5440a71eedd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{P^{id}}^Pd\bar{G} = RT\int_{P^{id}}^P\frac{dP'}{P'} + RTB(T)\int_{P^{id}}^PdP'+ RTC(T)\int_{P^{id}}^PP'dP'+...
 \end{equation}\]</div>
 <p>Doing the integrtion yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5af2f6f8-2a77-42b6-b461-6388b4d084d4">
-<span class="eqno">(3.329)<a class="headerlink" href="#equation-5af2f6f8-2a77-42b6-b461-6388b4d084d4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0a7d3002-effe-4fdb-83f4-e06f20164035">
+<span class="eqno">(3.329)<a class="headerlink" href="#equation-0a7d3002-effe-4fdb-83f4-e06f20164035" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \bar{G}(T,P) = \bar{G}(T,P^{id}) + RT\ln\frac{P}{P^{id}} + RTB(T)P + \frac{RTC(T)P^2}{2} + ...
 \end{equation}\]</div>
 <p>This can be rewritten as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a8cc672b-8d54-4b9c-ae04-46c97507e86e">
-<span class="eqno">(3.330)<a class="headerlink" href="#equation-a8cc672b-8d54-4b9c-ae04-46c97507e86e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d0863bf1-4838-4ba4-bf52-890e5387d7d8">
+<span class="eqno">(3.330)<a class="headerlink" href="#equation-d0863bf1-4838-4ba4-bf52-890e5387d7d8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \bar{G}(T,P) = G^\circ(T)+ RT \ln\frac{f(P,T)}{f^\circ}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(f\)</span> is called the fugacity and is given by (for virial expansion)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-852a0e45-dede-4c94-84e5-3aea9570d166">
-<span class="eqno">(3.331)<a class="headerlink" href="#equation-852a0e45-dede-4c94-84e5-3aea9570d166" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-eb974072-5cb1-404e-9b69-937c7cd97397">
+<span class="eqno">(3.331)<a class="headerlink" href="#equation-eb974072-5cb1-404e-9b69-937c7cd97397" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{f(P,T)}{f^\circ} = \frac{P}{P^\circ}\exp\left[B(T)P + C(T)P^2 + ... \right]
 \end{equation}\]</div>
 <p>It can also be shown that <span class="math notranslate nohighlight">\(f^\circ = P^\circ\)</span></p>
-</div>
-</div>
-<div class="section" id="temperature-dependence-of-g">
+</section>
+</section>
+<section id="temperature-dependence-of-g">
 <h2><span class="section-number">3.2.14.5. </span>Temperature Dependence of <span class="math notranslate nohighlight">\(G\)</span><a class="headerlink" href="#temperature-dependence-of-g" title="Permalink to this headline">#</a></h2>
 <p>The partial derivative relationship can be used to determine the temperature dependence of <span class="math notranslate nohighlight">\( G\)</span>.  The derivation is as follows</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3a544e2e-2275-4102-8c34-1ec82f0969e6">
-<span class="eqno">(3.332)<a class="headerlink" href="#equation-3a544e2e-2275-4102-8c34-1ec82f0969e6" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-e89c09f5-98c8-4289-864f-1df8f44379f8">
+<span class="eqno">(3.332)<a class="headerlink" href="#equation-e89c09f5-98c8-4289-864f-1df8f44379f8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial G}{\partial T} \right)_P &amp;=&amp; -S \\
 \Rightarrow dG &amp;=&amp; -SdT \quad\text{constant P} \\
 \Rightarrow \Delta G &amp;=&amp; -\int_{T_1}^{T_2}SdP \quad\text{constant P}
 \end{eqnarray}\]</div>
 <p>Unlike for the pressure dependence, this does not get us far because we cannot typically measure <span class="math notranslate nohighlight">\(S\)</span>.  Rather, we will do the following manipulations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf76651c-51ec-416e-8bf7-64a0785b3422">
-<span class="eqno">(3.333)<a class="headerlink" href="#equation-bf76651c-51ec-416e-8bf7-64a0785b3422" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-cb7eaad0-55d0-48d9-8c24-e1fa93a3652a">
+<span class="eqno">(3.333)<a class="headerlink" href="#equation-cb7eaad0-55d0-48d9-8c24-e1fa93a3652a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial G}{\partial T} \right)_P &amp;=&amp; -S \\
 \Rightarrow \frac{1}{T}\left( \frac{\partial G}{\partial T}\right)_P &amp;=&amp; -\frac{S}{T} \\
 \Rightarrow \left( \frac{\partial \frac{G}{T}}{\partial T}\right)_P + \frac{G}{T^2} &amp;=&amp; -\frac{S}{T} \\
@@ -901,16 +912,16 @@ G(T,P)  &amp;=&amp; G^\circ(T) + nRT\ln\frac{P}{P^\circ}
 \Rightarrow \left( \frac{\partial \frac{G}{T}}{\partial T}\right)_P &amp;=&amp; -\frac{H}{T^2}
 \end{eqnarray}\]</div>
 <p>This last equation is called the <em>Gibbs-Helmholtz</em> equation.  We will use it in subsequent parts of this course to investigate the temperature dependence of the Gibbs free energy of chemical equilibria.  Applied to a process, this becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e49cbadc-2f51-46ee-b281-1ba0402b6ff2">
-<span class="eqno">(3.334)<a class="headerlink" href="#equation-e49cbadc-2f51-46ee-b281-1ba0402b6ff2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5be9e863-455c-4faa-b096-14e814dab623">
+<span class="eqno">(3.334)<a class="headerlink" href="#equation-5be9e863-455c-4faa-b096-14e814dab623" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial \frac{G}{T}}{\partial T}\right)_P &amp;=&amp; -\frac{\Delta H}{T^2}
 \end{eqnarray}\]</div>
 <p>The implications of this equation are that we can compute the Gibbs free energy of a substance at a given <span class="math notranslate nohighlight">\(T\)</span> from tabulated enthalpy and entropy information.  Or, equivalently</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e1b2458c-6e86-4aaf-919a-ae7a346c4f63">
-<span class="eqno">(3.335)<a class="headerlink" href="#equation-e1b2458c-6e86-4aaf-919a-ae7a346c4f63" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-70f437c8-f02e-418e-aac9-f5823a292394">
+<span class="eqno">(3.335)<a class="headerlink" href="#equation-70f437c8-f02e-418e-aac9-f5823a292394" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \bar{G}(T) - \bar{H}(0) = \bar{H}(T)-\bar{H}(0) - T\bar{S}(T)
 \end{equation}\]</div>
-<div class="section" id="example-temperature-dependence-of-g-for-propene">
+<section id="example-temperature-dependence-of-g-for-propene">
 <h3><span class="section-number">3.2.14.5.1. </span>Example: Temperature Dependence of <span class="math notranslate nohighlight">\(G\)</span> for Propene<a class="headerlink" href="#example-temperature-dependence-of-g-for-propene" title="Permalink to this headline">#</a></h3>
 <p>Given the following fata for propene, plot <span class="math notranslate nohighlight">\(\bar{G}(T) - \bar{H}(0)\)</span> versus <span class="math notranslate nohighlight">\(T\)</span>.  (assume ideal gas behavior)</p>
 <div class="amsmath math notranslate nohighlight">
@@ -929,19 +940,19 @@ T_{vap} &amp;=&amp; 225.46 \quad \text{K} \\
 \Delta \bar{H}_{vap} &amp;=&amp; 18.42 \quad \text{kJ}\cdot\text{mol}^{-1} \\
 \end{eqnarray*}\]</div>
 <p>We want <span class="math notranslate nohighlight">\(\bar{G}(T) - \bar{H}(0)\)</span> which we know to be equal to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5920742a-abb0-45c1-a5bb-94afa10ac2cb">
-<span class="eqno">(3.336)<a class="headerlink" href="#equation-5920742a-abb0-45c1-a5bb-94afa10ac2cb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b71e6ce3-5706-4976-87d1-08d652baf012">
+<span class="eqno">(3.336)<a class="headerlink" href="#equation-b71e6ce3-5706-4976-87d1-08d652baf012" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \bar{G}(T) - \bar{H}(0) = \bar{H}(T)-\bar{H}(0) - T\bar{S}(T)
 \end{equation}\]</div>
 <p>So we calculate <span class="math notranslate nohighlight">\(\bar{H}(T)-\bar{H}(0)\)</span> and <span class="math notranslate nohighlight">\(\bar{S}(T)\)</span> separately.</p>
 <p>From previous discussions, we know that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-17699ab9-095a-496b-a0c3-7ce2a5911251">
-<span class="eqno">(3.337)<a class="headerlink" href="#equation-17699ab9-095a-496b-a0c3-7ce2a5911251" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-772be936-38c3-41c1-a2e7-2d8479953152">
+<span class="eqno">(3.337)<a class="headerlink" href="#equation-772be936-38c3-41c1-a2e7-2d8479953152" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \bar{H}(T)-\bar{H}(0) = \Delta H = \int_0^{15} \bar{C}_p^s dT + \int_{15}^{87.90} \bar{C}_p^s dT + \Delta \bar{H}_{fusion} + \int_{87.90}^{225.46}\bar{C}_p^ldT + \Delta \bar{H}_{vap} + \int_{225.46}^{T}\bar{C}_p^gdT
 \end{eqnarray}\]</div>
 <p>Similarly, we know that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3414cc88-55aa-4782-882c-5f4488783c28">
-<span class="eqno">(3.338)<a class="headerlink" href="#equation-3414cc88-55aa-4782-882c-5f4488783c28" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-35ca1507-041f-4993-a19a-4d4dbf227d15">
+<span class="eqno">(3.338)<a class="headerlink" href="#equation-35ca1507-041f-4993-a19a-4d4dbf227d15" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \bar{S}(T) = \int_0^{15} \frac{\bar{C}_p^s}{T} dT + \int_{15}^{87.90} \frac{\bar{C}_p^s}{T} dT + \frac{\Delta \bar{H}_{fusion}}{T} + \int_{87.90}^{225.46}\frac{\bar{C}_p^l}{T}dT + \frac{\Delta \bar{H}_{vap}}{T} + \int_{225.46}^{T}\frac{\bar{C}_p^g}{T}dT
 \end{eqnarray}\]</div>
 <p>Below I will use code and numeric integration to make this plot.</p>
@@ -1129,9 +1140,9 @@ int 87.90 to 225.46 83.74783642272298 J/mol/K
 <img alt="../../_images/Pressure_and_Temperature_Dependence_Gibbs_Energy_17_1.png" src="../../_images/Pressure_and_Temperature_Dependence_Gibbs_Energy_17_1.png" />
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

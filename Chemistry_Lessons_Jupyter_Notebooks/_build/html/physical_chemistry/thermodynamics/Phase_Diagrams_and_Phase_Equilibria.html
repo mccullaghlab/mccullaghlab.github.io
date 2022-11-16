@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.2.15. Phase Diagrams and Phase Equilibria &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.16. Chemical Potential from the Partition Function" href="Chemical_Potential_from_Partition_Function.html" />
@@ -376,6 +377,16 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toctree-l3">
       <a class="reference internal" href="../kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">
        3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Reaction_Mechanisms_Part_I.html">
+       3.3.5. Reaction Mechanisms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Catalysts.html">
+       3.3.6. Catalysts
       </a>
      </li>
     </ul>
@@ -825,13 +836,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="phase-diagrams-and-phase-equilibria">
+  <section class="tex2jax_ignore mathjax_ignore" id="phase-diagrams-and-phase-equilibria">
 <h1><span class="section-number">3.2.15. </span>Phase Diagrams and Phase Equilibria<a class="headerlink" href="#phase-diagrams-and-phase-equilibria" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.2.15.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>Matter exists in three phases.  It can be useful to measure and ultimately predict the pressure and temperatures at which we expect matter to undergo a phase transition (e.g. at what temperature will water boil?  Does that depend on elevation?  Why?).  The Thermoydamic relationship that we have derived in previous notebooks allow us to predict this behavior.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.2.15.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through this notebook, you will be able to:</p>
 <ol class="simple">
@@ -840,8 +851,8 @@ title="Print to PDF"
 <li><p>Predict phase coexistence relationships using the Clapeyron equation</p></li>
 <li><p>Predict phase coexistence relatinships for solid-vapor and liquid-vapor using the Clausius-Clapeyron equation</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.2.15.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -849,13 +860,13 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="phase-diagrams">
+</section>
+<section id="phase-diagrams">
 <h2><span class="section-number">3.2.15.4. </span>Phase Diagrams<a class="headerlink" href="#phase-diagrams" title="Permalink to this headline">#</a></h2>
 <p>The phase behavior of a substance can be summarized on a phase diagram.  A phase diagram is a plot of Pressure and Temperature with the phases of matter labeled and the phase coexistence curves plotted.</p>
 <p>Here we will show a plot of the <span class="math notranslate nohighlight">\(P\)</span> vs <span class="math notranslate nohighlight">\(T\)</span> for benzene.  The phase coexistence curves are given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e0e6f0f-eba8-4e3f-8b9b-457b2f987e5a">
-<span class="eqno">(3.339)<a class="headerlink" href="#equation-9e0e6f0f-eba8-4e3f-8b9b-457b2f987e5a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-55b0ff4d-d9b1-4c62-bd63-61089ebd720e">
+<span class="eqno">(3.339)<a class="headerlink" href="#equation-55b0ff4d-d9b1-4c62-bd63-61089ebd720e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \ln P &amp;=&amp; -\frac{4110}{T} + 18.33 \quad 278.7 &lt; T &lt; 300 \text{K} \quad \text{liquid-vapor}\\
 \ln P &amp;=&amp; -\frac{5139}{T} + 22.67 \quad 250 &lt; T &lt; 278.7 \text{K} \quad \text{solid-vapor}\\
 P &amp;=&amp; -25992\cdot(T-278.7) + 36.1 \quad 278.7  \text{K} &lt; T \quad \text{solid-liquid}\\
@@ -905,81 +916,81 @@ P &amp;=&amp; -25992\cdot(T-278.7) + 36.1 \quad 278.7  \text{K} &lt; T \quad \te
 <p>A <em><strong>critical point</strong></em> (not indicated on the plot above) is the point along the liquid-vapor coexistence curve above which the liquid will cease to exist.</p>
 <p><em><strong>normal melting point</strong></em> is the melting temperature at 760 torr ot 1 atm.</p>
 <p><em><strong>normal boiling point</strong></em> is the boiling temperature at 760 torr or 1 atm.</p>
-</div>
-<div class="section" id="deriving-equations-for-phase-coexistence-curves">
+</section>
+<section id="deriving-equations-for-phase-coexistence-curves">
 <h2><span class="section-number">3.2.15.5. </span>Deriving Equations for Phase Coexistence Curves<a class="headerlink" href="#deriving-equations-for-phase-coexistence-curves" title="Permalink to this headline">#</a></h2>
 <p>Phase coexistence curves are points in <span class="math notranslate nohighlight">\(P\)</span> ant <span class="math notranslate nohighlight">\(T\)</span> space at which two phases of matter are in equilibrium.  We can use this relationship and equations that we have already learned from Thermodynamics to derive relationships for the phase coexistence curves.</p>
 <p>We will consider the Gibbs free energy expression since each point in <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(T\)</span> space can be considered a position at which <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(T\)</span> are held constant.  Thus, <span class="math notranslate nohighlight">\(dG &lt;0\)</span> indicates sponataneity and <span class="math notranslate nohighlight">\(dG=0\)</span> indicates equilibrium.  First, however, we must consider how to deal with the free energy of a two component system.</p>
-<div class="section" id="gibbs-free-energy-of-a-two-component-system">
+<section id="gibbs-free-energy-of-a-two-component-system">
 <h3><span class="section-number">3.2.15.5.1. </span>Gibbs Free Energy of a Two Component System<a class="headerlink" href="#gibbs-free-energy-of-a-two-component-system" title="Permalink to this headline">#</a></h3>
 <p>For a single component system we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-53aa20a0-945a-407f-a426-088239a520bd">
-<span class="eqno">(3.340)<a class="headerlink" href="#equation-53aa20a0-945a-407f-a426-088239a520bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-dddfec86-effc-4c59-8d3f-c0e4d3af2d8b">
+<span class="eqno">(3.340)<a class="headerlink" href="#equation-dddfec86-effc-4c59-8d3f-c0e4d3af2d8b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dG = -SdT + VdP
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(G(T,P)\)</span> is the Gibbs free energy as a function of natural variables <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(P\)</span>.  Technically, we can consider the Gibbs free energy of a single component system as a function of three fixed variables: <span class="math notranslate nohighlight">\(T\)</span>, <span class="math notranslate nohighlight">\(P\)</span>, and <span class="math notranslate nohighlight">\(N\)</span>.  The differntial form is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dffb2a49-447a-4406-b103-25f3965af644">
-<span class="eqno">(3.341)<a class="headerlink" href="#equation-dffb2a49-447a-4406-b103-25f3965af644" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-af8307ed-c70f-47b8-95eb-0da4fdba3823">
+<span class="eqno">(3.341)<a class="headerlink" href="#equation-af8307ed-c70f-47b8-95eb-0da4fdba3823" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dG = -SdT + VdP + \mu dN
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu = \left(\frac{\partial G}{\partial N}\right)_{T,P}\)</span> is called the chemical potential of the species.  This quantity can be thought of as the amount that the Gibbs free energy (an extensive variable) will change due to the change in the number of amount (<span class="math notranslate nohighlight">\(dN\)</span>) of the species.</p>
 <p>For a two component system with fixed number of moles, <span class="math notranslate nohighlight">\(N\)</span>, we have that <span class="math notranslate nohighlight">\(N = n_A + n_B\)</span> and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-24be6ca2-44de-4d63-98ce-21d4be683a35">
-<span class="eqno">(3.342)<a class="headerlink" href="#equation-24be6ca2-44de-4d63-98ce-21d4be683a35" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-80f938e7-0441-4203-8a9a-a86e55387df5">
+<span class="eqno">(3.342)<a class="headerlink" href="#equation-80f938e7-0441-4203-8a9a-a86e55387df5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dG  = -SdT + VdP + \mu_Adn_A + \mu_Ndn_B
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-17cbedeb-9300-47f8-87cc-5256f1c5ce15">
-<span class="eqno">(3.343)<a class="headerlink" href="#equation-17cbedeb-9300-47f8-87cc-5256f1c5ce15" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-cf9002ab-44d0-4c6f-89b2-e07378d9c677">
+<span class="eqno">(3.343)<a class="headerlink" href="#equation-cf9002ab-44d0-4c6f-89b2-e07378d9c677" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \mu_A &amp;=&amp; \left(\frac{\partial G}{\partial n_A}\right)_{n_B,T,P} \\
 \mu_B &amp;=&amp; \left(\frac{\partial G}{\partial n_B}\right)_{n_A,T,P}
 \end{eqnarray}\]</div>
 <p>are the chemical potentials of species <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, respectively.</p>
 <p>Under constant temperature (<span class="math notranslate nohighlight">\(dT = 0\)</span>) and pressure (<span class="math notranslate nohighlight">\(dP = 0\)</span>) conditions we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b6eac4dc-5d4f-44d7-929e-ca2cacffc244">
-<span class="eqno">(3.344)<a class="headerlink" href="#equation-b6eac4dc-5d4f-44d7-929e-ca2cacffc244" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7ec067e1-6930-4db8-b55e-708f500ed9bb">
+<span class="eqno">(3.344)<a class="headerlink" href="#equation-7ec067e1-6930-4db8-b55e-708f500ed9bb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dG  = \mu_Adn_A + \mu_Ndn_B
 \end{equation}\]</div>
 <p>for the two component system.  Since the number of moles is fixed (<span class="math notranslate nohighlight">\(N = constant\)</span>) and <span class="math notranslate nohighlight">\(N = n_A + n_B\)</span> we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9d827480-586c-4fc3-893f-7e3f31c09b82">
-<span class="eqno">(3.345)<a class="headerlink" href="#equation-9d827480-586c-4fc3-893f-7e3f31c09b82" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-bb8a460f-4bee-4a57-bcaa-43f1b1ba4dce">
+<span class="eqno">(3.345)<a class="headerlink" href="#equation-bb8a460f-4bee-4a57-bcaa-43f1b1ba4dce" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 dN &amp;=&amp; dn_A + dn_B \\
 0 &amp;=&amp; dn_A + dn_B \\
 \Rightarrow dn_A = -dn_B
 \end{eqnarray}\]</div>
 <p>Thus, the <span class="math notranslate nohighlight">\(dG\)</span> can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-25dc26be-3f5d-4198-8b3e-4e9eabf76ffe">
-<span class="eqno">(3.346)<a class="headerlink" href="#equation-25dc26be-3f5d-4198-8b3e-4e9eabf76ffe" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-57c29b8d-ca86-4553-ac86-2e72c574cc1c">
+<span class="eqno">(3.346)<a class="headerlink" href="#equation-57c29b8d-ca86-4553-ac86-2e72c574cc1c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 dG = (\mu_A - \mu_B)dn_A
 \end{eqnarray}\]</div>
 <p>A spontaneous process will have <span class="math notranslate nohighlight">\(dG &lt; 0\)</span>.  This can be achieved in two ways:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ed9a1a30-023b-4fa6-b611-453fa76490e2">
-<span class="eqno">(3.347)<a class="headerlink" href="#equation-ed9a1a30-023b-4fa6-b611-453fa76490e2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-588fa606-4deb-4345-bdb9-375e3746d947">
+<span class="eqno">(3.347)<a class="headerlink" href="#equation-588fa606-4deb-4345-bdb9-375e3746d947" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 1. \mu_A &amp;&lt;&amp; \mu_B \quad \text{and} \quad dn_A &gt; 0 \\
 2. \mu_A &amp;&gt;&amp; \mu_B \quad \text{and} \quad dn_A &lt; 0
 \end{eqnarray}\]</div>
 <p>Either case means that the system will flow towards the species with the lower chemical potential.</p>
 <p>If this system is at equilibrium we have that <span class="math notranslate nohighlight">\(dG = 0\)</span> and thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2a98b77f-14ef-485b-ad86-bd968911d103">
-<span class="eqno">(3.348)<a class="headerlink" href="#equation-2a98b77f-14ef-485b-ad86-bd968911d103" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-cbab6330-9da4-467d-b81e-18656a85d517">
+<span class="eqno">(3.348)<a class="headerlink" href="#equation-cbab6330-9da4-467d-b81e-18656a85d517" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 0  &amp;=&amp; (\mu_A - \mu_B)dn_A \\
 \Rightarrow \mu_A &amp;=&amp; \mu_B
 \end{eqnarray}\]</div>
 <p>The last relationship holds because, even at equilibrium, we cannot assume that <span class="math notranslate nohighlight">\(dn_A\)</span> (or <span class="math notranslate nohighlight">\(dn_B\)</span> for that matter) is zero because of the dynamic nature of equilibrium.</p>
 <p><em>This last equality states that the chemical potentials of two components in equilibrium are equivalent.</em></p>
-</div>
-</div>
-<div class="section" id="the-claperyon-equation">
+</section>
+</section>
+<section id="the-claperyon-equation">
 <h2><span class="section-number">3.2.15.6. </span>The Claperyon Equation<a class="headerlink" href="#the-claperyon-equation" title="Permalink to this headline">#</a></h2>
 <p>We can use the last outcome of two component systems to derive a relationship between the pressure of the two components.  Here we will consider the two components to be the same species but in different phases, like the water vapor in equilibrium with its liquid.</p>
 <p>We start this derivation by using a property of chemical potential.  That is, that the chemical potential can considered the molar Gibbs free energy of that component of the system.  Thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b361b123-a981-45b0-a880-bf8e569512d0">
-<span class="eqno">(3.349)<a class="headerlink" href="#equation-b361b123-a981-45b0-a880-bf8e569512d0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f3eee6c8-7661-4128-869d-a169cec9b136">
+<span class="eqno">(3.349)<a class="headerlink" href="#equation-f3eee6c8-7661-4128-869d-a169cec9b136" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mu_A(T,P) = \mu_B(T,P)
 \end{equation}\]</div>
 <p>where we have explicitly identified that both <span class="math notranslate nohighlight">\(\mu_A\)</span> and <span class="math notranslate nohighlight">\(\mu_B\)</span> are functions of <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(P\)</span>.  Taking the differentials of both sides of this last equation we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-74284363-72e3-4d14-a7a7-2fa7fbd665cc">
-<span class="eqno">(3.350)<a class="headerlink" href="#equation-74284363-72e3-4d14-a7a7-2fa7fbd665cc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-0783816d-e70a-49ac-8346-2f728a599e19">
+<span class="eqno">(3.350)<a class="headerlink" href="#equation-0783816d-e70a-49ac-8346-2f728a599e19" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 d\mu_A(T,P) &amp;=&amp; d\mu_B(T,P) \\
 \left(\frac{\partial \mu_A}{\partial P}\right)_TdP + \left(\frac{\partial \mu_A}{\partial T}\right)_PdT &amp;=&amp; \left(\frac{\partial \mu_B}{\partial P}\right)_TdP + \left(\frac{\partial \mu_B}{\partial T}\right)_PdT \\
 \bar{V}_AdP - \bar{S}_AdT &amp;=&amp; \bar{V}_BdP - \bar{S}_BdT\\
@@ -987,17 +998,17 @@ d\mu_A(T,P) &amp;=&amp; d\mu_B(T,P) \\
 \end{eqnarray}\]</div>
 <p>where we divided by <span class="math notranslate nohighlight">\(dT\)</span> and solved for <span class="math notranslate nohighlight">\(\frac{dP}{dT}\)</span> to get the last equation.</p>
 <p>If we now consider the case of a phase transition (e.g. <span class="math notranslate nohighlight">\(A = liquid\)</span> and <span class="math notranslate nohighlight">\(B=vapor\)</span>) then we get <span class="math notranslate nohighlight">\(\bar{S}_B - \bar{S}_A = \Delta \bar{S}_{Tr}\)</span> and <span class="math notranslate nohighlight">\(\bar{V}_B - \bar{V}_A = \Delta \bar{V}_{Tr}\)</span>.  Substituting this into the above equation for <span class="math notranslate nohighlight">\(\frac{dP}{dT}\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-405f78bd-bf95-4751-869c-bbadbf8d2c33">
-<span class="eqno">(3.351)<a class="headerlink" href="#equation-405f78bd-bf95-4751-869c-bbadbf8d2c33" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-54a70e0d-4060-48b3-9d78-8d6ccac8edd2">
+<span class="eqno">(3.351)<a class="headerlink" href="#equation-54a70e0d-4060-48b3-9d78-8d6ccac8edd2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{dP}{dT} &amp;=&amp; \frac{\Delta\bar{S}_{Tr}}{\Delta\bar{V}_{Tr}} \\
 &amp;=&amp; \frac{\Delta\bar{H}_{Tr}}{T\Delta\bar{V}_{Tr}}
 \end{eqnarray}\]</div>
 <p>where we have used <span class="math notranslate nohighlight">\(\Delta S_{Tr} = \frac{\Delta H_{Tr}}{T}\)</span> in the last equality.  This equation is called the <em><strong>Clapyeron equation</strong></em> and relates the slope of the two-phases coexistence curve in a <span class="math notranslate nohighlight">\(P\)</span> vs <span class="math notranslate nohighlight">\(T\)</span> plot to the enthalpy of the phase transition.</p>
-<div class="section" id="example-1-melting-of-benzene">
+<section id="example-1-melting-of-benzene">
 <h3><span class="section-number">3.2.15.6.1. </span>Example 1: Melting of Benzene<a class="headerlink" href="#example-1-melting-of-benzene" title="Permalink to this headline">#</a></h3>
 <p>Given the following Thermodynamic data for benzene</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb4d85ff-2d8d-414e-820f-51ee2a7fd7aa">
-<span class="eqno">(3.352)<a class="headerlink" href="#equation-eb4d85ff-2d8d-414e-820f-51ee2a7fd7aa" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-675aac57-f135-418b-a6df-47f68ef78f6c">
+<span class="eqno">(3.352)<a class="headerlink" href="#equation-675aac57-f135-418b-a6df-47f68ef78f6c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta \bar{H}_{fusion} &amp;=&amp; 9.95 \quad \text{kJ}\cdot\text{mol}^{-1} \\
 T_{fusion} &amp;=&amp; 278.7\quad \text{K}\\
 \Delta \bar{V}_{fusion} &amp;=&amp; 10.3 \quad\text{mL}\cdot\text{mol}^{-1}
@@ -1005,23 +1016,23 @@ T_{fusion} &amp;=&amp; 278.7\quad \text{K}\\
 <p>Compute the pressure at which the melting temperature of benzene is <span class="math notranslate nohighlight">\(T = 300\)</span> K.</p>
 <p><em>Solution:</em></p>
 <p>We will use the Clapeyron equation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-081f799d-632f-49a8-8249-8c196f37a6b9">
-<span class="eqno">(3.353)<a class="headerlink" href="#equation-081f799d-632f-49a8-8249-8c196f37a6b9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-34297034-9417-4692-bece-a4d38109b61d">
+<span class="eqno">(3.353)<a class="headerlink" href="#equation-34297034-9417-4692-bece-a4d38109b61d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{dP}{dT} &amp;=&amp; \frac{\Delta\bar{H}_{fusion}}{T\Delta\bar{V}_{fusion}}\\
 &amp;=&amp; \frac{9.95\times10^3\text{J}\cdot\text{mol}^{-1}}{278.7\cdot10.3\text{K}\cdot\text{mL}\cdot\text{mol}^{-1}}\cdot\frac{1000 \text{mL}}{1\text{L}}\cdot\frac{0.08206\text{L}\cdot\text{atm}\cdot\text{mol}^{-1}\text{K}^{-1}}{8.314\text{J}\cdot{mol}^{-1}\cdot\text{K}^{-1}} \\
 &amp;=&amp; 34.2 \quad\text{atm}\cdot{K}^{-1}
 \end{eqnarray}\]</div>
 <p>This is the slope of the <span class="math notranslate nohighlight">\(P\)</span> vs <span class="math notranslate nohighlight">\(T\)</span> curve at <span class="math notranslate nohighlight">\(T=278.7\)</span> K and <span class="math notranslate nohighlight">\(P = 1\)</span> atm, if we assume the curve is linear we can determine the change in <span class="math notranslate nohighlight">\(P\)</span> for a given change in <span class="math notranslate nohighlight">\(T\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-28ee38ef-56e3-4791-a6f3-b917a2640f5f">
-<span class="eqno">(3.354)<a class="headerlink" href="#equation-28ee38ef-56e3-4791-a6f3-b917a2640f5f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-acd9d538-0566-4bb8-a796-b9cb56e447fb">
+<span class="eqno">(3.354)<a class="headerlink" href="#equation-acd9d538-0566-4bb8-a796-b9cb56e447fb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{dP}{dT} &amp;=&amp;  34.2 \quad\text{atm}\cdot{K}^{-1} \approx \frac{\Delta P}{\Delta T} \\
 \Rightarrow \Delta P &amp;=&amp; 34.2 \Delta T \\
 &amp;=&amp; 34.2\left(300-278.7\right) \\
 &amp;=&amp; 728.46 \quad\text{atm}
 \end{eqnarray}\]</div>
 <p>Thus, the pressure that has a melting temperature of <span class="math notranslate nohighlight">\(300\)</span> K is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-372be3cd-4c2d-437b-b05b-95df8e4d5b1e">
-<span class="eqno">(3.355)<a class="headerlink" href="#equation-372be3cd-4c2d-437b-b05b-95df8e4d5b1e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6fbb9ed6-1270-48ec-a316-f604fc464bc6">
+<span class="eqno">(3.355)<a class="headerlink" href="#equation-6fbb9ed6-1270-48ec-a316-f604fc464bc6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P = 1+728.46 = 729 \quad \text{atm}
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1038,50 +1049,50 @@ P = 1+728.46 = 729 \quad \text{atm}
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="the-clausis-clapeyron-equation">
+</section>
+</section>
+<section id="the-clausis-clapeyron-equation">
 <h2><span class="section-number">3.2.15.7. </span>The Clausis-Clapeyron Equation<a class="headerlink" href="#the-clausis-clapeyron-equation" title="Permalink to this headline">#</a></h2>
 <p>Application of the Clapeyron equation to liquid-vapor or solid-vapor equilibria lends itself to further approximations.  Start with the Clapeyron equation for the liquid-vapor</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6d36ebaf-39e5-430c-944b-4c216af75d72">
-<span class="eqno">(3.356)<a class="headerlink" href="#equation-6d36ebaf-39e5-430c-944b-4c216af75d72" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-cc25ac29-0639-4fa6-b18b-05d3e96d6bba">
+<span class="eqno">(3.356)<a class="headerlink" href="#equation-cc25ac29-0639-4fa6-b18b-05d3e96d6bba" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{dP}{dT} = \frac{\Delta\bar{H}_{vap}}{T\left(\bar{V}_g - \bar{V}_l\right)}
 \end{eqnarray}\]</div>
 <p>Here, we will, in general, have <span class="math notranslate nohighlight">\(\bar{V}_g &gt;&gt; \bar{V}_l\)</span> allowing us to ignore the volume of the liquid.  Additionally, we can approximate the volume of the vapor by that of an ideal gas yielding:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6d5c8cba-53d0-4b54-bffd-1acb7a7355e7">
-<span class="eqno">(3.357)<a class="headerlink" href="#equation-6d5c8cba-53d0-4b54-bffd-1acb7a7355e7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5b8185c0-2a66-4b73-80b6-bc5b837bd866">
+<span class="eqno">(3.357)<a class="headerlink" href="#equation-5b8185c0-2a66-4b73-80b6-bc5b837bd866" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{dP}{dT} &amp;=&amp; P\frac{\Delta\bar{H}_{vap}}{RT^2} \\
 \Rightarrow \frac{1}{P} \frac{dP}{dT} &amp;=&amp; \frac{\Delta\bar{H}_{vap}}{RT^2} \\
 \frac{d\ln P}{dT}&amp;=&amp; \frac{\Delta\bar{H}_{vap}}{RT^2}
 \end{eqnarray}\]</div>
 <p>This last equation is the standard form of the <em><strong>Clausius-Clapeyron equation</strong></em>.  This equation is an approximation to the Clapeyron equation that is holds only for solid-vapor and liquid-vapor equilibria far from the triple point.  Regardless, this form is useful because it allows us to integrate.</p>
 <p>Multiplying both side of the Clausius-Clapeyron equation by <span class="math notranslate nohighlight">\(dT\)</span> and then integrating from <span class="math notranslate nohighlight">\((P_1,T_1)\)</span> to <span class="math notranslate nohighlight">\((P_2,T_2)\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-139b1c7f-903a-4b75-816b-b34bb081ac4c">
-<span class="eqno">(3.358)<a class="headerlink" href="#equation-139b1c7f-903a-4b75-816b-b34bb081ac4c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-fb044c44-dde7-413f-8bd7-ae3d8e0dc19e">
+<span class="eqno">(3.358)<a class="headerlink" href="#equation-fb044c44-dde7-413f-8bd7-ae3d8e0dc19e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int_{P_1}^{P_2} d\ln P &amp;=&amp; \int_{T_1}^{T_2}\frac{\Delta\bar{H}_{vap}}{RT^2}dT\\
 \ln\frac{P_2}{P_1} &amp;=&amp; -\frac{\Delta\bar{H}_{vap}}{R}\left(\frac{1}{T_2}-\frac{1}{T_1} \right)
 \end{eqnarray}\]</div>
 <p>This equation allows us to compute the vapor pressure at some temperature given the heat of vaporization and the vapor pressure at a different temperature.</p>
 <p>Multiplying both side of the Clausius-Clapeyron equation by <span class="math notranslate nohighlight">\(dT\)</span> and then performing indefinite integration yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d5739b41-b4d9-412b-9efa-e49c9e359bee">
-<span class="eqno">(3.359)<a class="headerlink" href="#equation-d5739b41-b4d9-412b-9efa-e49c9e359bee" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-92eac486-765f-40e8-884f-9a1556521beb">
+<span class="eqno">(3.359)<a class="headerlink" href="#equation-92eac486-765f-40e8-884f-9a1556521beb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int d\ln P &amp;=&amp; \int\frac{\Delta\bar{H}_{vap}}{RT^2}dT\\
 \ln P + C &amp;=&amp; -\frac{\Delta\bar{H}_{vap}}{RT} + D \\
 \ln P &amp;=&amp; -\frac{\Delta\bar{H}_{vap}}{RT} + constant
 \end{eqnarray}\]</div>
 <p>This last equation can be used to determine the heat of vaporization from vapor pressure as a function of temperature data. A note on units of this equation.  The units of pressure for this equation are wrapped up in the constant.  If you fit data in units of torr, then your pressures will all be torr.</p>
-<div class="section" id="example-2-determine-delta-bar-h-sub-for-i-2">
+<section id="example-2-determine-delta-bar-h-sub-for-i-2">
 <h3><span class="section-number">3.2.15.7.1. </span>Example 2: Determine <span class="math notranslate nohighlight">\(\Delta \bar{H}_{sub}\)</span> for I<span class="math notranslate nohighlight">\(_2\)</span><a class="headerlink" href="#example-2-determine-delta-bar-h-sub-for-i-2" title="Permalink to this headline">#</a></h3>
 <p>The vapor pressure for solid iodine is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-37cc6861-bd7b-46ff-931e-a32c42ca3391">
-<span class="eqno">(3.360)<a class="headerlink" href="#equation-37cc6861-bd7b-46ff-931e-a32c42ca3391" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2a9a7116-12d0-409c-8f26-eef7eb9300d9">
+<span class="eqno">(3.360)<a class="headerlink" href="#equation-2a9a7116-12d0-409c-8f26-eef7eb9300d9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln(P/atm) = -\frac{8090.0\text{K}}{T} - 2.013\ln(T/\text{K}) + 32.908
 \end{equation}\]</div>
 <p>Use this equation to calculate the normal sublimation temperature and the molar enthalpy of sublimation of I<span class="math notranslate nohighlight">\(_2\)</span> at 25<span class="math notranslate nohighlight">\(^\circ\)</span>C (<span class="math notranslate nohighlight">\(\Delta\bar{H}(25^\circ\text{C})\)</span>).  The experimental value is <span class="math notranslate nohighlight">\(\Delta\bar{H}(25^\circ\text{C})=62.23\)</span> kJ/mol.</p>
 <p><em>Solution:</em></p>
 <p>To find the <em>normal</em> sublimation temperature, we set <span class="math notranslate nohighlight">\(P=1\)</span> atm in the above equation and solve for <span class="math notranslate nohighlight">\(T\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6ff40cb5-b1ba-4d67-baf0-5d15784717a7">
-<span class="eqno">(3.361)<a class="headerlink" href="#equation-6ff40cb5-b1ba-4d67-baf0-5d15784717a7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c7c036a7-4c1b-4056-8717-a4bda13448cb">
+<span class="eqno">(3.361)<a class="headerlink" href="#equation-c7c036a7-4c1b-4056-8717-a4bda13448cb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \ln(1) &amp;=&amp; -\frac{8090.0}{T_{sub}} - 2.013\ln(T_{sub}) + 32.908 \\
 0 &amp;=&amp; -\frac{8090.0}{T_{sub}} - 2.013\ln(T_{sub}) + 32.908
 \end{eqnarray}\]</div>
@@ -1103,8 +1114,8 @@ P = 1+728.46 = 729 \quad \text{atm}
 </div>
 </div>
 <p>To solve for <span class="math notranslate nohighlight">\(\Delta\bar{H}_{vap}(25^\circ\text{C})\)</span> will use the Clausius-Clapeyron equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-35dffc2f-bf0f-465f-877d-4061cd19196e">
-<span class="eqno">(3.362)<a class="headerlink" href="#equation-35dffc2f-bf0f-465f-877d-4061cd19196e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-33cbf353-2dd1-4564-869f-153108bf692e">
+<span class="eqno">(3.362)<a class="headerlink" href="#equation-33cbf353-2dd1-4564-869f-153108bf692e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{d\ln P}{dT}&amp;=&amp; \frac{\Delta\bar{H}_{sub}}{RT^2} \\
 &amp;=&amp; \frac{8090.0}{T^2} - \frac{2.013}{T} \\
 &amp;=&amp; \frac{8090.0-2.013T}{T^2} \\
@@ -1112,8 +1123,8 @@ P = 1+728.46 = 729 \quad \text{atm}
 \Delta\bar{H}_{sub} &amp;=&amp; R(8090.0-2.013T)
 \end{eqnarray}\]</div>
 <p>Now sub in 25<span class="math notranslate nohighlight">\(^\circ\)</span>C to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0ddf29c1-6ff1-4077-b888-5790390b3fbb">
-<span class="eqno">(3.363)<a class="headerlink" href="#equation-0ddf29c1-6ff1-4077-b888-5790390b3fbb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ae5cf6f3-da38-443d-bc61-8495e62a0830">
+<span class="eqno">(3.363)<a class="headerlink" href="#equation-ae5cf6f3-da38-443d-bc61-8495e62a0830" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta\bar{H}_{sub}(298.15\text{K}) = 62.27\quad \text{kJ}\cdot\text{mol}^{-1}
 \end{equation}\]</div>
 <p>We see that this value is not far off from the experimental value of <span class="math notranslate nohighlight">\(\Delta\bar{H}(25^\circ\text{C})=62.23\)</span> kJ/mol</p>
@@ -1129,8 +1140,8 @@ P = 1+728.46 = 729 \quad \text{atm}
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="example-3-molar-enthalpy-of-vaporization-for-palladium">
+</section>
+<section id="example-3-molar-enthalpy-of-vaporization-for-palladium">
 <h3><span class="section-number">3.2.15.7.2. </span>Example 3: Molar Enthalpy of Vaporization for Palladium<a class="headerlink" href="#example-3-molar-enthalpy-of-vaporization-for-palladium" title="Permalink to this headline">#</a></h3>
 <p>Use the following data to estimate the molar enthalpy of vaporization (<span class="math notranslate nohighlight">\(\Delta\bar{H}_{vap}\)</span>) for palladium</p>
 <table class="colwidths-auto table">
@@ -1153,14 +1164,14 @@ P = 1+728.46 = 729 \quad \text{atm}
 </table>
 <p><em>Solution:</em></p>
 <p>We will use the Clausius-Clapeyron equation of the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83b10471-d73c-49cf-969c-d96ba91cca6b">
-<span class="eqno">(3.364)<a class="headerlink" href="#equation-83b10471-d73c-49cf-969c-d96ba91cca6b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-91b1385b-7778-47d0-a073-b056a7c5c6ad">
+<span class="eqno">(3.364)<a class="headerlink" href="#equation-91b1385b-7778-47d0-a073-b056a7c5c6ad" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln(P/bar) = -\frac{\Delta\bar{H}_{vap}}{RT} + C
 \end{equation}\]</div>
 <p>From this equation, we expect a plot of <span class="math notranslate nohighlight">\(\ln(P)\)</span> vs. <span class="math notranslate nohighlight">\(1/T\)</span> to be relatively linear (assuming <span class="math notranslate nohighlight">\(\Delta\bar{H}_{vap}\)</span> is independent of <span class="math notranslate nohighlight">\(T\)</span>) with a slope of <span class="math notranslate nohighlight">\(-\frac{\Delta\bar{H}_{vap}}{R}\)</span>.  In the code cell below I will make the plot and fit the line.</p>
 <p>You will see that we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-963e5734-28cc-4d29-8b24-89359e8c0c9a">
-<span class="eqno">(3.365)<a class="headerlink" href="#equation-963e5734-28cc-4d29-8b24-89359e8c0c9a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5b1129b0-529e-4869-a560-5f7397e3c725">
+<span class="eqno">(3.365)<a class="headerlink" href="#equation-5b1129b0-529e-4869-a560-5f7397e3c725" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta\bar{H}_{vap} = 410.8 \quad \text{kJ}\cdot\text{mol}^{-1}
 \end{equation}\]</div>
 <p>This is as compared to a value of <span class="math notranslate nohighlight">\(380\)</span> <span class="math notranslate nohighlight">\(\text{kJ}\cdot\text{mol}^{-1}\)</span> (https://webelements.com/palladium/thermochemistry.html).</p>
@@ -1213,9 +1224,9 @@ P = 1+728.46 = 729 \quad \text{atm}
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
