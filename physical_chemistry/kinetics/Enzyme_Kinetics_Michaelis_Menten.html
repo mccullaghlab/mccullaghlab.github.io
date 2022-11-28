@@ -1,0 +1,1267 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Enzyme Kinetics: The Michaelis-Menten Mechanism &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Chemistry Lessons with Jupyter Notebooks</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">
+   1. Jupyter Notebook Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">
+     1.1. Jupyter Notebook Tutorial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">
+     1.2. Advanced Jupyter Notebook Tutorial
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../coding_concepts/intro.html">
+   2. Coding Concepts
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/variables.html">
+     2.1. Variables in Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">
+     2.2. Arrays and Matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/for_loops.html">
+     2.3. for loops
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/functions.html">
+     2.4. Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">
+     2.5. Plotting with matplotlib
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/numeric_integration.html">
+     2.6. Numeric Integration
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../intro.html">
+   3. Physical Chemistry
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../statistical_thermodynamics/intro.html">
+     3.1. Statiscial Thermodynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Boltzmann_Factor.html">
+       3.1.1. Boltzmann Factor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Introduction_to_Probability.html">
+       3.1.2. Introduction to Probability
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">
+       3.1.3. Thermodynamic Properties from the Partition Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">
+       3.1.4. Partition Function for a Monatomic Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">
+       3.1.5. Partition Function for a Diatomic Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">
+       3.1.6. Classical Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">
+       3.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/microscopic_view_of_entropy.html">
+       3.1.8. Microscopic View of Entropy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">
+       3.1.9. Equations of State from Lattice Gas Models
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../thermodynamics/intro.html">
+     3.2. Thermodynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">
+       3.2.1. The First Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">
+       3.2.2. Heat Work and Calculating
+       <span class="math notranslate nohighlight">
+        \(\Delta U\)
+       </span>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">
+       3.2.4. Thermodynamic Cycles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Enthalpy.html">
+       3.2.5. Enthalpy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/The_Carnot_Cycle.html">
+       3.2.6. The Carnot Cycle
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">
+       3.2.7. Second Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">
+       3.2.8. Heat Engine Diagrams
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">
+       3.2.10. The Third Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">
+       3.2.11. First Derivative and Maxwell Relations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Maxwell_Relations_Applied.html">
+       3.2.12. Maxwell Relations Applied
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">
+       3.2.13. Free Energy and Legendre Transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">
+       3.2.14. The Pressure and Temperature Dependence of the Gibbs Energy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">
+       3.2.15. Phase Diagrams and Phase Equilibria
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Chemical_Potential_from_Partition_Function.html">
+       3.2.16. Chemical Potential from the Partition Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">
+       3.2.17. Thermodynamics of Solutions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Ideal_and_Non_Ideal_Solutions.html">
+       3.2.18. Ideal and Non-ideal Solutions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Introduction_to_Chemical_Equilibrium.html">
+       3.2.19. Chemical Equilibrium
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="intro.html">
+     3.3. Kinetics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Chemical_Kinetics_and_Rate_Laws.html">
+       3.3.1. Chemical Kinetics and Rate Laws
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Integrated_Rate_Laws.html">
+       3.3.2. Integrated Rate Laws
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Reversible_Reactions.html">
+       3.3.3. Reversible Reactions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">
+       3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Reaction_Mechanisms_Part_I.html">
+       3.3.5. Reaction Mechanisms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Catalysts.html">
+       3.3.6. Catalysts
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../quantum_mechanics/intro.html">
+     3.4. Quantum Mechanics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/history_of_quantum_mechanics.html">
+       3.4.1. The History of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/postulates_of_quantum_mechanics.html">
+       3.4.2. The Postulates and Formalism of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/harmonic_oscillator.html">
+       3.4.3. Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">
+       3.4.4. Vibrational Spectroscopy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">
+       3.4.5. Variational Method in Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/basis_functions.html">
+       3.4.6. Basis Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/harmonic_oscillator_using_variational_method.html">
+       3.4.7. Variational Solution to the Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/morse_oscillator.html">
+       3.4.8. The Morse Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/rigid_rotator.html">
+       3.4.9. Rigid Rotator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/rigid_rotator_using_variational_method.html">
+       3.4.10. Rigid Rotator Variational Solution…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/rigid_rotator_selection_rules.html">
+       3.4.11. Rigid Rotator Continued…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom.html">
+       3.4.13. The Hydrogen Atom
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../quantum_mechanics/the_helium_atom.html">
+       3.4.14. The Helium Atom
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../electronic_structure/intro.html">
+     3.5. Electronic Structure
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../electronic_structure/Hartree_Fock_Helium_Atom.html">
+       3.5.1. Hartree-Fock
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../electronic_structure/HF_for_H2.html">
+       3.5.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#motivation">
+   Motivation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-goals">
+   Learning Goals:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#coding-concepts">
+   Coding Concepts:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#enzymes-are-biological-catalysts">
+   Enzymes are Biological Catalysts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism">
+   Proposed Mechanism for Enzyme Catalysis: The Michaelis-Menten Mechanism
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiments-to-measure-michaelis-menten-parameters">
+   Experiments to Measure Michaelis-Menten Parameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fitting-michaelis-menten-parameters-using-a-lineweaver-burke-plot">
+   Fitting Michaelis-Menten Parameters using a Lineweaver-Burke Plot
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-fitting-michaelis-menten-parameters">
+   Example: Fitting Michaelis-Menten Parameters
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#solution-non-linear-fitting">
+     Solution: Non-linear Fitting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#solution-lineweaver-burke-plot">
+     Solution: Lineweaver-Burke Plot
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compare-solutions">
+     Compare Solutions
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Enzyme Kinetics: The Michaelis-Menten Mechanism</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#motivation">
+   Motivation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-goals">
+   Learning Goals:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#coding-concepts">
+   Coding Concepts:
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#enzymes-are-biological-catalysts">
+   Enzymes are Biological Catalysts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism">
+   Proposed Mechanism for Enzyme Catalysis: The Michaelis-Menten Mechanism
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiments-to-measure-michaelis-menten-parameters">
+   Experiments to Measure Michaelis-Menten Parameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fitting-michaelis-menten-parameters-using-a-lineweaver-burke-plot">
+   Fitting Michaelis-Menten Parameters using a Lineweaver-Burke Plot
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-fitting-michaelis-menten-parameters">
+   Example: Fitting Michaelis-Menten Parameters
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#solution-non-linear-fitting">
+     Solution: Non-linear Fitting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#solution-lineweaver-burke-plot">
+     Solution: Lineweaver-Burke Plot
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compare-solutions">
+     Compare Solutions
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="enzyme-kinetics-the-michaelis-menten-mechanism">
+<h1>Enzyme Kinetics: The Michaelis-Menten Mechanism<a class="headerlink" href="#enzyme-kinetics-the-michaelis-menten-mechanism" title="Permalink to this headline">#</a></h1>
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="learning-goals">
+<h2>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
+<p>After working through these notes, you will be able to:</p>
+<ol class="simple">
+<li><p>Delineate the steps and approximations in the Michaelis-Menten mechanism for enzyme kinetics.</p></li>
+<li><p>Express the rate of change of reactant (/substrate) change in terms of Michaelis-Menten parameters.</p></li>
+<li><p>Use a Lineweaver-Burke plot (/equation) to fit Michaelis-Menten parameters.</p></li>
+<li><p>Describe how to setup an experiment to measure Michaelis-Menten parameters.</p></li>
+</ol>
+</section>
+<section id="coding-concepts">
+<h2>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
+<p>The following coding concepts are used in this notebook:</p>
+<ol class="simple">
+<li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
+</ol>
+</section>
+<section id="enzymes-are-biological-catalysts">
+<h2>Enzymes are Biological Catalysts<a class="headerlink" href="#enzymes-are-biological-catalysts" title="Permalink to this headline">#</a></h2>
+<p>Enzyzmes are proteins that catalyze chemical reactions.  The type of reactions span the gamut of biochemical processes including almost every step of glycolysis to the hydrolysis of ATP in motor proteins.  Enzymes are known to speed-up chemical reactions by many orders of magnitude (as much as <span class="math notranslate nohighlight">\(10^5-10^{12}\)</span>).</p>
+<p>Without enzymes, life as we know it would not exist.  Processes would occur at rates far to slow to sustain life.</p>
+<p>So how do enzymes achieve such amazing speed-ups?</p>
+</section>
+<section id="proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism">
+<h2>Proposed Mechanism for Enzyme Catalysis: The Michaelis-Menten Mechanism<a class="headerlink" href="#proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism" title="Permalink to this headline">#</a></h2>
+<p>The most ubiquitous, and one of the simplest, mechanisms for enzyme catalysis was proposed my Leonor Michaelis and Maude Menten in 1913.  It is still the got to mechanism for fitting enzyme kinetics.  The derivation is as follows.</p>
+<p>Consider a generic process of converting a substrate to a product with chemical reaction</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1c0609d8-d8ac-407a-bc73-e36353a1ed43">
+<span class="eqno">()<a class="headerlink" href="#equation-1c0609d8-d8ac-407a-bc73-e36353a1ed43" title="Permalink to this equation">#</a></span>\[\begin{equation}
+S \underset{E}{\longrightarrow} P,
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(S\)</span> is the substrate (aka reactant), <span class="math notranslate nohighlight">\(E\)</span> is the enzyme, and <span class="math notranslate nohighlight">\(P\)</span> is the product.  It was found, experimentally, that many enzyme catalyzed reactions of this form followed the rate law</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6ed5c491-f548-49dc-bb9d-7ae43318a759">
+<span class="eqno">()<a class="headerlink" href="#equation-6ed5c491-f548-49dc-bb9d-7ae43318a759" title="Permalink to this equation">#</a></span>\[\begin{equation}
+-\frac{d[S]}{dt} = \frac{k[S]}{K+[S]}.
+\end{equation}\]</div>
+<p>Michealis and Menten proposed a two-step mechanism whereby the enzyme and substrate form an intermediate (called the enzyme-substrate complex) in a reversible reaction, followed by another reversible reaction in which the substrate is converted into product.  This can be written as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c50de22e-c2d2-4121-a609-e8dc1dfd029b">
+<span class="eqno">()<a class="headerlink" href="#equation-c50de22e-c2d2-4121-a609-e8dc1dfd029b" title="Permalink to this equation">#</a></span>\[\begin{align}
+E + S &amp;\overset{k_1}{\underset{k_{-1}}{\overset{\Longrightarrow}{\Longleftarrow}}} ES \\
+ES &amp;\overset{k_2}{\underset{k_{-2}}{\overset{\Longrightarrow}{\Longleftarrow}}} E + P
+\end{align}\]</div>
+<p>Note that it is common to assume the second step is irreversible but it is not necessary to do so.</p>
+<p>The above mechansim leads to the following three differential equations</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0461bd15-380b-4a03-9ce6-c8937424c27d">
+<span class="eqno">()<a class="headerlink" href="#equation-0461bd15-380b-4a03-9ce6-c8937424c27d" title="Permalink to this equation">#</a></span>\[\begin{align}
+-\frac{d[S]}{dt}  &amp;= k_1[E][S] - k_{-1}[ES] \\
+-\frac{d[ES]}{dt}  &amp;= (k_2+k_{-1})[ES] - k_1[E][S] - k_{-2}[E][P] \\
+\frac{d[P]}{dt} &amp;= k_2[ES] - k_{-2}[E][P]
+\end{align}\]</div>
+<p>Because enzyme is not created or destroyed during the reaction, the overall concentration of enzyme containing species is fixed as the initial concentration of enzyme.  That is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8160f5a2-6d43-4234-b48c-7730f215e55c">
+<span class="eqno">()<a class="headerlink" href="#equation-8160f5a2-6d43-4234-b48c-7730f215e55c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+[E]_0 = [E] + [ES]
+\end{equation}\]</div>
+<p>Substituting this into the differential equations above gives</p>
+<div class="amsmath math notranslate nohighlight" id="equation-34a94a62-3241-4d6e-81ad-c433b47fefe4">
+<span class="eqno">()<a class="headerlink" href="#equation-34a94a62-3241-4d6e-81ad-c433b47fefe4" title="Permalink to this equation">#</a></span>\[\begin{align}
+-\frac{d[S]}{dt}  &amp;= k_1[E]_0[S] - (k_{-1}+k_1[S])[ES] \\
+-\frac{d[ES]}{dt}  &amp;= (k_1[S] + k_{-2}[P] + k_2+k_{-1})[ES] - k_1[E]_0[S] - k_{-2}[E]_0[P] \\
+\frac{d[P]}{dt} &amp;= (k_2+k_{-2}[P])[ES] - k_{-2}[E]_0[P]
+\end{align}\]</div>
+<p>These equations cannot be solved analytically for <span class="math notranslate nohighlight">\([S]\)</span>, <span class="math notranslate nohighlight">\([E]\)</span>, and/or <span class="math notranslate nohighlight">\([P]\)</span> without further approximation.</p>
+<p><em>The first approximation employed is the steady-state approximation for <span class="math notranslate nohighlight">\([ES]\)</span>.</em>  This approximation is typically valid after an intial phase of building up the <span class="math notranslate nohighlight">\(ES\)</span> concentration when enzyme is mixed with excess substrate. After the initial lag phase, but before much substrate has been consumed and/or product has been formed, the steady-state approximation will be achieved yielding</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a5e6f5b5-5129-484c-bccf-50efa87f4c7f">
+<span class="eqno">()<a class="headerlink" href="#equation-a5e6f5b5-5129-484c-bccf-50efa87f4c7f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+-\frac{d[ES]}{dt}  &amp;\overset{s.s.}{=}&amp; 0 = (k_1[S] + k_{-2}[P] + k_2+k_{-1})[ES] - k_1[E]_0[S] - k_{-2}[E]_0[P] \\
+\Rightarrow [ES] &amp;\overset{s.s.}{=}&amp; \frac{(k_1[S]+k_{-2}[P])[E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}.
+\end{eqnarray}\]</div>
+<p>Substituting the steady-state approximation for the concentration of the enzyme-substrate complex into the differential equation for substrate concentration yields</p>
+<div class="amsmath math notranslate nohighlight" id="equation-76d57057-6c23-44ff-92fc-556e92a2a76e">
+<span class="eqno">()<a class="headerlink" href="#equation-76d57057-6c23-44ff-92fc-556e92a2a76e" title="Permalink to this equation">#</a></span>\[\begin{align}
+-\frac{d[S]}{dt}  &amp;= k_1[E]_0[S] - (k_{-1}+k_1[S])\frac{(k_1[S]+k_{-2}[P])[E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2} \\
+&amp;= k_1[E]_0[S]\frac{(k_1[S] + k_{-2}[P] + k_{-1} + k_2)}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}  - (k_{-1}+k_1[S])\frac{(k_1[S]+k_{-2}[P])[E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2} \\
+&amp;= \frac{k_1[E]_0[S]k_1[S] + k_1[E]_0[S]k_{-2}[P] + k_1[E]_0[S]k_{-1} + k_1[E]_0[S]k_2 - k_{-1}k_1[S][E]_0 - k_{-1}k_{-2}[P][E]_0 -k_1[S]k_1[S][E]_0 - k_1[S] k_{-2}[P][E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}\\
+&amp;= \frac{k_1k_2[E]_0[S] - k_{-1}k_{-2}[P][E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}
+\end{align}\]</div>
+<p>If we now dictate that we will only measure the intitial rate of the reaction (post lag phase) and that there is only reactant/substrate present initially, then we can make the following approximations</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e6895b5f-4be4-4d38-981a-cb843ed9892e">
+<span class="eqno">()<a class="headerlink" href="#equation-e6895b5f-4be4-4d38-981a-cb843ed9892e" title="Permalink to this equation">#</a></span>\[\begin{align}
+&amp;[S] \approx [S]_0 \\
+&amp;[P] \approx [P]_0
+\end{align}\]</div>
+<p>Plugging in these approximations to the Michaelis-Menten rate equation yields</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2ce29ff7-4dda-4bde-9e84-1481afa5bbb9">
+<span class="eqno">()<a class="headerlink" href="#equation-2ce29ff7-4dda-4bde-9e84-1481afa5bbb9" title="Permalink to this equation">#</a></span>\[\begin{align}
+v_0 = -\frac{d[S]}{dt}|_0 &amp;= \frac{k_1k_2[E]_0[S]_0}{k_1[S]_0 + k_{-1} + k_2} \\
+&amp;= \frac{k_2[E]_0[S]_0}{K_m + [S]_0}
+\end{align}\]</div>
+<p>where the last equality holds true for <span class="math notranslate nohighlight">\(K_m = \frac{k_{-1} + k_2}{k_1}\)</span>.  This quantity is called the  <em>Michaelis-Menten constant</em> or the <em>Michaelis-Menten binding constant</em>.   Note that this quantity is <em><strong>not</strong></em> the equilibrium constant for the first step in the Michaelis-Menten mechanism.</p>
+<p>We see an example plot of initial rate vs. initial substrate concentration below.</p>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="c1"># setup plot parameters</span>
+<span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$v_0$ ($\mu$M/s)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$[S]_0$ ($\mu$M)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">mm</span><span class="p">(</span><span class="n">S0</span><span class="p">,</span><span class="n">vmax</span><span class="p">,</span><span class="n">Km</span><span class="p">):</span>  
+    <span class="k">return</span> <span class="n">vmax</span><span class="o">*</span><span class="n">S0</span><span class="o">/</span><span class="p">(</span><span class="n">Km</span> <span class="o">+</span> <span class="n">S0</span><span class="p">)</span>
+<span class="n">vmax</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">Km</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">S0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">S0</span><span class="p">,</span><span class="n">mm</span><span class="p">(</span><span class="n">S0</span><span class="p">,</span><span class="n">vmax</span><span class="p">,</span><span class="n">Km</span><span class="p">),</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fb7e8f97b50&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_8_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_8_1.png" />
+</div>
+</div>
+<p>We notice from the plot above that the initial rate saturates/plateaus as the initial substrate concentration is increased.  Indeed, it is readily shown that the maximum initial rate, denoted <span class="math notranslate nohighlight">\(v_{max}\)</span>, is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7f92fb76-1ef9-46ff-8284-f4a4bd05aced">
+<span class="eqno">()<a class="headerlink" href="#equation-7f92fb76-1ef9-46ff-8284-f4a4bd05aced" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+v_{max} = \lim_{[S]_0\rightarrow\infty} v_0 = k_2[E]_0
+\end{eqnarray}\]</div>
+</section>
+<section id="experiments-to-measure-michaelis-menten-parameters">
+<h2>Experiments to Measure Michaelis-Menten Parameters<a class="headerlink" href="#experiments-to-measure-michaelis-menten-parameters" title="Permalink to this headline">#</a></h2>
+<p>For an enzyme catalyzed reaction that follows the Michaelis-Menten mechanism, the parameters <span class="math notranslate nohighlight">\(K_m\)</span> and <span class="math notranslate nohighlight">\(v_{max}\)</span> allow us to determine the rate of reaction at aribtraty substrate concentration.  These parameters can be compared amongst enzymes or across experimental conditions to assess the efficiency of an enzyme.  Indeed, these parameters are still estimated for a number of enzymes today.</p>
+<p>To consider how to design an experiment to estimate these parameters, we start writing out the chemical reaction</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6b172774-c990-4948-80f6-0ba55a804e7b">
+<span class="eqno">()<a class="headerlink" href="#equation-6b172774-c990-4948-80f6-0ba55a804e7b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+S \underset{E}{\longrightarrow} P,
+\end{equation}\]</div>
+<p>and the associated Michaelis-Menten rate equation</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2dee6933-d81c-4df7-b4ae-9156606598a2">
+<span class="eqno">()<a class="headerlink" href="#equation-2dee6933-d81c-4df7-b4ae-9156606598a2" title="Permalink to this equation">#</a></span>\[\begin{align}
+v_0 = \frac{v_{max}[S]_0}{K_m + [S]_0}
+\end{align}\]</div>
+<p>We need to measure <span class="math notranslate nohighlight">\(v_0\)</span> as a function of <span class="math notranslate nohighlight">\([S]_0\)</span> to determine <span class="math notranslate nohighlight">\(v_{max}\)</span> and <span class="math notranslate nohighlight">\(K_m\)</span>.  This can be done in a number of ways but there are two critical components:</p>
+<ol class="simple">
+<li><p>Some way of measuring the initial rate of reaction.  The specifics of this measurement will depend on the reaction and reaction conditions.  An example might be absorbance spectroscopy - if the product absorbs light at a different frequency than the reactant, then measuring absorbance as a function of time will provide the appropriate information.</p></li>
+<li><p>Performing multiple trials altering the initial concentration of substrate.</p></li>
+</ol>
+<p>After these experiments, one will have concentration (or something proportional to concentration) as a function of initial concentration of substrate.  From here, it is a question of fitting the resulting data to the above equation for <span class="math notranslate nohighlight">\(v_0\)</span> to determine v_{max}<span class="math notranslate nohighlight">\( and \)</span>K_m$.  This can be done using a non-linear fit or using a Lineweaver-Burke plot.</p>
+</section>
+<section id="fitting-michaelis-menten-parameters-using-a-lineweaver-burke-plot">
+<h2>Fitting Michaelis-Menten Parameters using a Lineweaver-Burke Plot<a class="headerlink" href="#fitting-michaelis-menten-parameters-using-a-lineweaver-burke-plot" title="Permalink to this headline">#</a></h2>
+<p>A Lineweaver-Burke plot is a plot of <span class="math notranslate nohighlight">\(\frac{1}{v_0}\)</span> vs. <span class="math notranslate nohighlight">\(\frac{1}{[S]_0}\)</span> and can be considered a linearized form of the Michaelis-Menten equation.</p>
+<p>To demonstrate this, we start with the Michaelis-Menten initial rate equation and take the reciprocal of both sides:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-bfdab615-bab4-44eb-997d-93a8fde20378">
+<span class="eqno">()<a class="headerlink" href="#equation-bfdab615-bab4-44eb-997d-93a8fde20378" title="Permalink to this equation">#</a></span>\[\begin{align}
+v_0 &amp;= \frac{v_{max}[S]_0}{K_m + [S]_0} \\
+\Rightarrow \frac{1}{v_0} &amp;= \frac{K_m + [S]_0}{v_{max}[S]_0} \\
+&amp;= \frac{K_m}{v_{max}}\frac{1}{[S]_0} + \frac{1}{v_{max}}
+\end{align}\]</div>
+<p>This last equation is known as the Lineweaver-Burke equation and demonstrates that <span class="math notranslate nohighlight">\(\frac{1}{v_0}\)</span> will be linear with respect to <span class="math notranslate nohighlight">\(\frac{1}{[S]_0}\)</span> for enzyme kinetics that is well modeled by the Michaelis-Menten mechanism.  The slope of the line will be <span class="math notranslate nohighlight">\(\frac{K_m}{v_{max}}\)</span> and the intercept is <span class="math notranslate nohighlight">\(\frac{1}{v_{max}}\)</span>.</p>
+</section>
+<section id="example-fitting-michaelis-menten-parameters">
+<h2>Example: Fitting Michaelis-Menten Parameters<a class="headerlink" href="#example-fitting-michaelis-menten-parameters" title="Permalink to this headline">#</a></h2>
+<p>Determine the Michaelis-Menten Paramters from the following data</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:left head"><p><span class="math notranslate nohighlight">\([S]_0\)</span> (mM)</p></th>
+<th class="text-align:left head"><p><span class="math notranslate nohighlight">\(v_0\)</span> (<span class="math notranslate nohighlight">\(\mu\)</span>M/s)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:left"><p>1</p></td>
+<td class="text-align:left"><p>2.5</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>2</p></td>
+<td class="text-align:left"><p>4.0</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>5</p></td>
+<td class="text-align:left"><p>6.3</p></td>
+</tr>
+<tr class="row-odd"><td class="text-align:left"><p>10</p></td>
+<td class="text-align:left"><p>7.6</p></td>
+</tr>
+<tr class="row-even"><td class="text-align:left"><p>20</p></td>
+<td class="text-align:left"><p>9.0</p></td>
+</tr>
+</tbody>
+</table>
+<section id="solution-non-linear-fitting">
+<h3>Solution: Non-linear Fitting<a class="headerlink" href="#solution-non-linear-fitting" title="Permalink to this headline">#</a></h3>
+<p>We will simply solve this by performing a non-linear fit to the Michaelis-Menten parameters.  We start by entering the data into arrays and plotting it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Put the datat into numpy arrays</span>
+<span class="n">s0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">20.0</span><span class="p">])</span>
+<span class="n">v0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.5</span><span class="p">,</span><span class="mf">4.0</span><span class="p">,</span><span class="mf">6.3</span><span class="p">,</span><span class="mf">7.6</span><span class="p">,</span><span class="mf">9.0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot data</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="c1"># setup plot parameters</span>
+<span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$v_0$ ($\mu$M/s)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$[S]_0$ (mM)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span><span class="n">v0</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fb7e958c2b0&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_17_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_17_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># perform non-linear fit</span>
+<span class="c1"># import least squares function from scipy library</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">least_squares</span>
+<span class="c1"># define Michaelis-Menten function</span>
+<span class="k">def</span> <span class="nf">mm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>  
+    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">s</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">)</span>
+<span class="c1"># define residual function (difference between function and data)</span>
+<span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">mm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="n">data</span>
+<span class="c1"># make an initial guess of parameters</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">res_lsq</span> <span class="o">=</span> <span class="n">least_squares</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span> <span class="n">v0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;v_max = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">res_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;micro M/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Km = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">res_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;mM&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v_max =  10.3 micro M/s
+Km =  3.2 mM
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot data</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="c1"># setup plot parameters</span>
+<span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$v_0$ ($\mu$M/s)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$[S]_0$ (mM)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span><span class="n">v0</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">mm</span><span class="p">(</span><span class="n">res_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">),</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;fit&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb7e9da35b0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_19_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_19_1.png" />
+</div>
+</div>
+</section>
+<section id="solution-lineweaver-burke-plot">
+<h3>Solution: Lineweaver-Burke Plot<a class="headerlink" href="#solution-lineweaver-burke-plot" title="Permalink to this headline">#</a></h3>
+<p>In this solution we will plot <span class="math notranslate nohighlight">\(1/v_0\)</span> vs <span class="math notranslate nohighlight">\(1/[S]_0\)</span> and fit the resulting data to a line.</p>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot data</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="c1"># setup plot parameters</span>
+<span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$1/v_0$ (s/$\mu$M)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$1/[S]_0$ (1/mM)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">s0</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="n">v0</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fb7e9ff4190&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_21_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_21_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># perform linear fit</span>
+<span class="c1"># import least squares function from scipy library</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">least_squares</span>
+<span class="c1"># define Michaelis-Menten function</span>
+<span class="k">def</span> <span class="nf">mm_lineweaver_burke</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>  
+    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">s</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># define residual function (difference between function and data)</span>
+<span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">mm_lineweaver_burke</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="o">-</span> <span class="n">data</span>
+<span class="c1"># make an initial guess of parameters</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="n">res_lwb_lsq</span> <span class="o">=</span> <span class="n">least_squares</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">s0</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">v0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;v_max = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">res_lwb_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;micro M/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Km = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">res_lwb_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">res_lwb_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;mM&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v_max =  10.1 micro M/s
+Km =  3.1 mM
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot data</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="c1"># setup plot parameters</span>
+<span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$1/v_0$ (s/$\mu$M)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$1/[S]_0$ (1/mM)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">s0</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="n">v0</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">s0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">s0</span><span class="p">),</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">mm_lineweaver_burke</span><span class="p">(</span><span class="n">res_lwb_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">),</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;fit&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb7ea179070&gt;
+</pre></div>
+</div>
+<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_23_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_23_1.png" />
+</div>
+</div>
+</section>
+<section id="compare-solutions">
+<h3>Compare Solutions<a class="headerlink" href="#compare-solutions" title="Permalink to this headline">#</a></h3>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot data</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="c1"># setup plot parameters</span>
+<span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$v_0$ ($\mu$M/s)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$[S]_0$ (mM)&quot;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span><span class="n">v0</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">mm</span><span class="p">(</span><span class="n">res_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">),</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;non-linear fit&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">mm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">res_lwb_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">res_lwb_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">res_lwb_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]]),</span><span class="n">s</span><span class="p">),</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;linear fit&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb7ea1e3c10&gt;
+</pre></div>
+</div>
+<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_25_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_25_1.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./physical_chemistry/kinetics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Martin McCullagh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
