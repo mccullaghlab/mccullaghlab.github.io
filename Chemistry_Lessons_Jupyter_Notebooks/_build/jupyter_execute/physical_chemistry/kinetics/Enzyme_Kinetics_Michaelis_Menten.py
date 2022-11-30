@@ -4,6 +4,8 @@
 # # Enzyme Kinetics: The Michaelis-Menten Mechanism
 
 # ## Motivation
+# 
+# Enzymes are proteins that catalyze a wide variety of biochemical reactions.  These important molecules facilitate almost every important process in cellular biology.  The kinetics of these biological catalysts is of interest for understanding the basic science of how our body works as well as the design of novel industrial chemical syntheses.
 
 # ## Learning Goals:
 # 
@@ -174,7 +176,7 @@ ax.plot(S0,mm(S0,vmax,Km),lw=3)
 
 # Michaelis-Menten Parameter are tabulated for various enzymes.  These can be compared to assess the relative efficiency of these enzymes.
 # 
-# | Enzyme  |  Substrate | $K_m$ (M) | $k_{2}$ (s$^{-1}$) | $\frac{k_2}{K_m}$ (M$^{-1}cdot$s$^{-1}$) |
+# | Enzyme  |  Substrate | $K_m$ (M) | $k_{2}$ (s$^{-1}$) | $\frac{k_2}{K_m}$ (M$^{-1}\cdot$s$^{-1}$) |
 # | :-----  | :--------- | :-------- | :----------------- | :-------------------------------         |
 # | Acetylcholineterase | Acetylcholine | $9.5\times10^{-5}$ | $1.4\times10^4$ | $1.5\times10^8$ |
 # | Carbonic anhydrase | CO$_2$ | $1.2\times10^{-2}$ | $1.0\times10^6$ | $8.3\times10^7$ |
@@ -355,7 +357,7 @@ plt.legend(fontsize=fontsize)
 
 # Here we consider fitting MM parameters using either the Lineweaver-Burk linearization or non-linear regression.  Which method is better?  To investigate this, we generate a set of fake data using a known $K_m$ and $v_{max}$ and then fit the data using both approaches.
 
-# Below is a piece of code that will generate a fake data set for initial concentrations of $1, 2, 5, 10, 20$ M.  We will use Michaelis-Menten parameters of
+# Below is a piece of code that will generate a fake data set for initial concentrations of $1, 2, 5, 10, 20$ mM.  We will use Michaelis-Menten parameters of
 # \begin{align}
 # V_{max} &= 7.5 \text{ }\mu\text{M}\cdot\text{s}^{-1}\\
 # K_m &= 4.0 \text{ mM}
