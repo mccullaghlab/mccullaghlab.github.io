@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -50,8 +49,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.3.8. Cooperative Binding Kinetics" href="Cooperative_Binding_Kinetics.html" />
@@ -852,13 +853,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="enzyme-kinetics-the-michaelis-menten-mechanism">
+  <div class="tex2jax_ignore mathjax_ignore section" id="enzyme-kinetics-the-michaelis-menten-mechanism">
 <h1><span class="section-number">3.3.7. </span>Enzyme Kinetics: The Michaelis-Menten Mechanism<a class="headerlink" href="#enzyme-kinetics-the-michaelis-menten-mechanism" title="Permalink to this headline">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">3.3.7.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>Enzymes are proteins that catalyze a wide variety of biochemical reactions.  These important molecules facilitate almost every important process in cellular biology.  The kinetics of these biological catalysts is of interest for understanding the basic science of how our body works as well as the design of novel industrial chemical syntheses.</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.3.7.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="simple">
@@ -867,8 +868,8 @@ title="Print to PDF"
 <li><p>Use a Lineweaver-Burk plot (/equation) to fit Michaelis-Menten parameters.</p></li>
 <li><p>Describe how to setup an experiment to measure Michaelis-Menten parameters.</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.3.7.3. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -876,76 +877,76 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</section>
-<section id="enzymes-are-biological-catalysts">
+</div>
+<div class="section" id="enzymes-are-biological-catalysts">
 <h2><span class="section-number">3.3.7.4. </span>Enzymes are Biological Catalysts<a class="headerlink" href="#enzymes-are-biological-catalysts" title="Permalink to this headline">#</a></h2>
 <p>Enzyzmes are proteins that catalyze chemical reactions.  The type of reactions span the gamut of biochemical processes including almost every step of glycolysis to the hydrolysis of ATP in motor proteins.  Enzymes are known to speed-up chemical reactions by many orders of magnitude (as much as <span class="math notranslate nohighlight">\(10^5-10^{12}\)</span>).</p>
 <p>Without enzymes, life as we know it would not exist.  Processes would occur at rates far to slow to sustain life.</p>
 <p>So how do enzymes achieve such amazing speed-ups?</p>
-</section>
-<section id="proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism">
+</div>
+<div class="section" id="proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism">
 <h2><span class="section-number">3.3.7.5. </span>Proposed Mechanism for Enzyme Catalysis: The Michaelis-Menten Mechanism<a class="headerlink" href="#proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism" title="Permalink to this headline">#</a></h2>
 <p>The most ubiquitous, and one of the simplest, mechanisms for enzyme catalysis was proposed my Leonor Michaelis and Maude Menten in 1913.  It is still the got to mechanism for fitting enzyme kinetics.  The derivation is as follows.</p>
 <p>Consider a generic process of converting a substrate to a product with chemical reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2f2086cc-9051-49ec-a329-a125e2f506d2">
-<span class="eqno">(3.565)<a class="headerlink" href="#equation-2f2086cc-9051-49ec-a329-a125e2f506d2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bc4b9786-9d8b-4c10-8369-14f0186dc17f">
+<span class="eqno">(3.565)<a class="headerlink" href="#equation-bc4b9786-9d8b-4c10-8369-14f0186dc17f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S \underset{E}{\longrightarrow} P,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(S\)</span> is the substrate (aka reactant), <span class="math notranslate nohighlight">\(E\)</span> is the enzyme, and <span class="math notranslate nohighlight">\(P\)</span> is the product.  It was found, experimentally, that many enzyme catalyzed reactions of this form followed the rate law</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c19acdf6-89fa-4c44-a961-b5fba2a64ffc">
-<span class="eqno">(3.566)<a class="headerlink" href="#equation-c19acdf6-89fa-4c44-a961-b5fba2a64ffc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a6cc1b05-f226-41fc-a94f-91f0c099af15">
+<span class="eqno">(3.566)<a class="headerlink" href="#equation-a6cc1b05-f226-41fc-a94f-91f0c099af15" title="Permalink to this equation">#</a></span>\[\begin{equation}
 -\frac{d[S]}{dt} = \frac{k[S]}{K+[S]}.
 \end{equation}\]</div>
 <p>Michealis and Menten proposed a two-step mechanism whereby the enzyme and substrate form an intermediate (called the enzyme-substrate complex) in a reversible reaction, followed by another reversible reaction in which the substrate is converted into product.  This can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eceb81ac-fa01-4338-a9c9-0a00924329d2">
-<span class="eqno">(3.567)<a class="headerlink" href="#equation-eceb81ac-fa01-4338-a9c9-0a00924329d2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a4167c63-4261-42fa-82dd-05d885fa3ac2">
+<span class="eqno">(3.567)<a class="headerlink" href="#equation-a4167c63-4261-42fa-82dd-05d885fa3ac2" title="Permalink to this equation">#</a></span>\[\begin{align}
 E + S &amp;\overset{k_1}{\underset{k_{-1}}{\overset{\Longrightarrow}{\Longleftarrow}}} ES \\
 ES &amp;\overset{k_2}{\underset{k_{-2}}{\overset{\Longrightarrow}{\Longleftarrow}}} E + P
 \end{align}\]</div>
 <p>Note that it is common to assume the second step is irreversible but it is not necessary to do so.</p>
 <p>The above mechansim leads to the following three differential equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c55fa0ca-0b90-41fd-a8d2-d330618bbc77">
-<span class="eqno">(3.568)<a class="headerlink" href="#equation-c55fa0ca-0b90-41fd-a8d2-d330618bbc77" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1808e2ed-a5fe-4269-8e5f-d7333bfec110">
+<span class="eqno">(3.568)<a class="headerlink" href="#equation-1808e2ed-a5fe-4269-8e5f-d7333bfec110" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\frac{d[S]}{dt}  &amp;= k_1[E][S] - k_{-1}[ES] \\
 -\frac{d[ES]}{dt}  &amp;= (k_2+k_{-1})[ES] - k_1[E][S] - k_{-2}[E][P] \\
 \frac{d[P]}{dt} &amp;= k_2[ES] - k_{-2}[E][P]
 \end{align}\]</div>
 <p>Because enzyme is not created or destroyed during the reaction, the overall concentration of enzyme containing species is fixed as the initial concentration of enzyme.  That is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-acd81fbb-f99d-44a0-a275-c1eccde0141d">
-<span class="eqno">(3.569)<a class="headerlink" href="#equation-acd81fbb-f99d-44a0-a275-c1eccde0141d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8c94bfcb-010d-4f6d-9696-2cf55a0631f2">
+<span class="eqno">(3.569)<a class="headerlink" href="#equation-8c94bfcb-010d-4f6d-9696-2cf55a0631f2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 [E]_0 = [E] + [ES]
 \end{equation}\]</div>
 <p>Substituting this into the differential equations above gives</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a6157f4-bc5a-4222-8133-b7b6ec267e62">
-<span class="eqno">(3.570)<a class="headerlink" href="#equation-5a6157f4-bc5a-4222-8133-b7b6ec267e62" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-939fd89e-b2a9-462e-a46c-f63bef18785f">
+<span class="eqno">(3.570)<a class="headerlink" href="#equation-939fd89e-b2a9-462e-a46c-f63bef18785f" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\frac{d[S]}{dt}  &amp;= k_1[E]_0[S] - (k_{-1}+k_1[S])[ES] \\
 -\frac{d[ES]}{dt}  &amp;= (k_1[S] + k_{-2}[P] + k_2+k_{-1})[ES] - k_1[E]_0[S] - k_{-2}[E]_0[P] \\
 \frac{d[P]}{dt} &amp;= (k_2+k_{-2}[P])[ES] - k_{-2}[E]_0[P]
 \end{align}\]</div>
 <p>These equations cannot be solved analytically for <span class="math notranslate nohighlight">\([S]\)</span>, <span class="math notranslate nohighlight">\([E]\)</span>, and/or <span class="math notranslate nohighlight">\([P]\)</span> without further approximation.</p>
 <p><em>The first approximation employed is the steady-state approximation for <span class="math notranslate nohighlight">\([ES]\)</span>.</em>  This approximation is typically valid after an intial phase of building up the <span class="math notranslate nohighlight">\(ES\)</span> concentration when enzyme is mixed with excess substrate. After the initial lag phase, but before much substrate has been consumed and/or product has been formed, the steady-state approximation will be achieved yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e8e822b4-6324-4c83-8d74-116c64ba71e7">
-<span class="eqno">(3.571)<a class="headerlink" href="#equation-e8e822b4-6324-4c83-8d74-116c64ba71e7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-25722ab3-cf21-4eb0-a22a-90d5971a1c13">
+<span class="eqno">(3.571)<a class="headerlink" href="#equation-25722ab3-cf21-4eb0-a22a-90d5971a1c13" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 -\frac{d[ES]}{dt}  &amp;\overset{s.s.}{=}&amp; 0 = (k_1[S] + k_{-2}[P] + k_2+k_{-1})[ES] - k_1[E]_0[S] - k_{-2}[E]_0[P] \\
 \Rightarrow [ES] &amp;\overset{s.s.}{=}&amp; \frac{(k_1[S]+k_{-2}[P])[E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}.
 \end{eqnarray}\]</div>
 <p>Substituting the steady-state approximation for the concentration of the enzyme-substrate complex into the differential equation for substrate concentration yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eab20840-181c-4576-9f7a-92551f30d0ac">
-<span class="eqno">(3.572)<a class="headerlink" href="#equation-eab20840-181c-4576-9f7a-92551f30d0ac" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8a91fc2f-46bf-4d34-9cf7-dfd394e37111">
+<span class="eqno">(3.572)<a class="headerlink" href="#equation-8a91fc2f-46bf-4d34-9cf7-dfd394e37111" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\frac{d[S]}{dt}  &amp;= k_1[E]_0[S] - (k_{-1}+k_1[S])\frac{(k_1[S]+k_{-2}[P])[E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2} \\
 &amp;= k_1[E]_0[S]\frac{(k_1[S] + k_{-2}[P] + k_{-1} + k_2)}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}  - (k_{-1}+k_1[S])\frac{(k_1[S]+k_{-2}[P])[E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2} \\
 &amp;= \frac{k_1[E]_0[S]k_1[S] + k_1[E]_0[S]k_{-2}[P] + k_1[E]_0[S]k_{-1} + k_1[E]_0[S]k_2 - k_{-1}k_1[S][E]_0 - k_{-1}k_{-2}[P][E]_0 -k_1[S]k_1[S][E]_0 - k_1[S] k_{-2}[P][E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}\\
 &amp;= \frac{k_1k_2[E]_0[S] - k_{-1}k_{-2}[P][E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}
 \end{align}\]</div>
 <p>If we now dictate that we will only measure the intitial rate of the reaction (post lag phase) and that there is only reactant/substrate present initially, then we can make the following approximations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c09b69e1-b834-440f-8717-648709758f3f">
-<span class="eqno">(3.573)<a class="headerlink" href="#equation-c09b69e1-b834-440f-8717-648709758f3f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d504376c-3850-4a71-89cb-e3dbb753964e">
+<span class="eqno">(3.573)<a class="headerlink" href="#equation-d504376c-3850-4a71-89cb-e3dbb753964e" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;[S] \approx [S]_0 \\
 &amp;[P] \approx [P]_0
 \end{align}\]</div>
 <p>Plugging in these approximations to the Michaelis-Menten rate equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6fa9a23b-78a6-4c5b-ac3d-e2322590b2c2">
-<span class="eqno">(3.574)<a class="headerlink" href="#equation-6fa9a23b-78a6-4c5b-ac3d-e2322590b2c2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2772cc6b-d362-463b-963b-604f20afbdb0">
+<span class="eqno">(3.574)<a class="headerlink" href="#equation-2772cc6b-d362-463b-963b-604f20afbdb0" title="Permalink to this equation">#</a></span>\[\begin{align}
 v_0 = -\frac{d[S]}{dt}|_0 &amp;= \frac{k_1k_2[E]_0[S]_0}{k_1[S]_0 + k_{-1} + k_2} \\
 &amp;= \frac{k_2[E]_0[S]_0}{K_m + [S]_0}
 \end{align}\]</div>
@@ -974,29 +975,29 @@ v_0 = -\frac{d[S]}{dt}|_0 &amp;= \frac{k_1k_2[E]_0[S]_0}{k_1[S]_0 + k_{-1} + k_2
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7ff7807d6b50&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fbf283010a0&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_8_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_8_1.png" />
 </div>
 </div>
 <p>We notice from the plot above that the initial rate saturates/plateaus as the initial substrate concentration is increased.  Indeed, it is readily shown that the maximum initial rate, denoted <span class="math notranslate nohighlight">\(v_{max}\)</span>, is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8f8824c3-c603-430e-bed4-f1609ac81797">
-<span class="eqno">(3.575)<a class="headerlink" href="#equation-8f8824c3-c603-430e-bed4-f1609ac81797" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-7477bbf5-83bb-4f2b-8850-9e9b227eaddc">
+<span class="eqno">(3.575)<a class="headerlink" href="#equation-7477bbf5-83bb-4f2b-8850-9e9b227eaddc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 v_{max} = \lim_{[S]_0\rightarrow\infty} v_0 = k_2[E]_0
 \end{eqnarray}\]</div>
-</section>
-<section id="experiments-to-measure-michaelis-menten-parameters">
+</div>
+<div class="section" id="experiments-to-measure-michaelis-menten-parameters">
 <h2><span class="section-number">3.3.7.6. </span>Experiments to Measure Michaelis-Menten Parameters<a class="headerlink" href="#experiments-to-measure-michaelis-menten-parameters" title="Permalink to this headline">#</a></h2>
 <p>For an enzyme catalyzed reaction that follows the Michaelis-Menten mechanism, the parameters <span class="math notranslate nohighlight">\(K_m\)</span> and <span class="math notranslate nohighlight">\(v_{max}\)</span> allow us to determine the rate of reaction at aribtraty substrate concentration.  These parameters can be compared amongst enzymes or across experimental conditions to assess the efficiency of an enzyme.  Indeed, these parameters are still estimated for a number of enzymes today.</p>
 <p>To consider how to design an experiment to estimate these parameters, we start writing out the chemical reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-749ae428-019e-4e44-81c8-2175e658e985">
-<span class="eqno">(3.576)<a class="headerlink" href="#equation-749ae428-019e-4e44-81c8-2175e658e985" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9f426c9a-f91d-44ae-a520-f37dff49f67f">
+<span class="eqno">(3.576)<a class="headerlink" href="#equation-9f426c9a-f91d-44ae-a520-f37dff49f67f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S \underset{E}{\longrightarrow} P,
 \end{equation}\]</div>
 <p>and the associated Michaelis-Menten rate equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0632dff1-2bb8-4652-8942-83810f2512fb">
-<span class="eqno">(3.577)<a class="headerlink" href="#equation-0632dff1-2bb8-4652-8942-83810f2512fb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-98ffe6ca-c319-46fd-b897-062d0ecce21a">
+<span class="eqno">(3.577)<a class="headerlink" href="#equation-98ffe6ca-c319-46fd-b897-062d0ecce21a" title="Permalink to this equation">#</a></span>\[\begin{align}
 v_0 = \frac{v_{max}[S]_0}{K_m + [S]_0}
 \end{align}\]</div>
 <p>We need to measure <span class="math notranslate nohighlight">\(v_0\)</span> as a function of <span class="math notranslate nohighlight">\([S]_0\)</span> to determine <span class="math notranslate nohighlight">\(v_{max}\)</span> and <span class="math notranslate nohighlight">\(K_m\)</span>.  This can be done in a number of ways but there are two critical components:</p>
@@ -1005,35 +1006,35 @@ v_0 = \frac{v_{max}[S]_0}{K_m + [S]_0}
 <li><p>Performing multiple trials altering the initial concentration of substrate.</p></li>
 </ol>
 <p>After these experiments, one will have concentration (or something proportional to concentration) as a function of initial concentration of substrate.  From here, it is a question of fitting the resulting data to the above equation for <span class="math notranslate nohighlight">\(v_0\)</span> to determine v_{max}<span class="math notranslate nohighlight">\( and \)</span>K_m$.  This can be done using a non-linear fit or using a Lineweaver-Burke plot.</p>
-</section>
-<section id="fitting-michaelis-menten-parameters-using-a-lineweaver-burk-plot">
+</div>
+<div class="section" id="fitting-michaelis-menten-parameters-using-a-lineweaver-burk-plot">
 <h2><span class="section-number">3.3.7.7. </span>Fitting Michaelis-Menten Parameters using a Lineweaver-Burk Plot<a class="headerlink" href="#fitting-michaelis-menten-parameters-using-a-lineweaver-burk-plot" title="Permalink to this headline">#</a></h2>
 <p>A Lineweaver-Burk plot is a plot of <span class="math notranslate nohighlight">\(\frac{1}{v_0}\)</span> vs. <span class="math notranslate nohighlight">\(\frac{1}{[S]_0}\)</span> and can be considered a linearized form of the Michaelis-Menten equation.</p>
 <p>To demonstrate this, we start with the Michaelis-Menten initial rate equation and take the reciprocal of both sides:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6c459cfe-1c15-45de-b7cf-583e2da42ffa">
-<span class="eqno">(3.578)<a class="headerlink" href="#equation-6c459cfe-1c15-45de-b7cf-583e2da42ffa" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-657e1a1f-f7b6-4b59-8f55-fe919fc7f37c">
+<span class="eqno">(3.578)<a class="headerlink" href="#equation-657e1a1f-f7b6-4b59-8f55-fe919fc7f37c" title="Permalink to this equation">#</a></span>\[\begin{align}
 v_0 &amp;= \frac{v_{max}[S]_0}{K_m + [S]_0} \\
 \Rightarrow \frac{1}{v_0} &amp;= \frac{K_m + [S]_0}{v_{max}[S]_0} \\
 &amp;= \frac{K_m}{v_{max}}\frac{1}{[S]_0} + \frac{1}{v_{max}}
 \end{align}\]</div>
 <p>This last equation is known as the Lineweaver-Burk equation and demonstrates that <span class="math notranslate nohighlight">\(\frac{1}{v_0}\)</span> will be linear with respect to <span class="math notranslate nohighlight">\(\frac{1}{[S]_0}\)</span> for enzyme kinetics that is well modeled by the Michaelis-Menten mechanism.  The slope of the line will be <span class="math notranslate nohighlight">\(\frac{K_m}{v_{max}}\)</span> and the intercept is <span class="math notranslate nohighlight">\(\frac{1}{v_{max}}\)</span>.</p>
-</section>
-<section id="the-importance-of-v-k">
+</div>
+<div class="section" id="the-importance-of-v-k">
 <h2><span class="section-number">3.3.7.8. </span>The Importance of v/K<a class="headerlink" href="#the-importance-of-v-k" title="Permalink to this headline">#</a></h2>
 <p>The value of <span class="math notranslate nohighlight">\(v_{max}/K_m\)</span> (or, <span class="math notranslate nohighlight">\(k_2/K_m\)</span>), is a measure of the efficiency of an enzyme.   To see why this value is important, consider the MM rate law</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d159bce2-03ec-4b65-915d-68f1648d86d9">
-<span class="eqno">(3.579)<a class="headerlink" href="#equation-d159bce2-03ec-4b65-915d-68f1648d86d9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7542ed9d-99e4-42e4-8b27-74195a179238">
+<span class="eqno">(3.579)<a class="headerlink" href="#equation-7542ed9d-99e4-42e4-8b27-74195a179238" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v_0 = \frac{v_{max}[S]_0}{K_m + [S]_0}
 \end{equation}\]</div>
 <p>When <span class="math notranslate nohighlight">\(K_m &gt;&gt; [S]_0\)</span>, we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a38e92f1-4ed7-4dc3-b30f-601ef43ee644">
-<span class="eqno">(3.580)<a class="headerlink" href="#equation-a38e92f1-4ed7-4dc3-b30f-601ef43ee644" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1419bbad-0ee9-4ab8-b397-06cb3a92c213">
+<span class="eqno">(3.580)<a class="headerlink" href="#equation-1419bbad-0ee9-4ab8-b397-06cb3a92c213" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v_0 \approx \frac{v_{max}}{K_m}[S]_0 = \frac{k_{2}}{K_m}[E]_0[S]_0
 \end{equation}\]</div>
 <p>or that the reaction is first order in substrate, first order in enzyme, and second order overall with observed rate constant of <span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span>.</p>
-<p><span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span> will have units of M<span class="math notranslate nohighlight">\(^{-1}cdot\)</span>s<span class="math notranslate nohighlight">\(^{-1}\)</span> and is related to the number of collisions that lead to reaction. The higher the value of  <span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span> the more efficient the enzyme.  Value near <span class="math notranslate nohighlight">\(10^9\)</span> are the maximum indicating that the reaction is diffusion controlled and thus effectively every collision leads to reaction.</p>
-</section>
-<section id="comparing-mm-parameters-for-different-enzymes">
+<p><span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span> will have units of M<span class="math notranslate nohighlight">\(^{-1}\cdot\)</span>s<span class="math notranslate nohighlight">\(^{-1}\)</span> and is related to the number of collisions that lead to reaction. The higher the value of  <span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span> the more efficient the enzyme.  Value near <span class="math notranslate nohighlight">\(10^9\)</span> are the maximum indicating that the reaction is diffusion controlled and thus effectively every collision leads to reaction.</p>
+</div>
+<div class="section" id="comparing-mm-parameters-for-different-enzymes">
 <h2><span class="section-number">3.3.7.9. </span>Comparing MM Parameters For Different Enzymes<a class="headerlink" href="#comparing-mm-parameters-for-different-enzymes" title="Permalink to this headline">#</a></h2>
 <p>Michaelis-Menten Parameter are tabulated for various enzymes.  These can be compared to assess the relative efficiency of these enzymes.</p>
 <table class="colwidths-auto table">
@@ -1073,8 +1074,8 @@ v_0 \approx \frac{v_{max}}{K_m}[S]_0 = \frac{k_{2}}{K_m}[E]_0[S]_0
 </tbody>
 </table>
 <p>In the table above we see various examples of enzymes substrate pairs and their associated Michaelis-Menten parameters.  Carbonic anhydrase, for example, can bind either CO<span class="math notranslate nohighlight">\(_2\)</span> or HCO<span class="math notranslate nohighlight">\(_3^-\)</span> and has different MM parameters for those substrates.  As a summary, the enzymative efficiency (<span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span>) of Carbonic anhydrase is larger for CO<span class="math notranslate nohighlight">\(_2\)</span> as a substrate as compared to HCO<span class="math notranslate nohighlight">\(_3^-\)</span>.</p>
-</section>
-<section id="example-fitting-michaelis-menten-parameters">
+</div>
+<div class="section" id="example-fitting-michaelis-menten-parameters">
 <h2><span class="section-number">3.3.7.10. </span>Example: Fitting Michaelis-Menten Parameters<a class="headerlink" href="#example-fitting-michaelis-menten-parameters" title="Permalink to this headline">#</a></h2>
 <p>Determine the Michaelis-Menten Paramters from the following data</p>
 <table class="colwidths-auto table">
@@ -1101,7 +1102,7 @@ v_0 \approx \frac{v_{max}}{K_m}[S]_0 = \frac{k_{2}}{K_m}[E]_0[S]_0
 </tr>
 </tbody>
 </table>
-<section id="solution-non-linear-fitting">
+<div class="section" id="solution-non-linear-fitting">
 <h3><span class="section-number">3.3.7.10.1. </span>Solution: Non-linear Fitting<a class="headerlink" href="#solution-non-linear-fitting" title="Permalink to this headline">#</a></h3>
 <p>We will simply solve this by performing a non-linear fit to the Michaelis-Menten parameters.  We start by entering the data into arrays and plotting it.</p>
 <div class="cell docutils container">
@@ -1133,7 +1134,7 @@ v_0 \approx \frac{v_{max}}{K_m}[S]_0 = \frac{k_{2}}{K_m}[E]_0[S]_0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7ff780d9c220&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fbf6897a640&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_21_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_21_1.png" />
@@ -1179,28 +1180,20 @@ Km =  3.2 +/- 0.2 mM
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span><span class="n">v0</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span><span class="mf">0.01</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">mm</span><span class="p">(</span><span class="n">res_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">),</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;fit&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">mm</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">popt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">popt</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;fit&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="n">a3369de19bfc</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s0</span><span class="p">,</span><span class="n">v0</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">s0</span><span class="p">),</span><span class="mf">0.01</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">15</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">mm</span><span class="p">(</span><span class="n">res_lsq</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">),</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;fit&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;res_lsq&#39; is not defined
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbf387f4730&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_23_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_23_1.png" />
 </div>
 </div>
-</section>
-<section id="solution-lineweaver-burk-plot">
+</div>
+<div class="section" id="solution-lineweaver-burk-plot">
 <h3><span class="section-number">3.3.7.10.2. </span>Solution: Lineweaver-Burk Plot<a class="headerlink" href="#solution-lineweaver-burk-plot" title="Permalink to this headline">#</a></h3>
 <p>In this solution we will plot <span class="math notranslate nohighlight">\(1/v_0\)</span> vs <span class="math notranslate nohighlight">\(1/[S]_0\)</span> and fit the resulting data to a line.</p>
 <div class="cell tag_hide_input docutils container">
@@ -1222,7 +1215,7 @@ Km =  3.2 +/- 0.2 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fc25fdb2c10&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fbf28657c40&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_25_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_25_1.png" />
@@ -1277,14 +1270,14 @@ Km =  3.1 +/- 0.1 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fd3632c5220&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbf58c60a60&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_27_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_27_1.png" />
 </div>
 </div>
-</section>
-<section id="compare-solutions">
+</div>
+<div class="section" id="compare-solutions">
 <h3><span class="section-number">3.3.7.10.3. </span>Compare Solutions<a class="headerlink" href="#compare-solutions" title="Permalink to this headline">#</a></h3>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
@@ -1309,26 +1302,27 @@ Km =  3.1 +/- 0.1 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fd362a316d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbf58ca8eb0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_29_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_29_1.png" />
 </div>
 </div>
-</section>
-</section>
-<section id="example-fitting-with-error">
+</div>
+</div>
+<div class="section" id="example-fitting-with-error">
 <h2><span class="section-number">3.3.7.11. </span>Example: Fitting with Error<a class="headerlink" href="#example-fitting-with-error" title="Permalink to this headline">#</a></h2>
 <p>Here we consider fitting MM parameters using either the Lineweaver-Burk linearization or non-linear regression.  Which method is better?  To investigate this, we generate a set of fake data using a known <span class="math notranslate nohighlight">\(K_m\)</span> and <span class="math notranslate nohighlight">\(v_{max}\)</span> and then fit the data using both approaches.</p>
 <p>Below is a piece of code that will generate a fake data set for initial concentrations of <span class="math notranslate nohighlight">\(1, 2, 5, 10, 20\)</span> mM.  We will use Michaelis-Menten parameters of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a6842cc4-5ff3-4615-bfc3-0c26e0270b4d">
-<span class="eqno">(3.581)<a class="headerlink" href="#equation-a6842cc4-5ff3-4615-bfc3-0c26e0270b4d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-61edc27b-ad0d-4cc5-a552-3afcb7257af3">
+<span class="eqno">(3.581)<a class="headerlink" href="#equation-61edc27b-ad0d-4cc5-a552-3afcb7257af3" title="Permalink to this equation">#</a></span>\[\begin{align}
 V_{max} &amp;= 7.5 \text{ }\mu\text{M}\cdot\text{s}^{-1}\\
 K_m &amp;= 4.0 \text{ mM}
 \end{align}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">20.0</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+<span class="n">s0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">20.0</span><span class="p">])</span>
 <span class="c1"># Generate a data set</span>
 <span class="k">def</span> <span class="nf">mm_from_params</span><span class="p">(</span><span class="n">S0</span><span class="p">,</span><span class="n">vmax</span><span class="p">,</span><span class="n">Km</span><span class="p">):</span>  
     <span class="k">return</span> <span class="n">vmax</span><span class="o">*</span><span class="n">S0</span><span class="o">/</span><span class="p">(</span><span class="n">Km</span> <span class="o">+</span> <span class="n">S0</span><span class="p">)</span>
@@ -1347,6 +1341,19 @@ K_m &amp;= 4.0 \text{ mM}
     <span class="n">data</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">truth</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">error</span><span class="p">)</span>
     <span class="c1"># keep flattened s0 array</span>
     <span class="n">s0_total</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">s0</span>
+<span class="n">combined_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">s0</span><span class="p">,</span><span class="n">data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">combined_data</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;[S]0&quot;</span><span class="p">,</span><span class="s2">&quot;Trial 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Trial 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Trial 3&quot;</span><span class="p">,</span> <span class="s2">&quot;Trial 4&quot;</span><span class="p">,</span> <span class="s2">&quot;Trial 5&quot;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  [S]0    Trial 1    Trial 2    Trial 3    Trial 4    Trial 5
+------  ---------  ---------  ---------  ---------  ---------
+     1    1.50593    1.49246    1.48586    1.55994    1.51604
+     2    2.50661    2.57846    2.63617    2.53685    2.45979
+     5    4.12168    4.06272    4.29321    4.21919    4.14908
+    10    5.45623    5.29496    5.62846    5.48092    5.34797
+    20    6.20648    6.57879    6.58053    6.40632    6.10658
 </pre></div>
 </div>
 </div>
@@ -1379,7 +1386,7 @@ K_m &amp;= 4.0 \text{ mM}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fd366cbec40&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fbf78b1b0d0&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_35_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_35_1.png" />
@@ -1407,8 +1414,8 @@ K_m &amp;= 4.0 \text{ mM}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v_max =  7.7 +/- 0.2 muM/s
-Km =  4.2 +/- 0.1 mM
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v_max =  7.6 +/- 0.1 muM/s
+Km =  4.0 +/- 0.1 mM
 </pre></div>
 </div>
 </div>
@@ -1432,8 +1439,8 @@ Km =  4.2 +/- 0.1 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v_max =  7.5 +/- 0.1 muM/s
-Km =  3.9 +/- 0.1 mM
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v_max =  7.7 +/- 0.1 muM/s
+Km =  4.1 +/- 0.1 mM
 </pre></div>
 </div>
 </div>
@@ -1463,14 +1470,14 @@ Km =  3.9 +/- 0.1 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fd367281ac0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbf689ae8e0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_41_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_41_1.png" />
 </div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

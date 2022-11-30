@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.1.9. Equations of State from Lattice Gas Models &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -52,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2. Welcome to the Thermodynamics Lessons" href="../thermodynamics/intro.html" />
@@ -387,6 +386,16 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toctree-l3">
       <a class="reference internal" href="../kinetics/Catalysts.html">
        3.3.6. Catalysts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Enzyme_Kinetics_Michaelis_Menten.html">
+       3.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Cooperative_Binding_Kinetics.html">
+       3.3.8. Cooperative Binding Kinetics
       </a>
      </li>
     </ul>
@@ -808,13 +817,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="equations-of-state-from-lattice-gas-models">
+  <div class="tex2jax_ignore mathjax_ignore section" id="equations-of-state-from-lattice-gas-models">
 <h1><span class="section-number">3.1.9. </span>Equations of State from Lattice Gas Models<a class="headerlink" href="#equations-of-state-from-lattice-gas-models" title="Permalink to this headline">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">3.1.9.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>The finite volume lattice gas model can be used to estimate entropies of mixing.  In these notes we will address how different lattice gas models can be used to derive equations of state.</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.1.9.2. </span>Learning goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After these notes, students should be able to:</p>
 <ol class="simple">
@@ -822,8 +831,8 @@ title="Print to PDF"
 <li><p>Derive the ideal gas law from no-volume lattice gas model</p></li>
 <li><p>Derive the equation of state for a fintie volume lattice gas model</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.1.9.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used to illustrate aspects of this lesson:</p>
 <ol class="simple">
@@ -833,31 +842,31 @@ title="Print to PDF"
 <li><p>Numpy</p></li>
 <li><p>Plotting with matplotlib</p></li>
 </ol>
-</section>
-<section id="introduction">
+</div>
+<div class="section" id="introduction">
 <h2><span class="section-number">3.1.9.4. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
-</section>
-<section id="ideal-gas-lattice-gas">
+</div>
+<div class="section" id="ideal-gas-lattice-gas">
 <h2><span class="section-number">3.1.9.5. </span>Ideal Gas Lattice Gas<a class="headerlink" href="#ideal-gas-lattice-gas" title="Permalink to this headline">#</a></h2>
 <p>We have previously seen the finite volume lattice gas.  The ideal gas lattice gas is even easier.  The number of ways of arranging <span class="math notranslate nohighlight">\(N\)</span> gas particles in <span class="math notranslate nohighlight">\(M\)</span> lattice sites (<span class="math notranslate nohighlight">\(M&gt;N\)</span>) is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a75da4d5-7927-4539-901d-32d572ee6d5e">
-<span class="eqno">(3.176)<a class="headerlink" href="#equation-a75da4d5-7927-4539-901d-32d572ee6d5e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-32e14588-90ea-484b-813c-ca3281be26c7">
+<span class="eqno">(3.176)<a class="headerlink" href="#equation-32e14588-90ea-484b-813c-ca3281be26c7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W = \frac{M^N}{N!}.
 \end{equation}\]</div>
 <p>This is because every gas particle can be place in any of the lattice sites.  The <span class="math notranslate nohighlight">\(N!\)</span> in the denominator corrects for the indistinguishable nature of these particles.</p>
 <p>Thus, the entropy of an ideal gas with <span class="math notranslate nohighlight">\(N\)</span> particles in  <span class="math notranslate nohighlight">\(M\)</span> lattice sites is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-31f4668c-8dd1-43a9-867f-0e590e63474c">
-<span class="eqno">(3.177)<a class="headerlink" href="#equation-31f4668c-8dd1-43a9-867f-0e590e63474c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ba13ea1e-73d6-4cd7-84a5-e02f4cca1acf">
+<span class="eqno">(3.177)<a class="headerlink" href="#equation-ba13ea1e-73d6-4cd7-84a5-e02f4cca1acf" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; k_B \ln\left( \frac{M^N}{N!}\right) \\
 &amp;=&amp; Nk_B\ln M - k_B\ln N!
 \end{eqnarray}\]</div>
-<section id="example-1-entropy-of-lattice-gas">
+<div class="section" id="example-1-entropy-of-lattice-gas">
 <h3><span class="section-number">3.1.9.5.1. </span>Example 1: Entropy of Lattice Gas<a class="headerlink" href="#example-1-entropy-of-lattice-gas" title="Permalink to this headline">#</a></h3>
 <p>Compute the molar entropy of a lattice gas with 5 particles and 16 lattice sites for the (a) ideal gas model and (b) finite gas model.</p>
 <p>(a) Ideal gas model:
 For this model the entropy is given as the formula above</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c586122a-5a4d-4d7d-851a-83052f5d0455">
-<span class="eqno">(3.178)<a class="headerlink" href="#equation-c586122a-5a4d-4d7d-851a-83052f5d0455" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-7dbece4d-165b-49c7-86f5-31df1f07b0cd">
+<span class="eqno">(3.178)<a class="headerlink" href="#equation-7dbece4d-165b-49c7-86f5-31df1f07b0cd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \bar{S} &amp;=&amp; NR\ln M - R\ln N! \\
 &amp;=&amp; 5R\ln 16 - R\ln 5! \\
 &amp;=&amp; 8.314(5\ln16 - ln120) \\
@@ -878,8 +887,8 @@ For this model the entropy is given as the formula above</p>
 </div>
 </div>
 <p>(b) Finite gas model: for this model the entropy is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-60b16879-a832-4fe6-9ea2-5ded666b7827">
-<span class="eqno">(3.179)<a class="headerlink" href="#equation-60b16879-a832-4fe6-9ea2-5ded666b7827" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-98d603c0-5193-4a25-98b0-2f74ad51944d">
+<span class="eqno">(3.179)<a class="headerlink" href="#equation-98d603c0-5193-4a25-98b0-2f74ad51944d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \bar{S} &amp;=&amp; R\ln\left(\frac{M!}{(M-N)!N!}\right) \\
 &amp;=&amp; R\ln\left(\frac{16!}{11!5!}\right) \\
 &amp;=&amp; 69.69 \quad J\cdot K^{-1}\cdot mol^{-1}
@@ -898,64 +907,64 @@ For this model the entropy is given as the formula above</p>
 </div>
 </div>
 </div>
-</section>
-<section id="equation-of-state-for-an-ideal-lattice-gas">
+</div>
+<div class="section" id="equation-of-state-for-an-ideal-lattice-gas">
 <h3><span class="section-number">3.1.9.5.2. </span>Equation of State for an Ideal Lattice Gas<a class="headerlink" href="#equation-of-state-for-an-ideal-lattice-gas" title="Permalink to this headline">#</a></h3>
 <p>We can derive the equation of state for an ideal gas lattice gas model using the relationship</p>
-<div class="amsmath math notranslate nohighlight" id="equation-511fbc41-41d5-4bd5-aa6b-4957789b3f30">
-<span class="eqno">(3.180)<a class="headerlink" href="#equation-511fbc41-41d5-4bd5-aa6b-4957789b3f30" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-93b47094-1f4b-4447-a3a8-9621cf49d92d">
+<span class="eqno">(3.180)<a class="headerlink" href="#equation-93b47094-1f4b-4447-a3a8-9621cf49d92d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p = T \left( \frac{\partial S}{\partial V}\right)_N.
 \end{equation}\]</div>
 <p>We will see where this relationship comes from during the section on classical Thermodynamics.</p>
 <p>In order to use this relationship, we need to have an equation for <span class="math notranslate nohighlight">\(S\)</span> in terms of the volume of the system, <span class="math notranslate nohighlight">\(V\)</span>.  For this, we recognize that, for uniformly size grids/lattices, the volume of the system is proportional to the number of lattice sites</p>
-<div class="amsmath math notranslate nohighlight" id="equation-22879df7-4986-4e85-a11b-583a8a07ecd0">
-<span class="eqno">(3.181)<a class="headerlink" href="#equation-22879df7-4986-4e85-a11b-583a8a07ecd0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7aea60ca-4e54-4cf7-83e7-ef3f2ed834e3">
+<span class="eqno">(3.181)<a class="headerlink" href="#equation-7aea60ca-4e54-4cf7-83e7-ef3f2ed834e3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 V \propto M.
 \end{equation}\]</div>
 <p>The proportionality constant is the volume of each lattice site which we will denote <span class="math notranslate nohighlight">\(v\)</span>.  This yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2491f6cd-cbe1-4294-8fe5-8c4c4d095e6d">
-<span class="eqno">(3.182)<a class="headerlink" href="#equation-2491f6cd-cbe1-4294-8fe5-8c4c4d095e6d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b4fbb4b6-49e9-4115-8a2d-29c3d85494f0">
+<span class="eqno">(3.182)<a class="headerlink" href="#equation-b4fbb4b6-49e9-4115-8a2d-29c3d85494f0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 V = vM
 \end{equation}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-78bd7165-d1cd-43b1-8db7-5d90d6d781e8">
-<span class="eqno">(3.183)<a class="headerlink" href="#equation-78bd7165-d1cd-43b1-8db7-5d90d6d781e8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2f54e8a3-a901-4e09-8c1a-e37b0dcd1471">
+<span class="eqno">(3.183)<a class="headerlink" href="#equation-2f54e8a3-a901-4e09-8c1a-e37b0dcd1471" title="Permalink to this equation">#</a></span>\[\begin{equation}
 M = \frac{V}{v}
 \end{equation}\]</div>
 <p>Subbing this into the ideal gas lattice gas entropy equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1a782a52-a523-4182-8f18-e252cde2209b">
-<span class="eqno">(3.184)<a class="headerlink" href="#equation-1a782a52-a523-4182-8f18-e252cde2209b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-acb22de9-8485-4847-918c-06b573713c1c">
+<span class="eqno">(3.184)<a class="headerlink" href="#equation-acb22de9-8485-4847-918c-06b573713c1c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; Nk_B\ln \frac{V}{v} - k_B\ln N! \\
  &amp;=&amp; Nk_B\ln V -  Nk_B\ln v- k_B\ln N! \\
 \end{eqnarray}\]</div>
 <p>Now differentiating the above equation with respect to <span class="math notranslate nohighlight">\(V\)</span> and multiplying by <span class="math notranslate nohighlight">\(T\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2ce465c4-73cb-48f3-80c7-a3d6d53e196c">
-<span class="eqno">(3.185)<a class="headerlink" href="#equation-2ce465c4-73cb-48f3-80c7-a3d6d53e196c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-d03dbaec-17ed-445d-8bb5-9ab7036595e3">
+<span class="eqno">(3.185)<a class="headerlink" href="#equation-d03dbaec-17ed-445d-8bb5-9ab7036595e3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p &amp;=&amp; T \left( \frac{\partial S}{\partial V}\right)_N \\
 &amp;=&amp; T \left( \frac{\partial( Nk_B\ln V -  Nk_B\ln v- k_B\ln N!)}{\partial V}\right)_N\\
 &amp;=&amp; T \cdot Nk_B\frac{1}{V} \\
 &amp;=&amp;  \frac{Nk_BT}{V} \\
 \end{eqnarray}\]</div>
-</section>
-</section>
-<section id="finite-volume-lattice-gas">
+</div>
+</div>
+<div class="section" id="finite-volume-lattice-gas">
 <h2><span class="section-number">3.1.9.6. </span>Finite Volume Lattice Gas<a class="headerlink" href="#finite-volume-lattice-gas" title="Permalink to this headline">#</a></h2>
 <p>For a fintie volume lattice gas, the number of ways of arranging <span class="math notranslate nohighlight">\(N\)</span> gas particles in <span class="math notranslate nohighlight">\(M\)</span> lattice sites (<span class="math notranslate nohighlight">\(M&gt;N\)</span>) is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83d07390-0f0a-40db-a23b-d13fb4a21fe1">
-<span class="eqno">(3.186)<a class="headerlink" href="#equation-83d07390-0f0a-40db-a23b-d13fb4a21fe1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-12152a69-b4ff-4704-8523-3363de660090">
+<span class="eqno">(3.186)<a class="headerlink" href="#equation-12152a69-b4ff-4704-8523-3363de660090" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W = \frac{M!}{(M-N)!N!} = _MC_N.
 \end{equation}\]</div>
 <p>Thus, the entropy of an finite volume gas with <span class="math notranslate nohighlight">\(N\)</span> particles in <span class="math notranslate nohighlight">\(M\)</span> lattice sites is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0fe957df-2c9d-412d-87d2-2c9ec65e32ea">
-<span class="eqno">(3.187)<a class="headerlink" href="#equation-0fe957df-2c9d-412d-87d2-2c9ec65e32ea" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ceacba1e-510a-4a89-97dc-9926c53f8e5a">
+<span class="eqno">(3.187)<a class="headerlink" href="#equation-ceacba1e-510a-4a89-97dc-9926c53f8e5a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; k_B \ln\left( \frac{M!}{(M-N)!N!} \right) \\
 &amp;=&amp; k_B\ln M! - k_B\ln(M-N)! - k_B\ln N!
 \end{eqnarray}\]</div>
-<section id="the-sterling-approximation">
+<div class="section" id="the-sterling-approximation">
 <h3><span class="section-number">3.1.9.6.1. </span>The Sterling Approximation<a class="headerlink" href="#the-sterling-approximation" title="Permalink to this headline">#</a></h3>
 <p>A common approximation that comes up is Statistical Mechanics is the Sterling Approximation.  This approximates the natural log of a factorial as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3943da32-6fc2-4f6d-b422-3903aff5a5b6">
-<span class="eqno">(3.188)<a class="headerlink" href="#equation-3943da32-6fc2-4f6d-b422-3903aff5a5b6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f9e83940-826a-4f97-bf9b-385a8db09494">
+<span class="eqno">(3.188)<a class="headerlink" href="#equation-f9e83940-826a-4f97-bf9b-385a8db09494" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln N! = N\ln N - N
 \end{equation}\]</div>
 <p>Let’s see how good of an approximation this is</p>
@@ -1007,31 +1016,31 @@ S &amp;=&amp; k_B \ln\left( \frac{M!}{(M-N)!N!} \right) \\
 </div>
 </div>
 <p>From the above plot, specifically from the rapid decay of the percent error with increasing <span class="math notranslate nohighlight">\(N\)</span>, we can see that the Sterling approximation is a good approximation in particular for large <span class="math notranslate nohighlight">\(N\)</span>.</p>
-</section>
-<section id="equation-of-state-for-a-finite-volume-lattice-gas">
+</div>
+<div class="section" id="equation-of-state-for-a-finite-volume-lattice-gas">
 <h3><span class="section-number">3.1.9.6.2. </span>Equation of State for a Finite Volume Lattice Gas<a class="headerlink" href="#equation-of-state-for-a-finite-volume-lattice-gas" title="Permalink to this headline">#</a></h3>
 <p>We can derive the equation of state for an ideal gas lattice gas model using the relationship</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9390f917-6645-4e1a-811d-1880dfbe5001">
-<span class="eqno">(3.189)<a class="headerlink" href="#equation-9390f917-6645-4e1a-811d-1880dfbe5001" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-92f60a53-7b18-4c65-8159-4cfe07c8046a">
+<span class="eqno">(3.189)<a class="headerlink" href="#equation-92f60a53-7b18-4c65-8159-4cfe07c8046a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p = T \left( \frac{\partial S}{\partial V}\right)_N.
 \end{equation}\]</div>
 <p>We will see where this relationship comes from during the section on classical Thermodynamics.</p>
 <p>To derive an expression for <span class="math notranslate nohighlight">\(S\)</span> in terms of <span class="math notranslate nohighlight">\(V\)</span> for a finite volume lattice gas, we will start be employing the Sterling approximation to the equation for <span class="math notranslate nohighlight">\(S\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-743b192e-a0b4-4a07-9cae-d370279d1393">
-<span class="eqno">(3.190)<a class="headerlink" href="#equation-743b192e-a0b4-4a07-9cae-d370279d1393" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2801da71-f44b-4af6-b9d2-6938db40af6e">
+<span class="eqno">(3.190)<a class="headerlink" href="#equation-2801da71-f44b-4af6-b9d2-6938db40af6e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; k_B\ln M! - k_B\ln(M-N)! - k_B\ln N! \\
 &amp;=&amp; k_B \left( M\ln M - M - (M-N)\ln(M-N) + (M-N) - N\ln N + N\right) \\
 &amp;=&amp; k_B \left( M\ln M - M\ln(M-N) + N\ln(M-N) - N\ln N \right)
 \end{eqnarray}\]</div>
 <p>Now substituting that <span class="math notranslate nohighlight">\(M=\frac{V}{v}\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b472ffd4-e70b-4735-b065-5313a3893cce">
-<span class="eqno">(3.191)<a class="headerlink" href="#equation-b472ffd4-e70b-4735-b065-5313a3893cce" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-d9c4c696-012b-4d8f-9a93-ba7e73588751">
+<span class="eqno">(3.191)<a class="headerlink" href="#equation-d9c4c696-012b-4d8f-9a93-ba7e73588751" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; k_B \left( \frac{V}{v}\ln \frac{V}{v} - \frac{V}{v}\ln(\frac{V}{v}-N) + N\ln(\frac{V}{v}-N) - N\ln N \right)\\
 &amp;=&amp; k_B \left( \frac{V}{v}\ln V - \frac{V}{v}\ln v - \frac{V}{v}\ln(\frac{V}{v}-N) + N\ln(\frac{V}{v}-N) - N\ln N \right)
 \end{eqnarray}\]</div>
 <p>Now differentiating the above equation with respect to <span class="math notranslate nohighlight">\(V\)</span> and multiplying by <span class="math notranslate nohighlight">\(T\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-941abf28-bdfe-4aff-bfd9-09cf6f03130f">
-<span class="eqno">(3.192)<a class="headerlink" href="#equation-941abf28-bdfe-4aff-bfd9-09cf6f03130f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-869e997c-c427-4e19-8f23-23a9057e20c8">
+<span class="eqno">(3.192)<a class="headerlink" href="#equation-869e997c-c427-4e19-8f23-23a9057e20c8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p &amp;=&amp; T \left( \frac{\partial S}{\partial V}\right)_N \\
 &amp;=&amp; k_B T \left( \frac{1}{v}\ln V + \frac{V}{v}\frac{1}{V} - \frac{1}{v}\ln v - \frac{1}{v}\ln(\frac{V}{v}-N) - \frac{V}{v}\frac{1}{\frac{V}{v}-N}\frac{1}{v} + N\frac{1}{\frac{V}{v}-N}\frac{1}{v} \right)\\
 &amp;=&amp; \frac{k_B T}{v} \left( \ln V + 1 - \ln v - \ln(\frac{V}{v}-N) - \frac{V}{v}\frac{1}{\frac{V}{v}-N} + N\frac{1}{\frac{V}{v}-N} \right) \\
@@ -1039,15 +1048,15 @@ p &amp;=&amp; T \left( \frac{\partial S}{\partial V}\right)_N \\
 &amp;=&amp; \frac{k_B T}{v} \left( \ln M + 1 - \ln(M-N) - \frac{V}{V-vN} + \frac{vN}{V-vN} \right)
 \end{eqnarray}\]</div>
 <p>At this point we need to make another approximation/assumption in order to simplify further.  If we assume that the gas is dilute then the number of lattice sites <span class="math notranslate nohighlight">\(M\)</span> will be much much larger than the number of gas particles <span class="math notranslate nohighlight">\(N\)</span>.  This has the implication that <span class="math notranslate nohighlight">\(M-N \approx M\)</span> and <span class="math notranslate nohighlight">\(\frac{V}{V-vN}\approx 1\)</span>.  Applying this assumption yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0e1bd9ae-f4bf-4702-a99e-540b021950dd">
-<span class="eqno">(3.193)<a class="headerlink" href="#equation-0e1bd9ae-f4bf-4702-a99e-540b021950dd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-bdbcefc7-f321-4815-ab1f-247ebc3c7fc0">
+<span class="eqno">(3.193)<a class="headerlink" href="#equation-bdbcefc7-f321-4815-ab1f-247ebc3c7fc0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p &amp;=&amp; \frac{k_B T}{v} \left( \ln M + 1 - \ln M - 1 + \frac{vN}{V-vN} \right) \\
 &amp;=&amp; \frac{Nk_B T}{V-vN}
 \end{eqnarray}\]</div>
 <p>which is a somewhat standard correction to the ideal gas law for finite volume particles.</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

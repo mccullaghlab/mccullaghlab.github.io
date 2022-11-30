@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.2.1. The First Law of Thermodynamics &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -52,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.2. Heat Work and Calculating \(\Delta U\)" href="Heat_Work_and_Calculating_U.html" />
@@ -387,6 +386,16 @@ const thebe_selector_output = ".output, .cell_output"
      <li class="toctree-l3">
       <a class="reference internal" href="../kinetics/Catalysts.html">
        3.3.6. Catalysts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Enzyme_Kinetics_Michaelis_Menten.html">
+       3.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Cooperative_Binding_Kinetics.html">
+       3.3.8. Cooperative Binding Kinetics
       </a>
      </li>
     </ul>
@@ -798,10 +807,10 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="the-first-law-of-thermodynamics">
+  <div class="tex2jax_ignore mathjax_ignore section" id="the-first-law-of-thermodynamics">
 <h1><span class="section-number">3.2.1. </span>The First Law of Thermodynamics<a class="headerlink" href="#the-first-law-of-thermodynamics" title="Permalink to this headline">#</a></h1>
 <p>Thermodynamics is the study of how heat moves.  It tells us nothing about the time it takes for a process to happen but the laws of Thermodynamics have proven to govern whether things happen.  Things can be anything from macroscopic phenomenon to biochemical processes.</p>
-<section id="learning-goals-for-today">
+<div class="section" id="learning-goals-for-today">
 <h2><span class="section-number">3.2.1.1. </span>Learning goals for today:<a class="headerlink" href="#learning-goals-for-today" title="Permalink to this headline">#</a></h2>
 <p>After these notes, you should be able to:</p>
 <ol class="simple">
@@ -811,39 +820,39 @@ title="Print to PDF"
 <li><p>Give at least three examples of state functions</p></li>
 <li><p>Define a Thermodynamic system</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.2.1.2. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
 <li><p>Numeric integration</p></li>
 <li><p>Plotting with matplotlib</p></li>
 </ol>
-</section>
-<section id="statement-of-the-first-law">
+</div>
+<div class="section" id="statement-of-the-first-law">
 <h2><span class="section-number">3.2.1.3. </span>Statement of the first law<a class="headerlink" href="#statement-of-the-first-law" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>The internal energy of an <em>isolated system</em>, <span class="math notranslate nohighlight">\(U_{sys}\)</span>, is a <em>state function</em> and subject to conservation (<span class="math notranslate nohighlight">\(\Delta U_{sys} = 0\)</span> if the initial and final states are the same).</p></li>
 </ol>
 <p>where an <em>isolated system</em> is one that cannot exchange heat or matter with surroundings, a <em>state function</em> has values that do not depend on the path taken, and <span class="math notranslate nohighlight">\(\Delta U_{sys} = U_{sys}^{final} - U_{sys}^{initial}\)</span></p>
-</section>
-<section id="internal-energy">
+</div>
+<div class="section" id="internal-energy">
 <h2><span class="section-number">3.2.1.4. </span>Internal energy<a class="headerlink" href="#internal-energy" title="Permalink to this headline">#</a></h2>
 <p>The internal energy of a chemical system is a measure of the chemical (potential) and thermal (kinetic) energy in the system.  It is denoted <em>internal</em> because it does not include the kinetic and potential energies of the system moving as a whole or the interaction with the system and the surroundings.  Within the context of chemistry, things like bond energies and the non-bonded interactions that we have discussed would be included in the internal energy.</p>
-</section>
-<section id="state-function">
+</div>
+<div class="section" id="state-function">
 <h2><span class="section-number">3.2.1.5. </span>State function<a class="headerlink" href="#state-function" title="Permalink to this headline">#</a></h2>
 <p>State functions are important in Thermodynamics.  These functions do not depend on path but only the initial and final position.  Examples in Thermodynamics include change in internal energy (<span class="math notranslate nohighlight">\(\Delta U\)</span>), change in enthalpy (<span class="math notranslate nohighlight">\(\Delta H\)</span>), change in entropy (<span class="math notranslate nohighlight">\(\Delta S\)</span>), change in free energy (<span class="math notranslate nohighlight">\(\Delta G\)</span> or <span class="math notranslate nohighlight">\(\Delta A\)</span>), and others.  State functions have the mathematical property of having an exact differential which will be important later on.</p>
 <p>Examples of things that are not state functions: work, heat, and other specific forms of energy.</p>
-<section id="example-of-a-state-function">
+<div class="section" id="example-of-a-state-function">
 <h3><span class="section-number">3.2.1.5.1. </span>Example of a state function<a class="headerlink" href="#example-of-a-state-function" title="Permalink to this headline">#</a></h3>
 <p>Consider going from point <span class="math notranslate nohighlight">\(A\)</span> to point <span class="math notranslate nohighlight">\(B\)</span> anywhere on the globe.</p>
 <ol class="simple">
 <li><p>Elevation, <span class="math notranslate nohighlight">\(Z\)</span>, is a state function: the elevations at points <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> only depend on where those points not how you got from point <span class="math notranslate nohighlight">\(A\)</span> to point <span class="math notranslate nohighlight">\(B\)</span>.  The change in elevation, <span class="math notranslate nohighlight">\(\Delta Z\)</span>, is also then a state function.</p></li>
 <li><p>Distance traveled is not a state function. There may be many different ways to get from point <span class="math notranslate nohighlight">\(A\)</span> to point <span class="math notranslate nohighlight">\(B\)</span> some of which will require traveling a greater distance.  We say that distance traveled is path dependent.</p></li>
 </ol>
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h3><span class="section-number">3.2.1.5.2. </span>Example of a State Function<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
 <p>Consider going from and elevation of <span class="math notranslate nohighlight">\(E(0) = 0\)</span> to <span class="math notranslate nohighlight">\(E(1)=10\)</span> using two different paths:</p>
 <ol class="simple">
@@ -881,23 +890,23 @@ title="Print to PDF"
 </div>
 <p>The change in elevation is clearly 10 in both cases but we will show that here.</p>
 <p>For the first path:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bc200979-f28e-4e87-85f2-b1e325565a8d">
-<span class="eqno">(3.194)<a class="headerlink" href="#equation-bc200979-f28e-4e87-85f2-b1e325565a8d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-f42f9cae-e239-4990-92f3-22b66ba44b2a">
+<span class="eqno">(3.194)<a class="headerlink" href="#equation-f42f9cae-e239-4990-92f3-22b66ba44b2a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta E_1 &amp;=&amp; \int_{0}^{1}\frac{dE_1}{dx}dx \\
 &amp;=&amp; E_1(1) - E_1(0) \\
 &amp;=&amp; 10 - 0 =10
 \end{eqnarray}\]</div>
 <p>For the second path:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9ca5ceec-7807-423f-95de-746136935252">
-<span class="eqno">(3.195)<a class="headerlink" href="#equation-9ca5ceec-7807-423f-95de-746136935252" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-b878fbdb-f038-4009-91e0-4a35144fc1eb">
+<span class="eqno">(3.195)<a class="headerlink" href="#equation-b878fbdb-f038-4009-91e0-4a35144fc1eb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta E_2 &amp;=&amp; \int_{0}^{1}\frac{dE_2}{dx}dx \\
 &amp;=&amp; E_2(1) - E_2(0) \\
 &amp;=&amp; 10 - 0 =10
 \end{eqnarray}\]</div>
 <p>For distance traveled, we need to compute path/arc length. This is easy enough for <span class="math notranslate nohighlight">\(E_1\)</span>:</p>
 <p>For the first path:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c6fa7eee-e5a6-473e-9088-347c1a3d427d">
-<span class="eqno">(3.196)<a class="headerlink" href="#equation-c6fa7eee-e5a6-473e-9088-347c1a3d427d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-7f3913e3-5594-46c9-827a-7e0f25ea10ba">
+<span class="eqno">(3.196)<a class="headerlink" href="#equation-7f3913e3-5594-46c9-827a-7e0f25ea10ba" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 L_1 &amp;=&amp; \int_{0}^{1} \sqrt{1+\left(\frac{dE_1}{dx}\right)^2}dx \\
 &amp;=&amp; \int_{0}^{1} \sqrt{1+\left(10\right)^2}dx \\
 &amp;=&amp; \sqrt{101} \\
@@ -905,8 +914,8 @@ L_1 &amp;=&amp; \int_{0}^{1} \sqrt{1+\left(\frac{dE_1}{dx}\right)^2}dx \\
 \end{eqnarray}\]</div>
 <p>where we could also determine this using Pythagorean’s theorem.</p>
 <p>For <span class="math notranslate nohighlight">\(E_2\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6f1c84a0-93b0-467c-85ac-da662adc8eb2">
-<span class="eqno">(3.197)<a class="headerlink" href="#equation-6f1c84a0-93b0-467c-85ac-da662adc8eb2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-25d5175e-cb4a-4dde-a052-3fb6ec20d826">
+<span class="eqno">(3.197)<a class="headerlink" href="#equation-25d5175e-cb4a-4dde-a052-3fb6ec20d826" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 L_2 &amp;=&amp; \int_{0}^{1} \sqrt{1+\left(\frac{dE_2}{dx}\right)^2}dx \\
 &amp;=&amp; \int_{0}^{1} \sqrt{1+\left(20x\right)^2}dx \\
 &amp;=&amp; \int_{0}^{1} \sqrt{1+400x^2}dx \\
@@ -929,20 +938,20 @@ L_2 &amp;=&amp; \int_{0}^{1} \sqrt{1+\left(\frac{dE_2}{dx}\right)^2}dx \\
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="thermodynamic-system">
+</div>
+</div>
+<div class="section" id="thermodynamic-system">
 <h2><span class="section-number">3.2.1.6. </span>Thermodynamic system<a class="headerlink" href="#thermodynamic-system" title="Permalink to this headline">#</a></h2>
 <p>The concept of a <em>system</em> in Thermodynamics is somewhat vague but important.  A system can be defined as anything but is typically the substance/volume of interest.  This might be, for example, the beaker with the solution of interest during an experiment.  Key concepts regarding a system are: definition of the system, surroundings and types of barriers between system and surroundings.</p>
 <a class="reference internal image-reference" href="../../_images/Thermo_system.png"><img alt="../../_images/Thermo_system.png" class="align-center" src="../../_images/Thermo_system.png" style="width: 750px;" /></a>
-<section id="types-of-thermodynamic-systems">
+<div class="section" id="types-of-thermodynamic-systems">
 <h3><span class="section-number">3.2.1.6.1. </span>Types of Thermodynamic systems<a class="headerlink" href="#types-of-thermodynamic-systems" title="Permalink to this headline">#</a></h3>
 <p><em><strong>Isolated:</strong></em> An isolated system cannot transfer heat or mass between system and surroundings.</p>
 <p><em><strong>Closed:</strong></em> A closed system is one that cannot transfer mass between the system and the surroundings.</p>
 <p><em><strong>Open:</strong></em> An open system can transfer both heat and mass between the system and the surroundings.</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
