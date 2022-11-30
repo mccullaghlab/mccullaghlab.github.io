@@ -288,6 +288,8 @@ plt.tick_params(axis='both',labelsize=fontsize)
 ax.plot(1/s0,1/v0,'o',lw=2)
 
 
+# Fit the line to get the MM parameters:
+
 # In[7]:
 
 
@@ -307,6 +309,8 @@ Km_lwb_err = Km_lwb*np.sqrt( (err_lwb[0]/popt_lwb[0])**2 + (err_lwb[1]/popt_lwb[
 print("v_max = ", np.round(vmax_lwb,1),"+/-", np.round(vmax_lwb_err,1), "muM/s")
 print("Km = ", np.round(Km_lwb,1),"+/-", np.round(Km_lwb_err,1), "mM")
 
+
+# Plot the resulting Lineweaver-Burk plot:
 
 # In[8]:
 
