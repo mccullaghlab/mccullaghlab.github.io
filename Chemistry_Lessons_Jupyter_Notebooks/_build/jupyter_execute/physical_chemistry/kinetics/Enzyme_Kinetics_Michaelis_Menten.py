@@ -170,7 +170,7 @@ ax.plot(S0,mm(S0,vmax,Km),lw=3)
 # \end{equation}
 # or that the reaction is first order in substrate, first order in enzyme, and second order overall with observed rate constant of $\frac{k_2}{K_m}$.  
 # 
-# $\frac{k_2}{K_m}$ will have units of M$^{-1}cdot$s$^{-1}$ and is related to the number of collisions that lead to reaction. The higher the value of  $\frac{k_2}{K_m}$ the more efficient the enzyme.  Value near $10^9$ are the maximum indicating that the reaction is diffusion controlled and thus effectively every collision leads to reaction.
+# $\frac{k_2}{K_m}$ will have units of M$^{-1}\cdot$s$^{-1}$ and is related to the number of collisions that lead to reaction. The higher the value of  $\frac{k_2}{K_m}$ the more efficient the enzyme.  Value near $10^9$ are the maximum indicating that the reaction is diffusion controlled and thus effectively every collision leads to reaction.
 
 # ## Comparing MM Parameters For Different Enzymes
 
@@ -262,7 +262,7 @@ ax.set_xlabel("$[S]_0$ (mM)",size=fontsize)
 plt.tick_params(axis='both',labelsize=fontsize)
 ax.plot(s0,v0,'o',lw=2)
 s = np.arange(np.amin(s0),np.amax(s0),0.01)
-ax.plot(s,mm(res_lsq.x,s),lw=3,label="fit")
+ax.plot(s,mm(s,popt[0],popt[1]),lw=3,label="fit")
 plt.legend(fontsize=fontsize)
 
 
@@ -270,7 +270,7 @@ plt.legend(fontsize=fontsize)
 # 
 # In this solution we will plot $1/v_0$ vs $1/[S]_0$ and fit the resulting data to a line.
 
-# In[23]:
+# In[6]:
 
 
 # plot data
@@ -288,7 +288,7 @@ plt.tick_params(axis='both',labelsize=fontsize)
 ax.plot(1/s0,1/v0,'o',lw=2)
 
 
-# In[13]:
+# In[7]:
 
 
 # perform linear fit
@@ -308,7 +308,7 @@ print("v_max = ", np.round(vmax_lwb,1),"+/-", np.round(vmax_lwb_err,1), "muM/s")
 print("Km = ", np.round(Km_lwb,1),"+/-", np.round(Km_lwb_err,1), "mM")
 
 
-# In[9]:
+# In[8]:
 
 
 # plot data
@@ -331,7 +331,7 @@ plt.legend(fontsize=fontsize)
 
 # ### Compare Solutions
 
-# In[10]:
+# In[9]:
 
 
 # plot data
@@ -363,9 +363,10 @@ plt.legend(fontsize=fontsize)
 # K_m &= 4.0 \text{ mM}
 # \end{align}
 
-# In[47]:
+# In[10]:
 
 
+from tabulate import tabulate
 s0 = np.array([1,2,5,10,20.0])
 # Generate a data set
 def mm_from_params(S0,vmax,Km):  
@@ -385,11 +386,13 @@ for i in range(n_trials):
     data[:,i] = truth*(1+error)
     # keep flattened s0 array
     s0_total[:,i] = s0
+combined_data = np.column_stack((s0,data))
+print(tabulate(combined_data,headers=["[S]0","Trial 1", "Trial 2", "Trial 3", "Trial 4", "Trial 5"]))
 
 
 # The data in both standard and linear form look like:
 
-# In[48]:
+# In[11]:
 
 
 # plot data
@@ -417,7 +420,7 @@ ax[1].plot(1/s0,1/truth,'-',lw=2,label="Truth")
 
 # Now to perform the fits.  We start with the linear least-squares using the Lineweaver-Burk formulation.
 
-# In[52]:
+# In[12]:
 
 
 # perform linear fit
@@ -439,7 +442,7 @@ print("Km = ", np.round(Km_lwb,1),"+/-", np.round(Km_lwb_err,1), "mM")
 
 # Now we perform non-linear least squares using the standard Michaelis-Menten rate equation.
 
-# In[50]:
+# In[13]:
 
 
 # perform non-linear fit
@@ -458,7 +461,7 @@ print("Km = ", np.round(popt[1],1),"+/-", np.round(err[1],1), "mM")
 
 # You can see that both methods produce reasonable results.  They can be compared visually by looking at the plot.
 
-# In[53]:
+# In[14]:
 
 
 # plot data
