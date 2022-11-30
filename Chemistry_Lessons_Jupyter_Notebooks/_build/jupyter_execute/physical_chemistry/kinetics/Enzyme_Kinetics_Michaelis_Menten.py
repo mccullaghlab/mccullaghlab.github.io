@@ -11,7 +11,7 @@
 # 
 # 1. Delineate the steps and approximations in the Michaelis-Menten mechanism for enzyme kinetics.
 # 2. Express the rate of change of reactant (/substrate) change in terms of Michaelis-Menten parameters.
-# 3. Use a Lineweaver-Burke plot (/equation) to fit Michaelis-Menten parameters.
+# 3. Use a Lineweaver-Burk plot (/equation) to fit Michaelis-Menten parameters.
 # 4. Describe how to setup an experiment to measure Michaelis-Menten parameters.
 
 # ## Coding Concepts:
@@ -143,9 +143,9 @@ ax.plot(S0,mm(S0,vmax,Km),lw=3)
 # 
 # After these experiments, one will have concentration (or something proportional to concentration) as a function of initial concentration of substrate.  From here, it is a question of fitting the resulting data to the above equation for $v_0$ to determine v_{max}$ and $K_m$.  This can be done using a non-linear fit or using a Lineweaver-Burke plot.  
 
-# ## Fitting Michaelis-Menten Parameters using a Lineweaver-Burke Plot
+# ## Fitting Michaelis-Menten Parameters using a Lineweaver-Burk Plot
 
-# A Lineweaver-Burke plot is a plot of $\frac{1}{v_0}$ vs. $\frac{1}{[S]_0}$ and can be considered a linearized form of the Michaelis-Menten equation.  
+# A Lineweaver-Burk plot is a plot of $\frac{1}{v_0}$ vs. $\frac{1}{[S]_0}$ and can be considered a linearized form of the Michaelis-Menten equation.  
 # 
 # To demonstrate this, we start with the Michaelis-Menten initial rate equation and take the reciprocal of both sides:
 # \begin{align}
@@ -154,7 +154,34 @@ ax.plot(S0,mm(S0,vmax,Km),lw=3)
 # &= \frac{K_m}{v_{max}}\frac{1}{[S]_0} + \frac{1}{v_{max}}
 # \end{align}
 # 
-# This last equation is known as the Lineweaver-Burke equation and demonstrates that $\frac{1}{v_0}$ will be linear with respect to $\frac{1}{[S]_0}$ for enzyme kinetics that is well modeled by the Michaelis-Menten mechanism.  The slope of the line will be $\frac{K_m}{v_{max}}$ and the intercept is $\frac{1}{v_{max}}$.
+# This last equation is known as the Lineweaver-Burk equation and demonstrates that $\frac{1}{v_0}$ will be linear with respect to $\frac{1}{[S]_0}$ for enzyme kinetics that is well modeled by the Michaelis-Menten mechanism.  The slope of the line will be $\frac{K_m}{v_{max}}$ and the intercept is $\frac{1}{v_{max}}$.
+
+# ## The Importance of v/K
+
+# The value of $v_{max}/K_m$ (or, $k_2/K_m$), is a measure of the efficiency of an enzyme.   To see why this value is important, consider the MM rate law
+# \begin{equation}
+# v_0 = \frac{v_{max}[S]_0}{K_m + [S]_0}
+# \end{equation}
+# When $K_m >> [S]_0$, we have that 
+# \begin{equation}
+# v_0 \approx \frac{v_{max}}{K_m}[S]_0 = \frac{k_{2}}{K_m}[E]_0[S]_0
+# \end{equation}
+# or that the reaction is first order in substrate, first order in enzyme, and second order overall with observed rate constant of $\frac{k_2}{K_m}$.  
+# 
+# $\frac{k_2}{K_m}$ will have units of M$^{-1}cdot$s$^{-1}$ and is related to the number of collisions that lead to reaction. The higher the value of  $\frac{k_2}{K_m}$ the more efficient the enzyme.  Value near $10^9$ are the maximum indicating that the reaction is diffusion controlled and thus effectively every collision leads to reaction.
+
+# ## Comparing MM Parameters For Different Enzymes
+
+# Michaelis-Menten Parameter are tabulated for various enzymes.  These can be compared to assess the relative efficiency of these enzymes.
+# 
+# | Enzyme  |  Substrate | $K_m$ (M) | $k_{2}$ (s$^{-1}$) | $\frac{k_2}{K_m}$ (M$^{-1}cdot$s$^{-1}$) |
+# | :-----  | :--------- | :-------- | :----------------- | :-------------------------------         |
+# | Acetylcholineterase | Acetylcholine | $9.5\times10^{-5}$ | $1.4\times10^4$ | $1.5\times10^8$ |
+# | Carbonic anhydrase | CO$_2$ | $1.2\times10^{-2}$ | $1.0\times10^6$ | $8.3\times10^7$ |
+# | Carbonic anhydrase | HCO$_3^-$ | $2.6\times10^{-2}$ | $4.0\times10^5$ | $1.5\times10^7$ |
+# | Catalase | H$_2$O$_2$ | $2.5\times10^{-2}$ | $1.0\times10^7$ | $4.0\times10^8$ |
+# 
+# In the table above we see various examples of enzymes substrate pairs and their associated Michaelis-Menten parameters.  Carbonic anhydrase, for example, can bind either CO$_2$ or HCO$_3^-$ and has different MM parameters for those substrates.  As a summary, the enzymative efficiency ($\frac{k_2}{K_m}$) of Carbonic anhydrase is larger for CO$_2$ as a substrate as compared to HCO$_3^-$.
 
 # ## Example: Fitting Michaelis-Menten Parameters
 # 
@@ -175,7 +202,8 @@ ax.plot(S0,mm(S0,vmax,Km),lw=3)
 # In[2]:
 
 
-# Put the datat into numpy arrays
+# Put the data into numpy arrays
+import numpy as np
 s0 = np.array([1,2,5,10,20.0])
 v0 = np.array([2.5,4.0,6.3,7.6,9.0])
 
@@ -203,18 +231,16 @@ ax.plot(s0,v0,'o',lw=2)
 
 # perform non-linear fit
 # import least squares function from scipy library
-from scipy.optimize import least_squares
+from scipy.optimize import curve_fit
 # define Michaelis-Menten function
-def mm(x,s):  
-    return x[0]*s/(x[1] + s)
-# define residual function (difference between function and data)
-def loss(x,s,data):
-    return mm(x,s) - data
+def mm(s,vmax,Km):  
+    return vmax*s/(Km + s)
 # make an initial guess of parameters
 x0 = np.array([1.0,1.0])
-res_lsq = least_squares(loss, x0, args=(s0, v0))
-print("v_max = ", np.round(res_lsq.x[0],1), "micro M/s")
-print("Km = ", np.round(res_lsq.x[1],1), "mM")
+popt, pcov = curve_fit(mm, s0, v0)
+err = np.sqrt(np.diag(pcov))
+print("v_max = ", np.round(popt[0],1),"+/-", np.round(err[0],1), "muM/s")
+print("Km = ", np.round(popt[1],1),"+/-", np.round(err[1],1), "mM")
 
 
 # In[5]:
@@ -238,11 +264,11 @@ ax.plot(s,mm(res_lsq.x,s),lw=3,label="fit")
 plt.legend(fontsize=fontsize)
 
 
-# ### Solution: Lineweaver-Burke Plot
+# ### Solution: Lineweaver-Burk Plot
 # 
 # In this solution we will plot $1/v_0$ vs $1/[S]_0$ and fit the resulting data to a line.
 
-# In[6]:
+# In[23]:
 
 
 # plot data
@@ -260,26 +286,27 @@ plt.tick_params(axis='both',labelsize=fontsize)
 ax.plot(1/s0,1/v0,'o',lw=2)
 
 
-# In[7]:
+# In[13]:
 
 
 # perform linear fit
 # import least squares function from scipy library
-from scipy.optimize import least_squares
+from scipy.optimize import curve_fit
 # define Michaelis-Menten function
-def mm_lineweaver_burke(x,s):  
-    return x[0]*s + x[1]
-# define residual function (difference between function and data)
-def loss(x,s,data):
-    return mm_lineweaver_burke(x,s) - data
+def mm_lineweaver_burke(s,m,b):  
+    return m*s + b
 # make an initial guess of parameters
-x0 = np.array([1.0,1.0])
-res_lwb_lsq = least_squares(loss, x0, args=(1/s0, 1/v0))
-print("v_max = ", np.round(1/res_lwb_lsq.x[1],1), "micro M/s")
-print("Km = ", np.round(res_lwb_lsq.x[0]/res_lwb_lsq.x[1],1), "mM")
+popt_lwb, pcov = curve_fit(mm_lineweaver_burke, 1/s0, 1/v0)
+err_lwb = np.sqrt(np.diag(pcov))
+vmax_lwb = 1/popt_lwb[1]
+vmax_lwb_err = vmax_lwb*err_lwb[1]/popt_lwb[1]
+Km_lwb = popt_lwb[0]/popt_lwb[1]
+Km_lwb_err = Km_lwb*np.sqrt( (err_lwb[0]/popt_lwb[0])**2 + (err_lwb[1]/popt_lwb[1])**2)
+print("v_max = ", np.round(vmax_lwb,1),"+/-", np.round(vmax_lwb_err,1), "muM/s")
+print("Km = ", np.round(Km_lwb,1),"+/-", np.round(Km_lwb_err,1), "mM")
 
 
-# In[8]:
+# In[9]:
 
 
 # plot data
@@ -296,13 +323,13 @@ ax.set_xlabel("$1/[S]_0$ (1/mM)",size=fontsize)
 plt.tick_params(axis='both',labelsize=fontsize)
 ax.plot(1/s0,1/v0,'o',lw=2)
 s = np.arange(np.amin(1/s0),np.amax(1/s0),0.01)
-ax.plot(s,mm_lineweaver_burke(res_lwb_lsq.x,s),lw=3,label="fit")
+ax.plot(s,mm_lineweaver_burke(s,popt_lwb[0],popt_lwb[1]),lw=3,label="fit")
 plt.legend(fontsize=fontsize)
 
 
 # ### Compare Solutions
 
-# In[9]:
+# In[10]:
 
 
 # plot data
@@ -319,7 +346,135 @@ ax.set_xlabel("$[S]_0$ (mM)",size=fontsize)
 plt.tick_params(axis='both',labelsize=fontsize)
 ax.plot(s0,v0,'o',lw=2)
 s = np.arange(np.amin(s0),np.amax(s0),0.01)
-ax.plot(s,mm(res_lsq.x,s),lw=3,label="non-linear fit")
-ax.plot(s,mm(np.array([1/res_lwb_lsq.x[1],res_lwb_lsq.x[0]/res_lwb_lsq.x[1]]),s),'--',lw=3,label="linear fit")
+ax.plot(s,mm(s,popt[0],popt[1]),lw=3,label="non-linear fit")
+ax.plot(s,mm(s,vmax_lwb,Km_lwb),'--',lw=3,label="linear fit")
+plt.legend(fontsize=fontsize)
+
+
+# ## Example: Fitting with Error
+
+# Here we consider fitting MM parameters using either the Lineweaver-Burk linearization or non-linear regression.  Which method is better?  To investigate this, we generate a set of fake data using a known $K_m$ and $v_{max}$ and then fit the data using both approaches.
+
+# Below is a piece of code that will generate a fake data set for initial concentrations of $1, 2, 5, 10, 20$ M.  We will use Michaelis-Menten parameters of
+# \begin{align}
+# V_{max} &= 7.5 \text{ }\mu\text{M}\cdot\text{s}^{-1}\\
+# K_m &= 4.0 \text{ mM}
+# \end{align}
+
+# In[47]:
+
+
+s0 = np.array([1,2,5,10,20.0])
+# Generate a data set
+def mm_from_params(S0,vmax,Km):  
+    return vmax*S0/(Km + S0)
+vmax = 7.5
+Km = 4.0
+truth = mm_from_params(s0,vmax,Km)
+n_trials = 5
+data = np.empty((truth.shape[0],n_trials))
+s0_total = np.empty((s0.shape[0],n_trials))
+for i in range(n_trials):
+    # estimate error based on normal distribution 99.9% data within 7.5%
+    error = np.random.normal(0,0.03,truth.shape[0])
+    # estimate error from uniform distribution with maximum value of 5%
+    #error = 0.1*(np.random.rand(truth.shape[0])-0.5)
+    # generate data by adding error to truth
+    data[:,i] = truth*(1+error)
+    # keep flattened s0 array
+    s0_total[:,i] = s0
+
+
+# The data in both standard and linear form look like:
+
+# In[48]:
+
+
+# plot data
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+# setup plot parameters
+fontsize=16
+fig, ax = plt.subplots(1,2,figsize=(16,8), dpi= 80, facecolor='w', edgecolor='k')
+ax[0].grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax[0].set_ylabel("$v_0$ ($\mu$M/s)",size=fontsize)
+ax[0].set_xlabel("$[S]_0$ (mM)",size=fontsize)
+ax[0].tick_params(axis='both',labelsize=fontsize)
+for i in range(n_trials):
+    ax[0].plot(s0,data[:,i],'o')
+ax[0].plot(s0,truth,'-',lw=2,label="Truth")
+ax[1].grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax[1].set_ylabel("$1/v_0$ (s/$\mu$M)",size=fontsize)
+ax[1].set_xlabel("$1/[S]_0$ (1/mM)",size=fontsize)
+ax[1].tick_params(axis='both',labelsize=fontsize)
+for i in range(n_trials):
+    ax[1].plot(1/s0,1/data[:,i],'o')
+ax[1].plot(1/s0,1/truth,'-',lw=2,label="Truth")
+
+
+# Now to perform the fits.  We start with the linear least-squares using the Lineweaver-Burk formulation.
+
+# In[52]:
+
+
+# perform linear fit
+# import least squares function from scipy library
+from scipy.optimize import curve_fit
+# define Michaelis-Menten function
+def mm_lineweaver_burke(s,m,b):  
+    return m*s + b
+# make an initial guess of parameters
+popt_lwb, pcov = curve_fit(mm_lineweaver_burke, 1/s0_total.flatten(), 1/data.flatten())
+err_lwb = np.sqrt(np.diag(pcov))
+vmax_lwb = 1/popt_lwb[1]
+vmax_lwb_err = vmax_lwb*err_lwb[1]/popt_lwb[1]
+Km_lwb = popt_lwb[0]/popt_lwb[1]
+Km_lwb_err = Km_lwb*np.sqrt( (err_lwb[0]/popt_lwb[0])**2 + (err_lwb[1]/popt_lwb[1])**2)
+print("v_max = ", np.round(vmax_lwb,1),"+/-", np.round(vmax_lwb_err,1), "muM/s")
+print("Km = ", np.round(Km_lwb,1),"+/-", np.round(Km_lwb_err,1), "mM")
+
+
+# Now we perform non-linear least squares using the standard Michaelis-Menten rate equation.
+
+# In[50]:
+
+
+# perform non-linear fit
+# import least squares function from scipy library
+from scipy.optimize import curve_fit
+# define Michaelis-Menten function
+def mm(s,vmax,Km):  
+    return vmax*s/(Km + s)
+# make an initial guess of parameters
+x0 = np.array([1.0,1.0])
+popt, pcov = curve_fit(mm, s0_total.flatten(), data.flatten())
+err = np.sqrt(np.diag(pcov))
+print("v_max = ", np.round(popt[0],1),"+/-", np.round(err[0],1), "muM/s")
+print("Km = ", np.round(popt[1],1),"+/-", np.round(err[1],1), "mM")
+
+
+# You can see that both methods produce reasonable results.  They can be compared visually by looking at the plot.
+
+# In[53]:
+
+
+# plot data
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+# setup plot parameters
+fontsize=16
+fig, ax = plt.subplots(1,1,figsize=(8,8), dpi= 80, facecolor='w', edgecolor='k')
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_ylabel("$v_0$ ($\mu$M/s)",size=fontsize)
+ax.set_xlabel("$[S]_0$ (mM)",size=fontsize)
+ax.tick_params(axis='both',labelsize=fontsize)
+for i in range(n_trials):
+    ax.plot(s0,data[:,i],'o')
+s = np.arange(1,20,0.01)
+ax.plot(s,mm(s,vmax,Km),'-',lw=3,label="Truth")
+ax.plot(s,mm(s,popt[0],popt[1]),'--',lw=2,label="non-linear fit")
+ax.plot(s,mm(s,vmax_lwb,Km_lwb),'--',lw=2,label="linear fit")
 plt.legend(fontsize=fontsize)
 
