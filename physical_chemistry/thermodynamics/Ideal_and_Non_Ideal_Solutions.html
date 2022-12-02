@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.2.18. Ideal and Non-ideal Solutions &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.19. Chemical Equilibrium" href="Introduction_to_Chemical_Equilibrium.html" />
@@ -827,13 +828,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="ideal-and-non-ideal-solutions">
+  <section class="tex2jax_ignore mathjax_ignore" id="ideal-and-non-ideal-solutions">
 <h1><span class="section-number">3.2.18. </span>Ideal and Non-ideal Solutions<a class="headerlink" href="#ideal-and-non-ideal-solutions" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.2.18.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>Solutions are composed of two or more homogeneously mixed components.  <em>Ideal</em> solutions are ones that are homogenously mixed and that follow <em>Raoult’s law</em>.  Most solutions, however, are non-ideal.  In these notes we will discuss how to compute Thermodynamic quantitites for ideal and non-ideal solutions.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.2.18.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="simple">
@@ -842,8 +843,8 @@ title="Print to PDF"
 <li><p>Compute <span class="math notranslate nohighlight">\(\Delta G_{mix}\)</span> and <span class="math notranslate nohighlight">\(\Delta S_{mix}\)</span> for ideal solutions give mole fraction information</p></li>
 <li><p>Compute the Henry’s law constant from <span class="math notranslate nohighlight">\(P(x_1)\)</span> information</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.2.18.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -851,31 +852,31 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="ideal-solutions">
+</section>
+<section id="ideal-solutions">
 <h2><span class="section-number">3.2.18.4. </span>Ideal Solutions<a class="headerlink" href="#ideal-solutions" title="Permalink to this headline">#</a></h2>
 <p>An <em>ideal solution</em> is one in which the partial pressure of each component is proportional to its mole fraction, or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2624681-16ed-4955-86b1-9525378d46c6">
-<span class="eqno">(3.410)<a class="headerlink" href="#equation-e2624681-16ed-4955-86b1-9525378d46c6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-675e4f2d-c5d3-4ce8-9e36-a60bc8fd6e12">
+<span class="eqno">(3.410)<a class="headerlink" href="#equation-675e4f2d-c5d3-4ce8-9e36-a60bc8fd6e12" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P_j = x_j P_j^*.
 \end{equation}\]</div>
 <p>The above equation is called <em>Raoult’s law</em> so an ideal solution is one which obeys Raoult’s law.  Ideal solutions are composed of similar (similar in size and molecular nature) species such as benzene and toluene. The similarity in species leads to similar intermolecular interactions.  This will also lead to a uniform distribution of species across the entire solution (another description of an ideal solution).</p>
 <p>Rault’s law can be used to express the chemical potential of components of an ideal solution as a function of the mole fraction of that component.  Starting with the chemical potential of component <span class="math notranslate nohighlight">\(i\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d9bc7472-99e1-4266-8922-93009066c32f">
-<span class="eqno">(3.411)<a class="headerlink" href="#equation-d9bc7472-99e1-4266-8922-93009066c32f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5353a3c6-b131-4df9-85b5-bf98159b9aae">
+<span class="eqno">(3.411)<a class="headerlink" href="#equation-5353a3c6-b131-4df9-85b5-bf98159b9aae" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mu^{sln}_i = \mu^{*}_i(l) + RT\ln\frac{P_i}{P_i^*}
 \end{equation}\]</div>
 <p>we substitute Rault’s law for <span class="math notranslate nohighlight">\(P_i\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-76a1af77-8446-46cb-979a-911455db54bb">
-<span class="eqno">(3.412)<a class="headerlink" href="#equation-76a1af77-8446-46cb-979a-911455db54bb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f17dba3d-3bb5-48c4-9b92-10d298e1073f">
+<span class="eqno">(3.412)<a class="headerlink" href="#equation-f17dba3d-3bb5-48c4-9b92-10d298e1073f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mu^{sln}_i = \mu^{*}_i(l) + RT\ln\frac{x_i P_i^*}{P_i^*} = \mu^{*}_i(l) + RT\ln x_i
 \end{equation}\]</div>
-<div class="section" id="example-pressures-above-ideal-solutions">
+<section id="example-pressures-above-ideal-solutions">
 <h3><span class="section-number">3.2.18.4.1. </span>Example: Pressures above Ideal Solutions<a class="headerlink" href="#example-pressures-above-ideal-solutions" title="Permalink to this headline">#</a></h3>
 <p>1-propanol and 2-propanol form an ideal solution at 25<span class="math notranslate nohighlight">\(^\circ\)</span>C.  The pressure of pure 1-proponal is <span class="math notranslate nohighlight">\(P_1^*=20.9\)</span> torr and that of 2-propanol is <span class="math notranslate nohighlight">\(P_2^* =45.2\)</span> torr.  Plot the partial pressures and total pressures as a function of <span class="math notranslate nohighlight">\(x_1\)</span> the mole fraction of 1-propanol.</p>
 <p>We will use the equation the following equations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a5ac4ab-1d84-488e-9f22-e53f42303726">
-<span class="eqno">(3.413)<a class="headerlink" href="#equation-8a5ac4ab-1d84-488e-9f22-e53f42303726" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-80764062-5a34-4639-9985-e52744e7c56c">
+<span class="eqno">(3.413)<a class="headerlink" href="#equation-80764062-5a34-4639-9985-e52744e7c56c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P_1 &amp;=&amp; x_1P_1* \\
 P_2 &amp;=&amp; (1-x_1)P_2* \\
 P_{total} &amp;=&amp; x_1P_1* + (1-x_1)P_2*
@@ -912,22 +913,22 @@ P_{total} &amp;=&amp; x_1P_1* + (1-x_1)P_2*
 <img alt="../../_images/Ideal_and_Non_Ideal_Solutions_7_1.png" src="../../_images/Ideal_and_Non_Ideal_Solutions_7_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="the-mole-fraction-in-the-liquid-and-vapor-phases-can-be-different">
+</section>
+<section id="the-mole-fraction-in-the-liquid-and-vapor-phases-can-be-different">
 <h3><span class="section-number">3.2.18.4.2. </span>The mole fraction in the liquid and vapor phases can be different<a class="headerlink" href="#the-mole-fraction-in-the-liquid-and-vapor-phases-can-be-different" title="Permalink to this headline">#</a></h3>
 <p>The mole fraction of a component of the vapor, <span class="math notranslate nohighlight">\(y_i\)</span>, can be determined by Dalton’s law of partial pressure</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7e988c64-3038-4c87-a909-c2e0dc3eb434">
-<span class="eqno">(3.414)<a class="headerlink" href="#equation-7e988c64-3038-4c87-a909-c2e0dc3eb434" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-db6f89ed-8085-4830-9fa9-631b36d1aa53">
+<span class="eqno">(3.414)<a class="headerlink" href="#equation-db6f89ed-8085-4830-9fa9-631b36d1aa53" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_i = \frac{P_i}{P_{total}}
 \end{equation}\]</div>
 <p>Using Rault’s law we can substitute <span class="math notranslate nohighlight">\(P_i = x_iP_i^*\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae9707f4-e05b-4bf1-bc7f-8a56f2882c9e">
-<span class="eqno">(3.415)<a class="headerlink" href="#equation-ae9707f4-e05b-4bf1-bc7f-8a56f2882c9e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-da163011-a7d6-4a6d-98a8-692cd5c71477">
+<span class="eqno">(3.415)<a class="headerlink" href="#equation-da163011-a7d6-4a6d-98a8-692cd5c71477" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_i = \frac{xP_i^*}{P_{total}}
 \end{equation}\]</div>
 <p>Because of the potential difference in partial pressures due to the pure liquid the mole fractions in the liquid phase, <span class="math notranslate nohighlight">\(x_i\)</span>, are not necessarily equal to the mole fractions in the vapor phase, <span class="math notranslate nohighlight">\(y_i\)</span>.</p>
-</div>
-<div class="section" id="example-mole-fractions-of-1-propanol-and-2-propanol-in-vapor-and-in-liquid">
+</section>
+<section id="example-mole-fractions-of-1-propanol-and-2-propanol-in-vapor-and-in-liquid">
 <h3><span class="section-number">3.2.18.4.3. </span>Example: Mole Fractions of 1-propanol and 2-propanol in Vapor and in Liquid<a class="headerlink" href="#example-mole-fractions-of-1-propanol-and-2-propanol-in-vapor-and-in-liquid" title="Permalink to this headline">#</a></h3>
 <p>Make a plot of total pressure as a function of mole fraction of 1-propanol in the liquid and in the vapor phase of the previous example</p>
 <div class="cell docutils container">
@@ -1004,53 +1005,53 @@ y_i = \frac{xP_i^*}{P_{total}}
 <img alt="../../_images/Ideal_and_Non_Ideal_Solutions_11_1.png" src="../../_images/Ideal_and_Non_Ideal_Solutions_11_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="free-energy-of-mixing-ideal-solutions">
+</section>
+<section id="free-energy-of-mixing-ideal-solutions">
 <h3><span class="section-number">3.2.18.4.4. </span>Free Energy of Mixing Ideal Solutions<a class="headerlink" href="#free-energy-of-mixing-ideal-solutions" title="Permalink to this headline">#</a></h3>
 <p>The Gibbs free energy of mixing of a binary ideal solution at constant <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(P\)</span> can be computed as follows</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cbba094f-15cc-4778-b97d-d73aaf1e4592">
-<span class="eqno">(3.416)<a class="headerlink" href="#equation-cbba094f-15cc-4778-b97d-d73aaf1e4592" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-29259ca3-5696-4f74-9659-1d91244e5645">
+<span class="eqno">(3.416)<a class="headerlink" href="#equation-29259ca3-5696-4f74-9659-1d91244e5645" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta G_{mix}  &amp;=&amp; G^{sln}(T,P,n_1,n_2) - G_1^*(T,P,n_1) - G_2^*(T,P,n_2) \\
     &amp;=&amp; n_1\mu_1^{sln} + n_2\mu_2^{sln} - n_1\mu_1^* - n_2\mu_2^* \\
     &amp;=&amp; RT(n_1\ln x_1 + n_2\ln x_2)
 \end{eqnarray}\]</div>
 <p>Entropy of mixing can be computed ass the temperature derivative of <span class="math notranslate nohighlight">\(\Delta G_{mix}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-248c49f8-0e29-4e6d-9015-ae6a06dd21d6">
-<span class="eqno">(3.417)<a class="headerlink" href="#equation-248c49f8-0e29-4e6d-9015-ae6a06dd21d6" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-52e9f5ef-f81c-43c8-bb72-fc39a3fafafe">
+<span class="eqno">(3.417)<a class="headerlink" href="#equation-52e9f5ef-f81c-43c8-bb72-fc39a3fafafe" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta S_{mix} = -\left( \frac{\partial \Delta G_{mix}}{\partial T} \right)_{P,n_1,n_2} = -R(n_1\ln x_1 + n_2\ln x_2)
 \end{eqnarray}\]</div>
 <p>The volume change upon mixing is zero for ideal solutions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-42161d0e-3b0a-4ac8-96c6-1f0e877cea0c">
-<span class="eqno">(3.418)<a class="headerlink" href="#equation-42161d0e-3b0a-4ac8-96c6-1f0e877cea0c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-63ab276f-91dc-4837-b013-f6f4b96e863a">
+<span class="eqno">(3.418)<a class="headerlink" href="#equation-63ab276f-91dc-4837-b013-f6f4b96e863a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta V_{mix} = \left( \frac{\partial \Delta G_{mix}}{\partial P}\right)_{T,n_1,n_2} = 0
 \end{equation}\]</div>
 <p>The enthalpy change of mixing is also zero for ideal solutions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-af59af1f-e68e-4797-8d08-7359a52830ce">
-<span class="eqno">(3.419)<a class="headerlink" href="#equation-af59af1f-e68e-4797-8d08-7359a52830ce" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f51ec80c-dad9-4ca8-8286-d67fc68809c9">
+<span class="eqno">(3.419)<a class="headerlink" href="#equation-f51ec80c-dad9-4ca8-8286-d67fc68809c9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta H_{mix} = \Delta G_{mix} - T\Delta S_{mix} = 0
 \end{equation}\]</div>
-</div>
-</div>
-<div class="section" id="non-ideal-solutions">
+</section>
+</section>
+<section id="non-ideal-solutions">
 <h2><span class="section-number">3.2.18.5. </span>Non-Ideal Solutions<a class="headerlink" href="#non-ideal-solutions" title="Permalink to this headline">#</a></h2>
 <p>Most Solutions are not ideal, meaning there is an imbalance in molecular size and/or intermolecular interactions between the species.  This leads to distinct behavior from Raoult’s law for each component as the mole fraction of that component deviates from <span class="math notranslate nohighlight">\(1\)</span>.  This can be written mathematically as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ce7b513c-8765-4bc8-b759-1157c448e534">
-<span class="eqno">(3.420)<a class="headerlink" href="#equation-ce7b513c-8765-4bc8-b759-1157c448e534" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-aa0b919f-bd9a-4241-8485-70087eadb7c9">
+<span class="eqno">(3.420)<a class="headerlink" href="#equation-aa0b919f-bd9a-4241-8485-70087eadb7c9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P_i &amp;\rightarrow&amp; x_iP_i^* \quad\text{as}\quad x_i\rightarrow 1 \\
 P_i &amp;\rightarrow&amp; x_ik_{H,i} \quad\text{as}\quad x_i\rightarrow 0 
 \end{eqnarray}\]</div>
 <p>This last relationship is called <em>Henry’s law</em> and <span class="math notranslate nohighlight">\(k_{H,i}\)</span> is the Henry’s law constant for component <span class="math notranslate nohighlight">\(i\)</span>.  The value of <span class="math notranslate nohighlight">\(k_{H,i}\)</span> reflects the intermolecular interactions between species <span class="math notranslate nohighlight">\(i\)</span> and the other components of the solution.</p>
-<div class="section" id="example-compute-henry-s-law-constant">
+<section id="example-compute-henry-s-law-constant">
 <h3><span class="section-number">3.2.18.5.1. </span>Example: Compute Henry’s Law Constant<a class="headerlink" href="#example-compute-henry-s-law-constant" title="Permalink to this headline">#</a></h3>
 <p>The vapor pressure for one component of a binary solution is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-598e18a4-660d-4df9-8661-33a7e45c064a">
-<span class="eqno">(3.421)<a class="headerlink" href="#equation-598e18a4-660d-4df9-8661-33a7e45c064a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3f27d8e3-e8c6-409c-ba5c-014b3055fc95">
+<span class="eqno">(3.421)<a class="headerlink" href="#equation-3f27d8e3-e8c6-409c-ba5c-014b3055fc95" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P_1  = 180 x_1e^{x_2^2+\frac{1}{2}x_2^3}
 \end{equation}\]</div>
 <p>Determine the Henry’s law constant for this component.</p>
 <p>We calculate the Henry’s law constant by taking the limit of <span class="math notranslate nohighlight">\(P_1\)</span> as <span class="math notranslate nohighlight">\(x_1\)</span> goes to zero:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-44f8a66f-ee47-4fc7-a57e-55deaebe67b3">
-<span class="eqno">(3.422)<a class="headerlink" href="#equation-44f8a66f-ee47-4fc7-a57e-55deaebe67b3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-438ca91a-1a2b-4052-bf49-2ebdd584077b">
+<span class="eqno">(3.422)<a class="headerlink" href="#equation-438ca91a-1a2b-4052-bf49-2ebdd584077b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 k_{H,1} &amp;=&amp; \lim_{x_1\rightarrow0} \frac{P_1}{x_1} \\
 &amp;=&amp; \lim_{x_1\rightarrow0} 180 e^{x_2^2+\frac{1}{2}x_2^3} \\
 &amp;=&amp; 180\lim_{x_1\rightarrow0}   e^{(1-x_1)^2+\frac{1}{2}(1-x_1)^3} \\
@@ -1058,24 +1059,24 @@ k_{H,1} &amp;=&amp; \lim_{x_1\rightarrow0} \frac{P_1}{x_1} \\
 &amp;=&amp; 180e^{\frac{3}{2}}\\
 &amp;\approx&amp; 807 \quad \text{torr}
 \end{eqnarray}\]</div>
-</div>
-</div>
-<div class="section" id="vapor-pressures-above-solutions-can-be-related-using-gibbs-duhem">
+</section>
+</section>
+<section id="vapor-pressures-above-solutions-can-be-related-using-gibbs-duhem">
 <h2><span class="section-number">3.2.18.6. </span>Vapor Pressures Above Solutions can be Related Using Gibbs-Duhem<a class="headerlink" href="#vapor-pressures-above-solutions-can-be-related-using-gibbs-duhem" title="Permalink to this headline">#</a></h2>
 <p>Much like the case of the the chemical potentials of solutions, the vapor pressures above solutions can be related using the Gibbs-Duhem equation.  This can be seen from the following relationships for a binary solution</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4488873a-746f-43a9-b6d7-e8a54161ec38">
-<span class="eqno">(3.423)<a class="headerlink" href="#equation-4488873a-746f-43a9-b6d7-e8a54161ec38" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-9a6efa07-c5ef-4969-98c4-1e6a519b0fa9">
+<span class="eqno">(3.423)<a class="headerlink" href="#equation-9a6efa07-c5ef-4969-98c4-1e6a519b0fa9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \mu_1 &amp;=&amp; \mu_1^0 + RT\ln P_1 \\
 \mu_2 &amp;=&amp; \mu_2^0 + RT\ln P_2 
 \end{eqnarray}\]</div>
 <p>and the Gibbs-Duhem relationship that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-27a24d32-1906-486a-b738-6f2d3c808ea4">
-<span class="eqno">(3.424)<a class="headerlink" href="#equation-27a24d32-1906-486a-b738-6f2d3c808ea4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e4bf844b-5f2f-44b1-a0fd-19b1ef0c5c66">
+<span class="eqno">(3.424)<a class="headerlink" href="#equation-e4bf844b-5f2f-44b1-a0fd-19b1ef0c5c66" title="Permalink to this equation">#</a></span>\[\begin{equation}
 d\mu_2 = -\frac{x_1}{x_2}d\mu_2.
 \end{equation}\]</div>
 <p>The first set of equations can be solved for <span class="math notranslate nohighlight">\(P_1\)</span> and <span class="math notranslate nohighlight">\(P_2\)</span> in terms of <span class="math notranslate nohighlight">\(\mu_1\)</span> and <span class="math notranslate nohighlight">\(\mu_2\)</span>, respectively.  So one can measure the partial pressure of one species as a function of composition and determine the partial pressure as a function of composition using these relationships.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
