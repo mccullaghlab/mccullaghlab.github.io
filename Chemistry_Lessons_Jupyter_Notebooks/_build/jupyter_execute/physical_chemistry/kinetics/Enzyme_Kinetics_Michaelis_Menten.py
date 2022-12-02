@@ -396,7 +396,7 @@ print(tabulate(combined_data,headers=["[S]0","Trial 1", "Trial 2", "Trial 3", "T
 
 # The data in both standard and linear form look like:
 
-# In[11]:
+# In[48]:
 
 
 # plot data
@@ -424,7 +424,7 @@ ax[1].plot(1/s0,1/truth,'-',lw=2,label="Truth")
 
 # Now to perform the fits.  We start with the linear least-squares using the Lineweaver-Burk formulation.
 
-# In[12]:
+# In[52]:
 
 
 # perform linear fit
@@ -446,7 +446,7 @@ print("Km = ", np.round(Km_lwb,1),"+/-", np.round(Km_lwb_err,1), "mM")
 
 # Now we perform non-linear least squares using the standard Michaelis-Menten rate equation.
 
-# In[13]:
+# In[50]:
 
 
 # perform non-linear fit
@@ -465,7 +465,7 @@ print("Km = ", np.round(popt[1],1),"+/-", np.round(err[1],1), "mM")
 
 # You can see that both methods produce reasonable results.  They can be compared visually by looking at the plot.
 
-# In[14]:
+# In[53]:
 
 
 # plot data

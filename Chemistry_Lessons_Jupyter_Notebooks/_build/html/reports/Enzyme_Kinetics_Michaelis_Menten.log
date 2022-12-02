@@ -17,32 +17,39 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# plot data
-import numpy as np
-import matplotlib.pyplot as plt
-%matplotlib inline
-# setup plot parameters
-fontsize=16
-fig = plt.figure(figsize=(8,8), dpi= 80, facecolor='w', edgecolor='k')
-ax = plt.subplot(111)
-ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
-ax.set_ylabel("$v_0$ ($\mu$M/s)",size=fontsize)
-ax.set_xlabel("$[S]_0$ (mM)",size=fontsize)
-plt.tick_params(axis='both',labelsize=fontsize)
-ax.plot(s0,v0,'o',lw=2)
-s = np.arange(np.amin(s0),np.amax(s0),0.01)
-ax.plot(s,mm(res_lsq.x,s),lw=3,label="fit")
-plt.legend(fontsize=fontsize)
+from tabulate import tabulate
+s0 = np.array([1,2,5,10,20.0])
+# Generate a data set
+def mm_from_params(S0,vmax,Km):  
+    return vmax*S0/(Km + S0)
+vmax = 7.5
+Km = 4.0
+truth = mm_from_params(s0,vmax,Km)
+n_trials = 5
+data = np.empty((truth.shape[0],n_trials))
+s0_total = np.empty((s0.shape[0],n_trials))
+for i in range(n_trials):
+    # estimate error based on normal distribution 99.9% data within 7.5%
+    error = np.random.normal(0,0.03,truth.shape[0])
+    # estimate error from uniform distribution with maximum value of 5%
+    #error = 0.1*(np.random.rand(truth.shape[0])-0.5)
+    # generate data by adding error to truth
+    data[:,i] = truth*(1+error)
+    # keep flattened s0 array
+    s0_total[:,i] = s0
+combined_data = np.column_stack((s0,data))
+print(tabulate(combined_data,headers=["[S]0","Trial 1", "Trial 2", "Trial 3", "Trial 4", "Trial 5"]))
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m<ipython-input-5-a3369de19bfc>[0m in [0;36m<module>[0;34m[0m
-[1;32m     13[0m [0max[0m[0;34m.[0m[0mplot[0m[0;34m([0m[0ms0[0m[0;34m,[0m[0mv0[0m[0;34m,[0m[0;34m'o'[0m[0;34m,[0m[0mlw[0m[0;34m=[0m[0;36m2[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     14[0m [0ms[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0marange[0m[0;34m([0m[0mnp[0m[0;34m.[0m[0mamin[0m[0;34m([0m[0ms0[0m[0;34m)[0m[0;34m,[0m[0mnp[0m[0;34m.[0m[0mamax[0m[0;34m([0m[0ms0[0m[0;34m)[0m[0;34m,[0m[0;36m0.01[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 15[0;31m [0max[0m[0;34m.[0m[0mplot[0m[0;34m([0m[0ms[0m[0;34m,[0m[0mmm[0m[0;34m([0m[0mres_lsq[0m[0;34m.[0m[0mx[0m[0;34m,[0m[0ms[0m[0;34m)[0m[0;34m,[0m[0mlw[0m[0;34m=[0m[0;36m3[0m[0;34m,[0m[0mlabel[0m[0;34m=[0m[0;34m"fit"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     16[0m [0mplt[0m[0;34m.[0m[0mlegend[0m[0;34m([0m[0mfontsize[0m[0;34m=[0m[0mfontsize[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;32m<ipython-input-10-e7a272c13a12>[0m in [0;36m<module>[0;34m[0m
+[0;32m----> 1[0;31m [0;32mfrom[0m [0mtabulate[0m [0;32mimport[0m [0mtabulate[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      2[0m [0ms0[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0marray[0m[0;34m([0m[0;34m[[0m[0;36m1[0m[0;34m,[0m[0;36m2[0m[0;34m,[0m[0;36m5[0m[0;34m,[0m[0;36m10[0m[0;34m,[0m[0;36m20.0[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      3[0m [0;31m# Generate a data set[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;32mdef[0m [0mmm_from_params[0m[0;34m([0m[0mS0[0m[0;34m,[0m[0mvmax[0m[0;34m,[0m[0mKm[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m     [0;32mreturn[0m [0mvmax[0m[0;34m*[0m[0mS0[0m[0;34m/[0m[0;34m([0m[0mKm[0m [0;34m+[0m [0mS0[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mNameError[0m: name 'res_lsq' is not defined
-NameError: name 'res_lsq' is not defined
+[0;31mModuleNotFoundError[0m: No module named 'tabulate'
+ModuleNotFoundError: No module named 'tabulate'
 

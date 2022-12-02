@@ -8,6 +8,13 @@
 # Some processes involving enzymes do not follow Michaelis-Menten kinetics. One such example is cooperative binding in which the binding of one molecule affects the binding of another molecule.  In this notebook we will look at the ability of an enzyme to bind multiple copies of the same molecule.
 
 # ## Learning Goals
+# 
+# After working through this notebook, you will be able to
+# 
+# 1. Write out the cooperative binding mechanism
+# 2. Derive the cooperative binding rate law
+# 3. Identify cooperative binding behavior in a plot of $v_0$ vs $[S]_0$
+# 4. Identify negative and postive cooperative binding behavior.
 
 # ## Coding Concepts
 # 
@@ -204,6 +211,8 @@ s0 = np.array([1,2,5,10,20.0])
 v0 = np.array([2.5,4.0,6.3,7.6,9.0])
 
 
+# Perform the non-linear fit and get the parameters:
+
 # In[5]:
 
 
@@ -285,6 +294,8 @@ plt.tick_params(axis='both',labelsize=fontsize)
 ax.plot(s0,v0,'o',lw=2)
 
 
+# Perform the non-linear fit to the Hill equation and get the parameters:
+
 # In[9]:
 
 
@@ -298,10 +309,12 @@ def hill(s,vmax,Km,n):
 x0 = np.array([1.0,1.0])
 popt, pcov = curve_fit(hill, s0, v0)
 err = np.sqrt(np.diag(pcov))
-print("v_max = ", np.round(popt[0],1),"+/-", np.round(err[0],1), "muM/s")
+print("v_max = ", np.round(popt[0],2),"+/-", np.round(err[0],2), "muM/s")
 print("Km = ", np.round(popt[1],1),"+/-", np.round(err[1],1), "mM")
 print("n = ", np.round(popt[2],1),"+/-", np.round(err[2],1))
 
+
+# Perform a non-linear fit the MM equation for reference:
 
 # In[10]:
 
@@ -319,6 +332,8 @@ err_mm = np.sqrt(np.diag(pcov))
 print("v_max = ", np.round(popt_mm[0],1),"+/-", np.round(err_mm[0],1), "muM/s")
 print("Km = ", np.round(popt_mm[1],1),"+/-", np.round(err_mm[1],1), "mM")
 
+
+# Plot the results:
 
 # In[11]:
 
@@ -340,31 +355,4 @@ s = np.arange(0.5,20,0.01)
 ax.plot(s,hill(s,popt[0],popt[1],popt[2]),lw=2,label="Hill")
 ax.plot(s,mm(s,popt_mm[0],popt_mm[1]),lw=2,label="Michaelis-Menten")
 plt.legend(fontsize=fontsize)
-
-
-# In[12]:
-
-
-import numpy as np
-s0 = np.array([0.5,1,2,5,10,20.0])
-# Generate a data set
-def hill(S0,vmax,Km,n):  
-    return vmax*S0**n/(Km + S0**n)
-vmax = 7.5
-Km = 5.0
-n = 3
-truth = hill(s0,vmax,Km,n)
-n_trials = 1
-data = np.empty((truth.shape[0],n_trials))
-s0_total = np.empty((s0.shape[0],n_trials))
-for i in range(n_trials):
-    # estimate error based on normal distribution 99.9% data within 7.5%
-    error = np.random.normal(0,0.015,truth.shape[0])
-    # estimate error from uniform distribution with maximum value of 5%
-    #error = 0.1*(np.random.rand(truth.shape[0])-0.5)
-    # generate data by adding error to truth
-    data[:,i] = truth*(1+error)
-    # keep flattened s0 array
-    s0_total[:,i] = s0
-print(data)
 
