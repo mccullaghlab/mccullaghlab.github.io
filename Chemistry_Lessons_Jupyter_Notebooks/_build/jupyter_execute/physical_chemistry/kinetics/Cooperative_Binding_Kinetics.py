@@ -155,7 +155,7 @@ def hill(S0,vmax,Km,n):
     return vmax*S0**n/(Km + S0**n)
 vmax = 0.001
 Km = 2
-S0 = np.arange(0,8,0.1)
+S0 = np.arange(0,80000000,1.0)
 ax.plot(S0,hill(S0,vmax,Km,1),'-',lw=3,label="n=1")
 ax.plot(S0,hill(S0,vmax,Km,2),'-',lw=3,label="n=2")
 ax.plot(S0,hill(S0,vmax,Km,3),'-',lw=3,label="n=3")
@@ -203,7 +203,7 @@ plt.legend(fontsize=fontsize)
 # | 10           | 7.6              |
 # | 20           | 9.0              |
 
-# In[4]:
+# In[18]:
 
 
 # Put the datat into numpy arrays
@@ -213,7 +213,7 @@ v0 = np.array([2.5,4.0,6.3,7.6,9.0])
 
 # Perform the non-linear fit and get the parameters:
 
-# In[5]:
+# In[20]:
 
 
 # perform non-linear fit
@@ -233,7 +233,7 @@ print("Km = ", np.round(res_lsq.x[1],1), "mM")
 print("n = ", np.round(res_lsq.x[2],1), "unitless")
 
 
-# In[6]:
+# In[21]:
 
 
 # plot data
@@ -267,7 +267,7 @@ plt.legend(fontsize=fontsize)
 # | 10           | 7.52             |
 # | 20           |  7.42             |
 
-# In[7]:
+# In[2]:
 
 
 # Put the data into numpy arrays
@@ -276,7 +276,7 @@ s0 = np.array([0.5,1,2,5,10,20.0])
 v0 = np.array([0.19,1.26,4.55,7.18,7.52,7.42])
 
 
-# In[8]:
+# In[20]:
 
 
 # plot data
@@ -296,7 +296,7 @@ ax.plot(s0,v0,'o',lw=2)
 
 # Perform the non-linear fit to the Hill equation and get the parameters:
 
-# In[9]:
+# In[4]:
 
 
 # perform non-linear fit
@@ -316,7 +316,7 @@ print("n = ", np.round(popt[2],1),"+/-", np.round(err[2],1))
 
 # Perform a non-linear fit the MM equation for reference:
 
-# In[10]:
+# In[22]:
 
 
 # perform non-linear fit
@@ -335,7 +335,7 @@ print("Km = ", np.round(popt_mm[1],1),"+/-", np.round(err_mm[1],1), "mM")
 
 # Plot the results:
 
-# In[11]:
+# In[23]:
 
 
 # plot data
@@ -355,4 +355,58 @@ s = np.arange(0.5,20,0.01)
 ax.plot(s,hill(s,popt[0],popt[1],popt[2]),lw=2,label="Hill")
 ax.plot(s,mm(s,popt_mm[0],popt_mm[1]),lw=2,label="Michaelis-Menten")
 plt.legend(fontsize=fontsize)
+
+
+# ## Example: Multiple Data Sets
+
+# In[7]:
+
+
+from tabulate import tabulate
+import numpy as np
+s0 = np.array([1,2,5,10,20.0])
+# Generate a data set
+def hill(S0,vmax,Km,n):  
+    return vmax*S0**n/(Km + S0**n)
+vmax = 7.5
+Km = 4.0
+n = 0.5
+truth = hill(s0,vmax,Km,n)
+n_trials = 1
+data = np.empty((truth.shape[0],n_trials))
+s0_total = np.empty((s0.shape[0],n_trials))
+for i in range(n_trials):
+    # estimate error based on normal distribution 99.9% data within 7.5%
+    error = np.random.normal(0,0.03,truth.shape[0])
+    # estimate error from uniform distribution with maximum value of 5%
+    #error = 0.1*(np.random.rand(truth.shape[0])-0.5)
+    # generate data by adding error to truth
+    data[:,i] = truth*(1+error)
+    # keep flattened s0 array
+    s0_total[:,i] = s0
+combined_data = np.column_stack((s0,data))
+print(tabulate(combined_data,headers=["[S]0","Trial 1", "Trial 2", "Trial 3", "Trial 4", "Trial 5"]))
+
+
+# In[8]:
+
+
+# perform non-linear fit
+# import least squares function from scipy library
+from scipy.optimize import curve_fit
+# define Michaelis-Menten function
+def hill(s,vmax,Km,n):  
+    return vmax*s**n/(Km + s**n)
+# make an initial guess of parameters
+popt, pcov = curve_fit(hill, s0_total.flatten(), data.flatten())
+err = np.sqrt(np.diag(pcov))
+print("v_max = ", np.round(popt[0],1),"+/-", np.round(err[0],1), "muM/s")
+print("Km = ", np.round(popt[1],1),"+/-", np.round(err[1],1), "mM")
+print("n = ", np.round(popt[2],1),"+/-", np.round(err[2],1))
+
+
+# In[ ]:
+
+
+
 
