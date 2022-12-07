@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.3.5. Reaction Mechanisms &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -52,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.3.6. Catalysts" href="Catalysts.html" />
@@ -399,6 +398,11 @@ const thebe_selector_output = ".output, .cell_output"
        3.3.8. Cooperative Binding Kinetics
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Competitive_Inhibition.html">
+       3.3.9. Competitive Inhibition
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -613,6 +617,19 @@ title="Fullscreen mode"
   </span>
 
 </button>
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fphysical_chemistry/kinetics/Reaction_Mechanisms_Part_I.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -858,13 +875,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="reaction-mechanisms">
+  <div class="tex2jax_ignore mathjax_ignore section" id="reaction-mechanisms">
 <h1><span class="section-number">3.3.5. </span>Reaction Mechanisms<a class="headerlink" href="#reaction-mechanisms" title="Permalink to this headline">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">3.3.5.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>Many reactions proceed through interemdiates before achieving their products.  The step-by-step process of going from reactants to products is called a reaction mechanism.  The mechanism that a reaction follows affects its kinetics.  In these notes, we will ee how proposed mechanisms can be shown to be consistent or incosistent with experimental data.</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.3.5.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you should be able to:</p>
 <ol class="simple">
@@ -874,29 +891,29 @@ title="Print to PDF"
 <li><p>Identify unimolecular, bimolecular, and termolecular elementary steps</p></li>
 <li><p>Right the rate laws for unimolecular, bimolecular, and termolecular elementary steps</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.3.5.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
 <li><p>None, yet.</p></li>
 </ol>
-</section>
-<section id="most-reactions-proceed-through-at-least-one-intermediate">
+</div>
+<div class="section" id="most-reactions-proceed-through-at-least-one-intermediate">
 <h2><span class="section-number">3.3.5.4. </span>Most Reactions Proceed through at least one Intermediate<a class="headerlink" href="#most-reactions-proceed-through-at-least-one-intermediate" title="Permalink to this headline">#</a></h2>
 <p>Most reaction do not proceed in a straightforward manner from reactants to products.  Typically, an intermediate, or multiple intermediates, are formed before the products form.  The presence of these intermediates complicates the molecularity of the rate law making it such that the overall rate law need not match the stoichiometry of the overall balanced chemical reaction.</p>
 <p>The goal here is to describe the steps that makeup a mechanism.  Each proposed step, a so called “elementary step”, must obey the molecularity of the balanced chemical reaction for that step.  For example, if you propose an elementary step that is, e.g.,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-91405021-8b09-481d-a6d8-1df01f6ec501">
-<span class="eqno">(3.518)<a class="headerlink" href="#equation-91405021-8b09-481d-a6d8-1df01f6ec501" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c6ec807d-d3e5-4f1b-8c97-3c439e0518b1">
+<span class="eqno">(3.518)<a class="headerlink" href="#equation-c6ec807d-d3e5-4f1b-8c97-3c439e0518b1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 NO_3(g) + CO(g) \overset{k_1}{\Longrightarrow} NO_2(g) + CO_2(g)
 \end{equation}\]</div>
 <p>you are actually saying that one molecule of <span class="math notranslate nohighlight">\(NO_3(g)\)</span> and one molecule of <span class="math notranslate nohighlight">\(CO(g)\)</span> collide to form a transition state that then dissociates into one molecule of <span class="math notranslate nohighlight">\(NO_2(g)\)</span> and another molecule of <span class="math notranslate nohighlight">\(CO_2(g)\)</span>.  No intermediates are formed in between the reactants and products.  Thus, the rate law for this step will be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e76989af-a4ff-4f83-a258-25824ac442c4">
-<span class="eqno">(3.519)<a class="headerlink" href="#equation-e76989af-a4ff-4f83-a258-25824ac442c4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-84d1d66c-9e9b-4718-96a2-a884e14cedef">
+<span class="eqno">(3.519)<a class="headerlink" href="#equation-84d1d66c-9e9b-4718-96a2-a884e14cedef" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = \frac{d[NO_2]}{dt} = \frac{d[CO_2]}{dt} = k_1[NO_3][CO]
 \end{equation}\]</div>
-</section>
-<section id="rules-for-a-valid-mechanism">
+</div>
+<div class="section" id="rules-for-a-valid-mechanism">
 <h2><span class="section-number">3.3.5.5. </span>Rules for a Valid Mechanism<a class="headerlink" href="#rules-for-a-valid-mechanism" title="Permalink to this headline">#</a></h2>
 <p>An almost infinite number of mechanisms can be proposed for a given reaction.  In order for a mechanism to be <em><strong>valid</strong></em>, it must abide by the following criteria:</p>
 <ol class="simple">
@@ -905,224 +922,224 @@ v(t) = \frac{d[NO_2]}{dt} = \frac{d[CO_2]}{dt} = k_1[NO_3][CO]
 <li><p>All species must make some semblence of chemical sense.</p></li>
 </ol>
 <p>This last criteria can sometimes be difficult to determine as it can be challenging to determine the rate law from a given mechanism.</p>
-</section>
-<section id="example-mechanisms">
+</div>
+<div class="section" id="example-mechanisms">
 <h2><span class="section-number">3.3.5.6. </span>Example Mechanisms<a class="headerlink" href="#example-mechanisms" title="Permalink to this headline">#</a></h2>
 <p>Consider the reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8c74c234-4fa3-4680-b35c-99e8257fe191">
-<span class="eqno">(3.520)<a class="headerlink" href="#equation-8c74c234-4fa3-4680-b35c-99e8257fe191" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ae05104a-ea73-4abe-b01e-326f17699577">
+<span class="eqno">(3.520)<a class="headerlink" href="#equation-ae05104a-ea73-4abe-b01e-326f17699577" title="Permalink to this equation">#</a></span>\[\begin{equation}
 2NO(g) + O_2(g) \overset{k_{obs}}{\longrightarrow} 2NO_2(g)
 \end{equation}\]</div>
 <p>The rate law has been experimentally determined to be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-60711629-62f1-4537-96c0-422ff678367e">
-<span class="eqno">(3.521)<a class="headerlink" href="#equation-60711629-62f1-4537-96c0-422ff678367e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e0f22f34-20ee-4368-a98d-160affd2d7ec">
+<span class="eqno">(3.521)<a class="headerlink" href="#equation-e0f22f34-20ee-4368-a98d-160affd2d7ec" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{1}{2} \frac{d[NO_2]}{dt} = k_{obs}[NO]^2[O_2]
 \end{equation}\]</div>
 <p>Consider four propsed mechanisms.  Determine if each is valid.</p>
 <p><em>Mechanism 1:</em></p>
-<div class="amsmath math notranslate nohighlight" id="equation-a91a236a-0f9d-4256-87a2-d698e242241a">
-<span class="eqno">(3.522)<a class="headerlink" href="#equation-a91a236a-0f9d-4256-87a2-d698e242241a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ea091bd2-1598-4790-8c9c-752bfa93d277">
+<span class="eqno">(3.522)<a class="headerlink" href="#equation-ea091bd2-1598-4790-8c9c-752bfa93d277" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 NO(g) + O_2(g) &amp;\overset{k_1}{\overset{\Longrightarrow}{\underset{k_{-1}}{\Longleftarrow}}}&amp; NO_3(g) \quad \text{(rapid equilibrium)} \\
 NO_3(g) + NO(g) &amp;\overset{k_2}{\Longrightarrow}&amp; 2NO_2(g) \quad \text{(slow)}
 \end{eqnarray}\]</div>
 <p><em>Mechanism 2:</em></p>
-<div class="amsmath math notranslate nohighlight" id="equation-1ece501c-b088-495d-9246-2491c765f6d6">
-<span class="eqno">(3.523)<a class="headerlink" href="#equation-1ece501c-b088-495d-9246-2491c765f6d6" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-8575b7fe-78b8-41f4-94e1-9357d512d4e3">
+<span class="eqno">(3.523)<a class="headerlink" href="#equation-8575b7fe-78b8-41f4-94e1-9357d512d4e3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 NO(g) + NO(g) &amp;\overset{k_1}{\overset{\Longrightarrow}{\underset{k_{-1}}{\Longleftarrow}}}&amp; N_2O_2(g) \quad \text{(steady-state)} \\
 N_2O_2(g) + O_2(g) &amp;\overset{k_2}{\Longrightarrow}&amp; 2NO_2(g) 
 \end{eqnarray}\]</div>
 <p><em>Mechanism 3:</em></p>
-<div class="amsmath math notranslate nohighlight" id="equation-52a942c1-15a4-464e-a000-5ec7b059de13">
-<span class="eqno">(3.524)<a class="headerlink" href="#equation-52a942c1-15a4-464e-a000-5ec7b059de13" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-31369db0-d0e2-410d-aae6-db93544be52c">
+<span class="eqno">(3.524)<a class="headerlink" href="#equation-31369db0-d0e2-410d-aae6-db93544be52c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 2O_2(g) + 2O_2(g) &amp;\overset{k_1}{\Longrightarrow}&amp; 2O_3(g) + 2O(g)  \\
 2NO(g) + 2O(g) &amp;\overset{k_2}{\Longrightarrow}&amp; 2NO_2(g) 
 \end{eqnarray}\]</div>
 <p><em>Mechanism 4:</em></p>
-<div class="amsmath math notranslate nohighlight" id="equation-14a8b99a-b28d-4d74-a6c2-b3e034a82135">
-<span class="eqno">(3.525)<a class="headerlink" href="#equation-14a8b99a-b28d-4d74-a6c2-b3e034a82135" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-d41fb224-5554-4f53-b85d-647509045220">
+<span class="eqno">(3.525)<a class="headerlink" href="#equation-d41fb224-5554-4f53-b85d-647509045220" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 O_2(g) + O_2(g) &amp;\overset{k_1}{\overset{\Longrightarrow}{\underset{k_{-1}}{\Longleftarrow}}}&amp; O_4(g) \quad \text{(rapid equilibrium)} \\
 NO(g) + NO(g) &amp;\overset{k_2}{\overset{\Longrightarrow}{\underset{k_{-2}}{\Longleftarrow}}}&amp; N_2O_2(g) \quad \text{(rapid equilibrium)} \\
 N_2O_2(g) + O_4(g) &amp;\overset{k_3}{\Longrightarrow}&amp; 2NO_2(g) + O_2(g) 
 \end{eqnarray}\]</div>
-<section id="mechanism-1">
+<div class="section" id="mechanism-1">
 <h3><span class="section-number">3.3.5.6.1. </span>Mechanism 1:<a class="headerlink" href="#mechanism-1" title="Permalink to this headline">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-2e4da998-2648-4849-abf4-15ad02fcee12">
-<span class="eqno">(3.526)<a class="headerlink" href="#equation-2e4da998-2648-4849-abf4-15ad02fcee12" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-acdd4ddd-50d6-462e-b1d3-e2b164716dae">
+<span class="eqno">(3.526)<a class="headerlink" href="#equation-acdd4ddd-50d6-462e-b1d3-e2b164716dae" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 NO(g) + O_2(g) &amp;\overset{k_1}{\overset{\Longrightarrow}{\underset{k_{-1}}{\Longleftarrow}}}&amp; NO_3(g) \quad \text{(rapid equilibrium)} \\
 NO_3(g) + NO(g) &amp;\overset{k_2}{\Longrightarrow}&amp; 2NO_2(g) \quad \text{(slow)}
 \end{eqnarray}\]</div>
 <p>We start by checking that the two reactions sum to the net reaction.  The summed reaction from mechanism 1 is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4c9108a1-4c7c-4477-b777-dad42d14c421">
-<span class="eqno">(3.527)<a class="headerlink" href="#equation-4c9108a1-4c7c-4477-b777-dad42d14c421" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-efb11b96-e797-4595-93c0-e320c22486cc">
+<span class="eqno">(3.527)<a class="headerlink" href="#equation-efb11b96-e797-4595-93c0-e320c22486cc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 NO(g) + O_2(g) + NO_3(g) + NO(g) &amp;\longrightarrow&amp; NO_3(g) + 2NO_2(g) \\
 2NO(g) + O_2(g) &amp;\longrightarrow&amp; 2NO_2(g)
 \end{eqnarray}\]</div>
 <p>The last being the same as the net reaction (after cancelling intermediate <span class="math notranslate nohighlight">\(NO_3(g)\)</span> from both sides) and thus this mechanism satistifies our first criteria for a valid mechanism.</p>
 <p>Now to determine the rate law from this mechanism. We start by writing out the differential equation for the rate of appearance of the product in step 2:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bdd7b67f-28a3-4898-b999-51f655e36c6a">
-<span class="eqno">(3.528)<a class="headerlink" href="#equation-bdd7b67f-28a3-4898-b999-51f655e36c6a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-4131a3fd-07ea-4687-84b3-17a26d03c5bf">
+<span class="eqno">(3.528)<a class="headerlink" href="#equation-4131a3fd-07ea-4687-84b3-17a26d03c5bf" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{1}{2}\frac{d[NO_2]}{dt} = k_2[NO_3][NO]
 \end{eqnarray}\]</div>
 <p>we note that the left-hand side is equivalent to the rate law expression of the overall net reaction (experimentally determined rate law) thus we are off to a good start.  We also note that the rate depends on the concentration of <span class="math notranslate nohighlight">\(NO_3\)</span>, an intermediate in our reaction.  We need to get rid of that.  We will use the rapid equilibrium in the first step.</p>
 <p>A rapid equilibrium in step 1 means that we can assume that the concentrations of the species in step 1 are always their equilibrium concentrations.  Namely</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a79d7551-4212-47c2-b372-32e8ca411db9">
-<span class="eqno">(3.529)<a class="headerlink" href="#equation-a79d7551-4212-47c2-b372-32e8ca411db9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-77afe4f3-8fdd-4c07-bd79-932667e645c7">
+<span class="eqno">(3.529)<a class="headerlink" href="#equation-77afe4f3-8fdd-4c07-bd79-932667e645c7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 K_{C,1} &amp;=&amp; \frac{[NO_3]}{[NO][O_2]} \\
 \Rightarrow [NO_3] &amp;=&amp; K_{C,1}[NO][O_2]
 \end{eqnarray}\]</div>
 <p>Plugging this into the equation above yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ea15bf1d-df56-4d4b-844e-24628e6fe855">
-<span class="eqno">(3.530)<a class="headerlink" href="#equation-ea15bf1d-df56-4d4b-844e-24628e6fe855" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-e26479b3-2165-495d-b0bd-b9da3d7e21a6">
+<span class="eqno">(3.530)<a class="headerlink" href="#equation-e26479b3-2165-495d-b0bd-b9da3d7e21a6" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{1}{2}\frac{d[NO_2]}{dt} = k_2K_{C,1}[NO]^2[O_2]
 \end{eqnarray}\]</div>
 <p>Thus, we see that this mechanism is consistent with the experimentally determined rate law with <span class="math notranslate nohighlight">\(k_{obs} = k_2K_{C,1}\)</span>.</p>
 <p>None of the species proposed in this mechanism are out of the realm of chemical possibility and thus we conclude that the proposed mechanism is valid and consistent with all of the relevant experimental data.</p>
-</section>
-<section id="mechanism-2">
+</div>
+<div class="section" id="mechanism-2">
 <h3><span class="section-number">3.3.5.6.2. </span>Mechanism 2:<a class="headerlink" href="#mechanism-2" title="Permalink to this headline">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-ede0e695-6e70-4be7-ac79-a0c37f5fcf5f">
-<span class="eqno">(3.531)<a class="headerlink" href="#equation-ede0e695-6e70-4be7-ac79-a0c37f5fcf5f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a6f4d81e-ec06-44fc-baf8-0aa5d50bc658">
+<span class="eqno">(3.531)<a class="headerlink" href="#equation-a6f4d81e-ec06-44fc-baf8-0aa5d50bc658" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 NO(g) + NO(g) &amp;\overset{k_1}{\overset{\Longrightarrow}{\underset{k_{-1}}{\Longleftarrow}}}&amp; N_2O_2(g) \quad \text{(steady-state)} \\
 N_2O_2(g) + O_2(g) &amp;\overset{k_2}{\Longrightarrow}&amp; 2NO_2(g) 
 \end{eqnarray}\]</div>
 <p>We start by checking that the two reactions sum to the net reaction.  The summed reaction from mechanism 2 is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1ee71cd9-01d7-4951-958e-6e7c8f1c1656">
-<span class="eqno">(3.532)<a class="headerlink" href="#equation-1ee71cd9-01d7-4951-958e-6e7c8f1c1656" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-d2d5310d-3df5-4f50-90d8-0cd65101c675">
+<span class="eqno">(3.532)<a class="headerlink" href="#equation-d2d5310d-3df5-4f50-90d8-0cd65101c675" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 NO(g) + NO(g) + O_2(g) + N_2O_2(g) &amp;\longrightarrow&amp; N_2O_2(g) + 2NO_2(g) \\
 2NO(g) + O_2(g) &amp;\longrightarrow&amp; 2NO_2(g)
 \end{eqnarray}\]</div>
 <p>The last being the same as the net reaction (after cancelling intermediate <span class="math notranslate nohighlight">\(NO_3(g)\)</span> from both sides) and thus this mechanism satistifies our first criteria for a valid mechanism.</p>
 <p>Now to determine the rate law from this mechanism. We start by writing out the differential equation for the rate of appearance of the product in step 2:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c38d9081-da71-41c2-a49f-37028872a378">
-<span class="eqno">(3.533)<a class="headerlink" href="#equation-c38d9081-da71-41c2-a49f-37028872a378" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-08ab329b-0215-4c1a-84cd-45b1540fd5a4">
+<span class="eqno">(3.533)<a class="headerlink" href="#equation-08ab329b-0215-4c1a-84cd-45b1540fd5a4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{1}{2}\frac{d[NO_2]}{dt} = k_2[N_2O_2][O_2]
 \end{eqnarray}\]</div>
 <p>we note, again, that the left-hand side is equivalent to the rate law expression of the overall net reaction (experimentally determined rate law) thus we are off to a good start.  We also note that the rate depends on the concentration of <span class="math notranslate nohighlight">\(N_2O_2\)</span>, an intermediate in our reaction.  We need to get rid of that.  We will use the steady-state approximation for the intermediate.</p>
 <p>The steady-state approximation implies that the concentration of the intermediate species, <span class="math notranslate nohighlight">\(N_2O_2\)</span> in this case, is constant with respect to time (<span class="math notranslate nohighlight">\(\frac{d[N_2O_2]}{dt} = 0\)</span>).  To see how we can use this we write out the diffential expression for <span class="math notranslate nohighlight">\([N_2O_2]\)</span> with respect to time for this mechanism:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c0d387e9-873d-4a57-8828-d932d7009ac2">
-<span class="eqno">(3.534)<a class="headerlink" href="#equation-c0d387e9-873d-4a57-8828-d932d7009ac2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-1402bda2-c5a6-4289-b687-16e528b7175c">
+<span class="eqno">(3.534)<a class="headerlink" href="#equation-1402bda2-c5a6-4289-b687-16e528b7175c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{d[N_2O_2]}{dt} = k_1[NO][NO] - k_{-1}[N_2O_2] - k_2[N_2O_2][O_2]
 \end{eqnarray}\]</div>
 <p>where the first two terms on the r.h.s. come from step 1 of the mechanism and the last term comes from step 2 of the mechanism.  We now apply the steady-state approximation and solve the resulting equation for <span class="math notranslate nohighlight">\([N_2O_2]\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-47ea64d6-bc62-4847-808f-ef7954d3732c">
-<span class="eqno">(3.535)<a class="headerlink" href="#equation-47ea64d6-bc62-4847-808f-ef7954d3732c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a4895e4f-5b02-4b19-a98a-205ba01b73b4">
+<span class="eqno">(3.535)<a class="headerlink" href="#equation-a4895e4f-5b02-4b19-a98a-205ba01b73b4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{d[N_2O_2]}{dt} \overset{s.s.}{=} 0 &amp;=&amp; k_1[NO][NO] - k_{-1}[N_2O_2] - k_2[N_2O_2][O_2] \\
 \Rightarrow [N_2O_2](k_{-1} + k_2[O_2]) &amp;=&amp; k_1[NO]^2 \\
 \Rightarrow [N_2O_2] &amp;=&amp; \frac{k_1[NO]^2}{(k_{-1} + k_2[O_2])}
 \end{eqnarray}\]</div>
 <p>The steady-state approximation is only valid in this case when the rate of the reverse reaction in step 1 is much larger than the rate of the forward reactions in steps 1 and 2.  Or, <span class="math notranslate nohighlight">\(k_{-1} &gt;&gt; k_2[O_2]\)</span>.  Thus, we get that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e352e1ce-9372-4760-89ae-e28f71782b24">
-<span class="eqno">(3.536)<a class="headerlink" href="#equation-e352e1ce-9372-4760-89ae-e28f71782b24" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0ee8b4cf-246d-432e-87b1-017fd57ee0de">
+<span class="eqno">(3.536)<a class="headerlink" href="#equation-0ee8b4cf-246d-432e-87b1-017fd57ee0de" title="Permalink to this equation">#</a></span>\[\begin{equation}
 [N_2O_2] = \frac{k_1}{k_{-1}}[NO]^2 = K_{C,1}[NO]^2
 \end{equation}\]</div>
 <p>Plugging this into the equation above yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6214a9f1-88e2-4cf8-ae88-b09c1dd57977">
-<span class="eqno">(3.537)<a class="headerlink" href="#equation-6214a9f1-88e2-4cf8-ae88-b09c1dd57977" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a575b368-2f28-4966-b728-12883b0fd097">
+<span class="eqno">(3.537)<a class="headerlink" href="#equation-a575b368-2f28-4966-b728-12883b0fd097" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{1}{2}\frac{d[NO_2]}{dt} = k_2K_{C,1}[NO]^2[O_2]
 \end{eqnarray}\]</div>
 <p>Thus, we see that this mechanism is consistent with the experimentally determined rate law with <span class="math notranslate nohighlight">\(k_{obs} = k_2K_{C,1}\)</span>.</p>
 <p>None of the species proposed in this mechanism are out of the realm of chemical possibility and thus we conclude that the proposed mechanism is valid and consistent with all of the relevant experimental data.</p>
-</section>
-<section id="mechanism-3">
+</div>
+<div class="section" id="mechanism-3">
 <h3><span class="section-number">3.3.5.6.3. </span>Mechanism 3:<a class="headerlink" href="#mechanism-3" title="Permalink to this headline">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-b26db089-1a44-4098-8a13-e5861c2d70b2">
-<span class="eqno">(3.538)<a class="headerlink" href="#equation-b26db089-1a44-4098-8a13-e5861c2d70b2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-687cc99b-133f-4fe5-ac0b-ee4cf1c6b86c">
+<span class="eqno">(3.538)<a class="headerlink" href="#equation-687cc99b-133f-4fe5-ac0b-ee4cf1c6b86c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 2O_2(g) + 2O_2(g) &amp;\overset{k_1}{\Longrightarrow}&amp; 2O_3(g) + 2O(g)  \\
 2NO(g) + 2O(g) &amp;\overset{k_2}{\Longrightarrow}&amp; 2NO_2(g) 
 \end{eqnarray}\]</div>
 <p>We start by checking that the two reactions sum to the net reaction.  The summed reaction from mechanism 3 is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bb2d05d6-055c-4190-8f3e-ffdebc1685e2">
-<span class="eqno">(3.539)<a class="headerlink" href="#equation-bb2d05d6-055c-4190-8f3e-ffdebc1685e2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-96720878-ee05-4b73-9974-05365a472030">
+<span class="eqno">(3.539)<a class="headerlink" href="#equation-96720878-ee05-4b73-9974-05365a472030" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 2NO(g) + 2O(g) + 4O_2(g) &amp;\longrightarrow&amp; 2O_3(g) + 2O(g) + 2NO_2(g)  \\
 2NO(g) + 4O_2(g) &amp;\longrightarrow&amp; 2NO_2(g) + 2O_3(g)
 \end{eqnarray}\]</div>
 <p>Clearly this reaction does not match the net balanced reaction thus this mechanism is invalid.</p>
-</section>
-<section id="mechanism-4">
+</div>
+<div class="section" id="mechanism-4">
 <h3><span class="section-number">3.3.5.6.4. </span>Mechanism 4:<a class="headerlink" href="#mechanism-4" title="Permalink to this headline">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-cb69a0fe-2a0f-495f-b2a7-f1aabeec6edc">
-<span class="eqno">(3.540)<a class="headerlink" href="#equation-cb69a0fe-2a0f-495f-b2a7-f1aabeec6edc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-569eea94-f05c-41a7-a693-ed0f9d9ede47">
+<span class="eqno">(3.540)<a class="headerlink" href="#equation-569eea94-f05c-41a7-a693-ed0f9d9ede47" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 O_2(g) + O_2(g) &amp;\overset{k_1}{\overset{\Longrightarrow}{\underset{k_{-1}}{\Longleftarrow}}}&amp; O_4(g) \quad \text{(rapid equilibrium)} \\
 NO(g) + NO(g) &amp;\overset{k_2}{\overset{\Longrightarrow}{\underset{k_{-2}}{\Longleftarrow}}}&amp; N_2O_2(g) \quad \text{(rapid equilibrium)} \\
 N_2O_2(g) + O_4(g) &amp;\overset{k_3}{\Longrightarrow}&amp; 2NO_2(g) + O_2(g) 
 \end{eqnarray}\]</div>
 <p>We start by checking that the two reactions sum to the net reaction.  The summed reaction from mechanism 2 is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b51bf4af-563f-400e-88ac-a16bd6c33bc6">
-<span class="eqno">(3.541)<a class="headerlink" href="#equation-b51bf4af-563f-400e-88ac-a16bd6c33bc6" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-890b110a-1725-4351-90df-75909294e7a2">
+<span class="eqno">(3.541)<a class="headerlink" href="#equation-890b110a-1725-4351-90df-75909294e7a2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 NO(g) + NO(g) + O_2(g) + O_2(g) N_2O_2(g) + O_4(g) &amp;\longrightarrow&amp; O_4(g) + O_2(g) + N_2O_2(g) + 2NO_2(g) \\
 2NO(g) + O_2(g) &amp;\longrightarrow&amp; 2NO_2(g)
 \end{eqnarray}\]</div>
 <p>The last being the same as the net reaction (after cancelling intermediates <span class="math notranslate nohighlight">\(N_2O_2(g)\)</span> and <span class="math notranslate nohighlight">\(O_4(g)\)</span> as well as one mole of <span class="math notranslate nohighlight">\(O_2\)</span> that appears as both reactant and product) and thus this mechanism satistifies our first criteria for a valid mechanism.</p>
 <p>Now to determine the rate law. We start by writing out the differential equation for the rate of appearance of the product in step 3:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dca739fc-fcb7-4e98-b1d8-1599cd5a7145">
-<span class="eqno">(3.542)<a class="headerlink" href="#equation-dca739fc-fcb7-4e98-b1d8-1599cd5a7145" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-87f26938-5f08-44dc-ba12-59d6cb073a36">
+<span class="eqno">(3.542)<a class="headerlink" href="#equation-87f26938-5f08-44dc-ba12-59d6cb073a36" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{1}{2}\frac{d[NO_2]}{dt} = k_3[N_2O_2][O_4]
 \end{eqnarray}\]</div>
 <p>we note that the left-hand side is equivalent to the rate law expression of the overall net reaction (experimentally determined rate law) thus we are off to a good start.  We also note that the rate depends on the concentration of intermediates <span class="math notranslate nohighlight">\(N_2O_2\)</span> and <span class="math notranslate nohighlight">\(O_4\)</span>.</p>
 <p>We will use the rapid equilibria from steps 1 and 2 to substitute the concentrations of intermediates with concentrations of reactants.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2de6a962-4259-47b7-96f3-c9babc1ecdc2">
-<span class="eqno">(3.543)<a class="headerlink" href="#equation-2de6a962-4259-47b7-96f3-c9babc1ecdc2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-b06f0e28-f73d-4daf-84c1-1c1551fb05da">
+<span class="eqno">(3.543)<a class="headerlink" href="#equation-b06f0e28-f73d-4daf-84c1-1c1551fb05da" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 K_{C,1} &amp;=&amp; \frac{[O_4]}{[O_2][O_2]} \\
 \Rightarrow [O_4] &amp;=&amp; K_{C,1}[O_2]^2
 \end{eqnarray}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-dfe9e187-5ab0-4924-bf94-39c62df9f89b">
-<span class="eqno">(3.544)<a class="headerlink" href="#equation-dfe9e187-5ab0-4924-bf94-39c62df9f89b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-be89ad93-0827-4583-9fd9-c0d15332ca34">
+<span class="eqno">(3.544)<a class="headerlink" href="#equation-be89ad93-0827-4583-9fd9-c0d15332ca34" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 K_{C,2} &amp;=&amp; \frac{[N_2O_2]}{[NO][NO]} \\
 \Rightarrow [N_2O_2] &amp;=&amp; K_{C,2}[NO]^2
 \end{eqnarray}\]</div>
 <p>Substituting these two relationships into the rate law yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3bafb89c-5fdc-4513-8ce0-2ab8d3c4e965">
-<span class="eqno">(3.545)<a class="headerlink" href="#equation-3bafb89c-5fdc-4513-8ce0-2ab8d3c4e965" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c839abcc-d822-474f-bb35-d4504f33872c">
+<span class="eqno">(3.545)<a class="headerlink" href="#equation-c839abcc-d822-474f-bb35-d4504f33872c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{1}{2}\frac{d[NO_2]}{dt} = k_3 K_{C,1}K_{C,2}[NO]^2[O_2]^2
 \end{eqnarray}\]</div>
 <p>We see that this rate law is second order in <span class="math notranslate nohighlight">\(O_2\)</span> which is inconsistent with the experimentally determined rate law.  Thus, this mechanism is invalid.</p>
-</section>
-</section>
-<section id="types-of-elementary-steps">
+</div>
+</div>
+<div class="section" id="types-of-elementary-steps">
 <h2><span class="section-number">3.3.5.7. </span>Types of Elementary Steps<a class="headerlink" href="#types-of-elementary-steps" title="Permalink to this headline">#</a></h2>
 <p>The above example has a number of different types of elementary steps.  Here we describe them in terms of how many reactants must collide to produce products.  Elementary steps that involve one, two, and three reactant molecules are termed <em>unimolecular, bimolecular, and termolecular</em> respectively.</p>
 <p>The probability of having simultaneous collision between all reactants decreases with increasing molecularity.  No elementary step with a molecularity greater than three is known.</p>
-<section id="unimolecular">
+<div class="section" id="unimolecular">
 <h3><span class="section-number">3.3.5.7.1. </span>Unimolecular<a class="headerlink" href="#unimolecular" title="Permalink to this headline">#</a></h3>
 <p>Unimolecular elementary steps involve only one reactant.  In general these are written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-139b7cd0-6d3e-45d0-b2ba-ae388e4433f1">
-<span class="eqno">(3.546)<a class="headerlink" href="#equation-139b7cd0-6d3e-45d0-b2ba-ae388e4433f1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6cf52995-74ee-4d8f-914a-02e7822d713b">
+<span class="eqno">(3.546)<a class="headerlink" href="#equation-6cf52995-74ee-4d8f-914a-02e7822d713b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A \Longrightarrow P
 \end{equation}\]</div>
 <p>These types of reactions could be isomerizations (molecular reorganizations) or dissoications.  Since these types of reactions don’t require collisions with other molecules they can happen rapidly.  The rate law for such elementary steps are first order and are written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-39c80697-8aec-438f-93ea-8e9f07a4dc6e">
-<span class="eqno">(3.547)<a class="headerlink" href="#equation-39c80697-8aec-438f-93ea-8e9f07a4dc6e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f7a61441-86e8-4673-a7ba-de6613be8904">
+<span class="eqno">(3.547)<a class="headerlink" href="#equation-f7a61441-86e8-4673-a7ba-de6613be8904" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v = k[A]
 \end{equation}\]</div>
-</section>
-<section id="bimolecular">
+</div>
+<div class="section" id="bimolecular">
 <h3><span class="section-number">3.3.5.7.2. </span>Bimolecular<a class="headerlink" href="#bimolecular" title="Permalink to this headline">#</a></h3>
 <p>Bimolecular elementary steps involve the collision of two reactantd.  In general these are written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4845b31-9822-4da9-92d3-f394f92a32c5">
-<span class="eqno">(3.548)<a class="headerlink" href="#equation-d4845b31-9822-4da9-92d3-f394f92a32c5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1fddf331-7800-4586-96d0-667796c5e407">
+<span class="eqno">(3.548)<a class="headerlink" href="#equation-1fddf331-7800-4586-96d0-667796c5e407" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A + B \Longrightarrow P
 \end{equation}\]</div>
 <p>These types of reactions could be addition or replacement reactions. The rate law for such elementary steps are second order overall and are written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c8c83e3e-3e3f-4d0d-b9dd-2abdbd701a66">
-<span class="eqno">(3.549)<a class="headerlink" href="#equation-c8c83e3e-3e3f-4d0d-b9dd-2abdbd701a66" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b2caed44-3d1a-4667-af77-263b903314f3">
+<span class="eqno">(3.549)<a class="headerlink" href="#equation-b2caed44-3d1a-4667-af77-263b903314f3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v = k[A][B]
 \end{equation}\]</div>
-</section>
-<section id="termolecular">
+</div>
+<div class="section" id="termolecular">
 <h3><span class="section-number">3.3.5.7.3. </span>Termolecular<a class="headerlink" href="#termolecular" title="Permalink to this headline">#</a></h3>
 <p>Termolecular elementary steps involve the simultaneous collision of three reactants.  In general these are written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0c5d9f28-0d40-446c-928a-3192f856178b">
-<span class="eqno">(3.550)<a class="headerlink" href="#equation-0c5d9f28-0d40-446c-928a-3192f856178b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1006299e-bf86-4e14-aeec-39cab751c1aa">
+<span class="eqno">(3.550)<a class="headerlink" href="#equation-1006299e-bf86-4e14-aeec-39cab751c1aa" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A + B + C \Longrightarrow P
 \end{equation}\]</div>
 <p>These types of reactions could be addition or replacement reactions. The rate law for such elementary steps are third order overall and are written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1e250d35-68e6-4135-b62f-748e08d7aa10">
-<span class="eqno">(3.551)<a class="headerlink" href="#equation-1e250d35-68e6-4135-b62f-748e08d7aa10" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b5c264bf-5e5f-4090-8cc0-0489fda53f2c">
+<span class="eqno">(3.551)<a class="headerlink" href="#equation-b5c264bf-5e5f-4090-8cc0-0489fda53f2c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v = k[A][B][C]
 \end{equation}\]</div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
