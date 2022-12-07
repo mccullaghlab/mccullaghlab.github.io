@@ -117,7 +117,7 @@
 # 
 # Holding the inhibitor dissociation constant, $K_I$, constant and increasing the inhibtor concentration will reduce the initial rate of reaction as compared to the unhibited Michaelis-Menten rate.  This can be observed mathematically because increasing $[I]_0$, and holding everything else constant, will increase the value of the denominator in the rate law and thus decrease the overall initial rate.  This makes sense physically because for inhibitors that actually bind to the active site (thus have a finite $K_I$), increasing the concentration of inhibitor will drive the equilibrium of the formation of $EI$ towards the product (and thus the inhibited form of the enzyme).
 
-# In[1]:
+# In[17]:
 
 
 import numpy as np
@@ -148,7 +148,7 @@ plt.legend(fontsize=16)
 
 # Holding the inhibitor concentration, $[I]_0$, constant and decreasing the inhibitor dissociation constant will reduce the initial rate of reaction as compared to the unhibited Michaelis-Menten rate.  This can be observed mathematically because decreasing $K_I$ will increase the ratio $[I]_0/K_I$, which will, in turn, increase the denominator of the $v_0$ expression and ultimately decrease the overall initial rate.  Physically, decreasing $K_I$ implies shifting the equilibrium more towards the formation of $EI$.  Doing so will cause more enzyme to be inhibited for a given concentration of inhibitor and thus slow the overall rate of product formation.
 
-# In[2]:
+# In[16]:
 
 
 import numpy as np
@@ -190,7 +190,7 @@ plt.legend(fontsize=16)
 # 
 # We notice that the only difference between this equation and the Lineweaver-Burk equation for the MM mechanism is the $\alpha$ altering the slope.  Thus, we expect the introduction of an inhibitor that follows a competitive inhibition mechanism to not alter $v_{max}$ and thus the intercept of the Lineweaver-Burk equation.
 
-# In[3]:
+# In[42]:
 
 
 # plot data
@@ -237,8 +237,27 @@ plt.legend(fontsize=fontsize)
 # &\Rightarrow K_I\left(1 + \frac{[S]_0}{K_m}\right) = IC50
 # \end{align}
 
-# In[ ]:
+# In[9]:
 
 
-
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+# setup plot parameters
+fontsize=16
+fig = plt.figure(figsize=(8,8), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_ylabel("Relative Activity",size=fontsize)
+ax.set_xlabel("$[I]_0$ ($\mu$M)",size=fontsize)
+plt.tick_params(axis='both',labelsize=fontsize)
+def relative_activity(I0,Km,KI,S0):  
+    return (Km+S0)/ ( (1+I0/KI)*Km + S0)
+Km = 10
+S0 = 1e-5
+I0 = np.arange(0,0.1,0.0001)
+KI = 1e-8
+ax.plot(I0,relative_activity(I0*1e-6,Km,KI,S0),label="??")
+plt.legend(fontsize=16)
+print("IC50 = ", KI*(1+S0/Km))
 

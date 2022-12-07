@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2.6. Numeric Integration &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -52,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="3. Welcome to the Physical Chemistry Chapter" href="../physical_chemistry/intro.html" />
@@ -399,6 +398,11 @@ const thebe_selector_output = ".output, .cell_output"
        3.3.8. Cooperative Binding Kinetics
       </a>
      </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../physical_chemistry/kinetics/Competitive_Inhibition.html">
+       3.3.9. Competitive Inhibition
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toctree-l2 has-children">
@@ -613,6 +617,19 @@ title="Fullscreen mode"
   </span>
 
 </button>
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fcoding_concepts/numeric_integration.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -764,14 +781,14 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="numeric-integration">
+  <div class="tex2jax_ignore mathjax_ignore section" id="numeric-integration">
 <h1><span class="section-number">2.6. </span>Numeric Integration<a class="headerlink" href="#numeric-integration" title="Permalink to this headline">#</a></h1>
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">2.6.1. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
-</section>
-<section id="integration">
+</div>
+<div class="section" id="integration">
 <h2><span class="section-number">2.6.2. </span>Integration<a class="headerlink" href="#integration" title="Permalink to this headline">#</a></h2>
-<section id="indefinite-integration">
+<div class="section" id="indefinite-integration">
 <h3><span class="section-number">2.6.2.1. </span>Indefinite integration<a class="headerlink" href="#indefinite-integration" title="Permalink to this headline">#</a></h3>
 <p>Consider <span class="math notranslate nohighlight">\(f(x) = \int x^2 dx\)</span>, can we write <span class="math notranslate nohighlight">\(f(x)\)</span> in a different way?  Sure, if we know the antiderivative of the integrand we can write out f(x) as the indefinite integral.  Namely, <span class="math notranslate nohighlight">\(f(x) = \int x^2 dx = \frac{x^3}{3} + C\)</span> for arbitrary constant <span class="math notranslate nohighlight">\(C\)</span>.</p>
 <p>What are the indefinite integrals of the following</p>
@@ -782,8 +799,8 @@ title="Print to PDF"
 <li><p><span class="math notranslate nohighlight">\(\int \frac{1}{x} dx\)</span></p></li>
 </ol>
 <p>Coding does not help with indefinite integration.  These need to be derived analytically.  Some common indefinite integrals are tabulated here: http://integral-table.com/</p>
-</section>
-<section id="definite-integration">
+</div>
+<div class="section" id="definite-integration">
 <h3><span class="section-number">2.6.2.2. </span>Definite integration<a class="headerlink" href="#definite-integration" title="Permalink to this headline">#</a></h3>
 <p>Definite integration is when we want to evaluate the integral of a function (integrand) over a finite domain.  E.g. <span class="math notranslate nohighlight">\(\int_0^4 x^2dx\)</span>.  If the domain is static (i.e. <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(4\)</span> instead of <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(y\)</span>) and integration is performed over all variables in the integrand, then the result of a definite integral will be a number (as opposed to a function of x in the case of indefinite integrals).  This may all sound esoteric so let’s consider some examples.</p>
 <ol>
@@ -815,8 +832,8 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-</section>
-<section id="numeric-definite-integration">
+</div>
+<div class="section" id="numeric-definite-integration">
 <h3><span class="section-number">2.6.2.3. </span>Numeric Definite Integration<a class="headerlink" href="#numeric-definite-integration" title="Permalink to this headline">#</a></h3>
 <p>Numeric integration can only be used for definite integrals.  It is a way of approximating the analytic solution and good approaches to this will converge to that solution in certain limits.  The most common example of this is rectangular integration (or the midpoint rule).  For this method, we approximate the area under a curve as the sum of the areas of abutting rectangles that are the height of the function at the midpoint of the rectangle.  These rectangles are of a specified width and the value of the summation converges to the real solution as the width of the rectangles decrease.</p>
 <div class="cell docutils container">
@@ -895,9 +912,9 @@ Gaussian quadrature : 21.333333333333336
 </div>
 </div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
