@@ -29,7 +29,26 @@ def define_figure(xlabel="X",ylabel="Y"):
 
 # # The History of Quantum Mechanics
 
+# ## Motivation
+
 # At the end of the 19th century, it was widely believed that classical physics could explain all phenomena.  There were a few observations, however, that had yet to receive an adequate explanation in classical physics.  These included blackbody radiation, the photoelectric effect, the heat capacity of some solids at low temperature and the atomic spectra (specifically the hydrogen atom spectrum).  Physicists such as Max Planck, Albert Einstein, and Niels Bohr introduced the idea of quantizing energies and other quantities to explain the experimental data of these phenomena.  Following this, physicists such as Werner Heisenberg, Max Born and Erwin Schrodinger developed the quantum mechanics formalism that we use today.
+
+# ## Learning Objectives
+# 
+# After working through this notebook, you will be able to:
+# 
+# 1. Describe the blackbody catastrophe
+# 2. Describe the photoelectric effect
+# 3. Describe an Einstein solid
+# 4. Desribe the hydrogen atom spectrum
+
+# ## Coding Concepts
+# 
+# The following coding concepts are employed in this notebook:
+# 
+# 1. [Variables](../../coding_concepts/variables.ipynb)
+# 2. [Functions](../../coding_concepts/functions.ipynb)
+# 3. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.ipynb)
 
 # ## Blackbody catastrophe
 
