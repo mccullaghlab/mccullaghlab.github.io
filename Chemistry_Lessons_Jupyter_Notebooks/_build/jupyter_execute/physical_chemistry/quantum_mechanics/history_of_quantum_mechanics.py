@@ -179,8 +179,75 @@ ax.legend(fontsize=20,markerscale=5.0)
 
 # ![hatom](img/spectrumwav.gif)
 
-# Potentially the most famous success of quantum mechanics is assigning the hydrogen atom spectrum.  Niels Bohr was able to do this by creating a model for the hydrogen atom in which the electron revolves around the nucleus with quantized angular momentum.  Bohr demonstrated that this leads to the following energy levels (we will derive this later):
+# When heated or subjected to electrical discharge, atoms emit radiation of characteristic frequencies.  The spectrum from each atom is unique.  These discrete emitted frequencies comprise a stick spectrum such as the one shown above.  
 # 
-# $ E_n = -\frac{m_ee^4}{8\epsilon_0h^2}\frac{1}{n^2}, n=1,2,... \tag{6}$
+# These stick spectra are clearly impossible to describe with classical mechanics.  In 1885, Johann Blamer demonstrated that a subset of the hydrogen atom spectrum (the Balmer series) could be described by the equation
+# \begin{equation}
+# v = 8.2202\times10^{14}\left(1-\frac{4}{n^2}\right),
+# \end{equation}
+# where $n=3,4,5,...$.  Later, Johannes Rydberg generalized this formula to account for the entire hydrogen atom spectrum yielding the Rydberg formula
+# \begin{equation}
+# \tilde{v} = R_H\left(\frac{1}{n_1^2}-\frac{1}{n_2^2}\right),
+# \end{equation}
+# where $R_H = 109677.581$ cm$^{-1}$ is the Rydberg constant, $n_1 = 1,2,3,...$, and $n_2 = n_1+1,n_1+2,...$.  
 # 
-# This correctly represented the hydrogen atom spectrum.  
+# While these equations fit the hydrogen atom spectrum nicely, they do not prescribe any physics to the system.  They do not present a model of the hydrogen atom but rather a heuristic equation that fits the data.  Nonetheless, scientists were perplexed by the presence of the integers $n_1$ and $n_2$. 
+
+# In 1911, Niels Bohr proposed a model for the hydrogen atom that was able to recapitulate the hydrogen atom spectrum.
+# 
+# The model consists of an electron orbiting a proton.  The proton is considered to be fixed in space because it is so much more massive than the electron.  Bohr posited that for stationary states of the electron the electrostatic force between the proton and electron,
+# \begin{equation}
+# f = \frac{e^2}{4\pi\varepsilon_0r^2}
+# \end{equation}
+# where $4\pi\varepsilon_0$ is present to achieve SI units, must be equal to the centrifugal force,
+# \begin{equation}
+# f = \frac{m_ev^2}{r}
+# \end{equation}
+# where $m_e$ is the mass and $v$ is the velocity of the electron.  Equating these two forces yields
+# \begin{equation}
+# \frac{e^2}{4\pi\varepsilon_0r^2} = \frac{m_ev^2}{r}.
+# \end{equation}
+# 
+# The next assumption that Bohr made was that the electron was moving in a circular orbit around the proton in a wavelike manner.  This must be achieved with an integer number of wavelenghts or
+# \begin{equation}
+# 2\pi r = n\lambda_e \quad n=1,2,3,...
+# \end{equation}
+# where $\lambda_e$ is the deBroglie wavelength of an electron and can be written as
+# \begin{equation}
+# \lambda_e = \frac{h}{m_ev}.
+# \end{equation}
+# Plugging the deBroglie wavelength equation into the circular wave equation yields
+# \begin{equation}
+# m_evr = \frac{nh}{2\pi} = n\hbar,
+# \end{equation}
+# where we have introduce $\hbar = \frac{h}{2\pi}$ as a short-hand because it comes up frequently in quantum mechanics. 
+# 
+# The term on the left-hand side of the last equation, $m_evr$, is the angular momentum of the electron.  Thus Bohr 's model demonstrates a quantization of the angular momentum of the electron.
+# 
+# Bohr's model also restricts the values of $r$, the radius of the electron's circular orbit, that can be taken.  To demonstrate this we simply solve the last equation for $v$ and plug the result into the force balance equation and solve for $r$:
+# \begin{align}
+# \frac{e^2}{4\pi\varepsilon_0r^2} &= \frac{m_e\left( \frac{n\hbar}{m_er}\right)^2}{r} \\
+# \Rightarrow \frac{e^2}{4\pi\varepsilon_0} &= \frac{(n\hbar)^2}{m_er} \\
+# \Rightarrow e^2m_er &= 4\pi\varepsilon_0(n\hbar)^2 \\
+# \Rightarrow r &= \frac{4\pi\varepsilon_0(n\hbar)^2}{e^2m_e}
+# \end{align}
+# The radius of the first Bohr orbit is denoted $a_0$ or units of Bohr.
+# 
+# The energy of the system can be derived to be:
+# 
+# $ E_n = -\frac{m_ee^4}{8\varepsilon_0h^2}\frac{1}{n^2}, n=1,2,... \tag{6}$
+# 
+# Taking differences in energy between two energy levels, $n_1$ and $n_2>n_1$, yields
+# \begin{equation}
+# \Delta E = \frac{m_ee^4}{8\varepsilon_0^2h^2}\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right)
+# \end{equation}
+# Equating this to the frequency (use $E = h\nu$ and $\tilde{\nu} = \frac{\nu}{c}$) of emitted light yields
+# \begin{equation}
+# \tilde{v} = \frac{m_ee^4}{8\varepsilon_0^2ch^3}\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right)
+# \end{equation}
+
+# In[ ]:
+
+
+
+
