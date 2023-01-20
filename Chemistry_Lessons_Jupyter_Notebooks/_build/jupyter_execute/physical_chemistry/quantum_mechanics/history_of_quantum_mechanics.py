@@ -97,7 +97,7 @@ ax.plot(x,quantumB(x,3000),label="quantum T=300K",lw=3)
 # plot classical result
 ax.plot(x,classicalB(x,3000),label="classical T=3000K",lw=3)
 # make legend
-ax.legend(fontsize=20,markerscale=5.0)
+ax.legend(fontsize=20,markerscale=5.0);
 
 
 # ## Photoelectric effect
@@ -137,7 +137,7 @@ ydata = [2.935,1.280]
 ax.plot(xdata,ydata,'o',markersize=15,mfc='none',label='data')
 ax.plot()
 # make legend
-ax.legend(fontsize=20,markerscale=1.0)
+ax.legend(fontsize=20,markerscale=1.0);
 
 
 # ## Einstein Solid
@@ -172,7 +172,7 @@ ax.plot(x,quantumCv(x),label="quantum",lw=3)
 # plot classical result
 ax.plot(x,classicalCv(x),label="classical",lw=3)
 # make legend
-ax.legend(fontsize=20,markerscale=5.0)
+ax.legend(fontsize=20,markerscale=5.0);
 
 
 # ## Hydrogen Atom Spectrum
@@ -195,7 +195,21 @@ ax.legend(fontsize=20,markerscale=5.0)
 
 # In 1911, Niels Bohr proposed a model for the hydrogen atom that was able to recapitulate the hydrogen atom spectrum.
 # 
-# The model consists of an electron orbiting a proton.  The proton is considered to be fixed in space because it is so much more massive than the electron.  Bohr posited that for stationary states of the electron the electrostatic force between the proton and electron,
+# The model consists of an electron orbiting a proton in circular orbits.  The proton is considered to be fixed in space because it is so much more massive than the electron.  Bohr assumed that the electron demonstrates wavelike characteristics and that these waves must have an integer number of modes around the circular orbit.  This equates to
+# \begin{equation}
+# 2\pi r = n\lambda_e \quad n=1,2,3,...
+# \end{equation}
+# where $\lambda_e$ is the deBroglie wavelength of an electron and can be written as
+# \begin{equation}
+# \lambda_e = \frac{h}{m_ev}.
+# \end{equation}
+# Plugging the deBroglie wavelength equation into the circular wave equation yields
+# \begin{equation}
+# m_evr = \frac{nh}{2\pi} = n\hbar,
+# \end{equation}
+# where we have introduce $\hbar = \frac{h}{2\pi}$ as a short-hand because it comes up frequently in quantum mechanics. The term on the left-hand side of the last equation, $m_evr$, is the angular momentum of the electron.  Thus Bohr 's model demonstrates a quantization of the angular momentum of the electron.
+# 
+# Bohr posited that for stationary states of the electron the electrostatic force between the proton and electron,
 # \begin{equation}
 # f = \frac{e^2}{4\pi\varepsilon_0r^2}
 # \end{equation}
@@ -208,34 +222,50 @@ ax.legend(fontsize=20,markerscale=5.0)
 # \frac{e^2}{4\pi\varepsilon_0r^2} = \frac{m_ev^2}{r}.
 # \end{equation}
 # 
-# The next assumption that Bohr made was that the electron was moving in a circular orbit around the proton in a wavelike manner.  This must be achieved with an integer number of wavelenghts or
-# \begin{equation}
-# 2\pi r = n\lambda_e \quad n=1,2,3,...
-# \end{equation}
-# where $\lambda_e$ is the deBroglie wavelength of an electron and can be written as
-# \begin{equation}
-# \lambda_e = \frac{h}{m_ev}.
-# \end{equation}
-# Plugging the deBroglie wavelength equation into the circular wave equation yields
-# \begin{equation}
-# m_evr = \frac{nh}{2\pi} = n\hbar,
-# \end{equation}
-# where we have introduce $\hbar = \frac{h}{2\pi}$ as a short-hand because it comes up frequently in quantum mechanics. 
 # 
-# The term on the left-hand side of the last equation, $m_evr$, is the angular momentum of the electron.  Thus Bohr 's model demonstrates a quantization of the angular momentum of the electron.
-# 
-# Bohr's model also restricts the values of $r$, the radius of the electron's circular orbit, that can be taken.  To demonstrate this we simply solve the last equation for $v$ and plug the result into the force balance equation and solve for $r$:
+# The combination of the force balance equation and the quantized angular momentum equation quantizes the values of $r$, the radius of the electron's circular orbit, that can be taken.  To demonstrate this we solve the quantized angular momentum equation for $v$ and plug the result into the force balance equation and solve for $r$:
 # \begin{align}
 # \frac{e^2}{4\pi\varepsilon_0r^2} &= \frac{m_e\left( \frac{n\hbar}{m_er}\right)^2}{r} \\
 # \Rightarrow \frac{e^2}{4\pi\varepsilon_0} &= \frac{(n\hbar)^2}{m_er} \\
 # \Rightarrow e^2m_er &= 4\pi\varepsilon_0(n\hbar)^2 \\
-# \Rightarrow r &= \frac{4\pi\varepsilon_0(n\hbar)^2}{e^2m_e}
+# \Rightarrow r &= \frac{4\pi\varepsilon_0(n\hbar)^2}{e^2m_e} \quad n=1,2,3,...
 # \end{align}
-# The radius of the first Bohr orbit is denoted $a_0$ or units of Bohr.
+# The radius of the first Bohr orbit is denoted $a_0 = \frac{4\pi\varepsilon_0\hbar^2}{e^2m_e}$ or units of Bohr.  Allowed values of $r$ as a function of $n$ are plotted below.
+
+# In[6]:
+
+
+# classical spectral distribution function
+def hydrogen_r(n):
+    return n*n
+
+# make an array containing domain of wavelengths to consider
+n = np.arange(1,10,1)
+# setup plot parameters
+fig = plt.figure(figsize=(10,8), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_xlabel('n',size=20)
+ax.set_ylabel(r'r/$a_0$',size=20)
+plt.tick_params(axis='both',labelsize=20)
+# plot quantum result
+ax.plot(n,hydrogen_r(n),'o');
+
+
+# The energy of the system can is a sum of the Coulomb attraction between the electron and the proton and the kinetic energy of the electron:
+# \begin{equation}
+# E(r) = \frac{1}{2}m_ev^2 - \frac{e^2}{4\pi\varepsilon_0r}
+# \end{equation}
 # 
-# The energy of the system can be derived to be:
-# 
-# $ E_n = -\frac{m_ee^4}{8\varepsilon_0h^2}\frac{1}{n^2}, n=1,2,... \tag{6}$
+# To determine the energy of an electron that is limited to be in the circular wavelike orbits described above, we must use the force balance relationship.  We do that by substituting $m_ev^2 = \frac{e^2}{4\pi\varepsilon_0r}$ into the energy equation to yield
+# \begin{align}
+# E(r) &= \frac{1}{2}\frac{e^2}{4\pi\varepsilon_0r} - \frac{e^2}{4\pi\varepsilon_0r} \\
+#     &= -\frac{1}{2}\frac{e^2}{4\pi\varepsilon_0r} \\
+#     &= -\frac{1}{2}\frac{e^2}{4\pi\varepsilon_0}\frac{e^2m_e}{4\pi\varepsilon_0(n\hbar)^2} \\
+#     &= -\frac{m_ee^4}{32\pi^2\varepsilon_0\hbar^2}\frac{1}{n^2} \\
+#     &= -\frac{m_ee^4}{8\varepsilon_0^2h^2}\frac{1}{n^2} \quad n=1,2,3,...
+# \end{align}
+# where I plugged in the quantized values for $r$ derived from the for balance relationship.  
 # 
 # Taking differences in energy between two energy levels, $n_1$ and $n_2>n_1$, yields
 # \begin{equation}
@@ -245,9 +275,30 @@ ax.legend(fontsize=20,markerscale=5.0)
 # \begin{equation}
 # \tilde{v} = \frac{m_ee^4}{8\varepsilon_0^2ch^3}\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right)
 # \end{equation}
+# 
+# We see that this yields an expression for the Rydberg constant in terms of fundamental constants
+# \begin{equation}
+# R_H = \frac{m_ee^4}{8\varepsilon_0^2ch^3}
+# \end{equation}
 
-# In[ ]:
+# In[7]:
 
 
-
+# make an array containing domain of wavelengths to consider
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+theta = np.arange(0,2*np.pi,0.01)
+# setup plot parameters
+fig, ax  = plt.subplots(1,3,subplot_kw={'projection': 'polar'},figsize=(18,6), dpi= 80)
+n = np.array([4,5,5.15])
+for i in range(3):
+    ax[i].plot(theta,np.ones(theta.size),c='k')
+    ax[i].grid(False)
+    ax[i].set_rticks([]);
+    ax[i].set_thetagrids([])
+    ax[i].set_rmax(2)
+    ax[i].plot(theta,np.ones(theta.size) + 0.0001*np.sin(n[i]*theta),c='b')
+#ax.plot(x,np.sqrt(1-x**2),label="quantum",lw=1,c='k')
+#ax.plot(x,-np.sqrt(1-x**2),label="quantum",lw=1,c='k')
 
