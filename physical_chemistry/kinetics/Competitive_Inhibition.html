@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.3.9. Competitive Inhibition &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.4. Welcome to the lessons on Quantum Mechanics" href="../quantum_mechanics/intro.html" />
@@ -815,13 +816,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="competitive-inhibition">
+  <section class="tex2jax_ignore mathjax_ignore" id="competitive-inhibition">
 <h1><span class="section-number">3.3.9. </span>Competitive Inhibition<a class="headerlink" href="#competitive-inhibition" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.3.9.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>The inhibition of enzymes is a common target for therapeutics.  Additionally, it can be an endongenous control for the enzyme activity. In this notebook, we derive the rate law for a specific type of inhibition.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.3.9.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="simple">
@@ -830,8 +831,8 @@ title="Print to PDF"
 <li><p>Describe, qualitatively, how <span class="math notranslate nohighlight">\([I]_0\)</span> and <span class="math notranslate nohighlight">\(K_I\)</span> can affect the rate of reaction</p></li>
 <li><p>Calculate IC50 from <span class="math notranslate nohighlight">\(K_I\)</span> (<span class="math notranslate nohighlight">\([S]_0\)</span> and <span class="math notranslate nohighlight">\(K_m\)</span>).</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.3.9.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook</p>
 <ol class="simple">
@@ -839,101 +840,101 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="competitive-inhibition-mechanism">
+</section>
+<section id="competitive-inhibition-mechanism">
 <h2><span class="section-number">3.3.9.4. </span>Competitive Inhibition Mechanism<a class="headerlink" href="#competitive-inhibition-mechanism" title="Permalink to this headline">#</a></h2>
 <p>Unlike all other reactions and mechanisms we have seen thus far, the competitive inhibition mechanism deals with two competing reactions.  The concept here is that the enzyme has a single binding site which can either be occuppied by the substrate, <span class="math notranslate nohighlight">\(S\)</span>, or the inhibitor, <span class="math notranslate nohighlight">\(I\)</span>.  If the inhibitor binds, it must unbind and substrate bind and react to form product.  The stronger the binding coefficient of the inhibitor, the better it is at preventing back reaction and ultimately preventing product formation.</p>
 <p>The underlying reaction we are considering is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-07f4743e-f550-4740-8d11-bcef3ff29811">
-<span class="eqno">(3.590)<a class="headerlink" href="#equation-07f4743e-f550-4740-8d11-bcef3ff29811" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-76a23b51-7644-4d6e-a031-12286754fc78">
+<span class="eqno">(3.590)<a class="headerlink" href="#equation-76a23b51-7644-4d6e-a031-12286754fc78" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S \underset{E}{\longrightarrow} P
 \end{equation}\]</div>
 <p>Here, the enzyme is denoted by the <span class="math notranslate nohighlight">\(E\)</span> underneath the reaction arrow.  We are also considering that the uncatalyzed reaction is so slow that negligible product will form in measurable time without the enzyme present.</p>
 <p>Since it is the inhibition of the enzyme that we are considering, we will list it as a reactant and product in the reaction.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-19974768-40f5-439a-88ed-0bce5c7291fc">
-<span class="eqno">(3.591)<a class="headerlink" href="#equation-19974768-40f5-439a-88ed-0bce5c7291fc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9469dcc1-c1cd-4fa3-8a49-609701f6011a">
+<span class="eqno">(3.591)<a class="headerlink" href="#equation-9469dcc1-c1cd-4fa3-8a49-609701f6011a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S + E \longrightarrow E + P
 \end{equation}\]</div>
 <p>Now, we introduce an inhibitor molecule, <span class="math notranslate nohighlight">\(I\)</span>, that binds to the same active site of the enzyme and does not form a product.  This can be denoted as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-782b983f-8d4b-4c1d-a080-527826f86744">
-<span class="eqno">(3.592)<a class="headerlink" href="#equation-782b983f-8d4b-4c1d-a080-527826f86744" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f7e02cf3-3528-4df4-9eac-4232ff47f4dd">
+<span class="eqno">(3.592)<a class="headerlink" href="#equation-f7e02cf3-3528-4df4-9eac-4232ff47f4dd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 I + E \longrightarrow EI
 \end{equation}\]</div>
 <p>The enzyme-inhibitor complex, <span class="math notranslate nohighlight">\(EI\)</span>, is not an effective catalyst of the substrate to product formation reaction.</p>
 <p>We can write the combined reaction in the following way</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fded507e-4d43-4890-b87c-3a82910e34aa">
-<span class="eqno">(3.593)<a class="headerlink" href="#equation-fded507e-4d43-4890-b87c-3a82910e34aa" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6bd579df-27be-41a2-bf04-428bed4995ba">
+<span class="eqno">(3.593)<a class="headerlink" href="#equation-6bd579df-27be-41a2-bf04-428bed4995ba" title="Permalink to this equation">#</a></span>\[\begin{equation}
 EI + S \longleftarrow E + I + S \longrightarrow E + I + P
 \end{equation}\]</div>
 <p>where the first arrow denotes that the solution of <span class="math notranslate nohighlight">\(E\)</span>, <span class="math notranslate nohighlight">\(I\)</span> and <span class="math notranslate nohighlight">\(S\)</span> reacts to form <span class="math notranslate nohighlight">\(EI\)</span> with <span class="math notranslate nohighlight">\(S\)</span> unaffected.</p>
 <p>If we now consider that the <span class="math notranslate nohighlight">\(S\)</span> to <span class="math notranslate nohighlight">\(P\)</span> reaction follows a Michaelis-Menten mechanism, we can write the mechanism as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92c8494d-3220-4fa0-ba57-200532fc9680">
-<span class="eqno">(3.594)<a class="headerlink" href="#equation-92c8494d-3220-4fa0-ba57-200532fc9680" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-40d12cab-7a4a-4a0a-9af0-bd3edbb27189">
+<span class="eqno">(3.594)<a class="headerlink" href="#equation-40d12cab-7a4a-4a0a-9af0-bd3edbb27189" title="Permalink to this equation">#</a></span>\[\begin{equation}
 EI + S \overset{k_i}{\underset{k_{-i}}{\overset{\Longleftarrow}{\Longrightarrow}}} E + I + S \overset{k_1}{\underset{k_{-1}}{\overset{\Longrightarrow}{\Longleftarrow}}} ES + I \overset{k_2}{\Longrightarrow} E + P + I
 \end{equation}\]</div>
 <p>where we note that each step is now an elementary step.  This can also be written as a multistep mechanism</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a5efb7b7-a4c4-4b2b-8ed6-79c7ac6a2a4b">
-<span class="eqno">(3.595)<a class="headerlink" href="#equation-a5efb7b7-a4c4-4b2b-8ed6-79c7ac6a2a4b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-18bd3198-569c-4807-aedc-40194dd6d959">
+<span class="eqno">(3.595)<a class="headerlink" href="#equation-18bd3198-569c-4807-aedc-40194dd6d959" title="Permalink to this equation">#</a></span>\[\begin{align}
 E + I &amp; \overset{k_i}{\underset{k_{-i}}{\overset{\Longrightarrow}{\Longleftarrow}}} EI \\
 E + S &amp;\overset{k_1}{\underset{k_{-1}}{\overset{\Longrightarrow}{\Longleftarrow}}} ES \\
 ES &amp;\overset{k_2}{\Longrightarrow} E + P 
 \end{align}\]</div>
-</div>
-<div class="section" id="competitive-inhibition-rate-law">
+</section>
+<section id="competitive-inhibition-rate-law">
 <h2><span class="section-number">3.3.9.5. </span>Competitive Inhibition Rate Law<a class="headerlink" href="#competitive-inhibition-rate-law" title="Permalink to this headline">#</a></h2>
 <p>We will now derive the rate law stemming from the mechanism written above.  We still care about the rate of formation of the product so</p>
-<div class="amsmath math notranslate nohighlight" id="equation-de127046-1d68-4cc9-b096-9ce64033abc1">
-<span class="eqno">(3.596)<a class="headerlink" href="#equation-de127046-1d68-4cc9-b096-9ce64033abc1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9c52b220-0573-44bd-91d5-01ff36524fce">
+<span class="eqno">(3.596)<a class="headerlink" href="#equation-9c52b220-0573-44bd-91d5-01ff36524fce" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v = \frac{d[P]}{dt} = k_2[ES]
 \end{equation}\]</div>
 <p>You may be inclined to say that <span class="math notranslate nohighlight">\(v = k_2[ES][I]\)</span> for the rate law for the final step.  Careful inspection of this step, however, demonstrates that <span class="math notranslate nohighlight">\(I\)</span> is a bystander - it shows up as both reactant and product and is not hypothesized to do anything to facilitate the reaction.  Thus, it should not appear in the rate law.  This is apparent when you look at the three-step version of the mechanism.</p>
 <p>We can also write out the differential equation for the rate of change of <span class="math notranslate nohighlight">\(ES\)</span> concentration:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-64666d9c-9c11-487e-b862-d2c4b75f6054">
-<span class="eqno">(3.597)<a class="headerlink" href="#equation-64666d9c-9c11-487e-b862-d2c4b75f6054" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-77a28518-4326-4fa9-9260-19dc3251bc79">
+<span class="eqno">(3.597)<a class="headerlink" href="#equation-77a28518-4326-4fa9-9260-19dc3251bc79" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d[ES]}{dt} = -(k_2 + k_{-1})[ES] + k_1[E][S]
 \end{equation}\]</div>
 <p>We recognize, again, that the total enzyme concentration floating around the reaction will remain constant or that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-28130dc5-81ed-4b2c-9a17-89eb5e384e85">
-<span class="eqno">(3.598)<a class="headerlink" href="#equation-28130dc5-81ed-4b2c-9a17-89eb5e384e85" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-fa9d0b0a-aca6-48d0-94cb-92651e09b56f">
+<span class="eqno">(3.598)<a class="headerlink" href="#equation-fa9d0b0a-aca6-48d0-94cb-92651e09b56f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 [E]_0 &amp;=&amp; [E] + [ES] + [EI] \\
 \Rightarrow [E] &amp;=&amp; [E]_0 - [ES] - [EI]
 \end{eqnarray}\]</div>
 <p>where the last term must be included here (as opposed to Michaelis-Menten and cooperative binding mechanisms) because this complex can be formed and occupy some of the enzyme concentration.  Indeed, if the inhibitor is “good” then most of the enzyme will be of this form.</p>
 <p>We can plug the above expression for <span class="math notranslate nohighlight">\([E]\)</span> into the differential expression for <span class="math notranslate nohighlight">\([ES]\)</span> but it will still have two interdependent terms in it (namely <span class="math notranslate nohighlight">\([ES]\)</span> and <span class="math notranslate nohighlight">\([EI]\)</span>).  To attempt to alleviate this issue, we make our first approximation and that is a rapid equilibrium for the <span class="math notranslate nohighlight">\(EI\)</span> formation reaction.  Thus, we say</p>
-<div class="amsmath math notranslate nohighlight" id="equation-96d99282-c469-4c00-bd0c-b476674995ea">
-<span class="eqno">(3.599)<a class="headerlink" href="#equation-96d99282-c469-4c00-bd0c-b476674995ea" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f478dd71-08bd-4152-990d-0b6533b8995c">
+<span class="eqno">(3.599)<a class="headerlink" href="#equation-f478dd71-08bd-4152-990d-0b6533b8995c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 [EI] \approx \frac{[E][I]}{K_I},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(K_I = \frac{k_{-i}}{k_{i}}\)</span> is the dissociation constant of the enzyme-inhibitor complex.  Using this expression for <span class="math notranslate nohighlight">\([EI]\)</span> and solving for <span class="math notranslate nohighlight">\([E]\)</span> using the fixed total enzyme concentration expression above we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b410c732-cb8f-4e6b-8b75-2df813812505">
-<span class="eqno">(3.600)<a class="headerlink" href="#equation-b410c732-cb8f-4e6b-8b75-2df813812505" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6e6d4ec9-e82d-4b9a-84d2-57f7cb113559">
+<span class="eqno">(3.600)<a class="headerlink" href="#equation-6e6d4ec9-e82d-4b9a-84d2-57f7cb113559" title="Permalink to this equation">#</a></span>\[\begin{equation}
 [E] = \frac{[E]_0 - [ES]}{1 + [I]/K_I}
 \end{equation}\]</div>
 <p>Substituting this expression for <span class="math notranslate nohighlight">\([E]\)</span> into the differential expression for <span class="math notranslate nohighlight">\([ES]\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a37fc04e-b69a-4ad0-bcdc-b2c7d0116223">
-<span class="eqno">(3.601)<a class="headerlink" href="#equation-a37fc04e-b69a-4ad0-bcdc-b2c7d0116223" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-61473306-0e5e-4431-b722-6727f4f99ce0">
+<span class="eqno">(3.601)<a class="headerlink" href="#equation-61473306-0e5e-4431-b722-6727f4f99ce0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{d[ES]}{dt} &amp;=&amp; -(k_2 + k_{-1})[ES] + k_1\frac{([E]_0 - [ES])}{1 + [I]/K_I}[S]
 &amp;=&amp; -(k_2 + k_{-1}+ \frac{k_1[S]}{1 + [I]/K_I})[ES] + \frac{k_1[E]_0}{1 + [I]/K_I}[S]
 \end{eqnarray}\]</div>
 <p>Now employing the steady-state approximation for <span class="math notranslate nohighlight">\(ES\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c789375d-1f53-4801-a6a9-bd9f1ab95861">
-<span class="eqno">(3.602)<a class="headerlink" href="#equation-c789375d-1f53-4801-a6a9-bd9f1ab95861" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-0f604023-c8a6-45e9-828c-d525714a2ead">
+<span class="eqno">(3.602)<a class="headerlink" href="#equation-0f604023-c8a6-45e9-828c-d525714a2ead" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 0 &amp;=&amp; -(k_2 + k_{-1}+ \frac{k_1[S]}{1 + [I]/K_I})[ES] + \frac{k_1[E]_0}{1 + [I]/K_I}[S] \\
 \Rightarrow [ES]_{s.s.} &amp;=&amp; \frac{\frac{k_1[E]_0}{1 + [I]/K_I}[S]}{k_2 + k_{-1}+ \frac{k_1[S]}{1 + [I]/K_I}} \\
 &amp;=&amp; \frac{[E]_0[S]}{\frac{k_2 + k_{-1}}{k_1}\left(1 + [I]/K_I\right)+ [S]}
 \end{eqnarray}\]</div>
 <p>where the last equality holds by multiplying numerator and denominator by <span class="math notranslate nohighlight">\(\frac{1 + [I]/K_I}{k_1[S]}\)</span>.  We can now define <span class="math notranslate nohighlight">\(K_m = \frac{k_2 + k_{-1}}{k_1}\)</span> and substitute the above expression into the overall rate law to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6a5ddbc8-da17-4e8f-bf3f-ec445f792a7f">
-<span class="eqno">(3.603)<a class="headerlink" href="#equation-6a5ddbc8-da17-4e8f-bf3f-ec445f792a7f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f7454a67-a80a-4363-a04b-79aed7688653">
+<span class="eqno">(3.603)<a class="headerlink" href="#equation-f7454a67-a80a-4363-a04b-79aed7688653" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v = \frac{d[P]}{dt} = \frac{k_2[E]_0[S]}{K_m\left(1 + [I]/K_I\right)+ [S]}
 \end{equation}\]</div>
 <p>Finally, we recognize that the product formation step could actually be reversible so we only investigate initial time ultimately yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3be7c103-81b8-40f5-99ec-dc8052b7c78b">
-<span class="eqno">(3.604)<a class="headerlink" href="#equation-3be7c103-81b8-40f5-99ec-dc8052b7c78b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f4004ac5-0740-473b-9d7c-0bac74e9ea3c">
+<span class="eqno">(3.604)<a class="headerlink" href="#equation-f4004ac5-0740-473b-9d7c-0bac74e9ea3c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v_0 = \frac{k_2[E]_0[S]_0}{K_m\left(1 + [I]_0/K_I\right)+ [S]_0}
 \end{equation}\]</div>
-</div>
-<div class="section" id="qualitative-interpretation-of-competitive-inhibition-rate-law">
+</section>
+<section id="qualitative-interpretation-of-competitive-inhibition-rate-law">
 <h2><span class="section-number">3.3.9.6. </span>Qualitative Interpretation of Competitive Inhibition Rate Law<a class="headerlink" href="#qualitative-interpretation-of-competitive-inhibition-rate-law" title="Permalink to this headline">#</a></h2>
 <p>The competitive inhibition rate law introduces two new variables into the rate law for production formation.  Those are the initial inhibitor concentration, <span class="math notranslate nohighlight">\([I]_0\)</span>, and the enzyme-inhibitor dissociation constant, <span class="math notranslate nohighlight">\(K_I\)</span>.  The ratio of these values has an affect on the initial rate.  Holding either constant and altering the other can have an affect on the initial rate.</p>
 <p>Holding the inhibitor dissociation constant, <span class="math notranslate nohighlight">\(K_I\)</span>, constant and increasing the inhibtor concentration will reduce the initial rate of reaction as compared to the unhibited Michaelis-Menten rate.  This can be observed mathematically because increasing <span class="math notranslate nohighlight">\([I]_0\)</span>, and holding everything else constant, will increase the value of the denominator in the rate law and thus decrease the overall initial rate.  This makes sense physically because for inhibitors that actually bind to the active site (thus have a finite <span class="math notranslate nohighlight">\(K_I\)</span>), increasing the concentration of inhibitor will drive the equilibrium of the formation of <span class="math notranslate nohighlight">\(EI\)</span> towards the product (and thus the inhibited form of the enzyme).</p>
@@ -1010,17 +1011,17 @@ v_0 = \frac{k_2[E]_0[S]_0}{K_m\left(1 + [I]_0/K_I\right)+ [S]_0}
 <img alt="../../_images/Competitive_Inhibition_12_1.png" src="../../_images/Competitive_Inhibition_12_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="lineweaver-burk-plots-for-competitive-inhibition">
+</section>
+<section id="lineweaver-burk-plots-for-competitive-inhibition">
 <h2><span class="section-number">3.3.9.7. </span>Lineweaver-Burk Plots for Competitive Inhibition<a class="headerlink" href="#lineweaver-burk-plots-for-competitive-inhibition" title="Permalink to this headline">#</a></h2>
 <p>Competitive Inhibition plots have the same <span class="math notranslate nohighlight">\(v_{max}\)</span> as the standard Michaelis-Menten initial rate.  This becomes apparent when we consider the Lineweaver-Burk linearization of the Competitive Inhibition rate law.  First, we will make the substitution that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-676591e2-6937-4e51-82dc-74b095b1033e">
-<span class="eqno">(3.605)<a class="headerlink" href="#equation-676591e2-6937-4e51-82dc-74b095b1033e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7172249e-6544-41fa-838f-3d24fc391b1a">
+<span class="eqno">(3.605)<a class="headerlink" href="#equation-7172249e-6544-41fa-838f-3d24fc391b1a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \alpha = 1 + \frac{[I]_0}{K_I}
 \end{equation}\]</div>
 <p>to introduce a parameter that accounts for changes in both <span class="math notranslate nohighlight">\([I]_0\)</span> and <span class="math notranslate nohighlight">\(K_I\)</span>.  Given this substition, it is readily shown that a Lineweaver-Burk version of the competitive inhibition rate law is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-642f18db-31bb-4b2a-abea-6ad6615b1121">
-<span class="eqno">(3.606)<a class="headerlink" href="#equation-642f18db-31bb-4b2a-abea-6ad6615b1121" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c9e6b178-4324-47ec-b375-7fb7bd280525">
+<span class="eqno">(3.606)<a class="headerlink" href="#equation-c9e6b178-4324-47ec-b375-7fb7bd280525" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{1}{v_0} = \alpha\frac{K_m}{v_{max}}\frac{1}{[S]_0} + \frac{1}{v_{max}}
 \end{equation}\]</div>
 <p>We notice that the only difference between this equation and the Lineweaver-Burk equation for the MM mechanism is the <span class="math notranslate nohighlight">\(\alpha\)</span> altering the slope.  Thus, we expect the introduction of an inhibitor that follows a competitive inhibition mechanism to not alter <span class="math notranslate nohighlight">\(v_{max}\)</span> and thus the intercept of the Lineweaver-Burk equation.</p>
@@ -1059,18 +1060,18 @@ v_0 = \frac{k_2[E]_0[S]_0}{K_m\left(1 + [I]_0/K_I\right)+ [S]_0}
 <img alt="../../_images/Competitive_Inhibition_15_1.png" src="../../_images/Competitive_Inhibition_15_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="relationship-between-k-i-and-ic50">
+</section>
+<section id="relationship-between-k-i-and-ic50">
 <h2><span class="section-number">3.3.9.8. </span>Relationship between <span class="math notranslate nohighlight">\(K_I\)</span> and IC50<a class="headerlink" href="#relationship-between-k-i-and-ic50" title="Permalink to this headline">#</a></h2>
 <p>The effectiveness of an inhibitor is often quantified by something called IC50.  IC50 stands for inhibitor concentration at 50% activity.  Or, what inhibitor concentration is necessary to achieve 50% activity?  To investigate this, we need to fix the enzyme and substrate concentration and alter the inhibitor concentration.</p>
 <p>It can be shown that the relationship between IC50 and <span class="math notranslate nohighlight">\(K_I\)</span> is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fedd6a7c-6ba2-4c76-95a3-fe69a9f89a77">
-<span class="eqno">(3.607)<a class="headerlink" href="#equation-fedd6a7c-6ba2-4c76-95a3-fe69a9f89a77" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2a43d2a3-d39e-4e21-bf3a-eb65f4fb2691">
+<span class="eqno">(3.607)<a class="headerlink" href="#equation-2a43d2a3-d39e-4e21-bf3a-eb65f4fb2691" title="Permalink to this equation">#</a></span>\[\begin{equation}
 IC50 = K_I\left(1 + \frac{[S]_0}{K_m}\right)
 \end{equation}\]</div>
 <p>To demonstrate this relationship, we solve for <span class="math notranslate nohighlight">\([I]\)</span> when <span class="math notranslate nohighlight">\(v_0\)</span> is half of the unhibited (MM) rate for fixed <span class="math notranslate nohighlight">\([S]_0\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e88422b7-0bf4-45fc-b372-c89ac09e5f9f">
-<span class="eqno">(3.608)<a class="headerlink" href="#equation-e88422b7-0bf4-45fc-b372-c89ac09e5f9f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f0820f92-8149-41cc-a5db-d4fb7988ed01">
+<span class="eqno">(3.608)<a class="headerlink" href="#equation-f0820f92-8149-41cc-a5db-d4fb7988ed01" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;\frac{k_2[E]_0[S]_0}{K_m\left(1 + IC50/K_I\right)+ [S]_0} = \frac{1}{2}\frac{k_2[E]_0[S]_0}{K_m+ [S]_0} \\
 &amp;\Rightarrow 2(K_m+ [S]_0) = K_m\left(1 + IC50/K_I\right)+ [S]_0 \\
 &amp;\Rightarrow 2K_m+ 2[S]_0 - K_m - [S]_0 = K_m\cdot IC50/K_I \\
@@ -1110,8 +1111,8 @@ IC50 = K_I\left(1 + \frac{[S]_0}{K_m}\right)
 <img alt="../../_images/Competitive_Inhibition_18_1.png" src="../../_images/Competitive_Inhibition_18_1.png" />
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

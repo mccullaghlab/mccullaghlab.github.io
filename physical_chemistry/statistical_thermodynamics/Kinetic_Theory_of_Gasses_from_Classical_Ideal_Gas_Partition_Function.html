@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.1.8. Microscopic View of Entropy" href="microscopic_view_of_entropy.html" />
@@ -797,13 +798,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="kinetic-theory-of-gasses-from-the-classical-ideal-gas">
+  <section class="tex2jax_ignore mathjax_ignore" id="kinetic-theory-of-gasses-from-the-classical-ideal-gas">
 <h1><span class="section-number">3.1.7. </span>Kinetic Theory of Gasses from the Classical Ideal Gas<a class="headerlink" href="#kinetic-theory-of-gasses-from-the-classical-ideal-gas" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.1.7.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>In these notes we will demonstrate that some of the aspects of the Kinetic Theory of Gasses can be derived from the partition function of the classical ideal gas.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.1.7.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After these notes, students should be able to:</p>
 <ol class="simple">
@@ -811,16 +812,16 @@ title="Print to PDF"
 <li><p>Derive the Gaussian distribution of components of a particle velocity</p></li>
 <li><p>Derive the distribution of speeds for a gas from the classical partition function.</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.1.7.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <ol class="simple">
 <li><p>variables</p></li>
 <li><p>functions</p></li>
 <li><p>plotting with matplotlib</p></li>
 </ol>
-</div>
-<div class="section" id="introduction">
+</section>
+<section id="introduction">
 <h2><span class="section-number">3.1.7.4. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
 <p>The Kinetic Theory of Gasses (KTG) is a model of Gasses that is used to explain attributes of all gasses including:</p>
 <ol class="simple">
@@ -831,26 +832,26 @@ title="Print to PDF"
 <p>The KTG is used to describe other attributes of a gas that we will not discuss here, including some that cannot be derived from an ideal gas.</p>
 <p>The three attributes above can be derived from the partition function of a classical ideal gas.</p>
 <p>Recall that the partition function for a classical ideal gas</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2140ca4-f70a-4d3a-9680-dd96539f8058">
-<span class="eqno">(3.146)<a class="headerlink" href="#equation-e2140ca4-f70a-4d3a-9680-dd96539f8058" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ab72c47d-8ae5-42c2-b7a2-2bd470dc9921">
+<span class="eqno">(3.146)<a class="headerlink" href="#equation-ab72c47d-8ae5-42c2-b7a2-2bd470dc9921" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q = \frac{V^N\left( \frac{2\pi mk_BT}{h^2}\right)^{3N/2}}{N!}
 \end{equation}\]</div>
 <p>and that this was derived by representing the energy of the system as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9d76c091-9e44-4289-9a79-5f4c4e437781">
-<span class="eqno">(3.147)<a class="headerlink" href="#equation-9d76c091-9e44-4289-9a79-5f4c4e437781" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-98c690fd-dbed-45d1-966e-a7984dced34f">
+<span class="eqno">(3.147)<a class="headerlink" href="#equation-98c690fd-dbed-45d1-966e-a7984dced34f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 H(\vec{R}^N,\vec{P}^N) = \sum_{i=1}^N \frac{\vec{p}_i^2}{2m}
 \end{equation}\]</div>
 <p>We derived this by utilizing an integral overall all phase space (phase space is composed of position and momenta)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-62e0706d-ed9a-4f0c-802d-d0eaf367ae30">
-<span class="eqno">(3.148)<a class="headerlink" href="#equation-62e0706d-ed9a-4f0c-802d-d0eaf367ae30" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e758f656-fc32-435c-a1b8-be3eaba714ad">
+<span class="eqno">(3.148)<a class="headerlink" href="#equation-e758f656-fc32-435c-a1b8-be3eaba714ad" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q = \frac{\int_0^L\int_{-\infty}^{\infty} e^{-\beta H(\vec{R}^N,\vec{P}^N)}d\vec{R}^Nd\vec{P}^N}{h^{3N}N!}
 \end{equation}\]</div>
-</div>
-<div class="section" id="temperature-is-related-to-average-squared-velocity-for-a-gas">
+</section>
+<section id="temperature-is-related-to-average-squared-velocity-for-a-gas">
 <h2><span class="section-number">3.1.7.5. </span>Temperature is related to average squared velocity for a gas<a class="headerlink" href="#temperature-is-related-to-average-squared-velocity-for-a-gas" title="Permalink to this headline">#</a></h2>
 <p>To demonstrate the relationship between average squared particle velocity and temperature we will compute the average energy of a classical ideal gas</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8dd3513e-61f3-4bb2-8f11-d8553dc4bf3d">
-<span class="eqno">(3.149)<a class="headerlink" href="#equation-8dd3513e-61f3-4bb2-8f11-d8553dc4bf3d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-761fc686-852c-4c6d-aaef-e63595166190">
+<span class="eqno">(3.149)<a class="headerlink" href="#equation-761fc686-852c-4c6d-aaef-e63595166190" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle E \rangle &amp;=&amp; \langle H(\vec{R}^N,\vec{P}^N) \rangle \\
     &amp;=&amp; \langle \sum_{i=1}^N \frac{\vec{p}_i^2}{2m} \rangle \\
     &amp;=&amp; \frac{1}{2m} \sum_{i=1}^N \langle \vec{p}_i^2 \rangle \\
@@ -858,66 +859,66 @@ Q = \frac{\int_0^L\int_{-\infty}^{\infty} e^{-\beta H(\vec{R}^N,\vec{P}^N)}d\vec
 \end{eqnarray}\]</div>
 <p>where the last equality holds because all particles are equivalent and thus <span class="math notranslate nohighlight">\(\langle \vec{p}_i^2 \rangle = \langle \vec{p}_j^2 \rangle\)</span> for all <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>.</p>
 <p>Next we recognize that <span class="math notranslate nohighlight">\(\vec{p} = m\vec{v}\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f7109659-ee81-4f3c-81d1-ffa960f9a160">
-<span class="eqno">(3.150)<a class="headerlink" href="#equation-f7109659-ee81-4f3c-81d1-ffa960f9a160" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-bd6f936c-bf28-4ef5-897c-c91daa69e890">
+<span class="eqno">(3.150)<a class="headerlink" href="#equation-bd6f936c-bf28-4ef5-897c-c91daa69e890" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle E \rangle &amp;=&amp; \frac{1}{2m} N m^2 \langle \vec{v}^2 \rangle \\
 &amp;=&amp; \frac{Nm}{2} \langle \vec{v}^2 \rangle
 \end{eqnarray}\]</div>
 <p>To determine the relationship with temperature recall that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4af20d1f-05d6-4fbb-96c4-68f6b6c67587">
-<span class="eqno">(3.151)<a class="headerlink" href="#equation-4af20d1f-05d6-4fbb-96c4-68f6b6c67587" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0a840844-a30e-4261-9aa9-6ac7ab1a02e4">
+<span class="eqno">(3.151)<a class="headerlink" href="#equation-0a840844-a30e-4261-9aa9-6ac7ab1a02e4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle E \rangle = -\left( \frac{\partial \ln Q}{\partial \beta}\right)
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-32e2371a-4ebb-4b4d-9861-86d1083cd407">
-<span class="eqno">(3.152)<a class="headerlink" href="#equation-32e2371a-4ebb-4b4d-9861-86d1083cd407" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-fb03a58a-17ac-4f73-9e33-c534f3d73725">
+<span class="eqno">(3.152)<a class="headerlink" href="#equation-fb03a58a-17ac-4f73-9e33-c534f3d73725" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 lnQ =  -\frac{3N}{2}\ln \beta + \frac{3N}{2}\ln\left( \frac{2\pi m}{h^2}\right) \ln V - \ln N!
 \end{eqnarray}\]</div>
 <p>Differentiating w.r.t. <span class="math notranslate nohighlight">\(\beta\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-47b69ed3-cbf4-4835-9e44-d28d9a7b0452">
-<span class="eqno">(3.153)<a class="headerlink" href="#equation-47b69ed3-cbf4-4835-9e44-d28d9a7b0452" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-136b8b8e-4a8e-4a53-82d6-67dbea37d7f4">
+<span class="eqno">(3.153)<a class="headerlink" href="#equation-136b8b8e-4a8e-4a53-82d6-67dbea37d7f4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle E \rangle = \frac{3Nk_BT}{2}
 \end{equation}\]</div>
 <p>Equating the two expressions for <span class="math notranslate nohighlight">\(\langle E \rangle\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9c019fed-0893-4ce0-be09-87ab3e4e8d71">
-<span class="eqno">(3.154)<a class="headerlink" href="#equation-9c019fed-0893-4ce0-be09-87ab3e4e8d71" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-3f971dde-461b-424f-9421-c8255276ec81">
+<span class="eqno">(3.154)<a class="headerlink" href="#equation-3f971dde-461b-424f-9421-c8255276ec81" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{3Nk_BT}{2} &amp;=&amp; \frac{Nm}{2} \langle \vec{v}^2 \rangle \\
 \Rightarrow T &amp;=&amp; \frac{m}{3k_B} \langle \vec{v}^2 \rangle 
 \end{eqnarray}\]</div>
 <p>In molar quantities this becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ebc6399c-827a-4ec9-aa28-6cf447d7bf21">
-<span class="eqno">(3.155)<a class="headerlink" href="#equation-ebc6399c-827a-4ec9-aa28-6cf447d7bf21" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-f4159068-a785-4a66-9045-d0c28254cccb">
+<span class="eqno">(3.155)<a class="headerlink" href="#equation-f4159068-a785-4a66-9045-d0c28254cccb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 T = \frac{M}{3R} \langle \vec{v}^2 \rangle 
 \end{eqnarray}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-37cee5b1-ba92-4d93-ba62-4ba0cf328f23">
-<span class="eqno">(3.156)<a class="headerlink" href="#equation-37cee5b1-ba92-4d93-ba62-4ba0cf328f23" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c83b8a14-2606-488f-87f7-93d38b0ce643">
+<span class="eqno">(3.156)<a class="headerlink" href="#equation-c83b8a14-2606-488f-87f7-93d38b0ce643" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{3RT}{M} = \langle \vec{v}^2 \rangle 
 \end{eqnarray}\]</div>
-</div>
-<div class="section" id="distribution-of-components-of-particle-velocity-follow-a-gaussian">
+</section>
+<section id="distribution-of-components-of-particle-velocity-follow-a-gaussian">
 <h2><span class="section-number">3.1.7.6. </span>Distribution of Components of Particle Velocity Follow a Gaussian<a class="headerlink" href="#distribution-of-components-of-particle-velocity-follow-a-gaussian" title="Permalink to this headline">#</a></h2>
 <p>We have seen this equation before but the KTG states that components of particle velocity, <span class="math notranslate nohighlight">\(\vec{v} = (v_x,v_y,v_z)\)</span>, follow a Gaussian distribution of the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2bde0750-568c-4536-8415-9a59f2616d68">
-<span class="eqno">(3.157)<a class="headerlink" href="#equation-2bde0750-568c-4536-8415-9a59f2616d68" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-00733bad-166f-453c-a9e5-a7d931a965c4">
+<span class="eqno">(3.157)<a class="headerlink" href="#equation-00733bad-166f-453c-a9e5-a7d931a965c4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(v_x) = \left( \frac{M}{2\pi RT}\right)^{1/2}e^{-\frac{Mv_x^2}{2RT}}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(M\)</span> is the molar of the particles.  The other components, <span class="math notranslate nohighlight">\(v_y\)</span> and <span class="math notranslate nohighlight">\(v_z\)</span>, have analagous distributions <span class="math notranslate nohighlight">\(f(v_y)\)</span> and <span class="math notranslate nohighlight">\(f(v_z)\)</span>.</p>
 <p>We are going to derive this equation from the partition function and Boltzmann factors from a classical monatomic ideal gas.</p>
 <p>From standard classical statistical mechanics we recall that the probability of a state described by continuous variable <span class="math notranslate nohighlight">\(x\)</span> is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-84208eb3-9db2-4e65-b61f-b986ec11cad8">
-<span class="eqno">(3.158)<a class="headerlink" href="#equation-84208eb3-9db2-4e65-b61f-b986ec11cad8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9b06c114-99bc-43dc-9cb4-65a6bf313846">
+<span class="eqno">(3.158)<a class="headerlink" href="#equation-9b06c114-99bc-43dc-9cb4-65a6bf313846" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(x) = \frac{e^{-\beta E(x)}}{Q}
 \end{equation}\]</div>
 <p>In the case of particle velocities component <span class="math notranslate nohighlight">\(v_x\)</span> for a classical monatomic ideal gas we consider</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5ba4774d-f5f4-4ee8-ac17-e26a21a8f8e8">
-<span class="eqno">(3.159)<a class="headerlink" href="#equation-5ba4774d-f5f4-4ee8-ac17-e26a21a8f8e8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-86ceb665-f38f-46f4-b96e-a5cf23181d5b">
+<span class="eqno">(3.159)<a class="headerlink" href="#equation-86ceb665-f38f-46f4-b96e-a5cf23181d5b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P(v_x) = \frac{e^{-\beta H_{1D}(v_x)}}{q_{1D}}
 \end{eqnarray}\]</div>
 <p>where H_{1D} is the Hamiltonian that only depends on the single velocity component and <span class="math notranslate nohighlight">\(q_{1D}\)</span> is the partition function in 1D of velocties. This can also be determined by using the total <span class="math notranslate nohighlight">\(q\)</span> and including a degeneracy for <span class="math notranslate nohighlight">\(e^{-\beta H_{1D}(v_x)}\)</span> that involves and integration over positions and two of the orthogonal velocity dimensions.  The results will be the same.</p>
 <p>We get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf38a556-24ce-44d8-b160-12348af6f336">
-<span class="eqno">(3.160)<a class="headerlink" href="#equation-bf38a556-24ce-44d8-b160-12348af6f336" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-0dfe8fcf-7ef5-4ea8-8872-9a2356a5a9be">
+<span class="eqno">(3.160)<a class="headerlink" href="#equation-0dfe8fcf-7ef5-4ea8-8872-9a2356a5a9be" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P(v_x) &amp;=&amp; \frac{e^{-\beta H_{1D}(v_x)}}{Q_{1D}} \\
 &amp;=&amp;  \frac{e^{-\beta \frac{1}{2}mv_x^2}}{\left( \frac{2\pi mk_BT}{h^2}\right)^{1/2}} \\
 &amp;=&amp; \left( \frac{h^2}{2\pi mk_BT}\right)^{1/2}e^{-\beta \frac{1}{2}mv_x^2} \\
@@ -955,23 +956,23 @@ P(v_x) &amp;=&amp; \frac{e^{-\beta H_{1D}(v_x)}}{Q_{1D}} \\
 <img alt="../../_images/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function_9_1.png" src="../../_images/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function_9_1.png" />
 </div>
 </div>
-</div>
-<div class="section" id="distribution-of-particle-speed-is-the-maxwell-boltzmann-distribution">
+</section>
+<section id="distribution-of-particle-speed-is-the-maxwell-boltzmann-distribution">
 <h2><span class="section-number">3.1.7.7. </span>Distribution of Particle Speed is the Maxwell-Boltzmann Distribution<a class="headerlink" href="#distribution-of-particle-speed-is-the-maxwell-boltzmann-distribution" title="Permalink to this headline">#</a></h2>
 <p>The distribution of particle speed is termed the Maxwell-Boltzmann distribution and has the following for</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c112cc4b-7047-4219-8107-998781952456">
-<span class="eqno">(3.161)<a class="headerlink" href="#equation-c112cc4b-7047-4219-8107-998781952456" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9c29f018-a283-4e6e-bcc6-133f291d8993">
+<span class="eqno">(3.161)<a class="headerlink" href="#equation-9c29f018-a283-4e6e-bcc6-133f291d8993" title="Permalink to this equation">#</a></span>\[\begin{equation}
 F(v) = 4\pi\left(\frac{m}{2\pi k_BT}\right)^{3/2}v^2e^{-mv^2/2k_B T}
 \end{equation}\]</div>
 <p>To derive this expression, we use a similar procedure to above except in this case we pay attention to the degeneracy of a particular value of <span class="math notranslate nohighlight">\(v\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-741bc2d8-1fad-4fc1-9683-7712afb68e97">
-<span class="eqno">(3.162)<a class="headerlink" href="#equation-741bc2d8-1fad-4fc1-9683-7712afb68e97" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ecdd7f4a-53e5-40e4-a04b-669cadcd262a">
+<span class="eqno">(3.162)<a class="headerlink" href="#equation-ecdd7f4a-53e5-40e4-a04b-669cadcd262a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(v) = \frac{g_ve^{-\beta H(v)}}{Q}.
 \end{equation}\]</div>
 <p>The degeneracy of a particular value of <span class="math notranslate nohighlight">\(v\)</span> is <span class="math notranslate nohighlight">\(g_v=4\pi v^2\)</span>, this can be demonstrated in a variety of ways but here I will just give a qualitative argument.  A particular value for <span class="math notranslate nohighlight">\(v=\sqrt{v_x^2+v_y^2+v_z^2}\)</span> can be achieved with various values of <span class="math notranslate nohighlight">\(v_x\)</span>, <span class="math notranslate nohighlight">\(v_y\)</span>, and <span class="math notranslate nohighlight">\(v_z\)</span>.  The size of the degeneracy increases as the value of <span class="math notranslate nohighlight">\(v\)</span> increases.  More specifically, a value for <span class="math notranslate nohighlight">\(v\)</span> carves out the surface of a sphere hence the degeneracty of <span class="math notranslate nohighlight">\(4\pi v^2\)</span>.</p>
 <p>Given this, we now have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-02a145df-bd99-4f28-b11b-aa408dff4b95">
-<span class="eqno">(3.163)<a class="headerlink" href="#equation-02a145df-bd99-4f28-b11b-aa408dff4b95" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-7c2646b0-770d-47b6-90b4-304c26a4d63c">
+<span class="eqno">(3.163)<a class="headerlink" href="#equation-7c2646b0-770d-47b6-90b4-304c26a4d63c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P(v) &amp;=&amp; \frac{4\pi v^2e^{-\beta \frac{1}{2}mv^2}}{\left(\frac{2\pi mk_BT}{h^2}\right)^{3/2}} \\
 &amp;=&amp; 4\pi\left(\frac{h^2}{2\pi mk_BT}\right)^{3/2} v^2e^{-\frac{mv^2}{2k_BT}}
 \end{eqnarray}\]</div>
@@ -1006,8 +1007,8 @@ P(v) &amp;=&amp; \frac{4\pi v^2e^{-\beta \frac{1}{2}mv^2}}{\left(\frac{2\pi mk_B
 <img alt="../../_images/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function_12_1.png" src="../../_images/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function_12_1.png" />
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
