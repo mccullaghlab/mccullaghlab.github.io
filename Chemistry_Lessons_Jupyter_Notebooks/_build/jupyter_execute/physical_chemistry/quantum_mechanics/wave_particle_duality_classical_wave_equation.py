@@ -65,7 +65,7 @@
 # \lambda = \frac{6.626\times10^{-34}}{5.6} = 1.2\times10^{-34} \text{ m}
 # \end{align}
 
-# In[1]:
+# In[5]:
 
 
 print(9.109e-31*3e5)
@@ -93,7 +93,7 @@ print(6.626e-34/(9.109e-31*3e5))
 # \end{align}
 # Since the string is anchored at both ends.
 
-# In[2]:
+# In[20]:
 
 
 import numpy as np
@@ -193,8 +193,43 @@ plt.yticks(ticks=None);
 
 # ### K < 0
 
-# In[ ]:
-
-
-
-
+# If $K<0$, we can set $K = (ki)^2$ for arbitrary constant $k>0$.  This implies the general form for $X(x)$ and $T(t)$:
+# \begin{align}
+# \frac{d^2y(x)}{dx^2} - (ki)^2y(x) = 0 
+# \end{align}
+# 
+# Or you can write this as 
+# \begin{align}
+# \frac{d^2y(x)}{dx^2} = (ki)^2y(x) 
+# \end{align}
+# which implies that $y$ is a function that, when you take two derivatives, returns itself times a constant squared.  This type of behavior is exhibited by functions of the form $e^{\alpha x}$ the value of $\alpha$ needs to be determined.  So, we propose that $y(x) = e^{\alpha x}$ and plug this into the above equation to determine the expression for $\alpha$.
+# 
+# \begin{align}
+# &\frac{d^2e^{\alpha x}}{dx^2} - (ik)^2e^{\alpha x} = 0 \\
+# & \alpha^2e^{\alpha x} - (ki)^2e^{\alpha x} = 0 \\
+# & (\alpha^2 - (ki)^2)e^{\alpha x} = 0 \\
+# \Rightarrow & (\alpha^2 - (ki)^2) = 0 \\
+# \Rightarrow & \alpha = \pm ki
+# \end{align}
+# 
+# This means that there are two possible values for $\alpha$ and thus two possible solutions, $y(x)$.  Namely
+# \begin{align}
+# y(x) = e^{ikx} \\
+# y(x) = e^{-ikx}
+# \end{align}
+# 
+# In general, when there are two possible solutions for a given differential equation, then any linear combination of these two solutions is also a solution.  Thus, it is more complete to write that the solution is
+# \begin{equation}
+# y(x) = c_1e^{ikx} + c_2e^{-ikx},
+# \end{equation}
+# where $c_1$ and $c_2$ are constants.
+# 
+# In this case, we can also recall/recognize that 
+# \begin{equation}
+# e^{ix} = \cos(x) + i \sin(x)
+# \end{equation}
+# 
+# Using this relationship is can be readily shown that
+# \begin{equation}
+# y(x) = (c_1 + c_2)\cos(kx) + i(c_1-c_2)\sin(kx)
+# \end{equation}
