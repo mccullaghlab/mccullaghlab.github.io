@@ -19,7 +19,8 @@
 # The following coding concepts are used in this notebook:
 # 
 # 1. [Variables](../../coding_concepts/variables.ipynb)
-# 2. [Plotting with matplotliub](../../coding_concepts/plotting_with_matplotlib.ipynb)
+# 2. [Functions](../../coding_concepts/functions.ipynb)
+# 3. [Plotting with matplotliub](../../coding_concepts/plotting_with_matplotlib.ipynb)
 
 # ## Matter has wavelike properties
 
@@ -65,7 +66,7 @@
 # \lambda = \frac{6.626\times10^{-34}}{5.6} = 1.2\times10^{-34} \text{ m}
 # \end{align}
 
-# In[5]:
+# In[1]:
 
 
 print(9.109e-31*3e5)
@@ -93,7 +94,7 @@ print(6.626e-34/(9.109e-31*3e5))
 # \end{align}
 # Since the string is anchored at both ends.
 
-# In[20]:
+# In[2]:
 
 
 import numpy as np
@@ -233,3 +234,109 @@ plt.yticks(ticks=None);
 # \begin{equation}
 # y(x) = (c_1 + c_2)\cos(kx) + i(c_1-c_2)\sin(kx)
 # \end{equation}
+# 
+# We will write this general solution as 
+# \begin{equation}
+# X(x) = A\cos(kx) + B\sin(kx)
+# \end{equation}
+# 
+# When we apply the boundary conditions we get that 
+# \begin{align}
+# A &= 0 \\
+# k &= \frac{n\pi}{l}
+# \end{align}
+# 
+# Finally yielding an $n$ specific solution of
+# \begin{equation}
+# X_n(x) = B_n\cos\frac{n\pi x}{l}
+# \end{equation}
+
+# ### Time Dependence
+
+# Now that we have solved the positional dependence equation and found a non-trivial solution we must solve the time dependent portion.  Recall that the time dependent differential equation is
+# \begin{equation}
+# \frac{d^2T(t)}{dt} - v^2KT(t) = 0,
+# \end{equation}
+# where $K$ is the exact same constant as for the positional part. Thus, for the non-trivial case with $K<0$ we have
+# \begin{equation}
+# \frac{d^2T(t)}{dt} + \frac{n^2\pi^2v^2}{l^2}T(t) = 0,
+# \end{equation}
+# The solutions to this equation are, by analogy with to the position equation,
+# \begin{equation}
+# T_n(t) = A_n\cos(\omega_nt) + B_n\sin(\omega_nt)
+# \end{equation}
+# where $\omega_n = \frac{n \pi v}{l}$.  It can be shown that this can be rewritten as 
+# \begin{equation}
+# T_n(t) = D_n\cos(\omega_nt + \phi_n)
+# \end{equation}
+# where $\phi_n = \tan^{-1}\frac{B_n}{A_n}$.  
+
+# ### Combined General Solution
+
+# The combined specific solution is then
+# \begin{equation}
+# u_n(x,t) = A_n\cos(\omega_nt + \phi_n)\sin\frac{n\pi x}{l}
+# \end{equation}
+# 
+# Since and $u_n$ is a specific solution to the linear differential equation, the general solution is a linear combination of these solutions.  Thus, the general solution is
+# 
+# \begin{equation}
+# u(x,t) = \sum_{i=1}^{\infty} u_n(x,t) = \sum_{i=1}^{\infty} A_n\cos(\omega_nt + \phi_n)\sin\frac{n\pi x}{l}
+# \end{equation}
+
+# ### Example: Linear combination of first two harmonics
+
+# To investigate what these look like, we can look at the sum of the first two harmonics, or first two solutions to the equation above.  The function is then
+# 
+# \begin{equation}
+# u(x,t) = A_1\cos(\omega_1t)\sin\frac{\pi x}{l} + A_2\cos(\omega_2t + \frac{\pi}{2})\sin\frac{2\pi x}{l}
+# \end{equation}
+# 
+# If we assume $A_1 = A_2 = 1$ we can see plot what these two curves look like as a function of time.
+# 
+# ![title](img/classical_wave_two_modes_v02.gif)
+
+# In[3]:
+
+
+# make animated gif of first two harmonics
+import matplotlib.pyplot as plt
+def plot_classical_wave_frame(t, nu, max_n):
+    a = 1
+    # setup plot parameters
+    fig = plt.figure(figsize=(6,4), dpi= 80, facecolor='w', edgecolor='k')
+    ax = plt.subplot(111)
+    all_x = np.arange(0,a,0.01)
+    n = 1
+    partial_sum = np.sin(n*np.pi*all_x/a)*np.cos(nu*n*t/(2*a))
+    ax.plot(all_x,partial_sum,'--',lw=2, label="n=1")
+    n = 2
+    partial_sum += np.sin(n*np.pi*all_x/a)*np.cos(nu*n*t/(2*a)+np.pi/2)
+    ax.plot(all_x,np.sin(n*np.pi*all_x/a)*np.cos(nu*n*t/(2*a)+np.pi/2),'--',lw=2, label="n=2")   
+    ax.plot(all_x,partial_sum,'-',lw=3, label="sum")
+    plt.legend(fontsize=12)
+    ax.set_xlabel(r'$x/a$',size=20)
+    ax.get_yaxis().set_visible(False)
+    plt.ylim((-2,2))
+    plt.xlim((0.0,1.0))
+    plt.savefig(f'./img/img_{t}.png', 
+                transparent = False,  
+                facecolor = 'white'
+               )
+    plt.close()
+    
+# make gif
+import numpy as np
+import imageio
+time = np.arange(0,120)
+for t in time:
+    plot_classical_wave_frame(t,0.1,1)
+frames = []
+for t in time:
+    #image = iio.imread(f'./img/img_{t}.png')
+    image = imageio.imread(f'./img/img_{t}.png')
+    frames.append(image)
+imageio.mimsave('./img/classical_wave_three_modes_v01.gif', # output gif
+                frames,          # array of input frames
+                fps = 10)  
+

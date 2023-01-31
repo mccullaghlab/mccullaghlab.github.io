@@ -25,7 +25,7 @@
 
 # To see the utility of the Schrodinger equation we will see what it predicts for the energy of a particle that can travel in one dimension but is restricted to a finite domain.  This can be seen as asking what the allowed energy is for a particle in a one dimensional box.  The only energy that this particle has is kinetic energy.  
 # 
-# ![title](img/InfiniteSquareWellAnimation.gif)
+# ![title](img/particle_in_a_box.gif)
 
 # The first step in solving this problem, as is the case for all problem involving the Schrodinger equation, is to write out the Hamiltonian.  From there, we can hopefully solve for the wave functions and the energies.  To do so we can start by writing out the classical energy and then converting the terms to quantum operators.
 # 
@@ -60,7 +60,7 @@
 # We start by rewriting the Schrodinger equation for the particle in a box in the more standard differential equation form:
 # \begin{align}
 # &\frac{d^2\psi}{dx^2} = \frac{-2mE}{\hbar^2}\psi(x) \\
-# \Rightarrow \frac{d^2\psi}{dx^2} + \frac{2mE}{\hbar^2}\psi(x) = 0
+# \Rightarrow &\frac{d^2\psi}{dx^2} + \frac{2mE}{\hbar^2}\psi(x) = 0
 # \end{align}
 # 
 # Additionally, we have the boundary conditions that 
@@ -85,12 +85,6 @@
 # \begin{align}
 # E_n = \frac{h^2n^2}{8ma^2}
 # \end{align}
-
-# In[1]:
-
-
-# Plot of the Particle in a box Energy Levels
-
 
 # ## Particle in a Box: Applications
 
@@ -143,6 +137,34 @@
 # \psi_n(x) = \sqrt{\frac{2}{a}} \sin\frac{n\pi x}{a}
 # \end{equation}
 
+# In[13]:
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+def psi(x,n):
+    a=1
+    return np.sqrt(2/a)*np.sin(n*np.pi*x/a)
+# make an array containing domain of wavelengths to consider
+x = np.arange(0,1,0.001)
+# setup plot parameters
+fig = plt.figure(figsize=(8,4), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_xlabel(r'$x/a$',size=20)
+ax.set_ylabel(r'$\psi(x)$',size=20)
+plt.tick_params(axis='both',labelsize=20)
+# plot quantum result
+ax.plot(x,psi(x,1),label="n=1",lw=2)
+ax.plot(x,psi(x,2),label="n=2",lw=2)
+ax.plot(x,psi(x,3),label="n=3",lw=2)
+ax.plot(x,psi(x,4),label="n=4",lw=2)
+plt.title("Wavefunctions of Particle in a Box",fontsize=20)
+# make legend
+ax.legend(fontsize=12,markerscale=5.0);
+
+
 # ### Probabiliity of Observing Particle in Finite Domain
 
 # Since the square of the wave function is a probability function, we can determine the probability of observing a particle in a particular domain using the relationship
@@ -166,6 +188,34 @@
 # &= \frac{2}{a}\left[ \frac{a}{3} - \frac{a\sin\frac{4n\pi}{3}}{4n\pi} - \frac{a}{6} + \frac{a\sin\frac{2n\pi }{3}}{4n\pi}\right] \\
 # &= 2\left[ \frac{1}{6}  + \frac{\sin\frac{2n\pi }{3} - \sin\frac{4n\pi}{3}}{4n\pi}\right]
 # \end{align}
+
+# In[12]:
+
+
+# plot probabilities
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+def psi(x,n):
+    a=1
+    return np.sqrt(2/a)*np.sin(n*np.pi*x/a)
+# make an array containing domain of wavelengths to consider
+x = np.arange(0,1,0.001)
+# setup plot parameters
+fig = plt.figure(figsize=(8,4), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_xlabel(r'$x/a$',size=20)
+ax.set_ylabel(r'$P(x)$',size=20)
+plt.tick_params(axis='both',labelsize=20)
+# plot quantum result
+ax.plot(x,psi(x,1)**2,label="n=1",lw=2)
+ax.plot(x,psi(x,2)**2,label="n=2",lw=2)
+ax.plot(x,psi(x,3)**2,label="n=3",lw=2)
+plt.title("Probabilites of Particle in a Box",fontsize=20)
+# make legend
+ax.legend(fontsize=12,markerscale=5.0);
+
 
 # ### Computing Average Properties from a Wave Function
 
