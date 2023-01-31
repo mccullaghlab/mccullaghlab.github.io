@@ -12,14 +12,16 @@
 # After working through these notes, you will be able to:
 # 
 # 1. Setup and solve the Schrodinger equation for a 1D particle in a finite box
-# 2. Normalize standard wave functions
-# 3. Compute stastical properties from wave functions
+# 2. Normalize 1D particle in a box wave functions.
+# 3. Compute average values of observables from 1D particle in a box wave functions.
 
 # ## Coding Concepts
 # 
 # The following coding concepts are used in this notebook:
 # 
-# 1. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.pyplot)
+# 1. [Variables](../../coding_concepts/variables.ipynb) 
+# 2. [Functions](../../coding_concepts/functions.ipynb)
+# 3. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.pyplot)
 
 # ## Particle in a Box: Setting up the Problem
 
@@ -224,3 +226,117 @@ ax.legend(fontsize=12,markerscale=5.0);
 # <A> = \int \psi^*(x)\hat{A}\psi(x)dx
 # \end{equation}
 # where $\hat{A}$ is any operator.  This could be momentum, kinetic energy, etc.
+#     
+# Let's look at a few examples.  
+#     
+# 1. Compute the average value of $x^2$ for a particle in a box
+# 2. Compute the average energy for a particle in a box
+# 3. Compute the average momentum for a particle in a box
+
+# ### Example: The average of $x^2$ for a particle in a box
+
+# To compute the average value of $x^2$ we start by writing the integral expression
+# \begin{equation}
+# \langle x^2 \rangle = \int \psi^*(x) x^2 \psi(x)dx
+# \end{equation}
+# 
+# For the particle in a box, we can limit the domain, and thus the bounds of integration, to $0\leq x \leq a$.  We can also set $\psi_n(x) = \sqrt{\frac{2}{a}}\sin\frac{n\pi x}{a}$.
+# 
+# Thus, for a particle in a 1D box of size $a$ we get
+# \begin{align}
+# \langle x^2 \rangle &= \int_0^a \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right) x^2 \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right)dx \\
+# &= \frac{2}{a} \int_0^a x^2 \sin^2\frac{n\pi x}{a}dx
+# \end{align}
+# 
+# From an integral table we find that
+# \begin{equation}
+# \int x^2\sin^2\alpha xdx = \frac{x^3}{6} - \left(\frac{x^2}{4\alpha} - \frac{1}{8\alpha^3}\right)\sin2\alpha x - \frac{x\cos 2\alpha x}{4\alpha^2} + C
+# \end{equation}
+# 
+# We use this equation with $\alpha = \frac{n\pi}{a}$ and get
+# \begin{align}
+# \langle x^2 \rangle &= \int_0^a \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right) x^2 \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right)dx \\
+# &= \frac{2}{a} \int_0^a x^2 \sin^2\frac{n\pi x}{a}dx \\
+# &= \frac{2}{a}\left[ \frac{x^3}{6} - \left(\frac{x^2}{4\alpha} - \frac{1}{8\alpha^3}\right)\sin2\alpha x - \frac{x\cos 2\alpha x}{4\alpha^2}\right]_0^a \\
+# &= \frac{2}{a}\left[ \frac{a^3}{6} - \left(\frac{a^2}{4\alpha} - \frac{1}{8\alpha^3}\right)\sin2\alpha a - \frac{a\cos 2\alpha a}{4\alpha^2} \right] \\
+# &= \frac{2}{a}\left[ \frac{a^3}{6} - \left(\frac{a^2}{4\frac{n\pi}{a}} - \frac{1}{8\left(\frac{n\pi}{a}\right)^3}\right)\sin2\frac{n\pi}{a} a - \frac{a\cos 2\frac{n\pi}{a} a}{4\left(\frac{n\pi}{a}\right)^2} \right] \\
+# &= \frac{2}{a}\left[ \frac{a^3}{6} - \frac{a^3}{\left(2n\pi\right)^2} \right] \\
+# &=  \frac{a^2}{3} - \frac{a^2}{2\left(n\pi\right)^2} 
+# \end{align}
+# 
+# This result, combined with the result for $\langle x \rangle$, can be used to determine $\sigma_x$, the standard deviation of particle deviation:
+# \begin{equation}
+# \sigma_x = \sqrt{\langle x^2 \rangle - \langle x \rangle^2} = \frac{a}{2\pi n}\sqrt{\frac{\pi^2n^2}{3} -2}
+# \end{equation}
+
+# In[2]:
+
+
+# plot probabilities
+import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+def sigmax(n):
+    return 1/(2*np.pi*n)*np.sqrt((np.pi*n)**2/3-2)
+# make an array containing domain of wavelengths to consider
+n = np.arange(1,11)
+# setup plot parameters
+fig = plt.figure(figsize=(8,4), dpi= 80, facecolor='w', edgecolor='k')
+ax = plt.subplot(111)
+ax.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax.set_xlabel(r'$n$',size=20)
+ax.set_ylabel(r'$\sigma_x/a$',size=20)
+plt.tick_params(axis='both',labelsize=20)
+# plot quantum result
+ax.plot(n,sigmax(n),'o',markersize=10)
+plt.title("Standard Deviation of Particle Position",fontsize=20)
+# make legend
+#ax.legend(fontsize=12,markerscale=5.0);
+
+
+# ### Example: Average Energy of Particle in a Box
+
+# The average energy of the particle in a box is a special case of computing an average quantity.  We will start by writing out the standard definition of computing and average from a wavefunction
+# \begin{equation}
+# \langle E \rangle = \int_0^a \psi_n^*(x)\hat{E}\psi_n(x)dx
+# \end{equation}
+# where $\hat{E}$ is the total energy operator.  We know the total energy operator by another symbol, namely $\hat{E} = \hat{H}$.  We plug this into the above equation to get
+# \begin{equation}
+# \langle E \rangle = \int_0^a \psi_n^*(x)\hat{H}\psi_n(x)dx.
+# \end{equation}
+# We now recognize that, for the particle in a box wavefunctions that we are discussion these were derived from the Schrodinger equation
+# \begin{equation}
+# \hat{H}\psi_n(x)  = E_n\psi_n(x)
+# \end{equation}
+# where $E_n$ is a scalar.  Thus, for the average energy we get
+# \begin{align}
+# \langle E \rangle &= \int_0^a \psi_n^*(x)\hat{H}\psi_n(x)dx \\
+# &=\int_0^a \psi_n^*(x)E_n\psi_n(x)dx \\
+# &=E_n\int_0^a \psi_n^*(x)\psi_n(x)dx \\
+# &= E_n
+# \end{align}
+# The last equality holding because the wave functions are normalized.
+
+# ### Example: Average momentum
+
+# To compute the average momentum of a particle in a 1D box we start in the usual way
+# \begin{equation}
+# \langle p \rangle = \int_0^a \psi_n^*(x)\hat{p}\psi_n(x)dx
+# \end{equation}
+# 
+# Recall that the momentum operator in one dimension is given by
+# \begin{equation}
+# \hat{p}_x = -i\hbar\frac{d}{dx}
+# \end{equation}
+# 
+# We now substitute this into the  above equation and solve
+# \begin{align}
+# \langle p \rangle &= \int_0^a \psi_n^*(x)\left(-i\hbar\frac{d}{dx}\right)\psi_n(x)dx \\
+# &= -\frac{2i\hbar}{a}\int_0^a \sin\left(\frac{n\pi x}{a}\right)\frac{d}{dx}\left(\sin\left(\frac{n\pi x}{a}\right)\right)dx \\
+# &= -\frac{2i\hbar}{a}\int_0^a \sin\left(\frac{n\pi x}{a}\right)\frac{n\pi}{a}\cos\left(\frac{n\pi x}{a}\right)dx \\
+# &= -\frac{2in\pi\hbar}{a^2}\int_0^a \sin\left(\frac{n\pi x}{a}\right)\cos\left(\frac{n\pi x}{a}\right)dx \\
+# &= 0
+# \end{align}
+# where the last equality can be found in an integral table.
+# 
+# So the average momentum of a particle in a box is zero.  This is because it is equally probable for the particle to be moving forward and backwards.
