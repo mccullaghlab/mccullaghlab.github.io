@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.4.4. Particle in a Box &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -50,8 +49,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.4.5. The Uncertainty Principle and Applications of Particle in a Box" href="uncertainty_principle_and_applications_of_particle_in_a_box.html" />
@@ -445,58 +446,63 @@ const thebe_selector_output = ".output, .cell_output"
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="momentum_operator.html">
+       3.4.7. The Momentum Operator
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="harmonic_oscillator.html">
-       3.4.7. Harmonic Oscillator
+       3.4.8. Harmonic Oscillator
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="quantum_mechanics_of_vibrational_spectroscopy.html">
-       3.4.8. Vibrational Spectroscopy
+       3.4.9. Vibrational Spectroscopy
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="variational_method_in_quantum_mechanics.html">
-       3.4.9. Variational Method in Quantum Mechanics
+       3.4.10. Variational Method in Quantum Mechanics
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="basis_functions.html">
-       3.4.10. Basis Functions
+       3.4.11. Basis Functions
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="harmonic_oscillator_using_variational_method.html">
-       3.4.11. Variational Solution to the Harmonic Oscillator
+       3.4.12. Variational Solution to the Harmonic Oscillator
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="morse_oscillator.html">
-       3.4.12. The Morse Oscillator
+       3.4.13. The Morse Oscillator
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="rigid_rotator.html">
-       3.4.13. Rigid Rotator
+       3.4.14. Rigid Rotator
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="rigid_rotator_using_variational_method.html">
-       3.4.14. Rigid Rotator Variational Solution…
+       3.4.15. Rigid Rotator Variational Solution…
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="rigid_rotator_selection_rules.html">
-       3.4.15. Rigid Rotator Continued…
+       3.4.16. Rigid Rotator Continued…
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="the_hydrogen_atom.html">
-       3.4.17. The Hydrogen Atom
+       3.4.18. The Hydrogen Atom
       </a>
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="the_helium_atom.html">
-       3.4.18. The Helium Atom
+       3.4.19. The Helium Atom
       </a>
      </li>
     </ul>
@@ -888,13 +894,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="particle-in-a-box">
+  <div class="tex2jax_ignore mathjax_ignore section" id="particle-in-a-box">
 <h1><span class="section-number">3.4.4. </span>Particle in a Box<a class="headerlink" href="#particle-in-a-box" title="Permalink to this headline">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">3.4.4.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>To demonstrate how to use the Schrodinger equation we will look at one of the simplest quantum problems: particle in a box.  This problem simply asks what are the solutions to the Shrodinger equation for a particle that is allowed to travel in one dimension in a finite domain.</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.4.4.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="simple">
@@ -902,8 +908,8 @@ title="Print to PDF"
 <li><p>Normalize 1D particle in a box wave functions.</p></li>
 <li><p>Compute average values of observables from 1D particle in a box wave functions.</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.4.4.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -911,84 +917,84 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><span class="xref myst">Plotting with matplotlib</span></p></li>
 </ol>
-</section>
-<section id="particle-in-a-box-setting-up-the-problem">
+</div>
+<div class="section" id="particle-in-a-box-setting-up-the-problem">
 <h2><span class="section-number">3.4.4.4. </span>Particle in a Box: Setting up the Problem<a class="headerlink" href="#particle-in-a-box-setting-up-the-problem" title="Permalink to this headline">#</a></h2>
 <p>To see the utility of the Schrodinger equation we will see what it predicts for the energy of a particle that can travel in one dimension but is restricted to a finite domain.  This can be seen as asking what the allowed energy is for a particle in a one dimensional box.  The only energy that this particle has is kinetic energy.</p>
 <p><img alt="title" src="../../_images/particle_in_a_box.gif" /></p>
 <p>The first step in solving this problem, as is the case for all problem involving the Schrodinger equation, is to write out the Hamiltonian.  From there, we can hopefully solve for the wave functions and the energies.  To do so we can start by writing out the classical energy and then converting the terms to quantum operators.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c70a71f5-0083-4b84-91d2-2e0596d1f0e2">
-<span class="eqno">(3.670)<a class="headerlink" href="#equation-c70a71f5-0083-4b84-91d2-2e0596d1f0e2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-34011aa4-a446-41da-82c2-72fc0c8c4625">
+<span class="eqno">(3.670)<a class="headerlink" href="#equation-34011aa4-a446-41da-82c2-72fc0c8c4625" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_{classical}(x,v) &amp;= K(v) + V(x) \\
 &amp;= \frac{1}{2}mv^2
 \end{align}\]</div>
 <p>where we have used that <span class="math notranslate nohighlight">\(V(x) = 0\)</span> as is stated in the problem.  So the total energy is just equivalent to the total kinetic energy. Since this is for a single particle the classical kinetic energy is just <span class="math notranslate nohighlight">\(\frac{1}{2}mv^2\)</span>.</p>
 <p>In order to write out the Hamiltonian we can always start with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dd4ec0bc-0056-4b72-b7a4-c9c949d5d313">
-<span class="eqno">(3.671)<a class="headerlink" href="#equation-dd4ec0bc-0056-4b72-b7a4-c9c949d5d313" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f9c1c96b-e4bc-4c45-9797-931bb46234d4">
+<span class="eqno">(3.671)<a class="headerlink" href="#equation-f9c1c96b-e4bc-4c45-9797-931bb46234d4" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{H} &amp;= \hat{K} + \hat{V} \\
 &amp;= \hat{K}
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{K}\)</span> is the kinetic energy operator.  If we consult the table provided in the <a class="reference internal" href="Schrodinger_Equation.html"><span class="doc std std-doc">Schrodinger Equation notes</span></a> we see that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d587a66d-6de4-4ead-ab08-9ff3259f1d44">
-<span class="eqno">(3.672)<a class="headerlink" href="#equation-d587a66d-6de4-4ead-ab08-9ff3259f1d44" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0697a5aa-efdb-41eb-abf4-ecc14c22d049">
+<span class="eqno">(3.672)<a class="headerlink" href="#equation-0697a5aa-efdb-41eb-abf4-ecc14c22d049" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{K} = -\frac{\hbar^2}{2m}\left(\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial x^2} \right).
 \end{align}\]</div>
 <p>Since this problem only involves a single dimension, we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0b8d830e-ff5e-4a83-99c3-777d5975b2ba">
-<span class="eqno">(3.673)<a class="headerlink" href="#equation-0b8d830e-ff5e-4a83-99c3-777d5975b2ba" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8a63aefd-4115-4944-b804-fee382b74245">
+<span class="eqno">(3.673)<a class="headerlink" href="#equation-8a63aefd-4115-4944-b804-fee382b74245" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{K} = -\frac{\hbar^2}{2m}\frac{d^2}{d x^2}.
 \end{align}\]</div>
 <p>Thus, the Schrodinger equation for this problem is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e5ad77e7-d21b-4d69-936a-c7169ee5f2e4">
-<span class="eqno">(3.674)<a class="headerlink" href="#equation-e5ad77e7-d21b-4d69-936a-c7169ee5f2e4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4d6e1419-e1d7-49ce-982d-29cf08e193a9">
+<span class="eqno">(3.674)<a class="headerlink" href="#equation-4d6e1419-e1d7-49ce-982d-29cf08e193a9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 -\frac{\hbar^2}{2m}\frac{d^2}{d x^2}\psi(x) = E\psi(x) \quad 0\leq x\leq a
 \end{equation}\]</div>
 <p>and the goal is to determine <span class="math notranslate nohighlight">\(\psi(x)\)</span> and <span class="math notranslate nohighlight">\(E\)</span>.</p>
-</section>
-<section id="particle-in-a-box-solution">
+</div>
+<div class="section" id="particle-in-a-box-solution">
 <h2><span class="section-number">3.4.4.5. </span>Particle in a Box: Solution<a class="headerlink" href="#particle-in-a-box-solution" title="Permalink to this headline">#</a></h2>
 <p>We start by rewriting the Schrodinger equation for the particle in a box in the more standard differential equation form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5506fbbb-9a64-427a-92b4-49313349023c">
-<span class="eqno">(3.675)<a class="headerlink" href="#equation-5506fbbb-9a64-427a-92b4-49313349023c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9aacaebc-5923-4b52-9b88-f627aa005115">
+<span class="eqno">(3.675)<a class="headerlink" href="#equation-9aacaebc-5923-4b52-9b88-f627aa005115" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;\frac{d^2\psi}{dx^2} = \frac{-2mE}{\hbar^2}\psi(x) \\
 \Rightarrow &amp;\frac{d^2\psi}{dx^2} + \frac{2mE}{\hbar^2}\psi(x) = 0
 \end{align}\]</div>
 <p>Additionally, we have the boundary conditions that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dc0a1599-34a0-451d-92ca-05c6cc4f523a">
-<span class="eqno">(3.676)<a class="headerlink" href="#equation-dc0a1599-34a0-451d-92ca-05c6cc4f523a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c297af1f-864f-47cc-8c06-0c96fa25d5e7">
+<span class="eqno">(3.676)<a class="headerlink" href="#equation-c297af1f-864f-47cc-8c06-0c96fa25d5e7" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi(0) &amp;= 0 \\
 \psi(l) &amp;= 0
 \end{align}\]</div>
 <p>The idea here is that the particle can not sit inside/on the wall.  You can think of the wall as being an infinite potential at <span class="math notranslate nohighlight">\(x=0\)</span> and <span class="math notranslate nohighlight">\(x=l\)</span>.</p>
 <p>This form of differential equation and boundary conditions are exactly the problem we solved in the <a class="reference internal" href="wave_particle_duality_classical_wave_equation.html"><span class="doc std std-doc">Classical Wave Equation</span></a> notes.  The general solution is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57c090d1-7df4-45ea-9a33-59ff13483ad4">
-<span class="eqno">(3.677)<a class="headerlink" href="#equation-57c090d1-7df4-45ea-9a33-59ff13483ad4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bc4e22e8-fe35-45ac-8bea-577e00eab6a3">
+<span class="eqno">(3.677)<a class="headerlink" href="#equation-bc4e22e8-fe35-45ac-8bea-577e00eab6a3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(x) = A\cos(kx) + B\sin(kx),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(k^2 = \frac{2mE}{\hbar^2}\)</span> in this case.</p>
 <p>Applying the boundary conditions to this general solution yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d0cbd21d-db2d-423e-8b25-1fc3947addf9">
-<span class="eqno">(3.678)<a class="headerlink" href="#equation-d0cbd21d-db2d-423e-8b25-1fc3947addf9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8d41f319-49a5-44d6-8302-554ab142334f">
+<span class="eqno">(3.678)<a class="headerlink" href="#equation-8d41f319-49a5-44d6-8302-554ab142334f" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;A = 0 \\
 &amp;k = \frac{n\pi}{a}
 \end{align}\]</div>
 <p>Using two expressions for <span class="math notranslate nohighlight">\(k\)</span> yields our solutions for <span class="math notranslate nohighlight">\(E\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ba17a3f8-8ae6-484d-9bdf-9262af26e10c">
-<span class="eqno">(3.679)<a class="headerlink" href="#equation-ba17a3f8-8ae6-484d-9bdf-9262af26e10c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-36df5221-ce72-42bc-a099-94b8c9561a82">
+<span class="eqno">(3.679)<a class="headerlink" href="#equation-36df5221-ce72-42bc-a099-94b8c9561a82" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_n = \frac{h^2n^2}{8ma^2}
 \end{align}\]</div>
-</section>
-<section id="particle-in-a-box-applications">
+</div>
+<div class="section" id="particle-in-a-box-applications">
 <h2><span class="section-number">3.4.4.6. </span>Particle in a Box: Applications<a class="headerlink" href="#particle-in-a-box-applications" title="Permalink to this headline">#</a></h2>
 <p>Although this seems like a trivial problem, the model of a free particle in a finite box has been applied to actual physical systems with reasonable success.  One example is the <span class="math notranslate nohighlight">\(\pi\)</span> electrons in a conjugated molecule.  The free electron model for butadiene does a reasonable job at reproducing the the <span class="math notranslate nohighlight">\(\pi\rightarrow\pi^*\)</span> absorption band.</p>
-</section>
-<section id="probabilistic-intepretation-of-the-wave-function">
+</div>
+<div class="section" id="probabilistic-intepretation-of-the-wave-function">
 <h2><span class="section-number">3.4.4.7. </span>Probabilistic Intepretation of the Wave Function<a class="headerlink" href="#probabilistic-intepretation-of-the-wave-function" title="Permalink to this headline">#</a></h2>
 <p>The wave function of a particle, such as the free particle, can be interpreted as the amplitude of the wave at that position.  This is analagous to the classical wave equation.</p>
 <p>The probability of finding a particle at position <span class="math notranslate nohighlight">\(x\)</span> is proportional to the square of the wave function.  Specifically,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-feff9fc1-fa32-404a-947b-711836c964b0">
-<span class="eqno">(3.680)<a class="headerlink" href="#equation-feff9fc1-fa32-404a-947b-711836c964b0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1e7fe587-fcb6-4940-851e-1a62fda611d6">
+<span class="eqno">(3.680)<a class="headerlink" href="#equation-1e7fe587-fcb6-4940-851e-1a62fda611d6" title="Permalink to this equation">#</a></span>\[\begin{align}
 P(x) \propto \psi^*(x)\psi(x),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\psi^*(x)\)</span> is the complex conjugate of <span class="math notranslate nohighlight">\(\psi(x)\)</span>.  Note that wave functions can be complex but, if they are not, then <span class="math notranslate nohighlight">\(\psi^*(x) = \psi(x)\)</span> and <span class="math notranslate nohighlight">\(P \propto \psi(x)^2\)</span>.</p>
@@ -998,37 +1004,37 @@ P(x) \propto \psi^*(x)\psi(x),
 <li><p>Probability of observing a particle in a particular domain is <span class="math notranslate nohighlight">\(\text{Prob}(x_1 \leq x \leq x_2) = \int_{x_1}^{x_2} \psi^*(x)\psi(x)dx\)</span></p></li>
 <li><p>Average properties of a particle can be computed as <span class="math notranslate nohighlight">\(&lt;A&gt; = \int \psi^*(x)\hat{A}\psi(x)dx\)</span></p></li>
 </ol>
-<section id="wave-functions-must-be-normalized">
+<div class="section" id="wave-functions-must-be-normalized">
 <h3><span class="section-number">3.4.4.7.1. </span>Wave functions must be normalized<a class="headerlink" href="#wave-functions-must-be-normalized" title="Permalink to this headline">#</a></h3>
 <p>Because the square of the wave function is related to the probability we can normalize the wave function based on</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9042e3bf-f1ce-4a46-b3df-8733a40233fb">
-<span class="eqno">(3.681)<a class="headerlink" href="#equation-9042e3bf-f1ce-4a46-b3df-8733a40233fb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-58870466-c8b8-43c5-964e-fd1ff6d89bb8">
+<span class="eqno">(3.681)<a class="headerlink" href="#equation-58870466-c8b8-43c5-964e-fd1ff6d89bb8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^{\infty} P(x) dx = \int_{-\infty}^{\infty} \psi^*(x)\psi(x)dx = 1
 \end{equation}\]</div>
 <p>Let’s consider what this means for the particle in a box wave functions.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c98d1c82-0687-4e83-93d8-a11be10179bd">
-<span class="eqno">(3.682)<a class="headerlink" href="#equation-c98d1c82-0687-4e83-93d8-a11be10179bd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7b89ed9a-69ff-41b6-8402-4ea03a62ef94">
+<span class="eqno">(3.682)<a class="headerlink" href="#equation-7b89ed9a-69ff-41b6-8402-4ea03a62ef94" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi_n(x) = B_n \sin\frac{n\pi x}{a} \\
 \psi_n^*(x) \psi_n(x)  = B_n^*B_n \sin^2\frac{n\pi x}{a}
 \end{align}\]</div>
 <p>We can determine the value for <span class="math notranslate nohighlight">\(B_n\)</span> based on the normalization condition.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bae402e3-0528-4047-8b5b-6a16ae649f07">
-<span class="eqno">(3.683)<a class="headerlink" href="#equation-bae402e3-0528-4047-8b5b-6a16ae649f07" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-246043c6-7c21-4eeb-a222-31ba322f4f31">
+<span class="eqno">(3.683)<a class="headerlink" href="#equation-246043c6-7c21-4eeb-a222-31ba322f4f31" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_0^a \psi_n^*(x) \psi_n(x)dx  = |B_n|^2 \int_0^a\sin^2\frac{n\pi x}{a}dx = 1
 \end{align}\]</div>
 <p>where we have use the domain <span class="math notranslate nohighlight">\(0\leq x \leq a\)</span> rather than <span class="math notranslate nohighlight">\(-\infty&lt; x &lt; \infty\)</span> because that is the finite domain of this particular problem.  Now let’s solve the <span class="math notranslate nohighlight">\(\sin^2\)</span> integral</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cea337fa-c3b7-4f57-bffc-67854e0aa18d">
-<span class="eqno">(3.684)<a class="headerlink" href="#equation-cea337fa-c3b7-4f57-bffc-67854e0aa18d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f0b9f824-cb14-4eca-9f17-538bb9c0a596">
+<span class="eqno">(3.684)<a class="headerlink" href="#equation-f0b9f824-cb14-4eca-9f17-538bb9c0a596" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_0^a\sin^2\frac{n\pi x}{a}dx = \frac{a}{2}
 \end{align}\]</div>
 <p>Thus, we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e05ebce3-5f63-443f-9ce6-f594a176a354">
-<span class="eqno">(3.685)<a class="headerlink" href="#equation-e05ebce3-5f63-443f-9ce6-f594a176a354" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-be6464fb-32de-46f3-8cd8-d37f7f4340c5">
+<span class="eqno">(3.685)<a class="headerlink" href="#equation-be6464fb-32de-46f3-8cd8-d37f7f4340c5" title="Permalink to this equation">#</a></span>\[\begin{align}
 B = \sqrt{\frac{2}{a}}
 \end{align}\]</div>
 <p>Finally, our normalized particle in a box wave functions are</p>
-<div class="amsmath math notranslate nohighlight" id="equation-76f3eec5-9b0b-4a88-b392-e68c7ce9769a">
-<span class="eqno">(3.686)<a class="headerlink" href="#equation-76f3eec5-9b0b-4a88-b392-e68c7ce9769a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7f1cc7ad-e771-42fb-a9d9-0bff4b9eebcc">
+<span class="eqno">(3.686)<a class="headerlink" href="#equation-7f1cc7ad-e771-42fb-a9d9-0bff4b9eebcc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi_n(x) = \sqrt{\frac{2}{a}} \sin\frac{n\pi x}{a}
 \end{equation}\]</div>
 <div class="cell tag_hide_input docutils container">
@@ -1063,27 +1069,27 @@ B = \sqrt{\frac{2}{a}}
 <img alt="../../_images/particle_in_a_box_15_0.png" src="../../_images/particle_in_a_box_15_0.png" />
 </div>
 </div>
-</section>
-<section id="probabiliity-of-observing-particle-in-finite-domain">
+</div>
+<div class="section" id="probabiliity-of-observing-particle-in-finite-domain">
 <h3><span class="section-number">3.4.4.7.2. </span>Probabiliity of Observing Particle in Finite Domain<a class="headerlink" href="#probabiliity-of-observing-particle-in-finite-domain" title="Permalink to this headline">#</a></h3>
 <p>Since the square of the wave function is a probability function, we can determine the probability of observing a particle in a particular domain using the relationship</p>
-<div class="amsmath math notranslate nohighlight" id="equation-237b6950-c590-4c1f-8b34-4dc48759441c">
-<span class="eqno">(3.687)<a class="headerlink" href="#equation-237b6950-c590-4c1f-8b34-4dc48759441c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2b5b9826-b6c6-418f-8b7d-0736d88adcbd">
+<span class="eqno">(3.687)<a class="headerlink" href="#equation-2b5b9826-b6c6-418f-8b7d-0736d88adcbd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \text{Prob}(x_1 \leq x \leq x_2) = \int_{x_1}^{x_2}P(x)dx = \int_{x_1}^{x_2} \psi^*(x)\psi(x)dx
 \end{equation}\]</div>
 <p>For example, compute the probability of observing the particle in a box being in the domain <span class="math notranslate nohighlight">\(\frac{a}{3} \leq x \leq \frac{2a}{3}\)</span>. We simply use the above equation and the normalized particle in a box wave function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-805bf85c-fe9e-41c1-b53d-72bf594b12ce">
-<span class="eqno">(3.688)<a class="headerlink" href="#equation-805bf85c-fe9e-41c1-b53d-72bf594b12ce" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-58160350-0aed-4580-9e18-5fff5d0a72c6">
+<span class="eqno">(3.688)<a class="headerlink" href="#equation-58160350-0aed-4580-9e18-5fff5d0a72c6" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Prob}(\frac{a}{3} \leq x \leq \frac{2a}{3}) = \frac{2}{a}\int_{\frac{a}{3}}^{\frac{2a}{3}} \sin^2\frac{n\pi x}{a}dx
 \end{align}\]</div>
 <p>We will use the definite integral of <span class="math notranslate nohighlight">\(\sin^2ax\)</span> from a table:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ea6784e4-feb3-44d2-bc77-1181e67b7374">
-<span class="eqno">(3.689)<a class="headerlink" href="#equation-ea6784e4-feb3-44d2-bc77-1181e67b7374" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c14f2213-d5fc-43e1-8d6b-e82e403ab7da">
+<span class="eqno">(3.689)<a class="headerlink" href="#equation-c14f2213-d5fc-43e1-8d6b-e82e403ab7da" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int\sin^2axdx = \frac{x}{2} - \frac{\sin2ax}{4a}
 \end{equation}\]</div>
 <p>Perform <span class="math notranslate nohighlight">\(u = \)</span> substition of the integral above to get into the table form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6e817853-7aa6-4611-abf6-83e3af34ae26">
-<span class="eqno">(3.690)<a class="headerlink" href="#equation-6e817853-7aa6-4611-abf6-83e3af34ae26" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9f38cc5a-61f5-47c6-b732-35580cdbbf0d">
+<span class="eqno">(3.690)<a class="headerlink" href="#equation-9f38cc5a-61f5-47c6-b732-35580cdbbf0d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Prob}(\frac{a}{3} \leq x \leq \frac{2a}{3}) &amp;= \frac{2}{a}\left[ \frac{x}{2} - \frac{\sin\frac{2n\pi x}{a}}{\frac{4n\pi}{a}}\right]_{\frac{a}{3}}^{\frac{2a}{3}} \\
 &amp;= \frac{2}{a}\left[ \frac{x}{2} - \frac{a\sin\frac{2n\pi x}{a}}{4n\pi}\right]_{\frac{a}{3}}^{\frac{2a}{3}} \\
 &amp;= \frac{2}{a}\left[ \frac{a}{3} - \frac{a\sin\frac{4n\pi}{3}}{4n\pi} - \frac{a}{6} + \frac{a\sin\frac{2n\pi }{3}}{4n\pi}\right] \\
@@ -1121,12 +1127,12 @@ B = \sqrt{\frac{2}{a}}
 <img alt="../../_images/particle_in_a_box_18_0.png" src="../../_images/particle_in_a_box_18_0.png" />
 </div>
 </div>
-</section>
-<section id="computing-average-properties-from-a-wave-function">
+</div>
+<div class="section" id="computing-average-properties-from-a-wave-function">
 <h3><span class="section-number">3.4.4.7.3. </span>Computing Average Properties from a Wave Function<a class="headerlink" href="#computing-average-properties-from-a-wave-function" title="Permalink to this headline">#</a></h3>
 <p>Because of the probabilistic interpretation of the wave funtion, average properties can be computed from the wave function.  The general formula is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e81977a1-7e98-451c-a36a-a91f11ffbb0a">
-<span class="eqno">(3.691)<a class="headerlink" href="#equation-e81977a1-7e98-451c-a36a-a91f11ffbb0a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-027d7efd-598f-4608-88e7-00cb4b69078a">
+<span class="eqno">(3.691)<a class="headerlink" href="#equation-027d7efd-598f-4608-88e7-00cb4b69078a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 &lt;A&gt; = \int \psi^*(x)\hat{A}\psi(x)dx
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{A}\)</span> is any operator.  This could be momentum, kinetic energy, etc.</p>
@@ -1136,29 +1142,29 @@ B = \sqrt{\frac{2}{a}}
 <li><p>Compute the average energy for a particle in a box</p></li>
 <li><p>Compute the average momentum for a particle in a box</p></li>
 </ol>
-</section>
-<section id="example-the-average-of-x-2-for-a-particle-in-a-box">
+</div>
+<div class="section" id="example-the-average-of-x-2-for-a-particle-in-a-box">
 <h3><span class="section-number">3.4.4.7.4. </span>Example: The average of <span class="math notranslate nohighlight">\(x^2\)</span> for a particle in a box<a class="headerlink" href="#example-the-average-of-x-2-for-a-particle-in-a-box" title="Permalink to this headline">#</a></h3>
 <p>To compute the average value of <span class="math notranslate nohighlight">\(x^2\)</span> we start by writing the integral expression</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a244a4ba-6ed2-4b98-9ec5-884e5ecac062">
-<span class="eqno">(3.692)<a class="headerlink" href="#equation-a244a4ba-6ed2-4b98-9ec5-884e5ecac062" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-47bfff11-7eda-4412-8103-a80a2546f58c">
+<span class="eqno">(3.692)<a class="headerlink" href="#equation-47bfff11-7eda-4412-8103-a80a2546f58c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle x^2 \rangle = \int \psi^*(x) x^2 \psi(x)dx
 \end{equation}\]</div>
 <p>For the particle in a box, we can limit the domain, and thus the bounds of integration, to <span class="math notranslate nohighlight">\(0\leq x \leq a\)</span>.  We can also set <span class="math notranslate nohighlight">\(\psi_n(x) = \sqrt{\frac{2}{a}}\sin\frac{n\pi x}{a}\)</span>.</p>
 <p>Thus, for a particle in a 1D box of size <span class="math notranslate nohighlight">\(a\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c281c360-a169-42ab-a9c4-9f24b5b7d584">
-<span class="eqno">(3.693)<a class="headerlink" href="#equation-c281c360-a169-42ab-a9c4-9f24b5b7d584" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2adc5fd8-e4c5-42bd-b8e0-e3e57e381752">
+<span class="eqno">(3.693)<a class="headerlink" href="#equation-2adc5fd8-e4c5-42bd-b8e0-e3e57e381752" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle x^2 \rangle &amp;= \int_0^a \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right) x^2 \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right)dx \\
 &amp;= \frac{2}{a} \int_0^a x^2 \sin^2\frac{n\pi x}{a}dx
 \end{align}\]</div>
 <p>From an integral table we find that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83e5eca6-36ff-4a5e-b8f9-2efb2f1ccb74">
-<span class="eqno">(3.694)<a class="headerlink" href="#equation-83e5eca6-36ff-4a5e-b8f9-2efb2f1ccb74" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-36e63c47-c74a-469b-ae01-e2458c9e82e7">
+<span class="eqno">(3.694)<a class="headerlink" href="#equation-36e63c47-c74a-469b-ae01-e2458c9e82e7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int x^2\sin^2\alpha xdx = \frac{x^3}{6} - \left(\frac{x^2}{4\alpha} - \frac{1}{8\alpha^3}\right)\sin2\alpha x - \frac{x\cos 2\alpha x}{4\alpha^2} + C
 \end{equation}\]</div>
 <p>We use this equation with <span class="math notranslate nohighlight">\(\alpha = \frac{n\pi}{a}\)</span> and get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92326627-3eca-4afb-b9c1-f77fc464bd42">
-<span class="eqno">(3.695)<a class="headerlink" href="#equation-92326627-3eca-4afb-b9c1-f77fc464bd42" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e1f16d81-c710-4dcf-ab0b-ac0d0ba46bf7">
+<span class="eqno">(3.695)<a class="headerlink" href="#equation-e1f16d81-c710-4dcf-ab0b-ac0d0ba46bf7" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle x^2 \rangle &amp;= \int_0^a \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right) x^2 \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right)dx \\
 &amp;= \frac{2}{a} \int_0^a x^2 \sin^2\frac{n\pi x}{a}dx \\
 &amp;= \frac{2}{a}\left[ \frac{x^3}{6} - \left(\frac{x^2}{4\alpha} - \frac{1}{8\alpha^3}\right)\sin2\alpha x - \frac{x\cos 2\alpha x}{4\alpha^2}\right]_0^a \\
@@ -1168,8 +1174,8 @@ B = \sqrt{\frac{2}{a}}
 &amp;=  \frac{a^2}{3} - \frac{a^2}{2\left(n\pi\right)^2} 
 \end{align}\]</div>
 <p>This result, combined with the result for <span class="math notranslate nohighlight">\(\langle x \rangle\)</span>, can be used to determine <span class="math notranslate nohighlight">\(\sigma_x\)</span>, the standard deviation of particle deviation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57a068a6-9997-47ba-834d-b713992364e5">
-<span class="eqno">(3.696)<a class="headerlink" href="#equation-57a068a6-9997-47ba-834d-b713992364e5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b7364d9e-b2f3-4371-9e86-886d209769fc">
+<span class="eqno">(3.696)<a class="headerlink" href="#equation-b7364d9e-b2f3-4371-9e86-886d209769fc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sigma_x = \sqrt{\langle x^2 \rangle - \langle x \rangle^2} = \frac{a}{2\pi n}\sqrt{\frac{\pi^2n^2}{3} -2}
 \end{equation}\]</div>
 <div class="cell tag_hide_input docutils container">
@@ -1204,49 +1210,49 @@ B = \sqrt{\frac{2}{a}}
 <img alt="../../_images/particle_in_a_box_23_1.png" src="../../_images/particle_in_a_box_23_1.png" />
 </div>
 </div>
-</section>
-<section id="example-average-energy-of-particle-in-a-box">
+</div>
+<div class="section" id="example-average-energy-of-particle-in-a-box">
 <h3><span class="section-number">3.4.4.7.5. </span>Example: Average Energy of Particle in a Box<a class="headerlink" href="#example-average-energy-of-particle-in-a-box" title="Permalink to this headline">#</a></h3>
 <p>The average energy of the particle in a box is a special case of computing an average quantity.  We will start by writing out the standard definition of computing and average from a wavefunction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-62c46e12-50d9-4f7e-8914-fce206b5f3b5">
-<span class="eqno">(3.697)<a class="headerlink" href="#equation-62c46e12-50d9-4f7e-8914-fce206b5f3b5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-93e1eec1-849d-43ab-add0-09e93c3a33ad">
+<span class="eqno">(3.697)<a class="headerlink" href="#equation-93e1eec1-849d-43ab-add0-09e93c3a33ad" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle E \rangle = \int_0^a \psi_n^*(x)\hat{E}\psi_n(x)dx
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{E}\)</span> is the total energy operator.  We know the total energy operator by another symbol, namely <span class="math notranslate nohighlight">\(\hat{E} = \hat{H}\)</span>.  We plug this into the above equation to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7b418ea2-3c08-4012-a525-710105cd5138">
-<span class="eqno">(3.698)<a class="headerlink" href="#equation-7b418ea2-3c08-4012-a525-710105cd5138" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6d272bbe-e2a3-4730-afa1-2fd402ea0ed3">
+<span class="eqno">(3.698)<a class="headerlink" href="#equation-6d272bbe-e2a3-4730-afa1-2fd402ea0ed3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle E \rangle = \int_0^a \psi_n^*(x)\hat{H}\psi_n(x)dx.
 \end{equation}\]</div>
 <p>We now recognize that, for the particle in a box wavefunctions that we are discussion these were derived from the Schrodinger equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2d132db5-a4ba-4479-ad92-57bf885fe51e">
-<span class="eqno">(3.699)<a class="headerlink" href="#equation-2d132db5-a4ba-4479-ad92-57bf885fe51e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-22a8901a-906f-44b8-9c93-b7ee4fcd50dd">
+<span class="eqno">(3.699)<a class="headerlink" href="#equation-22a8901a-906f-44b8-9c93-b7ee4fcd50dd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H}\psi_n(x)  = E_n\psi_n(x)
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(E_n\)</span> is a scalar.  Thus, for the average energy we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e12d81c1-60b8-435d-8438-a1428349d4ed">
-<span class="eqno">(3.700)<a class="headerlink" href="#equation-e12d81c1-60b8-435d-8438-a1428349d4ed" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-16c8e906-f34f-4e94-857e-c4c5119ae739">
+<span class="eqno">(3.700)<a class="headerlink" href="#equation-16c8e906-f34f-4e94-857e-c4c5119ae739" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle E \rangle &amp;= \int_0^a \psi_n^*(x)\hat{H}\psi_n(x)dx \\
 &amp;=\int_0^a \psi_n^*(x)E_n\psi_n(x)dx \\
 &amp;=E_n\int_0^a \psi_n^*(x)\psi_n(x)dx \\
 &amp;= E_n
 \end{align}\]</div>
 <p>The last equality holding because the wave functions are normalized.</p>
-</section>
-<section id="example-average-momentum">
+</div>
+<div class="section" id="example-average-momentum">
 <h3><span class="section-number">3.4.4.7.6. </span>Example: Average momentum<a class="headerlink" href="#example-average-momentum" title="Permalink to this headline">#</a></h3>
 <p>To compute the average momentum of a particle in a 1D box we start in the usual way</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d1a115e5-4034-4167-9138-5f472709aa4f">
-<span class="eqno">(3.701)<a class="headerlink" href="#equation-d1a115e5-4034-4167-9138-5f472709aa4f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c989a75d-fde1-4726-8234-b59d290b8b97">
+<span class="eqno">(3.701)<a class="headerlink" href="#equation-c989a75d-fde1-4726-8234-b59d290b8b97" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle p \rangle = \int_0^a \psi_n^*(x)\hat{p}\psi_n(x)dx
 \end{equation}\]</div>
 <p>Recall that the momentum operator in one dimension is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-823151c5-4cdc-4c2c-8232-a78c0ec37b12">
-<span class="eqno">(3.702)<a class="headerlink" href="#equation-823151c5-4cdc-4c2c-8232-a78c0ec37b12" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2bf8f979-821a-4065-9836-83e1adc389f1">
+<span class="eqno">(3.702)<a class="headerlink" href="#equation-2bf8f979-821a-4065-9836-83e1adc389f1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{p}_x = -i\hbar\frac{d}{dx}
 \end{equation}\]</div>
 <p>We now substitute this into the  above equation and solve</p>
-<div class="amsmath math notranslate nohighlight" id="equation-72d9e92a-9cfe-4a10-9b0a-6495bc08121f">
-<span class="eqno">(3.703)<a class="headerlink" href="#equation-72d9e92a-9cfe-4a10-9b0a-6495bc08121f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0597c601-eec0-4d32-9bc2-f29c4959d3ce">
+<span class="eqno">(3.703)<a class="headerlink" href="#equation-0597c601-eec0-4d32-9bc2-f29c4959d3ce" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle p \rangle &amp;= \int_0^a \psi_n^*(x)\left(-i\hbar\frac{d}{dx}\right)\psi_n(x)dx \\
 &amp;= -\frac{2i\hbar}{a}\int_0^a \sin\left(\frac{n\pi x}{a}\right)\frac{d}{dx}\left(\sin\left(\frac{n\pi x}{a}\right)\right)dx \\
 &amp;= -\frac{2i\hbar}{a}\int_0^a \sin\left(\frac{n\pi x}{a}\right)\frac{n\pi}{a}\cos\left(\frac{n\pi x}{a}\right)dx \\
@@ -1255,9 +1261,9 @@ B = \sqrt{\frac{2}{a}}
 \end{align}\]</div>
 <p>where the last equality can be found in an integral table.</p>
 <p>So the average momentum of a particle in a box is zero.  This is because it is equally probable for the particle to be moving forward and backwards.</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

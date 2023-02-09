@@ -1,0 +1,1064 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3.4.7. The Momentum Operator &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.4.8. Harmonic Oscillator" href="harmonic_oscillator.html" />
+    <link rel="prev" title="3.4.6. The Postulates and Formalism of Quantum Mechanics" href="postulates_of_quantum_mechanics.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Chemistry Lessons with Jupyter Notebooks</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">
+   1. Jupyter Notebook Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">
+     1.1. Jupyter Notebook Tutorial
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">
+     1.2. Advanced Jupyter Notebook Tutorial
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../coding_concepts/intro.html">
+   2. Coding Concepts
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/variables.html">
+     2.1. Variables in Python
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">
+     2.2. Arrays and Matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/for_loops.html">
+     2.3. for loops
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/functions.html">
+     2.4. Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">
+     2.5. Plotting with matplotlib
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../coding_concepts/numeric_integration.html">
+     2.6. Numeric Integration
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../intro.html">
+   3. Physical Chemistry
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../statistical_thermodynamics/intro.html">
+     3.1. Statiscial Thermodynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Boltzmann_Factor.html">
+       3.1.1. Boltzmann Factor
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Introduction_to_Probability.html">
+       3.1.2. Introduction to Probability
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">
+       3.1.3. Thermodynamic Properties from the Partition Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">
+       3.1.4. Partition Function for a Monatomic Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">
+       3.1.5. Partition Function for a Diatomic Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">
+       3.1.6. Classical Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">
+       3.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/microscopic_view_of_entropy.html">
+       3.1.8. Microscopic View of Entropy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">
+       3.1.9. Equations of State from Lattice Gas Models
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../thermodynamics/intro.html">
+     3.2. Thermodynamics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">
+       3.2.1. The First Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">
+       3.2.2. Heat Work and Calculating
+       <span class="math notranslate nohighlight">
+        \(\Delta U\)
+       </span>
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">
+       3.2.4. Thermodynamic Cycles
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Enthalpy.html">
+       3.2.5. Enthalpy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/The_Carnot_Cycle.html">
+       3.2.6. The Carnot Cycle
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">
+       3.2.7. Second Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">
+       3.2.8. Heat Engine Diagrams
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">
+       3.2.10. The Third Law of Thermodynamics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">
+       3.2.11. First Derivative and Maxwell Relations
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Maxwell_Relations_Applied.html">
+       3.2.12. Maxwell Relations Applied
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">
+       3.2.13. Free Energy and Legendre Transforms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">
+       3.2.14. The Pressure and Temperature Dependence of the Gibbs Energy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">
+       3.2.15. Phase Diagrams and Phase Equilibria
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Chemical_Potential_from_Partition_Function.html">
+       3.2.16. Chemical Potential from the Partition Function
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">
+       3.2.17. Thermodynamics of Solutions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Ideal_and_Non_Ideal_Solutions.html">
+       3.2.18. Ideal and Non-ideal Solutions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../thermodynamics/Introduction_to_Chemical_Equilibrium.html">
+       3.2.19. Chemical Equilibrium
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../kinetics/intro.html">
+     3.3. Kinetics
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Chemical_Kinetics_and_Rate_Laws.html">
+       3.3.1. Chemical Kinetics and Rate Laws
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Integrated_Rate_Laws.html">
+       3.3.2. Integrated Rate Laws
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Reversible_Reactions.html">
+       3.3.3. Reversible Reactions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">
+       3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Reaction_Mechanisms_Part_I.html">
+       3.3.5. Reaction Mechanisms
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Catalysts.html">
+       3.3.6. Catalysts
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Enzyme_Kinetics_Michaelis_Menten.html">
+       3.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Cooperative_Binding_Kinetics.html">
+       3.3.8. Cooperative Binding Kinetics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../kinetics/Competitive_Inhibition.html">
+       3.3.9. Competitive Inhibition
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="intro.html">
+     3.4. Quantum Mechanics
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+    <label for="toctree-checkbox-7">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3">
+      <a class="reference internal" href="history_of_quantum_mechanics.html">
+       3.4.1. The History of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="wave_particle_duality_classical_wave_equation.html">
+       3.4.2. Wave Particle Duality and the Classical Wave Equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="Schrodinger_Equation.html">
+       3.4.3. Schrodinger Equation
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="particle_in_a_box.html">
+       3.4.4. Particle in a Box
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="uncertainty_principle_and_applications_of_particle_in_a_box.html">
+       3.4.5. The Uncertainty Principle and Applications of Particle in a Box
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="postulates_of_quantum_mechanics.html">
+       3.4.6. The Postulates and Formalism of Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       3.4.7. The Momentum Operator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="harmonic_oscillator.html">
+       3.4.8. Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="quantum_mechanics_of_vibrational_spectroscopy.html">
+       3.4.9. Vibrational Spectroscopy
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="variational_method_in_quantum_mechanics.html">
+       3.4.10. Variational Method in Quantum Mechanics
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="basis_functions.html">
+       3.4.11. Basis Functions
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="harmonic_oscillator_using_variational_method.html">
+       3.4.12. Variational Solution to the Harmonic Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="morse_oscillator.html">
+       3.4.13. The Morse Oscillator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="rigid_rotator.html">
+       3.4.14. Rigid Rotator
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="rigid_rotator_using_variational_method.html">
+       3.4.15. Rigid Rotator Variational Solution…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="rigid_rotator_selection_rules.html">
+       3.4.16. Rigid Rotator Continued…
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="the_hydrogen_atom.html">
+       3.4.18. The Hydrogen Atom
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="the_helium_atom.html">
+       3.4.19. The Helium Atom
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="../electronic_structure/intro.html">
+     3.5. Electronic Structure
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+    <label for="toctree-checkbox-8">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../electronic_structure/Hartree_Fock_Helium_Atom.html">
+       3.5.1. Hartree-Fock
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="../electronic_structure/HF_for_H2.html">
+       3.5.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/quantum_mechanics/momentum_operator.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/quantum_mechanics/momentum_operator.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fphysical_chemistry/quantum_mechanics/momentum_operator.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/physical_chemistry/quantum_mechanics/momentum_operator.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#motivation">
+   3.4.7.1. Motivation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-goals">
+   3.4.7.2. Learning Goals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#coding-concepts">
+   3.4.7.3. Coding Concepts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-premise">
+   3.4.7.4. The Premise
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fourier-transforms">
+     3.4.7.4.1. Fourier Transforms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deriving-the-momentum-operator">
+     3.4.7.4.2. Deriving the Momentum Operator
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>The Momentum Operator</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#motivation">
+   3.4.7.1. Motivation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-goals">
+   3.4.7.2. Learning Goals
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#coding-concepts">
+   3.4.7.3. Coding Concepts
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-premise">
+   3.4.7.4. The Premise
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fourier-transforms">
+     3.4.7.4.1. Fourier Transforms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deriving-the-momentum-operator">
+     3.4.7.4.2. Deriving the Momentum Operator
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="the-momentum-operator">
+<h1><span class="section-number">3.4.7. </span>The Momentum Operator<a class="headerlink" href="#the-momentum-operator" title="Permalink to this headline">#</a></h1>
+<div class="section" id="motivation">
+<h2><span class="section-number">3.4.7.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
+<p>We want to know why the (1D) momentum operator is <span class="math notranslate nohighlight">\(hat{p_x} = -i\hbar\frac{\partial}{\partial x}\)</span>.</p>
+</div>
+<div class="section" id="learning-goals">
+<h2><span class="section-number">3.4.7.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
+<p>After working through this notebook, you will be able to</p>
+<ol class="simple">
+<li><p>Use Fourier transforms to convert between position and momentum space</p></li>
+<li><p>Identify the Fourier integral form of the Dirac delta function</p></li>
+<li><p>Utilize Fourier transforms to derive the 1D momentum operator in position space.</p></li>
+</ol>
+</div>
+<div class="section" id="coding-concepts">
+<h2><span class="section-number">3.4.7.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
+<p>The following coding concepts are used in this notebook</p>
+<ol class="simple">
+<li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
+</ol>
+</div>
+<div class="section" id="the-premise">
+<h2><span class="section-number">3.4.7.4. </span>The Premise<a class="headerlink" href="#the-premise" title="Permalink to this headline">#</a></h2>
+<p>We have been told that the two operators from which we can construct all others in quantum mechanics are the position operator and momentum operator.  In one dimension these are given as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e3bd1e6b-f6c7-4d39-b7d0-8fdd7d533809">
+<span class="eqno">(3.720)<a class="headerlink" href="#equation-e3bd1e6b-f6c7-4d39-b7d0-8fdd7d533809" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{X} &amp;= x \\
+\hat{P_x} &amp;= -i\hbar\frac{\partial}{\partial x}
+\end{align}\]</div>
+<p>It is the goal of these notes to demonstrate why the momentum operator in position coordinates is the first derivative.</p>
+<p>A single particle at finite temperature in one dimension will have a position, denoted <span class="math notranslate nohighlight">\(x\)</span>, and a momentum, denoted <span class="math notranslate nohighlight">\(p_x\)</span>.  The particle can be described by a wavefunction in position space, denoted <span class="math notranslate nohighlight">\(\psi(x)\)</span>, and a wave function in momentum space, denoted <span class="math notranslate nohighlight">\(\phi(p_x)\)</span>.  The position operator operating on the position wave function yields the position of the particle and the momentum operator in momentum space operating on the momentum wave function yields the moment.  This is more concisely written as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-cfe1731f-d7e1-4817-9817-60811e6c495a">
+<span class="eqno">(3.721)<a class="headerlink" href="#equation-cfe1731f-d7e1-4817-9817-60811e6c495a" title="Permalink to this equation">#</a></span>\[\begin{align}
+&amp;\hat{X}|\psi(x)\rangle = x |\psi(x)\rangle \\
+&amp;\hat{P}|\phi(p_x)\rangle = p_x | \phi(p_x)\rangle
+\end{align}\]</div>
+<p>Our goal can be restated as determining the form of the operator <span class="math notranslate nohighlight">\(\hat{P}\)</span> in position space.</p>
+<div class="section" id="fourier-transforms">
+<h3><span class="section-number">3.4.7.4.1. </span>Fourier Transforms<a class="headerlink" href="#fourier-transforms" title="Permalink to this headline">#</a></h3>
+<p>In addition to setting up the problem, the crux of this derivation is recognizing that <span class="math notranslate nohighlight">\(\psi(x)\)</span> and <span class="math notranslate nohighlight">\(\phi(p_x)\)</span> are Fourier transforms of each other.  If you are not familiar with this type of transformation, do not worry.  This can be written mathematically as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fda4579b-a3c8-4a3e-8b38-b394d311e250">
+<span class="eqno">(3.722)<a class="headerlink" href="#equation-fda4579b-a3c8-4a3e-8b38-b394d311e250" title="Permalink to this equation">#</a></span>\[\begin{align}
+\psi(x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) e^{ip_xx/\hbar}dp_x \\
+\phi(p_x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \psi(x) e^{-ip_xx/\hbar}dx 
+\end{align}\]</div>
+<p>Fourier transformations show up in a number of places but typically they are used to convert between a position space and a frequency space.  Here we are converting between position and momentum.</p>
+<p>Another aspect that shows up in Fourier transforms that we will utilize is the Dirac delta function.  There are many definitions of this but the one that shows up in Fourier transforms is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ece12bd5-e037-47c8-8e5f-0861423e928d">
+<span class="eqno">(3.723)<a class="headerlink" href="#equation-ece12bd5-e037-47c8-8e5f-0861423e928d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\delta(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty}e^{ixt}dt
+\end{equation}\]</div>
+<p>The Dirac delta function has the following property</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0401e052-d393-49fe-a1b0-a845297fdacc">
+<span class="eqno">(3.724)<a class="headerlink" href="#equation-0401e052-d393-49fe-a1b0-a845297fdacc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\delta(x) = \begin{cases} 1\text{ if } x=0 \\ 0 \text{ otherwise}\end{cases}
+\end{equation}\]</div>
+<p>The integral of the Dirac delta function over all space is equal to 1</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1041d7c6-7ff9-40ff-8bb7-118cad98f01d">
+<span class="eqno">(3.725)<a class="headerlink" href="#equation-1041d7c6-7ff9-40ff-8bb7-118cad98f01d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int_{-\infty}^{\infty} \delta(x)dx = 1
+\end{equation}\]</div>
+<p>Additionally, the Dirac delta is often used in integral equations to remove dependency on one variable because of the following property</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6c35b416-878b-4ba5-9fbb-87a261f54352">
+<span class="eqno">(3.726)<a class="headerlink" href="#equation-6c35b416-878b-4ba5-9fbb-87a261f54352" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int_{-\infty}^{\infty} \delta(x)f(x)dx = f(0),
+\end{equation}\]</div>
+<p>or, somewhat more generally</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d2534a81-d072-4197-9b03-f479a74de18e">
+<span class="eqno">(3.727)<a class="headerlink" href="#equation-d2534a81-d072-4197-9b03-f479a74de18e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int_{-\infty}^{\infty} \delta(x-x_0)f(x)dx = f(x_0).
+\end{equation}\]</div>
+<p>To see how this is true for the Fourier transform integral case, we will take the integral for finite limits and then argue that this function behaves as described for the Dirac delta function.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ed17ebc4-83df-49ed-8adb-52498f5f5d39">
+<span class="eqno">(3.728)<a class="headerlink" href="#equation-ed17ebc4-83df-49ed-8adb-52498f5f5d39" title="Permalink to this equation">#</a></span>\[\begin{align}
+\int_{-n}^{n}e^{ixt}dt &amp;= \left[ \frac{e^{ixt}}{ix}\right]_{-n}^{n} \\
+&amp;= \frac{e^{ixn}-e^{-ixn}}{ix} \\
+&amp;= \frac{2i\sin xn}{ix} \\
+&amp;= \frac{2\sin xn}{x}
+\end{align}\]</div>
+<p>Now we take the limit</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8b93b71b-a986-42fd-8b07-6ff98ccecf37">
+<span class="eqno">(3.729)<a class="headerlink" href="#equation-8b93b71b-a986-42fd-8b07-6ff98ccecf37" title="Permalink to this equation">#</a></span>\[\begin{align}
+\lim_{n\rightarrow\infty}\frac{2\sin xn}{x} = 2\pi\delta(x)
+\end{align}\]</div>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="n">x</span>
+<span class="c1"># </span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="c1"># setup plot parameters</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x/a$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># plot quantum result</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=1&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=2&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=3&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=10&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Dirac Delta Function&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># make legend</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span><span class="n">markerscale</span><span class="o">=</span><span class="mf">5.0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/momentum_operator_8_0.png" src="../../_images/momentum_operator_8_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="deriving-the-momentum-operator">
+<h3><span class="section-number">3.4.7.4.2. </span>Deriving the Momentum Operator<a class="headerlink" href="#deriving-the-momentum-operator" title="Permalink to this headline">#</a></h3>
+<p>We now have all the pieces to derive the expression for the momentum operator in position space.  The map of how we will do this is we recognize</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b00e18d6-50cd-4163-9abb-66645d8aa38e">
+<span class="eqno">(3.730)<a class="headerlink" href="#equation-b00e18d6-50cd-4163-9abb-66645d8aa38e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\langle p \rangle = \langle \phi(p_x)| p_x | \phi(p_x)\rangle
+\end{equation}\]</div>
+<p>We will transform the coordinates in the integrals on the r.h.s of the above equation using Fourier transforms.  Before we do that, however, it is useful to start by taking the spacial derivative of <span class="math notranslate nohighlight">\(\psi(x)\)</span></p>
+<div class="amsmath math notranslate nohighlight" id="equation-b113d435-2657-4226-961e-117a89be6301">
+<span class="eqno">(3.731)<a class="headerlink" href="#equation-b113d435-2657-4226-961e-117a89be6301" title="Permalink to this equation">#</a></span>\[\begin{align}
+\frac{\partial}{\partial x}\psi(x) &amp;= \frac{\partial}{\partial x}\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) e^{ip_xx/\hbar}dp_x \\
+&amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) \frac{\partial}{\partial x}e^{ip_xx/\hbar}dp_x \\
+&amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) \frac{ip_x}{\hbar}e^{ip_xx/\hbar}dp_x \\
+&amp;= \frac{i}{\hbar\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) p_xe^{ip_xx/\hbar}dp_x \\
+\Rightarrow -i\hbar\frac{\partial}{\partial x}\psi(x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} p_x\phi(p_x) e^{ip_xx/\hbar}dp_x
+\end{align}\]</div>
+<p>The above equation demonstrates that <span class="math notranslate nohighlight">\(i\hbar\frac{\partial}{\partial x}\psi(x)\)</span> and <span class="math notranslate nohighlight">\(p_x\phi(p_x)\)</span> are Fourier transforms of eachother.  This will be useful in our coordinate transformation.</p>
+<p>Now, let’s start</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c89d6738-c532-4f30-a9b7-15ab73ad78cf">
+<span class="eqno">(3.732)<a class="headerlink" href="#equation-c89d6738-c532-4f30-a9b7-15ab73ad78cf" title="Permalink to this equation">#</a></span>\[\begin{align}
+\langle \phi(p_x)| p_x | \phi(p_x)\rangle = \int_{-\infty}^{\infty}\phi^*(p_x)p_x\phi(p_x)dp_x
+\end{align}\]</div>
+<p>In this equation we will substitute that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fdb12eeb-71c6-42ea-8915-48bf7dc828b4">
+<span class="eqno">(3.733)<a class="headerlink" href="#equation-fdb12eeb-71c6-42ea-8915-48bf7dc828b4" title="Permalink to this equation">#</a></span>\[\begin{align}
+\phi^*(p_x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar}dx' \\
+p_x\phi(p_x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{\infty}^{\infty} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dx 
+\end{align}\]</div>
+<p>where the first relationship is the complex conjugate of the Fourier transform of <span class="math notranslate nohighlight">\(\phi\)</span> and the second relationship is the inverse Fourier transform that we just showed.  I use <span class="math notranslate nohighlight">\(x'\)</span> in the first expression to disntinguish the integration variables in the two integrals.  Plugging these into the expectation value of <span class="math notranslate nohighlight">\(p\)</span> equation yields</p>
+<div class="amsmath math notranslate nohighlight" id="equation-cf1efb6c-dcd5-4140-b3b8-ee3b6cd04e39">
+<span class="eqno">(3.734)<a class="headerlink" href="#equation-cf1efb6c-dcd5-4140-b3b8-ee3b6cd04e39" title="Permalink to this equation">#</a></span>\[\begin{align}
+\langle \phi(p_x)| p_x | \phi(p_x)\rangle &amp;= \int_{-\infty}^{\infty}\phi^*(p_x)p_x\phi(p_x)dp_x \\
+&amp;= \int_{-\infty}^{\infty}\left[\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar}dx'\right]\left[\frac{1}{\sqrt{2\pi}}\int_{\infty}^{\infty} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dx\right]dp_x \\
+&amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\left[\int_{-\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar}dx'\right]\left[\int_{\infty}^{\infty} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dx\right]dp_x \\
+&amp;=\frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dp_xdx'dx 
+\end{align}\]</div>
+<p>where in the last step I can put all terms inside a triple integral because the terms inside the <span class="math notranslate nohighlight">\(x'\)</span> and <span class="math notranslate nohighlight">\(x\)</span> integrals don’t depend on the other integration variable.  I can now combine the two exponential terms (because <span class="math notranslate nohighlight">\(e^{ip_xx'/\hbar}\)</span> is constant with respect to <span class="math notranslate nohighlight">\(\frac{\partial}{\partial x}\)</span>) and then integrate the result over <span class="math notranslate nohighlight">\(p_x\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-93ef2359-fff9-4b65-9344-cd4207d62369">
+<span class="eqno">(3.735)<a class="headerlink" href="#equation-93ef2359-fff9-4b65-9344-cd4207d62369" title="Permalink to this equation">#</a></span>\[\begin{align}
+\langle \phi(p_x)| p_x | \phi(p_x)\rangle &amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dp_xdx'dx \\
+&amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{ip_x(x'-x)/\hbar}dp_xdx'dx \\
+&amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)\int_{\infty}^{\infty}e^{ip_x(x'-x)/\hbar}dp_xdx'dx \\
+&amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)2\pi\delta(x-x')dx'dx
+\end{align}\]</div>
+<p>where we recognize the Fourier version of the Dirac delta function in the last step.  The Dirac function now allows us to elimnate one of the integration variables (i.e. <span class="math notranslate nohighlight">\(\delta(x-x')\)</span> is only nonzero when <span class="math notranslate nohighlight">\(x'=x\)</span>) yielding</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4d88c0fc-a68b-4c8e-be17-1c51afa7d991">
+<span class="eqno">(3.736)<a class="headerlink" href="#equation-4d88c0fc-a68b-4c8e-be17-1c51afa7d991" title="Permalink to this equation">#</a></span>\[\begin{align}
+\langle \phi(p_x)| p_x | \phi(p_x)\rangle &amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)2\pi\delta(x-x')dx'dx \\
+&amp;= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x) \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)dx \\
+&amp;= \langle \psi(x) | -i\hbar\frac{\partial}{\partial x} | \psi(x)\rangle
+\end{align}\]</div>
+<p>Thus</p>
+<div class="amsmath math notranslate nohighlight" id="equation-500ec84e-9aa8-4cba-9fa8-c12b7d544ca8">
+<span class="eqno">(3.737)<a class="headerlink" href="#equation-500ec84e-9aa8-4cba-9fa8-c12b7d544ca8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{p_x} = -i\hbar\frac{\partial}{\partial x}
+\end{equation}\]</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./physical_chemistry/quantum_mechanics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="postulates_of_quantum_mechanics.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">3.4.6. </span>The Postulates and Formalism of Quantum Mechanics</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="harmonic_oscillator.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3.4.8. </span>Harmonic Oscillator</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Martin McCullagh<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
