@@ -155,7 +155,7 @@ ax.legend(fontsize=12,markerscale=5.0);
 # where we recognize the Fourier version of the Dirac delta function in the last step.  The Dirac function now allows us to elimnate one of the integration variables (i.e. $\delta(x-x')$ is only nonzero when $x'=x$) yielding
 # \begin{align}
 # \langle \phi(p_x)| p_x | \phi(p_x)\rangle &= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)2\pi\delta(x-x')dx'dx \\
-# &= \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x) \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)dx \\
+# &= \int_{-\infty}^{\infty} \psi^*(x) \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)dx \\
 # &= \langle \psi(x) | -i\hbar\frac{\partial}{\partial x} | \psi(x)\rangle
 # \end{align}
 # 
