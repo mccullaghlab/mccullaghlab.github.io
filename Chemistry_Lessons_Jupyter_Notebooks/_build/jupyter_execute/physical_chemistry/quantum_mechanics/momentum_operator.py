@@ -5,7 +5,7 @@
 
 # ## Motivation
 # 
-# We want to know why the (1D) momentum operator is $hat{p_x} = -i\hbar\frac{\partial}{\partial x}$.
+# We want to know why the (1D) momentum operator is $\hat{P_x} = -i\hbar\frac{\partial}{\partial x}$.
 
 # ## Learning Goals
 # 
