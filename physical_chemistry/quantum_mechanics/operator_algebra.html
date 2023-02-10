@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>3.4.7. The Momentum Operator &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+    <title>3.4.8. Operator Algebra &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -56,8 +56,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3.4.8. Operator Algebra" href="operator_algebra.html" />
-    <link rel="prev" title="3.4.6. The Postulates and Formalism of Quantum Mechanics" href="postulates_of_quantum_mechanics.html" />
+    <link rel="next" title="3.4.9. Harmonic Oscillator" href="harmonic_oscillator.html" />
+    <link rel="prev" title="3.4.7. The Momentum Operator" href="momentum_operator.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -446,13 +446,13 @@ const thebe_selector_output = ".output, .cell_output"
        3.4.6. The Postulates and Formalism of Quantum Mechanics
       </a>
      </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
+     <li class="toctree-l3">
+      <a class="reference internal" href="momentum_operator.html">
        3.4.7. The Momentum Operator
       </a>
      </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="operator_algebra.html">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
        3.4.8. Operator Algebra
       </a>
      </li>
@@ -596,7 +596,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/quantum_mechanics/momentum_operator.ipynb"
+        <a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/quantum_mechanics/operator_algebra.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -614,7 +614,7 @@ title="Launch on Binder"
       </li>
       
       <li>
-        <a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/quantum_mechanics/momentum_operator.ipynb"
+        <a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/quantum_mechanics/operator_algebra.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -648,7 +648,7 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fphysical_chemistry/quantum_mechanics/momentum_operator.html&body=Your%20issue%20content%20here."
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fphysical_chemistry/quantum_mechanics/operator_algebra.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="bottom"
@@ -670,7 +670,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/physical_chemistry/quantum_mechanics/momentum_operator.ipynb"
+        <a href="../../_sources/physical_chemistry/quantum_mechanics/operator_algebra.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -731,32 +731,56 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#motivation">
-   3.4.7.1. Motivation
+   3.4.8.1. Motivation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#learning-goals">
-   3.4.7.2. Learning Goals
+   3.4.8.2. Learning Goals
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#coding-concepts">
-   3.4.7.3. Coding Concepts
+   3.4.8.3. Coding Concepts
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-premise">
-   3.4.7.4. The Premise
+  <a class="reference internal nav-link" href="#operator-equality">
+   3.4.8.4. Operator Equality
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#operator-addition">
+   3.4.8.5. Operator Addition
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#fourier-transforms">
-     3.4.7.4.1. Fourier Transforms
+    <a class="reference internal nav-link" href="#example-operator-addition">
+     3.4.8.5.1. Example: Operator Addition
     </a>
    </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#operator-multiplication">
+   3.4.8.6. Operator Multiplication
+  </a>
+  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#deriving-the-momentum-operator">
-     3.4.7.4.2. Deriving the Momentum Operator
+    <a class="reference internal nav-link" href="#example-operator-multiplication">
+     3.4.8.6.1. Example: Operator Multiplication
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#operator-commutation">
+   3.4.8.7. Operator Commutation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-commutators">
+     3.4.8.7.1. Example: Commutators
     </a>
    </li>
   </ul>
@@ -770,7 +794,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>The Momentum Operator</h1>
+                <h1>Operator Algebra</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -782,32 +806,56 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#motivation">
-   3.4.7.1. Motivation
+   3.4.8.1. Motivation
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#learning-goals">
-   3.4.7.2. Learning Goals
+   3.4.8.2. Learning Goals
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#coding-concepts">
-   3.4.7.3. Coding Concepts
+   3.4.8.3. Coding Concepts
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-premise">
-   3.4.7.4. The Premise
+  <a class="reference internal nav-link" href="#operator-equality">
+   3.4.8.4. Operator Equality
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#operator-addition">
+   3.4.8.5. Operator Addition
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#fourier-transforms">
-     3.4.7.4.1. Fourier Transforms
+    <a class="reference internal nav-link" href="#example-operator-addition">
+     3.4.8.5.1. Example: Operator Addition
     </a>
    </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#operator-multiplication">
+   3.4.8.6. Operator Multiplication
+  </a>
+  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#deriving-the-momentum-operator">
-     3.4.7.4.2. Deriving the Momentum Operator
+    <a class="reference internal nav-link" href="#example-operator-multiplication">
+     3.4.8.6.1. Example: Operator Multiplication
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#operator-commutation">
+   3.4.8.7. Operator Commutation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-commutators">
+     3.4.8.7.1. Example: Commutators
     </a>
    </li>
   </ul>
@@ -822,181 +870,145 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="the-momentum-operator">
-<h1><span class="section-number">3.4.7. </span>The Momentum Operator<a class="headerlink" href="#the-momentum-operator" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="operator-algebra">
+<h1><span class="section-number">3.4.8. </span>Operator Algebra<a class="headerlink" href="#operator-algebra" title="Permalink to this headline">#</a></h1>
 <section id="motivation">
-<h2><span class="section-number">3.4.7.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
-<p>We want to know why the (1D) momentum operator is <span class="math notranslate nohighlight">\(\hat{P_x} = -i\hbar\frac{\partial}{\partial x}\)</span>.</p>
+<h2><span class="section-number">3.4.8.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
+<p>Operators are an important component of quantum mechanics.  Postulate 2 states that all physical observables have an associated (linear and Hermitian) operator.  Each of these operators can be built from the basic position and momentum operators.  To do so, we need to know the rules of operator algebra.</p>
 </section>
 <section id="learning-goals">
-<h2><span class="section-number">3.4.7.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
-<p>After working through this notebook, you will be able to</p>
+<h2><span class="section-number">3.4.8.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
+<p>After working through these notes, you will be able to:</p>
 <ol class="simple">
-<li><p>Use Fourier transforms to convert between position and momentum space</p></li>
-<li><p>Identify the Fourier integral form of the Dirac delta function</p></li>
-<li><p>Utilize Fourier transforms to derive the 1D momentum operator in position space.</p></li>
+<li><p>Determine if two operators are equal</p></li>
+<li><p>Determine the single operator equivalent to the addition of other operators</p></li>
+<li><p>Determine the single operator equivalent to the multiplication of other operators</p></li>
+<li><p>Determine the commutator of two operators.</p></li>
 </ol>
 </section>
 <section id="coding-concepts">
-<h2><span class="section-number">3.4.7.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
-<p>The following coding concepts are used in this notebook</p>
+<h2><span class="section-number">3.4.8.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
+<p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
-<li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
-<li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
-<li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
+<li><p>None. Yet.</p></li>
 </ol>
 </section>
-<section id="the-premise">
-<h2><span class="section-number">3.4.7.4. </span>The Premise<a class="headerlink" href="#the-premise" title="Permalink to this headline">#</a></h2>
-<p>We have been told that the two operators from which we can construct all others in quantum mechanics are the position operator and momentum operator.  In one dimension these are given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-afec522c-e11c-4f7c-a19a-0ed9c6661288">
-<span class="eqno">(3.720)<a class="headerlink" href="#equation-afec522c-e11c-4f7c-a19a-0ed9c6661288" title="Permalink to this equation">#</a></span>\[\begin{align}
-\hat{X} &amp;= x \\
-\hat{P_x} &amp;= -i\hbar\frac{\partial}{\partial x}
+<section id="operator-equality">
+<h2><span class="section-number">3.4.8.4. </span>Operator Equality<a class="headerlink" href="#operator-equality" title="Permalink to this headline">#</a></h2>
+<p>Two operators <span class="math notranslate nohighlight">\(\hat{A}\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\)</span> are said to be equivalent if they achieve the same result when applied to <em><strong>any</strong></em> function.  Assuming that <span class="math notranslate nohighlight">\(\hat{A}\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\)</span> depend only on a single variable <span class="math notranslate nohighlight">\(x\)</span> then if</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5f702b7f-c725-4a18-a6f7-de22462f01c7">
+<span class="eqno">(3.738)<a class="headerlink" href="#equation-5f702b7f-c725-4a18-a6f7-de22462f01c7" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{A}f(x) &amp;= \hat{B}f(x)
 \end{align}\]</div>
-<p>It is the goal of these notes to demonstrate why the momentum operator in position coordinates is the first derivative.</p>
-<p>A single particle at finite temperature in one dimension will have a position, denoted <span class="math notranslate nohighlight">\(x\)</span>, and a momentum, denoted <span class="math notranslate nohighlight">\(p_x\)</span>.  The particle can be described by a wavefunction in position space, denoted <span class="math notranslate nohighlight">\(\psi(x)\)</span>, and a wave function in momentum space, denoted <span class="math notranslate nohighlight">\(\phi(p_x)\)</span>.  The position operator operating on the position wave function yields the position of the particle and the momentum operator in momentum space operating on the momentum wave function yields the moment.  This is more concisely written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-430b2e36-b8a0-46be-9b6d-c5efc4c0660b">
-<span class="eqno">(3.721)<a class="headerlink" href="#equation-430b2e36-b8a0-46be-9b6d-c5efc4c0660b" title="Permalink to this equation">#</a></span>\[\begin{align}
-&amp;\hat{X}|\psi(x)\rangle = x |\psi(x)\rangle \\
-&amp;\hat{P}|\phi(p_x)\rangle = p_x | \phi(p_x)\rangle
+<p>for all functions <span class="math notranslate nohighlight">\(f(x)\)</span> then <span class="math notranslate nohighlight">\(\hat{A} = \hat{B}\)</span>.</p>
+<p>It is important to note that it is not assumed that <span class="math notranslate nohighlight">\(f(x)\)</span> is an eigenfunction of <span class="math notranslate nohighlight">\(\hat{A}\)</span>.  It could be that applying <span class="math notranslate nohighlight">\(\hat{A}\)</span> to <span class="math notranslate nohighlight">\(f(x)\)</span> creates a new function <span class="math notranslate nohighlight">\(g(x)\)</span>, <span class="math notranslate nohighlight">\(\hat{A}f(x) = g(x)\)</span>.  In order for <span class="math notranslate nohighlight">\(\hat{A}\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\)</span> to be equal <span class="math notranslate nohighlight">\(\hat{B}f(x)=g(x)\)</span> as well.</p>
+<p>It is also important to note that this behavior must be consistent for any function <span class="math notranslate nohighlight">\(f(x)\)</span>.  It is possible to find a particular <span class="math notranslate nohighlight">\(f(x)\)</span> for which the result of two different operators is the same.  For example</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a7e5d4d2-b7e2-468d-8a9f-c57cc84c9e2b">
+<span class="eqno">(3.739)<a class="headerlink" href="#equation-a7e5d4d2-b7e2-468d-8a9f-c57cc84c9e2b" title="Permalink to this equation">#</a></span>\[\begin{align}
+f(x) &amp;= e^{-x^2} \\
+\hat{A} &amp;= \frac{d}{dx} \\
+\hat{B} &amp;= -2x
 \end{align}\]</div>
-<p>Our goal can be restated as determining the form of the operator <span class="math notranslate nohighlight">\(\hat{P}\)</span> in position space.</p>
-<section id="fourier-transforms">
-<h3><span class="section-number">3.4.7.4.1. </span>Fourier Transforms<a class="headerlink" href="#fourier-transforms" title="Permalink to this headline">#</a></h3>
-<p>In addition to setting up the problem, the crux of this derivation is recognizing that <span class="math notranslate nohighlight">\(\psi(x)\)</span> and <span class="math notranslate nohighlight">\(\phi(p_x)\)</span> are Fourier transforms of each other.  If you are not familiar with this type of transformation, do not worry.  This can be written mathematically as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b5a2bf71-2f67-4da0-8044-664f7501b1de">
-<span class="eqno">(3.722)<a class="headerlink" href="#equation-b5a2bf71-2f67-4da0-8044-664f7501b1de" title="Permalink to this equation">#</a></span>\[\begin{align}
-\psi(x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) e^{ip_xx/\hbar}dp_x \\
-\phi(p_x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \psi(x) e^{-ip_xx/\hbar}dx 
+<p>If we now apply to the two operators to <span class="math notranslate nohighlight">\(f(x)\)</span> we get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-cb4ffeca-dd17-4e2e-94e9-149a04b5297b">
+<span class="eqno">(3.740)<a class="headerlink" href="#equation-cb4ffeca-dd17-4e2e-94e9-149a04b5297b" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{A}f(x) &amp;= \frac{d}{dx} e^{-x^2} = -2xe^{-x^2} \\
+\hat{B}f(x) &amp;= -2x e^{-x^2} 
 \end{align}\]</div>
-<p>Fourier transformations show up in a number of places but typically they are used to convert between a position space and a frequency space.  Here we are converting between position and momentum.</p>
-<p>Another aspect that shows up in Fourier transforms that we will utilize is the Dirac delta function.  There are many definitions of this but the one that shows up in Fourier transforms is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c9241049-7ac0-43d5-ba30-9a59dded14bd">
-<span class="eqno">(3.723)<a class="headerlink" href="#equation-c9241049-7ac0-43d5-ba30-9a59dded14bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
-\delta(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty}e^{ixt}dt
-\end{equation}\]</div>
-<p>The Dirac delta function has the following property</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e0b009b7-bcb9-45b2-acfc-8237abf36479">
-<span class="eqno">(3.724)<a class="headerlink" href="#equation-e0b009b7-bcb9-45b2-acfc-8237abf36479" title="Permalink to this equation">#</a></span>\[\begin{equation}
-\delta(x) = \begin{cases} 1\text{ if } x=0 \\ 0 \text{ otherwise}\end{cases}
-\end{equation}\]</div>
-<p>The integral of the Dirac delta function over all space is equal to 1</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6af01745-eb0b-4086-a6c9-de3365e5d45a">
-<span class="eqno">(3.725)<a class="headerlink" href="#equation-6af01745-eb0b-4086-a6c9-de3365e5d45a" title="Permalink to this equation">#</a></span>\[\begin{equation}
-\int_{-\infty}^{\infty} \delta(x)dx = 1
-\end{equation}\]</div>
-<p>Additionally, the Dirac delta is often used in integral equations to remove dependency on one variable because of the following property</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d39ae98d-7471-4dde-bcdc-8b8cde8b1244">
-<span class="eqno">(3.726)<a class="headerlink" href="#equation-d39ae98d-7471-4dde-bcdc-8b8cde8b1244" title="Permalink to this equation">#</a></span>\[\begin{equation}
-\int_{-\infty}^{\infty} \delta(x)f(x)dx = f(0),
-\end{equation}\]</div>
-<p>or, somewhat more generally</p>
-<div class="amsmath math notranslate nohighlight" id="equation-373bf4eb-92eb-4e57-a3cb-35295c6c09fc">
-<span class="eqno">(3.727)<a class="headerlink" href="#equation-373bf4eb-92eb-4e57-a3cb-35295c6c09fc" title="Permalink to this equation">#</a></span>\[\begin{equation}
-\int_{-\infty}^{\infty} \delta(x-x_0)f(x)dx = f(x_0).
-\end{equation}\]</div>
-<p>To see how this is true for the Fourier transform integral case, we will take the integral for finite limits and then argue that this function behaves as described for the Dirac delta function.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-25fe3afa-2b72-4326-991d-456cceba5547">
-<span class="eqno">(3.728)<a class="headerlink" href="#equation-25fe3afa-2b72-4326-991d-456cceba5547" title="Permalink to this equation">#</a></span>\[\begin{align}
-\int_{-n}^{n}e^{ixt}dt &amp;= \left[ \frac{e^{ixt}}{ix}\right]_{-n}^{n} \\
-&amp;= \frac{e^{ixn}-e^{-ixn}}{ix} \\
-&amp;= \frac{2i\sin xn}{ix} \\
-&amp;= \frac{2\sin xn}{x}
-\end{align}\]</div>
-<p>Now we take the limit</p>
-<div class="amsmath math notranslate nohighlight" id="equation-58032145-6a76-4cfd-91f8-d7cba3d2e228">
-<span class="eqno">(3.729)<a class="headerlink" href="#equation-58032145-6a76-4cfd-91f8-d7cba3d2e228" title="Permalink to this equation">#</a></span>\[\begin{align}
-\lim_{n\rightarrow\infty}\frac{2\sin xn}{x} = 2\pi\delta(x)
-\end{align}\]</div>
-<div class="cell tag_hide_input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
-    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="n">x</span>
-<span class="c1"># </span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.001</span><span class="p">)</span>
-<span class="c1"># setup plot parameters</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x/a$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="c1"># plot quantum result</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=1&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=2&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=3&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=10&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Dirac Delta Function&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="c1"># make legend</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span><span class="n">markerscale</span><span class="o">=</span><span class="mf">5.0</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/momentum_operator_8_0.png" src="../../_images/momentum_operator_8_0.png" />
-</div>
-</div>
+<p>We see that the result is the same for this particular function.  We cannot say that <span class="math notranslate nohighlight">\(\hat{A}\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\)</span> are equivalent, however, because this behavior does not hold true for other functions (e.g. <span class="math notranslate nohighlight">\(f(x) = x^2\)</span>).</p>
 </section>
-<section id="deriving-the-momentum-operator">
-<h3><span class="section-number">3.4.7.4.2. </span>Deriving the Momentum Operator<a class="headerlink" href="#deriving-the-momentum-operator" title="Permalink to this headline">#</a></h3>
-<p>We now have all the pieces to derive the expression for the momentum operator in position space.  The map of how we will do this is we recognize</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8204125-a060-40f6-b4c4-6d299a006360">
-<span class="eqno">(3.730)<a class="headerlink" href="#equation-b8204125-a060-40f6-b4c4-6d299a006360" title="Permalink to this equation">#</a></span>\[\begin{equation}
-\langle p \rangle = \langle \phi(p_x)| p_x | \phi(p_x)\rangle
+<section id="operator-addition">
+<h2><span class="section-number">3.4.8.5. </span>Operator Addition<a class="headerlink" href="#operator-addition" title="Permalink to this headline">#</a></h2>
+<p>Operator addition (and substraction) follows what we might consider to be <em>standard</em> rules.  That is if</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ed1b736f-bab7-4b1e-85d7-4cfdc918cb73">
+<span class="eqno">(3.741)<a class="headerlink" href="#equation-ed1b736f-bab7-4b1e-85d7-4cfdc918cb73" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{A}f &amp;= g \\
+\hat{B}f &amp;= h
+\end{align}\]</div>
+<p>then</p>
+<div class="amsmath math notranslate nohighlight" id="equation-84c6b21c-5217-4487-9e91-1406ba5e202b">
+<span class="eqno">(3.742)<a class="headerlink" href="#equation-84c6b21c-5217-4487-9e91-1406ba5e202b" title="Permalink to this equation">#</a></span>\[\begin{align}
+\left(\hat{A} + \hat{B}\right)f = \hat{A}f + \hat{B}f = g + h
+\end{align}\]</div>
+<p>This can also be thought of as the distributive law for functions over operators.</p>
+<section id="example-operator-addition">
+<h3><span class="section-number">3.4.8.5.1. </span>Example: Operator Addition<a class="headerlink" href="#example-operator-addition" title="Permalink to this headline">#</a></h3>
+<p>Given <span class="math notranslate nohighlight">\(\hat{A} = \frac{d}{dx}\)</span> and <span class="math notranslate nohighlight">\(\hat{B} = 3x^2 -x\)</span>, determine the result of <span class="math notranslate nohighlight">\((\hat{A} + \hat{B})f(x)\)</span> for $f(x) = 3e^{x^2}.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3078e51d-4fd3-4f1d-b734-b913b78df2e7">
+<span class="eqno">(3.743)<a class="headerlink" href="#equation-3078e51d-4fd3-4f1d-b734-b913b78df2e7" title="Permalink to this equation">#</a></span>\[\begin{align}
+(\hat{A} + \hat{B})f(x) &amp;= \left( \frac{d}{dx}+  3x^2 -x \right) 3e^{x^2}  \\
+&amp;= \frac{d}{dx}\left(3e^{x^2}\right) +  3x^2\left(3e^{x^2}\right) -x\left(3e^{x^2}\right) \\
+&amp;= 6xe^{x^2} +  9x^2e^{x^2} -3xe^{x^2} \\
+&amp;= 3xe^{x^2} +  9x^2e^{x^2} \\
+&amp;= \left(3x +  9x^2\right)e^{x^2}
+\end{align}\]</div>
+</section>
+</section>
+<section id="operator-multiplication">
+<h2><span class="section-number">3.4.8.6. </span>Operator Multiplication<a class="headerlink" href="#operator-multiplication" title="Permalink to this headline">#</a></h2>
+<p>Operator multiplication does not follow <em>standard</em> rules.  Specifically, some operators do not commute with others.  Operator multiplication, however, is extremely important for building up the set of operators pertaining to observables.  Thus, it is important to define what we mean by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a2165e6d-5b66-48db-967a-450f13674157">
+<span class="eqno">(3.744)<a class="headerlink" href="#equation-a2165e6d-5b66-48db-967a-450f13674157" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{A}\hat{B}
 \end{equation}\]</div>
-<p>We will transform the coordinates in the integrals on the r.h.s of the above equation using Fourier transforms.  Before we do that, however, it is useful to start by taking the spacial derivative of <span class="math notranslate nohighlight">\(\psi(x)\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-df2c5dca-e45b-44b5-aa13-2ab2d9a7290b">
-<span class="eqno">(3.731)<a class="headerlink" href="#equation-df2c5dca-e45b-44b5-aa13-2ab2d9a7290b" title="Permalink to this equation">#</a></span>\[\begin{align}
-\frac{\partial}{\partial x}\psi(x) &amp;= \frac{\partial}{\partial x}\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) e^{ip_xx/\hbar}dp_x \\
-&amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) \frac{\partial}{\partial x}e^{ip_xx/\hbar}dp_x \\
-&amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) \frac{ip_x}{\hbar}e^{ip_xx/\hbar}dp_x \\
-&amp;= \frac{i}{\hbar\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) p_xe^{ip_xx/\hbar}dp_x \\
-\Rightarrow -i\hbar\frac{\partial}{\partial x}\psi(x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} p_x\phi(p_x) e^{ip_xx/\hbar}dp_x
-\end{align}\]</div>
-<p>The above equation demonstrates that <span class="math notranslate nohighlight">\(i\hbar\frac{\partial}{\partial x}\psi(x)\)</span> and <span class="math notranslate nohighlight">\(p_x\phi(p_x)\)</span> are Fourier transforms of eachother.  This will be useful in our coordinate transformation.</p>
-<p>Now, let’s start</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c7934da8-d7f9-41ee-9fb7-0b2ae739ccbb">
-<span class="eqno">(3.732)<a class="headerlink" href="#equation-c7934da8-d7f9-41ee-9fb7-0b2ae739ccbb" title="Permalink to this equation">#</a></span>\[\begin{align}
-\langle \phi(p_x)| p_x | \phi(p_x)\rangle = \int_{-\infty}^{\infty}\phi^*(p_x)p_x\phi(p_x)dp_x
-\end{align}\]</div>
-<p>In this equation we will substitute that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3f18521a-d396-40ef-95ca-6a162524a910">
-<span class="eqno">(3.733)<a class="headerlink" href="#equation-3f18521a-d396-40ef-95ca-6a162524a910" title="Permalink to this equation">#</a></span>\[\begin{align}
-\phi^*(p_x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar}dx' \\
-p_x\phi(p_x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{\infty}^{\infty} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dx 
-\end{align}\]</div>
-<p>where the first relationship is the complex conjugate of the Fourier transform of <span class="math notranslate nohighlight">\(\phi\)</span> and the second relationship is the inverse Fourier transform that we just showed.  I use <span class="math notranslate nohighlight">\(x'\)</span> in the first expression to disntinguish the integration variables in the two integrals.  Plugging these into the expectation value of <span class="math notranslate nohighlight">\(p\)</span> equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8df03576-9f9d-4652-9fd8-a023b5a00ffe">
-<span class="eqno">(3.734)<a class="headerlink" href="#equation-8df03576-9f9d-4652-9fd8-a023b5a00ffe" title="Permalink to this equation">#</a></span>\[\begin{align}
-\langle \phi(p_x)| p_x | \phi(p_x)\rangle &amp;= \int_{-\infty}^{\infty}\phi^*(p_x)p_x\phi(p_x)dp_x \\
-&amp;= \int_{-\infty}^{\infty}\left[\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar}dx'\right]\left[\frac{1}{\sqrt{2\pi}}\int_{\infty}^{\infty} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dx\right]dp_x \\
-&amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\left[\int_{-\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar}dx'\right]\left[\int_{\infty}^{\infty} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dx\right]dp_x \\
-&amp;=\frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dp_xdx'dx 
-\end{align}\]</div>
-<p>where in the last step I can put all terms inside a triple integral because the terms inside the <span class="math notranslate nohighlight">\(x'\)</span> and <span class="math notranslate nohighlight">\(x\)</span> integrals don’t depend on the other integration variable.  I can now combine the two exponential terms (because <span class="math notranslate nohighlight">\(e^{ip_xx'/\hbar}\)</span> is constant with respect to <span class="math notranslate nohighlight">\(\frac{\partial}{\partial x}\)</span>) and then integrate the result over <span class="math notranslate nohighlight">\(p_x\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-553b8a75-8260-4d07-8408-14002b77f1cd">
-<span class="eqno">(3.735)<a class="headerlink" href="#equation-553b8a75-8260-4d07-8408-14002b77f1cd" title="Permalink to this equation">#</a></span>\[\begin{align}
-\langle \phi(p_x)| p_x | \phi(p_x)\rangle &amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dp_xdx'dx \\
-&amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{ip_x(x'-x)/\hbar}dp_xdx'dx \\
-&amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)\int_{\infty}^{\infty}e^{ip_x(x'-x)/\hbar}dp_xdx'dx \\
-&amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)2\pi\delta(x-x')dx'dx
-\end{align}\]</div>
-<p>where we recognize the Fourier version of the Dirac delta function in the last step.  The Dirac function now allows us to elimnate one of the integration variables (i.e. <span class="math notranslate nohighlight">\(\delta(x-x')\)</span> is only nonzero when <span class="math notranslate nohighlight">\(x'=x\)</span>) yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d1fe199a-715e-4970-9d13-ab9921356cbc">
-<span class="eqno">(3.736)<a class="headerlink" href="#equation-d1fe199a-715e-4970-9d13-ab9921356cbc" title="Permalink to this equation">#</a></span>\[\begin{align}
-\langle \phi(p_x)| p_x | \phi(p_x)\rangle &amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)2\pi\delta(x-x')dx'dx \\
-&amp;= \int_{-\infty}^{\infty} \psi^*(x) \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)dx \\
-&amp;= \langle \psi(x) | -i\hbar\frac{\partial}{\partial x} | \psi(x)\rangle
-\end{align}\]</div>
-<p>Thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b4e7b296-7ea8-400f-a769-237056c5d723">
-<span class="eqno">(3.737)<a class="headerlink" href="#equation-b4e7b296-7ea8-400f-a769-237056c5d723" title="Permalink to this equation">#</a></span>\[\begin{equation}
-\hat{p_x} = -i\hbar\frac{\partial}{\partial x}
+<p>for generic operators <span class="math notranslate nohighlight">\(\hat{A}\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\)</span>.</p>
+<p>The operation <span class="math notranslate nohighlight">\(\hat{A}\hat{B}\)</span> means to first apply operator <span class="math notranslate nohighlight">\(\hat{B}\)</span> to a function and then apply operator <span class="math notranslate nohighlight">\(\hat{A}\)</span>.  This is perhaps more concisely written as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-22c2d656-9d7c-43bf-af96-03f043483e0b">
+<span class="eqno">(3.745)<a class="headerlink" href="#equation-22c2d656-9d7c-43bf-af96-03f043483e0b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{A}\hat{B}f(x) = \hat{A}\left[\hat{B}f(x)\right]
 \end{equation}\]</div>
+<p>Note that since operators do not commute we should typically assume that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f91d2d09-a845-474f-90be-d11cbb765354">
+<span class="eqno">(3.746)<a class="headerlink" href="#equation-f91d2d09-a845-474f-90be-d11cbb765354" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{A}\hat{B} \neq \hat{B}\hat{A}
+\end{equation}\]</div>
+<p>This implies that the order in which you apply the operator is hugely important.</p>
+<section id="example-operator-multiplication">
+<h3><span class="section-number">3.4.8.6.1. </span>Example: Operator Multiplication<a class="headerlink" href="#example-operator-multiplication" title="Permalink to this headline">#</a></h3>
+<p>Given <span class="math notranslate nohighlight">\(\hat{A} = \frac{d}{dx}\)</span> and <span class="math notranslate nohighlight">\(\hat{B} = 3x^2 -x\)</span>, determine the result of <span class="math notranslate nohighlight">\(\hat{A}\hat{B}f(x)\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\hat{A}f(x)\)</span> for <span class="math notranslate nohighlight">\(f(x) = 3e^{x^2}\)</span>.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-bc64b6ff-6dbf-4b7e-b6c0-f57be2e343b8">
+<span class="eqno">(3.747)<a class="headerlink" href="#equation-bc64b6ff-6dbf-4b7e-b6c0-f57be2e343b8" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{A}\hat{B}f(x) &amp;= \frac{d}{dx}\left[\left( 3x^2 -x \right) 3e^{x^2}\right]  \\
+&amp;= \frac{d}{dx}\left[9x^2e^{x^2} -3xe^{x^2}\right] \\
+&amp;= \frac{d}{dx}\left(9x^2e^{x^2}\right) -\frac{d}{dx}\left(3xe^{x^2}\right) \\
+&amp;= 18xe^{x^2} + 18x^3e^{x^2}  -3e^{x^2} - 6x^2e^{x^2} \\
+&amp;= \left( 6x^3 - 2x^2 + 6x -1 \right)3e^{x^2}
+\end{align}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-a5c0cce7-5e6d-44f0-8e83-1121feee23cd">
+<span class="eqno">(3.748)<a class="headerlink" href="#equation-a5c0cce7-5e6d-44f0-8e83-1121feee23cd" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{B}\hat{A}f(x) &amp;= \left( 3x^2 -x \right) \left[\frac{d}{dx}3e^{x^2}\right]  \\
+&amp;= \left( 3x^2 -x \right)\left( 6xe^{x^2}\right) \\
+&amp;= \left( 3x^3 -2x^2 \right) 3e^{x^2}
+\end{align}\]</div>
+</section>
+</section>
+<section id="operator-commutation">
+<h2><span class="section-number">3.4.8.7. </span>Operator Commutation<a class="headerlink" href="#operator-commutation" title="Permalink to this headline">#</a></h2>
+<p>Whether operators commute or not turns out to be quite important in quantum mechanics.  We define the <em><strong>commutator</strong></em> of two operators as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2aedc925-adb5-4092-9c57-a382be77edd7">
+<span class="eqno">(3.749)<a class="headerlink" href="#equation-2aedc925-adb5-4092-9c57-a382be77edd7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\left[\hat{A},\hat{B}\right] = \hat{A}\hat{B} - \hat{B}\hat{A}
+\end{equation}\]</div>
+<p>If this value is zero then the operators commute.  If this value is non-zero, the operators do not commute.  We determine a commutator for arbitrary function.</p>
+<section id="example-commutators">
+<h3><span class="section-number">3.4.8.7.1. </span>Example: Commutators<a class="headerlink" href="#example-commutators" title="Permalink to this headline">#</a></h3>
+<p>Estimate the commutator of <span class="math notranslate nohighlight">\(\hat{A} = \frac{d}{dx}\)</span> and <span class="math notranslate nohighlight">\(\hat{B} = 3x^2 -x\)</span>.</p>
+<p>We know that these two operators don’t commute. Let’s compute the commutator, however.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-27601a20-7b6c-4b80-8b67-1704652c8893">
+<span class="eqno">(3.750)<a class="headerlink" href="#equation-27601a20-7b6c-4b80-8b67-1704652c8893" title="Permalink to this equation">#</a></span>\[\begin{align}
+[\hat{A},\hat{B}]f(x) &amp;= [\hat{A}\hat{B} - \hat{B}\hat{A}]f(x) \\
+&amp;= \hat{A}\hat{B}f(x) - \hat{B}\hat{A}]f(x) \\
+&amp;= \frac{d}{dx}\left[\left( 3x^2 -x \right) f(x)\right] - \left( 3x^2 -x \right) \left[\frac{d}{dx}f(x)\right] \\
+&amp;= \frac{d}{dx}\left( 3x^2f -xf \right)- \left( 3x^2 -x \right)\frac{df}{dx} \\
+&amp;=  6xf + 3x^2\frac{df}{dx} - f - x\frac{df}{dx} - 3x^2\frac{df}{dx} +x\frac{df}{dx} \\
+&amp;=  (6x-1)f 
+\end{align}\]</div>
+<p>Thus,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-bfb1653e-35a6-48c6-a0e0-032ba7c9a483">
+<span class="eqno">(3.751)<a class="headerlink" href="#equation-bfb1653e-35a6-48c6-a0e0-032ba7c9a483" title="Permalink to this equation">#</a></span>\[\begin{align}
+[\hat{A},\hat{B}] = 6x-1
+\end{align}\]</div>
+<p>We see that if we plug in that <span class="math notranslate nohighlight">\(f(x) = 3e^{x^2}\)</span> and substract the commutator will be the same as the difference between the two answers in the multiplication example.</p>
 </section>
 </section>
 </section>
@@ -1028,17 +1040,17 @@ p_x\phi(p_x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{\infty}^{\infty} \left(-i\hbar\fr
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="postulates_of_quantum_mechanics.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="momentum_operator.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">3.4.6. </span>The Postulates and Formalism of Quantum Mechanics</p>
+            <p class="prev-next-title"><span class="section-number">3.4.7. </span>The Momentum Operator</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="operator_algebra.html" title="next page">
+    <a class='right-next' id="next-link" href="harmonic_oscillator.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3.4.8. </span>Operator Algebra</p>
+        <p class="prev-next-title"><span class="section-number">3.4.9. </span>Harmonic Oscillator</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
