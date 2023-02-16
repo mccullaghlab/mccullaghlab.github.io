@@ -130,18 +130,18 @@
 # Substite the above equation for $\psi$ into the Schrodinger equation to get
 # \begin{align}
 # \hat{L}^2R(r)Y(\theta,\phi) -\hbar^2 \frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)Y(\theta,\phi) &= 2mr^2ER(r)Y(\theta,\phi) \\
-# \Rightarrow \frac{-\hbar^2}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) -\frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) &= 2mr^2E
+# \Rightarrow \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E
 # \end{align}
 # 
-# Notice that the left-hand term depends on $\theta$ and $\phi$ but the other terms do not.  Thus, we must have that
+# Notice that the left-hand side depends on $\theta$ and $\phi$ only and the right-hand side depends on $r$ only.  Thus, we must have that
 # \begin{equation}
-# \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = E_{\theta,\phi},
+# \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = \alpha,
 # \end{equation}
-# where $E_{\theta,\phi}$ is a constant.
+# where $\alpha$ is a constant.
 # 
 # Additionally, we must have that
 # \begin{equation}
-# \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = E_{\theta,\phi}
+# \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = \alpha
 # \end{equation}
 # 
 # 
@@ -151,30 +151,30 @@
 
 # It is the goal of this section of the notes to find a solution to the differential equation
 # \begin{equation}
-# \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = E_{\theta,\phi},
+# \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = \alpha,
 # \end{equation}
-# where $E_{\theta,\phi}$ is a constant.
+# where $\alpha$ is a constant.
 # 
 # This equation can be rearranged to the eigenvalue equation
 # \begin{equation}
-# \hat{L}^2Y(\theta,\phi) = E_{\theta,\phi}Y(\theta,\phi)
+# \hat{L}^2Y(\theta,\phi) =\alpha Y(\theta,\phi)
 # \end{equation}
 # Now plugging back in the expanded form of $\hat{L}^2$ we get
 # \begin{align}
 # -\hbar^2\left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &= E_{\theta,\phi}Y(\theta,\phi) \\
-# \Rightarrow \left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &= \frac{-E_{\theta,\phi}}{\hbar^2}Y(\theta,\phi)
+# \Rightarrow \left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &= \frac{-\alpha}{\hbar^2}Y(\theta,\phi)
 # \end{align}
 # 
 # Multiplying the above equation by $\sin^2\theta$ yields
 # \begin{align}
-# \left(\sin\theta\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &= \frac{-E_{\theta,\phi}\sin^2\theta}{\hbar^2}Y(\theta,\phi)
+# \left(\sin\theta\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &= \frac{-\alpha\sin^2\theta}{\hbar^2}Y(\theta,\phi)
 # \end{align}
 # We notice that this motivates a separation of variables into 
 # \begin{equation}
 # Y(\theta,\phi) = \Theta(\theta)\Phi(\phi)
 # \end{equation}
 # 
-# Substituting this and $\beta = \frac{E_{\theta,\phi}}{\hbar^2}$ yields
+# Substituting this and $\beta = \frac{\alpha}{\hbar^2}$ yields
 # 
 # \begin{equation}
 # \left[\sin\theta\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\beta\sin^2\theta \right] \Theta(\theta)\Phi(\phi) = -\frac{\partial^2}{\partial^2\phi} \Theta(\theta)\Phi(\phi).
@@ -222,19 +222,17 @@
 # 
 # $(1-x^2)\frac{d^2}{dx^2}P(x)-2x\frac{d}{dx}P(x)+\left[\beta-\frac{m^2}{1-x^2}\right]P(x) = 0$.
 # 
-# For $\Theta(\theta)$ to be continous $\beta=J(J+1)$ where $J=0,1,2...$.  Note that this also puts a limit on $m$ with $m=0,\pm 1, \pm 2, ... , \pm J$.   The quantization of $\beta$ leads to the quantization of energy
-# 
-# $E_J = \frac{\hbar^2}{2I}J(J+1)$.
+# For $\Theta(\theta)$ to be continous $\beta=l(l+1)$ where $l=0,1,2...$.  Note that this also puts a limit on $m$ with $m=0,\pm 1, \pm 2, ... , \pm l$.   
 # 
 # The solutions, $P(x)$, to the Legendre equation are known as the Associated Legendre polynomials.  
 # 
-# $P_\nu^m = (-1)^m(1-x^2)^{m/2}\frac{d^m}{dx^m}P_\nu(x)$
+# $P_l^m = (-1)^m(1-x^2)^{m/2}\frac{d^m}{dx^m}P_l(x)$
 # 
 # where
 # 
-# $P_\nu(x) = \sum_{k=0}^{\infty}\frac{(-\nu)_k(\nu+1)_k}{k!^2}\left(\frac{1-x}{2}\right)^k$
+# $P_l(x) = \sum_{k=0}^{\infty}\frac{(-l)_k(l+1)_k}{k!^2}\left(\frac{1-x}{2}\right)^k$
 # 
-# and $(\nu)_k = \frac{(\nu+k-1)!}{(\nu-1)!}$.
+# and $(l)_k = \frac{(l+k-1)!}{(l-1)!}$.
 
 # In[8]:
 
@@ -305,10 +303,45 @@ plot_spherical_harmonic(0,2);
 
 # It is the goal of this section to solve the equation
 # \begin{equation}
-# \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = E_{\theta,\phi}
+# \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = \alpha
+# \end{equation}
+# The above equation is a form of the radial component of the Helmholtz equation and has the solution of the spherical Bessel functions.
+# 
+# Plugging in what we have already determined for $\alpha$ (namely $\alpha = \hbar^2\beta = \hbar^2l(l+1)$)
+# \begin{equation}
+# \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = \hbar^2l(l+1)
+# \end{equation}
+# Multiplying through by $-\frac{R(r)}{2m}$ and rearranging yields
+# \begin{equation}
+# \frac{-\hbar^2}{2m}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) -\frac{\hbar^2}{2m}l(l+1)R(r)= r^2ER(r)  
 # \end{equation}
 # 
-# The above equation is a form of the Helmholtz equation and has the solution of the spherical Bessel functions.
+# We now make the substitution that $u(r) = rR(r)$.  This will allow us to simplify the above equation due to the fact that
+# \begin{equation}
+# \frac{d^2u}{dr^2} = 2\frac{dR}{dr} + r\frac{d^2R}{dr^2} = \frac{1}{r}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)
+# \end{equation}
+# Making this substition yields
+# \begin{equation}
+# \frac{-\hbar^2}{2m}r\frac{d^2u}{dr^2} -\frac{\hbar^2}{2m}l(l+1)\frac{u(r)}{r}= rEu(r)  
+# \end{equation}
+# Dividing through by $r$ yields
+# \begin{equation}
+# \frac{-\hbar^2}{2m}\frac{d^2u}{dr^2} -\frac{\hbar^2}{2m}\frac{l(l+1)}{r^2}u(r)= Eu(r)  
+# \end{equation}
+# 
+# We note that this final expression looks like a Schrodinger equation in $r$ with a potential of $-\frac{\hbar^2}{2m}\frac{l(l+1)}{r^2}$.  This potential has the effect of pushing the particle away from the origin and is thus sometimes referred to as the centrifugal potential.
+# 
+# The solutions to this differential expression are related to the spherical Bessel functions with a general solution written as
+# \begin{equation}
+# u(r) = Arj_l(kr) + Bry_l(kr)
+# \end{equation}
+# where $A$ and $B$ are constants, $k=\sqrt{\frac{2mE}{\hbar^2}}$ and $j_l$ (spherical Bessel functions of type 1) and $y_l$ (spherical Bessel functions of type 2) are defined as
+# \begin{align}
+# j_l(x) &= (-x)^l\left(\frac{1}{x}\frac{d}{dx}\right)^l\frac{\sin x}{x} \\
+# y_l(x) &= -(-x)^l\left(\frac{1}{x}\frac{d}{dx}\right)^l\frac{\cos x}{x}
+# \end{align}
+# 
+# 
 
 # In[12]:
 
