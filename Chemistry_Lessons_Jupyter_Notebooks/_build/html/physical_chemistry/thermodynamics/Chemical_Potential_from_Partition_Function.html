@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.2.16. Chemical Potential from the Partition Function &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2.17. Thermodynamics of Solutions" href="Thermodynamics_of_Solutions.html" />
@@ -862,13 +863,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="chemical-potential-from-the-partition-function">
+  <section class="tex2jax_ignore mathjax_ignore" id="chemical-potential-from-the-partition-function">
 <h1><span class="section-number">3.2.16. </span>Chemical Potential from the Partition Function<a class="headerlink" href="#chemical-potential-from-the-partition-function" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.2.16.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>The chemical potential, or molar Gibbs free energy of a component, is an important quantity for multicomponent systems.  We saw that two phase equilibrium at constant temperature and pressure dictates that the chemical potentials of each phase be equivalent.  Here, we will show that the chemical potential can be determined from the partition function of the system.  This provides a tie between this quantity and the molecular level.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.2.16.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="simple">
@@ -876,171 +877,171 @@ title="Print to PDF"
 <li><p>Express the chemical potential in terms of the canonical partition function</p></li>
 <li><p>Calculate the standard state chemical potential for an ideal gas</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.2.16.3. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>None, yet.</p>
-</div>
-<div class="section" id="review-of-the-partition-function">
+</section>
+<section id="review-of-the-partition-function">
 <h2><span class="section-number">3.2.16.4. </span>Review of the Partition Function<a class="headerlink" href="#review-of-the-partition-function" title="Permalink to this headline">#</a></h2>
 <p>Recall that the partition function, <span class="math notranslate nohighlight">\(Q\)</span>, of a system under constant <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(T\)</span> is defined as a sum over the Boltzmann factors of all energy levels of the system</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4ac9a359-df6b-4a5a-b3de-fbdcdac075db">
-<span class="eqno">(3.366)<a class="headerlink" href="#equation-4ac9a359-df6b-4a5a-b3de-fbdcdac075db" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-38f0fe0d-ca3a-4db5-b74d-37eb459d036c">
+<span class="eqno">(3.366)<a class="headerlink" href="#equation-38f0fe0d-ca3a-4db5-b74d-37eb459d036c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q = \sum_i e^{-\beta E_i},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(E_i\)</span> is the energy of the system in energy level <span class="math notranslate nohighlight">\(i\)</span>.</p>
 <p>For an ideal gas system the particles do not interact and thus we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-baf45892-b158-4193-8285-c21446093acb">
-<span class="eqno">(3.367)<a class="headerlink" href="#equation-baf45892-b158-4193-8285-c21446093acb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7e70f1fa-f5c1-499f-b866-69b348d0e9dc">
+<span class="eqno">(3.367)<a class="headerlink" href="#equation-7e70f1fa-f5c1-499f-b866-69b348d0e9dc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q = \frac{q^N}{N!},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(q\)</span> is the molecular partition function defined as a sum over molecular energy levels</p>
-<div class="amsmath math notranslate nohighlight" id="equation-51cb4ba8-5f07-41da-9f9d-3cb6ef094d11">
-<span class="eqno">(3.368)<a class="headerlink" href="#equation-51cb4ba8-5f07-41da-9f9d-3cb6ef094d11" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c20a9ad6-58c0-45d2-b0f7-c080a1dea0dd">
+<span class="eqno">(3.368)<a class="headerlink" href="#equation-c20a9ad6-58c0-45d2-b0f7-c080a1dea0dd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q = \sum_j e^{-\beta \epsilon_j},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_j\)</span> is the energy of a molecule is molecular state <span class="math notranslate nohighlight">\(j\)</span>.</p>
 <p>From the partition function we can compute important thermodynamic quantities such as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eedd1526-eb06-4060-b2a2-43846cc6092c">
-<span class="eqno">(3.369)<a class="headerlink" href="#equation-eedd1526-eb06-4060-b2a2-43846cc6092c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5f7e05cd-6638-4f6d-8feb-bcb35354034c">
+<span class="eqno">(3.369)<a class="headerlink" href="#equation-5f7e05cd-6638-4f6d-8feb-bcb35354034c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 U &amp;=&amp; k_BT^2\left( \frac{\partial lnQ}{\partial T}\right)_{N,V} \\
 P &amp;=&amp;  \frac{1}{\beta}\frac{\partial \ln Q}{\partial V} \\
 C_V &amp;=&amp; k_B \beta^2 \left( \frac{\partial^2 \ln Q}{\partial \beta^2}\right)_{N,V} \\
 S &amp;=&amp; k_BT\left( \frac{\partial lnQ}{\partial T}\right)_{N,V} + k_B\ln Q
 \end{eqnarray}\]</div>
-</div>
-<div class="section" id="entropy-from-the-partition-function">
+</section>
+<section id="entropy-from-the-partition-function">
 <h2><span class="section-number">3.2.16.5. </span>Entropy from the Partition Function<a class="headerlink" href="#entropy-from-the-partition-function" title="Permalink to this headline">#</a></h2>
 <p>Actually, we have not yet shown the last equation above.  I will do so here a bit of an aside.  We start with the Gibbs entropy formula</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ba6bf606-6da0-4329-9349-89e488055d33">
-<span class="eqno">(3.370)<a class="headerlink" href="#equation-ba6bf606-6da0-4329-9349-89e488055d33" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e0896701-1d18-4b58-bda3-fd95dc4dca8e">
+<span class="eqno">(3.370)<a class="headerlink" href="#equation-e0896701-1d18-4b58-bda3-fd95dc4dca8e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S = -k_B\sum_ip_i\ln p_i
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p_i\)</span> is the probability of state <span class="math notranslate nohighlight">\(i\)</span> and in the Canonical ensemble is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b2fd7fb9-f495-435e-aff9-0396934dfd98">
-<span class="eqno">(3.371)<a class="headerlink" href="#equation-b2fd7fb9-f495-435e-aff9-0396934dfd98" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b9e57f10-b0fc-48e1-8568-0dc4097d9770">
+<span class="eqno">(3.371)<a class="headerlink" href="#equation-b9e57f10-b0fc-48e1-8568-0dc4097d9770" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p_i = \frac{e^{-\beta E_i}}{Q}
 \end{equation}\]</div>
 <p>Plugging this formula into the Gibbs entropy equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-97443f88-0e5b-45a0-8cd9-623423578a59">
-<span class="eqno">(3.372)<a class="headerlink" href="#equation-97443f88-0e5b-45a0-8cd9-623423578a59" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c70244a2-8a93-4e95-acfb-a27edb3aff29">
+<span class="eqno">(3.372)<a class="headerlink" href="#equation-c70244a2-8a93-4e95-acfb-a27edb3aff29" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; -k_B\sum_i \frac{e^{-\beta E_i}}{Q} \ln \left( \frac{e^{-\beta E_i}}{Q} \right)  \\
 &amp;=&amp; -k_B\sum_i \frac{e^{-\beta E_i}}{Q} \left( -\beta E_i - \ln Q\right) \\
 &amp;=&amp; \beta k_B\sum_i E_i\frac{e^{-\beta E_i}}{Q} + k_B\sum_i\ln Q\frac{e^{-\beta E_i}}{Q} \\
 &amp;=&amp; \frac{1}{T}\langle E \rangle  + \frac{k_B\ln Q}{Q} \sum_i e^{-\beta E_i} \\
 &amp;=&amp; \frac{U}{T} + k_B\ln Q
 \end{eqnarray}\]</div>
-</div>
-<div class="section" id="helmholtz-free-energy-from-partition-function">
+</section>
+<section id="helmholtz-free-energy-from-partition-function">
 <h2><span class="section-number">3.2.16.6. </span>Helmholtz Free Energy from Partition Function<a class="headerlink" href="#helmholtz-free-energy-from-partition-function" title="Permalink to this headline">#</a></h2>
 <p>Given the above equalities and the Thermodynamic definition of <span class="math notranslate nohighlight">\(A\)</span>, it is straightforward to determine an equation for <span class="math notranslate nohighlight">\(A\)</span> in terms of the partition function.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-91b50cc6-3577-48f7-9a17-08d665659cea">
-<span class="eqno">(3.373)<a class="headerlink" href="#equation-91b50cc6-3577-48f7-9a17-08d665659cea" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-9c0ab2eb-23ff-4e67-af38-a11eb7c7c1c7">
+<span class="eqno">(3.373)<a class="headerlink" href="#equation-9c0ab2eb-23ff-4e67-af38-a11eb7c7c1c7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 A &amp;=&amp; U - TS \\
 &amp;=&amp; k_BT^2\left( \frac{\partial lnQ}{\partial T}\right)_{N,V} - T\left( k_BT\left( \frac{\partial lnQ}{\partial T}\right)_{N,V} + k_B\ln Q \right) \\
 &amp;=&amp; -k_BT\ln Q 
 \end{eqnarray}\]</div>
-</div>
-<div class="section" id="chemical-potential">
+</section>
+<section id="chemical-potential">
 <h2><span class="section-number">3.2.16.7. </span>Chemical Potential<a class="headerlink" href="#chemical-potential" title="Permalink to this headline">#</a></h2>
 <p>To derive an equation for the chemical potential in terms of the partition function we start be writing the differential form of the Helmholtz free energy for a single component system</p>
-<div class="amsmath math notranslate nohighlight" id="equation-876c4186-b5da-4313-9ba9-ca2a64bc5898">
-<span class="eqno">(3.374)<a class="headerlink" href="#equation-876c4186-b5da-4313-9ba9-ca2a64bc5898" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-9f240164-8e54-483b-acb6-8d32f7bfbd79">
+<span class="eqno">(3.374)<a class="headerlink" href="#equation-9f240164-8e54-483b-acb6-8d32f7bfbd79" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 dA &amp;=&amp; \left(\frac{\partial A}{\partial T} \right)_{N,V}dT + \left(\frac{\partial A}{\partial V} \right)_{N,T}dV + \left(\frac{\partial A}{\partial N} \right)_{T,V}dN \\
 &amp;=&amp; -SdT - PdV + \mu dN 
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the chemical potential of the species and <span class="math notranslate nohighlight">\(N\)</span> is the number of molecules in the system.</p>
 <p>The chemical potential can also be expressed as partial derivatives of other energy functions,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e942bd14-fe63-494d-87b9-0cf60a02abe2">
-<span class="eqno">(3.375)<a class="headerlink" href="#equation-e942bd14-fe63-494d-87b9-0cf60a02abe2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7c8b96b9-4b32-4ebb-932b-ef0cf0f2dfa3">
+<span class="eqno">(3.375)<a class="headerlink" href="#equation-7c8b96b9-4b32-4ebb-932b-ef0cf0f2dfa3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mu = \left(\frac{\partial A}{\partial N} \right)_{T,V} = \left(\frac{\partial G}{\partial N} \right)_{T,P} = \left(\frac{\partial H}{\partial N} \right)_{S,P} = \left(\frac{\partial U}{\partial N} \right)_{S,V},
 \end{equation}\]</div>
 <p>as long as the appropriate natural variables are kept constant.</p>
 <p>It is more convenient to work in terms of moles in which case we convert <span class="math notranslate nohighlight">\(N\)</span> to <span class="math notranslate nohighlight">\(n\)</span> in the equation for <span class="math notranslate nohighlight">\(dA\)</span> and express the molar chemical potential as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9ec61b38-9c57-450e-8d46-cd6f45fcef87">
-<span class="eqno">(3.376)<a class="headerlink" href="#equation-9ec61b38-9c57-450e-8d46-cd6f45fcef87" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-412ef593-cb84-489c-8aaf-d71699e1f8e1">
+<span class="eqno">(3.376)<a class="headerlink" href="#equation-412ef593-cb84-489c-8aaf-d71699e1f8e1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mu = \left(\frac{\partial A}{\partial n} \right)_{T,V} = \left(\frac{\partial G}{\partial n} \right)_{T,P} = \left(\frac{\partial H}{\partial n} \right)_{S,P} = \left(\frac{\partial U}{\partial n} \right)_{S,V}.
 \end{equation}\]</div>
 <p>The units of chemical potential written in this way are energy per mole.</p>
-</div>
-<div class="section" id="id1">
+</section>
+<section id="id1">
 <h2><span class="section-number">3.2.16.8. </span>Chemical Potential from the Partition Function<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <p>Since the chemical potential can be determined from any energy function and we have a simple expression for <span class="math notranslate nohighlight">\(A\)</span> in terms of <span class="math notranslate nohighlight">\(Q\)</span>, we will derive the formula for chemical potential from <span class="math notranslate nohighlight">\(A\)</span>.</p>
 <p>We start with the definition of the molar chemical potential in terms of <span class="math notranslate nohighlight">\(A\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-13afaf9a-6467-4f02-b25f-7910c0e5e6e8">
-<span class="eqno">(3.377)<a class="headerlink" href="#equation-13afaf9a-6467-4f02-b25f-7910c0e5e6e8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-3b496fdf-0b7c-4823-b404-77b9c79f4224">
+<span class="eqno">(3.377)<a class="headerlink" href="#equation-3b496fdf-0b7c-4823-b404-77b9c79f4224" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \mu &amp;=&amp; \left(\frac{\partial A}{\partial n} \right)_{T,V} \\
 &amp;=&amp; \frac{\partial}{\partial n} \left(-k_BT\ln Q \right)_{T,V} \\
 &amp;=&amp; -k_BT\left(\frac{\partial \ln Q}{\partial n} \right)_{T,V} \\
 &amp;=&amp; -RT\left(\frac{\partial \ln Q}{\partial N} \right)_{T,V}
 \end{eqnarray}\]</div>
-</div>
-<div class="section" id="chemical-potential-of-an-ideal-gas">
+</section>
+<section id="chemical-potential-of-an-ideal-gas">
 <h2><span class="section-number">3.2.16.9. </span>Chemical Potential of an Ideal Gas<a class="headerlink" href="#chemical-potential-of-an-ideal-gas" title="Permalink to this headline">#</a></h2>
 <p>Recall that, for an ideal gas, we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d7efef3d-e973-43e8-9299-f85b9781224b">
-<span class="eqno">(3.378)<a class="headerlink" href="#equation-d7efef3d-e973-43e8-9299-f85b9781224b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8bf5fcbd-ba32-4d8c-a231-de63596e58e8">
+<span class="eqno">(3.378)<a class="headerlink" href="#equation-8bf5fcbd-ba32-4d8c-a231-de63596e58e8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q = \frac{q^N}{N!}
 \end{equation}\]</div>
 <p>To compute the chemical potential, we must differentiate <span class="math notranslate nohighlight">\(\ln Q\)</span> with respect to <span class="math notranslate nohighlight">\(N\)</span>.  We express <span class="math notranslate nohighlight">\(\ln Q\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-60b023f3-6dfa-442b-a396-e657978642bd">
-<span class="eqno">(3.379)<a class="headerlink" href="#equation-60b023f3-6dfa-442b-a396-e657978642bd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a1badb8c-9fd1-4eae-9f06-708045938e72">
+<span class="eqno">(3.379)<a class="headerlink" href="#equation-a1badb8c-9fd1-4eae-9f06-708045938e72" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln Q = \ln\left(\frac{q^N}{N!} \right) = N\ln q - \ln N! = N\ln q - N\ln N + N
 \end{equation}\]</div>
 <p>where the last equality employed the use of the Stirling approximation.</p>
 <p>Thus, the chemical potential of an ideal gas is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7f9bd02a-f78c-460e-a148-bc0d27209c4e">
-<span class="eqno">(3.380)<a class="headerlink" href="#equation-7f9bd02a-f78c-460e-a148-bc0d27209c4e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3f2ff5e1-1b3d-4c9d-ad70-03acdb2a760e">
+<span class="eqno">(3.380)<a class="headerlink" href="#equation-3f2ff5e1-1b3d-4c9d-ad70-03acdb2a760e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mu = -RT(\ln q - \ln N -1 + 1) = -RT\ln\frac{q}{N}
 \end{equation}\]</div>
 <p>Recall that <span class="math notranslate nohighlight">\(q\)</span> is a function of <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(T\)</span> and that <span class="math notranslate nohighlight">\(q \propto V\)</span>.  Thus <span class="math notranslate nohighlight">\(q/V\)</span> is independent of <span class="math notranslate nohighlight">\(V\)</span> and only a function of <span class="math notranslate nohighlight">\(T\)</span>. This allows us to rewrite <span class="math notranslate nohighlight">\(\mu\)</span> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e347fbc3-2a85-4629-b588-5926087fc476">
-<span class="eqno">(3.381)<a class="headerlink" href="#equation-e347fbc3-2a85-4629-b588-5926087fc476" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5cfe7058-0baf-44d6-95db-352278b5c330">
+<span class="eqno">(3.381)<a class="headerlink" href="#equation-5cfe7058-0baf-44d6-95db-352278b5c330" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \mu = -RT\ln\frac{q}{N} &amp;=&amp; -RT\ln\left[ \frac{q}{V}\frac{V}{N} \right] \\
 &amp;=&amp; -RT\ln\left[\frac{q}{V}\frac{k_BT}{P} \right] \\
 &amp;=&amp; -RT\ln\frac{qk_BT}{V} + RT\ln P
 \end{eqnarray}\]</div>
 <p>where we used that <span class="math notranslate nohighlight">\(\frac{V}{N} = \frac{k_BT}{P}\)</span> from the ideal gas law.</p>
 <p>From the above equation, we call the first term the standard state chemical potential, <span class="math notranslate nohighlight">\(\mu^\circ\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9037a54f-ac06-46dd-a930-1d0b545006ff">
-<span class="eqno">(3.382)<a class="headerlink" href="#equation-9037a54f-ac06-46dd-a930-1d0b545006ff" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-60928ab9-8b1a-455f-a10b-a205a918a952">
+<span class="eqno">(3.382)<a class="headerlink" href="#equation-60928ab9-8b1a-455f-a10b-a205a918a952" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mu^\circ(T) = -RT\ln\left[ \frac{qk_BT}{VP^\circ} \right],
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(P^\circ\)</span> is the standard state pressure of 1 bar or <span class="math notranslate nohighlight">\(10^5\)</span> Pa.</p>
-</div>
-<div class="section" id="example-chemical-potential-of-a-monatomic-ideal-gas">
+</section>
+<section id="example-chemical-potential-of-a-monatomic-ideal-gas">
 <h2><span class="section-number">3.2.16.10. </span>Example: Chemical Potential of a Monatomic Ideal Gas<a class="headerlink" href="#example-chemical-potential-of-a-monatomic-ideal-gas" title="Permalink to this headline">#</a></h2>
 <p>Compute the standard state chemical potential of Ar(g) at 298.15 K.  Assume ideal gas behavior.</p>
 <p>For a monatomic ideal gas we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2805648f-7565-48ae-a25e-25b9b466d116">
-<span class="eqno">(3.383)<a class="headerlink" href="#equation-2805648f-7565-48ae-a25e-25b9b466d116" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0f735db3-3b70-4d37-add3-50b7cd5f3cb1">
+<span class="eqno">(3.383)<a class="headerlink" href="#equation-0f735db3-3b70-4d37-add3-50b7cd5f3cb1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q = \left(\frac{2\pi m k_B T}{h^2}\right)^{3/2}V
 \end{equation}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b73af779-20e4-42f5-8cd3-80e6bb1e4e7c">
-<span class="eqno">(3.384)<a class="headerlink" href="#equation-b73af779-20e4-42f5-8cd3-80e6bb1e4e7c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d597b31e-4098-4298-8149-e8952facd9d6">
+<span class="eqno">(3.384)<a class="headerlink" href="#equation-d597b31e-4098-4298-8149-e8952facd9d6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{q}{V} = \left(\frac{2\pi m k_B T}{h^2}\right)^{3/2}
 \end{equation}\]</div>
 <p>Given the temperature and mass of the substance, we can compute <span class="math notranslate nohighlight">\(q/V\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-37e610be-f98f-4af9-85bb-4d852affd060">
-<span class="eqno">(3.385)<a class="headerlink" href="#equation-37e610be-f98f-4af9-85bb-4d852affd060" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-531ae42e-ec21-4fa1-be70-8aefcccc5fc7">
+<span class="eqno">(3.385)<a class="headerlink" href="#equation-531ae42e-ec21-4fa1-be70-8aefcccc5fc7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{q}{V} &amp;=&amp; \left(\frac{2\pi\cdot0.03995\cdot 1.3806\times10^{-23}\cdot298.15}{6.022\times10^{23}(6.626\times10^{-34})^2}\right)^{3/2} \\
 &amp;=&amp; 2.444\times10^{32} \quad\text{m}^{-3}
 \end{eqnarray}\]</div>
 <p>and <span class="math notranslate nohighlight">\(\frac{k_BT}{P^\circ}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8eb8e1cc-99af-4a3d-a9c3-a54c29420c70">
-<span class="eqno">(3.386)<a class="headerlink" href="#equation-8eb8e1cc-99af-4a3d-a9c3-a54c29420c70" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-19b0aa49-a3a1-49d9-a428-558b10d59ba6">
+<span class="eqno">(3.386)<a class="headerlink" href="#equation-19b0aa49-a3a1-49d9-a428-558b10d59ba6" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{k_BT}{P^\circ} &amp;=&amp; \frac{1.3806\times10^{-23}\cdot 298.15}{1.00\times10^5}  \\
 &amp;=&amp; 4.116\times10^{-26}\quad\text{m}^3
 \end{eqnarray}\]</div>
 <p>Plugging this into equation above yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-91de3a42-8f5e-43af-8470-62a4a016919c">
-<span class="eqno">(3.387)<a class="headerlink" href="#equation-91de3a42-8f5e-43af-8470-62a4a016919c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-07f61d51-3372-4800-a80d-019fc243bd31">
+<span class="eqno">(3.387)<a class="headerlink" href="#equation-07f61d51-3372-4800-a80d-019fc243bd31" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \mu^\circ(298.15) &amp;=&amp; -8.314\cdot298.15 \cdot \ln(2.444\times10^{32}\cdot 4.116\times10^{-26}) \\
 &amp;=&amp; -39.97 \quad\text{kJ}\cdot\text{mol}^{-1}
 \end{eqnarray}\]</div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

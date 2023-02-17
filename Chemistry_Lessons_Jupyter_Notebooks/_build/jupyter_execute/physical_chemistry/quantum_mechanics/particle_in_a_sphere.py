@@ -233,8 +233,18 @@
 # $P_l(x) = \sum_{k=0}^{\infty}\frac{(-l)_k(l+1)_k}{k!^2}\left(\frac{1-x}{2}\right)^k$
 # 
 # and $(l)_k = \frac{(l+k-1)!}{(l-1)!}$.
+# 
+# 
+# Below is a table of the first few associated Lengedre polynomials followed by a plot of these functions
+# 
+# | $l$ | $m$ | $P_l^m(x)$|
+# | :-- | :-- | :-------- |
+# | 0   | 0   | $P_0^0(x) = 1$ |
+# | $1$   | $-1$  | $P_1^{-1}(x) = \frac{1}{2}\sqrt{1-x^2}$ |
+# | $1$   | $0$  | $P_1^{0}(x) = x$ |
+# | $1$   | $1$  | $P_1^{-1}(x) = -\sqrt{1-x^2}$ |
 
-# In[8]:
+# In[1]:
 
 
 # plot of some of the Legendre polynomials
@@ -242,14 +252,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'inline')
 from scipy.special import lpmv
-x = np.arange(-1,1,0.001)
+x = np.arange(-1,1,0.0001)
 plt.figure(figsize=(12,6),dpi= 80, facecolor='w', edgecolor='k')
 plt.tick_params(axis='both',labelsize=20)
 plt.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
-for l in range(4):
-    for m in range(l):
+for l in range(2):
+    for m in range(-l,l+1):
         label = "l=" + str(l) + ", m=" + str(m)
         plt.plot(x,lpmv(m,l,x),lw=4,label=label)
+plt.title("Associated Lengedre Polynomials",fontsize=16)
 plt.legend(fontsize=16);
 
 
@@ -261,7 +272,7 @@ plt.legend(fontsize=16);
 # 
 # These are the spherical harmonics. We will now look at some of these.
 
-# In[10]:
+# In[2]:
 
 
 # make two plots of the same spherical harmonic
@@ -272,31 +283,29 @@ import matplotlib.pyplot as plt
 from scipy.special import sph_harm
 get_ipython().run_line_magic('matplotlib', 'inline')
 from scipy.special import sph_harm
-def plot_spherical_harmonic(m,l,theta=np.linspace(0,np.pi,100),phi=np.linspace(0,2*np.pi,100)):
+def plot_spherical_harmonic(m,l, ax_obj, theta=np.linspace(0,np.pi,100),phi=np.linspace(0,2*np.pi,100)):
     THETA, PHI = np.meshgrid(theta, phi)
     X = np.sin(THETA) * np.cos(PHI)
     Y = np.sin(THETA) * np.sin(PHI)
     Z = np.cos(THETA)
     # Calculate the spherical harmonic Y(l,m) and normalize to [0,1]
     fcolors = sph_harm(m, l, PHI, THETA).real
-    s = sph_harm(m, l, PHI, THETA).real
-    s /= s.max()
     fmax, fmin = fcolors.max(), fcolors.min()
-    fcolors = (fcolors - fmin)/(fmax - fmin)
+    if l>0:
+        fcolors = (fcolors - fmin)/(fmax - fmin)
+    # plot
+    ax_obj.set_title(rf'$l={l},m={m}$', fontsize=18)
+    ax_obj.plot_surface(X, Y, Z,  rstride=1, cstride=1, facecolors=cm.seismic(fcolors))
+    ax_obj.set_axis_off()
     
-
-    # Set the aspect ratio to 1 so our sphere looks spherical
-    fig = plt.figure(figsize=(24,12),dpi= 80, facecolor='w', edgecolor='k')
-    ax = fig.add_subplot(1, 2, 1, projection='3d')
-    ax.plot_surface(X, Y, Z,  rstride=1, cstride=1, facecolors=cm.seismic(fcolors))
-    ax.set_axis_off()
-    ax = fig.add_subplot(1, 2, 2, projection='3d')
-    ax.plot_surface(X*s, Y*s, Z*s,  rstride=1, cstride=1, facecolors=cm.seismic(fcolors))
-    # Turn off the axis planes
-    ax.set_axis_off()
-    plt.show();
-plot_spherical_harmonic(0,1)
-plot_spherical_harmonic(0,2);
+fig, ax = plt.subplots(3,5,figsize=(12,10),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
+for i in range(3):
+    for j in range(5):
+        ax[i,j].set_axis_off()
+for l_index, l in enumerate(range(3)):
+    for m_index, m in enumerate(range(-l,l+1)):
+        plot_spherical_harmonic(m,l,ax[l_index,m_index])
+plt.show();
 
 
 # ## Solution to the $r$ differential equation
@@ -341,34 +350,127 @@ plot_spherical_harmonic(0,2);
 # y_l(x) &= -(-x)^l\left(\frac{1}{x}\frac{d}{dx}\right)^l\frac{\cos x}{x}
 # \end{align}
 # 
+# Below are plots of the first few of both of these functions.
+
+# In[3]:
+
+
+#### import numpy as np
+import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
+from scipy.special import spherical_jn, spherical_yn
+fontsize = 20
+x = np.arange(0.0, 10.0, 0.01)
+fig, ax = plt.subplots(1,2,figsize=(20,8),dpi= 80, facecolor='w', edgecolor='k')
+ax[0].set_ylim(-0.5, 1.1)
+ax[0].set_title(r'$j_l$', fontsize=2*fontsize)
+ax[0].set_xlabel(r'$x$',size=fontsize)
+ax[0].set_ylabel(r'$j_l(x)$',size=fontsize)
+ax[0].tick_params(axis='both',labelsize=fontsize)
+for n in np.arange(0, 4):
+    ax[0].plot(x, spherical_jn(n, x), lw = 3, label=rf'$l={n}$')
+ax[0].grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+ax[0].legend(loc='best',fontsize=fontsize)
+# second type
+ax[1].set_ylim(-1, 1)
+ax[1].set_title(r'$y_l$',fontsize=2*fontsize)
+for n in np.arange(0, 4):
+    ax[1].plot(x, spherical_yn(n, x), lw = 3, label=rf'$l={n}$')
+ax[1].set_xlabel(r'$x$',size=fontsize)
+ax[1].set_ylabel(r'$y_l(x)$',size=fontsize)
+ax[1].tick_params(axis='both',labelsize=fontsize)
+ax[1].legend(loc='best',fontsize=fontsize)
+ax[1].grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+plt.show();
+
+
+# From the above plots we observe that both $j_l$ and $y_l$ are single-valued and continuous over the plotted domain. Additionally, the $j_l$ functions are all finite over the plotted domain.  The $j_l$ functions, however, are not finite over the domain as they tend to $-\infty$ as $x\rightarrow0$.  Thus, we get the solutions
+# \begin{equation}
+# u(r) = Arj_l(kr)
+# \end{equation}
+# or 
+# \begin{equation}
+# R_l(r) = Aj_l(kr)
+# \end{equation}
 # 
+# Applying the boundary condition that
+# \begin{equation}
+# R(r_0) = 0
+# \end{equation}
+# yields
+# \begin{equation}
+# kr_0 = \beta_l^n
+# \end{equation}
+# where $\beta_l^n$ is the $n$th root ($n=1,2,3...$) of the $l$th spherical Bessel function of the first type.  There are an infinite number of zeros for each $l$.  The values of these zeros cannot, in general, be determined analytically (except for $l=0$).  Here is a table of some of the zeros
+# 
+# | l\n  | 1    |  2   |  3   | 4    |  
+# |:---- | :--- | :--- | :--- | :--- |
+# | 0    | $\pi$| $2\pi$| $3\pi$ | $4\pi$|
+# | 1    | 4.493| 7.725 | 10.904 | 14.066 |
+# | 2    | 5.763| 9.095 | 12.322 | 15.515 |
+# 
+# From the equation $kr_0 = \beta_l^n$ we can also get the energy using the previously stated equality $k = \sqrt{\frac{2mE}{\hbar^2}}$
+# \begin{align}
+# \sqrt{\frac{2mE}{\hbar^2}}r_0 &= \beta_l^n \\
+# \Rightarrow \frac{2mE}{\hbar^2} &= \frac{\left(\beta_l^n\right)^2}{r_0^2} \\
+# \Rightarrow E_{l,n} &= \frac{\hbar^2\left(\beta_l^n\right)^2}{2mr_0^2}
+# \end{align}
+# 
+# Also, the radial wavefunction is now
+# \begin{equation}
+# R_{l,n}(r) = Aj_l\left(\frac{\beta_l^n}{r_0}r\right)
+# \end{equation}
 
-# In[12]:
+# ## Combined Solution for the wave functions
+
+# We can now combine our solutions for the wave functions for $\theta$ and $\phi$ and $r$ to get
+# \begin{align}
+# \psi(r,\theta,\phi) &= R_{l,n}(r)Y_l^m(\theta,\phi) \\
+# &= Aj_l\left(\frac{\beta_l^n}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi}
+# \end{align}
+
+# In[4]:
 
 
+# make two plots of the same spherical harmonic
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm, colors
+import numpy as np
 import matplotlib.pyplot as plt
+from scipy.special import sph_harm
 from scipy.special import spherical_jn
-x = np.arange(0.0, 10.0, 0.01)
-fig, ax = plt.subplots()
-ax.set_ylim(-0.5, 1.5)
-ax.set_title(r'Spherical Bessel functions $j_n$')
-for n in np.arange(0, 4):
-    ax.plot(x, spherical_jn(n, x), label=rf'$j_{n}$')
-plt.legend(loc='best')
-plt.show()
+from scipy.special import lpmv
+get_ipython().run_line_magic('matplotlib', 'inline')
+
+def particle_in_sphere_wf(r,theta,phi,m,l):
+    return sph_harm(m, l, phi, theta).real*spherical_yn(l, r)
+
+def particle_in_sphere_r_theta(r,theta,m,l):
+    return lpmv(m,l,np.cos(theta))*spherical_yn(l, r)
+
+def plot_particle_in_sphere_wf_r_theta(m,l, ax_obj, theta=np.linspace(0,np.pi,100), r=np.linspace(0,1,100)):
+    R, THETA = np.meshgrid(r, theta)
+    X = R*np.sin(THETA) 
+    Y = R*np.cos(THETA) 
+    Z = particle_in_sphere_r_theta(R,THETA,m,l)
+    # plot
+    ax_obj.set_title(rf'$l={l},m={m}$', fontsize=18)
+    ax_obj.plot_surface(X, Y, Z,  rstride=1, cstride=1)
+    #ax_obj.set_axis_off()
+    
+fig, ax = plt.subplots(1,1,figsize=(12,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
+plot_particle_in_sphere_wf_r_theta(0,1,ax)
+#for i in range(3):
+#    for j in range(5):
+#        ax[i,j].set_axis_off()
+#for l_index, l in enumerate(range(3)):
+#    for m_index, m in enumerate(range(-l,l+1)):
+#        plot_spherical_harmonic(m,l,ax[l_index,m_index])
+plt.show();
 
 
-# In[16]:
+# In[ ]:
 
 
-import matplotlib.pyplot as plt
-from scipy.special import spherical_yn
-x = np.arange(0.0, 10.0, 0.01)
-fig, ax = plt.subplots()
-ax.set_ylim(-1.5, 0.5)
-ax.set_title(r'Spherical Bessel functions $y_n$')
-for n in np.arange(0, 4):
-    ax.plot(x, spherical_yn(n, x), label=rf'$y_{n}$')
-plt.legend(loc='best')
-plt.show()
+
 
