@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.2.19. Chemical Equilibrium &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.3. Welcome to the Kinetics Lessons" href="../kinetics/intro.html" />
@@ -836,13 +837,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="chemical-equilibrium">
+  <section class="tex2jax_ignore mathjax_ignore" id="chemical-equilibrium">
 <h1><span class="section-number">3.2.19. </span>Chemical Equilibrium<a class="headerlink" href="#chemical-equilibrium" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.2.19.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>The application of Thermodynamics to chemical equilibrium is one of the most important outcomes in this class.  We will like to not only predict whether a reaction happens but rather how much product is formed and how that varies with parameters such as temperature and pressure.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.2.19.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="simple">
@@ -852,8 +853,8 @@ title="Print to PDF"
 <li><p>Use <span class="math notranslate nohighlight">\(G(\xi)\)</span> to determine <span class="math notranslate nohighlight">\(\xi\)</span> at equilibrium</p></li>
 <li><p>Van’t Hoff</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.2.19.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -861,17 +862,17 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><span class="xref myst">Plotting with matplotlib</span></p></li>
 </ol>
-</div>
-<div class="section" id="id1">
+</section>
+<section id="id1">
 <h2><span class="section-number">3.2.19.4. </span>Chemical Equilibrium<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <p>Here we consider chemical reactions such as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0eef86cd-206a-4248-888a-254c9c5b1438">
-<span class="eqno">(3.425)<a class="headerlink" href="#equation-0eef86cd-206a-4248-888a-254c9c5b1438" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cb177bf7-d585-46af-97a2-fa3e304f5b15">
+<span class="eqno">(3.425)<a class="headerlink" href="#equation-cb177bf7-d585-46af-97a2-fa3e304f5b15" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v_A A(g) + v_B B(g) \rightleftharpoons v_yY(g) + v_z Z(g)
 \end{equation}\]</div>
 <p>We define a quantity, <span class="math notranslate nohighlight">\(\xi\)</span>, called the extent of reaction, such that the number of moles of the reactants and products are given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-80c29b49-31a3-408e-ab3e-d7427a878947">
-<span class="eqno">(3.426)<a class="headerlink" href="#equation-80c29b49-31a3-408e-ab3e-d7427a878947" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ef1d4679-a583-4883-8d20-c6759c94665b">
+<span class="eqno">(3.426)<a class="headerlink" href="#equation-ef1d4679-a583-4883-8d20-c6759c94665b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 n_A &amp;=&amp; n_{A0} - v_A\xi\\
 n_B &amp;=&amp; n_{B0} - v_B\xi\\
 n_Y &amp;=&amp; n_{Y0} + v_Y\xi\\
@@ -879,53 +880,53 @@ n_Z &amp;=&amp; n_{Z0} + v_Z\xi
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(n_{A0}\)</span> is the initial number of moles of species <span class="math notranslate nohighlight">\(A\)</span>.</p>
 <p>If we take the differential of both sides we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0b807de9-b67b-43c3-9006-430e481c4cae">
-<span class="eqno">(3.427)<a class="headerlink" href="#equation-0b807de9-b67b-43c3-9006-430e481c4cae" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-fbe0b46c-982a-4494-927c-e31697aa357c">
+<span class="eqno">(3.427)<a class="headerlink" href="#equation-fbe0b46c-982a-4494-927c-e31697aa357c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 dn_A &amp;=&amp; - v_Ad\xi\\
 dn_B &amp;=&amp; - v_Bd\xi\\
 dn_Y &amp;=&amp; v_Yd\xi\\
 dn_Z &amp;=&amp; v_Zd\xi
 \end{eqnarray}\]</div>
 <p>The differential of Gibbs free energy at constant <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(P\)</span> is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9650dee6-ce9c-4862-a61e-a7c955d99ba4">
-<span class="eqno">(3.428)<a class="headerlink" href="#equation-9650dee6-ce9c-4862-a61e-a7c955d99ba4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2e61852e-4b1e-445b-a296-750377873c5a">
+<span class="eqno">(3.428)<a class="headerlink" href="#equation-2e61852e-4b1e-445b-a296-750377873c5a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 dG &amp;=&amp; \mu_Adn_A + \mu_Bdn_B + \mu_Ydn_Y  + \mu_Zdn_Z \\
 &amp;=&amp; (-v_A\mu_A  0 v_B\mu_B + v_Y\mu_Y  + v_Z\mu_Z)d\xi \\
 \end{eqnarray}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bb76e732-4e20-4675-ada0-eba4f5327668">
-<span class="eqno">(3.429)<a class="headerlink" href="#equation-bb76e732-4e20-4675-ada0-eba4f5327668" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0efb9044-ac24-4a4b-a01e-efeb67825c1c">
+<span class="eqno">(3.429)<a class="headerlink" href="#equation-0efb9044-ac24-4a4b-a01e-efeb67825c1c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \left( \frac{\partial G}{\partial \xi} \right)_{T,P} = (v_Y\mu_Y  + v_Z\mu_Z - v_A\mu_A  - v_B\mu_B)
 \end{equation}\]</div>
 <p>The above equation is defined as the change in free energy of reaction, <span class="math notranslate nohighlight">\(\Delta \bar{G}_{rxn}\)</span>.</p>
 <p>If we assume each component acts as an ideal gas we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-36b9b40f-ef8d-42c0-8607-62936f463e1e">
-<span class="eqno">(3.430)<a class="headerlink" href="#equation-36b9b40f-ef8d-42c0-8607-62936f463e1e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-cf0e6383-4b71-4f88-8319-2bb811be4d7e">
+<span class="eqno">(3.430)<a class="headerlink" href="#equation-cf0e6383-4b71-4f88-8319-2bb811be4d7e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \Delta \bar{G}_{rxn} &amp;=&amp; v_Y\mu^\circ_Y(T) + v_Z\mu^\circ_Z(T)RT - v_A\mu^\circ_A(T) - v_B\mu^\circ_B(T) + \left( v_Y\ln\frac{P_Y}{P^0} + v_Z\ln\frac{P_Z}{P^0} - v_A\ln\frac{P_A}{P^0} - v_B\ln\frac{P_B}{P^0} \right) \\
 &amp;=&amp; \Delta \bar{G}^0 + RT\ln Q
 \end{eqnarray}\]</div>
 <p>At equilibrium we have that <span class="math notranslate nohighlight">\(\Delta\bar{G}_{rxn}=0\)</span> which yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f6417d0f-8c36-4597-9104-74df05eca0d7">
-<span class="eqno">(3.431)<a class="headerlink" href="#equation-f6417d0f-8c36-4597-9104-74df05eca0d7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d5d0914f-23d9-48d8-b55e-27aceb2c726b">
+<span class="eqno">(3.431)<a class="headerlink" href="#equation-d5d0914f-23d9-48d8-b55e-27aceb2c726b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta \bar{G}^0 = - RT\ln K_{eq}
 \end{equation}\]</div>
-</div>
-<div class="section" id="dg-0-at-equilibrium">
+</section>
+<section id="dg-0-at-equilibrium">
 <h2><span class="section-number">3.2.19.5. </span>dG = 0 at Equilibrium<a class="headerlink" href="#dg-0-at-equilibrium" title="Permalink to this headline">#</a></h2>
 <p>Consider the example equilibrium maintained at 298.15 K and at 1 bar of pressure</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0edd0ecc-0a33-4c38-9969-cb528ae56915">
-<span class="eqno">(3.432)<a class="headerlink" href="#equation-0edd0ecc-0a33-4c38-9969-cb528ae56915" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5f50d469-38bc-4542-8436-c5ed38510d64">
+<span class="eqno">(3.432)<a class="headerlink" href="#equation-5f50d469-38bc-4542-8436-c5ed38510d64" title="Permalink to this equation">#</a></span>\[\begin{equation}
 N_2O_4(g) \rightleftharpoons 2NO_2(g)
 \end{equation}\]</div>
 <p>If we start with 1 mole of reactants, we can write the extent of reaction as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6919f030-86e1-41ac-9c0f-c13a586bbfce">
-<span class="eqno">(3.433)<a class="headerlink" href="#equation-6919f030-86e1-41ac-9c0f-c13a586bbfce" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-dc7a64fd-5a9e-4a4b-b844-52e23c19ab62">
+<span class="eqno">(3.433)<a class="headerlink" href="#equation-dc7a64fd-5a9e-4a4b-b844-52e23c19ab62" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 n_{N_2O_4} &amp;=&amp; 1 - \xi \\
 n_{NO_2} &amp;=&amp; 2\xi
 \end{eqnarray}\]</div>
 <p>This allows us to write the Gibbs energy as a function of <span class="math notranslate nohighlight">\(\xi\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-053e49d9-75a6-4c93-82e5-1e18d68066a7">
-<span class="eqno">(3.434)<a class="headerlink" href="#equation-053e49d9-75a6-4c93-82e5-1e18d68066a7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-046bf01d-0684-4916-8d71-1bb245c5afae">
+<span class="eqno">(3.434)<a class="headerlink" href="#equation-046bf01d-0684-4916-8d71-1bb245c5afae" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 G &amp;=&amp; n_{N_2O_4}\bar{\mu}_{N_2O_4} + n_{NO_2}\bar{\mu}_{NO_2} \\
 \Rightarrow G(\xi) &amp;=&amp; (1-\xi)\bar{\mu}_{N_2O_4} + 2\xi\bar{\mu}_{NO_2}\\
 &amp;=&amp; (1-\xi)\left( \bar{\mu}^\circ_{N_2O_4} +RT\ln P_{N_2O_4}\right) + 2\xi\left( \bar{\mu}^\circ_{NO_2} +RT\ln P_{NO_2}\right) \\
@@ -933,21 +934,21 @@ G &amp;=&amp; n_{N_2O_4}\bar{\mu}_{N_2O_4} + n_{NO_2}\bar{\mu}_{NO_2} \\
 \end{eqnarray}\]</div>
 <p>where we have assumed that each gas is ideal.</p>
 <p>Since the reaction is carred out a constant pressure of <span class="math notranslate nohighlight">\(P=1\)</span> bar and we have already assumed each gas is ideal, it follows that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4a22629-fa9e-4b4a-9729-950e02792a90">
-<span class="eqno">(3.435)<a class="headerlink" href="#equation-d4a22629-fa9e-4b4a-9729-950e02792a90" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-3341947d-9384-4d02-879d-92291dab09eb">
+<span class="eqno">(3.435)<a class="headerlink" href="#equation-3341947d-9384-4d02-879d-92291dab09eb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P_{N_2O_4} &amp;=&amp; x_{N_2O_4} \\
 P_{NO_2} &amp;=&amp; x_{NO_2}
 \end{eqnarray}\]</div>
 <p>The total number of moles is fixed so that we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a35a2fd9-abee-4603-acc5-3adf662de5d3">
-<span class="eqno">(3.436)<a class="headerlink" href="#equation-a35a2fd9-abee-4603-acc5-3adf662de5d3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-3cec234c-8631-4fb1-ad24-23e523e19541">
+<span class="eqno">(3.436)<a class="headerlink" href="#equation-3cec234c-8631-4fb1-ad24-23e523e19541" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P_{N_2O_4} &amp;=&amp; x_{N_2O_4} = \frac{1-\xi}{1+\xi} \\
 P_{NO_2} &amp;=&amp; x_{NO_2} = \frac{2\xi}{1+\xi}
 \end{eqnarray}\]</div>
 <p>Additionally, we will use that <span class="math notranslate nohighlight">\(\bar{\mu}^\circ_{N_2O_4} = \Delta G^\circ_f = 97.87\)</span> kJ<span class="math notranslate nohighlight">\(\cdot\)</span>mol<span class="math notranslate nohighlight">\(^{-1}\)</span> and <span class="math notranslate nohighlight">\(\bar{\mu}^\circ_{NO_2} = \Delta G^\circ_f = 51.258\)</span> kJ<span class="math notranslate nohighlight">\(\cdot\)</span>mol<span class="math notranslate nohighlight">\(^{-1}\)</span>.</p>
 <p>Plugging these into the equation for <span class="math notranslate nohighlight">\(G(\xi)\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f53042e0-1a56-4759-92b4-f0223cea42f5">
-<span class="eqno">(3.437)<a class="headerlink" href="#equation-f53042e0-1a56-4759-92b4-f0223cea42f5" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-f74c3826-2eb7-429e-80a1-01831ec3b1bc">
+<span class="eqno">(3.437)<a class="headerlink" href="#equation-f74c3826-2eb7-429e-80a1-01831ec3b1bc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 G(\xi) &amp;=&amp; (1-\xi)\Delta G^\circ_{f,N_2O_4} + 2\xi\Delta G^\circ_{f,NO_2} + (1-\xi)RT\ln \frac{1-\xi}{1+\xi} + 2\xi RT\ln \frac{2\xi}{1+\xi}
 \end{eqnarray}\]</div>
 <p>This function is plotted below.</p>
@@ -993,15 +994,15 @@ G(\xi) &amp;=&amp; (1-\xi)\Delta G^\circ_{f,N_2O_4} + 2\xi\Delta G^\circ_{f,NO_2
   return (1-xi)*97.87+2*xi*51.258 + (1-xi)*R*T*np.log((1-xi)/(1+xi)) + 2*xi*R*T*np.log(2*xi/(1+xi))
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fba30a78970&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fb5ad7de880&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/Introduction_to_Chemical_Equilibrium_10_2.png" src="../../_images/Introduction_to_Chemical_Equilibrium_10_2.png" />
 </div>
 </div>
 <p>The minimum in the above plot is where <span class="math notranslate nohighlight">\(\frac{\partial G}{\partial \xi}=0\)</span> and indicates that the reaction is at equilibrium.  We can determine this by perorming the differentiation, setting the derivative to 0, and solving for <span class="math notranslate nohighlight">\(\xi\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c53128c9-22d1-400f-8646-701afe0f7262">
-<span class="eqno">(3.438)<a class="headerlink" href="#equation-c53128c9-22d1-400f-8646-701afe0f7262" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ae727d7d-05fa-46f5-a188-8bee869b11aa">
+<span class="eqno">(3.438)<a class="headerlink" href="#equation-ae727d7d-05fa-46f5-a188-8bee869b11aa" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial G(\xi)}{\partial \xi}\right)_{T,P} &amp;=&amp; -\Delta G^\circ_{f,N_2O_4} + 2\Delta G^\circ_{f,NO_2} + -RT\ln\frac{1-\xi}{1+\xi} + (1-\xi)RT\frac{1+\xi}{1-\xi}\left( \frac{-1}{1+\xi} - \frac{1-\xi}{(1+\xi)^2}\right) + 2RT\ln \frac{2\xi}{1+\xi} + 2\xi RT \frac{1+\xi}{2\xi} \left( \frac{2}{1+\xi} - \frac{2\xi}{(1+\xi)^2}\right) \\
 &amp;=&amp; -\Delta G^\circ_{f,N_2O_4} + 2\Delta G^\circ_{f,NO_2} + -RT\ln\frac{1-\xi}{1+\xi} + RT(1+\xi)\left( \frac{-1}{1+\xi} - \frac{1-\xi}{(1+\xi)^2}\right) + 2RT\ln \frac{2\xi}{1+\xi} + RT (1+\xi) \left( \frac{2}{1+\xi} - \frac{2\xi}{(1+\xi)^2}\right) \\
 &amp;=&amp;-\Delta G^\circ_{f,N_2O_4} + 2\Delta G^\circ_{f,NO_2} - RT\ln\frac{1-\xi}{1+\xi} + 2RT\ln \frac{2\xi}{1+\xi} + RT\left( -1 - \frac{1-\xi}{1+\xi}\right) + RT  \left( 2 - \frac{2\xi}{1+\xi}\right) \\
@@ -1013,8 +1014,8 @@ G(\xi) &amp;=&amp; (1-\xi)\Delta G^\circ_{f,N_2O_4} + 2\xi\Delta G^\circ_{f,NO_2
 &amp;=&amp; -\Delta G^\circ_{f,N_2O_4} + 2\Delta G^\circ_{f,NO_2} + RT\ln\left[ \frac{4\xi^2}{1-\xi^2}\right] 
 \end{eqnarray}\]</div>
 <p>Setting this to zero and solving for <span class="math notranslate nohighlight">\(\xi\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7e92161a-7e82-4b92-8d67-6703eb8e6577">
-<span class="eqno">(3.439)<a class="headerlink" href="#equation-7e92161a-7e82-4b92-8d67-6703eb8e6577" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-e3b801c6-0443-4342-92c6-66e97a05f72b">
+<span class="eqno">(3.439)<a class="headerlink" href="#equation-e3b801c6-0443-4342-92c6-66e97a05f72b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial G(\xi)}{\partial \xi}\right)_{T,P}|_{eq} &amp;=&amp; 0 \\
 &amp;=&amp; -\Delta G^\circ_{f,N_2O_4} + 2\Delta G^\circ_{f,NO_2} + RT\ln\left[ \frac{4\xi^2}{1-\xi^2}\right]  \\
 \Rightarrow \ln\left[ \frac{4\xi^2}{1-\xi^2}\right] &amp;=&amp; \frac{\Delta G^\circ_{f,N_2O_4} -2\Delta G^\circ_{f,NO_2} }{RT} \\
@@ -1023,8 +1024,8 @@ G(\xi) &amp;=&amp; (1-\xi)\Delta G^\circ_{f,N_2O_4} + 2\xi\Delta G^\circ_{f,NO_2
 \Rightarrow \frac{4\xi^2}{1-\xi^2} &amp;=&amp; e^{-\frac{\Delta G_{rxn}^\circ}{RT}} = 0.1484
 \end{eqnarray}\]</div>
 <p>Solving this for <span class="math notranslate nohighlight">\(xi\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4f5180fb-4ab6-44e9-937c-0e3c10b146d3">
-<span class="eqno">(3.440)<a class="headerlink" href="#equation-4f5180fb-4ab6-44e9-937c-0e3c10b146d3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f6c866a8-657d-44d5-af5a-0cd5f8f9db07">
+<span class="eqno">(3.440)<a class="headerlink" href="#equation-f6c866a8-657d-44d5-af5a-0cd5f8f9db07" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \xi_{eq} = 0.1891
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1053,45 +1054,45 @@ G(\xi) &amp;=&amp; (1-\xi)\Delta G^\circ_{f,N_2O_4} + 2\xi\Delta G^\circ_{f,NO_2
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="equilibrium-constant-and-temperature">
+</section>
+<section id="equilibrium-constant-and-temperature">
 <h2><span class="section-number">3.2.19.6. </span>Equilibrium Constant and Temperature<a class="headerlink" href="#equilibrium-constant-and-temperature" title="Permalink to this headline">#</a></h2>
 <p>The equilibrium constant depends on temperature.  How it depends on temperature is given by the Van’T Hoff equation which can be derived from the Gibbs-Helmholtz equation.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-74b912cc-29de-422f-a509-05fdd88c75b4">
-<span class="eqno">(3.441)<a class="headerlink" href="#equation-74b912cc-29de-422f-a509-05fdd88c75b4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5acdbe38-cdd1-4b25-8dfc-869596a64086">
+<span class="eqno">(3.441)<a class="headerlink" href="#equation-5acdbe38-cdd1-4b25-8dfc-869596a64086" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial \Delta G^\circ/T}{\partial T}\right)_P &amp;=&amp; -\frac{\Delta H^\circ}{T^2} \\
 \Rightarrow \left( \frac{\partial -RT\ln K_{eq}/T}{\partial T}\right)_P &amp;=&amp; -\frac{\Delta H^\circ}{T^2} \\
 \Rightarrow \left( \frac{\partial \ln K_{eq}}{\partial T}\right)_P &amp;=&amp; \frac{\Delta H^\circ}{RT^2} 
 \end{eqnarray}\]</div>
 <p>We will now multiply by <span class="math notranslate nohighlight">\(dT\)</span> and integrate to investigate the behavior of <span class="math notranslate nohighlight">\(K_{eq}\)</span> with <span class="math notranslate nohighlight">\(T\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1bbbef34-88aa-45ba-b08a-0b733bb39038">
-<span class="eqno">(3.442)<a class="headerlink" href="#equation-1bbbef34-88aa-45ba-b08a-0b733bb39038" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-eed5747d-0d25-4a9d-8f94-7f1d5859e1b4">
+<span class="eqno">(3.442)<a class="headerlink" href="#equation-eed5747d-0d25-4a9d-8f94-7f1d5859e1b4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 d\ln K_{eq} &amp;=&amp; \frac{\Delta H^\circ}{RT^2} dT \quad \text{constant P} \\
 \int d\ln K_{eq} &amp;=&amp; \frac{\Delta H^\circ}{RT^2} dT \quad \text{constant P} \\
 \ln \frac{K_{eq}(T_2)}{K_{eq}(T_1)} &amp;=&amp; \int_{T_1}^{T_2} \frac{\Delta H^\circ}{RT^2} dT \quad \text{constant P}
 \end{eqnarray}\]</div>
 <p>The above equation is the most general and allows for a temperature dependent <span class="math notranslate nohighlight">\(\Delta H\)</span>.  If, however, we assume it to be temperature indepedent we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7d14be6a-993d-44c2-b5a3-86489ed7860f">
-<span class="eqno">(3.443)<a class="headerlink" href="#equation-7d14be6a-993d-44c2-b5a3-86489ed7860f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a3790802-cdaa-42f7-a09e-6e3b232186dd">
+<span class="eqno">(3.443)<a class="headerlink" href="#equation-a3790802-cdaa-42f7-a09e-6e3b232186dd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln \frac{K_{eq}(T_2)}{K_{eq}(T_1)} = -\frac{\Delta H^\circ}{R}\left(\frac{1}{T_2}-\frac{1}{T_1}\right)
 \end{equation}\]</div>
 <p>This equation is the Van’t Hoff equation which demonstrates that an equation of <span class="math notranslate nohighlight">\(\ln K\)</span> vs <span class="math notranslate nohighlight">\(\frac{1}{T}\)</span> will be linear for <span class="math notranslate nohighlight">\(\Delta H\)</span> independent of temperature.</p>
-<div class="section" id="example-van-t-hoff">
+<section id="example-van-t-hoff">
 <h3><span class="section-number">3.2.19.6.1. </span>Example: Van’t Hoff<a class="headerlink" href="#example-van-t-hoff" title="Permalink to this headline">#</a></h3>
 <p>Given that <span class="math notranslate nohighlight">\(\Delta H^\circ\)</span> has an average value of <span class="math notranslate nohighlight">\(-69.8\)</span> kJ/mol over the temperature range <span class="math notranslate nohighlight">\(500\)</span> K to <span class="math notranslate nohighlight">\(700\)</span> K for the reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d7a5f756-2436-4809-becb-e7e740fdac22">
-<span class="eqno">(3.444)<a class="headerlink" href="#equation-d7a5f756-2436-4809-becb-e7e740fdac22" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-297e9f92-96a5-4f63-87c4-fc9c227fae28">
+<span class="eqno">(3.444)<a class="headerlink" href="#equation-297e9f92-96a5-4f63-87c4-fc9c227fae28" title="Permalink to this equation">#</a></span>\[\begin{equation}
 PCl_3(g) + Cl_2(g) \rightleftharpoons PCl_5(g)
 \end{equation}\]</div>
 <p>estimate <span class="math notranslate nohighlight">\(K_P\)</span> at 700 K given that <span class="math notranslate nohighlight">\(K_P = 0.0408\)</span> at 500 K.</p>
 <p>We will use the integrated Van’t Hoff equation above and solve for <span class="math notranslate nohighlight">\(K(T_2)\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f5827dda-0e12-4e15-a552-e977c28d836f">
-<span class="eqno">(3.445)<a class="headerlink" href="#equation-f5827dda-0e12-4e15-a552-e977c28d836f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6b6b7730-72f8-419f-9e40-bd836ab28c55">
+<span class="eqno">(3.445)<a class="headerlink" href="#equation-6b6b7730-72f8-419f-9e40-bd836ab28c55" title="Permalink to this equation">#</a></span>\[\begin{equation}
 K_P(T_2) = K_P(T_1)e^{-\frac{\Delta H^\circ}{R}\left(\frac{1}{T_2}-\frac{1}{T_1}\right)}
 \end{equation}\]</div>
 <p>Now just plug in numbers and solve</p>
-<div class="amsmath math notranslate nohighlight" id="equation-db916073-0aab-466f-ac44-bc3afe7be19e">
-<span class="eqno">(3.446)<a class="headerlink" href="#equation-db916073-0aab-466f-ac44-bc3afe7be19e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-8990a0af-33ff-42a2-96e1-eff3eee5b96f">
+<span class="eqno">(3.446)<a class="headerlink" href="#equation-8990a0af-33ff-42a2-96e1-eff3eee5b96f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 K_P(T_2) &amp;=&amp; (0.0408)e^{\frac{69.8\times10^3}{8.314}\left(\frac{1}{700}-\frac{1}{500}\right)} \\
 &amp;=&amp; 3.34\times10^{-4}
 \end{eqnarray}\]</div>
@@ -1107,9 +1108,9 @@ K_P(T_2) &amp;=&amp; (0.0408)e^{\frac{69.8\times10^3}{8.314}\left(\frac{1}{700}-
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

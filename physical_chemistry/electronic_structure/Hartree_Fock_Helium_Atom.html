@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.5.1. Hartree-Fock &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -49,8 +50,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.5.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis" href="HF_for_H2.html" />
@@ -790,7 +793,7 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="hartree-fock">
+  <section class="tex2jax_ignore mathjax_ignore" id="hartree-fock">
 <h1><span class="section-number">3.5.1. </span>Hartree-Fock<a class="headerlink" href="#hartree-fock" title="Permalink to this headline">#</a></h1>
 <p>For the sake of these notes we will consider a two electron Hamiltonian of the form</p>
 <p><span class="math notranslate nohighlight">\( \hat{H} = -\frac{1}{2}\nabla_1^2 + \frac{Z}{r_1} - \frac{1}{2}\nabla_2^2 + \frac{Z}{r_2} + \frac{1}{r_{12}} \)</span>,</p>
@@ -805,31 +808,31 @@ title="Print to PDF"
 <p><span class="math notranslate nohighlight">\(\Rightarrow \zeta_{min} = \frac{27}{16}\)</span></p>
 <p><span class="math notranslate nohighlight">\(\Rightarrow E_{min} = -2.8477\)</span> Hartree</p>
 <p>In following this procedure for the variational approach we have completely ignored the spin of the electron.  Recall from postulate 6 of quantum mechanics, an electronic wavefunction must be antisymmetric with respect to exhange of an electron.</p>
-<div class="section" id="antisymmetric-wavefunctions">
+<section id="antisymmetric-wavefunctions">
 <h2><span class="section-number">3.5.1.1. </span>Antisymmetric Wavefunctions<a class="headerlink" href="#antisymmetric-wavefunctions" title="Permalink to this headline">#</a></h2>
 <p>We need to ensure that our wavefunctions our antisymmetric with respect to exchange of electrons.  This will be achieved using slater determinants of spin-orbits.  For the minimal basis helium atom we will have two spin orbits</p>
 <p><span class="math notranslate nohighlight">\(\chi_1(1) = \psi_1(1) \alpha(1)\)</span></p>
 <p><span class="math notranslate nohighlight">\(\chi_2(1) = \psi_1(1) \beta(1)\)</span></p>
 <p>where <span class="math notranslate nohighlight">\(\psi_1\)</span> is the spatial function and <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> are the spin functions. The <span class="math notranslate nohighlight">\(1\)</span> in parantheses, <span class="math notranslate nohighlight">\((1)\)</span>, denotes that these are functions of the coordinates of electron <span class="math notranslate nohighlight">\(1\)</span>.   We construct an antisymmetric wavefunction using Slater determinants:</p>
 <p><span class="math notranslate nohighlight">\(|\Psi(1,2)\rangle = \frac{1}{\sqrt{2}} \begin{vmatrix}\chi_1(1) &amp; \chi_1(2)\\ \chi_2(1) &amp; \chi_2(2)  \end{vmatrix}  = \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) \)</span></p>
-</div>
-<div class="section" id="coulomb-and-exhange-integrals">
+</section>
+<section id="coulomb-and-exhange-integrals">
 <h2><span class="section-number">3.5.1.2. </span>Coulomb and Exhange Integrals<a class="headerlink" href="#coulomb-and-exhange-integrals" title="Permalink to this headline">#</a></h2>
 <p>We now want to determine the expectation value of the Hamiltonian in the antisymmetric trial wavefunction.  Let’s start by rewriting the Hamiltonian as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bae1eb57-736f-481e-8fdf-b2fe53027fc0">
-<span class="eqno">(3.784)<a class="headerlink" href="#equation-bae1eb57-736f-481e-8fdf-b2fe53027fc0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8442dd4a-6f6e-467d-b081-b1aa505ca332">
+<span class="eqno">(3.791)<a class="headerlink" href="#equation-8442dd4a-6f6e-467d-b081-b1aa505ca332" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{H} &amp;=&amp; -\frac{1}{2}\nabla_1^2 + \frac{Z}{r_1} - \frac{1}{2}\nabla_2^2 + \frac{Z}{r_2} + \frac{1}{r_{12}} \\
  &amp;=&amp; h(1) + h(2) + \frac{1}{r_{12}},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(h(i) = -\frac{1}{2}\nabla_i^2 + \frac{Z}{r_i}\)</span> is the one electron operator for electron <span class="math notranslate nohighlight">\(i\)</span>.  Using this form of Hamiltonian, we can write the expectation value</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1cca7885-f4e8-4934-a488-1e7e8335aed9">
-<span class="eqno">(3.785)<a class="headerlink" href="#equation-1cca7885-f4e8-4934-a488-1e7e8335aed9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c1351678-4f34-448f-b41e-60e98b690c66">
+<span class="eqno">(3.792)<a class="headerlink" href="#equation-c1351678-4f34-448f-b41e-60e98b690c66" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle\Psi(1,2)| \hat{H} |\Psi(1,2)\rangle &amp;=&amp; \langle\Psi(1,2)| h(1) + h(2) + \frac{1}{r_{12}} |\Psi(1,2)\rangle\\
 &amp;=&amp; \langle\Psi(1,2)| h(1)|\Psi(1,2)\rangle  +  \langle\Psi(1,2)|h(2)|\Psi(1,2)\rangle +  \langle\Psi(1,2)|\frac{1}{r_{12}} |\Psi(1,2)\rangle
 \end{align}\]</div>
 <p>We can now evaluate these terms separately.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8f0e24e7-e7bd-4058-b6d1-df5beb471702">
-<span class="eqno">(3.786)<a class="headerlink" href="#equation-8f0e24e7-e7bd-4058-b6d1-df5beb471702" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cf831b51-ecf9-491a-802c-0e0a43dc772e">
+<span class="eqno">(3.793)<a class="headerlink" href="#equation-cf831b51-ecf9-491a-802c-0e0a43dc772e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle\Psi(1,2)| h(1)|\Psi(1,2)\rangle &amp;=&amp; \langle \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) | h(1) | \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) \rangle\\
 &amp;=&amp; \frac{1}{2} \langle(\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) | h(1) | (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) \rangle \\
 &amp;=&amp; \frac{1}{2} \left( \langle\chi_1(1)\chi_2(2) | h(1) | \chi_1(1)\chi_2(2) \rangle + \langle\chi_2(1)\chi_1(2) | h(1) | \chi_2(1)\chi_1(2) \rangle - \langle\chi_1(1)\chi_2(2) | h(1) | \chi_2(1)\chi_1(2) \rangle - \langle\chi_2(1)\chi_1(2) | h(1) | \chi_1(1)\chi_2(2) \rangle \right)\\
@@ -837,18 +840,18 @@ title="Print to PDF"
 \end{align}\]</div>
 <p>where the last equality holds if <span class="math notranslate nohighlight">\(\chi_1\)</span> is orthogonal to <span class="math notranslate nohighlight">\(\chi_2\)</span>.  It can be readily seen that you will get a similar result for the <span class="math notranslate nohighlight">\(h(2)\)</span> term.</p>
 <p>The two electron integral is more interesting.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3b7318bc-28c4-42f9-b23c-0650349de9b9">
-<span class="eqno">(3.787)<a class="headerlink" href="#equation-3b7318bc-28c4-42f9-b23c-0650349de9b9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5f221164-6845-48c7-ac36-5bf2488c9542">
+<span class="eqno">(3.794)<a class="headerlink" href="#equation-5f221164-6845-48c7-ac36-5bf2488c9542" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle\Psi(1,2)| \frac{1}{r_{12}}|\Psi(1,2)\rangle &amp;=&amp; \langle \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) | \frac{1}{r_{12}} | \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) \rangle\\
 &amp;=&amp;\frac{1}{2} \left( \langle\chi_1(1)\chi_2(2) | \frac{1}{r_{12}} | \chi_1(1)\chi_2(2) \rangle + \langle\chi_2(1)\chi_1(2) | \frac{1}{r_{12}} | \chi_2(1)\chi_1(2) \rangle - \langle\chi_1(1)\chi_2(2) |\frac{1}{r_{12}} | \chi_2(1)\chi_1(2) \rangle - \langle\chi_2(1)\chi_1(2) | \frac{1}{r_{12}} | \chi_1(1)\chi_2(2) \rangle \right)\\
 &amp;=&amp; \langle\chi_1(1)\chi_2(2) | \frac{1}{r_{12}} | \chi_1(1)\chi_2(2) \rangle - \langle\chi_1(1)\chi_2(2) |\frac{1}{r_{12}} | \chi_2(1)\chi_1(2) \rangle
 \end{align}\]</div>
 <p>where the final equality holds due to commutative multiplication in this case.  The first term in the last line is called a Coulomb integral and the second term is called an Exchange integral.</p>
-</div>
-<div class="section" id="self-consistent-field-scf">
+</section>
+<section id="self-consistent-field-scf">
 <h2><span class="section-number">3.5.1.3. </span>Self-consistent Field (SCF)<a class="headerlink" href="#self-consistent-field-scf" title="Permalink to this headline">#</a></h2>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {

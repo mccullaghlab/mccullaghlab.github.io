@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.4.2. Wave Particle Duality and the Classical Wave Equation &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.4.3. Schrodinger Equation" href="Schrodinger_Equation.html" />
@@ -910,21 +911,21 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="wave-particle-duality-and-the-classical-wave-equation">
+  <section class="tex2jax_ignore mathjax_ignore" id="wave-particle-duality-and-the-classical-wave-equation">
 <h1><span class="section-number">3.4.2. </span>Wave Particle Duality and the Classical Wave Equation<a class="headerlink" href="#wave-particle-duality-and-the-classical-wave-equation" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.4.2.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>We have already used the concept that light and matter both exhibit aspects of wave-like and particle-like behavior.  de Broglie formalized this hypothesis in his famous wavelength equation.  Additionally, we will discuss how waves are treated classically.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.4.2.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="simple">
 <li><p>Use the de Broglie wavelength equation to convert between wavelength and particle mass</p></li>
 <li><p>Solve the classical wave equation using the methods of separation of variables</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.4.2.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -932,52 +933,52 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotliub</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="matter-has-wavelike-properties">
+</section>
+<section id="matter-has-wavelike-properties">
 <h2><span class="section-number">3.4.2.4. </span>Matter has wavelike properties<a class="headerlink" href="#matter-has-wavelike-properties" title="Permalink to this headline">#</a></h2>
 <p>Both light and matter have wave-like and particle-like properties.  This is more readily observed in light.  White light splitting into colors of the visible spectrum when shone through a prism is an example of light displaying wave-like character.  The photoelectric effect, where a photon of light with energy <span class="math notranslate nohighlight">\(h\nu\)</span> collides with an electron causing it to leave the metal if the incident energy is larger than the work function, is an example of light displaying matter-like character.  In 1925, de Broglie reasoned that both light and matter display this behavior.  Whats more, the realatonship between wavelength and momentum derived for light by Einstein also applies to matter</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3bb2b043-aa36-4d89-a98c-d3f290d79774">
-<span class="eqno">(3.623)<a class="headerlink" href="#equation-3bb2b043-aa36-4d89-a98c-d3f290d79774" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1a69df57-be5b-4efa-9acb-868c4638a4a8">
+<span class="eqno">(3.623)<a class="headerlink" href="#equation-1a69df57-be5b-4efa-9acb-868c4638a4a8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \lambda = \frac{h}{p} = \frac{h}{mv}    
 \end{equation}\]</div>
-<div class="section" id="example-the-de-broglie-wavelength-of-matter">
+<section id="example-the-de-broglie-wavelength-of-matter">
 <h3><span class="section-number">3.4.2.4.1. </span>Example: The de Broglie Wavelength of Matter<a class="headerlink" href="#example-the-de-broglie-wavelength-of-matter" title="Permalink to this headline">#</a></h3>
 <p>Compute the de Broglie Wavelength of the following two objects:</p>
 <ol class="simple">
 <li><p>An electron traveling at <span class="math notranslate nohighlight">\(3\times10^{5}\)</span> m<span class="math notranslate nohighlight">\(\cdot\)</span>s<span class="math notranslate nohighlight">\(^{-1}\)</span></p></li>
 <li><p>A baseball (5.0 oz) traveling at 90 mph</p></li>
 </ol>
-</div>
-<div class="section" id="solution-the-de-broglie-wavelength-of-matter">
+</section>
+<section id="solution-the-de-broglie-wavelength-of-matter">
 <h3><span class="section-number">3.4.2.4.2. </span>Solution: The de Broglie Wavelength of Matter<a class="headerlink" href="#solution-the-de-broglie-wavelength-of-matter" title="Permalink to this headline">#</a></h3>
 <ol class="simple">
 <li><p>An electron traveling at <span class="math notranslate nohighlight">\(3\times10^5\)</span> m<span class="math notranslate nohighlight">\(\cdot\)</span>s<span class="math notranslate nohighlight">\(^{-1}\)</span>.  For this we compute the momentum of the electron:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-43999443-9dfa-4681-a075-5e4a66c06430">
-<span class="eqno">(3.624)<a class="headerlink" href="#equation-43999443-9dfa-4681-a075-5e4a66c06430" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-87076865-09ad-4f38-b5c6-61499309eab1">
+<span class="eqno">(3.624)<a class="headerlink" href="#equation-87076865-09ad-4f38-b5c6-61499309eab1" title="Permalink to this equation">#</a></span>\[\begin{align}
 p = m_ev &amp;= (9.109\times10^{-31}\text{ kg})(3\times10^5 \text{ m}\cdot\text{s}^{-1}) \\
 &amp;= 2.73 \times 10^{-25} \text{ kg}\cdot\text{m}\cdot\text{s}^{-1}
 \end{align}\]</div>
 <p>The de Broglie wavelength is then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d36bd86a-dbe8-440b-9bbd-d8917f8545cd">
-<span class="eqno">(3.625)<a class="headerlink" href="#equation-d36bd86a-dbe8-440b-9bbd-d8917f8545cd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-27723cfb-0492-40eb-a239-9c14081dc014">
+<span class="eqno">(3.625)<a class="headerlink" href="#equation-27723cfb-0492-40eb-a239-9c14081dc014" title="Permalink to this equation">#</a></span>\[\begin{align}
 \lambda &amp;= \frac{6.626\times10^{-34} \text{ J}\cdot\text{s}}{2.73 \times 10^{-25} \text{ kg}\cdot\text{m}\cdot\text{s}^{-1}} \\
 &amp;= 2.43 \text{ nm}
 \end{align}\]</div>
 <ol class="simple">
 <li><p>For a baseball traveling at 90 mph</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-0f5f8391-7c59-4107-8df1-605c8f0b500c">
-<span class="eqno">(3.626)<a class="headerlink" href="#equation-0f5f8391-7c59-4107-8df1-605c8f0b500c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-870ff240-3df5-474c-b921-6c087956c4e7">
+<span class="eqno">(3.626)<a class="headerlink" href="#equation-870ff240-3df5-474c-b921-6c087956c4e7" title="Permalink to this equation">#</a></span>\[\begin{align}
 m = 5\text{ oz}\frac{1\text{ lb}}{16 \text{ oz}} \frac{0.454 \text{kg}}{1 \text{ lb}} = 0.14 \text {kg}
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-d4ba6624-d130-43b2-b77e-578964c9a913">
-<span class="eqno">(3.627)<a class="headerlink" href="#equation-d4ba6624-d130-43b2-b77e-578964c9a913" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7fd77f8a-c62d-405f-9354-5cb094f39227">
+<span class="eqno">(3.627)<a class="headerlink" href="#equation-7fd77f8a-c62d-405f-9354-5cb094f39227" title="Permalink to this equation">#</a></span>\[\begin{align}
 p = m_ev &amp;= (0.14\text{ kg})\left(90\text{ mph} \frac{1610\text{ m}}{1 \text{mi}} \frac{1 \text{hr}}{3600 \text{s}}\right) \\
 &amp;= 5.6 \text{ kg}\cdot\text{m}\cdot\text{s}^{-1}
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-78760096-71f0-436a-9418-8900464e96aa">
-<span class="eqno">(3.628)<a class="headerlink" href="#equation-78760096-71f0-436a-9418-8900464e96aa" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f9f48dbb-ca74-46c6-afb4-608627d313c4">
+<span class="eqno">(3.628)<a class="headerlink" href="#equation-f9f48dbb-ca74-46c6-afb4-608627d313c4" title="Permalink to this equation">#</a></span>\[\begin{align}
 \lambda = \frac{6.626\times10^{-34}}{5.6} = 1.2\times10^{-34} \text{ m}
 \end{align}\]</div>
 <div class="cell docutils container">
@@ -997,19 +998,19 @@ p = m_ev &amp;= (0.14\text{ kg})\left(90\text{ mph} \frac{1610\text{ m}}{1 \text
 <p>From this example we see that, at this velocity, the wavelength of electron motion is of a similar magnitude to the radius of hydrogen atom orbits.  This demonstrates that the wavelike character of the electron is important for its behavior.</p>
 <p>The wavelength of the baseball, however, is miniscule, even for atomic distances.  Thus, the wavelike behavior of a baseball is irrelevant for its behavior.</p>
 <p>The wavelike behavior of electrons is not only important for determining the structure and behavior of atoms and molecules.  It is utilized in electron microscopes and can display similar wavelike defraction patterns to X-rays.</p>
-</div>
-</div>
-<div class="section" id="the-1-d-wave-equation">
+</section>
+</section>
+<section id="the-1-d-wave-equation">
 <h2><span class="section-number">3.4.2.5. </span>The 1-D Wave Equation<a class="headerlink" href="#the-1-d-wave-equation" title="Permalink to this headline">#</a></h2>
 <p>The behavior and physics of waves might be foreign to us.  Waves are, however, readily treated using classical mechanics.  Consider, for example, a string of tied between two objects a length <span class="math notranslate nohighlight">\(l\)</span> apart.  We consider the motion of the string (i.e. strumming a guitar string). The amplitude of the motion normal to the direction of the wave is described by a time dependent function <span class="math notranslate nohighlight">\(u(x,t)\)</span> where <span class="math notranslate nohighlight">\(x\)</span> is the position along the end separation vector and <span class="math notranslate nohighlight">\(t\)</span> is time.  The classical wave equation relates the second derivative of the function <span class="math notranslate nohighlight">\(u\)</span> in position and in time</p>
-<div class="amsmath math notranslate nohighlight" id="equation-51f19ec5-2ed8-42a0-946d-14bcfeacdf33">
-<span class="eqno">(3.629)<a class="headerlink" href="#equation-51f19ec5-2ed8-42a0-946d-14bcfeacdf33" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d888fe70-d883-4e37-a73e-1f0012efda9c">
+<span class="eqno">(3.629)<a class="headerlink" href="#equation-d888fe70-d883-4e37-a73e-1f0012efda9c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\partial^2 u(x,t)}{\partial x^2} = \frac{1}{v^2}\frac{\partial^2u(x,t)}{\partial t^2},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(v\)</span> is the linear velocity of the wave.  This is a linear partial differential equation: linear because the second derivatives only appear to the first power and there are not cross partial derivatives and partial because derivatives of the same function w.r.t different variables show up in the same equation.</p>
 <p>The above equation is subject to the following boundary conditions:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-356c5f0b-5436-4399-afc8-e463e3d1a5a0">
-<span class="eqno">(3.630)<a class="headerlink" href="#equation-356c5f0b-5436-4399-afc8-e463e3d1a5a0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-758deaea-e09c-4d75-b4a8-9e18aee34c96">
+<span class="eqno">(3.630)<a class="headerlink" href="#equation-758deaea-e09c-4d75-b4a8-9e18aee34c96" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(0,t) =&amp; 0\\
 u(l,t) =&amp; 0
 \end{align}\]</div>
@@ -1040,67 +1041,67 @@ u(l,t) =&amp; 0
 <img alt="../../_images/wave_particle_duality_classical_wave_equation_12_0.png" src="../../_images/wave_particle_duality_classical_wave_equation_12_0.png" />
 </div>
 </div>
-</div>
-<div class="section" id="solving-the-1-d-wave-equation-with-separation-of-variables">
+</section>
+<section id="solving-the-1-d-wave-equation-with-separation-of-variables">
 <h2><span class="section-number">3.4.2.6. </span>Solving the 1-D Wave Equation with Separation of Variables<a class="headerlink" href="#solving-the-1-d-wave-equation-with-separation-of-variables" title="Permalink to this headline">#</a></h2>
 <p>The first major step to solve the above differential equation is to assume that the dependence of the two different variables can be separated.  Namely that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2387a5f6-4d80-45f6-a07b-3e0efa692632">
-<span class="eqno">(3.631)<a class="headerlink" href="#equation-2387a5f6-4d80-45f6-a07b-3e0efa692632" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-123acf5c-18d2-4370-8db4-93dfb0820b39">
+<span class="eqno">(3.631)<a class="headerlink" href="#equation-123acf5c-18d2-4370-8db4-93dfb0820b39" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u(x,t) = X(x)T(t)
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(X(x)\)</span> is some function strictly of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(T(t)\)</span> is another function strictly of <span class="math notranslate nohighlight">\(t\)</span>.  Substituting this for for <span class="math notranslate nohighlight">\(u\)</span> into the differential equation above yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-362c17a6-4f82-495a-a474-fcbe3325be33">
-<span class="eqno">(3.632)<a class="headerlink" href="#equation-362c17a6-4f82-495a-a474-fcbe3325be33" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a162fa5b-3f0a-414e-8345-ab152ca8bdd4">
+<span class="eqno">(3.632)<a class="headerlink" href="#equation-a162fa5b-3f0a-414e-8345-ab152ca8bdd4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 T(t)\frac{d^2X(x)}{dx^2} = \frac{1}{v^2}X(x)\frac{d^2T(t)}{dt}
 \end{equation}\]</div>
 <p>Dividing both sides of the above equation by <span class="math notranslate nohighlight">\(u(x,t) = X(x)T(t)\)</span> will complete the separation of variables</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9a0f13ab-506e-400c-b699-dc907e4dbc86">
-<span class="eqno">(3.633)<a class="headerlink" href="#equation-9a0f13ab-506e-400c-b699-dc907e4dbc86" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3f8f4b42-3402-492a-83e1-f02d9a8b1e58">
+<span class="eqno">(3.633)<a class="headerlink" href="#equation-3f8f4b42-3402-492a-83e1-f02d9a8b1e58" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{1}{X(x)}\frac{d^2X(x)}{dx^2} = \frac{1}{v^2T(t)}\frac{d^2T(t)}{dt}
 \end{equation}\]</div>
 <p>Since the left-hand side depends only on <span class="math notranslate nohighlight">\(x\)</span> and the right-hand side depends only on <span class="math notranslate nohighlight">\(t\)</span>, and these two coordinates are independent, the only way for this to be achieved is for both sides to be equal to the same constant.  That is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cae2b226-71d7-448d-bd05-142a4ec633a6">
-<span class="eqno">(3.634)<a class="headerlink" href="#equation-cae2b226-71d7-448d-bd05-142a4ec633a6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ad92c8d1-560e-4553-911c-e6699b296e25">
+<span class="eqno">(3.634)<a class="headerlink" href="#equation-ad92c8d1-560e-4553-911c-e6699b296e25" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{1}{X(x)}\frac{d^2X(x)}{dx^2} &amp;= K \\
 \frac{1}{v^2T(t)}\frac{d^2T(t)}{dt} &amp;= K
 \end{align}\]</div>
 <p>Each of these equations can be rewritten as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-62a38774-385a-4821-8ed2-c18f87afbd91">
-<span class="eqno">(3.635)<a class="headerlink" href="#equation-62a38774-385a-4821-8ed2-c18f87afbd91" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-66f36fec-b66d-4f99-89b3-1e4fece53308">
+<span class="eqno">(3.635)<a class="headerlink" href="#equation-66f36fec-b66d-4f99-89b3-1e4fece53308" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{d^2X(x)}{dx^2} - KX(x) = 0 \\
 \frac{d^2T(t)}{dt} - v^2KT(t) = 0
 \end{align}\]</div>
 <p>These are ordinary differential equations that can be solved using standard ODE procedures.  We now consider the solutions to these equations for three scenarios</p>
-<div class="amsmath math notranslate nohighlight" id="equation-012e5936-3126-46b1-9234-c23eeed3896d">
-<span class="eqno">(3.636)<a class="headerlink" href="#equation-012e5936-3126-46b1-9234-c23eeed3896d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7573c28c-9dbf-46d9-b17c-5341e9f78047">
+<span class="eqno">(3.636)<a class="headerlink" href="#equation-7573c28c-9dbf-46d9-b17c-5341e9f78047" title="Permalink to this equation">#</a></span>\[\begin{align}
 K &amp;= 0\\
 K &amp;&gt;0\\
 K &amp;&lt; 0
 \end{align}\]</div>
-<div class="section" id="k-0">
+<section id="k-0">
 <h3><span class="section-number">3.4.2.6.1. </span>K =0<a class="headerlink" href="#k-0" title="Permalink to this headline">#</a></h3>
 <p><span class="math notranslate nohighlight">\(K = 0\)</span> is what is called the <em>trivial</em> solution.  Namely this solution is such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-413db47b-125f-4f6a-8216-b3ed08ee127b">
-<span class="eqno">(3.637)<a class="headerlink" href="#equation-413db47b-125f-4f6a-8216-b3ed08ee127b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-76126d3f-8324-4355-b7d2-b0f2c196a57f">
+<span class="eqno">(3.637)<a class="headerlink" href="#equation-76126d3f-8324-4355-b7d2-b0f2c196a57f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u(x,t) = 0
 \end{equation}\]</div>
 <p>This is a mathematically valid solution to our problem but of no physical interest.</p>
-</div>
-<div class="section" id="id1">
+</section>
+<section id="id1">
 <h3><span class="section-number">3.4.2.6.2. </span>K &gt; 0<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
 <p>If <span class="math notranslate nohighlight">\(K&gt;0\)</span>, we get the following general form for <span class="math notranslate nohighlight">\(X(x)\)</span> and <span class="math notranslate nohighlight">\(T(t)\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-79987d55-582d-4294-9774-dec57348c663">
-<span class="eqno">(3.638)<a class="headerlink" href="#equation-79987d55-582d-4294-9774-dec57348c663" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-951d4dc4-7b15-42f5-8be7-4bca1f81a052">
+<span class="eqno">(3.638)<a class="headerlink" href="#equation-951d4dc4-7b15-42f5-8be7-4bca1f81a052" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{d^2y(x)}{dx^2} - k^2y(x) = 0 
 \end{align}\]</div>
 <p>Or you can write this as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-74e83b81-2ccd-4f6f-a496-48ba66af4937">
-<span class="eqno">(3.639)<a class="headerlink" href="#equation-74e83b81-2ccd-4f6f-a496-48ba66af4937" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3218868d-6c4d-433a-9c7e-92dd6e0edd7e">
+<span class="eqno">(3.639)<a class="headerlink" href="#equation-3218868d-6c4d-433a-9c7e-92dd6e0edd7e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{d^2y(x)}{dx^2} = k^2y(x) 
 \end{align}\]</div>
 <p>which implies that <span class="math notranslate nohighlight">\(y\)</span> is a function that, when you take two derivatives, returns itself times a constant squared.  This type of behavior is exhibited by functions of the form <span class="math notranslate nohighlight">\(e^{\alpha x}\)</span> the value of <span class="math notranslate nohighlight">\(\alpha\)</span> needs to be determined.  So, we propose that <span class="math notranslate nohighlight">\(y(x) = e^{\alpha x}\)</span> and plug this into the above equation to determine the expression for <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6aeec3c5-7e44-4c3a-9521-cf08e0a5582d">
-<span class="eqno">(3.640)<a class="headerlink" href="#equation-6aeec3c5-7e44-4c3a-9521-cf08e0a5582d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b867b89b-b9db-46a4-b687-3c522897811f">
+<span class="eqno">(3.640)<a class="headerlink" href="#equation-b867b89b-b9db-46a4-b687-3c522897811f" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;\frac{d^2e^{\alpha x}}{dx^2} - k^2e^{\alpha x} = 0 \\
 &amp; \alpha^2e^{\alpha x} - k^2e^{\alpha x} = 0 \\
 &amp; (\alpha^2 - k^2)e^{\alpha x} = 0 \\
@@ -1108,33 +1109,33 @@ u(x,t) = 0
 \Rightarrow &amp; \alpha = \pm k
 \end{align}\]</div>
 <p>This means that there are two possible values for <span class="math notranslate nohighlight">\(\alpha\)</span> and thus two possible solutions, <span class="math notranslate nohighlight">\(y(x)\)</span>.  Namely</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6a0fb4ed-892f-488b-94ec-09b63f950bf5">
-<span class="eqno">(3.641)<a class="headerlink" href="#equation-6a0fb4ed-892f-488b-94ec-09b63f950bf5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-acba6501-7adb-48ff-9a10-01f794cf5e7f">
+<span class="eqno">(3.641)<a class="headerlink" href="#equation-acba6501-7adb-48ff-9a10-01f794cf5e7f" title="Permalink to this equation">#</a></span>\[\begin{align}
 y(x) = e^{kx} \\
 y(x) = e^{-kx}
 \end{align}\]</div>
 <p>In general, when there are two possible solutions for a given differential equation, then any linear combination of these two solutions is also a solution.  Thus, it is more complete to write that the solution is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40b117d4-fe6c-49cd-af6d-748be9734053">
-<span class="eqno">(3.642)<a class="headerlink" href="#equation-40b117d4-fe6c-49cd-af6d-748be9734053" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-91669e1d-ee7c-4194-83b3-d654607b99d3">
+<span class="eqno">(3.642)<a class="headerlink" href="#equation-91669e1d-ee7c-4194-83b3-d654607b99d3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y(x) = c_1e^{kx} + c_2e^{-kx},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(c_1\)</span> and <span class="math notranslate nohighlight">\(c_2\)</span> are constants.</p>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h3><span class="section-number">3.4.2.6.3. </span>K &lt; 0<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
 <p>If <span class="math notranslate nohighlight">\(K&lt;0\)</span>, we can set <span class="math notranslate nohighlight">\(K = (ki)^2\)</span> for arbitrary constant <span class="math notranslate nohighlight">\(k&gt;0\)</span>.  This implies the general form for <span class="math notranslate nohighlight">\(X(x)\)</span> and <span class="math notranslate nohighlight">\(T(t)\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2cb1043b-b38f-4afa-9700-7ec9808ff1db">
-<span class="eqno">(3.643)<a class="headerlink" href="#equation-2cb1043b-b38f-4afa-9700-7ec9808ff1db" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-069e0ab1-c125-460d-aa9d-329e9c1e6657">
+<span class="eqno">(3.643)<a class="headerlink" href="#equation-069e0ab1-c125-460d-aa9d-329e9c1e6657" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{d^2y(x)}{dx^2} - (ki)^2y(x) = 0 
 \end{align}\]</div>
 <p>Or you can write this as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-959603eb-d87c-4fd5-8880-f73ca73be0df">
-<span class="eqno">(3.644)<a class="headerlink" href="#equation-959603eb-d87c-4fd5-8880-f73ca73be0df" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-813fd25e-7232-4c05-b24a-d3795b373a0f">
+<span class="eqno">(3.644)<a class="headerlink" href="#equation-813fd25e-7232-4c05-b24a-d3795b373a0f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{d^2y(x)}{dx^2} = (ki)^2y(x) 
 \end{align}\]</div>
 <p>which implies that <span class="math notranslate nohighlight">\(y\)</span> is a function that, when you take two derivatives, returns itself times a constant squared.  This type of behavior is exhibited by functions of the form <span class="math notranslate nohighlight">\(e^{\alpha x}\)</span> the value of <span class="math notranslate nohighlight">\(\alpha\)</span> needs to be determined.  So, we propose that <span class="math notranslate nohighlight">\(y(x) = e^{\alpha x}\)</span> and plug this into the above equation to determine the expression for <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3f245e1c-ec1e-43ba-8ab9-30b4ffe85c4b">
-<span class="eqno">(3.645)<a class="headerlink" href="#equation-3f245e1c-ec1e-43ba-8ab9-30b4ffe85c4b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-053dfb36-56b1-4832-8e4e-7a819eaa5207">
+<span class="eqno">(3.645)<a class="headerlink" href="#equation-053dfb36-56b1-4832-8e4e-7a819eaa5207" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;\frac{d^2e^{\alpha x}}{dx^2} - (ik)^2e^{\alpha x} = 0 \\
 &amp; \alpha^2e^{\alpha x} - (ki)^2e^{\alpha x} = 0 \\
 &amp; (\alpha^2 - (ki)^2)e^{\alpha x} = 0 \\
@@ -1142,86 +1143,86 @@ y(x) = c_1e^{kx} + c_2e^{-kx},
 \Rightarrow &amp; \alpha = \pm ki
 \end{align}\]</div>
 <p>This means that there are two possible values for <span class="math notranslate nohighlight">\(\alpha\)</span> and thus two possible solutions, <span class="math notranslate nohighlight">\(y(x)\)</span>.  Namely</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb446c86-0da5-4972-99d4-ebd4f41c33a5">
-<span class="eqno">(3.646)<a class="headerlink" href="#equation-eb446c86-0da5-4972-99d4-ebd4f41c33a5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e923c5e6-bce7-49d2-b270-7b2e1bed2b74">
+<span class="eqno">(3.646)<a class="headerlink" href="#equation-e923c5e6-bce7-49d2-b270-7b2e1bed2b74" title="Permalink to this equation">#</a></span>\[\begin{align}
 y(x) = e^{ikx} \\
 y(x) = e^{-ikx}
 \end{align}\]</div>
 <p>In general, when there are two possible solutions for a given differential equation, then any linear combination of these two solutions is also a solution.  Thus, it is more complete to write that the solution is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1519d537-82c8-45cb-88bc-6f9eae9a6b54">
-<span class="eqno">(3.647)<a class="headerlink" href="#equation-1519d537-82c8-45cb-88bc-6f9eae9a6b54" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5ab8061c-0df8-4ef9-90a3-c056184cc0c4">
+<span class="eqno">(3.647)<a class="headerlink" href="#equation-5ab8061c-0df8-4ef9-90a3-c056184cc0c4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y(x) = c_1e^{ikx} + c_2e^{-ikx},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(c_1\)</span> and <span class="math notranslate nohighlight">\(c_2\)</span> are constants.</p>
 <p>In this case, we can also recall/recognize that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0fcb1493-8612-4fba-9940-6fad573f6bc7">
-<span class="eqno">(3.648)<a class="headerlink" href="#equation-0fcb1493-8612-4fba-9940-6fad573f6bc7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-76adcdc8-8930-4ca5-8db8-13a58beedf36">
+<span class="eqno">(3.648)<a class="headerlink" href="#equation-76adcdc8-8930-4ca5-8db8-13a58beedf36" title="Permalink to this equation">#</a></span>\[\begin{equation}
 e^{ix} = \cos(x) + i \sin(x)
 \end{equation}\]</div>
 <p>Using this relationship is can be readily shown that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4ba376a-90bc-4e86-868b-2e7db8079494">
-<span class="eqno">(3.649)<a class="headerlink" href="#equation-d4ba376a-90bc-4e86-868b-2e7db8079494" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-aefc387c-a663-4d15-a739-02bdc7614a35">
+<span class="eqno">(3.649)<a class="headerlink" href="#equation-aefc387c-a663-4d15-a739-02bdc7614a35" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y(x) = (c_1 + c_2)\cos(kx) + i(c_1-c_2)\sin(kx)
 \end{equation}\]</div>
 <p>We will write this general solution as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8cd7af46-df6d-4e18-913e-7bbdf7b3c238">
-<span class="eqno">(3.650)<a class="headerlink" href="#equation-8cd7af46-df6d-4e18-913e-7bbdf7b3c238" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-daa6de3e-de49-4ffc-b9be-034b0dfcf802">
+<span class="eqno">(3.650)<a class="headerlink" href="#equation-daa6de3e-de49-4ffc-b9be-034b0dfcf802" title="Permalink to this equation">#</a></span>\[\begin{equation}
 X(x) = A\cos(kx) + B\sin(kx)
 \end{equation}\]</div>
 <p>When we apply the boundary conditions we get that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-86ca03bf-dcc0-477f-8cdb-a751aa748c37">
-<span class="eqno">(3.651)<a class="headerlink" href="#equation-86ca03bf-dcc0-477f-8cdb-a751aa748c37" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1eb39162-cfe0-4708-aea8-8164844e4428">
+<span class="eqno">(3.651)<a class="headerlink" href="#equation-1eb39162-cfe0-4708-aea8-8164844e4428" title="Permalink to this equation">#</a></span>\[\begin{align}
 A &amp;= 0 \\
 k &amp;= \frac{n\pi}{l}
 \end{align}\]</div>
 <p>Finally yielding an <span class="math notranslate nohighlight">\(n\)</span> specific solution of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9ec282ff-f822-49dc-a6bf-1a71a0f7e832">
-<span class="eqno">(3.652)<a class="headerlink" href="#equation-9ec282ff-f822-49dc-a6bf-1a71a0f7e832" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4fc67461-8573-4e32-9510-4666aff00dc4">
+<span class="eqno">(3.652)<a class="headerlink" href="#equation-4fc67461-8573-4e32-9510-4666aff00dc4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 X_n(x) = B_n\cos\frac{n\pi x}{l}
 \end{equation}\]</div>
-</div>
-<div class="section" id="time-dependence">
+</section>
+<section id="time-dependence">
 <h3><span class="section-number">3.4.2.6.4. </span>Time Dependence<a class="headerlink" href="#time-dependence" title="Permalink to this headline">#</a></h3>
 <p>Now that we have solved the positional dependence equation and found a non-trivial solution we must solve the time dependent portion.  Recall that the time dependent differential equation is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8726fa36-fc04-4ccc-ab12-f69c19693be9">
-<span class="eqno">(3.653)<a class="headerlink" href="#equation-8726fa36-fc04-4ccc-ab12-f69c19693be9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5e90ae17-7d59-4c3d-879b-81c292770a24">
+<span class="eqno">(3.653)<a class="headerlink" href="#equation-5e90ae17-7d59-4c3d-879b-81c292770a24" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d^2T(t)}{dt} - v^2KT(t) = 0,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(K\)</span> is the exact same constant as for the positional part. Thus, for the non-trivial case with <span class="math notranslate nohighlight">\(K&lt;0\)</span> we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4bf58bff-837f-418e-bfdd-5c2cf1a9bf88">
-<span class="eqno">(3.654)<a class="headerlink" href="#equation-4bf58bff-837f-418e-bfdd-5c2cf1a9bf88" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8d5d3361-1827-471f-8661-83ddca42d1c3">
+<span class="eqno">(3.654)<a class="headerlink" href="#equation-8d5d3361-1827-471f-8661-83ddca42d1c3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d^2T(t)}{dt} + \frac{n^2\pi^2v^2}{l^2}T(t) = 0,
 \end{equation}\]</div>
 <p>The solutions to this equation are, by analogy with to the position equation,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-df190b28-b2b4-428b-a640-335c1c267e76">
-<span class="eqno">(3.655)<a class="headerlink" href="#equation-df190b28-b2b4-428b-a640-335c1c267e76" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7d65b7ee-be47-4ac0-882c-a4a3a4fb80ab">
+<span class="eqno">(3.655)<a class="headerlink" href="#equation-7d65b7ee-be47-4ac0-882c-a4a3a4fb80ab" title="Permalink to this equation">#</a></span>\[\begin{equation}
 T_n(t) = A_n\cos(\omega_nt) + B_n\sin(\omega_nt)
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\omega_n = \frac{n \pi v}{l}\)</span>.  It can be shown that this can be rewritten as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e0e7a19-4c1e-4be0-acae-474e64cb9bd9">
-<span class="eqno">(3.656)<a class="headerlink" href="#equation-9e0e7a19-4c1e-4be0-acae-474e64cb9bd9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-62f075e2-f737-4b92-bce0-be5c1231125b">
+<span class="eqno">(3.656)<a class="headerlink" href="#equation-62f075e2-f737-4b92-bce0-be5c1231125b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 T_n(t) = D_n\cos(\omega_nt + \phi_n)
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\phi_n = \tan^{-1}\frac{B_n}{A_n}\)</span>.</p>
-</div>
-<div class="section" id="combined-general-solution">
+</section>
+<section id="combined-general-solution">
 <h3><span class="section-number">3.4.2.6.5. </span>Combined General Solution<a class="headerlink" href="#combined-general-solution" title="Permalink to this headline">#</a></h3>
 <p>The combined specific solution is then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bb3826d6-bdf5-4619-9dfb-e6eed4ac51d7">
-<span class="eqno">(3.657)<a class="headerlink" href="#equation-bb3826d6-bdf5-4619-9dfb-e6eed4ac51d7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-68012431-96d0-467a-bb8c-38288f9b7f7c">
+<span class="eqno">(3.657)<a class="headerlink" href="#equation-68012431-96d0-467a-bb8c-38288f9b7f7c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u_n(x,t) = A_n\cos(\omega_nt + \phi_n)\sin\frac{n\pi x}{l}
 \end{equation}\]</div>
 <p>Since and <span class="math notranslate nohighlight">\(u_n\)</span> is a specific solution to the linear differential equation, the general solution is a linear combination of these solutions.  Thus, the general solution is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-298388b5-ca07-4cf2-b89c-a6ac195a2eac">
-<span class="eqno">(3.658)<a class="headerlink" href="#equation-298388b5-ca07-4cf2-b89c-a6ac195a2eac" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d14699ec-2df0-4048-8433-43924f0106c9">
+<span class="eqno">(3.658)<a class="headerlink" href="#equation-d14699ec-2df0-4048-8433-43924f0106c9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u(x,t) = \sum_{i=1}^{\infty} u_n(x,t) = \sum_{i=1}^{\infty} A_n\cos(\omega_nt + \phi_n)\sin\frac{n\pi x}{l}
 \end{equation}\]</div>
-</div>
-<div class="section" id="example-linear-combination-of-first-two-harmonics">
+</section>
+<section id="example-linear-combination-of-first-two-harmonics">
 <h3><span class="section-number">3.4.2.6.6. </span>Example: Linear combination of first two harmonics<a class="headerlink" href="#example-linear-combination-of-first-two-harmonics" title="Permalink to this headline">#</a></h3>
 <p>To investigate what these look like, we can look at the sum of the first two harmonics, or first two solutions to the equation above.  The function is then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e392ef36-3165-47a9-8d6f-b8c5876e733b">
-<span class="eqno">(3.659)<a class="headerlink" href="#equation-e392ef36-3165-47a9-8d6f-b8c5876e733b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e16f70c6-780e-4812-a506-ee706901e5ff">
+<span class="eqno">(3.659)<a class="headerlink" href="#equation-e16f70c6-780e-4812-a506-ee706901e5ff" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u(x,t) = A_1\cos(\omega_1t)\sin\frac{\pi x}{l} + A_2\cos(\omega_2t + \frac{\pi}{2})\sin\frac{2\pi x}{l}
 \end{equation}\]</div>
 <p>If we assume <span class="math notranslate nohighlight">\(A_1 = A_2 = 1\)</span> we can see plot what these two curves look like as a function of time.</p>
@@ -1272,9 +1273,9 @@ u(x,t) = A_1\cos(\omega_1t)\sin\frac{\pi x}{l} + A_2\cos(\omega_2t + \frac{\pi}{
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
