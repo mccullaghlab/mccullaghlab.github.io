@@ -441,36 +441,90 @@ from scipy.special import sph_harm
 from scipy.special import spherical_jn
 from scipy.special import lpmv
 get_ipython().run_line_magic('matplotlib', 'inline')
+from scipy.optimize import root
 
-def particle_in_sphere_wf(r,theta,phi,m,l):
-    return sph_harm(m, l, phi, theta).real*spherical_yn(l, r)
-
-def particle_in_sphere_r_theta(r,theta,m,l):
-    return lpmv(m,l,np.cos(theta))*spherical_yn(l, r)
-
-def plot_particle_in_sphere_wf_r_theta(m,l, ax_obj, theta=np.linspace(0,np.pi,100), r=np.linspace(0,1,100)):
-    R, THETA = np.meshgrid(r, theta)
-    X = R*np.sin(THETA) 
-    Y = R*np.cos(THETA) 
-    Z = particle_in_sphere_r_theta(R,THETA,m,l)
-    # plot
-    ax_obj.set_title(rf'$l={l},m={m}$', fontsize=18)
-    ax_obj.plot_surface(X, Y, Z,  rstride=1, cstride=1)
-    #ax_obj.set_axis_off()
+def spherical_jn_sensible_grid(l, n, ngrid=100):
+    """Returns a grid of x values that should contain the first n zeros, but not too many.
+    """
+    return np.linspace(l, l + 2*n*(np.pi * (np.log(l)+1)), ngrid)
     
-fig, ax = plt.subplots(1,1,figsize=(12,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
-plot_particle_in_sphere_wf_r_theta(0,1,ax)
-#for i in range(3):
-#    for j in range(5):
-#        ax[i,j].set_axis_off()
-#for l_index, l in enumerate(range(3)):
-#    for m_index, m in enumerate(range(-l,l+1)):
-#        plot_spherical_harmonic(m,l,ax[l_index,m_index])
+
+def spherical_jn_zero(l, n, ngrid=100):
+    """Returns nth zero of spherical bessel function of order l
+    """
+    if l > 0:
+        # calculate on a sensible grid
+        x = spherical_jn_sensible_grid(l, n, ngrid=ngrid)
+        y = spherical_jn(l, x)
+    
+        # Find m good initial guesses from where y switches sign
+        diffs = np.sign(y)[1:] - np.sign(y)[:-1]
+        ind0s = np.where(diffs)[0][:n]  # first m times sign of y changes
+        x0s = x[ind0s]
+    
+        def fn(x):
+            return spherical_jn(l, x)
+
+        return [root(fn, x0).x[0] for x0 in x0s][-1]
+    else:
+        return n*np.pi
+    
+def particle_in_sphere_wf(r,theta,phi,n,l,m):
+    denom = spherical_jn_zero(l, n)
+    return sph_harm(m, l, phi, theta).real*spherical_jn(l, r*denom)
+
+
+def plot_particle_in_sphere_wf_r_theta(n,l,m, ax_obj, r=np.linspace(0,1,15), theta=np.linspace(0,np.pi,20), phi=np.linspace(0,1.5*np.pi,25)):
+    R, THETA, PHI = np.meshgrid(r, theta, phi)
+    R = R.flatten()
+    THETA = THETA.flatten()
+    PHI = PHI.flatten()
+    x = R*np.sin(THETA)*np.cos(PHI) 
+    y = R*np.sin(THETA)*np.sin(PHI)
+    z = R*np.cos(THETA)
+    wf = particle_in_sphere_wf(R,THETA,PHI,n,l,m)
+    # plot
+    ax_obj.set_title(rf'$n={n},l={l},m={m}$', fontsize=18)
+    ax_obj.scatter3D(x,y,z,c=wf, vmin=-0.2, vmax=0.2,alpha=0.25)
+    ax_obj.set_box_aspect((100,100,100))
+    # xy countour
+    #R, PHI = np.meshgrid(r, phi)
+    #x = R*np.sin(np.pi/2)*np.cos(PHI) 
+    #y = R*np.sin(np.pi/2)*np.sin(PHI)
+    #z = R*np.cos(np.pi/2)
+    #wf = particle_in_sphere_wf(R.flatten(),np.ones(R.flatten().size)*np.pi/2,PHI.flatten(),m,l).reshape(R.shape)
+    #ax_obj.contourf(x,y,wf,zdir='z',offset=-1)#,cmap='coolwarm')
+    # xz
+    #R, THETA = np.meshgrid(r, theta)
+    #x = R*np.sin(THETA)*np.cos(0) 
+    #y = R*np.sin(THETA)*np.sin(0)
+    #z = R*np.cos(THETA)
+    #wf = particle_in_sphere_wf(R.flatten(),np.ones(R.flatten().size)*np.pi/2,PHI.flatten(),m,l).reshape(R.shape)
+    #ax_obj.contourf(x,y,wf,zdir='z',offset=-1)#,cmap='coolwarm')
+    #ax_obj.set_box_aspect((100,100,100))
+    ax_obj.set_axis_off()
+
+
+# In[5]:
+
+
+
+fig, ax = plt.subplots(3,3,figsize=(12,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
+for l in range(3):
+for n in range(1,4):
+    plot_particle_in_sphere_wf_r_theta(n,l,0,ax[l,n-1])
 plt.show();
 
 
-# In[ ]:
+# In[138]:
 
 
-
+fig, ax = plt.subplots(3,3,figsize=(12,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
+for l in range(3):
+    for m in range(3):
+        if m <= l:
+            plot_particle_in_sphere_wf_r_theta(1,l,m,ax[l,m])
+        else: 
+            ax[l,m].set_axis_off()
+plt.show();
 

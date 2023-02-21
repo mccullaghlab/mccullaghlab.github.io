@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.4.9. Particle in a Sphere &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -52,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.4.10. Harmonic Oscillator" href="harmonic_oscillator.html" />
@@ -951,13 +950,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="particle-in-a-sphere">
+  <div class="tex2jax_ignore mathjax_ignore section" id="particle-in-a-sphere">
 <h1><span class="section-number">3.4.9. </span>Particle in a Sphere<a class="headerlink" href="#particle-in-a-sphere" title="Permalink to this headline">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">3.4.9.1. </span>Motivation:<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>Gearing up to work on the hydrogen atom, we recognize that the hydrogen atom is a spherically symmetric system.  That is, we care about the distance of the electron from the proton/nucleus not the specific <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(z\)</span> coordinates of the electron.  Here, we consider what constraining a particle to a sphere does as opposed to a cube.</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.4.9.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="simple">
@@ -966,8 +965,8 @@ title="Print to PDF"
 <li><p>Write out the Hamiltonian for the particle in a the sphere</p></li>
 <li><p>Perform separation of variables on the particle in a sphere Hamiltonian</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.4.9.3. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook</p>
 <ol class="simple">
@@ -975,168 +974,168 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</section>
-<section id="statement-of-the-problem">
+</div>
+<div class="section" id="statement-of-the-problem">
 <h2><span class="section-number">3.4.9.4. </span>Statement of the Problem<a class="headerlink" href="#statement-of-the-problem" title="Permalink to this headline">#</a></h2>
 <p>Consider a particle restricted to be <em><strong>in a sphere</strong></em>.  This is equivalent to a free particle (no potential) inside a fixed radius and an infinte potential at <span class="math notranslate nohighlight">\(r_0\)</span>.</p>
 <p>We would like to know the allowed energies and probability of positions for such a system.  To get these we will setup and solve the Schrodinger equation.</p>
 <p>We start by defining the Hamiltonian for such a system.</p>
-</section>
-<section id="the-hamiltonian">
+</div>
+<div class="section" id="the-hamiltonian">
 <h2><span class="section-number">3.4.9.5. </span>The Hamiltonian<a class="headerlink" href="#the-hamiltonian" title="Permalink to this headline">#</a></h2>
 <p>We start constructing the Hamiltonian in the same way for every problem.  The Hamiltonian is always (for the sake of this class/these notes) a sum of the Kinetic Energy operator and the Potential Energy operator:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-43bbc863-0fe4-41f7-aff4-a44ba17e74d9">
-<span class="eqno">(3.752)<a class="headerlink" href="#equation-43bbc863-0fe4-41f7-aff4-a44ba17e74d9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-af29c3db-330b-4912-ac42-bb3f9a1bbef6">
+<span class="eqno">(3.752)<a class="headerlink" href="#equation-af29c3db-330b-4912-ac42-bb3f9a1bbef6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H} = \hat{K} + \hat{V}.
 \end{equation}\]</div>
 <p>The potential energy for this problem is zero since the particle is <em>free</em> inside the sphere and cannot go outside of the sphere.  Thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-58e7f226-9996-4596-b3ad-14b375a4028b">
-<span class="eqno">(3.753)<a class="headerlink" href="#equation-58e7f226-9996-4596-b3ad-14b375a4028b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-aacec32d-913a-4aa0-bad2-bd9106f34176">
+<span class="eqno">(3.753)<a class="headerlink" href="#equation-aacec32d-913a-4aa0-bad2-bd9106f34176" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H} = \hat{K}
 \end{equation}\]</div>
 <p>The Kinetic Energy operator in three dimensions for a single particle is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b4f6a25a-4821-48b3-a98e-c2324c4f2e1a">
-<span class="eqno">(3.754)<a class="headerlink" href="#equation-b4f6a25a-4821-48b3-a98e-c2324c4f2e1a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-45d6be4c-07cb-4bb6-a817-63a452175762">
+<span class="eqno">(3.754)<a class="headerlink" href="#equation-45d6be4c-07cb-4bb6-a817-63a452175762" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{K} = -\frac{\hbar^2}{2m}\left( \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}\right)
 \end{equation}\]</div>
 <p>We could attempt to solve this problem in Cartesian coordinates.  Solving the differential equation will yield the same initial solutions as the 3D particle in a box:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-824731b0-b6a1-4007-8b24-98891862db5d">
-<span class="eqno">(3.755)<a class="headerlink" href="#equation-824731b0-b6a1-4007-8b24-98891862db5d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7ef4cb04-3a7f-46e2-bb05-447deb6bc467">
+<span class="eqno">(3.755)<a class="headerlink" href="#equation-7ef4cb04-3a7f-46e2-bb05-447deb6bc467" title="Permalink to this equation">#</a></span>\[\begin{align}
 X(x) = A\sin k_x x + B\cos k_x x \\
 Y(y) = A\sin k_y y + B\cos k_y y \\
 Z(z) = A\sin k_z z + B\cos k_z z 
 \end{align}\]</div>
 <p>where the total wavefunction is <span class="math notranslate nohighlight">\(\psi(x,y,z) = X(x)Y(y)Z(z)\)</span></p>
 <p>The issue is that applying the boundary condition that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fdb16982-cc25-4a0d-96fc-7965cc7409c8">
-<span class="eqno">(3.756)<a class="headerlink" href="#equation-fdb16982-cc25-4a0d-96fc-7965cc7409c8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5f64a6b7-e9bf-46be-b2d4-167f64b220ff">
+<span class="eqno">(3.756)<a class="headerlink" href="#equation-5f64a6b7-e9bf-46be-b2d4-167f64b220ff" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(r=r_0) = 0
 \end{equation}\]</div>
 <p>is difficult in Cartesian coordinates in part because it requires a coupling of <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(z\)</span>.  Instead, we will solve the problem in spherical polar coordinates.</p>
-</section>
-<section id="spherical-polar-coordinates">
+</div>
+<div class="section" id="spherical-polar-coordinates">
 <h2><span class="section-number">3.4.9.6. </span>Spherical Polar Coordinates<a class="headerlink" href="#spherical-polar-coordinates" title="Permalink to this headline">#</a></h2>
 <p>In spherical polar coordinates, we define a point in <span class="math notranslate nohighlight">\(\mathbb{R}^3\)</span> by a distane from the origin, <span class="math notranslate nohighlight">\(r\)</span>, and two angles, <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>.</p>
 <p><img alt="title" src="../../_images/SphericalCoordinates_1201.svg" /></p>
 <p>These can be expressed in terms of Cartesian coordinates as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70a41107-bf45-41c9-8f23-1a068c3bfb54">
-<span class="eqno">(3.757)<a class="headerlink" href="#equation-70a41107-bf45-41c9-8f23-1a068c3bfb54" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d9bf671e-200f-4eb3-95db-84db33962df0">
+<span class="eqno">(3.757)<a class="headerlink" href="#equation-d9bf671e-200f-4eb3-95db-84db33962df0" title="Permalink to this equation">#</a></span>\[\begin{align}
 r &amp;= \sqrt{x^2+ y^2 + z^2} \\
 \phi &amp;= \tan^{-1}\frac{y}{x} \\
 \theta &amp;= \cos^{-1}\frac{z}{r}
 \end{align}\]</div>
 <p>Note that the following domain limits are placed on these coordinates</p>
-<div class="amsmath math notranslate nohighlight" id="equation-65361417-fd5e-40a0-8f00-254299d5bbf1">
-<span class="eqno">(3.758)<a class="headerlink" href="#equation-65361417-fd5e-40a0-8f00-254299d5bbf1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-87ee6575-037f-4aef-a140-710d2d297812">
+<span class="eqno">(3.758)<a class="headerlink" href="#equation-87ee6575-037f-4aef-a140-710d2d297812" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 \leq &amp;r &lt; \infty \\
 0 \leq &amp;\theta \leq \pi \\
 0 \leq &amp;\phi \leq 2\pi
 \end{align}\]</div>
 <p>The Cartesian coordinated in terms of their spherical counterparts are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-20b161b4-fe63-4e5e-96f5-45964fae02c5">
-<span class="eqno">(3.759)<a class="headerlink" href="#equation-20b161b4-fe63-4e5e-96f5-45964fae02c5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6b5e3e35-dc52-45e1-86e9-2434aec6bafb">
+<span class="eqno">(3.759)<a class="headerlink" href="#equation-6b5e3e35-dc52-45e1-86e9-2434aec6bafb" title="Permalink to this equation">#</a></span>\[\begin{align}
 x &amp;= r\sin\theta\cos\phi \\
 y &amp;= r\sin\theta\sin\phi \\
 z &amp;= r\cos\theta
 \end{align}\]</div>
 <p>In order to describe the particle in a sphere problem in spherical coordinates, we need to define the Hamiltonian in spherical coordinates.  This can be done with the equations above and their derivatives and second derivatives.  The derivation is long and tedious so here we present the result for the Laplacian in spherical polar coordinates:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2f989994-f46a-4153-bb27-ae7e07f69cfd">
-<span class="eqno">(3.760)<a class="headerlink" href="#equation-2f989994-f46a-4153-bb27-ae7e07f69cfd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e65a0616-1410-413f-aac8-b7e2db20b8c5">
+<span class="eqno">(3.760)<a class="headerlink" href="#equation-e65a0616-1410-413f-aac8-b7e2db20b8c5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \nabla^2_{r\theta\phi} = \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial^2\phi}
 \end{equation}\]</div>
-</section>
-<section id="separation-of-variables-in-spherical-coordinates">
+</div>
+<div class="section" id="separation-of-variables-in-spherical-coordinates">
 <h2><span class="section-number">3.4.9.7. </span>Separation of Variables in Spherical Coordinates<a class="headerlink" href="#separation-of-variables-in-spherical-coordinates" title="Permalink to this headline">#</a></h2>
 <p>The Schrodinger equation in spherical polar coordinates is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5d46ac24-fa73-42ea-a1d9-afd40d0f6e3d">
-<span class="eqno">(3.761)<a class="headerlink" href="#equation-5d46ac24-fa73-42ea-a1d9-afd40d0f6e3d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bb0066fc-3a92-4378-b9e7-42f14253bcb4">
+<span class="eqno">(3.761)<a class="headerlink" href="#equation-bb0066fc-3a92-4378-b9e7-42f14253bcb4" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{H}\psi(r,\theta,\phi) &amp;= E \psi(r,\theta,\phi) \\
 -\frac{\hbar^2}{2m}\nabla^2_{r\theta\phi} &amp;= E \psi(r,\theta,\phi) \\
 -\frac{\hbar^2}{2m}\left[\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right] \psi(r,\theta,\phi) &amp;= E \psi(r,\theta,\phi)
 \end{align}\]</div>
 <p>This equation does not look immediately separable.  Indeed it looks quite intimidating.  It turns out, however, that the equation is separable into <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span>, and <span class="math notranslate nohighlight">\(\phi\)</span> components. We will start by separating <span class="math notranslate nohighlight">\(r\)</span> from <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>.</p>
 <p>Multiply both sides of the above equation by <span class="math notranslate nohighlight">\(2mr^2\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-10e13b0e-7ab5-4958-b57a-62d09e01db3e">
-<span class="eqno">(3.762)<a class="headerlink" href="#equation-10e13b0e-7ab5-4958-b57a-62d09e01db3e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3dae758f-88e7-40f2-884a-8e3aff41888e">
+<span class="eqno">(3.762)<a class="headerlink" href="#equation-3dae758f-88e7-40f2-884a-8e3aff41888e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 -\hbar^2\left[\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) - \frac{\hbar^2}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\psi(r,\theta,\phi)  = 2mr^2E\psi(r,\theta,\phi)
 \end{equation}\]</div>
 <p>Rearrange (combine terms dependent on <span class="math notranslate nohighlight">\(r\)</span>) to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c197848e-8322-4980-bd81-002b0894ac73">
-<span class="eqno">(3.763)<a class="headerlink" href="#equation-c197848e-8322-4980-bd81-002b0894ac73" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5804776e-0cc7-4633-b457-86c313c491c1">
+<span class="eqno">(3.763)<a class="headerlink" href="#equation-5804776e-0cc7-4633-b457-86c313c491c1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 -\hbar^2\left[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\psi(r,\theta,\phi) -\hbar^2\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)\psi(r,\theta,\phi) = 2mr^2E\psi(r,\theta,\phi)
 \end{equation}\]</div>
 <p>Notice that we have a sum of a term that depends on <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> and then two terms that depend only on <span class="math notranslate nohighlight">\(r\)</span>.  Thus we can posit a separation of variables such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cedae204-587a-4535-a104-41b37c6b6a63">
-<span class="eqno">(3.764)<a class="headerlink" href="#equation-cedae204-587a-4535-a104-41b37c6b6a63" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-55cfa68e-6fce-41fe-820f-1a1f1783b573">
+<span class="eqno">(3.764)<a class="headerlink" href="#equation-55cfa68e-6fce-41fe-820f-1a1f1783b573" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(r,\theta,\phi) = R(r)Y(\theta,\phi)
 \end{equation}\]</div>
 <p>Additionally, we will define the angular momentum operator (that only operates on <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>) as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f065c899-59da-4bab-b52a-dfcbe7728331">
-<span class="eqno">(3.765)<a class="headerlink" href="#equation-f065c899-59da-4bab-b52a-dfcbe7728331" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-30c21375-77b2-4fc5-a794-96f432b34d3b">
+<span class="eqno">(3.765)<a class="headerlink" href="#equation-30c21375-77b2-4fc5-a794-96f432b34d3b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{L}^2 = -\hbar^2\left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right)
 \end{equation}\]</div>
 <p>Substite the above equation for <span class="math notranslate nohighlight">\(\psi\)</span> into the Schrodinger equation to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a31766e-19c0-433b-b646-59f68e33bfd6">
-<span class="eqno">(3.766)<a class="headerlink" href="#equation-5a31766e-19c0-433b-b646-59f68e33bfd6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b8b79248-4b47-4f09-892c-5a073a914ef2">
+<span class="eqno">(3.766)<a class="headerlink" href="#equation-b8b79248-4b47-4f09-892c-5a073a914ef2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{L}^2R(r)Y(\theta,\phi) -\hbar^2 \frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)Y(\theta,\phi) &amp;= 2mr^2ER(r)Y(\theta,\phi) \\
 \Rightarrow \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E
 \end{align}\]</div>
 <p>Notice that the left-hand side depends on <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> only and the right-hand side depends on <span class="math notranslate nohighlight">\(r\)</span> only.  Thus, we must have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9abf7dbb-9058-420e-940d-c8e78a252c31">
-<span class="eqno">(3.767)<a class="headerlink" href="#equation-9abf7dbb-9058-420e-940d-c8e78a252c31" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d33362a3-6b0d-4b5d-bb10-9bddba5161a5">
+<span class="eqno">(3.767)<a class="headerlink" href="#equation-d33362a3-6b0d-4b5d-bb10-9bddba5161a5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = \alpha,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a constant.</p>
 <p>Additionally, we must have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cba858fa-664d-494b-963a-d2ae5a399d95">
-<span class="eqno">(3.768)<a class="headerlink" href="#equation-cba858fa-664d-494b-963a-d2ae5a399d95" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0156c5c1-0013-4b59-98ea-e739290c8104">
+<span class="eqno">(3.768)<a class="headerlink" href="#equation-0156c5c1-0013-4b59-98ea-e739290c8104" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = \alpha
 \end{equation}\]</div>
 <p>We will solve these two equations separately.</p>
-</section>
-<section id="solutions-to-theta-and-phi-equation">
+</div>
+<div class="section" id="solutions-to-theta-and-phi-equation">
 <h2><span class="section-number">3.4.9.8. </span>Solutions to <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> equation<a class="headerlink" href="#solutions-to-theta-and-phi-equation" title="Permalink to this headline">#</a></h2>
 <p>It is the goal of this section of the notes to find a solution to the differential equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cd49d1a1-d755-4993-91e0-f7320d9bf01d">
-<span class="eqno">(3.769)<a class="headerlink" href="#equation-cd49d1a1-d755-4993-91e0-f7320d9bf01d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a4e433be-d69d-47af-9741-e87d9f5ccb55">
+<span class="eqno">(3.769)<a class="headerlink" href="#equation-a4e433be-d69d-47af-9741-e87d9f5ccb55" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = \alpha,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a constant.</p>
 <p>This equation can be rearranged to the eigenvalue equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-74fd56b9-906d-4fff-8e9d-a0f0decf6397">
-<span class="eqno">(3.770)<a class="headerlink" href="#equation-74fd56b9-906d-4fff-8e9d-a0f0decf6397" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d9d6ed16-fbcb-4fa3-bbc4-6466cc96ca5c">
+<span class="eqno">(3.770)<a class="headerlink" href="#equation-d9d6ed16-fbcb-4fa3-bbc4-6466cc96ca5c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{L}^2Y(\theta,\phi) =\alpha Y(\theta,\phi)
 \end{equation}\]</div>
 <p>Now plugging back in the expanded form of <span class="math notranslate nohighlight">\(\hat{L}^2\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9936f153-9e5a-4239-add6-fede732f8cc2">
-<span class="eqno">(3.771)<a class="headerlink" href="#equation-9936f153-9e5a-4239-add6-fede732f8cc2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-37cdeecb-697e-481a-bf3a-c738439a71a2">
+<span class="eqno">(3.771)<a class="headerlink" href="#equation-37cdeecb-697e-481a-bf3a-c738439a71a2" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\hbar^2\left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &amp;= E_{\theta,\phi}Y(\theta,\phi) \\
 \Rightarrow \left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &amp;= \frac{-\alpha}{\hbar^2}Y(\theta,\phi)
 \end{align}\]</div>
 <p>Multiplying the above equation by <span class="math notranslate nohighlight">\(\sin^2\theta\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cb5b1ea8-40fc-4dd8-9592-1831b659d3f1">
-<span class="eqno">(3.772)<a class="headerlink" href="#equation-cb5b1ea8-40fc-4dd8-9592-1831b659d3f1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3e280310-6b8a-4296-9a36-1913b9e653a1">
+<span class="eqno">(3.772)<a class="headerlink" href="#equation-3e280310-6b8a-4296-9a36-1913b9e653a1" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left(\sin\theta\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &amp;= \frac{-\alpha\sin^2\theta}{\hbar^2}Y(\theta,\phi)
 \end{align}\]</div>
 <p>We notice that this motivates a separation of variables into</p>
-<div class="amsmath math notranslate nohighlight" id="equation-84ca2c07-268d-4fe1-ae24-365f626e938d">
-<span class="eqno">(3.773)<a class="headerlink" href="#equation-84ca2c07-268d-4fe1-ae24-365f626e938d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5008e6de-2470-4704-8135-2213b77a3008">
+<span class="eqno">(3.773)<a class="headerlink" href="#equation-5008e6de-2470-4704-8135-2213b77a3008" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Y(\theta,\phi) = \Theta(\theta)\Phi(\phi)
 \end{equation}\]</div>
 <p>Substituting this and <span class="math notranslate nohighlight">\(\beta = \frac{\alpha}{\hbar^2}\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2b705fa-1d36-406e-b500-e52c62867d8a">
-<span class="eqno">(3.774)<a class="headerlink" href="#equation-e2b705fa-1d36-406e-b500-e52c62867d8a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7a0e969d-7525-4862-9da1-ca93641a5663">
+<span class="eqno">(3.774)<a class="headerlink" href="#equation-7a0e969d-7525-4862-9da1-ca93641a5663" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \left[\sin\theta\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\beta\sin^2\theta \right] \Theta(\theta)\Phi(\phi) = -\frac{\partial^2}{\partial^2\phi} \Theta(\theta)\Phi(\phi).
 \end{equation}\]</div>
 <p>Divide both sides of the equation above by <span class="math notranslate nohighlight">\(\Theta(\theta)\Phi(\phi)\)</span> and note that the operator on the right-hand side is independent of <span class="math notranslate nohighlight">\(\theta\)</span> to yield</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b12ed871-c8ca-4176-9319-b907841aced3">
-<span class="eqno">(3.775)<a class="headerlink" href="#equation-b12ed871-c8ca-4176-9319-b907841aced3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-58e87aa6-1707-4f17-9c5a-0796179bd16d">
+<span class="eqno">(3.775)<a class="headerlink" href="#equation-58e87aa6-1707-4f17-9c5a-0796179bd16d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\sin\theta}{\Theta(\theta)}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)\Theta(\theta)+\beta\sin^2\theta = -\frac{1}{\Phi(\phi)}\frac{\partial^2}{\partial^2\phi} \Phi(\phi).
 \end{equation}\]</div>
 <p>Now the left-hand side is independent of <span class="math notranslate nohighlight">\(\phi\)</span> and the right-hand side is independent of <span class="math notranslate nohighlight">\(\theta\)</span>.  Since these two things are equal but independent of the other’s variable they must be constant.  We will define this constant as <span class="math notranslate nohighlight">\(m^2\)</span> (for reasons that will become clear later) and solve the following two equations independently</p>
 <p><span class="math notranslate nohighlight">\(m^2 = -\frac{1}{\Phi(\phi)}\frac{\partial^2}{\partial^2\phi} \Phi(\phi) \tag{1}\)</span></p>
 <p><span class="math notranslate nohighlight">\(m^2 = \frac{\sin\theta}{\Theta(\theta)}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)\Theta(\theta)+\beta\sin^2\theta \tag{2}\)</span></p>
-<section id="solutions-to-phi-equation-1">
+<div class="section" id="solutions-to-phi-equation-1">
 <h3><span class="section-number">3.4.9.8.1. </span>Solutions to <span class="math notranslate nohighlight">\(\phi\)</span> equation (1)<a class="headerlink" href="#solutions-to-phi-equation-1" title="Permalink to this headline">#</a></h3>
 <p>Equation (1) above can me simply rearranged to give</p>
 <p><span class="math notranslate nohighlight">\(-m^2 \Phi(\phi)= \frac{\partial^2}{\partial^2\phi} \Phi(\phi)\)</span></p>
@@ -1147,8 +1146,8 @@ Y(\theta,\phi) = \Theta(\theta)\Phi(\phi)
 <p>Thus we can write</p>
 <p><span class="math notranslate nohighlight">\(\Phi(\phi) = Ae^{im\phi} \quad m=0,\pm 1, \pm 2, ...\)</span>.</p>
 <p>Normalization yields <span class="math notranslate nohighlight">\(A=\frac{1}{\sqrt{2\pi}}\)</span>.</p>
-</section>
-<section id="solutions-to-theta-equation-2">
+</div>
+<div class="section" id="solutions-to-theta-equation-2">
 <h3><span class="section-number">3.4.9.8.2. </span>Solutions to <span class="math notranslate nohighlight">\(\theta\)</span> equation (2)<a class="headerlink" href="#solutions-to-theta-equation-2" title="Permalink to this headline">#</a></h3>
 <p>The solutions to equation (2) above are not as straightforward as those for equation (1).  We start by rewriting the original equation here:</p>
 <p><span class="math notranslate nohighlight">\(m^2 = \frac{\sin\theta}{\Theta(\theta)}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)\Theta(\theta)+\beta\sin^2\theta\)</span>.</p>
@@ -1211,8 +1210,8 @@ Y(\theta,\phi) = \Theta(\theta)\Phi(\phi)
 <img alt="../../_images/particle_in_a_sphere_18_0.png" src="../../_images/particle_in_a_sphere_18_0.png" />
 </div>
 </div>
-</section>
-<section id="combining-solutions-to-theta-and-phi">
+</div>
+<div class="section" id="combining-solutions-to-theta-and-phi">
 <h3><span class="section-number">3.4.9.8.3. </span>Combining Solutions to <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span><a class="headerlink" href="#combining-solutions-to-theta-and-phi" title="Permalink to this headline">#</a></h3>
 <p>The total wavefunctions are the product of <span class="math notranslate nohighlight">\(\Phi(\phi)\)</span> and <span class="math notranslate nohighlight">\(\Theta(\theta)\)</span>.  It is easy to see</p>
 <p><span class="math notranslate nohighlight">\(Y_l^m(\theta,\phi)\propto P_l^{|m|}(\cos\theta)e^{im\phi}\)</span>.</p>
@@ -1257,50 +1256,50 @@ Y(\theta,\phi) = \Theta(\theta)\Phi(\phi)
 <img alt="../../_images/particle_in_a_sphere_21_0.png" src="../../_images/particle_in_a_sphere_21_0.png" />
 </div>
 </div>
-</section>
-</section>
-<section id="solution-to-the-r-differential-equation">
+</div>
+</div>
+<div class="section" id="solution-to-the-r-differential-equation">
 <h2><span class="section-number">3.4.9.9. </span>Solution to the <span class="math notranslate nohighlight">\(r\)</span> differential equation<a class="headerlink" href="#solution-to-the-r-differential-equation" title="Permalink to this headline">#</a></h2>
 <p>It is the goal of this section to solve the equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3dbe8034-300e-4dc2-9d6f-5f3a9db3d9cd">
-<span class="eqno">(3.776)<a class="headerlink" href="#equation-3dbe8034-300e-4dc2-9d6f-5f3a9db3d9cd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-da8d5c55-2c61-41aa-8f6b-cd6204a29603">
+<span class="eqno">(3.776)<a class="headerlink" href="#equation-da8d5c55-2c61-41aa-8f6b-cd6204a29603" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = \alpha
 \end{equation}\]</div>
 <p>The above equation is a form of the radial component of the Helmholtz equation and has the solution of the spherical Bessel functions.</p>
 <p>Plugging in what we have already determined for <span class="math notranslate nohighlight">\(\alpha\)</span> (namely <span class="math notranslate nohighlight">\(\alpha = \hbar^2\beta = \hbar^2l(l+1)\)</span>)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5b182b0d-cc8c-49ae-80e4-652d9651f919">
-<span class="eqno">(3.777)<a class="headerlink" href="#equation-5b182b0d-cc8c-49ae-80e4-652d9651f919" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cb2c01a5-77b0-4227-89ce-11a964538adb">
+<span class="eqno">(3.777)<a class="headerlink" href="#equation-cb2c01a5-77b0-4227-89ce-11a964538adb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = \hbar^2l(l+1)
 \end{equation}\]</div>
 <p>Multiplying through by <span class="math notranslate nohighlight">\(-\frac{R(r)}{2m}\)</span> and rearranging yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d8bce758-252e-416e-93f0-625b7167daec">
-<span class="eqno">(3.778)<a class="headerlink" href="#equation-d8bce758-252e-416e-93f0-625b7167daec" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c72bdd5c-0bc3-4278-8099-a2a2d3998811">
+<span class="eqno">(3.778)<a class="headerlink" href="#equation-c72bdd5c-0bc3-4278-8099-a2a2d3998811" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{-\hbar^2}{2m}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) -\frac{\hbar^2}{2m}l(l+1)R(r)= r^2ER(r)  
 \end{equation}\]</div>
 <p>We now make the substitution that <span class="math notranslate nohighlight">\(u(r) = rR(r)\)</span>.  This will allow us to simplify the above equation due to the fact that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-243c236a-d08d-45af-8703-65faf20fcaba">
-<span class="eqno">(3.779)<a class="headerlink" href="#equation-243c236a-d08d-45af-8703-65faf20fcaba" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a24f3ff2-e396-4b6d-a9ea-b8aa96b35111">
+<span class="eqno">(3.779)<a class="headerlink" href="#equation-a24f3ff2-e396-4b6d-a9ea-b8aa96b35111" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d^2u}{dr^2} = 2\frac{dR}{dr} + r\frac{d^2R}{dr^2} = \frac{1}{r}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)
 \end{equation}\]</div>
 <p>Making this substition yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ef4859cb-10c4-48af-905b-644dd6df2873">
-<span class="eqno">(3.780)<a class="headerlink" href="#equation-ef4859cb-10c4-48af-905b-644dd6df2873" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3c73af70-b919-470f-a260-d316e495fd6b">
+<span class="eqno">(3.780)<a class="headerlink" href="#equation-3c73af70-b919-470f-a260-d316e495fd6b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{-\hbar^2}{2m}r\frac{d^2u}{dr^2} -\frac{\hbar^2}{2m}l(l+1)\frac{u(r)}{r}= rEu(r)  
 \end{equation}\]</div>
 <p>Dividing through by <span class="math notranslate nohighlight">\(r\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57fc8107-67ab-4fb8-bd77-9602047b038d">
-<span class="eqno">(3.781)<a class="headerlink" href="#equation-57fc8107-67ab-4fb8-bd77-9602047b038d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bbe1c41f-2c55-4084-a2b7-491a350a6d0e">
+<span class="eqno">(3.781)<a class="headerlink" href="#equation-bbe1c41f-2c55-4084-a2b7-491a350a6d0e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{-\hbar^2}{2m}\frac{d^2u}{dr^2} -\frac{\hbar^2}{2m}\frac{l(l+1)}{r^2}u(r)= Eu(r)  
 \end{equation}\]</div>
 <p>We note that this final expression looks like a Schrodinger equation in <span class="math notranslate nohighlight">\(r\)</span> with a potential of <span class="math notranslate nohighlight">\(-\frac{\hbar^2}{2m}\frac{l(l+1)}{r^2}\)</span>.  This potential has the effect of pushing the particle away from the origin and is thus sometimes referred to as the centrifugal potential.</p>
 <p>The solutions to this differential expression are related to the spherical Bessel functions with a general solution written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e0ef8c31-e540-47ac-97bb-a7566154d5cb">
-<span class="eqno">(3.782)<a class="headerlink" href="#equation-e0ef8c31-e540-47ac-97bb-a7566154d5cb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d0176689-74c8-4e0d-a636-aed12f8b9095">
+<span class="eqno">(3.782)<a class="headerlink" href="#equation-d0176689-74c8-4e0d-a636-aed12f8b9095" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u(r) = Arj_l(kr) + Bry_l(kr)
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are constants, <span class="math notranslate nohighlight">\(k=\sqrt{\frac{2mE}{\hbar^2}}\)</span> and <span class="math notranslate nohighlight">\(j_l\)</span> (spherical Bessel functions of type 1) and <span class="math notranslate nohighlight">\(y_l\)</span> (spherical Bessel functions of type 2) are defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-829d9689-ce73-4f21-9dbf-62b19d404fd0">
-<span class="eqno">(3.783)<a class="headerlink" href="#equation-829d9689-ce73-4f21-9dbf-62b19d404fd0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6628bdc4-d408-4d81-ba5f-3db09dbc36d0">
+<span class="eqno">(3.783)<a class="headerlink" href="#equation-6628bdc4-d408-4d81-ba5f-3db09dbc36d0" title="Permalink to this equation">#</a></span>\[\begin{align}
 j_l(x) &amp;= (-x)^l\left(\frac{1}{x}\frac{d}{dx}\right)^l\frac{\sin x}{x} \\
 y_l(x) &amp;= -(-x)^l\left(\frac{1}{x}\frac{d}{dx}\right)^l\frac{\cos x}{x}
 \end{align}\]</div>
@@ -1342,23 +1341,23 @@ y_l(x) &amp;= -(-x)^l\left(\frac{1}{x}\frac{d}{dx}\right)^l\frac{\cos x}{x}
 </div>
 </div>
 <p>From the above plots we observe that both <span class="math notranslate nohighlight">\(j_l\)</span> and <span class="math notranslate nohighlight">\(y_l\)</span> are single-valued and continuous over the plotted domain. Additionally, the <span class="math notranslate nohighlight">\(j_l\)</span> functions are all finite over the plotted domain.  The <span class="math notranslate nohighlight">\(j_l\)</span> functions, however, are not finite over the domain as they tend to <span class="math notranslate nohighlight">\(-\infty\)</span> as <span class="math notranslate nohighlight">\(x\rightarrow0\)</span>.  Thus, we get the solutions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5ef80845-2f58-4497-9efa-fa7c961f90cd">
-<span class="eqno">(3.784)<a class="headerlink" href="#equation-5ef80845-2f58-4497-9efa-fa7c961f90cd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8ac3ed48-dc24-4a79-a8ef-8c6b65ea4c06">
+<span class="eqno">(3.784)<a class="headerlink" href="#equation-8ac3ed48-dc24-4a79-a8ef-8c6b65ea4c06" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u(r) = Arj_l(kr)
 \end{equation}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5bf06401-7779-4c94-a85a-0617cfb41929">
-<span class="eqno">(3.785)<a class="headerlink" href="#equation-5bf06401-7779-4c94-a85a-0617cfb41929" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7ddcf28a-f833-4942-a5a9-8987c6cc256a">
+<span class="eqno">(3.785)<a class="headerlink" href="#equation-7ddcf28a-f833-4942-a5a9-8987c6cc256a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R_l(r) = Aj_l(kr)
 \end{equation}\]</div>
 <p>Applying the boundary condition that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c431d9d1-9176-4b7a-99fb-efb18188b02e">
-<span class="eqno">(3.786)<a class="headerlink" href="#equation-c431d9d1-9176-4b7a-99fb-efb18188b02e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7becd748-6973-4409-a84e-37f2b27f855f">
+<span class="eqno">(3.786)<a class="headerlink" href="#equation-7becd748-6973-4409-a84e-37f2b27f855f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R(r_0) = 0
 \end{equation}\]</div>
 <p>yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-426b8f87-4dde-42b1-b25f-41f8c23fe0a5">
-<span class="eqno">(3.787)<a class="headerlink" href="#equation-426b8f87-4dde-42b1-b25f-41f8c23fe0a5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-51bc0b80-b41e-4a69-a39f-003cfbf13ca7">
+<span class="eqno">(3.787)<a class="headerlink" href="#equation-51bc0b80-b41e-4a69-a39f-003cfbf13ca7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 kr_0 = \beta_l^n
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta_l^n\)</span> is the <span class="math notranslate nohighlight">\(n\)</span>th root (<span class="math notranslate nohighlight">\(n=1,2,3...\)</span>) of the <span class="math notranslate nohighlight">\(l\)</span>th spherical Bessel function of the first type.  There are an infinite number of zeros for each <span class="math notranslate nohighlight">\(l\)</span>.  The values of these zeros cannot, in general, be determined analytically (except for <span class="math notranslate nohighlight">\(l=0\)</span>).  Here is a table of some of the zeros</p>
@@ -1393,23 +1392,23 @@ kr_0 = \beta_l^n
 </tbody>
 </table>
 <p>From the equation <span class="math notranslate nohighlight">\(kr_0 = \beta_l^n\)</span> we can also get the energy using the previously stated equality <span class="math notranslate nohighlight">\(k = \sqrt{\frac{2mE}{\hbar^2}}\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-6cbba9c9-9047-4de2-a73b-d86e05444c17">
-<span class="eqno">(3.788)<a class="headerlink" href="#equation-6cbba9c9-9047-4de2-a73b-d86e05444c17" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3c9813ec-1cf2-4c52-ac50-82abbfa94ee8">
+<span class="eqno">(3.788)<a class="headerlink" href="#equation-3c9813ec-1cf2-4c52-ac50-82abbfa94ee8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \sqrt{\frac{2mE}{\hbar^2}}r_0 &amp;= \beta_l^n \\
 \Rightarrow \frac{2mE}{\hbar^2} &amp;= \frac{\left(\beta_l^n\right)^2}{r_0^2} \\
 \Rightarrow E_{l,n} &amp;= \frac{\hbar^2\left(\beta_l^n\right)^2}{2mr_0^2}
 \end{align}\]</div>
 <p>Also, the radial wavefunction is now</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1b4a1401-b2a5-472c-add3-22c50db659a9">
-<span class="eqno">(3.789)<a class="headerlink" href="#equation-1b4a1401-b2a5-472c-add3-22c50db659a9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f1c23a65-2bbf-4aa0-8ed0-c0c0a9026f01">
+<span class="eqno">(3.789)<a class="headerlink" href="#equation-f1c23a65-2bbf-4aa0-8ed0-c0c0a9026f01" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R_{l,n}(r) = Aj_l\left(\frac{\beta_l^n}{r_0}r\right)
 \end{equation}\]</div>
-</section>
-<section id="combined-solution-for-the-wave-functions">
+</div>
+<div class="section" id="combined-solution-for-the-wave-functions">
 <h2><span class="section-number">3.4.9.10. </span>Combined Solution for the wave functions<a class="headerlink" href="#combined-solution-for-the-wave-functions" title="Permalink to this headline">#</a></h2>
 <p>We can now combine our solutions for the wave functions for <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> and <span class="math notranslate nohighlight">\(r\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-93231830-c481-4f16-82f8-f668c0c9ff8a">
-<span class="eqno">(3.790)<a class="headerlink" href="#equation-93231830-c481-4f16-82f8-f668c0c9ff8a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5f577b10-18ac-4d12-8f29-721d54b58bf5">
+<span class="eqno">(3.790)<a class="headerlink" href="#equation-5f577b10-18ac-4d12-8f29-721d54b58bf5" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi(r,\theta,\phi) &amp;= R_{l,n}(r)Y_l^m(\theta,\phi) \\
 &amp;= Aj_l\left(\frac{\beta_l^n}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi}
 \end{align}\]</div>
@@ -1424,47 +1423,124 @@ R_{l,n}(r) = Aj_l\left(\frac{\beta_l^n}{r_0}r\right)
 <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">spherical_jn</span>
 <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">lpmv</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span>
 
-<span class="k">def</span> <span class="nf">particle_in_sphere_wf</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">l</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">sph_harm</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="o">*</span><span class="n">spherical_yn</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">particle_in_sphere_r_theta</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">l</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">lpmv</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span><span class="o">*</span><span class="n">spherical_yn</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">plot_particle_in_sphere_wf_r_theta</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">l</span><span class="p">,</span> <span class="n">ax_obj</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">100</span><span class="p">),</span> <span class="n">r</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)):</span>
-    <span class="n">R</span><span class="p">,</span> <span class="n">THETA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">R</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">THETA</span><span class="p">)</span> 
-    <span class="n">Y</span> <span class="o">=</span> <span class="n">R</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">THETA</span><span class="p">)</span> 
-    <span class="n">Z</span> <span class="o">=</span> <span class="n">particle_in_sphere_r_theta</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="n">THETA</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">l</span><span class="p">)</span>
-    <span class="c1"># plot</span>
-    <span class="n">ax_obj</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;$l=</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1">,m=</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
-    <span class="n">ax_obj</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span>  <span class="n">rstride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="c1">#ax_obj.set_axis_off()</span>
+<span class="k">def</span> <span class="nf">spherical_jn_sensible_grid</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">ngrid</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a grid of x values that should contain the first n zeros, but not too many.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)),</span> <span class="n">ngrid</span><span class="p">)</span>
     
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="s1">&#39;3d&#39;</span><span class="p">})</span> 
-<span class="n">plot_particle_in_sphere_wf_r_theta</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">ax</span><span class="p">)</span>
-<span class="c1">#for i in range(3):</span>
-<span class="c1">#    for j in range(5):</span>
-<span class="c1">#        ax[i,j].set_axis_off()</span>
-<span class="c1">#for l_index, l in enumerate(range(3)):</span>
-<span class="c1">#    for m_index, m in enumerate(range(-l,l+1)):</span>
-<span class="c1">#        plot_spherical_harmonic(m,l,ax[l_index,m_index])</span>
+
+<span class="k">def</span> <span class="nf">spherical_jn_zero</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">ngrid</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns nth zero of spherical bessel function of order l</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">l</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># calculate on a sensible grid</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">spherical_jn_sensible_grid</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">ngrid</span><span class="o">=</span><span class="n">ngrid</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">spherical_jn</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    
+        <span class="c1"># Find m good initial guesses from where y switches sign</span>
+        <span class="n">diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">y</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ind0s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">diffs</span><span class="p">)[</span><span class="mi">0</span><span class="p">][:</span><span class="n">n</span><span class="p">]</span>  <span class="c1"># first m times sign of y changes</span>
+        <span class="n">x0s</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">ind0s</span><span class="p">]</span>
+    
+        <span class="k">def</span> <span class="nf">fn</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">spherical_jn</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">root</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">x0</span><span class="p">)</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x0</span> <span class="ow">in</span> <span class="n">x0s</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    
+<span class="k">def</span> <span class="nf">particle_in_sphere_wf</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">spherical_jn_zero</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sph_harm</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="o">*</span><span class="n">spherical_jn</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">r</span><span class="o">*</span><span class="n">denom</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">plot_particle_in_sphere_wf_r_theta</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">,</span> <span class="n">ax_obj</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="n">theta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">20</span><span class="p">),</span> <span class="n">phi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">25</span><span class="p">)):</span>
+    <span class="n">R</span><span class="p">,</span> <span class="n">THETA</span><span class="p">,</span> <span class="n">PHI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">THETA</span> <span class="o">=</span> <span class="n">THETA</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">PHI</span> <span class="o">=</span> <span class="n">PHI</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">R</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">THETA</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">PHI</span><span class="p">)</span> 
+    <span class="n">y</span> <span class="o">=</span> <span class="n">R</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">THETA</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">PHI</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">R</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">THETA</span><span class="p">)</span>
+    <span class="n">wf</span> <span class="o">=</span> <span class="n">particle_in_sphere_wf</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="n">THETA</span><span class="p">,</span><span class="n">PHI</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+    <span class="c1"># plot</span>
+    <span class="n">ax_obj</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;$n=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">,l=</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1">,m=</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+    <span class="n">ax_obj</span><span class="o">.</span><span class="n">scatter3D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="n">wf</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">ax_obj</span><span class="o">.</span><span class="n">set_box_aspect</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+    <span class="c1"># xy countour</span>
+    <span class="c1">#R, PHI = np.meshgrid(r, phi)</span>
+    <span class="c1">#x = R*np.sin(np.pi/2)*np.cos(PHI) </span>
+    <span class="c1">#y = R*np.sin(np.pi/2)*np.sin(PHI)</span>
+    <span class="c1">#z = R*np.cos(np.pi/2)</span>
+    <span class="c1">#wf = particle_in_sphere_wf(R.flatten(),np.ones(R.flatten().size)*np.pi/2,PHI.flatten(),m,l).reshape(R.shape)</span>
+    <span class="c1">#ax_obj.contourf(x,y,wf,zdir=&#39;z&#39;,offset=-1)#,cmap=&#39;coolwarm&#39;)</span>
+    <span class="c1"># xz</span>
+    <span class="c1">#R, THETA = np.meshgrid(r, theta)</span>
+    <span class="c1">#x = R*np.sin(THETA)*np.cos(0) </span>
+    <span class="c1">#y = R*np.sin(THETA)*np.sin(0)</span>
+    <span class="c1">#z = R*np.cos(THETA)</span>
+    <span class="c1">#wf = particle_in_sphere_wf(R.flatten(),np.ones(R.flatten().size)*np.pi/2,PHI.flatten(),m,l).reshape(R.shape)</span>
+    <span class="c1">#ax_obj.contourf(x,y,wf,zdir=&#39;z&#39;,offset=-1)#,cmap=&#39;coolwarm&#39;)</span>
+    <span class="c1">#ax_obj.set_box_aspect((100,100,100))</span>
+    <span class="n">ax_obj</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>    
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="s1">&#39;3d&#39;</span><span class="p">})</span> 
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">plot_particle_in_sphere_wf_r_theta</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">ax</span><span class="p">[</span><span class="n">l</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/numpy/core/numeric.py:1663: RuntimeWarning: invalid value encountered in multiply
-  multiply(a2, b0, out=cp1)
-/Users/mmccull/opt/anaconda3/lib/python3.8/site-packages/mpl_toolkits/mplot3d/proj3d.py:109: RuntimeWarning: invalid value encountered in true_divide
-  txs, tys, tzs = vecw[0]/w, vecw[1]/w, vecw[2]/w
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">5</span><span class="o">-</span><span class="mi">07</span><span class="n">d843e1e8c3</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">):</span>
+<span class="ne">----&gt; </span><span class="mi">4</span>         <span class="n">plot_particle_in_sphere_wf_r_theta</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">ax</span><span class="p">[</span><span class="n">l</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+
+<span class="nn">&lt;ipython-input-4-f0568183da47&gt;</span> in <span class="ni">plot_particle_in_sphere_wf_r_theta</span><span class="nt">(n, l, m, ax_obj, r, theta, phi)</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span>     <span class="n">ax_obj</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;$n=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">,l=</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s1">,m=</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">54</span>     <span class="n">ax_obj</span><span class="o">.</span><span class="n">scatter3D</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="n">wf</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">55</span>     <span class="n">ax_obj</span><span class="o">.</span><span class="n">set_box_aspect</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">56</span>     <span class="c1"># xy countour</span>
+<span class="g g-Whitespace">     </span><span class="mi">57</span>     <span class="c1">#R, PHI = np.meshgrid(r, phi)</span>
+
+<span class="ne">AttributeError</span>: &#39;Axes3DSubplot&#39; object has no attribute &#39;set_box_aspect&#39;
 </pre></div>
 </div>
-<img alt="../../_images/particle_in_a_sphere_28_1.png" src="../../_images/particle_in_a_sphere_28_1.png" />
+<img alt="../../_images/particle_in_a_sphere_29_1.png" src="../../_images/particle_in_a_sphere_29_1.png" />
 </div>
 </div>
-</section>
-</section>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">subplot_kw</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;projection&#39;</span><span class="p">:</span> <span class="s1">&#39;3d&#39;</span><span class="p">})</span> 
+<span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="o">&lt;=</span> <span class="n">l</span><span class="p">:</span>
+            <span class="n">plot_particle_in_sphere_wf_r_theta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">ax</span><span class="p">[</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="n">ax</span><span class="p">[</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/particle_in_a_sphere_30_0.png" src="../../_images/particle_in_a_sphere_30_0.png" />
+</div>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
