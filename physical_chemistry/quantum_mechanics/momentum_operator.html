@@ -4,8 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.4.7. The Momentum Operator &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -52,8 +51,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.4.8. Operator Algebra" href="operator_algebra.html" />
@@ -827,13 +826,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="the-momentum-operator">
+  <div class="tex2jax_ignore mathjax_ignore section" id="the-momentum-operator">
 <h1><span class="section-number">3.4.7. </span>The Momentum Operator<a class="headerlink" href="#the-momentum-operator" title="Permalink to this headline">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">3.4.7.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>We want to know why the (1D) momentum operator is <span class="math notranslate nohighlight">\(\hat{P_x} = -i\hbar\frac{\partial}{\partial x}\)</span>.</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.4.7.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through this notebook, you will be able to</p>
 <ol class="simple">
@@ -841,8 +840,8 @@ title="Print to PDF"
 <li><p>Identify the Fourier integral form of the Dirac delta function</p></li>
 <li><p>Utilize Fourier transforms to derive the 1D momentum operator in position space.</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.4.7.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook</p>
 <ol class="simple">
@@ -850,68 +849,68 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</section>
-<section id="the-premise">
+</div>
+<div class="section" id="the-premise">
 <h2><span class="section-number">3.4.7.4. </span>The Premise<a class="headerlink" href="#the-premise" title="Permalink to this headline">#</a></h2>
 <p>We have been told that the two operators from which we can construct all others in quantum mechanics are the position operator and momentum operator.  In one dimension these are given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cc0f9047-97b3-4258-b814-6ea6796c1561">
-<span class="eqno">(3.720)<a class="headerlink" href="#equation-cc0f9047-97b3-4258-b814-6ea6796c1561" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-de430afa-0771-4a2b-ac12-075536eaae92">
+<span class="eqno">(3.720)<a class="headerlink" href="#equation-de430afa-0771-4a2b-ac12-075536eaae92" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{X} &amp;= x \\
 \hat{P_x} &amp;= -i\hbar\frac{\partial}{\partial x}
 \end{align}\]</div>
 <p>It is the goal of these notes to demonstrate why the momentum operator in position coordinates is the first derivative.</p>
 <p>A single particle at finite temperature in one dimension will have a position, denoted <span class="math notranslate nohighlight">\(x\)</span>, and a momentum, denoted <span class="math notranslate nohighlight">\(p_x\)</span>.  The particle can be described by a wavefunction in position space, denoted <span class="math notranslate nohighlight">\(\psi(x)\)</span>, and a wave function in momentum space, denoted <span class="math notranslate nohighlight">\(\phi(p_x)\)</span>.  The position operator operating on the position wave function yields the position of the particle and the momentum operator in momentum space operating on the momentum wave function yields the moment.  This is more concisely written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ff1be425-93bc-4a74-ac05-0267d79528e4">
-<span class="eqno">(3.721)<a class="headerlink" href="#equation-ff1be425-93bc-4a74-ac05-0267d79528e4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-35b437fb-ddb2-419a-bd33-fac794297160">
+<span class="eqno">(3.721)<a class="headerlink" href="#equation-35b437fb-ddb2-419a-bd33-fac794297160" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;\hat{X}|\psi(x)\rangle = x |\psi(x)\rangle \\
 &amp;\hat{P}|\phi(p_x)\rangle = p_x | \phi(p_x)\rangle
 \end{align}\]</div>
 <p>Our goal can be restated as determining the form of the operator <span class="math notranslate nohighlight">\(\hat{P}\)</span> in position space.</p>
-<section id="fourier-transforms">
+<div class="section" id="fourier-transforms">
 <h3><span class="section-number">3.4.7.4.1. </span>Fourier Transforms<a class="headerlink" href="#fourier-transforms" title="Permalink to this headline">#</a></h3>
 <p>In addition to setting up the problem, the crux of this derivation is recognizing that <span class="math notranslate nohighlight">\(\psi(x)\)</span> and <span class="math notranslate nohighlight">\(\phi(p_x)\)</span> are Fourier transforms of each other.  If you are not familiar with this type of transformation, do not worry.  This can be written mathematically as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2ac2efe4-fa90-4635-9085-616ef8adc20c">
-<span class="eqno">(3.722)<a class="headerlink" href="#equation-2ac2efe4-fa90-4635-9085-616ef8adc20c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-97d0de0b-9dd5-49a5-9c5d-a3219dac74af">
+<span class="eqno">(3.722)<a class="headerlink" href="#equation-97d0de0b-9dd5-49a5-9c5d-a3219dac74af" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi(x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) e^{ip_xx/\hbar}dp_x \\
 \phi(p_x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \psi(x) e^{-ip_xx/\hbar}dx 
 \end{align}\]</div>
 <p>Fourier transformations show up in a number of places but typically they are used to convert between a position space and a frequency space.  Here we are converting between position and momentum.</p>
 <p>Another aspect that shows up in Fourier transforms that we will utilize is the Dirac delta function.  There are many definitions of this but the one that shows up in Fourier transforms is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e8f10ff-3e0d-4fcd-9274-98693dec6c8e">
-<span class="eqno">(3.723)<a class="headerlink" href="#equation-5e8f10ff-3e0d-4fcd-9274-98693dec6c8e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-11a69595-4a43-4cd5-852c-dd7c7ac6ab1e">
+<span class="eqno">(3.723)<a class="headerlink" href="#equation-11a69595-4a43-4cd5-852c-dd7c7ac6ab1e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \delta(x) = \frac{1}{2\pi}\int_{-\infty}^{\infty}e^{ixt}dt
 \end{equation}\]</div>
 <p>The Dirac delta function has the following property</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f38ac4f1-a3fb-4bb5-b0e0-f7ff26bf2be7">
-<span class="eqno">(3.724)<a class="headerlink" href="#equation-f38ac4f1-a3fb-4bb5-b0e0-f7ff26bf2be7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6adea69b-6669-423f-8c6c-944cac306643">
+<span class="eqno">(3.724)<a class="headerlink" href="#equation-6adea69b-6669-423f-8c6c-944cac306643" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \delta(x) = \begin{cases} 1\text{ if } x=0 \\ 0 \text{ otherwise}\end{cases}
 \end{equation}\]</div>
 <p>The integral of the Dirac delta function over all space is equal to 1</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8526ab4e-e45a-413d-b1f1-6b4a3286e9bb">
-<span class="eqno">(3.725)<a class="headerlink" href="#equation-8526ab4e-e45a-413d-b1f1-6b4a3286e9bb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-47fc3370-74db-43be-9e90-423145868625">
+<span class="eqno">(3.725)<a class="headerlink" href="#equation-47fc3370-74db-43be-9e90-423145868625" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^{\infty} \delta(x)dx = 1
 \end{equation}\]</div>
 <p>Additionally, the Dirac delta is often used in integral equations to remove dependency on one variable because of the following property</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8f1aea23-128c-4dce-83da-4af08e972095">
-<span class="eqno">(3.726)<a class="headerlink" href="#equation-8f1aea23-128c-4dce-83da-4af08e972095" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-601dbfa0-aa2a-4a7f-83b1-92c2aecb3f6a">
+<span class="eqno">(3.726)<a class="headerlink" href="#equation-601dbfa0-aa2a-4a7f-83b1-92c2aecb3f6a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^{\infty} \delta(x)f(x)dx = f(0),
 \end{equation}\]</div>
 <p>or, somewhat more generally</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2c02c6b0-675d-43ca-b2f5-c3e2f22535b5">
-<span class="eqno">(3.727)<a class="headerlink" href="#equation-2c02c6b0-675d-43ca-b2f5-c3e2f22535b5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-72f73745-908c-4ebd-9de0-c0744f358489">
+<span class="eqno">(3.727)<a class="headerlink" href="#equation-72f73745-908c-4ebd-9de0-c0744f358489" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^{\infty} \delta(x-x_0)f(x)dx = f(x_0).
 \end{equation}\]</div>
 <p>To see how this is true for the Fourier transform integral case, we will take the integral for finite limits and then argue that this function behaves as described for the Dirac delta function.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8d1c3e5-c7cc-4a20-8e76-45583f400c70">
-<span class="eqno">(3.728)<a class="headerlink" href="#equation-b8d1c3e5-c7cc-4a20-8e76-45583f400c70" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cdccf8c6-63ca-423a-a821-37feb5e9a5ea">
+<span class="eqno">(3.728)<a class="headerlink" href="#equation-cdccf8c6-63ca-423a-a821-37feb5e9a5ea" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_{-n}^{n}e^{ixt}dt &amp;= \left[ \frac{e^{ixt}}{ix}\right]_{-n}^{n} \\
 &amp;= \frac{e^{ixn}-e^{-ixn}}{ix} \\
 &amp;= \frac{2i\sin xn}{ix} \\
 &amp;= \frac{2\sin xn}{x}
 \end{align}\]</div>
 <p>Now we take the limit</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8b2a9d9f-fe16-4d40-a3a6-1dc68bafd6be">
-<span class="eqno">(3.729)<a class="headerlink" href="#equation-8b2a9d9f-fe16-4d40-a3a6-1dc68bafd6be" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a9427ce6-388e-42f0-befa-15415483a311">
+<span class="eqno">(3.729)<a class="headerlink" href="#equation-a9427ce6-388e-42f0-befa-15415483a311" title="Permalink to this equation">#</a></span>\[\begin{align}
 \lim_{n\rightarrow\infty}\frac{2\sin xn}{x} = 2\pi\delta(x)
 \end{align}\]</div>
 <div class="cell tag_hide_input docutils container">
@@ -945,17 +944,17 @@ title="Print to PDF"
 <img alt="../../_images/momentum_operator_8_0.png" src="../../_images/momentum_operator_8_0.png" />
 </div>
 </div>
-</section>
-<section id="deriving-the-momentum-operator">
+</div>
+<div class="section" id="deriving-the-momentum-operator">
 <h3><span class="section-number">3.4.7.4.2. </span>Deriving the Momentum Operator<a class="headerlink" href="#deriving-the-momentum-operator" title="Permalink to this headline">#</a></h3>
 <p>We now have all the pieces to derive the expression for the momentum operator in position space.  The map of how we will do this is we recognize</p>
-<div class="amsmath math notranslate nohighlight" id="equation-14f8f73f-60f6-469a-9626-6be33add2354">
-<span class="eqno">(3.730)<a class="headerlink" href="#equation-14f8f73f-60f6-469a-9626-6be33add2354" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5ff9f1b3-213f-44fc-8aa8-b475cac55f42">
+<span class="eqno">(3.730)<a class="headerlink" href="#equation-5ff9f1b3-213f-44fc-8aa8-b475cac55f42" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle p \rangle = \langle \phi(p_x)| p_x | \phi(p_x)\rangle
 \end{equation}\]</div>
 <p>We will transform the coordinates in the integrals on the r.h.s of the above equation using Fourier transforms.  Before we do that, however, it is useful to start by taking the spacial derivative of <span class="math notranslate nohighlight">\(\psi(x)\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-5c027ef3-29a5-45a9-94db-c0e6037bc5a7">
-<span class="eqno">(3.731)<a class="headerlink" href="#equation-5c027ef3-29a5-45a9-94db-c0e6037bc5a7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c0cfab93-d4dc-4088-a177-ee856ee9baf3">
+<span class="eqno">(3.731)<a class="headerlink" href="#equation-c0cfab93-d4dc-4088-a177-ee856ee9baf3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{\partial}{\partial x}\psi(x) &amp;= \frac{\partial}{\partial x}\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) e^{ip_xx/\hbar}dp_x \\
 &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) \frac{\partial}{\partial x}e^{ip_xx/\hbar}dp_x \\
 &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \phi(p_x) \frac{ip_x}{\hbar}e^{ip_xx/\hbar}dp_x \\
@@ -964,47 +963,47 @@ title="Print to PDF"
 \end{align}\]</div>
 <p>The above equation demonstrates that <span class="math notranslate nohighlight">\(i\hbar\frac{\partial}{\partial x}\psi(x)\)</span> and <span class="math notranslate nohighlight">\(p_x\phi(p_x)\)</span> are Fourier transforms of eachother.  This will be useful in our coordinate transformation.</p>
 <p>Now, let’s start</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1fd89f9a-5dde-4ded-9901-6d800a943dd1">
-<span class="eqno">(3.732)<a class="headerlink" href="#equation-1fd89f9a-5dde-4ded-9901-6d800a943dd1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c0ddc1bf-529f-425a-9aa5-0bb95d839b05">
+<span class="eqno">(3.732)<a class="headerlink" href="#equation-c0ddc1bf-529f-425a-9aa5-0bb95d839b05" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle \phi(p_x)| p_x | \phi(p_x)\rangle = \int_{-\infty}^{\infty}\phi^*(p_x)p_x\phi(p_x)dp_x
 \end{align}\]</div>
 <p>In this equation we will substitute that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-34f92452-a651-47c1-af8e-a005066df4b5">
-<span class="eqno">(3.733)<a class="headerlink" href="#equation-34f92452-a651-47c1-af8e-a005066df4b5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e4049d7a-13cb-425c-b947-7035c74d202b">
+<span class="eqno">(3.733)<a class="headerlink" href="#equation-e4049d7a-13cb-425c-b947-7035c74d202b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \phi^*(p_x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar}dx' \\
 p_x\phi(p_x) &amp;= \frac{1}{\sqrt{2\pi}}\int_{\infty}^{\infty} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dx 
 \end{align}\]</div>
 <p>where the first relationship is the complex conjugate of the Fourier transform of <span class="math notranslate nohighlight">\(\phi\)</span> and the second relationship is the inverse Fourier transform that we just showed.  I use <span class="math notranslate nohighlight">\(x'\)</span> in the first expression to disntinguish the integration variables in the two integrals.  Plugging these into the expectation value of <span class="math notranslate nohighlight">\(p\)</span> equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-efa34681-c514-494e-87b9-5cae557af732">
-<span class="eqno">(3.734)<a class="headerlink" href="#equation-efa34681-c514-494e-87b9-5cae557af732" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c4392ab4-e10c-4a89-a752-e6750a6e36df">
+<span class="eqno">(3.734)<a class="headerlink" href="#equation-c4392ab4-e10c-4a89-a752-e6750a6e36df" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle \phi(p_x)| p_x | \phi(p_x)\rangle &amp;= \int_{-\infty}^{\infty}\phi^*(p_x)p_x\phi(p_x)dp_x \\
 &amp;= \int_{-\infty}^{\infty}\left[\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar}dx'\right]\left[\frac{1}{\sqrt{2\pi}}\int_{\infty}^{\infty} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dx\right]dp_x \\
 &amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\left[\int_{-\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar}dx'\right]\left[\int_{\infty}^{\infty} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dx\right]dp_x \\
 &amp;=\frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dp_xdx'dx 
 \end{align}\]</div>
 <p>where in the last step I can put all terms inside a triple integral because the terms inside the <span class="math notranslate nohighlight">\(x'\)</span> and <span class="math notranslate nohighlight">\(x\)</span> integrals don’t depend on the other integration variable.  I can now combine the two exponential terms (because <span class="math notranslate nohighlight">\(e^{ip_xx'/\hbar}\)</span> is constant with respect to <span class="math notranslate nohighlight">\(\frac{\partial}{\partial x}\)</span>) and then integrate the result over <span class="math notranslate nohighlight">\(p_x\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca4e57cb-2bf4-41c2-af5c-cce535ae9b38">
-<span class="eqno">(3.735)<a class="headerlink" href="#equation-ca4e57cb-2bf4-41c2-af5c-cce535ae9b38" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e0310c5d-3036-43f8-b343-2103f062699a">
+<span class="eqno">(3.735)<a class="headerlink" href="#equation-e0310c5d-3036-43f8-b343-2103f062699a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle \phi(p_x)| p_x | \phi(p_x)\rangle &amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{\infty}^{\infty} \psi^*(x') e^{ip_xx'/\hbar} \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{-ip_xx/\hbar}dp_xdx'dx \\
 &amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)e^{ip_x(x'-x)/\hbar}dp_xdx'dx \\
 &amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)\int_{\infty}^{\infty}e^{ip_x(x'-x)/\hbar}dp_xdx'dx \\
 &amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)2\pi\delta(x-x')dx'dx
 \end{align}\]</div>
 <p>where we recognize the Fourier version of the Dirac delta function in the last step.  The Dirac function now allows us to elimnate one of the integration variables (i.e. <span class="math notranslate nohighlight">\(\delta(x-x')\)</span> is only nonzero when <span class="math notranslate nohighlight">\(x'=x\)</span>) yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-85183766-8a13-4c13-9aa9-6b8f5beafdfd">
-<span class="eqno">(3.736)<a class="headerlink" href="#equation-85183766-8a13-4c13-9aa9-6b8f5beafdfd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-db9ff31e-de93-4a62-866a-fe23d15cb6bf">
+<span class="eqno">(3.736)<a class="headerlink" href="#equation-db9ff31e-de93-4a62-866a-fe23d15cb6bf" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle \phi(p_x)| p_x | \phi(p_x)\rangle &amp;= \frac{1}{2\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} \psi^*(x') \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)2\pi\delta(x-x')dx'dx \\
 &amp;= \int_{-\infty}^{\infty} \psi^*(x) \left(-i\hbar\frac{\partial}{\partial x}\psi(x)\right)dx \\
 &amp;= \langle \psi(x) | -i\hbar\frac{\partial}{\partial x} | \psi(x)\rangle
 \end{align}\]</div>
 <p>Thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8ebf475b-732d-4075-82d4-6b392cc68951">
-<span class="eqno">(3.737)<a class="headerlink" href="#equation-8ebf475b-732d-4075-82d4-6b392cc68951" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ea739950-586e-47dd-b48d-6acfa1c58b80">
+<span class="eqno">(3.737)<a class="headerlink" href="#equation-ea739950-586e-47dd-b48d-6acfa1c58b80" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{p_x} = -i\hbar\frac{\partial}{\partial x}
 \end{equation}\]</div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
