@@ -272,7 +272,7 @@ plt.legend(fontsize=16);
 # 
 # These are the spherical harmonics. We will now look at some of these.
 
-# In[2]:
+# In[83]:
 
 
 # make two plots of the same spherical harmonic
@@ -352,7 +352,7 @@ plt.show();
 # 
 # Below are plots of the first few of both of these functions.
 
-# In[3]:
+# In[93]:
 
 
 #### import numpy as np
@@ -429,7 +429,7 @@ plt.show();
 # &= Aj_l\left(\frac{\beta_l^n}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi}
 # \end{align}
 
-# In[4]:
+# In[1]:
 
 
 # make two plots of the same spherical harmonic
@@ -505,7 +505,7 @@ def plot_particle_in_sphere_wf_r_theta(n,l,m, ax_obj, r=np.linspace(0,1,15), the
     ax_obj.set_axis_off()
 
 
-# In[5]:
+# In[2]:
 
 
 
@@ -516,7 +516,7 @@ for n in range(1,4):
 plt.show();
 
 
-# In[138]:
+# In[3]:
 
 
 fig, ax = plt.subplots(3,3,figsize=(12,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
