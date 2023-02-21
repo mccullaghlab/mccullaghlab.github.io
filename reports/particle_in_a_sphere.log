@@ -17,29 +17,67 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-    
-fig, ax = plt.subplots(3,3,figsize=(12,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
-for l in range(3):
-    for n in range(1,4):
-        plot_particle_in_sphere_wf_r_theta(n,l,0,ax[l,n-1])
-plt.show();
+# plot of some of the Legendre polynomials
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+from scipy.special import lpmv
+x = np.arange(-1,1,0.0001)
+plt.figure(figsize=(12,6),dpi= 80, facecolor='w', edgecolor='k')
+plt.tick_params(axis='both',labelsize=20)
+plt.grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
+for l in range(2):
+    for m in range(-l,l+1):
+        label = "l=" + str(l) + ", m=" + str(m)
+        plt.plot(x,lpmv(m,l,x),lw=4,label=label)
+plt.title("Associated Lengedre Polynomials",fontsize=16)
+plt.legend(fontsize=16);
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mAttributeError[0m                            Traceback (most recent call last)
-[0;32m<ipython-input-5-07d843e1e8c3>[0m in [0;36m<module>[0;34m[0m
-[1;32m      2[0m [0;32mfor[0m [0ml[0m [0;32min[0m [0mrange[0m[0;34m([0m[0;36m3[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      3[0m     [0;32mfor[0m [0mn[0m [0;32min[0m [0mrange[0m[0;34m([0m[0;36m1[0m[0;34m,[0m[0;36m4[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 4[0;31m         [0mplot_particle_in_sphere_wf_r_theta[0m[0;34m([0m[0mn[0m[0;34m,[0m[0ml[0m[0;34m,[0m[0;36m0[0m[0;34m,[0m[0max[0m[0;34m[[0m[0ml[0m[0;34m,[0m[0mn[0m[0;34m-[0m[0;36m1[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      5[0m [0mplt[0m[0;34m.[0m[0mshow[0m[0;34m([0m[0;34m)[0m[0;34m;[0m[0;34m[0m[0;34m[0m[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m<ipython-input-1-4fc79b1fd87d>[0m in [0;36m<module>[0;34m[0m
+[1;32m      7[0m [0mplt[0m[0;34m.[0m[0mfigure[0m[0;34m([0m[0mfigsize[0m[0;34m=[0m[0;34m([0m[0;36m12[0m[0;34m,[0m[0;36m6[0m[0;34m)[0m[0;34m,[0m[0mdpi[0m[0;34m=[0m [0;36m80[0m[0;34m,[0m [0mfacecolor[0m[0;34m=[0m[0;34m'w'[0m[0;34m,[0m [0medgecolor[0m[0;34m=[0m[0;34m'k'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      8[0m [0mplt[0m[0;34m.[0m[0mtick_params[0m[0;34m([0m[0maxis[0m[0;34m=[0m[0;34m'both'[0m[0;34m,[0m[0mlabelsize[0m[0;34m=[0m[0;36m20[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 9[0;31m [0mplt[0m[0;34m.[0m[0mgrid[0m[0;34m([0m[0mb[0m[0;34m=[0m[0;32mTrue[0m[0;34m,[0m [0mwhich[0m[0;34m=[0m[0;34m'major'[0m[0;34m,[0m [0maxis[0m[0;34m=[0m[0;34m'both'[0m[0;34m,[0m [0mcolor[0m[0;34m=[0m[0;34m'#808080'[0m[0;34m,[0m [0mlinestyle[0m[0;34m=[0m[0;34m'--'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     10[0m [0;32mfor[0m [0ml[0m [0;32min[0m [0mrange[0m[0;34m([0m[0;36m2[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     11[0m     [0;32mfor[0m [0mm[0m [0;32min[0m [0mrange[0m[0;34m([0m[0;34m-[0m[0ml[0m[0;34m,[0m[0ml[0m[0;34m+[0m[0;36m1[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
 
-[0;32m<ipython-input-4-f0568183da47>[0m in [0;36mplot_particle_in_sphere_wf_r_theta[0;34m(n, l, m, ax_obj, r, theta, phi)[0m
-[1;32m     53[0m     [0max_obj[0m[0;34m.[0m[0mset_title[0m[0;34m([0m[0;34mrf'$n={n},l={l},m={m}$'[0m[0;34m,[0m [0mfontsize[0m[0;34m=[0m[0;36m18[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     54[0m     [0max_obj[0m[0;34m.[0m[0mscatter3D[0m[0;34m([0m[0mx[0m[0;34m,[0m[0my[0m[0;34m,[0m[0mz[0m[0;34m,[0m[0mc[0m[0;34m=[0m[0mwf[0m[0;34m,[0m [0mvmin[0m[0;34m=[0m[0;34m-[0m[0;36m0.2[0m[0;34m,[0m [0mvmax[0m[0;34m=[0m[0;36m0.2[0m[0;34m,[0m[0malpha[0m[0;34m=[0m[0;36m0.25[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 55[0;31m     [0max_obj[0m[0;34m.[0m[0mset_box_aspect[0m[0;34m([0m[0;34m([0m[0;36m100[0m[0;34m,[0m[0;36m100[0m[0;34m,[0m[0;36m100[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     56[0m     [0;31m# xy countour[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     57[0m     [0;31m#R, PHI = np.meshgrid(r, phi)[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m~/opt/anaconda3/lib/python3.8/site-packages/matplotlib/pyplot.py[0m in [0;36mgrid[0;34m(visible, which, axis, **kwargs)[0m
+[1;32m   2587[0m [0;34m@[0m[0m_copy_docstring_and_deprecators[0m[0;34m([0m[0mAxes[0m[0;34m.[0m[0mgrid[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   2588[0m [0;32mdef[0m [0mgrid[0m[0;34m([0m[0mvisible[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m [0mwhich[0m[0;34m=[0m[0;34m'major'[0m[0;34m,[0m [0maxis[0m[0;34m=[0m[0;34m'both'[0m[0;34m,[0m [0;34m**[0m[0mkwargs[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 2589[0;31m     [0;32mreturn[0m [0mgca[0m[0;34m([0m[0;34m)[0m[0;34m.[0m[0mgrid[0m[0;34m([0m[0mvisible[0m[0;34m=[0m[0mvisible[0m[0;34m,[0m [0mwhich[0m[0;34m=[0m[0mwhich[0m[0;34m,[0m [0maxis[0m[0;34m=[0m[0maxis[0m[0;34m,[0m [0;34m**[0m[0mkwargs[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   2590[0m [0;34m[0m[0m
+[1;32m   2591[0m [0;34m[0m[0m
 
-[0;31mAttributeError[0m: 'Axes3DSubplot' object has no attribute 'set_box_aspect'
-AttributeError: 'Axes3DSubplot' object has no attribute 'set_box_aspect'
+[0;32m~/opt/anaconda3/lib/python3.8/site-packages/matplotlib/axes/_base.py[0m in [0;36mgrid[0;34m(self, visible, which, axis, **kwargs)[0m
+[1;32m   3194[0m         [0m_api[0m[0;34m.[0m[0mcheck_in_list[0m[0;34m([0m[0;34m[[0m[0;34m'x'[0m[0;34m,[0m [0;34m'y'[0m[0;34m,[0m [0;34m'both'[0m[0;34m][0m[0;34m,[0m [0maxis[0m[0;34m=[0m[0maxis[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   3195[0m         [0;32mif[0m [0maxis[0m [0;32min[0m [0;34m[[0m[0;34m'x'[0m[0;34m,[0m [0;34m'both'[0m[0;34m][0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 3196[0;31m             [0mself[0m[0;34m.[0m[0mxaxis[0m[0;34m.[0m[0mgrid[0m[0;34m([0m[0mvisible[0m[0;34m,[0m [0mwhich[0m[0;34m=[0m[0mwhich[0m[0;34m,[0m [0;34m**[0m[0mkwargs[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   3197[0m         [0;32mif[0m [0maxis[0m [0;32min[0m [0;34m[[0m[0;34m'y'[0m[0;34m,[0m [0;34m'both'[0m[0;34m][0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   3198[0m             [0mself[0m[0;34m.[0m[0myaxis[0m[0;34m.[0m[0mgrid[0m[0;34m([0m[0mvisible[0m[0;34m,[0m [0mwhich[0m[0;34m=[0m[0mwhich[0m[0;34m,[0m [0;34m**[0m[0mkwargs[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.8/site-packages/matplotlib/axis.py[0m in [0;36mgrid[0;34m(self, visible, which, **kwargs)[0m
+[1;32m   1653[0m             gridkw['gridOn'] = (not self._major_tick_kw['gridOn']
+[1;32m   1654[0m                                 if visible is None else visible)
+[0;32m-> 1655[0;31m             [0mself[0m[0;34m.[0m[0mset_tick_params[0m[0;34m([0m[0mwhich[0m[0;34m=[0m[0;34m'major'[0m[0;34m,[0m [0;34m**[0m[0mgridkw[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   1656[0m         [0mself[0m[0;34m.[0m[0mstale[0m [0;34m=[0m [0;32mTrue[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1657[0m [0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.8/site-packages/matplotlib/axis.py[0m in [0;36mset_tick_params[0;34m(self, which, reset, **kwargs)[0m
+[1;32m    925[0m         """
+[1;32m    926[0m         [0m_api[0m[0;34m.[0m[0mcheck_in_list[0m[0;34m([0m[0;34m[[0m[0;34m'major'[0m[0;34m,[0m [0;34m'minor'[0m[0;34m,[0m [0;34m'both'[0m[0;34m][0m[0;34m,[0m [0mwhich[0m[0;34m=[0m[0mwhich[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 927[0;31m         [0mkwtrans[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_translate_tick_params[0m[0;34m([0m[0mkwargs[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    928[0m [0;34m[0m[0m
+[1;32m    929[0m         [0;31m# the kwargs are stored in self._major/minor_tick_kw so that any[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/opt/anaconda3/lib/python3.8/site-packages/matplotlib/axis.py[0m in [0;36m_translate_tick_params[0;34m(kw, reverse)[0m
+[1;32m   1069[0m         [0;32mfor[0m [0mkey[0m [0;32min[0m [0mkw_[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1070[0m             [0;32mif[0m [0mkey[0m [0;32mnot[0m [0;32min[0m [0mallowed_keys[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 1071[0;31m                 raise ValueError(
+[0m[1;32m   1072[0m                     [0;34m"keyword %s is not recognized; valid keywords are %s"[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1073[0m                     % (key, allowed_keys))
+
+[0;31mValueError[0m: keyword grid_b is not recognized; valid keywords are ['size', 'width', 'color', 'tickdir', 'pad', 'labelsize', 'labelcolor', 'zorder', 'gridOn', 'tick1On', 'tick2On', 'label1On', 'label2On', 'length', 'direction', 'left', 'bottom', 'right', 'top', 'labelleft', 'labelbottom', 'labelright', 'labeltop', 'labelrotation', 'grid_agg_filter', 'grid_alpha', 'grid_animated', 'grid_antialiased', 'grid_clip_box', 'grid_clip_on', 'grid_clip_path', 'grid_color', 'grid_dash_capstyle', 'grid_dash_joinstyle', 'grid_dashes', 'grid_data', 'grid_drawstyle', 'grid_figure', 'grid_fillstyle', 'grid_gapcolor', 'grid_gid', 'grid_in_layout', 'grid_label', 'grid_linestyle', 'grid_linewidth', 'grid_marker', 'grid_markeredgecolor', 'grid_markeredgewidth', 'grid_markerfacecolor', 'grid_markerfacecoloralt', 'grid_markersize', 'grid_markevery', 'grid_mouseover', 'grid_path_effects', 'grid_picker', 'grid_pickradius', 'grid_rasterized', 'grid_sketch_params', 'grid_snap', 'grid_solid_capstyle', 'grid_solid_joinstyle', 'grid_transform', 'grid_url', 'grid_visible', 'grid_xdata', 'grid_ydata', 'grid_zorder', 'grid_aa', 'grid_c', 'grid_ds', 'grid_ls', 'grid_lw', 'grid_mec', 'grid_mew', 'grid_mfc', 'grid_mfcalt', 'grid_ms']
+ValueError: keyword grid_b is not recognized; valid keywords are ['size', 'width', 'color', 'tickdir', 'pad', 'labelsize', 'labelcolor', 'zorder', 'gridOn', 'tick1On', 'tick2On', 'label1On', 'label2On', 'length', 'direction', 'left', 'bottom', 'right', 'top', 'labelleft', 'labelbottom', 'labelright', 'labeltop', 'labelrotation', 'grid_agg_filter', 'grid_alpha', 'grid_animated', 'grid_antialiased', 'grid_clip_box', 'grid_clip_on', 'grid_clip_path', 'grid_color', 'grid_dash_capstyle', 'grid_dash_joinstyle', 'grid_dashes', 'grid_data', 'grid_drawstyle', 'grid_figure', 'grid_fillstyle', 'grid_gapcolor', 'grid_gid', 'grid_in_layout', 'grid_label', 'grid_linestyle', 'grid_linewidth', 'grid_marker', 'grid_markeredgecolor', 'grid_markeredgewidth', 'grid_markerfacecolor', 'grid_markerfacecoloralt', 'grid_markersize', 'grid_markevery', 'grid_mouseover', 'grid_path_effects', 'grid_picker', 'grid_pickradius', 'grid_rasterized', 'grid_sketch_params', 'grid_snap', 'grid_solid_capstyle', 'grid_solid_joinstyle', 'grid_transform', 'grid_url', 'grid_visible', 'grid_xdata', 'grid_ydata', 'grid_zorder', 'grid_aa', 'grid_c', 'grid_ds', 'grid_ls', 'grid_lw', 'grid_mec', 'grid_mew', 'grid_mfc', 'grid_mfcalt', 'grid_ms']
 
