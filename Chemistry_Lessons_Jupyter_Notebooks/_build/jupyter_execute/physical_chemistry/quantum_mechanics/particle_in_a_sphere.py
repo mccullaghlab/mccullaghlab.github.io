@@ -15,6 +15,11 @@
 # 2. Write out the Laplacian in spherical polar coordinates
 # 3. Write out the Hamiltonian for the particle in a the sphere
 # 4. Perform separation of variables on the particle in a sphere Hamiltonian
+# 5. Identify the solutions to the $\phi$ differential equation
+# 6. Identify the solutions to the $\theta$ differential equation
+# 7. Describe the orthonormal property of the spherical harmonics
+# 8. Identify the solutions to the radial component of the particle in a sphere problem
+# 9. Describe how the three quantum numbers affect the energy and wave function of the particle in the sphere.
 
 # ## Coding Concepts:
 # 
@@ -248,6 +253,8 @@
 
 
 # plot of some of the Legendre polynomials
+import warnings
+warnings.filterwarnings('ignore')
 import numpy as np
 import matplotlib.pyplot as plt
 get_ipython().run_line_magic('matplotlib', 'inline')
@@ -272,7 +279,7 @@ plt.legend(fontsize=16);
 # 
 # These are the spherical harmonics. We will now look at some of these.
 
-# In[83]:
+# In[2]:
 
 
 # make two plots of the same spherical harmonic
@@ -352,7 +359,7 @@ plt.show();
 # 
 # Below are plots of the first few of both of these functions.
 
-# In[93]:
+# In[3]:
 
 
 #### import numpy as np
@@ -384,7 +391,7 @@ ax[1].grid(b=True, which='major', axis='both', color='#808080', linestyle='--')
 plt.show();
 
 
-# From the above plots we observe that both $j_l$ and $y_l$ are single-valued and continuous over the plotted domain. Additionally, the $j_l$ functions are all finite over the plotted domain.  The $j_l$ functions, however, are not finite over the domain as they tend to $-\infty$ as $x\rightarrow0$.  Thus, we get the solutions
+# From the above plots we observe that both $j_l$ and $y_l$ are single-valued and continuous over the plotted domain. Additionally, the $j_l$ functions are all finite over the plotted domain.  The $y_l$ functions, however, are not finite over the domain as they tend to $-\infty$ as $x\rightarrow0$.  Thus, we get the solutions
 # \begin{equation}
 # u(r) = Arj_l(kr)
 # \end{equation}
@@ -399,9 +406,9 @@ plt.show();
 # \end{equation}
 # yields
 # \begin{equation}
-# kr_0 = \beta_l^n
+# kr_0 = \beta_{n,l}
 # \end{equation}
-# where $\beta_l^n$ is the $n$th root ($n=1,2,3...$) of the $l$th spherical Bessel function of the first type.  There are an infinite number of zeros for each $l$.  The values of these zeros cannot, in general, be determined analytically (except for $l=0$).  Here is a table of some of the zeros
+# where $\beta_{n,l}$ is the $n$th root ($n=1,2,3...$) of the $l$th spherical Bessel function of the first type.  There are an infinite number of zeros for each $l$.  The values of these zeros cannot, in general, be determined analytically (except for $l=0$).  Here is a table of some of the zeros
 # 
 # | l\n  | 1    |  2   |  3   | 4    |  
 # |:---- | :--- | :--- | :--- | :--- |
@@ -409,16 +416,16 @@ plt.show();
 # | 1    | 4.493| 7.725 | 10.904 | 14.066 |
 # | 2    | 5.763| 9.095 | 12.322 | 15.515 |
 # 
-# From the equation $kr_0 = \beta_l^n$ we can also get the energy using the previously stated equality $k = \sqrt{\frac{2mE}{\hbar^2}}$
+# From the equation $kr_0 = \beta_{n,l}$ we can also get the energy using the previously stated equality $k = \sqrt{\frac{2mE}{\hbar^2}}$
 # \begin{align}
-# \sqrt{\frac{2mE}{\hbar^2}}r_0 &= \beta_l^n \\
-# \Rightarrow \frac{2mE}{\hbar^2} &= \frac{\left(\beta_l^n\right)^2}{r_0^2} \\
-# \Rightarrow E_{l,n} &= \frac{\hbar^2\left(\beta_l^n\right)^2}{2mr_0^2}
+# \sqrt{\frac{2mE}{\hbar^2}}r_0 &= \beta_{n,l} \\
+# \Rightarrow \frac{2mE}{\hbar^2} &= \frac{\left(\beta_{n,l}\right)^2}{r_0^2} \\
+# \Rightarrow E_{l,n} &= \frac{\hbar^2\left(\beta_{n,l}\right)^2}{2mr_0^2}
 # \end{align}
 # 
 # Also, the radial wavefunction is now
 # \begin{equation}
-# R_{l,n}(r) = Aj_l\left(\frac{\beta_l^n}{r_0}r\right)
+# R_{l,n}(r) = Aj_l\left(\frac{\beta_{n,l}}{r_0}r\right)
 # \end{equation}
 
 # ## Combined Solution for the wave functions
@@ -426,10 +433,12 @@ plt.show();
 # We can now combine our solutions for the wave functions for $\theta$ and $\phi$ and $r$ to get
 # \begin{align}
 # \psi(r,\theta,\phi) &= R_{l,n}(r)Y_l^m(\theta,\phi) \\
-# &= Aj_l\left(\frac{\beta_l^n}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi}
+# &= Aj_l\left(\frac{\beta_{n,l}}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi}
 # \end{align}
+# 
+# Below, I plot various versions of these functions.  First, I investigate how $n$ and $l$ affect the wave functions.
 
-# In[1]:
+# In[4]:
 
 
 # make two plots of the same spherical harmonic
@@ -442,11 +451,6 @@ from scipy.special import spherical_jn
 from scipy.special import lpmv
 get_ipython().run_line_magic('matplotlib', 'inline')
 from scipy.optimize import root
-
-def spherical_jn_sensible_grid(l, n, ngrid=100):
-    """Returns a grid of x values that should contain the first n zeros, but not too many.
-    """
-    return np.linspace(l, l + 2*n*(np.pi * (np.log(l)+1)), ngrid)
     
 
 def spherical_jn_zero(l, n, ngrid=100):
@@ -454,7 +458,7 @@ def spherical_jn_zero(l, n, ngrid=100):
     """
     if l > 0:
         # calculate on a sensible grid
-        x = spherical_jn_sensible_grid(l, n, ngrid=ngrid)
+        x = np.linspace(l, l + 2*n*(np.pi * (np.log(l)+1)), ngrid)
         y = spherical_jn(l, x)
     
         # Find m good initial guesses from where y switches sign
@@ -474,7 +478,7 @@ def particle_in_sphere_wf(r,theta,phi,n,l,m):
     return sph_harm(m, l, phi, theta).real*spherical_jn(l, r*denom)
 
 
-def plot_particle_in_sphere_wf_r_theta(n,l,m, ax_obj, r=np.linspace(0,1,15), theta=np.linspace(0,np.pi,20), phi=np.linspace(0,1.5*np.pi,25)):
+def plot_particle_in_sphere_wf(n,l,m, ax_obj, r=np.linspace(0,1,15), theta=np.linspace(0,np.pi,20), phi=np.linspace(0,1.5*np.pi,25)):
     R, THETA, PHI = np.meshgrid(r, theta, phi)
     R = R.flatten()
     THETA = THETA.flatten()
@@ -485,46 +489,121 @@ def plot_particle_in_sphere_wf_r_theta(n,l,m, ax_obj, r=np.linspace(0,1,15), the
     wf = particle_in_sphere_wf(R,THETA,PHI,n,l,m)
     # plot
     ax_obj.set_title(rf'$n={n},l={l},m={m}$', fontsize=18)
-    ax_obj.scatter3D(x,y,z,c=wf, vmin=-0.2, vmax=0.2,alpha=0.25)
+    ax_obj.scatter3D(x,y,z,c=wf, cmap='RdBu', vmin=-0.2, vmax=0.2,alpha=0.25)
     ax_obj.set_box_aspect((100,100,100))
-    # xy countour
-    #R, PHI = np.meshgrid(r, phi)
-    #x = R*np.sin(np.pi/2)*np.cos(PHI) 
-    #y = R*np.sin(np.pi/2)*np.sin(PHI)
-    #z = R*np.cos(np.pi/2)
-    #wf = particle_in_sphere_wf(R.flatten(),np.ones(R.flatten().size)*np.pi/2,PHI.flatten(),m,l).reshape(R.shape)
-    #ax_obj.contourf(x,y,wf,zdir='z',offset=-1)#,cmap='coolwarm')
-    # xz
-    #R, THETA = np.meshgrid(r, theta)
-    #x = R*np.sin(THETA)*np.cos(0) 
-    #y = R*np.sin(THETA)*np.sin(0)
-    #z = R*np.cos(THETA)
-    #wf = particle_in_sphere_wf(R.flatten(),np.ones(R.flatten().size)*np.pi/2,PHI.flatten(),m,l).reshape(R.shape)
-    #ax_obj.contourf(x,y,wf,zdir='z',offset=-1)#,cmap='coolwarm')
-    #ax_obj.set_box_aspect((100,100,100))
+    #ax_obj.set_axis_off()
+    ax_obj.axes.xaxis.set_ticklabels([])
+    ax_obj.axes.yaxis.set_ticklabels([])
+    ax_obj.axes.zaxis.set_ticklabels([])
+    
+def plot_particle_in_sphere_wf_xz_projection(n,l,m, ax_obj):
+    x = np.linspace(-1,1,100)
+    z = np.linspace(-1,1,100)
+    y = np.zeros(100)
+    X, Z= np.meshgrid(x, z)
+    Y = np.zeros(X.shape)
+    R = np.sqrt(X*X + Y*Y + Z*Z).flatten()
+    THETA = np.arccos(Z.flatten()/R)
+    PHI = np.arctan2(Y,X).flatten()
+    wf = np.zeros(R.shape)
+    indeces = np.argwhere(R <= 1)
+    wf[indeces] = particle_in_sphere_wf(R[indeces],THETA[indeces],PHI[indeces],n,l,m)
+    wf = wf.reshape(X.shape)
+    # plot
+    ax_obj.set_title(rf'$n={n},l={l},m={m}$', fontsize=18)
+    c = ax_obj.pcolormesh(X, Z, wf, cmap='RdBu', vmin=-0.2, vmax=0.2)
+    # set the limits of the plot to the limits of the data
+    ax_obj.axis([-1, 1, -1, 1])
+    ax_obj.set_aspect('equal')
     ax_obj.set_axis_off()
+    return c
+
+def plot_particle_in_sphere_wf_xy_projection(n,l,m, ax_obj):
+    x = np.linspace(-1,1,100)
+    y = np.linspace(-1,1,100)
+    z = np.zeros(100)
+    X, Y= np.meshgrid(x, y)
+    Z = np.zeros(X.shape)
+    R = np.sqrt(X*X + Y*Y + Z*Z).flatten()
+    THETA = np.arccos(Z.flatten()/R)
+    PHI = np.arctan2(Y,X).flatten()
+    wf = np.zeros(R.shape)
+    indeces = np.argwhere(R <= 1)
+    wf[indeces] = particle_in_sphere_wf(R[indeces],THETA[indeces],PHI[indeces],n,l,m)
+    wf = wf.reshape(X.shape)
+    # plot
+    ax_obj.set_title(rf'$n={n},l={l},m={m}$', fontsize=18)
+    c = ax_obj.pcolormesh(X, Y, wf, cmap='RdBu', vmin=-0.2, vmax=0.2)
+    # set the limits of the plot to the limits of the data
+    ax_obj.axis([-1, 1, -1, 1])
+    ax_obj.set_aspect('equal')
+    ax_obj.set_axis_off()
+    return c
 
 
-# In[2]:
+# In[5]:
 
 
-
-fig, ax = plt.subplots(3,3,figsize=(12,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
+fig, ax = plt.subplots(3,3,figsize=(16,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
 for l in range(3):
-for n in range(1,4):
-    plot_particle_in_sphere_wf_r_theta(n,l,0,ax[l,n-1])
+    for n in range(1,4):
+        plot_particle_in_sphere_wf(n,l,0,ax[l,n-1])
 plt.show();
 
 
-# In[3]:
+# In[6]:
 
 
-fig, ax = plt.subplots(3,3,figsize=(12,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
+fig, ax = plt.subplots(3,3,figsize=(16,12),dpi= 80, facecolor='w', edgecolor='k') 
+for l in range(3):
+    for n in range(1,4):
+        c = plot_particle_in_sphere_wf_xz_projection(n,l,0,ax[l,n-1])
+cbar = fig.colorbar(c,ax=ax,shrink=0.5)
+cbar.ax.tick_params(labelsize=10)
+plt.show();
+
+
+# Next we see how $l$ and $m$ affect the wave functions.
+
+# In[7]:
+
+
+fig, ax = plt.subplots(3,3,figsize=(16,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
 for l in range(3):
     for m in range(3):
         if m <= l:
-            plot_particle_in_sphere_wf_r_theta(1,l,m,ax[l,m])
+            plot_particle_in_sphere_wf(1,l,m,ax[l,m])
         else: 
             ax[l,m].set_axis_off()
+plt.show();
+
+
+# In[8]:
+
+
+fig, ax = plt.subplots(3,3,figsize=(16,12),dpi= 80, facecolor='w', edgecolor='k') 
+for l in range(3):
+    for m in range(3):
+        if m <= l:
+            plot_particle_in_sphere_wf_xz_projection(1,l,m,ax[l,m])
+        else: 
+            ax[l,m].set_axis_off()
+cbar = fig.colorbar(c,ax=ax,shrink=0.5)
+cbar.ax.tick_params(labelsize=10)
+plt.show();
+
+
+# In[9]:
+
+
+fig, ax = plt.subplots(3,3,figsize=(16,12),dpi= 80, facecolor='w', edgecolor='k') 
+for l in range(3):
+    for m in range(3):
+        if m <= l:
+            plot_particle_in_sphere_wf_xy_projection(1,l,m,ax[l,m])
+        else: 
+            ax[l,m].set_axis_off()
+cbar = fig.colorbar(c,ax=ax,shrink=0.5)
+cbar.ax.tick_params(labelsize=10)
 plt.show();
 
