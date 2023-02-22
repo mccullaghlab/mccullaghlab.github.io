@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>3.3.3. Reversible Reactions &#8212; Chemistry Lessons with Jupyter Notebooks</title>
     
   <!-- Loaded before other Sphinx assets -->
@@ -51,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant" href="Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html" />
@@ -824,13 +825,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="reversible-reactions">
+  <section class="tex2jax_ignore mathjax_ignore" id="reversible-reactions">
 <h1><span class="section-number">3.3.3. </span>Reversible Reactions<a class="headerlink" href="#reversible-reactions" title="Permalink to this headline">#</a></h1>
-<div class="section" id="motivation">
+<section id="motivation">
 <h2><span class="section-number">3.3.3.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
 <p>Reactions that can proceed both in the forward and reverse directions are important in chemistry, as we saw in the equilibrium section of Thermodynamics. In these notes we will discuss how to write rate laws for simple “reversible” reactions.</p>
-</div>
-<div class="section" id="learning-goals">
+</section>
+<section id="learning-goals">
 <h2><span class="section-number">3.3.3.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
 <p>After working through these notes, you should be able to:</p>
 <ol class="simple">
@@ -838,8 +839,8 @@ title="Print to PDF"
 <li><p>Write out the derivative of concentration with respect to time for species in reversible reactions</p></li>
 <li><p>Derive and use the first order integrated rate law for a simple reversible process</p></li>
 </ol>
-</div>
-<div class="section" id="coding-concepts">
+</section>
+<section id="coding-concepts">
 <h2><span class="section-number">3.3.3.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="simple">
@@ -847,48 +848,48 @@ title="Print to PDF"
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</div>
-<div class="section" id="rate-laws-for-reversible-reactions">
+</section>
+<section id="rate-laws-for-reversible-reactions">
 <h2><span class="section-number">3.3.3.4. </span>Rate Laws for Reversible Reactions<a class="headerlink" href="#rate-laws-for-reversible-reactions" title="Permalink to this headline">#</a></h2>
 <p>Most chemical processes should be considered to go both in the forward and reverse directions.  In the context of Kinetics, we describe this as a reversible reaction (distinct from a reversible process in Thermodynamics).  A reaction that is considered to go both in the forward and reverse direction is denoted with two arrows (as we have seen in the Equilibrium portion of the Thermodynamics section).  As an example</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aab7df5a-1401-4563-8070-59bcc4370b9c">
-<span class="eqno">(3.480)<a class="headerlink" href="#equation-aab7df5a-1401-4563-8070-59bcc4370b9c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2f68ccce-36ab-4094-a764-433b3f77fd90">
+<span class="eqno">(3.480)<a class="headerlink" href="#equation-2f68ccce-36ab-4094-a764-433b3f77fd90" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A \overset{k_1}{\underset{k_{-1}}{\rightleftharpoons}} B
 \end{equation}\]</div>
 <p>we say the <span class="math notranslate nohighlight">\(A\)</span> transforms to <span class="math notranslate nohighlight">\(B\)</span> with rate constant <span class="math notranslate nohighlight">\(k_1\)</span> and <span class="math notranslate nohighlight">\(B\)</span> transforms to <span class="math notranslate nohighlight">\(A\)</span> with rate constant <span class="math notranslate nohighlight">\(k_{-1}\)</span>.  In situations such as these we also can write the equilibrium constant, <span class="math notranslate nohighlight">\(K_C\)</span>, as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1d503de0-b7d7-4bb7-b36f-fa21cf8368d9">
-<span class="eqno">(3.481)<a class="headerlink" href="#equation-1d503de0-b7d7-4bb7-b36f-fa21cf8368d9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4ec8ab2e-fc3b-40bc-ae14-9fde676d83c8">
+<span class="eqno">(3.481)<a class="headerlink" href="#equation-4ec8ab2e-fc3b-40bc-ae14-9fde676d83c8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 K_C = \frac{[B]_{eq}}{[A]_{eq}}
 \end{equation}\]</div>
 <p>To achieve equilibrium, we must allow the reaction to achieve the steady-state.  That is, the concentrations of <span class="math notranslate nohighlight">\([A]\)</span> and <span class="math notranslate nohighlight">\([B]\)</span> must remain constant.  This is noted mathematically as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7a763fc8-9659-4773-993e-5a1f377e1913">
-<span class="eqno">(3.482)<a class="headerlink" href="#equation-7a763fc8-9659-4773-993e-5a1f377e1913" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-41f53eb4-665e-4ecb-968d-27d629df43d9">
+<span class="eqno">(3.482)<a class="headerlink" href="#equation-41f53eb4-665e-4ecb-968d-27d629df43d9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d[A]}{dt} = \frac{d[B]}{dt} = 0
 \end{equation}\]</div>
 <p>Note that this does not mean that the forward and reverse reactions are not happening.  It just means that they are happening in such a way that and <span class="math notranslate nohighlight">\(A\)</span> depleted in the forward process is created in equal amount by the reverse process.  Thus, there is no net change in <span class="math notranslate nohighlight">\([A]\)</span> but the equilibrium is still dynamic.</p>
 <p>We now consider the special case in which the forward and reverse processes are both first order. In such a case we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e1e9543c-a4fb-42b1-986d-eabc973cbb8d">
-<span class="eqno">(3.483)<a class="headerlink" href="#equation-e1e9543c-a4fb-42b1-986d-eabc973cbb8d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-987cf292-4ff3-46dc-9b8f-c585cc23ce7a">
+<span class="eqno">(3.483)<a class="headerlink" href="#equation-987cf292-4ff3-46dc-9b8f-c585cc23ce7a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 v_{forward} = k_1[A]
 v_{backward} = k_{-1}[B]
 \end{eqnarray}\]</div>
 <p>If we want to equate these rate laws to the time derivatives of concentration of <span class="math notranslate nohighlight">\(A\)</span>, for example, we must take into account the forward and reverse processes simultaneously.  That is, <span class="math notranslate nohighlight">\(A\)</span> will be depleted by the forward process but will also be created by the reverse process thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8c137f5c-bf8d-4a3c-bee0-53d884745977">
-<span class="eqno">(3.484)<a class="headerlink" href="#equation-8c137f5c-bf8d-4a3c-bee0-53d884745977" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-009f93ed-33e3-4687-a945-a198a74de2ce">
+<span class="eqno">(3.484)<a class="headerlink" href="#equation-009f93ed-33e3-4687-a945-a198a74de2ce" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d[A]}{dt} = -k_1[A] + k_{-1}[B]
 \end{equation}\]</div>
 <p>Notice that the forward depletion is denoted by a negative sign infront of <span class="math notranslate nohighlight">\(k_1[A]\)</span> and the reverse creation is denoted by a positive sign infront of <span class="math notranslate nohighlight">\(k_{-1}[B]\)</span>.</p>
 <p>Notice that, at equilibrium, we have that <span class="math notranslate nohighlight">\(\frac{d[A]}{dt}=0\)</span> which yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-30f1f8f0-9eb3-421e-820e-c9a387767178">
-<span class="eqno">(3.485)<a class="headerlink" href="#equation-30f1f8f0-9eb3-421e-820e-c9a387767178" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-e7067509-647a-4416-8bb1-57ddfa878548">
+<span class="eqno">(3.485)<a class="headerlink" href="#equation-e7067509-647a-4416-8bb1-57ddfa878548" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{d[A]}{dt} = 0 &amp;=&amp; -k_1[A]_{eq} + k_{-1}[B]_{eq} \\
 \Rightarrow k_1[A]_{eq} = k_{-1}[B]_{eq} \\
 \Rightarrow \frac{k_1}{k_{-1}} = \frac{[B]_{eq}}{[A]_{eq}} = K_C
 \end{eqnarray}\]</div>
 <p>This is clearly an important relationship that states that the equilibrium constant is equal to a ratio of the forward and reverse rate constants.  We will use this in our derivation below for the integrated rate law.</p>
 <p>In order to derive an integrated rate law from the differential expression, we must write <span class="math notranslate nohighlight">\([B]\)</span> in terms of <span class="math notranslate nohighlight">\([A]\)</span>.  To achieve this, we regonize that the stoichiometry of the problem indicates that the total concentration of <span class="math notranslate nohighlight">\([A] + [B]\)</span> will remain constant and set by the initial concentrations of the experiment.  Assume <span class="math notranslate nohighlight">\([A] = [A]_0\)</span> and <span class="math notranslate nohighlight">\([B]=0\)</span> at <span class="math notranslate nohighlight">\(t=0\)</span> thus <span class="math notranslate nohighlight">\([B] = [A]_0-[A]\)</span>.  Substituting this into the equation above yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a7c174d-761f-4e2f-ac26-87978a1a3a40">
-<span class="eqno">(3.486)<a class="headerlink" href="#equation-5a7c174d-761f-4e2f-ac26-87978a1a3a40" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c776db7d-7660-47fd-b18a-6af9474a8588">
+<span class="eqno">(3.486)<a class="headerlink" href="#equation-c776db7d-7660-47fd-b18a-6af9474a8588" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{d[A]}{dt} &amp;=&amp; -k_1[A] + k_{-1}([A]_0-[A]) \\
 &amp;=&amp; -(k_1 + k_{-1})[A] + k_{-1}[A]_0 \\
 \Rightarrow \frac{d[A]}{-(k_1 + k_{-1})[A] + k_{-1}[A]_0} &amp;=&amp; dt \\
@@ -896,8 +897,8 @@ v_{backward} = k_{-1}[B]
 \frac{1}{(k_1 + k_{-1})}\int_{k_1[A]_0}^{(k_1 + k_{-1})[A] - k_{-1}[A]_0} \frac{du}{u} &amp;=&amp; -t 
 \end{eqnarray}\]</div>
 <p>in the last step we have set <span class="math notranslate nohighlight">\(u = (k_1 + k_{-1})[A] - k_{-1}[A]_0\)</span> and thus <span class="math notranslate nohighlight">\(du = (k_1 + k_{-1})d[A]\)</span> or <span class="math notranslate nohighlight">\(d[A] = \frac{du}{(k_1 + k_{-1})}\)</span>. The integral can be solved and simplified to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70e0d992-4241-46e3-a7a8-da5bfba7564f">
-<span class="eqno">(3.487)<a class="headerlink" href="#equation-70e0d992-4241-46e3-a7a8-da5bfba7564f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ba882091-147c-4bd1-b955-20226b10283f">
+<span class="eqno">(3.487)<a class="headerlink" href="#equation-ba882091-147c-4bd1-b955-20226b10283f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int_{k_1[A]_0}^{(k_1 + k_{-1})[A] - k_{-1}[A]_0} d\ln u &amp;=&amp; -(k_1 + k_{-1})t \\
 \ln\left((k_1 + k_{-1})[A] - k_{-1}[A]_0\right) - \ln{k_1[A]_0} &amp;=&amp; -(k_1 + k_{-1})t \\
 \ln\frac{(k_1 + k_{-1})[A] - k_{-1}[A]_0}{k_1[A]_0} &amp;=&amp; -(k_1 + k_{-1})t \\
@@ -910,34 +911,34 @@ v_{backward} = k_{-1}[B]
 \Rightarrow [A] &amp;=&amp; ([A]_0-[A]_{eq})e^{-(k_1 + k_{-1})t} + [A]_{eq}
 \end{eqnarray}\]</div>
 <p>The final expression can be considered an integrated rate law for reversible first order processes.  A slight rearrangement yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-045b5bbf-da02-4da5-8dfa-9b730a4c9087">
-<span class="eqno">(3.488)<a class="headerlink" href="#equation-045b5bbf-da02-4da5-8dfa-9b730a4c9087" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8bb9e1fe-fd17-4dd7-b218-7445a023afc9">
+<span class="eqno">(3.488)<a class="headerlink" href="#equation-8bb9e1fe-fd17-4dd7-b218-7445a023afc9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln\left([A] - [A]_{eq}\right) = - (k_{1} + k_{-1})t + \ln\left([A]_0 - [A]_{eq}\right)
 \end{equation}\]</div>
 <p>demonstrating that a plot of <span class="math notranslate nohighlight">\(\ln\left([A] - [A]_{eq}\right) \)</span> vs <span class="math notranslate nohighlight">\(t\)</span> should be linear with slope <span class="math notranslate nohighlight">\(-(k_1 + k_{-1})\)</span> and intercept <span class="math notranslate nohighlight">\(\ln\left([A]_0 - [A]_{eq}\right)\)</span>.</p>
-<div class="section" id="example-time-dependence-of-a-a-0-for-reversible-first-order-processes">
+<section id="example-time-dependence-of-a-a-0-for-reversible-first-order-processes">
 <h3><span class="section-number">3.3.3.4.1. </span>Example: Time Dependence of <span class="math notranslate nohighlight">\([A]/[A]_0\)</span> for Reversible First Order Processes<a class="headerlink" href="#example-time-dependence-of-a-a-0-for-reversible-first-order-processes" title="Permalink to this headline">#</a></h3>
 <p>Consider a generic equilibrium</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c51a19f5-d834-4e95-b55e-f6db45e0c84b">
-<span class="eqno">(3.489)<a class="headerlink" href="#equation-c51a19f5-d834-4e95-b55e-f6db45e0c84b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-086f12b9-9e39-40fd-bbea-5d7c5ff24f55">
+<span class="eqno">(3.489)<a class="headerlink" href="#equation-086f12b9-9e39-40fd-bbea-5d7c5ff24f55" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A \rightleftharpoons B
 \end{equation}\]</div>
 <p>with <span class="math notranslate nohighlight">\(k_1 = 2.25\times10^{-2}\)</span> s<span class="math notranslate nohighlight">\(^{-1}\)</span> and <span class="math notranslate nohighlight">\(k_2 = 1.50\times10^{-2}\)</span> s<span class="math notranslate nohighlight">\(^{-1}\)</span>.  Plot the time depedence of the concentration of species <span class="math notranslate nohighlight">\(A\)</span> and species <span class="math notranslate nohighlight">\(B\)</span> starting with 100% of species <span class="math notranslate nohighlight">\(A\)</span>.</p>
 <p>We will need to do some slight rearrangements of the equation we have above to achieve this.  First, we want to plot <span class="math notranslate nohighlight">\([A]/[A]_0\)</span> so we divide the equation above by <span class="math notranslate nohighlight">\([A]_0\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b91ec930-2683-497e-baac-a6489d956141">
-<span class="eqno">(3.490)<a class="headerlink" href="#equation-b91ec930-2683-497e-baac-a6489d956141" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-74de7f76-9d6f-4236-9c5c-7a515fc95178">
+<span class="eqno">(3.490)<a class="headerlink" href="#equation-74de7f76-9d6f-4236-9c5c-7a515fc95178" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{[A]}{[A]_0} &amp;=&amp; \frac{([A]_0-[A]_{eq})e^{-(k_1 + k_{-1})t}}{[A]_0} + \frac{[A]_{eq}}{[A]_0} \\
 \end{eqnarray}\]</div>
 <p>Next, we recognize that by dictating the rate constants, the problem has also dictated the relative amounts of the species at equilibrium:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-39251a67-3636-42c8-ab93-8773b1153168">
-<span class="eqno">(3.491)<a class="headerlink" href="#equation-39251a67-3636-42c8-ab93-8773b1153168" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a60d041b-c1aa-463c-9cda-881424fc0170">
+<span class="eqno">(3.491)<a class="headerlink" href="#equation-a60d041b-c1aa-463c-9cda-881424fc0170" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{B_{eq}}{A_{eq}} &amp;=&amp; K_C = \frac{k_1}{k_{-1}} \\
 \frac{A_0 - A_{eq}}{A_{eq}} &amp;=&amp; K_C \\
 A_0 &amp;=&amp; (K_C+1)A_{eq}
 \end{eqnarray}\]</div>
 <p>Now we use this relationship in the equation for <span class="math notranslate nohighlight">\([A]/[A]_0\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-db074a18-e6ee-4609-9bc5-564dd9742354">
-<span class="eqno">(3.492)<a class="headerlink" href="#equation-db074a18-e6ee-4609-9bc5-564dd9742354" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-0c534c26-0e6e-41d6-829f-a0b23d27d0b0">
+<span class="eqno">(3.492)<a class="headerlink" href="#equation-0c534c26-0e6e-41d6-829f-a0b23d27d0b0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{[A]}{[A]_0} &amp;=&amp; \frac{([A]_0-[A]_{eq})e^{-(k_1 + k_{-1})t}}{[A]_0} + \frac{1}{K_C+1} \\
 \frac{[A]}{[A]_0} &amp;=&amp; \frac{K_C[A]_{eq}e^{-(k_1 + k_{-1})t}}{[A]_0} + \frac{1}{K_C+1} \\
 \frac{[A]}{[A]_0} &amp;=&amp; \frac{K_Ce^{-(k_1 + k_{-1})t}}{K_C+1} + \frac{1}{K_C+1} \\
@@ -975,9 +976,9 @@ A_0 &amp;=&amp; (K_C+1)A_{eq}
 <img alt="../../_images/Reversible_Reactions_9_1.png" src="../../_images/Reversible_Reactions_9_1.png" />
 </div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
