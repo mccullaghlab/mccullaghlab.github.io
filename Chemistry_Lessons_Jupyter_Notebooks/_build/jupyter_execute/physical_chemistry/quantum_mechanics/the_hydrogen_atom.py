@@ -3,6 +3,22 @@
 
 # # The Hydrogen Atom
 
+# ## Motivation:
+# 
+# We would like to know how the particle-wave duality hypothesis affects the structure and behavior of atoms and molecules.  The simplest case is that of the hydrogen atom, containing only a single electron and a single proton.
+
+# ## Learning Goals:
+
+# ## Coding Concepts:
+# 
+# The following coding concepts are used in this notebook:
+# 
+# 1. [Variables](../../coding_concepts/variables.ipynb)
+# 2. [Functions](../../coding_concepts/functions.ipynb)
+# 3. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.ipynb)
+
+# ## Model of the Hydrogen Atom
+
 # The hydrogen atom is composed of an electron and a proton.  If these two particles were classical, the interaction energy would simply be described by the Coulombic attraction between the two particles
 # 
 # $V(r) = -\frac{e^2}{4\pi\epsilon_0r}$,
@@ -12,30 +28,32 @@
 # $\hat{H} = -\frac{\hbar^2}{2m_e}\nabla^2-\frac{e^2}{4\pi\epsilon_0r}$
 # 
 # where $m_e$ is the mass of an electron and $\nabla^2$ is the Laplacian in three dimensions.  Notice that this Hamiltonian is only in terms of the coordinates of the electron relative to the heavy proton.  
-# 
+
+# ## Solving the Schrodinger Equation by Separating Variables
+
 # Since the potential is a function of $r$, the separation distance between the proton and the electron, it is useful to write the Laplacian in spherical coordinates. Recall from the rigid rotator that
 # 
 # $\nabla^2_{r\theta\phi} = \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial^2\phi}$
 # 
 # Plugging this back into the Schrodinger equation yields
 # 
-# $\hat{H}\Psi(r,\theta,\phi) = -\frac{\hbar^2}{2m_e}\left[\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\Psi(r,\theta,\phi) +V(r)\Psi(r,\theta,\phi) = E\Psi(r,\theta,\phi)$ 
+# $\hat{H}\Psi(r,\theta,\phi) = -\frac{\hbar^2}{2m_e}\left[\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\psi(r,\theta,\phi) +V(r)\psi(r,\theta,\phi) = E\psi(r,\theta,\phi)$ 
 # 
 # Multiply through by $2m_er^2$ to get
 # 
-# $-\hbar^2\left[\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\Psi(r,\theta,\phi) +2m_er^2V(r)\Psi(r,\theta,\phi) = 2m_er^2E\Psi(r,\theta,\phi)$
+# $-\hbar^2\left[\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\psi(r,\theta,\phi) +2m_er^2V(r)\psi(r,\theta,\phi) = 2m_er^2E\psi(r,\theta,\phi)$
 # 
 # Rearrange (combine terms dependent on $r$) to get
 # 
-# $-\hbar^2\left[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\Psi(r,\theta,\phi) -\hbar^2\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)\Psi(r,\theta,\phi)+2m_er^2\left(V(r)-E\right)\Psi(r,\theta,\phi) =0$
+# $-\hbar^2\left[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\psi(r,\theta,\phi) -\hbar^2\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)\psi(r,\theta,\phi)+2m_er^2\left(V(r)-E\right)\psi(r,\theta,\phi) =0$
 # 
-# Notice that the left-hand term in the above equality is the $\hat{L}^2\Psi$ thus yielding
+# Notice that the left-hand term in the above equality is the $\hat{L}^2\psi$ thus yielding
 # 
-# $\hat{L}^2\Psi(r,\theta,\phi) -\hbar^2\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)\Psi(r,\theta,\phi)+2m_er^2\left(V(r)-E\right)\Psi(r,\theta,\phi) =0$.
+# $\hat{L}^2\psi(r,\theta,\phi) -\hbar^2\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)\psi(r,\theta,\phi)+2m_er^2\left(V(r)-E\right)\psi(r,\theta,\phi) =0$.
 # 
 # Now notice that only the left-hand term depends on $\theta$ and $\phi$ and only the two right-hand terms depend on $r$ thus allowing us to write
 # 
-# $\Psi(r,\theta,\phi) = R(r)Y(\theta,\phi)$,
+# $\psi(r,\theta,\phi) = R(r)Y(\theta,\phi)$,
 # 
 # where
 # 
@@ -44,12 +62,18 @@
 # and 
 # 
 # $-\frac{\hbar^2}{2m_er^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)+\left[\frac{E_{\theta,\phi}}{2m_er^2} + V(r)-E\right]R(r) =0 \tag{2} $.
-# 
-# We know the solutions to equation (1) above from the rigid rotator.  Namely
+
+# ## Solutions to the $\theta$ and $\phi$ Equation: The Spherical Harmonics
+
+# We know the solutions $\hat{L}^2$ equation to be the spherical harmonics.  Namely
 # 
 # $\hat{L}^2Y(\theta,\phi) = \hbar^2l(l+1)Y_l^{m_l}(\theta,\phi)$
 # 
-# for $l=0,1,2...$ and $-l\leq m_l \leq l$.  $Y_l^{m_l}(\theta,\phi)$ are the spherical harmonics where it is customary to write them in terms of $l$ and $m_l$ for the hydrogen atom instead of $J$ and $m_J$ for the rigid rotator.  
+# for $l=0,1,2...$ and $-l\leq m_l \leq l$.  $Y_l^{m_l}(\theta,\phi)$ are the spherical harmonics where it is customary to write them in terms of $l$ and $m_l$ for the hydrogen atom.  This yields that
+# 
+# $E_{\theta,\phi} = \hbar^2l(l+1)$.
+# 
+# Below are 3D representations of some of the spherical harmonics.
 
 # In[1]:
 
@@ -85,13 +109,15 @@ def plot_spherical_harmonic(m,l,theta=np.linspace(0,np.pi,100),phi=np.linspace(0
     # Turn off the axis planes
     ax.set_axis_off()
 
-plt.show()
 plot_spherical_harmonic(0,1)
 plot_spherical_harmonic(0,2)
 plot_spherical_harmonic(0,3)
 plot_spherical_harmonic(0,4)
 plot_spherical_harmonic(0,5)
+plt.show();
 
+
+# ## Solutions to the $r$ Equation: The Generalized Laguerre Polynomials
 
 # We must now substitute $E_{\theta,\phi}=\hbar^2l(l+1)$ into equation (2) above and solve for the radial part
 # 
@@ -109,7 +135,9 @@ plot_spherical_harmonic(0,5)
 # 
 # where $L_{n+l}^{2l+1}$ are the *associated Laguerre polynomials*.  Note that we will plot these functions in terms of the  *generalized Laguerre polynomials* which requires us to replace $L_{n+l}^{2l+1}$  in the above equation with $L_{n-l-1}^{2l+1}$ (this is now the generalized form) and remove a factor of $(n+l)!$:
 # 
-# $R_{nl} = -\left[ \frac{(n-l-1)!}{2n(n+l)!}\right]^{1/2} \left( \frac{2}{na_0}\right)^{l+3/2} r^le^{-r/na_0}L_{n-l-1}^{2l+1}\left( \frac{2r}{na_0}\right)$,
+# $R_{nl} = -\left[ \frac{(n-l-1)!}{2n(n+l)!}\right]^{1/2} \left( \frac{2}{na_0}\right)^{l+3/2} r^le^{-r/na_0}L_{n-l-1}^{2l+1}\left( \frac{2r}{na_0}\right)$.
+# 
+# Below is a plot of the first few $R_{nl}$ functions.  
 
 # In[2]:
 
@@ -136,10 +164,14 @@ for n in range(1,nLimit+1):
         prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
         R = prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
         label = "n=" + str(n) + " l=" + str(l)
-        ax.plot(r,R,label=label)
+        ax.plot(r,R,label=label,lw=2)
 plt.legend(fontsize=12)
-plt.show()
+plt.show();
 
+
+# ### Properties of the General Laguerre Polynomials
+
+# 
 
 # In[3]:
 
@@ -166,7 +198,7 @@ for n in range(1,nLimit+1):
         prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
         R = prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
         label = "n=" + str(n) + " l=" + str(l)
-        ax.plot(r,np.power(R,2)*np.power(r,2),label=label)
+        ax.plot(r,np.power(R,2)*np.power(r,2),label=label, lw=2)
 plt.legend(fontsize=12)
 plt.show()
 
