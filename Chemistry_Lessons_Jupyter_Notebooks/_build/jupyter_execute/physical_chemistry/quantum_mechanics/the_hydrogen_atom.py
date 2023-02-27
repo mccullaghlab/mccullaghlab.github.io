@@ -8,6 +8,14 @@
 # We would like to know how the particle-wave duality hypothesis affects the structure and behavior of atoms and molecules.  The simplest case is that of the hydrogen atom, containing only a single electron and a single proton.
 
 # ## Learning Goals:
+# 
+# After working through these notes, you will be able to:
+# 
+# 1. Write out the Hamiltonian for the hydrogen atom (or at least one approximation of the hydrogen atom)
+# 2. Perform a separation of variables on the hydrogen atom Hamiltonian (to separate $r$ from $\theta$ and $\phi$).
+# 3. Identify the $\theta$ and $\phi$ wave functions as the spherical harmonics.
+# 4. Identify the $r$ wave functions as related to the Laguerre polynomials.
+# 5. Properties of Laguerre polynomials.
 
 # ## Coding Concepts:
 # 
@@ -57,21 +65,27 @@
 # 
 # where
 # 
-# $\hat{L}^2Y(\theta,\phi) = E_{\theta,\phi}Y(\theta,\phi) \tag{1}$
+# $\hat{L}^2Y(\theta,\phi) = \alpha Y(\theta,\phi) \tag{1}$
 # 
 # and 
 # 
-# $-\frac{\hbar^2}{2m_er^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)+\left[\frac{E_{\theta,\phi}}{2m_er^2} + V(r)-E\right]R(r) =0 \tag{2} $.
+# $-\frac{\hbar^2}{2m_er^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)+\left[\frac{\alpha}{2m_er^2} + V(r)-E\right]R(r) =0 \tag{2} $.
 
 # ## Solutions to the $\theta$ and $\phi$ Equation: The Spherical Harmonics
 
 # We know the solutions $\hat{L}^2$ equation to be the spherical harmonics.  Namely
 # 
-# $\hat{L}^2Y(\theta,\phi) = \hbar^2l(l+1)Y_l^{m_l}(\theta,\phi)$
+# $\hat{L}^2Y(\theta,\phi) = \hbar^2l(l+1)Y_l^{m}(\theta,\phi)$
 # 
-# for $l=0,1,2...$ and $-l\leq m_l \leq l$.  $Y_l^{m_l}(\theta,\phi)$ are the spherical harmonics where it is customary to write them in terms of $l$ and $m_l$ for the hydrogen atom.  This yields that
+# for $l=0,1,2...$ and $-l\leq m \leq l$.  $Y_l^{m}(\theta,\phi)$ are the spherical harmonics where it is customary to write them in terms of $l$ and $m$ for the hydrogen atom.  This yields that
 # 
-# $E_{\theta,\phi} = \hbar^2l(l+1)$.
+# $\alpha = \hbar^2l(l+1)$.
+# 
+# In these notes we will include the normalization constants of each component with the respective function.  That is we define our spherical harmonics as
+# 
+# \begin{equation}
+# Y_l^{m} = \sqrt{\frac{(2l+1)(l-|m|)!}{4\pi(l+|m|)!}}P_l^{|m|}(\cos\theta)e^{im\phi}
+# \end{equation}
 # 
 # Below are 3D representations of some of the spherical harmonics.
 
@@ -119,11 +133,11 @@ plt.show();
 
 # ## Solutions to the $r$ Equation: The Generalized Laguerre Polynomials
 
-# We must now substitute $E_{\theta,\phi}=\hbar^2l(l+1)$ into equation (2) above and solve for the radial part
+# We must now substitute $\alpha=\hbar^2l(l+1)$ into equation (2) above and solve for the radial part
 # 
 # $-\frac{\hbar^2}{2m_er^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)+\left[\frac{\hbar^2l(l+1)}{2m_er^2} + V(r)-E\right]R(r) =0 $.
 # 
-# This can be solved but we will not go through it. Instead we will present the energies and wavefunctions
+# This can be solved using power series solutions to differential equations but we will not go through it. Instead we will present the energies and wavefunctions
 # 
 # $E_n = - \frac{m_ee^4}{8\epsilon_0^2h^2n^2} = - \frac{e^2}{8\pi\epsilon_0a_0n^2}$
 # 
@@ -131,9 +145,19 @@ plt.show();
 # 
 # The radial wavefunction solution to the equation above is given as 
 # 
-# $R_{nl} = -\left[ \frac{(n-l-1)!}{2n[(n+l)!]^3}\right]^{1/2} \left( \frac{2}{na_0}\right)^{l+3/2} r^le^{-r/na_0}L_{n+1}^{2l+1}\left( \frac{2r}{na_0}\right)$,
+# $R_{nl} = A_r r^le^{-r/na_0}L_{n+l}^{2l+1}\left( \frac{2r}{na_0}\right)$,
 # 
-# where $L_{n+l}^{2l+1}$ are the *associated Laguerre polynomials*.  Note that we will plot these functions in terms of the  *generalized Laguerre polynomials* which requires us to replace $L_{n+l}^{2l+1}$  in the above equation with $L_{n-l-1}^{2l+1}$ (this is now the generalized form) and remove a factor of $(n+l)!$:
+# where $L_{n+l}^{2l+1}$ are the *associated Laguerre polynomials*. The $A_r$ factor is the normalization factor that can be determined by requiring
+# \begin{equation}
+# \int_0^\infty R_{nl}^*R_{nl}r^2dr = 1,
+# \end{equation}
+# This requirement yields
+# \begin{equation}
+# A_r = -\left[ \frac{(n-l-1)!}{2n[(n+l)!]^3}\right]^{1/2} \left( \frac{2}{na_0}\right)^{l+3/2}
+# \end{equation}
+# 
+# 
+# Below we will plot these functions in terms of the  *generalized Laguerre polynomials* which requires us to replace $L_{n+l}^{2l+1}$  in the above equation with $L_{n-l-1}^{2l+1}$ (this is now the generalized form) and remove a factor of $(n+l)!$:
 # 
 # $R_{nl} = -\left[ \frac{(n-l-1)!}{2n(n+l)!}\right]^{1/2} \left( \frac{2}{na_0}\right)^{l+3/2} r^le^{-r/na_0}L_{n-l-1}^{2l+1}\left( \frac{2r}{na_0}\right)$.
 # 
@@ -149,163 +173,201 @@ from scipy.special import factorial
 from scipy import integrate
 import numpy as np
 import matplotlib.pyplot as plt
-import plotting as myplt
+import warnings
+warnings.filterwarnings('ignore')
 get_ipython().run_line_magic('matplotlib', 'inline')
-
-fig, ax = myplt.define_figure(xlabel="r (Bohr)", ylabel="$R(r)$")
-
+fontsize = 16
+plt.figure(figsize=(10,6),dpi= 80, facecolor='w', edgecolor='k')
+plt.tick_params(axis='both',labelsize=fontsize)
+plt.grid(which='major', axis='both', color='#808080', linestyle='--')
+plt.title("Hydrogen Atom Radial Wave Functions",fontsize=fontsize)
+plt.legend(fontsize=fontsize);
 # parameters for plotting
 nLimit = 3
 a0 = 1.0
-r = np.arange(0,30,0.01)
+r = np.arange(0,20,0.01)
 
 for n in range(1,nLimit+1):
     for l in range(n):
         prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
         R = prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
         label = "n=" + str(n) + " l=" + str(l)
-        ax.plot(r,R,label=label,lw=2)
-plt.legend(fontsize=12)
+        plt.plot(r,R,label=label,lw=2)
+plt.legend(fontsize=fontsize)
+plt.xlabel(r'$r$ (Bohr)',size=fontsize)
+plt.ylabel(r'$R(r)$',size=fontsize)
 plt.show();
 
 
 # ### Properties of the General Laguerre Polynomials
 
+# The radial wave function of the hydrogen atom contains a normalization factor and then three different functions of $r$:
 # 
+# $R_{nl}(r) \propto r^le^{-r/na_0}L_{n+1}^{2l+1}\left( \frac{2r}{na_0}\right)$.
+# 
+# Of these, the generalized Laguerre polynomials, $L_{n+1}^{2l+1}\left( \frac{2r}{na_0}\right)$, are relatively unknown to us but have some important (/useful) properties.  Before we get into them, here are a few of the first Laguerre polynomials:
+# 
+# |   $n, l$       | $L_n^{(\alpha)}(x)$ |
+# | :---------- | :---------------- |
+# | $1, 0$           | $L_1^1(x)= -1$ |
+# | $2, 0$          | $L_2^1(x)= -2(2-x)$ |
+# | $2, 1$            | $L_3^3(x)= -3!$ |
+# | $3, 0$          | $L_3^1(x)= -3!(3-3x+\frac{1}{2}x^2)$ |
+# | $3, 1$            | $L_4^3(x)= -4!(4-x)$ |
+# | $3, 2$          | $L_5^5(x)= -5!$ |
+# 
+# 
+# A plot of the generalized Laguerre polynomials is provided below.
+# 
+# There are two important properties of these functions that we will consider: (1) Differentiation and (2) Orthogonality.
+# 
+# ***Differentiation*** 
+# 
+# The generalized Laguerre polynomials have the following property when differentiated:
+# 
+# \begin{equation}
+# \frac{d^k}{dx^k} L_n^{(\alpha)}(x) = \begin{cases} (-1)^kL_{n-k}^{(\alpha+k)}(x)\quad\text{ if } k\leq n \\0 \qquad\qquad\qquad\text{ otherwise}\end{cases}
+# \end{equation}
+# 
+# ***Orthogonality*** 
+# 
+# The generalized Laguerre polynomials hare not orthogonal themselves but are orthogonal over $[0,\infty)$ with weighting function $x^\alpha e^{-x}$.  That is
+# 
+# \begin{equation}
+# \int_0^\infty x^\alpha e^{-x} L_n^{(\alpha)}(x)L_m^{(\alpha)}(x)dx = \frac{\Gamma(n+\alpha+1)}{n!}\delta_{n,m}
+# \end{equation}
+# 
+# where $\Gamma$ is the gamma function and $\delta_{n,m}$ is defined by
+# \begin{equation}
+# \delta_{n,m} = \begin{cases} 1 \quad\text{ if }n=m \\ 0 \quad\text{ otherwise}\end{cases}
+# \end{equation}
+# 
+# That particular orthogonality condition is not that useful for us but it can also be shown that
+# \begin{equation}
+# \int_0^\infty x^{(\alpha+1)} e^{-x} L_n^{(\alpha)}(x)L_m^{(\alpha)}(x)dx = \frac{2n[(n+\frac{\alpha-1}{2})!]^3}{(n-\frac{(\alpha-1)}{2}-1)!}\delta_{n,m}
+# \end{equation}
+# 
+# This relationship indicates that any two hydrogen atom wave functions differing in primary quantum number $n$ will be orthogonal.
+# 
+# A related integral is also useful
+# \begin{equation}
+# \int_0^\infty x^{\alpha+1}e^{-x}\left[ L_n^{(\alpha)}(x)\right]^2dx = \frac{(n+\alpha)!}{n!}(2n+\alpha + 1)
+# \end{equation}
 
-# In[3]:
-
-
-# let's plot some radial wavefunctions of the hydrogen atom
-from scipy.special import sph_harm
-from scipy.special import eval_genlaguerre
-from scipy.special import factorial
-from scipy import integrate
-import numpy as np
-import matplotlib.pyplot as plt
-import plotting as myplt
-get_ipython().run_line_magic('matplotlib', 'inline')
-
-fig, ax = myplt.define_figure(xlabel="r (Bohr)", ylabel="$r^2R^2(r)$")
-
-# parameters for plotting
-nLimit = 3
-a0 = 1.0
-r = np.arange(0,30,0.01)
-
-for n in range(1,nLimit+1):
-    for l in range(n):
-        prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
-        R = prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
-        label = "n=" + str(n) + " l=" + str(l)
-        ax.plot(r,np.power(R,2)*np.power(r,2),label=label, lw=2)
-plt.legend(fontsize=12)
-plt.show()
-
+# ## The Complete Solution
 
 # The complete hydrogen atom wavefunctions are a product of the radial and angular components
 # 
 # $\psi_{nlm_l}(r,\theta,\phi) = R_{nl}(r)Y_l^{m_l}(\theta,\phi)$
 
-# In[4]:
+# In[3]:
 
 
-# recall what the spherical harmonics look like
 # make two plots of the same spherical harmonic
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm, colors
 import numpy as np
 import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
 from scipy.special import sph_harm
 from scipy.special import eval_genlaguerre
+from scipy.special import lpmv
 from scipy.special import factorial
-a0 = 1
-def h_atom_r_prob(n,l,r):
-    prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
-    R = prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
-    return np.power(r,2)*np.power(R,2)
-def h_atom_theta_phi_prob(l,m,theta,phi):
-    y = sph_harm(m, l, phi, theta).real
-    return y*y
+get_ipython().run_line_magic('matplotlib', 'inline')
+from scipy.optimize import root
+a0 = 1.0 # radial unit of Bohr!    
+def hydrogen_atom_wf(r,theta,phi,n,l,m):
+    Y_norm = np.sqrt((2*l+1)*factorial(l-np.abs(m))/(4*np.pi*factorial(l+np.abs(m))))
+    R_prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
+    R = R_prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
+    return Y_norm*sph_harm(m, l, phi, theta).real*R
 
-def plot_h_atom_prob_xy_xz(n,l,m):
-    xi = np.arange(-15,15,0.1)
-    yi = np.arange(-15,15,0.1)
-    zi = np.arange(-15,15,0.1)
+def plot_hydrogen_atom_wf(n,l,m, ax_obj, r=np.linspace(0,10,100), theta=np.linspace(0,np.pi,20), phi=np.linspace(0,1.5*np.pi,25)):
+    R, THETA, PHI = np.meshgrid(r, theta, phi)
+    R = R.flatten()
+    THETA = THETA.flatten()
+    PHI = PHI.flatten()
+    x = R*np.sin(THETA)*np.cos(PHI) 
+    y = R*np.sin(THETA)*np.sin(PHI)
+    z = R*np.cos(THETA)
+    wf = hydrogen_atom_wf(R,THETA,PHI,n,l,m)
+    vmax = max(np.abs(np.amin(wf)),np.abs(np.amax(wf)))
+    vmin = -vmax
+    # plot
+    ax_obj.set_title(rf'$n={n},l={l},m={m}$', fontsize=18)
+    ax_obj.scatter3D(x,y,z,c=wf, cmap='RdBu', vmin=vmin, vmax=vmax,alpha=0.25)
+    ax_obj.set_box_aspect((100,100,100))
+    #ax_obj.set_axis_off()
+    ax_obj.axes.xaxis.set_ticklabels([])
+    ax_obj.axes.yaxis.set_ticklabels([])
+    ax_obj.axes.zaxis.set_ticklabels([])
     
-    r = np.sqrt(np.power(xi,2)+np.power(yi,2))
-    theta1 = np.zeros(xi.size,dtype=float)
-    theta2 = np.arccos(zi/np.sqrt(np.power(xi,2)+np.power(zi,2)))
-    phi1 = np.arctan(yi/xi)
-    
-    X,Y = np.meshgrid(xi,yi)
-    probxy = np.empty(X.shape,dtype=float)
-    for i in range(X.shape[0]):
-        for j in range(X.shape[1]):
-            r = np.sqrt(X[i,j]**2+Y[i,j]**2)
-            phi = np.arctan(Y[i,j]/X[i,j])
-            #print r, phi, h_atom_r_prob(n,l,r), h_atom_theta_phi_prob(l,m,np.pi/2.0,phi)
-            probxy[i,j] = h_atom_r_prob(n,l,r)*h_atom_theta_phi_prob(l,m,np.pi/2.0,phi)
-    
-    # Create the contour plot
-    zmax = np.amax(probxy)
-    zmin = np.amin(probxy)
-    CS = plt.contourf(X, Y, probxy, 15, cmap=plt.cm.rainbow, vmax=zmax, vmin=zmin)
-    plt.colorbar()  
-    plt.show()
-    
-    
-    
+def plot_hydrogen_atom_wf_xz_projection(n,l,m, ax_obj):
+    x = np.linspace(-10,10,1000)
+    z = np.linspace(-10,10,1000)
+    X, Z= np.meshgrid(x, z)
+    Y = np.zeros(X.shape)
+    R = np.sqrt(X*X + Y*Y + Z*Z).flatten()
+    THETA = np.arccos(Z.flatten()/R)
+    PHI = np.arctan2(Y,X).flatten()
+    wf = np.zeros(R.shape)
+    wf = hydrogen_atom_wf(R,THETA,PHI,n,l,m)
+    wf = wf.reshape(X.shape)
+    vmax = max(np.abs(np.amin(wf)),np.abs(np.amax(wf)))
+    vmin = -vmax
+    # plot
+    ax_obj.set_title(rf'$n={n},l={l},m={m}$', fontsize=18)
+    c = ax_obj.pcolormesh(X, Z, wf, cmap='RdBu', vmin=vmin, vmax=vmax)
+    # set the limits of the plot to the limits of the data
+    ax_obj.axis([-10, 10, -10, 10])
+    ax_obj.set_aspect('equal')
+    #ax_obj.set_axis_off()
+    return c
 
-plot_h_atom_prob_xy_xz(n=3,l=2,m=2)
+def plot_particle_in_sphere_wf_xy_projection(n,l,m, ax_obj):
+    x = np.linspace(-1,1,100)
+    y = np.linspace(-1,1,100)
+    z = np.zeros(100)
+    X, Y= np.meshgrid(x, y)
+    Z = np.zeros(X.shape)
+    R = np.sqrt(X*X + Y*Y + Z*Z).flatten()
+    THETA = np.arccos(Z.flatten()/R)
+    PHI = np.arctan2(Y,X).flatten()
+    wf = np.zeros(R.shape)
+    indeces = np.argwhere(R <= 1)
+    wf[indeces] = particle_in_sphere_wf(R[indeces],THETA[indeces],PHI[indeces],n,l,m)
+    wf = wf.reshape(X.shape)
+    # plot
+    ax_obj.set_title(rf'$n={n},l={l},m={m}$', fontsize=18)
+    c = ax_obj.pcolormesh(X, Y, wf, cmap='RdBu', vmin=-0.2, vmax=0.2)
+    # set the limits of the plot to the limits of the data
+    ax_obj.axis([-1, 1, -1, 1])
+    ax_obj.set_aspect('equal')
+    ax_obj.set_axis_off()
+    return c
+
+
+# In[4]:
+
+
+fig, ax = plt.subplots(3,3,figsize=(16,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
+for n in range(1,4):
+    for l in range(3):
+        if l < n:
+            plot_hydrogen_atom_wf(n,l,0,ax[n-1,l])
+        else: 
+            ax[n-1,l].set_axis_off()
+plt.show();
 
 
 # In[5]:
 
 
-#selection rules for theta and phi
-from scipy import integrate
-nLimit = 3
-a0 = 1.0
-theta = np.arange(0,np.pi,0.05)
-phi = np.arange(0,2*np.pi,0.05)
-
-for n1 in range(1,nLimit+1):
-    for l1 in range(n1):
-        for ml1 in range(-l1,l1):
-            y1 = sph_harm(ml1, l1, phi, theta)
-            for n2 in range(1,nLimit+1):
-                for l2 in range(n2):
-                    for ml2 in range(-l2,l2):
-                        y2 = sph_harm(ml2, l2, phi, theta)
-                        selection = integrate.simps(integrate.simps(y1, y2,phi)*np.cos(theta)*np.sin(theta),theta)
-                        print("<",n1,l1,ml1,"|cos|",n2,l2,ml2,"> = ", selection)
-
-
-# In[7]:
-
-
-#selection rules for r
-from scipy import integrate
-nLimit = 3
-a0 = 1.0
-r = np.arange(0,30,0.01)
-
-for n1 in range(1,nLimit+1):
-    for l1 in range(n1):
-        prefactor1 = -np.sqrt(factorial(n1-l1-1)/(2*n1*factorial(n1+l1)))*(2.0/(n1*a0))**(l1+1.5)*np.power(r,l1)*np.exp(-r/(n1*a0))
-        R1 = prefactor1*eval_genlaguerre(n1-l1-1,2*l1+1,2*r/(n1*a0))
-        for n2 in range(1,nLimit+1):
-            for l2 in range(n2):
-                prefactor2 = -np.sqrt(factorial(n2-l2-1)/(2*n2*factorial(n2+l2)))*(2.0/(n2*a0))**(l2+1.5)*np.power(r,l2)*np.exp(-r/(n2*a0))
-                R2 = prefactor*eval_genlaguerre(n2-l2-1,2*l2+1,2*r/(n2*a0))
-                selection = integrate.simps(R1*np.power(r,3)*R2,r)
-                print("<",n1,l1,"|r|",n2,l2,"> = ", selection)
-
-
-# In[ ]:
-
-
-
+fig, ax = plt.subplots(3,3,figsize=(16,12),dpi= 80, facecolor='w', edgecolor='k') 
+for n in range(1,4):
+    for l in range(3):
+        if l < n:
+            plot_hydrogen_atom_wf_xz_projection(n,l,0,ax[n-1,l])
+        else: 
+            ax[n-1,l].set_axis_off()
+plt.show();
 
