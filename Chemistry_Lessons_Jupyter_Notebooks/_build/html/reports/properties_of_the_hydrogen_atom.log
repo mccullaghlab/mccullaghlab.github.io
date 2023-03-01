@@ -17,34 +17,57 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-#selection rules for theta and phi
 from scipy import integrate
-nLimit = 3
-a0 = 1.0
-theta = np.arange(0,np.pi,0.05)
-phi = np.arange(0,2*np.pi,0.05)
+from scipy.special import lpmv
+import numpy as np
 
-for n1 in range(1,nLimit+1):
-    for l1 in range(n1):
-        for ml1 in range(-l1,l1):
-            y1 = sph_harm(ml1, l1, phi, theta)
-            for n2 in range(1,nLimit+1):
-                for l2 in range(n2):
-                    for ml2 in range(-l2,l2):
-                        y2 = sph_harm(ml2, l2, phi, theta)
-                        selection = integrate.simps(integrate.simps(y1, y2,phi)*np.cos(theta)*np.sin(theta),theta)
-                        print("<",n1,l1,ml1,"|cos|",n2,l2,ml2,"> = ", selection)
+def theta_norm2(m,l):
+    return ((2*l+1)*math.factorial(l-np.abs(m)))/(2*math.factorial(l+np.abs(m)))
+def integrand(theta,m,l):
+    return theta_norm2(m,l)*lpmv(m,l,theta)**2
+
+print ("{:<8} {:<15} {:<20}".format('l','m','<Theta_ml | Theta_ml>'))
+print("--------------------------------------------------------------------")
+for l in range(4):
+    for m in range(l+1):
+        print ("{:<8} {:<15} {:<20}".format(l,m,np.round(integrate.quad(integrand,-1,1,args=(m,l))[0],3)))
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mValueError[0m                                Traceback (most recent call last)
-[0;32m<ipython-input-5-8f2f6dbda670>[0m in [0;36m<module>[0;34m[0m
-[1;32m      9[0m     [0;32mfor[0m [0ml1[0m [0;32min[0m [0mrange[0m[0;34m([0m[0mn1[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     10[0m         [0;32mfor[0m [0mml1[0m [0;32min[0m [0mrange[0m[0;34m([0m[0;34m-[0m[0ml1[0m[0;34m,[0m[0ml1[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 11[0;31m             [0my1[0m [0;34m=[0m [0msph_harm[0m[0;34m([0m[0mml1[0m[0;34m,[0m [0ml1[0m[0;34m,[0m [0mphi[0m[0;34m,[0m [0mtheta[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     12[0m             [0;32mfor[0m [0mn2[0m [0;32min[0m [0mrange[0m[0;34m([0m[0;36m1[0m[0;34m,[0m[0mnLimit[0m[0;34m+[0m[0;36m1[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     13[0m                 [0;32mfor[0m [0ml2[0m [0;32min[0m [0mrange[0m[0;34m([0m[0mn2[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+[0;32m<ipython-input-2-ca56485042b4>[0m in [0;36m<module>[0;34m[0m
+[1;32m     12[0m [0;32mfor[0m [0ml[0m [0;32min[0m [0mrange[0m[0;34m([0m[0;36m4[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     13[0m     [0;32mfor[0m [0mm[0m [0;32min[0m [0mrange[0m[0;34m([0m[0ml[0m[0;34m+[0m[0;36m1[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 14[0;31m         [0mprint[0m [0;34m([0m[0;34m"{:<8} {:<15} {:<20}"[0m[0;34m.[0m[0mformat[0m[0;34m([0m[0ml[0m[0;34m,[0m[0mm[0m[0;34m,[0m[0mnp[0m[0;34m.[0m[0mround[0m[0;34m([0m[0mintegrate[0m[0;34m.[0m[0mquad[0m[0;34m([0m[0mintegrand[0m[0;34m,[0m[0;34m-[0m[0;36m1[0m[0;34m,[0m[0;36m1[0m[0;34m,[0m[0margs[0m[0;34m=[0m[0;34m([0m[0mm[0m[0;34m,[0m[0ml[0m[0;34m)[0m[0;34m)[0m[0;34m[[0m[0;36m0[0m[0;34m][0m[0;34m,[0m[0;36m3[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m
+[0;32m~/opt/anaconda3/lib/python3.8/site-packages/scipy/integrate/quadpack.py[0m in [0;36mquad[0;34m(func, a, b, args, full_output, epsabs, epsrel, limit, points, weight, wvar, wopts, maxp1, limlst)[0m
+[1;32m    349[0m [0;34m[0m[0m
+[1;32m    350[0m     [0;32mif[0m [0mweight[0m [0;32mis[0m [0;32mNone[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 351[0;31m         retval = _quad(func, a, b, args, full_output, epsabs, epsrel, limit,
+[0m[1;32m    352[0m                        points)
+[1;32m    353[0m     [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mValueError[0m: operands could not be broadcast together with shapes () () (126,) (63,) 
-ValueError: operands could not be broadcast together with shapes () () (126,) (63,) 
+[0;32m~/opt/anaconda3/lib/python3.8/site-packages/scipy/integrate/quadpack.py[0m in [0;36m_quad[0;34m(func, a, b, args, full_output, epsabs, epsrel, limit, points)[0m
+[1;32m    461[0m     [0;32mif[0m [0mpoints[0m [0;32mis[0m [0;32mNone[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    462[0m         [0;32mif[0m [0minfbounds[0m [0;34m==[0m [0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 463[0;31m             [0;32mreturn[0m [0m_quadpack[0m[0;34m.[0m[0m_qagse[0m[0;34m([0m[0mfunc[0m[0;34m,[0m[0ma[0m[0;34m,[0m[0mb[0m[0;34m,[0m[0margs[0m[0;34m,[0m[0mfull_output[0m[0;34m,[0m[0mepsabs[0m[0;34m,[0m[0mepsrel[0m[0;34m,[0m[0mlimit[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    464[0m         [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    465[0m             [0;32mreturn[0m [0m_quadpack[0m[0;34m.[0m[0m_qagie[0m[0;34m([0m[0mfunc[0m[0;34m,[0m[0mbound[0m[0;34m,[0m[0minfbounds[0m[0;34m,[0m[0margs[0m[0;34m,[0m[0mfull_output[0m[0;34m,[0m[0mepsabs[0m[0;34m,[0m[0mepsrel[0m[0;34m,[0m[0mlimit[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m<ipython-input-2-ca56485042b4>[0m in [0;36mintegrand[0;34m(theta, m, l)[0m
+[1;32m      6[0m     [0;32mreturn[0m [0;34m([0m[0;34m([0m[0;36m2[0m[0;34m*[0m[0ml[0m[0;34m+[0m[0;36m1[0m[0;34m)[0m[0;34m*[0m[0mmath[0m[0;34m.[0m[0mfactorial[0m[0;34m([0m[0ml[0m[0;34m-[0m[0mnp[0m[0;34m.[0m[0mabs[0m[0;34m([0m[0mm[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m/[0m[0;34m([0m[0;36m2[0m[0;34m*[0m[0mmath[0m[0;34m.[0m[0mfactorial[0m[0;34m([0m[0ml[0m[0;34m+[0m[0mnp[0m[0;34m.[0m[0mabs[0m[0;34m([0m[0mm[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m [0;32mdef[0m [0mintegrand[0m[0;34m([0m[0mtheta[0m[0;34m,[0m[0mm[0m[0;34m,[0m[0ml[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 8[0;31m     [0;32mreturn[0m [0mtheta_norm2[0m[0;34m([0m[0mm[0m[0;34m,[0m[0ml[0m[0;34m)[0m[0;34m*[0m[0mlpmv[0m[0;34m([0m[0mm[0m[0;34m,[0m[0ml[0m[0;34m,[0m[0mtheta[0m[0;34m)[0m[0;34m**[0m[0;36m2[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      9[0m [0;34m[0m[0m
+[1;32m     10[0m [0mprint[0m [0;34m([0m[0;34m"{:<8} {:<15} {:<20}"[0m[0;34m.[0m[0mformat[0m[0;34m([0m[0;34m'l'[0m[0;34m,[0m[0;34m'm'[0m[0;34m,[0m[0;34m'<Theta_ml | Theta_ml>'[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m<ipython-input-2-ca56485042b4>[0m in [0;36mtheta_norm2[0;34m(m, l)[0m
+[1;32m      4[0m [0;34m[0m[0m
+[1;32m      5[0m [0;32mdef[0m [0mtheta_norm2[0m[0;34m([0m[0mm[0m[0;34m,[0m[0ml[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 6[0;31m     [0;32mreturn[0m [0;34m([0m[0;34m([0m[0;36m2[0m[0;34m*[0m[0ml[0m[0;34m+[0m[0;36m1[0m[0;34m)[0m[0;34m*[0m[0mmath[0m[0;34m.[0m[0mfactorial[0m[0;34m([0m[0ml[0m[0;34m-[0m[0mnp[0m[0;34m.[0m[0mabs[0m[0;34m([0m[0mm[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m/[0m[0;34m([0m[0;36m2[0m[0;34m*[0m[0mmath[0m[0;34m.[0m[0mfactorial[0m[0;34m([0m[0ml[0m[0;34m+[0m[0mnp[0m[0;34m.[0m[0mabs[0m[0;34m([0m[0mm[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      7[0m [0;32mdef[0m [0mintegrand[0m[0;34m([0m[0mtheta[0m[0;34m,[0m[0mm[0m[0;34m,[0m[0ml[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      8[0m     [0;32mreturn[0m [0mtheta_norm2[0m[0;34m([0m[0mm[0m[0;34m,[0m[0ml[0m[0;34m)[0m[0;34m*[0m[0mlpmv[0m[0;34m([0m[0mm[0m[0;34m,[0m[0ml[0m[0;34m,[0m[0mtheta[0m[0;34m)[0m[0;34m**[0m[0;36m2[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mNameError[0m: name 'math' is not defined
+NameError: name 'math' is not defined
 

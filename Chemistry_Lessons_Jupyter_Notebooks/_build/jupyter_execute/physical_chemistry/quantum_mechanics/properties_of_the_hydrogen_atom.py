@@ -1,21 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # The Hydrogen Atom
+# # Properties of the Hydrogen Atom
 
 # ## Motivation:
 # 
-# We would like to know how the particle-wave duality hypothesis affects the structure and behavior of atoms and molecules.  The simplest case is that of the hydrogen atom, containing only a single electron and a single proton.
+# [Previous notes](the_hydrogen_atom.ipynb) presented the wave function and energy solution for the Schrodinger equation for the hydrogen atom.  In these notes we present properties of these wavefunctions and energies.
 
 # ## Learning Goals:
 # 
 # After working through these notes, you will be able to:
 # 
-# 1. Write out the Hamiltonian for the hydrogen atom (or at least one approximation of the hydrogen atom)
-# 2. Perform a separation of variables on the hydrogen atom Hamiltonian (to separate $r$ from $\theta$ and $\phi$).
-# 3. Identify the $\theta$ and $\phi$ wave functions as the spherical harmonics.
-# 4. Idnetify the $r$ wave functions as related to the Laguerre polynomials.
-# 5. Properties of Laguerre polynomials.
+# 1. 
 
 # ## Coding Concepts:
 # 
@@ -25,131 +21,114 @@
 # 2. [Functions](../../coding_concepts/functions.ipynb)
 # 3. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.ipynb)
 
-# ## Model of the Hydrogen Atom
+# ## Review of the Hydrogen Atom Solutions
 
-# The hydrogen atom is composed of an electron and a proton.  If these two particles were classical, the interaction energy would simply be described by the Coulombic attraction between the two particles
+# The complete hydrogen atom wavefunctions are a product of the radial and angular components
 # 
-# $V(r) = -\frac{e^2}{4\pi\epsilon_0r}$,
+# $\psi_{nlm_l}(r,\theta,\phi) = R_{nl}(r)Y_l^{m}(\theta,\phi)$
 # 
-# where $r$ is the separation distance between the two particles, $e$ is the charge of an electron and $\epsilon_0$ is the permittivity of free space. In the quantum mechanical picture, we will treat this same function as the potential energy operator.  The Hamiltonian for a hydrogen atom is then, including the kinetic energy,
+# where 
+# \begin{equation}
+# Y_l^{m} = \sqrt{\frac{(2l+1)(l-|m|)!}{4\pi(l+|m|)!}}P_l^{|m|}(\cos\theta)e^{im\phi}
+# \end{equation}
+# and
+# \begin{equation}
+# R_{nl} = -\left[ \frac{(n-l-1)!}{2n[(n+l)!]^3}\right]^{1/2} \left( \frac{2}{na_0}\right)^{l+3/2} r^le^{-r/na_0}L_{n+l}^{2l+1}\left( \frac{2r}{na_0}\right).
+# \end{equation}
 # 
-# $\hat{H} = -\frac{\hbar^2}{2m_e}\nabla^2-\frac{e^2}{4\pi\epsilon_0r}$
+# The energies are
+# \begin{equation}
+# E_n =  - \frac{e^2}{8\pi\epsilon_0a_0n^2}
+# \end{equation}
 # 
-# where $m_e$ is the mass of an electron and $\nabla^2$ is the Laplacian in three dimensions.  Notice that this Hamiltonian is only in terms of the coordinates of the electron relative to the heavy proton.  
 
-# ## Solving the Schrodinger Equation by Separating Variables
+# ## The Radial and Angular Wave Functions are Normalized
 
-# Since the potential is a function of $r$, the separation distance between the proton and the electron, it is useful to write the Laplacian in spherical coordinates. Recall from the rigid rotator that
-# 
-# $\nabla^2_{r\theta\phi} = \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial^2\phi}$
-# 
-# Plugging this back into the Schrodinger equation yields
-# 
-# $\hat{H}\Psi(r,\theta,\phi) = -\frac{\hbar^2}{2m_e}\left[\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\psi(r,\theta,\phi) +V(r)\psi(r,\theta,\phi) = E\psi(r,\theta,\phi)$ 
-# 
-# Multiply through by $2m_er^2$ to get
-# 
-# $-\hbar^2\left[\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\psi(r,\theta,\phi) +2m_er^2V(r)\psi(r,\theta,\phi) = 2m_er^2E\psi(r,\theta,\phi)$
-# 
-# Rearrange (combine terms dependent on $r$) to get
-# 
-# $-\hbar^2\left[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\psi(r,\theta,\phi) -\hbar^2\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)\psi(r,\theta,\phi)+2m_er^2\left(V(r)-E\right)\psi(r,\theta,\phi) =0$
-# 
-# Notice that the left-hand term in the above equality is the $\hat{L}^2\psi$ thus yielding
-# 
-# $\hat{L}^2\psi(r,\theta,\phi) -\hbar^2\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)\psi(r,\theta,\phi)+2m_er^2\left(V(r)-E\right)\psi(r,\theta,\phi) =0$.
-# 
-# Now notice that only the left-hand term depends on $\theta$ and $\phi$ and only the two right-hand terms depend on $r$ thus allowing us to write
-# 
-# $\psi(r,\theta,\phi) = R(r)Y(\theta,\phi)$,
-# 
-# where
-# 
-# $\hat{L}^2Y(\theta,\phi) = \alpha Y(\theta,\phi) \tag{1}$
-# 
-# and 
-# 
-# $-\frac{\hbar^2}{2m_er^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)+\left[\frac{\alpha}{2m_er^2} + V(r)-E\right]R(r) =0 \tag{2} $.
+# The constants with the factorials in the radial and angular wave functions are normalization constants.  They yield normalized wave functions for each indepdendent component.  In turn, the overall wave function is also normalized.
 
-# ## Solutions to the $\theta$ and $\phi$ Equation: The Spherical Harmonics
+# ### The Radial Wave Functions are Normalized
 
-# We know the solutions $\hat{L}^2$ equation to be the spherical harmonics.  Namely
+# The radial wave functions are normalized.  Rather than derive this for you, I will use code and numeric integration to demonstrate that
 # 
-# $\hat{L}^2Y(\theta,\phi) = \hbar^2l(l+1)Y_l^{m_l}(\theta,\phi)$
+# \begin{equation}
+# \langle R_{nl}|R_{nl}\rangle = \int_0^\infty R_{nl}^*R_{nl}r^2dr = 1
+# \end{equation}
 # 
-# for $l=0,1,2...$ and $-l\leq m_l \leq l$.  $Y_l^{m_l}(\theta,\phi)$ are the spherical harmonics where it is customary to write them in terms of $l$ and $m_l$ for the hydrogen atom.  This yields that
-# 
-# $\alpha = \hbar^2l(l+1)$.
-# 
-# Below are 3D representations of some of the spherical harmonics.
+# for select values of $n$ and $l$.
 
 # In[1]:
 
 
-# recall what the spherical harmonics look like
-# make two plots of the same spherical harmonic
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm, colors
 import numpy as np
-import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
-from scipy.special import sph_harm
-def plot_spherical_harmonic(m,l,theta=np.linspace(0,np.pi,100),phi=np.linspace(0,2*np.pi,100)):
-    THETA, PHI = np.meshgrid(theta, phi)
-    X = np.sin(THETA) * np.cos(PHI)
-    Y = np.sin(THETA) * np.sin(PHI)
-    Z = np.cos(THETA)
-    # Calculate the spherical harmonic Y(l,m) and normalize to [0,1]
-    fcolors = sph_harm(m, l, PHI, THETA).real
-    s = np.power(sph_harm(m, l, PHI, THETA).real,2)
-    s /= s.max()
-    fmax, fmin = fcolors.max(), fcolors.min()
-    fcolors = (fcolors - fmin)/(fmax - fmin)
-    
+from scipy import integrate
+from scipy.special import eval_genlaguerre
+from scipy.special import factorial
+a0 = 1.0 # radial unit of Bohr!    
+def hydrogen_atom_radial_wf(r,n,l):
+    R_prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
+    return R_prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
+def integrand(r,n1,l1,n2,l2):
+    return r*r*hydrogen_atom_radial_wf(r,n1,l1)*hydrogen_atom_radial_wf(r,n2,l2)
 
-    # Set the aspect ratio to 1 so our sphere looks spherical
-    fig = plt.figure(figsize=(24,12),dpi= 80, facecolor='w', edgecolor='k')
-    ax = fig.add_subplot(1, 2, 1, projection='3d')
-    ax.plot_surface(X, Y, Z,  rstride=1, cstride=1, facecolors=cm.seismic(fcolors))
-    ax.set_axis_off()
-    ax = fig.add_subplot(1, 2, 2, projection='3d')
-    ax.plot_surface(X*s, Y*s, Z*s,  rstride=1, cstride=1, facecolors=cm.seismic(fcolors))
-    # Turn off the axis planes
-    ax.set_axis_off()
-
-plot_spherical_harmonic(0,1)
-plot_spherical_harmonic(0,2)
-plot_spherical_harmonic(0,3)
-plot_spherical_harmonic(0,4)
-plot_spherical_harmonic(0,5)
-plt.show();
+for n in range(1,6):
+    for l in range(n):
+        print(f"<R_{n}{l}|R_{n}{l}> = ",np.round(integrate.quad(integrand,0,np.infty,args=(n,l,n,l))[0],3))
 
 
-# ## Solutions to the $r$ Equation: The Generalized Laguerre Polynomials
+# ### The Angular Wave Functions are Normalized
 
-# We must now substitute $\alpha=\hbar^2l(l+1)$ into equation (2) above and solve for the radial part
-# 
-# $-\frac{\hbar^2}{2m_er^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)+\left[\frac{\hbar^2l(l+1)}{2m_er^2} + V(r)-E\right]R(r) =0 $.
-# 
-# This can be solved using power series solutions to differential equations but we will not go through it. Instead we will present the energies and wavefunctions
-# 
-# $E_n = - \frac{m_ee^4}{8\epsilon_0^2h^2n^2} = - \frac{e^2}{8\pi\epsilon_0a_0n^2}$
-# 
-# for $n=1,2,...$ and $a_0 = \frac{\epsilon_0h^2}{\pi m_ee^2}$ is the Bohr radius.  These are actually the same energies obtained from the Bohr model of the hydrogen atom.  Also notice that the energies are independent of $l$.  It should be noted that $n\geq l+1 $ or $0 \leq l \leq n-1$ for $n=1,2,..$.  
-# 
-# The radial wavefunction solution to the equation above is given as 
-# 
-# $R_{nl} = -\left[ \frac{(n-l-1)!}{2n[(n+l)!]^3}\right]^{1/2} \left( \frac{2}{na_0}\right)^{l+3/2} r^le^{-r/na_0}L_{n+1}^{2l+1}\left( \frac{2r}{na_0}\right)$,
-# 
-# where $L_{n+l}^{2l+1}$ are the *associated Laguerre polynomials*.  Note that we will plot these functions in terms of the  *generalized Laguerre polynomials* which requires us to replace $L_{n+l}^{2l+1}$  in the above equation with $L_{n-l-1}^{2l+1}$ (this is now the generalized form) and remove a factor of $(n+l)!$:
-# 
-# $R_{nl} = -\left[ \frac{(n-l-1)!}{2n(n+l)!}\right]^{1/2} \left( \frac{2}{na_0}\right)^{l+3/2} r^le^{-r/na_0}L_{n-l-1}^{2l+1}\left( \frac{2r}{na_0}\right)$.
-# 
-# Below is a plot of the first few $R_{nl}$ functions.  
+# We have already seen this but below I demonstrate that both the $\phi$ and $\theta$ components of the $Y_l^m(\theta, \phi)$ equation are normalized for limited $l$ and $m$ values. A
 
 # In[2]:
 
 
+from scipy import integrate
+from scipy.special import lpmv
+import numpy as np
+
+def theta_norm2(m,l):
+    return ((2*l+1)*math.factorial(l-np.abs(m)))/(2*math.factorial(l+np.abs(m)))
+def integrand(theta,m,l):
+    return theta_norm2(m,l)*lpmv(m,l,theta)**2
+
+print ("{:<8} {:<15} {:<20}".format('l','m','<Theta_ml | Theta_ml>'))
+print("--------------------------------------------------------------------")
+for l in range(4):
+    for m in range(l+1):
+        print ("{:<8} {:<15} {:<20}".format(l,m,np.round(integrate.quad(integrand,-1,1,args=(m,l))[0],3)))
+
+
+# In[19]:
+
+
+from scipy import integrate
+from scipy.special import lpmv
+import numpy as np
+
+def phi_norm2():
+    return 1/(2*np.pi)
+def integrand(phi):
+    return phi_norm2()
+
+print ("{:<15} {:<20}".format('m','<Phi_m | Phi_m>'))
+print("--------------------------------------------------------------------")
+for m in range(7):
+    print ("{:<15} {:<20}".format(m,np.round(integrate.quad(integrand,0,2*np.pi)[0],3)))
+
+
+# ## The Radial Wave Functions are only Orthogonal when $\Delta l = 0$ and $\Delta n \neq 0$
+
+# In[ ]:
+
+
+
+
+
+# ## Radial Densities
+
+# In[7]:
+
+
 # let's plot some radial wavefunctions of the hydrogen atom
 from scipy.special import sph_harm
 from scipy.special import eval_genlaguerre
@@ -160,41 +139,7 @@ import matplotlib.pyplot as plt
 import plotting as myplt
 get_ipython().run_line_magic('matplotlib', 'inline')
 
-fig, ax = myplt.define_figure(xlabel="r (Bohr)", ylabel="$R(r)$")
-
-# parameters for plotting
-nLimit = 3
-a0 = 1.0
-r = np.arange(0,30,0.01)
-
-for n in range(1,nLimit+1):
-    for l in range(n):
-        prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
-        R = prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
-        label = "n=" + str(n) + " l=" + str(l)
-        ax.plot(r,R,label=label,lw=2)
-plt.legend(fontsize=12)
-plt.show();
-
-
-# ### Properties of the General Laguerre Polynomials
-
-# 
-
-# In[3]:
-
-
-# let's plot some radial wavefunctions of the hydrogen atom
-from scipy.special import sph_harm
-from scipy.special import eval_genlaguerre
-from scipy.special import factorial
-from scipy import integrate
-import numpy as np
-import matplotlib.pyplot as plt
-import plotting as myplt
-get_ipython().run_line_magic('matplotlib', 'inline')
-
-fig, ax = myplt.define_figure(xlabel="r (Bohr)", ylabel="$r^2R^2(r)$")
+fig, ax = myplt.define_figure(xlabel="$r$ (Bohr)", ylabel="$r^2R^2(r)$")
 
 # parameters for plotting
 nLimit = 3
@@ -208,14 +153,12 @@ for n in range(1,nLimit+1):
         label = "n=" + str(n) + " l=" + str(l)
         ax.plot(r,np.power(R,2)*np.power(r,2),label=label, lw=2)
 plt.legend(fontsize=12)
-plt.show()
+plt.show();
 
 
-# The complete hydrogen atom wavefunctions are a product of the radial and angular components
-# 
-# $\psi_{nlm_l}(r,\theta,\phi) = R_{nl}(r)Y_l^{m_l}(\theta,\phi)$
+# ## Angular Densities
 
-# In[4]:
+# In[10]:
 
 
 # recall what the spherical harmonics look like
@@ -269,7 +212,7 @@ def plot_h_atom_prob_xy_xz(n,l,m):
 plot_h_atom_prob_xy_xz(n=3,l=2,m=2)
 
 
-# In[5]:
+# In[11]:
 
 
 #selection rules for theta and phi
@@ -291,7 +234,7 @@ for n1 in range(1,nLimit+1):
                         print("<",n1,l1,ml1,"|cos|",n2,l2,ml2,"> = ", selection)
 
 
-# In[5]:
+# In[8]:
 
 
 import numpy as np
@@ -306,6 +249,8 @@ def integrand(r,n1,l1,n2,l2):
     return r*r*hydrogen_atom_radial_wf(r,n1,l1)*hydrogen_atom_radial_wf(r,n2,l2)
 print(integrate.quad(integrand,0,np.infty,args=(1,0,2,1))[0])
 print(integrate.quad(integrand,0,np.infty,args=(1,0,2,0))[0])
+print(integrate.quad(integrand,0,np.infty,args=(1,0,1,0))[0])
+print(integrate.quad(integrand,0,np.infty,args=(2,1,2,1))[0])
 
 
 # In[7]:
