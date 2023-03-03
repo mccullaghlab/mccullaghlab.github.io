@@ -5,13 +5,14 @@
 
 # ## Motivation:
 # 
-# [Previous notes](the_hydrogen_atom.ipynb) presented the wave function and energy solution for the Schrodinger equation for the hydrogen atom.  In these notes we present properties of these wavefunctions and energies.
+# Here we will consider the allowed absorption and emission lines of the model of the hydrogen atom stemming from the Schrodinger equation.  We will also determine the selection rules for absorption/emission.
 
 # ## Learning Goals:
 # 
 # After working through these notes, you will be able to:
 # 
-# 1. 
+# 1. Compute absorption and emission energies for the hydrogen atom.
+# 2. Identify the selection rules for electronic transitions in the hydrogen atom.
 
 # ## Coding Concepts:
 # 
@@ -20,29 +21,32 @@
 # 1. [Variables](../../coding_concepts/variables.ipynb)
 # 2. [Functions](../../coding_concepts/functions.ipynb)
 # 3. [Plotting with matplotlib](../../coding_concepts/plotting_with_matplotlib.ipynb)
+# 4. [Numeric Integration](../../coding_concepts/numeric_integration.ipynb)
 
-# ## Review of the Hydrogen Atom Solutions
+# ## The Hydrogen Atom Spectrum
 
-# The complete hydrogen atom wavefunctions are a product of the radial and angular components
-# 
-# $\psi_{nlm_l}(r,\theta,\phi) = R_{nl}(r)Y_l^{m}(\theta,\phi)$
-# 
-# where 
-# \begin{equation}
-# Y_l^{m} = \sqrt{\frac{(2l+1)(l-|m|)!}{4\pi(l+|m|)!}}P_l^{|m|}(\cos\theta)e^{im\phi}
-# \end{equation}
-# and
-# \begin{equation}
-# R_{nl} = -\left[ \frac{(n-l-1)!}{2n[(n+l)!]^3}\right]^{1/2} \left( \frac{2}{na_0}\right)^{l+3/2} r^le^{-r/na_0}L_{n+l}^{2l+1}\left( \frac{2r}{na_0}\right).
-# \end{equation}
-# 
-# The energies are
+# The allowed energies of the hydrogen atom are
 # \begin{equation}
 # E_n =  - \frac{e^2}{8\pi\epsilon_0a_0n^2}
 # \end{equation}
 # 
+# An electron can be excited from one state to a higher state when the atom absorbs light of the correct frequency/energy.  The allowed frequencies/energies are dictated by the energy spacings, or differences in energies.
+# 
+# For example, if we consider the $n=1$ as the ground state, then the allowed energies are
+# \begin{equation}
+# \Delta E = \frac{e^2}{8\pi\epsilon_0a_0}\left(1 - \frac{1}{n_2^2}\right), \quad n_2=2,3,4...
+# \end{equation}
+# This series of lines is called the Lyman series.  
+# 
+# If we consider the $n=2$ as the ground state, then the allowed energies are 
+# \begin{equation}
+# \Delta E = \frac{e^2}{8\pi\epsilon_0a_0}\left(\frac{1}{4} - \frac{1}{n_2^2}\right), \quad n_2=3,4,5...
+# \end{equation}
+# This series of lines is called the Balmer series.  
+# 
+# Any state can be considered as the ground state and will result in a series of absoprtion lines.  Below is a plot of the lines stemming from the first three states.
 
-# In[1]:
+# In[32]:
 
 
 # let's plot some radial wavefunctions of the hydrogen atom
@@ -54,36 +58,100 @@ fontsize = 16
 plt.figure(figsize=(4,6),dpi= 80, facecolor='w', edgecolor='k')
 plt.tick_params(axis='both',labelsize=fontsize)
 plt.grid(which='major', axis='both', color='#808080', linestyle='--')
-plt.title("Hydrogen Atom Energy Levels",fontsize=fontsize)
-plt.ylabel(r'$E_n / \frac{8\pi\epsilon_0a_0}{e^2}$',size=fontsize)
+plt.title("Hydrogen Absorption/Emission Line Plot",fontsize=fontsize)
+plt.ylabel(r'$E / \frac{8\pi\epsilon_0a_0}{e^2}$',size=fontsize)
 
 # parameters for plotting
 nLimit = 10
 
 x = np.arange(0,1,0.01)
-for n in range(1,nLimit+1):
-    En = -1/n**2
-    label = "n = " + str(n)
-    plt.plot(x,np.ones(x.size)*En,label=label, lw=3)
+for n1 in range(1,4):
+    for n2 in range(n1+1,nLimit+1):
+        color = "C"+str(n1)
+        En = 1/n1**2-1/n2**2
+        plt.plot(x,np.ones(x.size)*En, lw=3,c=color)
 #plt.legend(fontsize=12)
 plt.show();
 
 
-# ## The Radial and Angular Wave Functions are Normalized
+# Here we have presumed that all changes in $n$ are allowed.  Below we will show that this is true but that there are selection rules for the changes in $l$ and $m$ that we need to consider.
 
-# The constants with the factorials in the radial and angular wave functions are normalization constants.  They yield normalized wave functions for each indepdendent component.  In turn, the overall wave function is also normalized.
+# ## The Quantum Mechanics of Spectroscopy
 
-# ### The Radial Wave Functions are Normalized
-
-# The radial wave functions are normalized.  Rather than derive this for you, I will use code and numeric integration to demonstrate that
+# Various properties of molecules and materials are probed by shining light on the system.  The measurement of absorption or emission from this process is called spectroscopy.  In order to discern what happens to the system when perturbed by this light, we must start by describing the light and ultimately the system dependent operator that allows the system to interact with the light.
 # 
+# Light produces a time dependent electromagnetic field, $\mathbf{E}$, which can be approximatly written as
+# 
+# $\mathbf{E} = \mathbf{E}_0 cos2\pi\nu t$,
+# 
+# where $\nu$ is the frequency of the radiation and $\mathbf{E}_0$ is the electric field vector.  Note that this field is for monochromatic light and has an explicit time dependence.  
+# 
+# The electromagnetic field of the light interacts with the dipole of the system.  Strictly speaking, the interaction of the light with the dipole of the system affects the energy of the system and thus the Hamiltonian that one must consider when solving the Schrodinger equation.  That is, the wavefunction of the molecule is perturbed by the presence of the electromagnetic field.  The perturbation to the Hamiltonian can be written as
+# 
+# $\hat{H}^{(1)} = -\mathbf{\mu}\cdot\mathbf{E} = -\mathbf{\mu}\cdot\mathbf{E}_0 cos2\pi\nu t$
+# 
+# where $\mathbf{\mu}$ is the dipole vector of the molecule.  The complete Hamiltonian for the system is then
+# 
+# $\hat{H} = \hat{H}^{(0)} + \hat{H}^{(1)}$,
+# 
+# where $\hat{H}^{(0)}$ is the Hamiltonian of the isolated system.   This Hamiltonian has explicit time dependence so we cannot solve the stationary state Schrodinger equation.  This problem can be solved using *time-dependent perturbation theory* but we will not do so now.  Instead we will use some of the results from this solution.  
+# 
+
+# ### Transition Dipole Moment
+
+# Time-dependent perturbation theory on the above Hamiltonian leads to defining what is called the *transition dipole moment* for a molecule.  This is defined as
+# 
+# $\langle \psi_{nlm} | \mathbf{\mu} | \psi_{n'l'm'}\rangle = \int_{-\infty}^{\infty} \psi^*_{nlm}\mathbf{\mu}\psi_{n'l'm'}dV$,
+# 
+# where $\psi_{nlm}$ are stationary state solutions of the $\hat{H}^{(0)}$ Hamiltonian of the Hydrogen atom.  This quantity dictates the absorpition of a transition from state $nlm$ to a state $n'l'm'$.  If this quantity is zero then the transition is *not allowed*, if the quantity is finite, the transition is *allowed*. This will dictate the *selection rules*.
+# 
+# To determine this quantity, we start by expresing the dipole vector as a sum of it $x$, $y$, and $x$ contributions:
 # \begin{equation}
-# \langle R_{nl}|R_{nl}\rangle = \int_0^\infty R_{nl}^*R_{nl}r^2dr = 1
+# \mathbf{\mu} = \mu_x\mathbf{i} + \mu_y\mathbf{j} + \mu_z\mathbf{k},
 # \end{equation}
+# where $\mathbf{i}$, $\mathbf{j}$, $\mathbf{k}$ are unit vectors in the $x$, $y$, and $z$ directions respectively and $\mu_x = \mathbf{\mu}\cdot\mathbf{i}$, $\mu_y = \mathbf{\mu}\cdot\mathbf{j}$, and $\mu_z = \mathbf{\mu}\cdot\mathbf{k}$ are the components of the dipole vector in those directions.
 # 
-# for select values of $n$ and $l$.
+# Thus, our transition dipole moment can now be expressed as a sum of three terms
+# 
+# $\langle \psi_{nlm} | \mathbf{\mu} | \psi_{n'l'm'}\rangle = \langle \psi_{nlm} | \mu_x | \psi_{n'l'm'}\rangle\mathbf{i} + \langle \psi_{nlm} | \mu_y | \psi_{n'l'm'}\rangle\mathbf{j} + \langle \psi_{nlm} | \mu_x | \psi_{n'l'm'}\rangle\mathbf{k}$
+# 
+# We now express each of the dipole moment components as a Taylor series expansion truncated at first order analagous to
+# 
+# $\mu_x = \mu_{0x} + \left( \frac{d\mu_x}{dx}\right)_0x + ...$
+# 
+# where $\mu_{0x} $ is the dipole moment component at the equilibrium position and $x$ is the displacement from that position.  Substituting this expansion truncated to second order into the component of the transition dipole moment we get
+# 
+# $\langle nlm | \mu_x | n'l'm'\rangle = \mu_{0x} \langle nlm | n'l'm'\rangle + \left( \frac{d\mu_x}{dx}\right)_0 \langle nlm |x| n'l'm'\rangle $.
+# 
+# Doing a similar procedure for the other two components yields
+# 
+# \begin{align}
+# \langle nlm | \mu_y | n'l'm'\rangle &= \mu_{0y} \langle nlm | n'l'm'\rangle + \left( \frac{d\mu_y}{dy}\right)_0 \langle nlm |y| n'l'm'\rangle \\
+# \langle nlm | \mu_z | n'l'm'\rangle &= \mu_{0z} \langle nlm | n'l'm'\rangle + \left( \frac{d\mu_z}{dz}\right)_0 \langle nlm |z| n'l'm'\rangle
+# \end{align}
+# 
+# The first terms in these, the ones that look like $\mu_{0x} \langle nlm | n'l'm'\rangle$, will be zero if any of the quatum number are different due to the orthogonality of the unperturbed Hydrogen atom wave functions.  Thus, these are uninteresting in terms of absorption or emission becuase the are only finite for no change in state and thus no change in energy.  It is the second term in each that we must evaluate to determine the selection rules.
+# 
+# Since we have determined the Hydrogen atom wave functions in spherical polar coordinates, we will need to convert the $x$, $y$, and $x$ operators to polar coordinates to assess the selection rules. Namely, we will determine the following expectation values to determine the selection rules
+# \begin{align}
+# \langle nlm |x| n'l'm'\rangle &= \langle nlm |r\sin\theta\cos\phi| n'l'm'\rangle \\
+# \langle nlm |y| n'l'm'\rangle &= \langle nlm |r\sin\theta\sin\phi| n'l'm'\rangle \\
+# \langle nlm |z| n'l'm'\rangle &= \langle nlm |r\cos\theta| n'l'm'\rangle
+# \end{align}
 
-# In[2]:
+# ### No selection rules for $r$ and $n$
+
+# The $r$ dependent terms of the transition dipole moment can be all boiled down to the form
+# 
+# \begin{align}
+# \langle nl | r | n'l' \rangle
+# \end{align}
+# 
+# It turns out that these are all finite meaning that there are no limitations on what $n'$ or $l'$ values can be taken based on the radial component of the wave function.
+# 
+# Rather than deriving this I show it by numeric integration for a select subset of possible transitions.  We see below that all of these expectation values are finite.  The real implication for this is that transitions are allowed between any primary quantum numbers of the hydrogen atom.
+
+# In[9]:
 
 
 import numpy as np
@@ -95,358 +163,76 @@ def hydrogen_atom_radial_wf(r,n,l):
     R_prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
     return R_prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
 def integrand(r,n1,l1,n2,l2):
-    return r*r*hydrogen_atom_radial_wf(r,n1,l1)*hydrogen_atom_radial_wf(r,n2,l2)
+    return r*r*r*hydrogen_atom_radial_wf(r,n1,l1)*hydrogen_atom_radial_wf(r,n2,l2)
 
-for n in range(1,6):
-    for l in range(n):
-        print(f"<R_{n}{l}|R_{n}{l}> = ",np.round(integrate.quad(integrand,0,np.infty,args=(n,l,n,l))[0],3))
-
-
-# ### The Angular Wave Functions are Normalized
-
-# We have already seen this but below I demonstrate that both the $\phi$ and $\theta$ components of the $Y_l^m(\theta, \phi)$ equation are normalized for limited $l$ and $m$ values. A
-
-# In[3]:
-
-
-from scipy import integrate
-from scipy.special import lpmv
-import numpy as np
-
-def theta_norm2(m,l):
-    return ((2*l+1)*math.factorial(l-np.abs(m)))/(2*math.factorial(l+np.abs(m)))
-def integrand(theta,m,l):
-    return theta_norm2(m,l)*lpmv(m,l,theta)**2
-
-print ("{:<8} {:<15} {:<20}".format('l','m','<Theta_ml | Theta_ml>'))
-print("--------------------------------------------------------------------")
-for l in range(4):
-    for m in range(l+1):
-        print ("{:<8} {:<15} {:<20}".format(l,m,np.round(integrate.quad(integrand,-1,1,args=(m,l))[0],3)))
-
-
-# In[19]:
-
-
-from scipy import integrate
-from scipy.special import lpmv
-import numpy as np
-
-def phi_norm2():
-    return 1/(2*np.pi)
-def integrand(phi):
-    return phi_norm2()
-
-print ("{:<15} {:<20}".format('m','<Phi_m | Phi_m>'))
-print("--------------------------------------------------------------------")
-for m in range(7):
-    print ("{:<15} {:<20}".format(m,np.round(integrate.quad(integrand,0,2*np.pi)[0],3)))
-
-
-# ## Wave Functions for Different States are Orthogonal
-
-# The wave functions for different states, a state is defined by the set of quantum number $(n,l,m)$, are orthogonal.  This is actually dictated by the Postulates of QM because the eigenfunctions of a Hermitian operator must be orthogonal.  
-# 
-# It is important to note, however, that this requirement means
-# \begin{equation}
-# \langle \psi_{nlm} | \psi_{n'l'm'} \rangle = \delta_{nn'}\delta_{ll'}\delta_{mm'}
-# \end{equation}
-# which is distinct from requiring that $\langle R_{nl} | R_{n'l'} \rangle = \delta_{nn'}\delta_{ll'}$ (***which is not true!***).
-# 
-# It turns out that radial wave functions are only orthogonal when $\Delta l = 0$ and $\Delta n \neq 0$.  The orthogonality of the overall wave functions for situations such as $\Delta l \neq 0$ and $\Delta n \neq 0$ is dictated by the spherical harmonics.
-
-# ### The Radial Wave Functions are only Orthogonal when $\Delta l = 0$ and $\Delta n \neq 0$
-
-# The radial wave functions are only guaranteed to be orthogonal when $n\neq n'$ ***and*** $l=l'$.  
-# 
-# Rather than deriving this, I will show using numeric integration for finite values of n, l, n' and l'.
-
-# In[10]:
-
-
-import numpy as np
-from scipy import integrate
-from scipy.special import eval_genlaguerre
-from scipy.special import factorial
-a0 = 1.0 # radial unit of Bohr!    
-def hydrogen_atom_radial_wf(r,n,l):
-    R_prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
-    return R_prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
-def integrand(r,n1,l1,n2,l2):
-    return r*r*hydrogen_atom_radial_wf(r,n1,l1)*hydrogen_atom_radial_wf(r,n2,l2)
-
-print ("{:<10} {:<10} {:<10} {:<10} {:<20}".format('n', 'n\'', 'l', 'l\'', '<R_nl | R_n\'l\'>'))
+print ("{:<10} {:<10} {:<10} {:<10} {:<20}".format('n', 'l', 'n\'', 'l\'', '<R_nl | r | R_n\'l\'>'))
 print("--------------------------------------------------------------------")
 for n1 in range(1,4):
     for l1 in range(n1):
         for n2 in range(1,4):
             for l2 in range(n2):
-                print ("{:<10} {:<10} {:<10} {:<10} {:<20}".format(n1, n2, l1, l2, np.round(integrate.quad(integrand,0,np.infty,args=(n1,l1,n2,l2))[0],3)))
+                print ("{:<10} {:<10} {:<10} {:<10} {:<20}".format(n1, l1, n2, l2, np.round(integrate.quad(integrand,0,np.infty,args=(n1,l1,n2,l2))[0],3)))
 
 
-# ## Probability Densities
+# ### Selection rule for $l$ and $m$ from $\theta$ and $\phi$
 
-# ### Radial Densities
-
-# In[13]:
-
-
-# let's plot some radial wavefunctions of the hydrogen atom
-from scipy.special import sph_harm
-from scipy.special import eval_genlaguerre
-from scipy.special import factorial
-from scipy import integrate
-import numpy as np
-import matplotlib.pyplot as plt
-import plotting as myplt
-get_ipython().run_line_magic('matplotlib', 'inline')
-
-fontsize = 16
-plt.figure(figsize=(8,6),dpi= 80, facecolor='w', edgecolor='k')
-plt.tick_params(axis='both',labelsize=fontsize)
-plt.grid(which='major', axis='both', color='#808080', linestyle='--')
-plt.title("Hydrogen Atom Radial Probability Densities",fontsize=fontsize)
-plt.ylabel(r'$r^2R^2(r)$',size=fontsize)
-plt.xlabel(r'$r$ (Bohr)',size=fontsize)
-
-# parameters for plotting
-nLimit = 3
-a0 = 1.0
-r = np.arange(0,30,0.01)
-
-for n in range(1,nLimit+1):
-    for l in range(n):
-        prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
-        R = prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
-        label = "n=" + str(n) + " l=" + str(l)
-        plt.plot(r,np.power(R,2)*np.power(r,2),label=label, lw=2)
-plt.legend(fontsize=12)
-plt.show();
-
-
-# ### Angular Densities
-
-# The angular densitites are equivalent to [previously described](properties_of_particle_in_sphere.ipynb) because the angular components of the wave functions are the equivalent spherical harmonics.  
-
-# ### Combined Densities
-
-# Below we plot various representations of
-# \begin{equation}
-# P_{nlm}(r,\theta,\phi) = \psi_{nlm}^*(r,\theta,\phi) \psi_{nlm}(r,\theta,\phi)r^2\sin\theta
-# \end{equation}
-
-# In[20]:
-
-
-# make two plots of the same spherical harmonic
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm, colors
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.special import sph_harm
-from scipy.special import eval_genlaguerre
-from scipy.special import lpmv
-from scipy.special import factorial
-get_ipython().run_line_magic('matplotlib', 'inline')
-from scipy.optimize import root
-a0 = 1.0 # radial unit of Bohr!    
-def hydrogen_atom_prob(r,theta,phi,n,l,m):
-    Y_norm = np.sqrt((2*l+1)*factorial(l-np.abs(m))/(2*factorial(l+np.abs(m))))
-    R_prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
-    R = R_prefactor**2*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
-    return Y_norm**2*lpmv(m,l,np.cos(theta))**2*R**2*r**2
-
-def plot_hydrogen_atom_prob(n,l,m, ax_obj, r=np.linspace(0,10,100), theta=np.linspace(0,np.pi,20), phi=np.linspace(0,1.5*np.pi,25)):
-    R, THETA, PHI = np.meshgrid(r, theta, phi)
-    R = R.flatten()
-    THETA = THETA.flatten()
-    PHI = PHI.flatten()
-    x = R*np.sin(THETA)*np.cos(PHI) 
-    y = R*np.sin(THETA)*np.sin(PHI)
-    z = R*np.cos(THETA)
-    wf = hydrogen_atom_prob(R,THETA,PHI,n,l,m)
-    vmax = max(np.abs(np.amin(wf)),np.abs(np.amax(wf)))
-    vmin = -vmax
-    # plot
-    ax_obj.set_title(rf'$n={n},l={l},m={m}$', fontsize=18)
-    ax_obj.scatter3D(x,y,z,c=wf, cmap='RdBu', vmin=vmin, vmax=vmax,alpha=0.25)
-    ax_obj.set_box_aspect((100,100,100))
-    #ax_obj.set_axis_off()
-    ax_obj.axes.xaxis.set_ticklabels([])
-    ax_obj.axes.yaxis.set_ticklabels([])
-    ax_obj.axes.zaxis.set_ticklabels([])
-    
-def plot_hydrogen_atom_prob_xz_projection(n,l,m, ax_obj):
-    x = np.linspace(-10,10,1000)
-    z = np.linspace(-10,10,1000)
-    X, Z= np.meshgrid(x, z)
-    Y = np.zeros(X.shape)
-    R = np.sqrt(X*X + Y*Y + Z*Z).flatten()
-    THETA = np.arccos(Z.flatten()/R)
-    PHI = np.arctan2(Y,X).flatten()
-    wf = np.zeros(R.shape)
-    wf = hydrogen_atom_prob(R,THETA,PHI,n,l,m)
-    wf = wf.reshape(X.shape)
-    vmax = max(np.abs(np.amin(wf)),np.abs(np.amax(wf)))
-    vmin = -vmax
-    # plot
-    ax_obj.set_title(rf'$n={n},l={l},m={m}$', fontsize=18)
-    c = ax_obj.pcolormesh(X, Z, wf, cmap='RdBu', vmin=vmin, vmax=vmax)
-    # set the limits of the plot to the limits of the data
-    ax_obj.axis([-10, 10, -10, 10])
-    ax_obj.set_aspect('equal')
-    #ax_obj.set_axis_off()
-    return c
-
-def plot_particle_in_sphere_prob_xy_projection(n,l,m, ax_obj):
-    x = np.linspace(-1,1,100)
-    y = np.linspace(-1,1,100)
-    z = np.zeros(100)
-    X, Y= np.meshgrid(x, y)
-    Z = np.zeros(X.shape)
-    R = np.sqrt(X*X + Y*Y + Z*Z).flatten()
-    THETA = np.arccos(Z.flatten()/R)
-    PHI = np.arctan2(Y,X).flatten()
-    wf = np.zeros(R.shape)
-    indeces = np.argwhere(R <= 1)
-    wf[indeces] = particle_in_sphere_prob(R[indeces],THETA[indeces],PHI[indeces],n,l,m)
-    wf = wf.reshape(X.shape)
-    # plot
-    ax_obj.set_title(rf'$n={n},l={l},m={m}$', fontsize=18)
-    c = ax_obj.pcolormesh(X, Y, wf, cmap='RdBu', vmin=-0.2, vmax=0.2)
-    # set the limits of the plot to the limits of the data
-    ax_obj.axis([-1, 1, -1, 1])
-    ax_obj.set_aspect('equal')
-    ax_obj.set_axis_off()
-    return c
-
-
-# In[21]:
-
-
-fig, ax = plt.subplots(3,3,figsize=(16,12),dpi= 80, facecolor='w', edgecolor='k',subplot_kw={'projection': '3d'}) 
-for n in range(1,4):
-    for l in range(3):
-        if l < n:
-            plot_hydrogen_atom_prob(n,l,0,ax[n-1,l])
-        else: 
-            ax[n-1,l].set_axis_off()
-plt.show();
-
-
-# In[22]:
-
-
-fig, ax = plt.subplots(3,3,figsize=(16,12),dpi= 80, facecolor='w', edgecolor='k') 
-for n in range(1,4):
-    for l in range(3):
-        if l < n:
-            plot_hydrogen_atom_prob_xz_projection(n,l,0,ax[n-1,l])
-        else: 
-            ax[n-1,l].set_axis_off()
-plt.show();
-
-
-# ## Average Properties
-
-# Now that we have defined the normalized wave functions and looked at the probability densities, we can compute average properties as defined by
-# \begin{equation}
-# \langle a \rangle_{nlm} = \int_0^\infty\int_0^\pi \int_0^{2\pi} \psi_{nlm}^*(r,\theta,\phi)\hat{A}\psi_{nlm}(r,\theta,\phi)r^2\sin\theta dr d\theta d\phi
-# \end{equation}
+# The $\theta$ and $\phi$ dependent terms of the transition dipole moment are
 # 
-# For the hydrogen atom, we use the following shorthand to denote the average in a certain quantum state
 # \begin{align}
-# \langle a \rangle_{nlm} &= \langle \psi_{nlm}|\hat{A} |\psi_{nlm}(r,\theta,\phi)\rangle \\
-# &= \langle n,l,m |\hat{A} |n,l,m\rangle
+# \langle lm | &\sin\theta\cos\phi | l'm' \rangle \\
+# \langle lm | &\sin\theta\cos\phi | l'm' \rangle \\
+# \langle lm | &\cos\theta | l'm' \rangle
 # \end{align}
 # 
-# Below, I compute the average value of $r$ for various states (note that since the operator $r$ only depends on the coordinte $r$, I can integrate out the $\theta$ and $\phi$ dependence and only consider the integral over $r$.)
+# We will evaluate these terms using numeric integration:
 
-# In[24]:
+# In[28]:
 
 
+from scipy import integrate
+from scipy.special import lpmv
 import numpy as np
-from scipy import integrate
-from scipy.special import eval_genlaguerre
 from scipy.special import factorial
-a0 = 1.0 # radial unit of Bohr!    
-def hydrogen_atom_radial_wf(r,n,l):
-    R_prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
-    return R_prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
-def integrand(r,n1,l1,n2,l2):
-    return r**3*hydrogen_atom_radial_wf(r,n1,l1)*hydrogen_atom_radial_wf(r,n2,l2)
 
-print ("{:<10} {:<10} {:<20}".format('n', 'l', '<n l | r | n l>'))
-print("--------------------------------------------------------------------")
-for n in range(1,5):
-    for l in range(n):
-                print ("{:<10} {:<10} {:<20}".format(n, l, np.round(integrate.quad(integrand,0,np.infty,args=(n,l,n,l))[0],3)))
-
-
-# In[11]:
-
-
-#selection rules for theta and phi
-from scipy import integrate
-nLimit = 3
-a0 = 1.0
-theta = np.arange(0,np.pi,0.05)
-phi = np.arange(0,2*np.pi,0.05)
-
-for n1 in range(1,nLimit+1):
-    for l1 in range(n1):
-        for ml1 in range(-l1,l1):
-            y1 = sph_harm(ml1, l1, phi, theta)
-            for n2 in range(1,nLimit+1):
-                for l2 in range(n2):
-                    for ml2 in range(-l2,l2):
-                        y2 = sph_harm(ml2, l2, phi, theta)
-                        selection = integrate.simps(integrate.simps(y1, y2,phi)*np.cos(theta)*np.sin(theta),theta)
-                        print("<",n1,l1,ml1,"|cos|",n2,l2,ml2,"> = ", selection)
+def theta_norm(m,l):
+    return np.sqrt(((2*l+1)*factorial(l-np.abs(m)))/(2*factorial(l+np.abs(m))))
+def cos_integrand(theta,l1,m1,l2,m2):
+    return theta*theta_norm(m1,l1)*theta_norm(m2,l2)*lpmv(m1,l1,theta)*lpmv(m2,l2,theta)
+def sin_integrand(theta,l1,m1,l2,m2):
+    return np.sin(theta)**2*theta_norm(m1,l1)*theta_norm(m2,l2)*lpmv(m1,l1,np.cos(theta))*lpmv(m2,l2,np.cos(theta))
+def phi_norm2():
+    return 1/(2*np.pi)
+def phi_cos_integrand(phi,m1,m2):
+    real_part = phi_norm2()*(np.cos(m1*phi)*np.cos(m2*phi)+np.sin(m1*phi)*np.sin(m2*phi))
+    return np.cos(phi)*real_part
+def phi_sin_integrand(phi,m1,m2):
+    real_part = phi_norm2()*(np.cos(m1*phi)*np.cos(m2*phi)+np.sin(m1*phi)*np.sin(m2*phi))
+    return np.cos(phi)*real_part
+def phi_integrand(phi,m1,m2):
+    real_part = phi_norm2()*(np.cos(m1*phi)*np.cos(m2*phi)+np.sin(m1*phi)*np.sin(m2*phi))
+    return real_part
 
 
-# In[8]:
+print ("{:<8} {:<8} {:<35} {:<35} {:<35}".format('∆l','∆m','<Y_lm|sin_theta cos_phi|Y_l\'m\'>', '<Y_lm|sin_theta sin_phi|Y_l\'m\'>','<Y_lm|cos_theta|Y_l\'m\'>'))
+print("------------------------------------------------------------------------------------------------------")
+for l1 in range(3):
+    for m1 in range(l1+1):
+        for l2 in range(3):
+            for m2 in range(l2+1):
+                sin_theta_cos_phi = integrate.quad(sin_integrand,0,np.pi,args=(l1,m1,l2,m2))[0]*integrate.quad(phi_cos_integrand,0,2*np.pi,args=(m1,m2))[0]
+                sin_theta_sin_phi = integrate.quad(sin_integrand,0,np.pi,args=(l1,m1,l2,m2))[0]*integrate.quad(phi_sin_integrand,0,2*np.pi,args=(m1,m2))[0]
+                cos_theta = integrate.quad(cos_integrand,-1,1,args=(l1,m1,l2,m2))[0]*integrate.quad(phi_integrand,0,2*np.pi,args=(m1,m2))[0]                                 
+                print ("{:<8} {:<8} {:<35} {:<35} {:<35}".format(l1-l2,m1-m2,np.round(sin_theta_cos_phi,3),np.round(sin_theta_sin_phi,3),np.round(cos_theta,3)))
 
 
-import numpy as np
-from scipy import integrate
-from scipy.special import eval_genlaguerre
-from scipy.special import factorial
-a0 = 1.0 # radial unit of Bohr!    
-def hydrogen_atom_radial_wf(r,n,l):
-    R_prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
-    return R_prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
-def integrand(r,n1,l1,n2,l2):
-    return r*r*hydrogen_atom_radial_wf(r,n1,l1)*hydrogen_atom_radial_wf(r,n2,l2)
-print(integrate.quad(integrand,0,np.infty,args=(1,0,2,1))[0])
-print(integrate.quad(integrand,0,np.infty,args=(1,0,2,0))[0])
-print(integrate.quad(integrand,0,np.infty,args=(1,0,1,0))[0])
-print(integrate.quad(integrand,0,np.infty,args=(2,1,2,1))[0])
+# We see that there are finite values for at least one of the expectation values when
+# \begin{equation}
+# \Delta l = \pm 1 \\
+# \Delta m = 0, \pm 1
+# \end{equation}
+# 
+# These are the selection rules of the hydrogen atom.
 
+# ## Summary of Selection Rules for the Hydrogen Atom
 
-# In[7]:
-
-
-#selection rules for r
-from scipy import integrate
-nLimit = 3
-a0 = 1.0
-r = np.arange(0,30,0.01)
-
-for n1 in range(1,nLimit+1):
-    for l1 in range(n1):
-        prefactor1 = -np.sqrt(factorial(n1-l1-1)/(2*n1*factorial(n1+l1)))*(2.0/(n1*a0))**(l1+1.5)*np.power(r,l1)*np.exp(-r/(n1*a0))
-        R1 = prefactor1*eval_genlaguerre(n1-l1-1,2*l1+1,2*r/(n1*a0))
-        for n2 in range(1,nLimit+1):
-            for l2 in range(n2):
-                prefactor2 = -np.sqrt(factorial(n2-l2-1)/(2*n2*factorial(n2+l2)))*(2.0/(n2*a0))**(l2+1.5)*np.power(r,l2)*np.exp(-r/(n2*a0))
-                R2 = prefactor*eval_genlaguerre(n2-l2-1,2*l2+1,2*r/(n2*a0))
-                selection = integrate.simps(R1*np.power(r,3)*R2,r)
-                print("<",n1,l1,"|r|",n2,l2,"> = ", selection)
-
-
-# In[ ]:
-
-
-
-
+# A transition from any primary quantum number to any other primary quantum number is allowed.  But, a transition requires a change in the angular momentum quantum number $l$.  This implies that the $1s \rightarrow 2s$ transition is forbidden.  
