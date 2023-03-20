@@ -1,0 +1,64 @@
+Traceback (most recent call last):
+  File "/Users/mmccull/opt/anaconda3/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/Users/mmccull/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/mmccull/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/Users/mmccull/opt/anaconda3/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "/Users/mmccull/opt/anaconda3/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/Users/mmccull/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "/Users/mmccull/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/mmccull/opt/anaconda3/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# let's plot some radial wavefunctions of the hydrogen atom
+from scipy.special import sph_harm
+from scipy.special import eval_genlaguerre
+from scipy.special import factorial
+from scipy import integrate
+import numpy as np
+import matplotlib.pyplot as plt
+import plotting as myplt
+%matplotlib inline
+
+fontsize = 16
+plt.figure(figsize=(8,6),dpi= 80, facecolor='w', edgecolor='k')
+plt.tick_params(axis='both',labelsize=fontsize)
+plt.grid(which='major', axis='both', color='#808080', linestyle='--')
+plt.title("Hydrogen Atom Radial Probability Densities",fontsize=fontsize)
+plt.ylabel(r'$r^2R^2(r)$',size=fontsize)
+plt.xlabel(r'$r$ (Bohr)',size=fontsize)
+
+# parameters for plotting
+nLimit = 3
+a0 = 1.0
+r = np.arange(0,30,0.01)
+
+for n in range(1,nLimit+1):
+    for l in range(n):
+        prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
+        R = prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
+        label = "n=" + str(n) + " l=" + str(l)
+        plt.plot(r,np.power(R,2)*np.power(r,2),label=label, lw=2)
+plt.legend(fontsize=12)
+plt.show();
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;32m/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_19867/1627677400.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      6[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 8[0;31m [0;32mimport[0m [0mplotting[0m [0;32mas[0m [0mmyplt[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      9[0m [0mget_ipython[0m[0;34m([0m[0;34m)[0m[0;34m.[0m[0mrun_line_magic[0m[0;34m([0m[0;34m'matplotlib'[0m[0;34m,[0m [0;34m'inline'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     10[0m [0;34m[0m[0m
+
+[0;31mModuleNotFoundError[0m: No module named 'plotting'
+ModuleNotFoundError: No module named 'plotting'
+

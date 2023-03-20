@@ -1,48 +1,59 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>3.1.9. Equations of State from Lattice Gas Models &#8212; Chemistry Lessons with Jupyter Notebooks</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
@@ -50,65 +61,95 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2. Welcome to the Thermodynamics Lessons" href="../thermodynamics/intro.html" />
     <link rel="prev" title="3.1.8. Microscopic View of Entropy" href="microscopic_view_of_entropy.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
-
-    
-
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../index.html">
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../../_static/logo.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">Chemistry Lessons with Jupyter Notebooks</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -118,778 +159,356 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">
-   1. Jupyter Notebook Tutorials
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">
-     1.1. Jupyter Notebook Tutorial
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">
-     1.2. Advanced Jupyter Notebook Tutorial
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../coding_concepts/intro.html">
-   2. Coding Concepts
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/variables.html">
-     2.1. Variables in Python
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">
-     2.2. Arrays and Matrices
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/for_loops.html">
-     2.3. for loops
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/functions.html">
-     2.4. Functions
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">
-     2.5. Plotting with matplotlib
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/numeric_integration.html">
-     2.6. Numeric Integration
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="../intro.html">
-   3. Physical Chemistry
-  </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul class="current">
-   <li class="toctree-l2 current active has-children">
-    <a class="reference internal" href="intro.html">
-     3.1. Statiscial Thermodynamics
-    </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-    <label for="toctree-checkbox-4">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul class="current">
-     <li class="toctree-l3">
-      <a class="reference internal" href="Boltzmann_Factor.html">
-       3.1.1. Boltzmann Factor
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Introduction_to_Probability.html">
-       3.1.2. Introduction to Probability
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Thermodynamic_Properties_from_Partition_Function.html">
-       3.1.3. Thermodynamic Properties from the Partition Function
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Partition_Function_Monatomic_Ideal_Gas.html">
-       3.1.4. Partition Function for a Monatomic Ideal Gas
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Partition_Function_Diatomic_Ideal_Gas.html">
-       3.1.5. Partition Function for a Diatomic Ideal Gas
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Classical_Monatomic_Ideal_Gas.html">
-       3.1.6. Classical Ideal Gas
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">
-       3.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="microscopic_view_of_entropy.html">
-       3.1.8. Microscopic View of Entropy
-      </a>
-     </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
-       3.1.9. Equations of State from Lattice Gas Models
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../thermodynamics/intro.html">
-     3.2. Thermodynamics
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-    <label for="toctree-checkbox-5">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">
-       3.2.1. The First Law of Thermodynamics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">
-       3.2.2. Heat Work and Calculating
-       <span class="math notranslate nohighlight">
-        \(\Delta U\)
-       </span>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">
-       3.2.4. Thermodynamic Cycles
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Enthalpy.html">
-       3.2.5. Enthalpy
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/The_Carnot_Cycle.html">
-       3.2.6. The Carnot Cycle
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">
-       3.2.7. Second Law of Thermodynamics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">
-       3.2.8. Heat Engine Diagrams
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">
-       3.2.10. The Third Law of Thermodynamics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">
-       3.2.11. First Derivative and Maxwell Relations
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Maxwell_Relations_Applied.html">
-       3.2.12. Maxwell Relations Applied
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">
-       3.2.13. Free Energy and Legendre Transforms
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">
-       3.2.14. The Pressure and Temperature Dependence of the Gibbs Energy
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">
-       3.2.15. Phase Diagrams and Phase Equilibria
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Chemical_Potential_from_Partition_Function.html">
-       3.2.16. Chemical Potential from the Partition Function
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">
-       3.2.17. Thermodynamics of Solutions
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Ideal_and_Non_Ideal_Solutions.html">
-       3.2.18. Ideal and Non-ideal Solutions
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Introduction_to_Chemical_Equilibrium.html">
-       3.2.19. Chemical Equilibrium
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../kinetics/intro.html">
-     3.3. Kinetics
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-    <label for="toctree-checkbox-6">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../kinetics/Chemical_Kinetics_and_Rate_Laws.html">
-       3.3.1. Chemical Kinetics and Rate Laws
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../kinetics/Integrated_Rate_Laws.html">
-       3.3.2. Integrated Rate Laws
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../kinetics/Reversible_Reactions.html">
-       3.3.3. Reversible Reactions
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">
-       3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../kinetics/Reaction_Mechanisms_Part_I.html">
-       3.3.5. Reaction Mechanisms
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../kinetics/Catalysts.html">
-       3.3.6. Catalysts
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../kinetics/Enzyme_Kinetics_Michaelis_Menten.html">
-       3.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../kinetics/Cooperative_Binding_Kinetics.html">
-       3.3.8. Cooperative Binding Kinetics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../kinetics/Competitive_Inhibition.html">
-       3.3.9. Competitive Inhibition
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../quantum_mechanics/intro.html">
-     3.4. Quantum Mechanics
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-    <label for="toctree-checkbox-7">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/history_of_quantum_mechanics.html">
-       3.4.1. The History of Quantum Mechanics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/wave_particle_duality_classical_wave_equation.html">
-       3.4.2. Wave Particle Duality and the Classical Wave Equation
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/Schrodinger_Equation.html">
-       3.4.3. Schrodinger Equation
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/particle_in_a_box.html">
-       3.4.4. Particle in a Box
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">
-       3.4.5. The Uncertainty Principle and Applications of Particle in a Box
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/postulates_of_quantum_mechanics.html">
-       3.4.6. The Postulates and Formalism of Quantum Mechanics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/momentum_operator.html">
-       3.4.7. The Momentum Operator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/operator_algebra.html">
-       3.4.8. Operator Algebra
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/particle_in_a_sphere.html">
-       3.4.9. Particle in a Sphere
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/harmonic_oscillator.html">
-       3.4.10. Harmonic Oscillator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">
-       3.4.11. Vibrational Spectroscopy
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">
-       3.4.12. Variational Method in Quantum Mechanics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/basis_functions.html">
-       3.4.13. Basis Functions
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/harmonic_oscillator_using_variational_method.html">
-       3.4.14. Variational Solution to the Harmonic Oscillator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/morse_oscillator.html">
-       3.4.15. The Morse Oscillator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/rigid_rotator.html">
-       3.4.16. Rigid Rotator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/rigid_rotator_using_variational_method.html">
-       3.4.17. Rigid Rotator Variational Solution…
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/rigid_rotator_selection_rules.html">
-       3.4.18. Rigid Rotator Continued…
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom.html">
-       3.4.20. The Hydrogen Atom
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/the_helium_atom.html">
-       3.4.21. The Helium Atom
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../electronic_structure/intro.html">
-     3.5. Electronic Structure
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-    <label for="toctree-checkbox-8">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../electronic_structure/Hartree_Fock_Helium_Atom.html">
-       3.5.1. Hartree-Fock
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../electronic_structure/HF_for_H2.html">
-       3.5.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">1. Jupyter Notebook Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">1.1. Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">1.2. Advanced Jupyter Notebook Tutorial</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../coding_concepts/intro.html">2. Coding Concepts</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/variables.html">2.1. Variables in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">2.2. Arrays and Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/for_loops.html">2.3. for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/functions.html">2.4. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">2.5. Plotting with matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/numeric_integration.html">2.6. Numeric Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">3. Physical Chemistry</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">3.1. Statiscial Thermodynamics</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Boltzmann_Factor.html">3.1.1. Boltzmann Factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Introduction_to_Probability.html">3.1.2. Introduction to Probability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Thermodynamic_Properties_from_Partition_Function.html">3.1.3. Thermodynamic Properties from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Partition_Function_Monatomic_Ideal_Gas.html">3.1.4. Partition Function for a Monatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Partition_Function_Diatomic_Ideal_Gas.html">3.1.5. Partition Function for a Diatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classical_Monatomic_Ideal_Gas.html">3.1.6. Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">3.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="microscopic_view_of_entropy.html">3.1.8. Microscopic View of Entropy</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">3.1.9. Equations of State from Lattice Gas Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../thermodynamics/intro.html">3.2. Thermodynamics</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">3.2.1. The First Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">3.2.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">3.2.4. Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Enthalpy.html">3.2.5. Enthalpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/The_Carnot_Cycle.html">3.2.6. The Carnot Cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">3.2.7. Second Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">3.2.8. Heat Engine Diagrams</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">3.2.10. The Third Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">3.2.11. First Derivative and Maxwell Relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Maxwell_Relations_Applied.html">3.2.12. Maxwell Relations Applied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">3.2.13. Free Energy and Legendre Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">3.2.14. The Pressure and Temperature Dependence of the Gibbs Energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">3.2.15. Phase Diagrams and Phase Equilibria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Chemical_Potential_from_Partition_Function.html">3.2.16. Chemical Potential from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">3.2.17. Thermodynamics of Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Ideal_and_Non_Ideal_Solutions.html">3.2.18. Ideal and Non-ideal Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Introduction_to_Chemical_Equilibrium.html">3.2.19. Chemical Equilibrium</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../kinetics/intro.html">3.3. Kinetics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Chemical_Kinetics_and_Rate_Laws.html">3.3.1. Chemical Kinetics and Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Integrated_Rate_Laws.html">3.3.2. Integrated Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Reversible_Reactions.html">3.3.3. Reversible Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Reaction_Mechanisms_Part_I.html">3.3.5. Reaction Mechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Catalysts.html">3.3.6. Catalysts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Enzyme_Kinetics_Michaelis_Menten.html">3.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Cooperative_Binding_Kinetics.html">3.3.8. Cooperative Binding Kinetics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Competitive_Inhibition.html">3.3.9. Competitive Inhibition</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../quantum_mechanics/intro.html">3.4. Quantum Mechanics</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/history_of_quantum_mechanics.html">3.4.1. The History of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/wave_particle_duality_classical_wave_equation.html">3.4.2. Wave Particle Duality and the Classical Wave Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/Schrodinger_Equation.html">3.4.3. Schrodinger Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/particle_in_a_box.html">3.4.4. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">3.4.5. The Uncertainty Principle and Applications of Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/postulates_of_quantum_mechanics.html">3.4.6. The Postulates and Formalism of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/momentum_operator.html">3.4.7. The Momentum Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/operator_algebra.html">3.4.8. Operator Algebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/particle_in_a_sphere.html">3.4.9. Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/properties_of_particle_in_a_sphere.html">3.4.10. Properties of Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom.html">3.4.11. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/properties_of_the_hydrogen_atom.html">3.4.12. Properties of the Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom_absorption_spectrum.html">3.4.13. The Hydrogen Atom Absorption Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/special_functions_in_quantum_mechanics.html">3.4.14. Special Functions in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_helium_atom.html">3.4.15. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/harmonic_oscillator.html">3.4.16. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">3.4.17. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">3.4.18. Variational Method in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/basis_functions.html">3.4.19. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/harmonic_oscillator_using_variational_method.html">3.4.20. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/morse_oscillator.html">3.4.21. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/rigid_rotator.html">3.4.22. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/rigid_rotator_using_variational_method.html">3.4.23. Rigid Rotator Variational Solution…</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/rigid_rotator_selection_rules.html">3.4.24. Rigid Rotator Continued…</a></li>
+
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../electronic_structure/intro.html">3.5. Electronic Structure</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../electronic_structure/Hartree_Fock_Helium_Atom.html">3.5.1. Hartree-Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">3.5.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../../_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../../_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fphysical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fphysical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="bottom"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-lightbulb"></i>
   </span>
 
 </a>
 
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../../_sources/physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="headerbtn__text-container">.ipynb</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
-
-      </li>
+</li>
+      
+      
+      
       
       <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-file-pdf"></i>
   </span>
-<span class="headerbtn__text-container">.pdf</span>
+<span class="btn__text-container">.pdf</span>
 </button>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
   </span>
 
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#motivation">
-   3.1.9.1. Motivation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-goals">
-   3.1.9.2. Learning goals
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#coding-concepts">
-   3.1.9.3. Coding Concepts
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#introduction">
-   3.1.9.4. Introduction
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ideal-gas-lattice-gas">
-   3.1.9.5. Ideal Gas Lattice Gas
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-1-entropy-of-lattice-gas">
-     3.1.9.5.1. Example 1: Entropy of Lattice Gas
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#equation-of-state-for-an-ideal-lattice-gas">
-     3.1.9.5.2. Equation of State for an Ideal Lattice Gas
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#finite-volume-lattice-gas">
-   3.1.9.6. Finite Volume Lattice Gas
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-sterling-approximation">
-     3.1.9.6.1. The Sterling Approximation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#equation-of-state-for-a-finite-volume-lattice-gas">
-     3.1.9.6.2. Equation of State for a Finite Volume Lattice Gas
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Equations of State from Lattice Gas Models</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#motivation">
-   3.1.9.1. Motivation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-goals">
-   3.1.9.2. Learning goals
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#coding-concepts">
-   3.1.9.3. Coding Concepts
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#introduction">
-   3.1.9.4. Introduction
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#ideal-gas-lattice-gas">
-   3.1.9.5. Ideal Gas Lattice Gas
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-1-entropy-of-lattice-gas">
-     3.1.9.5.1. Example 1: Entropy of Lattice Gas
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#equation-of-state-for-an-ideal-lattice-gas">
-     3.1.9.5.2. Equation of State for an Ideal Lattice Gas
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#finite-volume-lattice-gas">
-   3.1.9.6. Finite Volume Lattice Gas
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#the-sterling-approximation">
-     3.1.9.6.1. The Sterling Approximation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#equation-of-state-for-a-finite-volume-lattice-gas">
-     3.1.9.6.2. Equation of State for a Finite Volume Lattice Gas
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Equations of State from Lattice Gas Models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">3.1.9.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">3.1.9.2. Learning goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">3.1.9.3. Coding Concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">3.1.9.4. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ideal-gas-lattice-gas">3.1.9.5. Ideal Gas Lattice Gas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-entropy-of-lattice-gas">3.1.9.5.1. Example 1: Entropy of Lattice Gas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equation-of-state-for-an-ideal-lattice-gas">3.1.9.5.2. Equation of State for an Ideal Lattice Gas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-volume-lattice-gas">3.1.9.6. Finite Volume Lattice Gas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sterling-approximation">3.1.9.6.1. The Sterling Approximation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equation-of-state-for-a-finite-volume-lattice-gas">3.1.9.6.2. Equation of State for a Finite Volume Lattice Gas</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="equations-of-state-from-lattice-gas-models">
-<h1><span class="section-number">3.1.9. </span>Equations of State from Lattice Gas Models<a class="headerlink" href="#equations-of-state-from-lattice-gas-models" title="Permalink to this headline">#</a></h1>
+<h1><span class="section-number">3.1.9. </span>Equations of State from Lattice Gas Models<a class="headerlink" href="#equations-of-state-from-lattice-gas-models" title="Permalink to this heading">#</a></h1>
 <section id="motivation">
-<h2><span class="section-number">3.1.9.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.1.9.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
 <p>The finite volume lattice gas model can be used to estimate entropies of mixing.  In these notes we will address how different lattice gas models can be used to derive equations of state.</p>
 </section>
 <section id="learning-goals">
-<h2><span class="section-number">3.1.9.2. </span>Learning goals<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.1.9.2. </span>Learning goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After these notes, students should be able to:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Use the Sterling approximation for natural logarithms of a factorial</p></li>
 <li><p>Derive the ideal gas law from no-volume lattice gas model</p></li>
 <li><p>Derive the equation of state for a fintie volume lattice gas model</p></li>
 </ol>
 </section>
 <section id="coding-concepts">
-<h2><span class="section-number">3.1.9.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.1.9.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>The following coding concepts are used to illustrate aspects of this lesson:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Variables</p></li>
 <li><p>Functions</p></li>
 <li><p>Arrays</p></li>
@@ -898,29 +517,29 @@ title="Print to PDF"
 </ol>
 </section>
 <section id="introduction">
-<h2><span class="section-number">3.1.9.4. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.1.9.4. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
 </section>
 <section id="ideal-gas-lattice-gas">
-<h2><span class="section-number">3.1.9.5. </span>Ideal Gas Lattice Gas<a class="headerlink" href="#ideal-gas-lattice-gas" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.1.9.5. </span>Ideal Gas Lattice Gas<a class="headerlink" href="#ideal-gas-lattice-gas" title="Permalink to this heading">#</a></h2>
 <p>We have previously seen the finite volume lattice gas.  The ideal gas lattice gas is even easier.  The number of ways of arranging <span class="math notranslate nohighlight">\(N\)</span> gas particles in <span class="math notranslate nohighlight">\(M\)</span> lattice sites (<span class="math notranslate nohighlight">\(M&gt;N\)</span>) is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52c8bbe9-b49a-4348-83c8-7a945b2e1ee5">
-<span class="eqno">(3.176)<a class="headerlink" href="#equation-52c8bbe9-b49a-4348-83c8-7a945b2e1ee5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4cc02ca8-bd5d-4f1e-b01f-2c34da6ce295">
+<span class="eqno">(3.176)<a class="headerlink" href="#equation-4cc02ca8-bd5d-4f1e-b01f-2c34da6ce295" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W = \frac{M^N}{N!}.
 \end{equation}\]</div>
 <p>This is because every gas particle can be place in any of the lattice sites.  The <span class="math notranslate nohighlight">\(N!\)</span> in the denominator corrects for the indistinguishable nature of these particles.</p>
 <p>Thus, the entropy of an ideal gas with <span class="math notranslate nohighlight">\(N\)</span> particles in  <span class="math notranslate nohighlight">\(M\)</span> lattice sites is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5f424d82-ca3e-4886-8af6-468d53627445">
-<span class="eqno">(3.177)<a class="headerlink" href="#equation-5f424d82-ca3e-4886-8af6-468d53627445" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-265754f7-86aa-4685-aee8-dfedd7b83424">
+<span class="eqno">(3.177)<a class="headerlink" href="#equation-265754f7-86aa-4685-aee8-dfedd7b83424" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; k_B \ln\left( \frac{M^N}{N!}\right) \\
 &amp;=&amp; Nk_B\ln M - k_B\ln N!
 \end{eqnarray}\]</div>
 <section id="example-1-entropy-of-lattice-gas">
-<h3><span class="section-number">3.1.9.5.1. </span>Example 1: Entropy of Lattice Gas<a class="headerlink" href="#example-1-entropy-of-lattice-gas" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">3.1.9.5.1. </span>Example 1: Entropy of Lattice Gas<a class="headerlink" href="#example-1-entropy-of-lattice-gas" title="Permalink to this heading">#</a></h3>
 <p>Compute the molar entropy of a lattice gas with 5 particles and 16 lattice sites for the (a) ideal gas model and (b) finite gas model.</p>
 <p>(a) Ideal gas model:
 For this model the entropy is given as the formula above</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f6c0fa95-bfa3-4db7-b539-70b6834face0">
-<span class="eqno">(3.178)<a class="headerlink" href="#equation-f6c0fa95-bfa3-4db7-b539-70b6834face0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-40659865-48e8-4288-82f1-acaf6d8ed3e7">
+<span class="eqno">(3.178)<a class="headerlink" href="#equation-40659865-48e8-4288-82f1-acaf6d8ed3e7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \bar{S} &amp;=&amp; NR\ln M - R\ln N! \\
 &amp;=&amp; 5R\ln 16 - R\ln 5! \\
 &amp;=&amp; 8.314(5\ln16 - ln120) \\
@@ -941,8 +560,8 @@ For this model the entropy is given as the formula above</p>
 </div>
 </div>
 <p>(b) Finite gas model: for this model the entropy is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d8232529-a1d4-4f67-aaae-336cbcb6ebf4">
-<span class="eqno">(3.179)<a class="headerlink" href="#equation-d8232529-a1d4-4f67-aaae-336cbcb6ebf4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5aa9efa1-f2a6-4830-9f73-8ba5d8753b26">
+<span class="eqno">(3.179)<a class="headerlink" href="#equation-5aa9efa1-f2a6-4830-9f73-8ba5d8753b26" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \bar{S} &amp;=&amp; R\ln\left(\frac{M!}{(M-N)!N!}\right) \\
 &amp;=&amp; R\ln\left(\frac{16!}{11!5!}\right) \\
 &amp;=&amp; 69.69 \quad J\cdot K^{-1}\cdot mol^{-1}
@@ -963,37 +582,37 @@ For this model the entropy is given as the formula above</p>
 </div>
 </section>
 <section id="equation-of-state-for-an-ideal-lattice-gas">
-<h3><span class="section-number">3.1.9.5.2. </span>Equation of State for an Ideal Lattice Gas<a class="headerlink" href="#equation-of-state-for-an-ideal-lattice-gas" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">3.1.9.5.2. </span>Equation of State for an Ideal Lattice Gas<a class="headerlink" href="#equation-of-state-for-an-ideal-lattice-gas" title="Permalink to this heading">#</a></h3>
 <p>We can derive the equation of state for an ideal gas lattice gas model using the relationship</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8f549ad-c612-4307-86b8-17bd00456a83">
-<span class="eqno">(3.180)<a class="headerlink" href="#equation-b8f549ad-c612-4307-86b8-17bd00456a83" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-73963d9c-79cd-4747-8ea3-4948eec71a6e">
+<span class="eqno">(3.180)<a class="headerlink" href="#equation-73963d9c-79cd-4747-8ea3-4948eec71a6e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p = T \left( \frac{\partial S}{\partial V}\right)_N.
 \end{equation}\]</div>
 <p>We will see where this relationship comes from during the section on classical Thermodynamics.</p>
 <p>In order to use this relationship, we need to have an equation for <span class="math notranslate nohighlight">\(S\)</span> in terms of the volume of the system, <span class="math notranslate nohighlight">\(V\)</span>.  For this, we recognize that, for uniformly size grids/lattices, the volume of the system is proportional to the number of lattice sites</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b4c8a3b7-6e0b-49e8-b720-afaa5abb3f9d">
-<span class="eqno">(3.181)<a class="headerlink" href="#equation-b4c8a3b7-6e0b-49e8-b720-afaa5abb3f9d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-008e8cc2-99d0-4bc7-b442-93ef81f54ab7">
+<span class="eqno">(3.181)<a class="headerlink" href="#equation-008e8cc2-99d0-4bc7-b442-93ef81f54ab7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 V \propto M.
 \end{equation}\]</div>
 <p>The proportionality constant is the volume of each lattice site which we will denote <span class="math notranslate nohighlight">\(v\)</span>.  This yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9ed1cd78-2fba-480f-b599-dfdd76f84f9d">
-<span class="eqno">(3.182)<a class="headerlink" href="#equation-9ed1cd78-2fba-480f-b599-dfdd76f84f9d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7504db64-c90a-4a31-b457-2ba414430cc5">
+<span class="eqno">(3.182)<a class="headerlink" href="#equation-7504db64-c90a-4a31-b457-2ba414430cc5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 V = vM
 \end{equation}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0dc94492-61a2-4000-94c6-fc8422ffae0f">
-<span class="eqno">(3.183)<a class="headerlink" href="#equation-0dc94492-61a2-4000-94c6-fc8422ffae0f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ab1078fd-8495-461a-91ae-a27fd1f83a25">
+<span class="eqno">(3.183)<a class="headerlink" href="#equation-ab1078fd-8495-461a-91ae-a27fd1f83a25" title="Permalink to this equation">#</a></span>\[\begin{equation}
 M = \frac{V}{v}
 \end{equation}\]</div>
 <p>Subbing this into the ideal gas lattice gas entropy equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-25ef375e-22c8-4e49-bc5b-0def68abc6cc">
-<span class="eqno">(3.184)<a class="headerlink" href="#equation-25ef375e-22c8-4e49-bc5b-0def68abc6cc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-3903786f-2aae-44cd-8447-2de6ec336548">
+<span class="eqno">(3.184)<a class="headerlink" href="#equation-3903786f-2aae-44cd-8447-2de6ec336548" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; Nk_B\ln \frac{V}{v} - k_B\ln N! \\
  &amp;=&amp; Nk_B\ln V -  Nk_B\ln v- k_B\ln N! \\
 \end{eqnarray}\]</div>
 <p>Now differentiating the above equation with respect to <span class="math notranslate nohighlight">\(V\)</span> and multiplying by <span class="math notranslate nohighlight">\(T\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e4c326c-98fc-424d-84ef-92289dced60d">
-<span class="eqno">(3.185)<a class="headerlink" href="#equation-9e4c326c-98fc-424d-84ef-92289dced60d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-bbf1abf9-c1c9-48b9-9804-37460fe591e9">
+<span class="eqno">(3.185)<a class="headerlink" href="#equation-bbf1abf9-c1c9-48b9-9804-37460fe591e9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p &amp;=&amp; T \left( \frac{\partial S}{\partial V}\right)_N \\
 &amp;=&amp; T \left( \frac{\partial( Nk_B\ln V -  Nk_B\ln v- k_B\ln N!)}{\partial V}\right)_N\\
 &amp;=&amp; T \cdot Nk_B\frac{1}{V} \\
@@ -1002,23 +621,23 @@ p &amp;=&amp; T \left( \frac{\partial S}{\partial V}\right)_N \\
 </section>
 </section>
 <section id="finite-volume-lattice-gas">
-<h2><span class="section-number">3.1.9.6. </span>Finite Volume Lattice Gas<a class="headerlink" href="#finite-volume-lattice-gas" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.1.9.6. </span>Finite Volume Lattice Gas<a class="headerlink" href="#finite-volume-lattice-gas" title="Permalink to this heading">#</a></h2>
 <p>For a fintie volume lattice gas, the number of ways of arranging <span class="math notranslate nohighlight">\(N\)</span> gas particles in <span class="math notranslate nohighlight">\(M\)</span> lattice sites (<span class="math notranslate nohighlight">\(M&gt;N\)</span>) is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-394d703d-f544-487f-bbfd-08130d8ff5d2">
-<span class="eqno">(3.186)<a class="headerlink" href="#equation-394d703d-f544-487f-bbfd-08130d8ff5d2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cec6c7cf-4dc4-4643-8b8e-7f00498cfc09">
+<span class="eqno">(3.186)<a class="headerlink" href="#equation-cec6c7cf-4dc4-4643-8b8e-7f00498cfc09" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W = \frac{M!}{(M-N)!N!} = _MC_N.
 \end{equation}\]</div>
 <p>Thus, the entropy of an finite volume gas with <span class="math notranslate nohighlight">\(N\)</span> particles in <span class="math notranslate nohighlight">\(M\)</span> lattice sites is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2e2cf248-4766-435c-89b0-fd9da15107b4">
-<span class="eqno">(3.187)<a class="headerlink" href="#equation-2e2cf248-4766-435c-89b0-fd9da15107b4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c951df9a-3f3f-4292-bbdf-72f9ce28a3e3">
+<span class="eqno">(3.187)<a class="headerlink" href="#equation-c951df9a-3f3f-4292-bbdf-72f9ce28a3e3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; k_B \ln\left( \frac{M!}{(M-N)!N!} \right) \\
 &amp;=&amp; k_B\ln M! - k_B\ln(M-N)! - k_B\ln N!
 \end{eqnarray}\]</div>
 <section id="the-sterling-approximation">
-<h3><span class="section-number">3.1.9.6.1. </span>The Sterling Approximation<a class="headerlink" href="#the-sterling-approximation" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">3.1.9.6.1. </span>The Sterling Approximation<a class="headerlink" href="#the-sterling-approximation" title="Permalink to this heading">#</a></h3>
 <p>A common approximation that comes up is Statistical Mechanics is the Sterling Approximation.  This approximates the natural log of a factorial as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-78954cc3-f224-4f96-aa56-0c700e2ec630">
-<span class="eqno">(3.188)<a class="headerlink" href="#equation-78954cc3-f224-4f96-aa56-0c700e2ec630" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6f799b91-2cb6-4fd6-8902-07065cc771f0">
+<span class="eqno">(3.188)<a class="headerlink" href="#equation-6f799b91-2cb6-4fd6-8902-07065cc771f0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln N! = N\ln N - N
 \end{equation}\]</div>
 <p>Let’s see how good of an approximation this is</p>
@@ -1066,35 +685,35 @@ S &amp;=&amp; k_B \ln\left( \frac{M!}{(M-N)!N!} \right) \\
   ax2.plot(N,np.abs(ln_N_factorial(N)-sterling_N(N))/ln_N_factorial(N)*100,lw=2,label=&quot;% error&quot;,color=&#39;C3&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Equations_of_State_From_Lattice_Gas_15_1.png" src="../../_images/Equations_of_State_From_Lattice_Gas_15_1.png" />
+<img alt="../../_images/fb4aed2f35a938c7dacb3b96dd837e43ca891d128c50dec75ce61544dab78043.png" src="../../_images/fb4aed2f35a938c7dacb3b96dd837e43ca891d128c50dec75ce61544dab78043.png" />
 </div>
 </div>
 <p>From the above plot, specifically from the rapid decay of the percent error with increasing <span class="math notranslate nohighlight">\(N\)</span>, we can see that the Sterling approximation is a good approximation in particular for large <span class="math notranslate nohighlight">\(N\)</span>.</p>
 </section>
 <section id="equation-of-state-for-a-finite-volume-lattice-gas">
-<h3><span class="section-number">3.1.9.6.2. </span>Equation of State for a Finite Volume Lattice Gas<a class="headerlink" href="#equation-of-state-for-a-finite-volume-lattice-gas" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">3.1.9.6.2. </span>Equation of State for a Finite Volume Lattice Gas<a class="headerlink" href="#equation-of-state-for-a-finite-volume-lattice-gas" title="Permalink to this heading">#</a></h3>
 <p>We can derive the equation of state for an ideal gas lattice gas model using the relationship</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c1d328a8-7a67-48be-821c-3d7be722df64">
-<span class="eqno">(3.189)<a class="headerlink" href="#equation-c1d328a8-7a67-48be-821c-3d7be722df64" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-662e32db-1c7d-47fb-b59d-3d3e067f40dd">
+<span class="eqno">(3.189)<a class="headerlink" href="#equation-662e32db-1c7d-47fb-b59d-3d3e067f40dd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p = T \left( \frac{\partial S}{\partial V}\right)_N.
 \end{equation}\]</div>
 <p>We will see where this relationship comes from during the section on classical Thermodynamics.</p>
 <p>To derive an expression for <span class="math notranslate nohighlight">\(S\)</span> in terms of <span class="math notranslate nohighlight">\(V\)</span> for a finite volume lattice gas, we will start be employing the Sterling approximation to the equation for <span class="math notranslate nohighlight">\(S\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-5804fdc5-273b-47c2-a3ca-b5d083e31fb0">
-<span class="eqno">(3.190)<a class="headerlink" href="#equation-5804fdc5-273b-47c2-a3ca-b5d083e31fb0" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ff99b504-c48a-4bf4-a78a-6162008cdfb5">
+<span class="eqno">(3.190)<a class="headerlink" href="#equation-ff99b504-c48a-4bf4-a78a-6162008cdfb5" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; k_B\ln M! - k_B\ln(M-N)! - k_B\ln N! \\
 &amp;=&amp; k_B \left( M\ln M - M - (M-N)\ln(M-N) + (M-N) - N\ln N + N\right) \\
 &amp;=&amp; k_B \left( M\ln M - M\ln(M-N) + N\ln(M-N) - N\ln N \right)
 \end{eqnarray}\]</div>
 <p>Now substituting that <span class="math notranslate nohighlight">\(M=\frac{V}{v}\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d3aa6089-d363-4ca4-a360-66d6ef87c640">
-<span class="eqno">(3.191)<a class="headerlink" href="#equation-d3aa6089-d363-4ca4-a360-66d6ef87c640" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-75398d82-cb94-4bdf-afb1-9846a7a91315">
+<span class="eqno">(3.191)<a class="headerlink" href="#equation-75398d82-cb94-4bdf-afb1-9846a7a91315" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 S &amp;=&amp; k_B \left( \frac{V}{v}\ln \frac{V}{v} - \frac{V}{v}\ln(\frac{V}{v}-N) + N\ln(\frac{V}{v}-N) - N\ln N \right)\\
 &amp;=&amp; k_B \left( \frac{V}{v}\ln V - \frac{V}{v}\ln v - \frac{V}{v}\ln(\frac{V}{v}-N) + N\ln(\frac{V}{v}-N) - N\ln N \right)
 \end{eqnarray}\]</div>
 <p>Now differentiating the above equation with respect to <span class="math notranslate nohighlight">\(V\)</span> and multiplying by <span class="math notranslate nohighlight">\(T\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3a01463b-50e0-46fd-9162-956970b893aa">
-<span class="eqno">(3.192)<a class="headerlink" href="#equation-3a01463b-50e0-46fd-9162-956970b893aa" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-bba73a00-ca79-4476-8ecd-a89b12b54f7c">
+<span class="eqno">(3.192)<a class="headerlink" href="#equation-bba73a00-ca79-4476-8ecd-a89b12b54f7c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p &amp;=&amp; T \left( \frac{\partial S}{\partial V}\right)_N \\
 &amp;=&amp; k_B T \left( \frac{1}{v}\ln V + \frac{V}{v}\frac{1}{V} - \frac{1}{v}\ln v - \frac{1}{v}\ln(\frac{V}{v}-N) - \frac{V}{v}\frac{1}{\frac{V}{v}-N}\frac{1}{v} + N\frac{1}{\frac{V}{v}-N}\frac{1}{v} \right)\\
 &amp;=&amp; \frac{k_B T}{v} \left( \ln V + 1 - \ln v - \ln(\frac{V}{v}-N) - \frac{V}{v}\frac{1}{\frac{V}{v}-N} + N\frac{1}{\frac{V}{v}-N} \right) \\
@@ -1102,8 +721,8 @@ p &amp;=&amp; T \left( \frac{\partial S}{\partial V}\right)_N \\
 &amp;=&amp; \frac{k_B T}{v} \left( \ln M + 1 - \ln(M-N) - \frac{V}{V-vN} + \frac{vN}{V-vN} \right)
 \end{eqnarray}\]</div>
 <p>At this point we need to make another approximation/assumption in order to simplify further.  If we assume that the gas is dilute then the number of lattice sites <span class="math notranslate nohighlight">\(M\)</span> will be much much larger than the number of gas particles <span class="math notranslate nohighlight">\(N\)</span>.  This has the implication that <span class="math notranslate nohighlight">\(M-N \approx M\)</span> and <span class="math notranslate nohighlight">\(\frac{V}{V-vN}\approx 1\)</span>.  Applying this assumption yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40ed1091-7b54-47fa-b936-b2bdb3e02db3">
-<span class="eqno">(3.193)<a class="headerlink" href="#equation-40ed1091-7b54-47fa-b936-b2bdb3e02db3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-304c8357-4d0a-4d82-8fe1-540f245590d8">
+<span class="eqno">(3.193)<a class="headerlink" href="#equation-304c8357-4d0a-4d82-8fe1-540f245590d8" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p &amp;=&amp; \frac{k_B T}{v} \left( \ln M + 1 - \ln M - 1 + \frac{vN}{V-vN} \right) \\
 &amp;=&amp; \frac{Nk_B T}{V-vN}
 \end{eqnarray}\]</div>
@@ -1124,7 +743,7 @@ p &amp;=&amp; \frac{k_B T}{v} \left( \ln M + 1 - \ln M - 1 + \frac{vN}{V-vN} \ri
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./physical_chemistry/statistical_thermodynamics"
         },
         predefinedOutput: true
@@ -1132,50 +751,112 @@ p &amp;=&amp; \frac{k_B T}{v} \left( \ln M + 1 - \ln M - 1 + \frac{vN}{V-vN} \ri
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="microscopic_view_of_entropy.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">3.1.8. </span>Microscopic View of Entropy</p>
-        </div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="microscopic_view_of_entropy.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">3.1.8. </span>Microscopic View of Entropy</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="../thermodynamics/intro.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="../thermodynamics/intro.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title"><span class="section-number">3.2. </span>Welcome to the Thermodynamics Lessons</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">3.1.9.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">3.1.9.2. Learning goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">3.1.9.3. Coding Concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">3.1.9.4. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ideal-gas-lattice-gas">3.1.9.5. Ideal Gas Lattice Gas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-entropy-of-lattice-gas">3.1.9.5.1. Example 1: Entropy of Lattice Gas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equation-of-state-for-an-ideal-lattice-gas">3.1.9.5.2. Equation of State for an Ideal Lattice Gas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-volume-lattice-gas">3.1.9.6. Finite Volume Lattice Gas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-sterling-approximation">3.1.9.6.1. The Sterling Approximation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equation-of-state-for-a-finite-volume-lattice-gas">3.1.9.6.2. Equation of State for a Finite Volume Lattice Gas</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
   
-    By Martin McCullagh<br/>
-  
-      &copy; Copyright 2022.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
-</div>
+<p class="component-author">
+By Martin McCullagh
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
 
-      </div>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

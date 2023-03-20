@@ -1,48 +1,59 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>3.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism &#8212; Chemistry Lessons with Jupyter Notebooks</title>
-    
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
@@ -50,65 +61,95 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.3.8. Cooperative Binding Kinetics" href="Cooperative_Binding_Kinetics.html" />
     <link rel="prev" title="3.3.6. Catalysts" href="Catalysts.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-    <div class="container-fluid" id="banner"></div>
-
-    
-
-    <div class="container-xl">
-      <div class="row">
-          
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../index.html">
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../../_static/logo.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">Chemistry Lessons with Jupyter Notebooks</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
@@ -118,805 +159,349 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">
-   1. Jupyter Notebook Tutorials
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">
-     1.1. Jupyter Notebook Tutorial
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">
-     1.2. Advanced Jupyter Notebook Tutorial
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../../coding_concepts/intro.html">
-   2. Coding Concepts
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/variables.html">
-     2.1. Variables in Python
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">
-     2.2. Arrays and Matrices
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/for_loops.html">
-     2.3. for loops
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/functions.html">
-     2.4. Functions
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">
-     2.5. Plotting with matplotlib
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../../coding_concepts/numeric_integration.html">
-     2.6. Numeric Integration
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="../intro.html">
-   3. Physical Chemistry
-  </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
-  <label for="toctree-checkbox-3">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul class="current">
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../statistical_thermodynamics/intro.html">
-     3.1. Statiscial Thermodynamics
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
-    <label for="toctree-checkbox-4">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../statistical_thermodynamics/Boltzmann_Factor.html">
-       3.1.1. Boltzmann Factor
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../statistical_thermodynamics/Introduction_to_Probability.html">
-       3.1.2. Introduction to Probability
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">
-       3.1.3. Thermodynamic Properties from the Partition Function
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">
-       3.1.4. Partition Function for a Monatomic Ideal Gas
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">
-       3.1.5. Partition Function for a Diatomic Ideal Gas
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">
-       3.1.6. Classical Ideal Gas
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">
-       3.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../statistical_thermodynamics/microscopic_view_of_entropy.html">
-       3.1.8. Microscopic View of Entropy
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">
-       3.1.9. Equations of State from Lattice Gas Models
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../thermodynamics/intro.html">
-     3.2. Thermodynamics
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
-    <label for="toctree-checkbox-5">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">
-       3.2.1. The First Law of Thermodynamics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">
-       3.2.2. Heat Work and Calculating
-       <span class="math notranslate nohighlight">
-        \(\Delta U\)
-       </span>
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">
-       3.2.4. Thermodynamic Cycles
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Enthalpy.html">
-       3.2.5. Enthalpy
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/The_Carnot_Cycle.html">
-       3.2.6. The Carnot Cycle
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">
-       3.2.7. Second Law of Thermodynamics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">
-       3.2.8. Heat Engine Diagrams
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">
-       3.2.10. The Third Law of Thermodynamics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">
-       3.2.11. First Derivative and Maxwell Relations
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Maxwell_Relations_Applied.html">
-       3.2.12. Maxwell Relations Applied
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">
-       3.2.13. Free Energy and Legendre Transforms
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">
-       3.2.14. The Pressure and Temperature Dependence of the Gibbs Energy
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">
-       3.2.15. Phase Diagrams and Phase Equilibria
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Chemical_Potential_from_Partition_Function.html">
-       3.2.16. Chemical Potential from the Partition Function
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">
-       3.2.17. Thermodynamics of Solutions
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Ideal_and_Non_Ideal_Solutions.html">
-       3.2.18. Ideal and Non-ideal Solutions
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../thermodynamics/Introduction_to_Chemical_Equilibrium.html">
-       3.2.19. Chemical Equilibrium
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 current active has-children">
-    <a class="reference internal" href="intro.html">
-     3.3. Kinetics
-    </a>
-    <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
-    <label for="toctree-checkbox-6">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul class="current">
-     <li class="toctree-l3">
-      <a class="reference internal" href="Chemical_Kinetics_and_Rate_Laws.html">
-       3.3.1. Chemical Kinetics and Rate Laws
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Integrated_Rate_Laws.html">
-       3.3.2. Integrated Rate Laws
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Reversible_Reactions.html">
-       3.3.3. Reversible Reactions
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">
-       3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Reaction_Mechanisms_Part_I.html">
-       3.3.5. Reaction Mechanisms
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Catalysts.html">
-       3.3.6. Catalysts
-      </a>
-     </li>
-     <li class="toctree-l3 current active">
-      <a class="current reference internal" href="#">
-       3.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Cooperative_Binding_Kinetics.html">
-       3.3.8. Cooperative Binding Kinetics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="Competitive_Inhibition.html">
-       3.3.9. Competitive Inhibition
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../quantum_mechanics/intro.html">
-     3.4. Quantum Mechanics
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
-    <label for="toctree-checkbox-7">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/history_of_quantum_mechanics.html">
-       3.4.1. The History of Quantum Mechanics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/wave_particle_duality_classical_wave_equation.html">
-       3.4.2. Wave Particle Duality and the Classical Wave Equation
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/Schrodinger_Equation.html">
-       3.4.3. Schrodinger Equation
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/particle_in_a_box.html">
-       3.4.4. Particle in a Box
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">
-       3.4.5. The Uncertainty Principle and Applications of Particle in a Box
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/postulates_of_quantum_mechanics.html">
-       3.4.6. The Postulates and Formalism of Quantum Mechanics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/momentum_operator.html">
-       3.4.7. The Momentum Operator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/operator_algebra.html">
-       3.4.8. Operator Algebra
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/particle_in_a_sphere.html">
-       3.4.9. Particle in a Sphere
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/harmonic_oscillator.html">
-       3.4.10. Harmonic Oscillator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">
-       3.4.11. Vibrational Spectroscopy
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">
-       3.4.12. Variational Method in Quantum Mechanics
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/basis_functions.html">
-       3.4.13. Basis Functions
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/harmonic_oscillator_using_variational_method.html">
-       3.4.14. Variational Solution to the Harmonic Oscillator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/morse_oscillator.html">
-       3.4.15. The Morse Oscillator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/rigid_rotator.html">
-       3.4.16. Rigid Rotator
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/rigid_rotator_using_variational_method.html">
-       3.4.17. Rigid Rotator Variational Solution…
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/rigid_rotator_selection_rules.html">
-       3.4.18. Rigid Rotator Continued…
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom.html">
-       3.4.20. The Hydrogen Atom
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../quantum_mechanics/the_helium_atom.html">
-       3.4.21. The Helium Atom
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toctree-l2 has-children">
-    <a class="reference internal" href="../electronic_structure/intro.html">
-     3.5. Electronic Structure
-    </a>
-    <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
-    <label for="toctree-checkbox-8">
-     <i class="fas fa-chevron-down">
-     </i>
-    </label>
-    <ul>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../electronic_structure/Hartree_Fock_Helium_Atom.html">
-       3.5.1. Hartree-Fock
-      </a>
-     </li>
-     <li class="toctree-l3">
-      <a class="reference internal" href="../electronic_structure/HF_for_H2.html">
-       3.5.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis
-      </a>
-     </li>
-    </ul>
-   </li>
-  </ul>
- </li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">1. Jupyter Notebook Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">1.1. Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">1.2. Advanced Jupyter Notebook Tutorial</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../coding_concepts/intro.html">2. Coding Concepts</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/variables.html">2.1. Variables in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">2.2. Arrays and Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/for_loops.html">2.3. for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/functions.html">2.4. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">2.5. Plotting with matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/numeric_integration.html">2.6. Numeric Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">3. Physical Chemistry</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../statistical_thermodynamics/intro.html">3.1. Statiscial Thermodynamics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Boltzmann_Factor.html">3.1.1. Boltzmann Factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Introduction_to_Probability.html">3.1.2. Introduction to Probability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">3.1.3. Thermodynamic Properties from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">3.1.4. Partition Function for a Monatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">3.1.5. Partition Function for a Diatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">3.1.6. Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">3.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/microscopic_view_of_entropy.html">3.1.8. Microscopic View of Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">3.1.9. Equations of State from Lattice Gas Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../thermodynamics/intro.html">3.2. Thermodynamics</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">3.2.1. The First Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">3.2.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">3.2.4. Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Enthalpy.html">3.2.5. Enthalpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/The_Carnot_Cycle.html">3.2.6. The Carnot Cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">3.2.7. Second Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">3.2.8. Heat Engine Diagrams</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">3.2.10. The Third Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">3.2.11. First Derivative and Maxwell Relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Maxwell_Relations_Applied.html">3.2.12. Maxwell Relations Applied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">3.2.13. Free Energy and Legendre Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">3.2.14. The Pressure and Temperature Dependence of the Gibbs Energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">3.2.15. Phase Diagrams and Phase Equilibria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Chemical_Potential_from_Partition_Function.html">3.2.16. Chemical Potential from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">3.2.17. Thermodynamics of Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Ideal_and_Non_Ideal_Solutions.html">3.2.18. Ideal and Non-ideal Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Introduction_to_Chemical_Equilibrium.html">3.2.19. Chemical Equilibrium</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">3.3. Kinetics</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Chemical_Kinetics_and_Rate_Laws.html">3.3.1. Chemical Kinetics and Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Integrated_Rate_Laws.html">3.3.2. Integrated Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reversible_Reactions.html">3.3.3. Reversible Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Reaction_Mechanisms_Part_I.html">3.3.5. Reaction Mechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Catalysts.html">3.3.6. Catalysts</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">3.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cooperative_Binding_Kinetics.html">3.3.8. Cooperative Binding Kinetics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Competitive_Inhibition.html">3.3.9. Competitive Inhibition</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../quantum_mechanics/intro.html">3.4. Quantum Mechanics</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/history_of_quantum_mechanics.html">3.4.1. The History of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/wave_particle_duality_classical_wave_equation.html">3.4.2. Wave Particle Duality and the Classical Wave Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/Schrodinger_Equation.html">3.4.3. Schrodinger Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/particle_in_a_box.html">3.4.4. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">3.4.5. The Uncertainty Principle and Applications of Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/postulates_of_quantum_mechanics.html">3.4.6. The Postulates and Formalism of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/momentum_operator.html">3.4.7. The Momentum Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/operator_algebra.html">3.4.8. Operator Algebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/particle_in_a_sphere.html">3.4.9. Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/properties_of_particle_in_a_sphere.html">3.4.10. Properties of Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom.html">3.4.11. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/properties_of_the_hydrogen_atom.html">3.4.12. Properties of the Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom_absorption_spectrum.html">3.4.13. The Hydrogen Atom Absorption Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/special_functions_in_quantum_mechanics.html">3.4.14. Special Functions in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_helium_atom.html">3.4.15. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/harmonic_oscillator.html">3.4.16. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">3.4.17. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">3.4.18. Variational Method in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/basis_functions.html">3.4.19. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/harmonic_oscillator_using_variational_method.html">3.4.20. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/morse_oscillator.html">3.4.21. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/rigid_rotator.html">3.4.22. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/rigid_rotator_using_variational_method.html">3.4.23. Rigid Rotator Variational Solution…</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/rigid_rotator_selection_rules.html">3.4.24. Rigid Rotator Continued…</a></li>
+
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../electronic_structure/intro.html">3.5. Electronic Structure</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../electronic_structure/Hartree_Fock_Helium_Atom.html">3.5.1. Hartree-Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">3.5.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
     </div>
 </nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
     </div>
-    <div id="rtd-footer-container"></div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
-          
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-
-          
-<!-- A tiny helper pixel to detect if we've scrolled -->
 <div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
-    
-    <div class="header-article row sticky-top noprint">
-        
 
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
   
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../../_static/images/logo_binder.svg">
   </span>
-<span class="headerbtn__text-container">Binder</span>
+<span class="btn__text-container">Binder</span>
 </a>
-
-      </li>
+</li>
       
-      <li>
-        <a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Colab"
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   
     <img src="../../_static/images/logo_colab.png">
   </span>
-<span class="headerbtn__text-container">Colab</span>
+<span class="btn__text-container">Colab</span>
 </a>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
 
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
+
+
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fphysical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fphysical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.html&body=Your%20issue%20content%20here."
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="bottom"
-title="Open an issue"
->
-  
-
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-lightbulb"></i>
   </span>
 
 </a>
 
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
   </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="../../_sources/physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="headerbtn__text-container">.ipynb</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
-
-      </li>
+</li>
+      
+      
+      
       
       <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
+<span class="btn__icon-container">
   <i class="fas fa-file-pdf"></i>
   </span>
-<span class="headerbtn__text-container">.pdf</span>
+<span class="btn__text-container">.pdf</span>
 </button>
-
-      </li>
+</li>
       
-    </ul>
-  </div>
+  </ul>
 </div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
 
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
   </span>
 
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
 </label>
-
+</div></div>
+      
     </div>
+  
 </div>
-
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#motivation">
-   3.3.7.1. Motivation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-goals">
-   3.3.7.2. Learning Goals:
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#coding-concepts">
-   3.3.7.3. Coding Concepts:
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#enzymes-are-biological-catalysts">
-   3.3.7.4. Enzymes are Biological Catalysts
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism">
-   3.3.7.5. Proposed Mechanism for Enzyme Catalysis: The Michaelis-Menten Mechanism
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experiments-to-measure-michaelis-menten-parameters">
-   3.3.7.6. Experiments to Measure Michaelis-Menten Parameters
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fitting-michaelis-menten-parameters-using-a-lineweaver-burk-plot">
-   3.3.7.7. Fitting Michaelis-Menten Parameters using a Lineweaver-Burk Plot
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-importance-of-v-k">
-   3.3.7.8. The Importance of v/K
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#comparing-mm-parameters-for-different-enzymes">
-   3.3.7.9. Comparing MM Parameters For Different Enzymes
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-fitting-michaelis-menten-parameters">
-   3.3.7.10. Example: Fitting Michaelis-Menten Parameters
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#solution-non-linear-fitting">
-     3.3.7.10.1. Solution: Non-linear Fitting
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#solution-lineweaver-burk-plot">
-     3.3.7.10.2. Solution: Lineweaver-Burk Plot
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#compare-solutions">
-     3.3.7.10.3. Compare Solutions
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-fitting-with-error">
-   3.3.7.11. Example: Fitting with Error
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
-    </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Enzyme Kinetics: The Michaelis-Menten Mechanism</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#motivation">
-   3.3.7.1. Motivation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-goals">
-   3.3.7.2. Learning Goals:
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#coding-concepts">
-   3.3.7.3. Coding Concepts:
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#enzymes-are-biological-catalysts">
-   3.3.7.4. Enzymes are Biological Catalysts
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism">
-   3.3.7.5. Proposed Mechanism for Enzyme Catalysis: The Michaelis-Menten Mechanism
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#experiments-to-measure-michaelis-menten-parameters">
-   3.3.7.6. Experiments to Measure Michaelis-Menten Parameters
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fitting-michaelis-menten-parameters-using-a-lineweaver-burk-plot">
-   3.3.7.7. Fitting Michaelis-Menten Parameters using a Lineweaver-Burk Plot
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-importance-of-v-k">
-   3.3.7.8. The Importance of v/K
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#comparing-mm-parameters-for-different-enzymes">
-   3.3.7.9. Comparing MM Parameters For Different Enzymes
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-fitting-michaelis-menten-parameters">
-   3.3.7.10. Example: Fitting Michaelis-Menten Parameters
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#solution-non-linear-fitting">
-     3.3.7.10.1. Solution: Non-linear Fitting
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#solution-lineweaver-burk-plot">
-     3.3.7.10.2. Solution: Lineweaver-Burk Plot
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#compare-solutions">
-     3.3.7.10.3. Compare Solutions
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#example-fitting-with-error">
-   3.3.7.11. Example: Fitting with Error
-  </a>
- </li>
-</ul>
+              
+              
 
-                        </nav>
-                    </div>
-                </div>
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Enzyme Kinetics: The Michaelis-Menten Mechanism</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
             </div>
-            <main id="main-content" role="main">
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">3.3.7.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">3.3.7.2. Learning Goals:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">3.3.7.3. Coding Concepts:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enzymes-are-biological-catalysts">3.3.7.4. Enzymes are Biological Catalysts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism">3.3.7.5. Proposed Mechanism for Enzyme Catalysis: The Michaelis-Menten Mechanism</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiments-to-measure-michaelis-menten-parameters">3.3.7.6. Experiments to Measure Michaelis-Menten Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-michaelis-menten-parameters-using-a-lineweaver-burk-plot">3.3.7.7. Fitting Michaelis-Menten Parameters using a Lineweaver-Burk Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-importance-of-v-k">3.3.7.8. The Importance of v/K</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-mm-parameters-for-different-enzymes">3.3.7.9. Comparing MM Parameters For Different Enzymes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-fitting-michaelis-menten-parameters">3.3.7.10. Example: Fitting Michaelis-Menten Parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-non-linear-fitting">3.3.7.10.1. Solution: Non-linear Fitting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-lineweaver-burk-plot">3.3.7.10.2. Solution: Lineweaver-Burk Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-solutions">3.3.7.10.3. Compare Solutions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-fitting-with-error">3.3.7.11. Example: Fitting with Error</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
                 
-              <div>
-                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="enzyme-kinetics-the-michaelis-menten-mechanism">
-<h1><span class="section-number">3.3.7. </span>Enzyme Kinetics: The Michaelis-Menten Mechanism<a class="headerlink" href="#enzyme-kinetics-the-michaelis-menten-mechanism" title="Permalink to this headline">#</a></h1>
+<h1><span class="section-number">3.3.7. </span>Enzyme Kinetics: The Michaelis-Menten Mechanism<a class="headerlink" href="#enzyme-kinetics-the-michaelis-menten-mechanism" title="Permalink to this heading">#</a></h1>
 <section id="motivation">
-<h2><span class="section-number">3.3.7.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
 <p>Enzymes are proteins that catalyze a wide variety of biochemical reactions.  These important molecules facilitate almost every important process in cellular biology.  The kinetics of these biological catalysts is of interest for understanding the basic science of how our body works as well as the design of novel industrial chemical syntheses.</p>
 </section>
 <section id="learning-goals">
-<h2><span class="section-number">3.3.7.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Delineate the steps and approximations in the Michaelis-Menten mechanism for enzyme kinetics.</p></li>
 <li><p>Express the rate of change of reactant (/substrate) change in terms of Michaelis-Menten parameters.</p></li>
 <li><p>Use a Lineweaver-Burk plot (/equation) to fit Michaelis-Menten parameters.</p></li>
@@ -924,83 +509,83 @@ title="Print to PDF"
 </ol>
 </section>
 <section id="coding-concepts">
-<h2><span class="section-number">3.3.7.3. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.3. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
 </section>
 <section id="enzymes-are-biological-catalysts">
-<h2><span class="section-number">3.3.7.4. </span>Enzymes are Biological Catalysts<a class="headerlink" href="#enzymes-are-biological-catalysts" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.4. </span>Enzymes are Biological Catalysts<a class="headerlink" href="#enzymes-are-biological-catalysts" title="Permalink to this heading">#</a></h2>
 <p>Enzyzmes are proteins that catalyze chemical reactions.  The type of reactions span the gamut of biochemical processes including almost every step of glycolysis to the hydrolysis of ATP in motor proteins.  Enzymes are known to speed-up chemical reactions by many orders of magnitude (as much as <span class="math notranslate nohighlight">\(10^5-10^{12}\)</span>).</p>
 <p>Without enzymes, life as we know it would not exist.  Processes would occur at rates far to slow to sustain life.</p>
 <p>So how do enzymes achieve such amazing speed-ups?</p>
 </section>
 <section id="proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism">
-<h2><span class="section-number">3.3.7.5. </span>Proposed Mechanism for Enzyme Catalysis: The Michaelis-Menten Mechanism<a class="headerlink" href="#proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.5. </span>Proposed Mechanism for Enzyme Catalysis: The Michaelis-Menten Mechanism<a class="headerlink" href="#proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism" title="Permalink to this heading">#</a></h2>
 <p>The most ubiquitous, and one of the simplest, mechanisms for enzyme catalysis was proposed my Leonor Michaelis and Maude Menten in 1913.  It is still the got to mechanism for fitting enzyme kinetics.  The derivation is as follows.</p>
 <p>Consider a generic process of converting a substrate to a product with chemical reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0cbef856-5530-4073-8ab3-9dc40785238f">
-<span class="eqno">(3.565)<a class="headerlink" href="#equation-0cbef856-5530-4073-8ab3-9dc40785238f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cdae22fd-e7b3-415e-a37d-b70158b19b17">
+<span class="eqno">(3.565)<a class="headerlink" href="#equation-cdae22fd-e7b3-415e-a37d-b70158b19b17" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S \underset{E}{\longrightarrow} P,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(S\)</span> is the substrate (aka reactant), <span class="math notranslate nohighlight">\(E\)</span> is the enzyme, and <span class="math notranslate nohighlight">\(P\)</span> is the product.  It was found, experimentally, that many enzyme catalyzed reactions of this form followed the rate law</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1c8bfeda-3a3f-4385-af1a-27d9ed52b9a2">
-<span class="eqno">(3.566)<a class="headerlink" href="#equation-1c8bfeda-3a3f-4385-af1a-27d9ed52b9a2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-077486dc-f5d2-4154-85f2-823141926e4b">
+<span class="eqno">(3.566)<a class="headerlink" href="#equation-077486dc-f5d2-4154-85f2-823141926e4b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 -\frac{d[S]}{dt} = \frac{k[S]}{K+[S]}.
 \end{equation}\]</div>
 <p>Michealis and Menten proposed a two-step mechanism whereby the enzyme and substrate form an intermediate (called the enzyme-substrate complex) in a reversible reaction, followed by another reversible reaction in which the substrate is converted into product.  This can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8605f91-0a3b-4694-bc93-15773e71ad87">
-<span class="eqno">(3.567)<a class="headerlink" href="#equation-b8605f91-0a3b-4694-bc93-15773e71ad87" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2fbeb90b-b535-42f6-8697-5dce724278ea">
+<span class="eqno">(3.567)<a class="headerlink" href="#equation-2fbeb90b-b535-42f6-8697-5dce724278ea" title="Permalink to this equation">#</a></span>\[\begin{align}
 E + S &amp;\overset{k_1}{\underset{k_{-1}}{\overset{\Longrightarrow}{\Longleftarrow}}} ES \\
 ES &amp;\overset{k_2}{\underset{k_{-2}}{\overset{\Longrightarrow}{\Longleftarrow}}} E + P
 \end{align}\]</div>
 <p>Note that it is common to assume the second step is irreversible but it is not necessary to do so.</p>
 <p>The above mechansim leads to the following three differential equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-71c52cdd-f452-4891-82c4-1fe5724829af">
-<span class="eqno">(3.568)<a class="headerlink" href="#equation-71c52cdd-f452-4891-82c4-1fe5724829af" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-71f510b7-ac98-45a5-a415-f18fda90c135">
+<span class="eqno">(3.568)<a class="headerlink" href="#equation-71f510b7-ac98-45a5-a415-f18fda90c135" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\frac{d[S]}{dt}  &amp;= k_1[E][S] - k_{-1}[ES] \\
 -\frac{d[ES]}{dt}  &amp;= (k_2+k_{-1})[ES] - k_1[E][S] - k_{-2}[E][P] \\
 \frac{d[P]}{dt} &amp;= k_2[ES] - k_{-2}[E][P]
 \end{align}\]</div>
 <p>Because enzyme is not created or destroyed during the reaction, the overall concentration of enzyme containing species is fixed as the initial concentration of enzyme.  That is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-93b2e633-92d8-44b9-ac33-6107918ba58a">
-<span class="eqno">(3.569)<a class="headerlink" href="#equation-93b2e633-92d8-44b9-ac33-6107918ba58a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-74dc78e6-bd9d-436d-8491-82728bb42e4a">
+<span class="eqno">(3.569)<a class="headerlink" href="#equation-74dc78e6-bd9d-436d-8491-82728bb42e4a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 [E]_0 = [E] + [ES]
 \end{equation}\]</div>
 <p>Substituting this into the differential equations above gives</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d2ebc3fe-d71b-4436-a61f-ef026f7d18f1">
-<span class="eqno">(3.570)<a class="headerlink" href="#equation-d2ebc3fe-d71b-4436-a61f-ef026f7d18f1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ad146d3e-e5b7-4b44-a25d-e8a1c5d32005">
+<span class="eqno">(3.570)<a class="headerlink" href="#equation-ad146d3e-e5b7-4b44-a25d-e8a1c5d32005" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\frac{d[S]}{dt}  &amp;= k_1[E]_0[S] - (k_{-1}+k_1[S])[ES] \\
 -\frac{d[ES]}{dt}  &amp;= (k_1[S] + k_{-2}[P] + k_2+k_{-1})[ES] - k_1[E]_0[S] - k_{-2}[E]_0[P] \\
 \frac{d[P]}{dt} &amp;= (k_2+k_{-2}[P])[ES] - k_{-2}[E]_0[P]
 \end{align}\]</div>
 <p>These equations cannot be solved analytically for <span class="math notranslate nohighlight">\([S]\)</span>, <span class="math notranslate nohighlight">\([E]\)</span>, and/or <span class="math notranslate nohighlight">\([P]\)</span> without further approximation.</p>
 <p><em>The first approximation employed is the steady-state approximation for <span class="math notranslate nohighlight">\([ES]\)</span>.</em>  This approximation is typically valid after an intial phase of building up the <span class="math notranslate nohighlight">\(ES\)</span> concentration when enzyme is mixed with excess substrate. After the initial lag phase, but before much substrate has been consumed and/or product has been formed, the steady-state approximation will be achieved yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52d9b37b-115f-4a8e-bc4e-68a4de9b4c81">
-<span class="eqno">(3.571)<a class="headerlink" href="#equation-52d9b37b-115f-4a8e-bc4e-68a4de9b4c81" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-b8992848-ef9f-4540-8db0-6b46f82a0cf9">
+<span class="eqno">(3.571)<a class="headerlink" href="#equation-b8992848-ef9f-4540-8db0-6b46f82a0cf9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 -\frac{d[ES]}{dt}  &amp;\overset{s.s.}{=}&amp; 0 = (k_1[S] + k_{-2}[P] + k_2+k_{-1})[ES] - k_1[E]_0[S] - k_{-2}[E]_0[P] \\
 \Rightarrow [ES] &amp;\overset{s.s.}{=}&amp; \frac{(k_1[S]+k_{-2}[P])[E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}.
 \end{eqnarray}\]</div>
 <p>Substituting the steady-state approximation for the concentration of the enzyme-substrate complex into the differential equation for substrate concentration yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4f61745e-b191-4526-9b45-efd32a030df1">
-<span class="eqno">(3.572)<a class="headerlink" href="#equation-4f61745e-b191-4526-9b45-efd32a030df1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3d49b67d-a4f2-45cf-b67e-c8edf048bf57">
+<span class="eqno">(3.572)<a class="headerlink" href="#equation-3d49b67d-a4f2-45cf-b67e-c8edf048bf57" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\frac{d[S]}{dt}  &amp;= k_1[E]_0[S] - (k_{-1}+k_1[S])\frac{(k_1[S]+k_{-2}[P])[E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2} \\
 &amp;= k_1[E]_0[S]\frac{(k_1[S] + k_{-2}[P] + k_{-1} + k_2)}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}  - (k_{-1}+k_1[S])\frac{(k_1[S]+k_{-2}[P])[E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2} \\
 &amp;= \frac{k_1[E]_0[S]k_1[S] + k_1[E]_0[S]k_{-2}[P] + k_1[E]_0[S]k_{-1} + k_1[E]_0[S]k_2 - k_{-1}k_1[S][E]_0 - k_{-1}k_{-2}[P][E]_0 -k_1[S]k_1[S][E]_0 - k_1[S] k_{-2}[P][E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}\\
 &amp;= \frac{k_1k_2[E]_0[S] - k_{-1}k_{-2}[P][E]_0}{k_1[S] + k_{-2}[P] + k_{-1} + k_2}
 \end{align}\]</div>
 <p>If we now dictate that we will only measure the intitial rate of the reaction (post lag phase) and that there is only reactant/substrate present initially, then we can make the following approximations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b7cad56a-9a56-4151-b603-6b29c4b2cb75">
-<span class="eqno">(3.573)<a class="headerlink" href="#equation-b7cad56a-9a56-4151-b603-6b29c4b2cb75" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-89333503-6ad8-42ee-bc6e-816e0303019b">
+<span class="eqno">(3.573)<a class="headerlink" href="#equation-89333503-6ad8-42ee-bc6e-816e0303019b" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;[S] \approx [S]_0 \\
 &amp;[P] \approx [P]_0
 \end{align}\]</div>
 <p>Plugging in these approximations to the Michaelis-Menten rate equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-853013ae-830e-432c-acff-b9d57ca849f9">
-<span class="eqno">(3.574)<a class="headerlink" href="#equation-853013ae-830e-432c-acff-b9d57ca849f9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-986929fa-427b-4f3c-bd57-12804a1fb57e">
+<span class="eqno">(3.574)<a class="headerlink" href="#equation-986929fa-427b-4f3c-bd57-12804a1fb57e" title="Permalink to this equation">#</a></span>\[\begin{align}
 v_0 = -\frac{d[S]}{dt}|_0 &amp;= \frac{k_1k_2[E]_0[S]_0}{k_1[S]_0 + k_{-1} + k_2} \\
 &amp;= \frac{k_2[E]_0[S]_0}{K_m + [S]_0}
 \end{align}\]</div>
@@ -1029,44 +614,48 @@ v_0 = -\frac{d[S]}{dt}|_0 &amp;= \frac{k_1k_2[E]_0[S]_0}{k_1[S]_0 + k_{-1} + k_2
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f7e587a9b80&gt;]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_19660/3685606058.py:8: MatplotlibDeprecationWarning: The &#39;b&#39; parameter of grid() has been renamed &#39;visible&#39; since Matplotlib 3.5; support for the old name will be dropped two minor releases later.
+  ax.grid(b=True, which=&#39;major&#39;, axis=&#39;both&#39;, color=&#39;#808080&#39;, linestyle=&#39;--&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_8_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_8_1.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fbab104a700&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/af68a30e138017f09d0b96355d75fc5ba68b1274e7963ea533cbe14bf295bf3d.png" src="../../_images/af68a30e138017f09d0b96355d75fc5ba68b1274e7963ea533cbe14bf295bf3d.png" />
 </div>
 </div>
 <p>We notice from the plot above that the initial rate saturates/plateaus as the initial substrate concentration is increased.  Indeed, it is readily shown that the maximum initial rate, denoted <span class="math notranslate nohighlight">\(v_{max}\)</span>, is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-809e68d6-e227-466b-ab2b-7bc584c85522">
-<span class="eqno">(3.575)<a class="headerlink" href="#equation-809e68d6-e227-466b-ab2b-7bc584c85522" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-173d66b6-a974-4617-80fb-08e03b3c0fb1">
+<span class="eqno">(3.575)<a class="headerlink" href="#equation-173d66b6-a974-4617-80fb-08e03b3c0fb1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 v_{max} = \lim_{[S]_0\rightarrow\infty} v_0 = k_2[E]_0
 \end{eqnarray}\]</div>
 </section>
 <section id="experiments-to-measure-michaelis-menten-parameters">
-<h2><span class="section-number">3.3.7.6. </span>Experiments to Measure Michaelis-Menten Parameters<a class="headerlink" href="#experiments-to-measure-michaelis-menten-parameters" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.6. </span>Experiments to Measure Michaelis-Menten Parameters<a class="headerlink" href="#experiments-to-measure-michaelis-menten-parameters" title="Permalink to this heading">#</a></h2>
 <p>For an enzyme catalyzed reaction that follows the Michaelis-Menten mechanism, the parameters <span class="math notranslate nohighlight">\(K_m\)</span> and <span class="math notranslate nohighlight">\(v_{max}\)</span> allow us to determine the rate of reaction at aribtraty substrate concentration.  These parameters can be compared amongst enzymes or across experimental conditions to assess the efficiency of an enzyme.  Indeed, these parameters are still estimated for a number of enzymes today.</p>
 <p>To consider how to design an experiment to estimate these parameters, we start writing out the chemical reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8cbaff8c-1aed-48ae-8bf0-c175911e768c">
-<span class="eqno">(3.576)<a class="headerlink" href="#equation-8cbaff8c-1aed-48ae-8bf0-c175911e768c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-058f7cfd-c681-48c7-8098-9d042453f6d2">
+<span class="eqno">(3.576)<a class="headerlink" href="#equation-058f7cfd-c681-48c7-8098-9d042453f6d2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S \underset{E}{\longrightarrow} P,
 \end{equation}\]</div>
 <p>and the associated Michaelis-Menten rate equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-142568e9-fefe-42fd-9aab-37c66e21b624">
-<span class="eqno">(3.577)<a class="headerlink" href="#equation-142568e9-fefe-42fd-9aab-37c66e21b624" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7ddeef7a-0826-4eca-9349-6215fbe4443e">
+<span class="eqno">(3.577)<a class="headerlink" href="#equation-7ddeef7a-0826-4eca-9349-6215fbe4443e" title="Permalink to this equation">#</a></span>\[\begin{align}
 v_0 = \frac{v_{max}[S]_0}{K_m + [S]_0}
 \end{align}\]</div>
 <p>We need to measure <span class="math notranslate nohighlight">\(v_0\)</span> as a function of <span class="math notranslate nohighlight">\([S]_0\)</span> to determine <span class="math notranslate nohighlight">\(v_{max}\)</span> and <span class="math notranslate nohighlight">\(K_m\)</span>.  This can be done in a number of ways but there are two critical components:</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Some way of measuring the initial rate of reaction.  The specifics of this measurement will depend on the reaction and reaction conditions.  An example might be absorbance spectroscopy - if the product absorbs light at a different frequency than the reactant, then measuring absorbance as a function of time will provide the appropriate information.</p></li>
 <li><p>Performing multiple trials altering the initial concentration of substrate.</p></li>
 </ol>
 <p>After these experiments, one will have concentration (or something proportional to concentration) as a function of initial concentration of substrate.  From here, it is a question of fitting the resulting data to the above equation for <span class="math notranslate nohighlight">\(v_0\)</span> to determine v_{max}<span class="math notranslate nohighlight">\( and \)</span>K_m$.  This can be done using a non-linear fit or using a Lineweaver-Burke plot.</p>
 </section>
 <section id="fitting-michaelis-menten-parameters-using-a-lineweaver-burk-plot">
-<h2><span class="section-number">3.3.7.7. </span>Fitting Michaelis-Menten Parameters using a Lineweaver-Burk Plot<a class="headerlink" href="#fitting-michaelis-menten-parameters-using-a-lineweaver-burk-plot" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.7. </span>Fitting Michaelis-Menten Parameters using a Lineweaver-Burk Plot<a class="headerlink" href="#fitting-michaelis-menten-parameters-using-a-lineweaver-burk-plot" title="Permalink to this heading">#</a></h2>
 <p>A Lineweaver-Burk plot is a plot of <span class="math notranslate nohighlight">\(\frac{1}{v_0}\)</span> vs. <span class="math notranslate nohighlight">\(\frac{1}{[S]_0}\)</span> and can be considered a linearized form of the Michaelis-Menten equation.</p>
 <p>To demonstrate this, we start with the Michaelis-Menten initial rate equation and take the reciprocal of both sides:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3ecb4b13-bc34-49ec-9b7c-2ec54ef39f6f">
-<span class="eqno">(3.578)<a class="headerlink" href="#equation-3ecb4b13-bc34-49ec-9b7c-2ec54ef39f6f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1b24671a-3a59-4a6f-8375-e4a7e822fb49">
+<span class="eqno">(3.578)<a class="headerlink" href="#equation-1b24671a-3a59-4a6f-8375-e4a7e822fb49" title="Permalink to this equation">#</a></span>\[\begin{align}
 v_0 &amp;= \frac{v_{max}[S]_0}{K_m + [S]_0} \\
 \Rightarrow \frac{1}{v_0} &amp;= \frac{K_m + [S]_0}{v_{max}[S]_0} \\
 &amp;= \frac{K_m}{v_{max}}\frac{1}{[S]_0} + \frac{1}{v_{max}}
@@ -1074,90 +663,90 @@ v_0 &amp;= \frac{v_{max}[S]_0}{K_m + [S]_0} \\
 <p>This last equation is known as the Lineweaver-Burk equation and demonstrates that <span class="math notranslate nohighlight">\(\frac{1}{v_0}\)</span> will be linear with respect to <span class="math notranslate nohighlight">\(\frac{1}{[S]_0}\)</span> for enzyme kinetics that is well modeled by the Michaelis-Menten mechanism.  The slope of the line will be <span class="math notranslate nohighlight">\(\frac{K_m}{v_{max}}\)</span> and the intercept is <span class="math notranslate nohighlight">\(\frac{1}{v_{max}}\)</span>.</p>
 </section>
 <section id="the-importance-of-v-k">
-<h2><span class="section-number">3.3.7.8. </span>The Importance of v/K<a class="headerlink" href="#the-importance-of-v-k" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.8. </span>The Importance of v/K<a class="headerlink" href="#the-importance-of-v-k" title="Permalink to this heading">#</a></h2>
 <p>The value of <span class="math notranslate nohighlight">\(v_{max}/K_m\)</span> (or, <span class="math notranslate nohighlight">\(k_2/K_m\)</span>), is a measure of the efficiency of an enzyme.   To see why this value is important, consider the MM rate law</p>
-<div class="amsmath math notranslate nohighlight" id="equation-779be127-4cd8-410a-b4b9-19e18bf8c8d9">
-<span class="eqno">(3.579)<a class="headerlink" href="#equation-779be127-4cd8-410a-b4b9-19e18bf8c8d9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ccec92e2-6d07-4e28-a80b-474830ba0f7b">
+<span class="eqno">(3.579)<a class="headerlink" href="#equation-ccec92e2-6d07-4e28-a80b-474830ba0f7b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v_0 = \frac{v_{max}[S]_0}{K_m + [S]_0}
 \end{equation}\]</div>
 <p>When <span class="math notranslate nohighlight">\(K_m &gt;&gt; [S]_0\)</span>, we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2fbddce3-50d6-4a30-b3c3-d6a83d5eafcb">
-<span class="eqno">(3.580)<a class="headerlink" href="#equation-2fbddce3-50d6-4a30-b3c3-d6a83d5eafcb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7a4e68bb-1fa4-4f47-82ae-59459410e30a">
+<span class="eqno">(3.580)<a class="headerlink" href="#equation-7a4e68bb-1fa4-4f47-82ae-59459410e30a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v_0 \approx \frac{v_{max}}{K_m}[S]_0 = \frac{k_{2}}{K_m}[E]_0[S]_0
 \end{equation}\]</div>
 <p>or that the reaction is first order in substrate, first order in enzyme, and second order overall with observed rate constant of <span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span>.</p>
 <p><span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span> will have units of M<span class="math notranslate nohighlight">\(^{-1}\cdot\)</span>s<span class="math notranslate nohighlight">\(^{-1}\)</span> and is related to the number of collisions that lead to reaction. The higher the value of  <span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span> the more efficient the enzyme.  Value near <span class="math notranslate nohighlight">\(10^9\)</span> are the maximum indicating that the reaction is diffusion controlled and thus effectively every collision leads to reaction.</p>
 </section>
 <section id="comparing-mm-parameters-for-different-enzymes">
-<h2><span class="section-number">3.3.7.9. </span>Comparing MM Parameters For Different Enzymes<a class="headerlink" href="#comparing-mm-parameters-for-different-enzymes" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.9. </span>Comparing MM Parameters For Different Enzymes<a class="headerlink" href="#comparing-mm-parameters-for-different-enzymes" title="Permalink to this heading">#</a></h2>
 <p>Michaelis-Menten Parameter are tabulated for various enzymes.  These can be compared to assess the relative efficiency of these enzymes.</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:left head"><p>Enzyme</p></th>
-<th class="text-align:left head"><p>Substrate</p></th>
-<th class="text-align:left head"><p><span class="math notranslate nohighlight">\(K_m\)</span> (M)</p></th>
-<th class="text-align:left head"><p><span class="math notranslate nohighlight">\(k_{2}\)</span> (s<span class="math notranslate nohighlight">\(^{-1}\)</span>)</p></th>
-<th class="text-align:left head"><p><span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span> (M<span class="math notranslate nohighlight">\(^{-1}\cdot\)</span>s<span class="math notranslate nohighlight">\(^{-1}\)</span>)</p></th>
+<tr class="row-odd"><th class="head text-left"><p>Enzyme</p></th>
+<th class="head text-left"><p>Substrate</p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(K_m\)</span> (M)</p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(k_{2}\)</span> (s<span class="math notranslate nohighlight">\(^{-1}\)</span>)</p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span> (M<span class="math notranslate nohighlight">\(^{-1}\cdot\)</span>s<span class="math notranslate nohighlight">\(^{-1}\)</span>)</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-align:left"><p>Acetylcholineterase</p></td>
-<td class="text-align:left"><p>Acetylcholine</p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(9.5\times10^{-5}\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(1.4\times10^4\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(1.5\times10^8\)</span></p></td>
+<tr class="row-even"><td class="text-left"><p>Acetylcholineterase</p></td>
+<td class="text-left"><p>Acetylcholine</p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(9.5\times10^{-5}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(1.4\times10^4\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(1.5\times10^8\)</span></p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>Carbonic anhydrase</p></td>
-<td class="text-align:left"><p>CO<span class="math notranslate nohighlight">\(_2\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(1.2\times10^{-2}\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(1.0\times10^6\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(8.3\times10^7\)</span></p></td>
+<tr class="row-odd"><td class="text-left"><p>Carbonic anhydrase</p></td>
+<td class="text-left"><p>CO<span class="math notranslate nohighlight">\(_2\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(1.2\times10^{-2}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(1.0\times10^6\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(8.3\times10^7\)</span></p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>Carbonic anhydrase</p></td>
-<td class="text-align:left"><p>HCO<span class="math notranslate nohighlight">\(_3^-\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(2.6\times10^{-2}\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(4.0\times10^5\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(1.5\times10^7\)</span></p></td>
+<tr class="row-even"><td class="text-left"><p>Carbonic anhydrase</p></td>
+<td class="text-left"><p>HCO<span class="math notranslate nohighlight">\(_3^-\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(2.6\times10^{-2}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(4.0\times10^5\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(1.5\times10^7\)</span></p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>Catalase</p></td>
-<td class="text-align:left"><p>H<span class="math notranslate nohighlight">\(_2\)</span>O<span class="math notranslate nohighlight">\(_2\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(2.5\times10^{-2}\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(1.0\times10^7\)</span></p></td>
-<td class="text-align:left"><p><span class="math notranslate nohighlight">\(4.0\times10^8\)</span></p></td>
+<tr class="row-odd"><td class="text-left"><p>Catalase</p></td>
+<td class="text-left"><p>H<span class="math notranslate nohighlight">\(_2\)</span>O<span class="math notranslate nohighlight">\(_2\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(2.5\times10^{-2}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(1.0\times10^7\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(4.0\times10^8\)</span></p></td>
 </tr>
 </tbody>
 </table>
 <p>In the table above we see various examples of enzymes substrate pairs and their associated Michaelis-Menten parameters.  Carbonic anhydrase, for example, can bind either CO<span class="math notranslate nohighlight">\(_2\)</span> or HCO<span class="math notranslate nohighlight">\(_3^-\)</span> and has different MM parameters for those substrates.  As a summary, the enzymative efficiency (<span class="math notranslate nohighlight">\(\frac{k_2}{K_m}\)</span>) of Carbonic anhydrase is larger for CO<span class="math notranslate nohighlight">\(_2\)</span> as a substrate as compared to HCO<span class="math notranslate nohighlight">\(_3^-\)</span>.</p>
 </section>
 <section id="example-fitting-michaelis-menten-parameters">
-<h2><span class="section-number">3.3.7.10. </span>Example: Fitting Michaelis-Menten Parameters<a class="headerlink" href="#example-fitting-michaelis-menten-parameters" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.10. </span>Example: Fitting Michaelis-Menten Parameters<a class="headerlink" href="#example-fitting-michaelis-menten-parameters" title="Permalink to this heading">#</a></h2>
 <p>Determine the Michaelis-Menten Paramters from the following data</p>
-<table class="colwidths-auto table">
+<table class="table">
 <thead>
-<tr class="row-odd"><th class="text-align:left head"><p><span class="math notranslate nohighlight">\([S]_0\)</span> (mM)</p></th>
-<th class="text-align:left head"><p><span class="math notranslate nohighlight">\(v_0\)</span> (<span class="math notranslate nohighlight">\(\mu\)</span>M/s)</p></th>
+<tr class="row-odd"><th class="head text-left"><p><span class="math notranslate nohighlight">\([S]_0\)</span> (mM)</p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(v_0\)</span> (<span class="math notranslate nohighlight">\(\mu\)</span>M/s)</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-align:left"><p>1</p></td>
-<td class="text-align:left"><p>2.5</p></td>
+<tr class="row-even"><td class="text-left"><p>1</p></td>
+<td class="text-left"><p>2.5</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>2</p></td>
-<td class="text-align:left"><p>4.0</p></td>
+<tr class="row-odd"><td class="text-left"><p>2</p></td>
+<td class="text-left"><p>4.0</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>5</p></td>
-<td class="text-align:left"><p>6.3</p></td>
+<tr class="row-even"><td class="text-left"><p>5</p></td>
+<td class="text-left"><p>6.3</p></td>
 </tr>
-<tr class="row-odd"><td class="text-align:left"><p>10</p></td>
-<td class="text-align:left"><p>7.6</p></td>
+<tr class="row-odd"><td class="text-left"><p>10</p></td>
+<td class="text-left"><p>7.6</p></td>
 </tr>
-<tr class="row-even"><td class="text-align:left"><p>20</p></td>
-<td class="text-align:left"><p>9.0</p></td>
+<tr class="row-even"><td class="text-left"><p>20</p></td>
+<td class="text-left"><p>9.0</p></td>
 </tr>
 </tbody>
 </table>
 <section id="solution-non-linear-fitting">
-<h3><span class="section-number">3.3.7.10.1. </span>Solution: Non-linear Fitting<a class="headerlink" href="#solution-non-linear-fitting" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">3.3.7.10.1. </span>Solution: Non-linear Fitting<a class="headerlink" href="#solution-non-linear-fitting" title="Permalink to this heading">#</a></h3>
 <p>We will simply solve this by performing a non-linear fit to the Michaelis-Menten parameters.  We start by entering the data into arrays and plotting it.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1188,10 +777,14 @@ v_0 \approx \frac{v_{max}}{K_m}[S]_0 = \frac{k_{2}}{K_m}[E]_0[S]_0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f7e58da63d0&gt;]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_19660/534359523.py:9: MatplotlibDeprecationWarning: The &#39;b&#39; parameter of grid() has been renamed &#39;visible&#39; since Matplotlib 3.5; support for the old name will be dropped two minor releases later.
+  ax.grid(b=True, which=&#39;major&#39;, axis=&#39;both&#39;, color=&#39;#808080&#39;, linestyle=&#39;--&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_21_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_21_1.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fbab13813a0&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/34c93d41bb51276ebea1e6f379d4991846854696a5dc3c90e737983c1e5d8733.png" src="../../_images/34c93d41bb51276ebea1e6f379d4991846854696a5dc3c90e737983c1e5d8733.png" />
 </div>
 </div>
 <div class="cell tag_hide_input docutils container">
@@ -1240,15 +833,19 @@ Km =  3.2 +/- 0.2 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f7e58f87460&gt;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_19660/3342227737.py:9: MatplotlibDeprecationWarning: The &#39;b&#39; parameter of grid() has been renamed &#39;visible&#39; since Matplotlib 3.5; support for the old name will be dropped two minor releases later.
+  ax.grid(b=True, which=&#39;major&#39;, axis=&#39;both&#39;, color=&#39;#808080&#39;, linestyle=&#39;--&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_23_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_23_1.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbab1b8c310&gt;
+</pre></div>
+</div>
+<img alt="../../_images/e26aa7d75a9ec867f5b3a4934f346da15ac7e756e551b0bdaaec176abd45b162.png" src="../../_images/e26aa7d75a9ec867f5b3a4934f346da15ac7e756e551b0bdaaec176abd45b162.png" />
 </div>
 </div>
 </section>
 <section id="solution-lineweaver-burk-plot">
-<h3><span class="section-number">3.3.7.10.2. </span>Solution: Lineweaver-Burk Plot<a class="headerlink" href="#solution-lineweaver-burk-plot" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">3.3.7.10.2. </span>Solution: Lineweaver-Burk Plot<a class="headerlink" href="#solution-lineweaver-burk-plot" title="Permalink to this heading">#</a></h3>
 <p>In this solution we will plot <span class="math notranslate nohighlight">\(1/v_0\)</span> vs <span class="math notranslate nohighlight">\(1/[S]_0\)</span> and fit the resulting data to a line.</p>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
@@ -1269,10 +866,14 @@ Km =  3.2 +/- 0.2 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f7e5992e190&gt;]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_19660/886581070.py:9: MatplotlibDeprecationWarning: The &#39;b&#39; parameter of grid() has been renamed &#39;visible&#39; since Matplotlib 3.5; support for the old name will be dropped two minor releases later.
+  ax.grid(b=True, which=&#39;major&#39;, axis=&#39;both&#39;, color=&#39;#808080&#39;, linestyle=&#39;--&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_25_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_25_1.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fbab1bec820&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/55df3c9e01641ebe399f57dd419fa76db6ed7caf832984a826dd22ebc26b1707.png" src="../../_images/55df3c9e01641ebe399f57dd419fa76db6ed7caf832984a826dd22ebc26b1707.png" />
 </div>
 </div>
 <p>Fit the line to get the MM parameters:</p>
@@ -1326,15 +927,19 @@ Km =  3.1 +/- 0.1 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f7e59a849d0&gt;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_19660/2333184454.py:9: MatplotlibDeprecationWarning: The &#39;b&#39; parameter of grid() has been renamed &#39;visible&#39; since Matplotlib 3.5; support for the old name will be dropped two minor releases later.
+  ax.grid(b=True, which=&#39;major&#39;, axis=&#39;both&#39;, color=&#39;#808080&#39;, linestyle=&#39;--&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_29_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_29_1.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbac0a80b20&gt;
+</pre></div>
+</div>
+<img alt="../../_images/767f5dc233e753d90c555bd421d59403f16125bd1864978cd2924284dea119bd.png" src="../../_images/767f5dc233e753d90c555bd421d59403f16125bd1864978cd2924284dea119bd.png" />
 </div>
 </div>
 </section>
 <section id="compare-solutions">
-<h3><span class="section-number">3.3.7.10.3. </span>Compare Solutions<a class="headerlink" href="#compare-solutions" title="Permalink to this headline">#</a></h3>
+<h3><span class="section-number">3.3.7.10.3. </span>Compare Solutions<a class="headerlink" href="#compare-solutions" title="Permalink to this heading">#</a></h3>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot data</span>
@@ -1358,20 +963,24 @@ Km =  3.1 +/- 0.1 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f7e59b38d30&gt;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_19660/382201956.py:9: MatplotlibDeprecationWarning: The &#39;b&#39; parameter of grid() has been renamed &#39;visible&#39; since Matplotlib 3.5; support for the old name will be dropped two minor releases later.
+  ax.grid(b=True, which=&#39;major&#39;, axis=&#39;both&#39;, color=&#39;#808080&#39;, linestyle=&#39;--&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_31_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_31_1.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbab12f2550&gt;
+</pre></div>
+</div>
+<img alt="../../_images/97b77ea041f7f326d8317080963bd0cda073154cee22ea9506853af75e755e83.png" src="../../_images/97b77ea041f7f326d8317080963bd0cda073154cee22ea9506853af75e755e83.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="example-fitting-with-error">
-<h2><span class="section-number">3.3.7.11. </span>Example: Fitting with Error<a class="headerlink" href="#example-fitting-with-error" title="Permalink to this headline">#</a></h2>
+<h2><span class="section-number">3.3.7.11. </span>Example: Fitting with Error<a class="headerlink" href="#example-fitting-with-error" title="Permalink to this heading">#</a></h2>
 <p>Here we consider fitting MM parameters using either the Lineweaver-Burk linearization or non-linear regression.  Which method is better?  To investigate this, we generate a set of fake data using a known <span class="math notranslate nohighlight">\(K_m\)</span> and <span class="math notranslate nohighlight">\(v_{max}\)</span> and then fit the data using both approaches.</p>
 <p>Below is a piece of code that will generate a fake data set for initial concentrations of <span class="math notranslate nohighlight">\(1, 2, 5, 10, 20\)</span> mM.  We will use Michaelis-Menten parameters of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6357f908-49d8-4524-a5db-dccc4aa9cea0">
-<span class="eqno">(3.581)<a class="headerlink" href="#equation-6357f908-49d8-4524-a5db-dccc4aa9cea0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e5bf4524-dab6-4a04-8f9f-282f4751d9b4">
+<span class="eqno">(3.581)<a class="headerlink" href="#equation-e5bf4524-dab6-4a04-8f9f-282f4751d9b4" title="Permalink to this equation">#</a></span>\[\begin{align}
 V_{max} &amp;= 7.5 \text{ }\mu\text{M}\cdot\text{s}^{-1}\\
 K_m &amp;= 4.0 \text{ mM}
 \end{align}\]</div>
@@ -1405,11 +1014,11 @@ K_m &amp;= 4.0 \text{ mM}
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  [S]0    Trial 1    Trial 2    Trial 3    Trial 4    Trial 5
 ------  ---------  ---------  ---------  ---------  ---------
-     1    1.45756    1.49441    1.51923    1.43638    1.51962
-     2    2.56659    2.42937    2.58644    2.39687    2.5823
-     5    4.21919    4.18296    4.21042    4.18116    4.23233
-    10    5.50653    5.43204    5.28928    5.11832    5.51735
-    20    6.57009    6.09832    6.19214    6.30859    6.25075
+     1    1.51994    1.49178    1.47727    1.5866     1.52405
+     2    2.51392    2.40436    2.58421    2.51268    2.4152
+     5    4.16024    4.10047    4.13275    4.00849    4.19603
+    10    5.29768    5.5521     5.04459    5.29513    5.56626
+    20    6.23265    6.54402    6.2872     6.47248    6.15017
 </pre></div>
 </div>
 </div>
@@ -1442,10 +1051,16 @@ K_m &amp;= 4.0 \text{ mM}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f7e5a08b4f0&gt;]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_19660/372459278.py:8: MatplotlibDeprecationWarning: The &#39;b&#39; parameter of grid() has been renamed &#39;visible&#39; since Matplotlib 3.5; support for the old name will be dropped two minor releases later.
+  ax[0].grid(b=True, which=&#39;major&#39;, axis=&#39;both&#39;, color=&#39;#808080&#39;, linestyle=&#39;--&#39;)
+/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_19660/372459278.py:15: MatplotlibDeprecationWarning: The &#39;b&#39; parameter of grid() has been renamed &#39;visible&#39; since Matplotlib 3.5; support for the old name will be dropped two minor releases later.
+  ax[1].grid(b=True, which=&#39;major&#39;, axis=&#39;both&#39;, color=&#39;#808080&#39;, linestyle=&#39;--&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_37_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_37_1.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fba90158f70&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/437965e7c1a015e4ca070da7949ab84ca04979930dba4a97cd7d47ad475b938f.png" src="../../_images/437965e7c1a015e4ca070da7949ab84ca04979930dba4a97cd7d47ad475b938f.png" />
 </div>
 </div>
 <p>Now to perform the fits.  We start with the linear least-squares using the Lineweaver-Burk formulation.</p>
@@ -1470,8 +1085,8 @@ K_m &amp;= 4.0 \text{ mM}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v_max =  7.6 +/- 0.2 muM/s
-Km =  4.1 +/- 0.1 mM
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v_max =  7.4 +/- 0.2 muM/s
+Km =  3.9 +/- 0.1 mM
 </pre></div>
 </div>
 </div>
@@ -1495,8 +1110,8 @@ Km =  4.1 +/- 0.1 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v_max =  7.5 +/- 0.1 muM/s
-Km =  4.0 +/- 0.1 mM
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v_max =  7.6 +/- 0.1 muM/s
+Km =  4.2 +/- 0.2 mM
 </pre></div>
 </div>
 </div>
@@ -1526,10 +1141,14 @@ Km =  4.0 +/- 0.1 mM
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f7e59ad3d00&gt;
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_19660/3111502636.py:8: MatplotlibDeprecationWarning: The &#39;b&#39; parameter of grid() has been renamed &#39;visible&#39; since Matplotlib 3.5; support for the old name will be dropped two minor releases later.
+  ax.grid(b=True, which=&#39;major&#39;, axis=&#39;both&#39;, color=&#39;#808080&#39;, linestyle=&#39;--&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Enzyme_Kinetics_Michaelis_Menten_43_1.png" src="../../_images/Enzyme_Kinetics_Michaelis_Menten_43_1.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbab1305430&gt;
+</pre></div>
+</div>
+<img alt="../../_images/1f43506d7d2484bd8237aaa79eebd93f4e8a216c129dd51b1e32725de30c9059.png" src="../../_images/1f43506d7d2484bd8237aaa79eebd93f4e8a216c129dd51b1e32725de30c9059.png" />
 </div>
 </div>
 </section>
@@ -1547,7 +1166,7 @@ Km =  4.0 +/- 0.1 mM
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./physical_chemistry/kinetics"
         },
         predefinedOutput: true
@@ -1555,50 +1174,114 @@ Km =  4.0 +/- 0.1 mM
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="Catalysts.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">3.3.6. </span>Catalysts</p>
-        </div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Catalysts.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">3.3.6. </span>Catalysts</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="Cooperative_Binding_Kinetics.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="Cooperative_Binding_Kinetics.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title"><span class="section-number">3.3.8. </span>Cooperative Binding Kinetics</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
-            </footer>
-        </div>
-    </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">3.3.7.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">3.3.7.2. Learning Goals:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">3.3.7.3. Coding Concepts:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enzymes-are-biological-catalysts">3.3.7.4. Enzymes are Biological Catalysts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proposed-mechanism-for-enzyme-catalysis-the-michaelis-menten-mechanism">3.3.7.5. Proposed Mechanism for Enzyme Catalysis: The Michaelis-Menten Mechanism</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#experiments-to-measure-michaelis-menten-parameters">3.3.7.6. Experiments to Measure Michaelis-Menten Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-michaelis-menten-parameters-using-a-lineweaver-burk-plot">3.3.7.7. Fitting Michaelis-Menten Parameters using a Lineweaver-Burk Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-importance-of-v-k">3.3.7.8. The Importance of v/K</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-mm-parameters-for-different-enzymes">3.3.7.9. Comparing MM Parameters For Different Enzymes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-fitting-michaelis-menten-parameters">3.3.7.10. Example: Fitting Michaelis-Menten Parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-non-linear-fitting">3.3.7.10.1. Solution: Non-linear Fitting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-lineweaver-burk-plot">3.3.7.10.2. Solution: Lineweaver-Burk Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compare-solutions">3.3.7.10.3. Compare Solutions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-fitting-with-error">3.3.7.11. Example: Fitting with Error</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
   
-    By Martin McCullagh<br/>
-  
-      &copy; Copyright 2022.<br/>
-</p>
-        </footer>
-    </div>
+  <div class="footer-item">
     
-</div>
+<p class="component-author">
+By Martin McCullagh
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
 
-      </div>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
     </div>
+  </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
 
-
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
