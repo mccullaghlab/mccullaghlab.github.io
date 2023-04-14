@@ -1,0 +1,841 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>3.4.18. Improving the H\(_2^+\) Variational Approximation &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'physical_chemistry/quantum_mechanics/Improving_the_h2+_variational_approximation';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.4.19. Harmonic Oscillator" href="harmonic_oscillator.html" />
+    <link rel="prev" title="3.4.17. Single Electron Molecule in the Variational Approach" href="Single_Electron_Molecule_Variational_Approach.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">1. Jupyter Notebook Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">1.1. Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">1.2. Advanced Jupyter Notebook Tutorial</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../coding_concepts/intro.html">2. Coding Concepts</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/variables.html">2.1. Variables in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">2.2. Arrays and Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/for_loops.html">2.3. for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/functions.html">2.4. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">2.5. Plotting with matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/numeric_integration.html">2.6. Numeric Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">3. Physical Chemistry</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../statistical_thermodynamics/intro.html">3.1. Statiscial Thermodynamics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Boltzmann_Factor.html">3.1.1. Boltzmann Factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Introduction_to_Probability.html">3.1.2. Introduction to Probability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">3.1.3. Thermodynamic Properties from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">3.1.4. Partition Function for a Monatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">3.1.5. Partition Function for a Diatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">3.1.6. Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">3.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/microscopic_view_of_entropy.html">3.1.8. Microscopic View of Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">3.1.9. Equations of State from Lattice Gas Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../thermodynamics/intro.html">3.2. Thermodynamics</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/First_Law_of_Thermodynamics.html">3.2.1. The First Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">3.2.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">3.2.4. Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Enthalpy.html">3.2.5. Enthalpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/The_Carnot_Cycle.html">3.2.6. The Carnot Cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">3.2.7. Second Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">3.2.8. Heat Engine Diagrams</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Third_Law_of_Thermodynamics.html">3.2.10. The Third Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">3.2.11. First Derivative and Maxwell Relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Maxwell_Relations_Applied.html">3.2.12. Maxwell Relations Applied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Free_Energy_and_Legendre_Transforms.html">3.2.13. Free Energy and Legendre Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">3.2.14. The Pressure and Temperature Dependence of the Gibbs Energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">3.2.15. Phase Diagrams and Phase Equilibria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Chemical_Potential_from_Partition_Function.html">3.2.16. Chemical Potential from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Thermodynamics_of_Solutions.html">3.2.17. Thermodynamics of Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Ideal_and_Non_Ideal_Solutions.html">3.2.18. Ideal and Non-ideal Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Introduction_to_Chemical_Equilibrium.html">3.2.19. Chemical Equilibrium</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../kinetics/intro.html">3.3. Kinetics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Chemical_Kinetics_and_Rate_Laws.html">3.3.1. Chemical Kinetics and Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Integrated_Rate_Laws.html">3.3.2. Integrated Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Reversible_Reactions.html">3.3.3. Reversible Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">3.3.4. Transition State Theory and Temperature Dependence of the Rate Constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Reaction_Mechanisms_Part_I.html">3.3.5. Reaction Mechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Catalysts.html">3.3.6. Catalysts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Enzyme_Kinetics_Michaelis_Menten.html">3.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Cooperative_Binding_Kinetics.html">3.3.8. Cooperative Binding Kinetics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../kinetics/Competitive_Inhibition.html">3.3.9. Competitive Inhibition</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">3.4. Quantum Mechanics</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="history_of_quantum_mechanics.html">3.4.1. The History of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wave_particle_duality_classical_wave_equation.html">3.4.2. Wave Particle Duality and the Classical Wave Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Schrodinger_Equation.html">3.4.3. Schrodinger Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particle_in_a_box.html">3.4.4. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uncertainty_principle_and_applications_of_particle_in_a_box.html">3.4.5. The Uncertainty Principle and Applications of Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="postulates_of_quantum_mechanics.html">3.4.6. The Postulates and Formalism of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="momentum_operator.html">3.4.7. The Momentum Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operator_algebra.html">3.4.8. Operator Algebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="particle_in_a_sphere.html">3.4.9. Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="properties_of_particle_in_a_sphere.html">3.4.10. Properties of Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="the_hydrogen_atom.html">3.4.11. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="properties_of_the_hydrogen_atom.html">3.4.12. Properties of the Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="the_hydrogen_atom_absorption_spectrum.html">3.4.13. The Hydrogen Atom Absorption Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="special_functions_in_quantum_mechanics.html">3.4.14. Special Functions in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="the_helium_atom.html">3.4.15. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="variational_method_in_quantum_mechanics.html">3.4.16. Variational Method in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Single_Electron_Molecule_Variational_Approach.html">3.4.17. Single Electron Molecule in the Variational Approach</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">3.4.18. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="harmonic_oscillator.html">3.4.19. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantum_mechanics_of_vibrational_spectroscopy.html">3.4.20. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basis_functions.html">3.4.21. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="harmonic_oscillator_using_variational_method.html">3.4.22. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="morse_oscillator.html">3.4.23. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rigid_rotator.html">3.4.24. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rigid_rotator_using_variational_method.html">3.4.25. Rigid Rotator Variational Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rigid_rotator_selection_rules.html">3.4.26. Rigid Rotator Continued…</a></li>
+
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../electronic_structure/intro.html">3.5. Electronic Structure</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../electronic_structure/Hartree_Fock_Helium_Atom.html">3.5.1. Hartree-Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">3.5.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/quantum_mechanics/Improving_the_h2+_variational_approximation.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/physical_chemistry/quantum_mechanics/Improving_the_h2+_variational_approximation.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fphysical_chemistry/quantum_mechanics/Improving_the_h2+_variational_approximation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/physical_chemistry/quantum_mechanics/Improving_the_h2+_variational_approximation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Improving the H_2^+ Variational Approximation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">3.4.18.1. Motivation:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">3.4.18.2. Learning Goals:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">3.4.18.3. Coding Concepts:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">3.4.18.4. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#including-variational-parameters-in-the-basis-functions">3.4.18.5. Including Variational Parameters in the Basis Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#including-polarization-functions">3.4.18.5.1. Including Polarization Functions</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="improving-the-h-2-variational-approximation">
+<h1><span class="section-number">3.4.18. </span>Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation<a class="headerlink" href="#improving-the-h-2-variational-approximation" title="Permalink to this heading">#</a></h1>
+<section id="motivation">
+<h2><span class="section-number">3.4.18.1. </span>Motivation:<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<p>The linear combination of atomic orbital (LCAO) description of the H<span class="math notranslate nohighlight">\(_2^+\)</span> molecule that we saw in <a class="reference internal" href="Single_Electron_Molecule_Variational_Approach.html"><span class="doc std std-doc">previous notes</span></a> gives a qualitatively correct but quantitatively inaccurate picture of bond formation.  In these notes, we will discuss ways of improving the basis functions to yield more quantitively correct results.</p>
+</section>
+<section id="learning-goals">
+<h2><span class="section-number">3.4.18.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
+<p>After working through these notes, you will be able to:</p>
+<ol class="arabic simple">
+<li><p>Define the difference between a Hydrogen-atom orbital and a Slater orbital</p></li>
+<li><p>Describe how using Slater 1s orbitals allows us to get an improved variational result for the H<span class="math notranslate nohighlight">\(_2^+\)</span> molecule as compared to hydrogen-atom 1s orbitals</p></li>
+<li><p>Describe what it means to include polarization functions in atomic orbitals.</p></li>
+</ol>
+</section>
+<section id="coding-concepts">
+<h2><span class="section-number">3.4.18.3. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
+<p>The following coding concepts are used in this notebook:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
+<li><p><span class="xref myst">Plotting with matplotlib</span></p></li>
+</ol>
+</section>
+<section id="background">
+<h2><span class="section-number">3.4.18.4. </span>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
+<p>We saw in the <a class="reference internal" href="Single_Electron_Molecule_Variational_Approach.html"><span class="doc std std-doc">previous notes</span></a> that the variational solution to H<span class="math notranslate nohighlight">\(_2^+\)</span> in a minimal basis (hydrogen atom 1s basis functions on each nucleus) yields a qualitatively correct picture of covalent bond formation but is not a good quantitative match with the excact solution.  Specifically, the predicted bond length is 2.5 Bohr in the minimal basis approximation but is 2.0 in the exact solution.  Additionally, the bond energy is -0.064 Hartree in the minimal basis and just over -0.1 Hartree in the exact solution.</p>
+<p>There are two obvious ways to improve the variational solution:</p>
+<ol class="arabic simple">
+<li><p>Increase the basis set size</p></li>
+<li><p>Improve the basis functions</p></li>
+</ol>
+<p>In these notes we will address option two.  We will do so in two ways: first by adding a variational parameter to the basis functions themselves and second by including polarization functions.</p>
+</section>
+<section id="including-variational-parameters-in-the-basis-functions">
+<h2><span class="section-number">3.4.18.5. </span>Including Variational Parameters in the Basis Functions<a class="headerlink" href="#including-variational-parameters-in-the-basis-functions" title="Permalink to this heading">#</a></h2>
+<p>In the previous notes we used a trial wave function of</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8fb626eb-5f2f-4651-8dbb-e0a031488d4e">
+<span class="eqno">(3.889)<a class="headerlink" href="#equation-8fb626eb-5f2f-4651-8dbb-e0a031488d4e" title="Permalink to this equation">#</a></span>\[\begin{align}
+\phi(r_A,r_B;R) = c_11s_A(r_A) + c_21s_B(r_B)
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(1s_A\)</span> denotes a hydrogen atom 1s wave function centered on nucleus <span class="math notranslate nohighlight">\(A\)</span> and is given by the function</p>
+<div class="amsmath math notranslate nohighlight" id="equation-890ec6a0-4f34-4788-8ef2-2f8ab6926346">
+<span class="eqno">(3.890)<a class="headerlink" href="#equation-890ec6a0-4f34-4788-8ef2-2f8ab6926346" title="Permalink to this equation">#</a></span>\[\begin{equation}
+1s(r) = \sqrt{\frac{1}{\pi}} e^{-r}
+\end{equation}\]</div>
+<p>In our variational example of the helium atom we introduced the idea of using the effective nuclear charge as a variational parameter.  We will do so again here.  This is a fairly general procedure and the hydrogen atom functions with nuclear charge as a variable (e.g. as <span class="math notranslate nohighlight">\(Z\)</span> or <span class="math notranslate nohighlight">\(\zeta\)</span>) are called Slater orbitals.  The Slater 1s orbital is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e3e1a1f6-bdce-4631-ab8e-929964b73aea">
+<span class="eqno">(3.891)<a class="headerlink" href="#equation-e3e1a1f6-bdce-4631-ab8e-929964b73aea" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\phi_{1s}(Z,r) = \sqrt{\frac{Z^3}{\pi}} e^{-Zr}
+\end{equation}\]</div>
+<p>We will thus propose the following wave function</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f92f897b-fdb0-4e03-a406-b3d8f34640b4">
+<span class="eqno">(3.892)<a class="headerlink" href="#equation-f92f897b-fdb0-4e03-a406-b3d8f34640b4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\psi(Z,r_A,r_B;R) = c_1\phi_{1s}(Z,r_A) + c_2\phi_{1s}(Z,r_B)
+\end{equation}\]</div>
+<p>If you recall from our discussion of the variational solution in the minimal basis, there was no need to determine <span class="math notranslate nohighlight">\(c_1\)</span> and <span class="math notranslate nohighlight">\(c_2\)</span> using the variational approach since it can be argued that their magnitudes should be the same and these magnitudes can be determined by normalization.   These same arguments hold here (despite introducing the <span class="math notranslate nohighlight">\(Z\)</span> variable).  Thus, the normalized trial wave function is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6aa46b18-7f5b-47dc-81cb-664ba68eea6e">
+<span class="eqno">(3.893)<a class="headerlink" href="#equation-6aa46b18-7f5b-47dc-81cb-664ba68eea6e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\psi(Z,r_A,r_B;R) = \frac{\phi_{1s}(Z,r_A) + \phi_{1s}(Z,r_B)}{\sqrt{2(1+S(Z,R))}}
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(S(Z,R)\)</span> is the overlap integral between the two basis functions.  That is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7f21a813-14dd-4aa9-8bb0-4616c5e55b12">
+<span class="eqno">(3.894)<a class="headerlink" href="#equation-7f21a813-14dd-4aa9-8bb0-4616c5e55b12" title="Permalink to this equation">#</a></span>\[\begin{equation}
+S(Z,R) = \left\langle \phi_{1s}(Z,r_A) | \phi_{1s}(Z,r_B) \right\rangle
+\end{equation}\]</div>
+<p>You will show for homework that this integral is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-39c3d1d8-38f7-4297-b12b-99fa49f38410">
+<span class="eqno">(3.895)<a class="headerlink" href="#equation-39c3d1d8-38f7-4297-b12b-99fa49f38410" title="Permalink to this equation">#</a></span>\[\begin{equation}
+S(Z,R) = e^{-ZR}\left(1+ZR+\frac{1}{3}Z^2R^2\right)
+\end{equation}\]</div>
+<p>Using this trial wave function it can be shown that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-75301a15-b2cb-4ead-8b7b-eb195c34bcf5">
+<span class="eqno">(3.896)<a class="headerlink" href="#equation-75301a15-b2cb-4ead-8b7b-eb195c34bcf5" title="Permalink to this equation">#</a></span>\[\begin{align}
+E_\psi &amp;= \left\langle \psi(Z,r_A,r_B;R) | \hat{H} | \psi(Z,r_A,r_B;R) \right\rangle \\
+&amp;= \frac{ \frac{Z^2}{2} - Z^2\left[\frac{S(Z,R)}{2} + K(Z,R)\right]}{1+S(Z,R)} + \frac{-Z + ZJ(Z,R) + 2ZK(ZR)}{1+S(Z,R)} + \frac{Z}{KR}
+\end{align}\]</div>
+<p>Differentiating <span class="math notranslate nohighlight">\(E_\psi\)</span> w.r.t <span class="math notranslate nohighlight">\(Z\)</span>, setting to zero, and solving for <span class="math notranslate nohighlight">\(Z_{min}\)</span> yields</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3075e281-ac20-4e55-89c5-a67ff3107b01">
+<span class="eqno">(3.897)<a class="headerlink" href="#equation-3075e281-ac20-4e55-89c5-a67ff3107b01" title="Permalink to this equation">#</a></span>\[\begin{align}
+Z_{min} &amp;= 1.238 \\
+E_{min} &amp;= -0.58651 \text{ Hartree}
+\end{align}\]</div>
+<p>Note that this is only strictly true at the value for <span class="math notranslate nohighlight">\(R\)</span> for which this is determined (<span class="math notranslate nohighlight">\(R=2.0\)</span> Bohr).  Technically <span class="math notranslate nohighlight">\(E_{min}\)</span> should be minimized w.r.t. <span class="math notranslate nohighlight">\(Z\)</span> at every value of <span class="math notranslate nohighlight">\(R\)</span>.</p>
+<p>Below I plot <span class="math notranslate nohighlight">\(E\)</span> as a function of <span class="math notranslate nohighlight">\(R\)</span> and determine the minimum <span class="math notranslate nohighlight">\(Z\)</span> at each <span class="math notranslate nohighlight">\(R\)</span> value using a numeric minimzation routine.  I also plot the minimal basis result.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">J</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">R</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="n">R</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">R</span>
+<span class="k">def</span> <span class="nf">K</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">R</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">R</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">S</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">R</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span> <span class="n">R</span> <span class="o">+</span> <span class="n">R</span><span class="o">*</span><span class="n">R</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">E</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">Z</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="n">Z</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">K</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">))</span>
+    <span class="n">T</span> <span class="o">/=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">S</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">))</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="o">-</span><span class="n">Z</span> <span class="o">+</span> <span class="n">Z</span><span class="o">*</span><span class="n">J</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">Z</span><span class="o">*</span><span class="n">K</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">)</span>
+    <span class="n">V</span> <span class="o">/=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">S</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">))</span>
+    <span class="n">V</span> <span class="o">+=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">R</span>
+    <span class="k">return</span> <span class="n">T</span> <span class="o">+</span> <span class="n">V</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">E_1s_basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">E_slater_basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">Z_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+    <span class="n">E_1s_basis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">E</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">r</span><span class="p">)</span>
+    <span class="n">Z_min</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">E</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">r</span><span class="p">))</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">E_slater_basis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">E</span><span class="p">(</span><span class="n">Z_min</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">r</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="n">E_1s_basis</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;E - 1s basis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="n">E_slater_basis</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;E - Slater basis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;R/$a_0$&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$E_0 (Hartree)$&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1">#plt.ylim(-0.6,-0.2)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Variational Solution to the H$_2^+$ Molecule in Slater Basis&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../../_images/a9be63e912e661c5beb8aac48dc37d01d08524b81d91bbfe3bdc690851f13c17.png" src="../../_images/a9be63e912e661c5beb8aac48dc37d01d08524b81d91bbfe3bdc690851f13c17.png" />
+</div>
+</div>
+<p>We see that allowing the function to be modified at each value of <span class="math notranslate nohighlight">\(R\)</span> to take on a specific effective nuclear charge allows the variational solution to lower and to become much closer to the exact value.  The value of the bond distance, in particular, is dramatically improved over the 1s minimal basis solution.</p>
+<section id="including-polarization-functions">
+<h3><span class="section-number">3.4.18.5.1. </span>Including Polarization Functions<a class="headerlink" href="#including-polarization-functions" title="Permalink to this heading">#</a></h3>
+<p>In the previous example we modified the effective nuclear charge for a 1s-like orbital and saw significant improvement in doing so.  The spherical symmetry of the 1s orbital is still maintained in this process.  If we think about what our intuition tells us that a <span class="math notranslate nohighlight">\(\sigma\)</span> bonding orbital will look like in this case, we would not consider it having spherical symmetry about each nucleus.  We might anticapte a large lobe between the two nuclei and small lobes on the opposing side.  This intuition is likely built on my own experiences reading chemistry text books etc but perhaps some of it is more general?</p>
+<p>Regardless, it is likely the spherically symmetric behavior of a 1s orbital is not ideal to create a molecular covalent bond.  Thus, it is natural to hypothesize that basis functions that allow the breaking of the spherical symmetry and the creation of a lobe of density between the two nuclei to yield better results for the H<span class="math notranslate nohighlight">\(_2^+\)</span> variational solution.</p>
+<p>We must remember, however, that the 1s orbital is the correct solution at infinte separation.  Thus, a good basis will still allow for this behavior while becoming non-spherically symmetric as the two nuclei become close together.  We will achieve this behavior by adding a <span class="math notranslate nohighlight">\(p_z\)</span> oribtal to the 1s orbital and allow for the amount of <span class="math notranslate nohighlight">\(p_z\)</span> character to be determined at every <span class="math notranslate nohighlight">\(R\)</span> value.</p>
+<p>Our trial wave function will thus look like</p>
+<div class="amsmath math notranslate nohighlight" id="equation-5405504f-b0ef-4653-a0b0-c09104cdd6a6">
+<span class="eqno">(3.898)<a class="headerlink" href="#equation-5405504f-b0ef-4653-a0b0-c09104cdd6a6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\psi(Z,r_A,r_B;R) = c_1(\phi_{1s}(Z_1,r_A) +a\phi_{2p_z}(Z_2,r_A,\theta_A))  + c_2(\phi_{1s}(Z_1,r_A) +a\phi_{2p_z}(Z_2,r_A,\theta_A))
+\end{equation}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-686f9c2b-8ccf-4503-beee-3c6ae92e83ef">
+<span class="eqno">(3.899)<a class="headerlink" href="#equation-686f9c2b-8ccf-4503-beee-3c6ae92e83ef" title="Permalink to this equation">#</a></span>\[\begin{align}
+\phi_{1s}(Z,r) &amp;= \sqrt{\frac{Z^3}{\pi}} e^{-Zr} \\
+\phi_{2p_z}(Z,r,\theta) &amp;= \sqrt{\frac{Z^5}{\pi}} r\cos\theta e^{-Zr} 
+\end{align}\]</div>
+<p>Notice that we can treat the effective nuclear charge for the 1s and 2p<span class="math notranslate nohighlight">\(_z\)</span> parts as separate variational parameters.  Additionally, we will treat <span class="math notranslate nohighlight">\(a\)</span>, the amount of <span class="math notranslate nohighlight">\(p_z\)</span> character in the polarized orbital, to be a variational parameter as well.  Below I plot the following polarized orbital for various values of <span class="math notranslate nohighlight">\(a\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-324a2d62-1965-4348-a7d0-f7fe089654a6">
+<span class="eqno">(3.900)<a class="headerlink" href="#equation-324a2d62-1965-4348-a7d0-f7fe089654a6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\phi = \phi_{1s}(Z_1,r_A) +a\phi_{2p_z}(Z_2,r_A,\theta_A)
+\end{equation}\]</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make two plots of the same spherical harmonic</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span><span class="p">,</span> <span class="n">colors</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">sph_harm</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">eval_genlaguerre</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">lpmv</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span>
+<span class="n">a0</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># radial unit of Bohr!    </span>
+<span class="k">def</span> <span class="nf">hydrogen_atom_wf</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">phi</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">Y_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">factorial</span><span class="p">(</span><span class="n">l</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">m</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">factorial</span><span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">m</span><span class="p">))))</span>
+    <span class="n">R_prefactor</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">l</span><span class="p">)))</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">a0</span><span class="p">))</span><span class="o">**</span><span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="mf">1.5</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">l</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">a0</span><span class="p">))</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">R_prefactor</span><span class="o">*</span><span class="n">eval_genlaguerre</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">a0</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">Y_norm</span><span class="o">*</span><span class="n">sph_harm</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span><span class="o">.</span><span class="n">real</span><span class="o">*</span><span class="n">R</span>
+    
+<span class="k">def</span> <span class="nf">plot_polarize_hydrogen_atom_wf_xz_projection</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span><span class="n">l1</span><span class="p">,</span><span class="n">m1</span><span class="p">,</span><span class="n">n2</span><span class="p">,</span><span class="n">l2</span><span class="p">,</span><span class="n">m2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">ax_obj</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="o">*</span><span class="n">X</span> <span class="o">+</span> <span class="n">Y</span><span class="o">*</span><span class="n">Y</span> <span class="o">+</span> <span class="n">Z</span><span class="o">*</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">THETA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">Z</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">/</span><span class="n">R</span><span class="p">)</span>
+    <span class="n">PHI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">wf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">wf</span> <span class="o">=</span> <span class="n">hydrogen_atom_wf</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="n">THETA</span><span class="p">,</span><span class="n">PHI</span><span class="p">,</span><span class="n">n1</span><span class="p">,</span><span class="n">l1</span><span class="p">,</span><span class="n">m1</span><span class="p">)</span>
+    <span class="n">wf</span> <span class="o">+=</span> <span class="n">a</span><span class="o">*</span><span class="n">hydrogen_atom_wf</span><span class="p">(</span><span class="n">R</span><span class="p">,</span><span class="n">THETA</span><span class="p">,</span><span class="n">PHI</span><span class="p">,</span><span class="n">n2</span><span class="p">,</span><span class="n">l2</span><span class="p">,</span><span class="n">m2</span><span class="p">)</span>
+    <span class="n">wf</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">vmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amin</span><span class="p">(</span><span class="n">wf</span><span class="p">)),</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">wf</span><span class="p">)))</span>
+    <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="n">vmax</span>
+    <span class="c1"># plot</span>
+    <span class="n">ax_obj</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;$a=</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">ax_obj</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">wf</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+    <span class="c1"># set the limits of the plot to the limits of the data</span>
+    <span class="n">ax_obj</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+    <span class="n">ax_obj</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="c1">#ax_obj.set_axis_off()</span>
+    <span class="k">return</span> <span class="n">c</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span> 
+<span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="n">plot_polarize_hydrogen_atom_wf_xz_projection</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">a</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../../_images/85f74f6d23c8a40da5406106136931309f652dcb66ff914a03ec4966cd7059a9.png" src="../../_images/85f74f6d23c8a40da5406106136931309f652dcb66ff914a03ec4966cd7059a9.png" />
+</div>
+</div>
+<p>I will not solve this all the way out but it is doable.  The integrals get even messier etc but are still all solvable.  Instead I will just provide you with the results for the minimum energy and <span class="math notranslate nohighlight">\(R\)</span> value:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2fbd1298-46a0-4ff9-bbdf-9660d2939a6a">
+<span class="eqno">(3.901)<a class="headerlink" href="#equation-2fbd1298-46a0-4ff9-bbdf-9660d2939a6a" title="Permalink to this equation">#</a></span>\[\begin{align}
+E_{min} &amp;= -0.59907 \text{ Hartree} \\
+R_{min} &amp;= 2.00 \text{ Bohr}
+\end{align}\]</div>
+<p>This value for the energy and bond distance are very close to the exact solution.  The inclusion of the polarization dramatically improved the energy (though didn’t have such a dramatic impact on the bond distance) as compared to just varationally optimizing the 1s-like orbitals.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./physical_chemistry/quantum_mechanics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Single_Electron_Molecule_Variational_Approach.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">3.4.17. </span>Single Electron Molecule in the Variational Approach</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="harmonic_oscillator.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3.4.19. </span>Harmonic Oscillator</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">3.4.18.1. Motivation:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">3.4.18.2. Learning Goals:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">3.4.18.3. Coding Concepts:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#background">3.4.18.4. Background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#including-variational-parameters-in-the-basis-functions">3.4.18.5. Including Variational Parameters in the Basis Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#including-polarization-functions">3.4.18.5.1. Including Polarization Functions</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin McCullagh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
