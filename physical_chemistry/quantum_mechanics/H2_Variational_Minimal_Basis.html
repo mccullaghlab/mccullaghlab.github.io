@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'physical_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3.4.20. Harmonic Oscillator" href="harmonic_oscillator.html" />
+    <link rel="next" title="3.4.20. H\(_2\) Configuration Interaction" href="H2_Configuration_Interaction.html" />
     <link rel="prev" title="3.4.18. Improving the H\(_2^+\) Variational Approximation" href="Improving_the_h2%2B_variational_approximation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -240,14 +240,15 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="Single_Electron_Molecule_Variational_Approach.html">3.4.17. Single Electron Molecule in the Variational Approach</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Improving_the_h2%2B_variational_approximation.html">3.4.18. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">3.4.19. The H<span class="math notranslate nohighlight">\(_2\)</span> Molecule using the Variational Method in a Minimal Basis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="harmonic_oscillator.html">3.4.20. Harmonic Oscillator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quantum_mechanics_of_vibrational_spectroscopy.html">3.4.21. Vibrational Spectroscopy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="basis_functions.html">3.4.22. Basis Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="harmonic_oscillator_using_variational_method.html">3.4.23. Variational Solution to the Harmonic Oscillator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="morse_oscillator.html">3.4.24. The Morse Oscillator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rigid_rotator.html">3.4.25. Rigid Rotator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rigid_rotator_using_variational_method.html">3.4.26. Rigid Rotator Variational Solution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rigid_rotator_selection_rules.html">3.4.27. Rigid Rotator Continued…</a></li>
+<li class="toctree-l3"><a class="reference internal" href="H2_Configuration_Interaction.html">3.4.20. H<span class="math notranslate nohighlight">\(_2\)</span> Configuration Interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="harmonic_oscillator.html">3.4.21. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantum_mechanics_of_vibrational_spectroscopy.html">3.4.22. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basis_functions.html">3.4.23. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="harmonic_oscillator_using_variational_method.html">3.4.24. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="morse_oscillator.html">3.4.25. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rigid_rotator.html">3.4.26. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rigid_rotator_using_variational_method.html">3.4.27. Rigid Rotator Variational Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rigid_rotator_selection_rules.html">3.4.28. Rigid Rotator Continued…</a></li>
 
 </ul>
 </li>
@@ -506,12 +507,18 @@ document.write(`
 </section>
 <section id="coding-concepts">
 <h2><span class="section-number">3.4.19.3. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
+<p>The following coding concepts are used in this notebook:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
+<li><p><span class="xref myst">Plotting with matplotlib</span></p></li>
+</ol>
 </section>
 <section id="background">
 <h2><span class="section-number">3.4.19.4. </span>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
 <p>The Born-Oppenheimer Hamiltonian for H<span class="math notranslate nohighlight">\(_2\)</span> (in atomic units) looks like</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5684f0de-d93b-413c-8fd1-1e92a0dfd6cd">
-<span class="eqno">(3.902)<a class="headerlink" href="#equation-5684f0de-d93b-413c-8fd1-1e92a0dfd6cd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f33fc543-7b1e-4502-8070-8ec24db68a6e">
+<span class="eqno">(3.902)<a class="headerlink" href="#equation-f33fc543-7b1e-4502-8070-8ec24db68a6e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H}_{H_2} = -\frac{1}{2}\nabla_1^2 - \frac{1}{r_{1A}} -\frac{1}{2}\nabla_2^2 - \frac{1}{r_{2B}} - \frac{1}{r_{1B}} - \frac{1}{r_{2A}} + \frac{1}{r_{12}} + \frac{1}{R}
 \end{equation}\]</div>
 <p>where we label the two nuclei as <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> and the two electrons as <span class="math notranslate nohighlight">\(1\)</span> and <span class="math notranslate nohighlight">\(2\)</span> such that <span class="math notranslate nohighlight">\(r_{1A}\)</span> is the distance between nucleus <span class="math notranslate nohighlight">\(A\)</span> and electron 1.</p>
@@ -521,8 +528,8 @@ document.write(`
 <section id="what-we-want-to-know">
 <h2><span class="section-number">3.4.19.5. </span>What We Want to Know<a class="headerlink" href="#what-we-want-to-know" title="Permalink to this heading">#</a></h2>
 <p>We would like to be able to descibe the bond distance, bonding energy, and ideally the dissociation energy of the H<span class="math notranslate nohighlight">\(_2\)</span> molecule.  We will see that this latter point is challenging for the simple pictures we will describe.  Regardless, the experimental, or target, values for these things are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5ee3ebc8-f2d4-4487-80d0-afa5b1f21361">
-<span class="eqno">(3.903)<a class="headerlink" href="#equation-5ee3ebc8-f2d4-4487-80d0-afa5b1f21361" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f31cde05-9b6d-41dc-91d1-4890141c5291">
+<span class="eqno">(3.903)<a class="headerlink" href="#equation-f31cde05-9b6d-41dc-91d1-4890141c5291" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;E_{min} = -1.174 \text{ Hartree} \\
 &amp;R_{eq} = 1.401 \text{ Bohr} \\
 &amp;D_e = -0.174 \text{ Hartree}
@@ -534,33 +541,33 @@ document.write(`
 <h2><span class="section-number">3.4.19.6. </span>The Trial Wave Function<a class="headerlink" href="#the-trial-wave-function" title="Permalink to this heading">#</a></h2>
 <p>The wave function for H<span class="math notranslate nohighlight">\(_2\)</span> will depend on the position of two electrons.  We will denote these positions <span class="math notranslate nohighlight">\(\vec{r}_1\)</span> and <span class="math notranslate nohighlight">\(\vec{r}_2\)</span>.  We will assume that the wave function is separable into functions of each electron.  Additionally, we will assume that each electron sits in a bonding orbital that is made up of two Slater 1s orbitals, like we determined for the H<span class="math notranslate nohighlight">\(_2^+\)</span> molecule.</p>
 <p>Written out explcitly, we will posit the following trial wave function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4d29603c-c44b-414c-9588-14f5a4f6c248">
-<span class="eqno">(3.904)<a class="headerlink" href="#equation-4d29603c-c44b-414c-9588-14f5a4f6c248" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6dc116e1-e808-4b1d-b3d3-c591055f1a1a">
+<span class="eqno">(3.904)<a class="headerlink" href="#equation-6dc116e1-e808-4b1d-b3d3-c591055f1a1a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(\vec{r}_1,\vec{r}_2) = \sigma_b(\vec{r}_1)\sigma_b(\vec{r}_2)
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\sigma_b(\vec{r})\)</span> is the bonding orbital that we determined for H<span class="math notranslate nohighlight">\(_2\)</span> plus in a 1s Slater basis.  This can be expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3deb53af-6163-4b40-bf43-fe6279517f06">
-<span class="eqno">(3.905)<a class="headerlink" href="#equation-3deb53af-6163-4b40-bf43-fe6279517f06" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-470f80b3-67c3-48c0-bb96-eca4ecd6b81f">
+<span class="eqno">(3.905)<a class="headerlink" href="#equation-470f80b3-67c3-48c0-bb96-eca4ecd6b81f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sigma_b(\vec{r}_1)  = \sqrt{\frac{Z^3}{\pi}}\frac{e^{-Zr_{1A}} + e^{-Zr_{1B}}}{\sqrt{2(1+S(ZR))}}
 \end{equation}\]</div>
 <p>Note that <span class="math notranslate nohighlight">\(r_{1A}\)</span> is the distance from electron one to nucleus <span class="math notranslate nohighlight">\(A\)</span>.  It is a function of the position of that electron, <span class="math notranslate nohighlight">\(\vec{r}_1\)</span>, and position of nucleus <span class="math notranslate nohighlight">\(A\)</span>.</p>
 <p>We can plug the last equation for the bonding orbital into the trial wave function to achieve</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9d79dd11-f884-4855-867b-904ffa660763">
-<span class="eqno">(3.906)<a class="headerlink" href="#equation-9d79dd11-f884-4855-867b-904ffa660763" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-56b3ff3f-d101-465a-b61c-79a07d3e0f3c">
+<span class="eqno">(3.906)<a class="headerlink" href="#equation-56b3ff3f-d101-465a-b61c-79a07d3e0f3c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(\vec{r}_1,\vec{r}_2) = \frac{Z^3}{2\pi(1+S(ZR))}\left( e^{-Zr_{1A}} + e^{-Zr_{1B}}\right)\left(e^{-Zr_{2A}} + e^{-Zr_{2B}}\right)
 \end{equation}\]</div>
 </section>
 <section id="variational-energy-for-h-2">
 <h2><span class="section-number">3.4.19.7. </span>Variational Energy for H<span class="math notranslate nohighlight">\(_2\)</span><a class="headerlink" href="#variational-energy-for-h-2" title="Permalink to this heading">#</a></h2>
 <p>With a trial wave function posited, the next step in the variational procedure is to determine the expectation value of the energy.  Because the proposed wave function is normalized this is simply</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2a087149-5f3c-40ab-9aba-826c64ae2759">
-<span class="eqno">(3.907)<a class="headerlink" href="#equation-2a087149-5f3c-40ab-9aba-826c64ae2759" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-782c877c-07c1-46ac-b822-b7d6ab03d296">
+<span class="eqno">(3.907)<a class="headerlink" href="#equation-782c877c-07c1-46ac-b822-b7d6ab03d296" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_\psi = \langle \psi | \hat{H} | \psi \rangle
 \end{equation}\]</div>
 <p>The procedure to determine this solution is similar to the H<span class="math notranslate nohighlight">\(_2^+\)</span> molecule but the calculus/algebra is just a bit more tedious.  Some of the integrals are over two electrons and there are more terms in the Hamiltonian.  This is just to say that I will not provide the step-by-step derivation but just provide the answer</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0370465a-2123-4375-b616-23b8601f31b6">
-<span class="eqno">(3.908)<a class="headerlink" href="#equation-0370465a-2123-4375-b616-23b8601f31b6" title="Permalink to this equation">#</a></span>\[\begin{equation}
-E_\psi = Z^2\left[\frac{1-S(ZR) - 2K(ZR)}{1+S(ZR}\right] + Z\left[\frac{-2+2J(ZR) + 4K(ZR)}{1+S(ZR)}\right]+ Z\left[\frac{5/16+J'(ZR)/2+K'(ZR)+2L(ZR)}{(1+S(ZR))^2}\right] + \frac{1}{R}
+<div class="amsmath math notranslate nohighlight" id="equation-10ae131d-d287-42af-90b6-f92efc5eb22a">
+<span class="eqno">(3.908)<a class="headerlink" href="#equation-10ae131d-d287-42af-90b6-f92efc5eb22a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+E_\psi = Z^2\left[\frac{1-S(ZR) - 2K(ZR)}{1+S(ZR)}\right] + Z\left[\frac{-2+2J(ZR) + 4K(ZR)}{1+S(ZR)}\right]+ Z\left[\frac{5/16+J'(ZR)/2+K'(ZR)+2L(ZR)}{(1+S(ZR))^2}\right] + \frac{1}{R}
 \end{equation}\]</div>
 <p>where we have seen the functions <span class="math notranslate nohighlight">\(S(R)\)</span>, <span class="math notranslate nohighlight">\(J(R)\)</span>, and <span class="math notranslate nohighlight">\(K(R)\)</span> from our discussion of the H<span class="math notranslate nohighlight">\(_2^+\)</span> molecule.  The new functions  <span class="math notranslate nohighlight">\(J'(R)\)</span>, <span class="math notranslate nohighlight">\(K'(R)\)</span>, and <span class="math notranslate nohighlight">\(L(R)\)</span> all come from two electron integrals.  All six of these functions are tabulated below</p>
 <table class="table">
@@ -727,15 +734,15 @@ Opt energy deviation (kcal/mol): 28.72
 <section id="summary-of-variational-solution-in-minimal-basis">
 <h2><span class="section-number">3.4.19.8. </span>Summary of Variational Solution in Minimal Basis<a class="headerlink" href="#summary-of-variational-solution-in-minimal-basis" title="Permalink to this heading">#</a></h2>
 <p>We see from above that the minimal basis with <span class="math notranslate nohighlight">\(Z=1\)</span> yields the following</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e4ecbdd9-9bdf-4820-9879-bf925fc51855">
-<span class="eqno">(3.909)<a class="headerlink" href="#equation-e4ecbdd9-9bdf-4820-9879-bf925fc51855" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bdf33118-4e26-4bfd-b06a-581caa468f1f">
+<span class="eqno">(3.909)<a class="headerlink" href="#equation-bdf33118-4e26-4bfd-b06a-581caa468f1f" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_{min} &amp;= -1.0991\text{ Hartree}  \\
 R_{eq} &amp;= 1.603 \text{ Bohr}
 \end{align}\]</div>
 <p>If we compare this to the experimental numbers, we see poor agreement.  The bond distance is off by 0.2 Bohr, for example.</p>
 <p>Looking at the variationally optimized energy in this basis <span class="math notranslate nohighlight">\(Z=opt\)</span> we find</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4870ddfa-0e66-47bc-a690-f860e7acc199">
-<span class="eqno">(3.910)<a class="headerlink" href="#equation-4870ddfa-0e66-47bc-a690-f860e7acc199" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6a49e9a6-1a9b-44e1-b0e4-d7c4ca2ab40f">
+<span class="eqno">(3.910)<a class="headerlink" href="#equation-6a49e9a6-1a9b-44e1-b0e4-d7c4ca2ab40f" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_{min} &amp;= -1.1282\text{ Hartree} \\
 R_{eq} &amp;= 1.385 \text{ Bohr}
 \end{align}\]</div>
@@ -747,8 +754,8 @@ R_{eq} &amp;= 1.385 \text{ Bohr}
 <p>We know that the energy at dissociation should be -1 Hartree because the lowest energy state should be two ground state hydrogen atoms (infinitely separated from each other).  Each of these has an energy of -0.5 Hartree and thus the total energy of -1 Hartree.</p>
 <p>Neither of our LCAO-MO solutions achieve this dissociation limit.  Indeed they continue to increase in energy even out to <span class="math notranslate nohighlight">\(R=8\)</span> Bohr.  Additionally, in the variationally optimized solution, we see that the variational parameter, <span class="math notranslate nohighlight">\(Z\)</span>, achieves a value below <span class="math notranslate nohighlight">\(Z=1\)</span> as <span class="math notranslate nohighlight">\(R\rightarrow\infty\)</span> even though we know that it should be going to <span class="math notranslate nohighlight">\(Z=1\)</span>.</p>
 <p>The problem is that the single determinant minimal basis wave function cannot capture the correct dissociation behavior.  Let’s look at the wave function a bit more closely to see why</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c21e694c-5caa-45de-af84-6ff424eb33e4">
-<span class="eqno">(3.911)<a class="headerlink" href="#equation-c21e694c-5caa-45de-af84-6ff424eb33e4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ee36ab39-c3cd-4146-9d54-45ea7b841f64">
+<span class="eqno">(3.911)<a class="headerlink" href="#equation-ee36ab39-c3cd-4146-9d54-45ea7b841f64" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi_{MO} &amp;= \frac{\left[1s_A(1) + 1s_B(1)\right]\left[1s_A(2) + 1s_B(2)\right]}{2(1+S)} \\
 &amp;= \frac{1s_A(1)1s_B(2) + 1s_A(2)1s_B(1) + 1s_A(1)1s_A(2) + 1s_B(1)1s_B(2)}{2(1+S)}
 \end{align}\]</div>
@@ -785,7 +792,7 @@ R_{eq} &amp;= 1.385 \text{ Bohr}
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fd8e316cc70&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fa3a3efef70&gt;
 </pre></div>
 </div>
 <img alt="../../_images/a9d88f1333dc634e747a5d681136181240dc35960fc61dccaddb47f73afbc793.png" src="../../_images/a9d88f1333dc634e747a5d681136181240dc35960fc61dccaddb47f73afbc793.png" />
@@ -832,11 +839,11 @@ R_{eq} &amp;= 1.385 \text{ Bohr}
       </div>
     </a>
     <a class="right-next"
-       href="harmonic_oscillator.html"
+       href="H2_Configuration_Interaction.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3.4.20. </span>Harmonic Oscillator</p>
+        <p class="prev-next-title"><span class="section-number">3.4.20. </span>H<span class="math notranslate nohighlight">\(_2\)</span> Configuration Interaction</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
