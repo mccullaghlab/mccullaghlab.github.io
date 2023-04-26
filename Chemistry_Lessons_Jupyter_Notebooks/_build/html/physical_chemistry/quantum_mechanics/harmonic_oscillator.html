@@ -469,10 +469,16 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-mechanics">3.4.21.1. Classical Mechanics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics">3.4.21.2. Quantum Mechanics</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aside-operator-commutator-relation">3.4.21.2.1. Aside: Operator Commutator Relation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-the-problem-at-hand">3.4.21.2.2. Back to the problem at hand:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">3.4.21.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">3.4.21.2. Learning Goals:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">3.4.21.3. Coding Concepts:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statememt-of-the-problem">3.4.21.4. Statememt of the Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-to-a-1d-problem">3.4.21.5. Mapping to a 1D Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-mechanics">3.4.21.6. Classical Mechanics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics">3.4.21.7. Quantum Mechanics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-differential-equation-approach">3.4.21.7.1. The Differential Equation Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ladder-operator-derivation">3.4.21.7.2. The Ladder Operator Derivation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-graphical-depiction-of-the-quantum-harmonic-ocillator">3.4.21.7.3. A Graphical Depiction of the Quantum Harmonic Ocillator</a></li>
 </ul>
 </li>
 </ul>
@@ -486,48 +492,124 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <div class="cell docutils container">
+  <section class="tex2jax_ignore mathjax_ignore" id="harmonic-oscillator">
+<h1><span class="section-number">3.4.21. </span>Harmonic Oscillator<a class="headerlink" href="#harmonic-oscillator" title="Permalink to this heading">#</a></h1>
+<section id="motivation">
+<h2><span class="section-number">3.4.21.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<p>Molecules absorb energy in a variety of ways.  If the incident energy is in the infrared, molecules absorb energy in their internal vibrational modes.  Here we will look at a very simplistic quantum mechanical perspective on harmonic bond stretching in a molecule.</p>
+</section>
+<section id="learning-goals">
+<h2><span class="section-number">3.4.21.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
+<p>After working through these notes, you will be able to:</p>
+<ol class="arabic simple">
+<li><p>Describe how a harmonic oscillator can be used to describe diatomic molecular vibration</p></li>
+<li><p>Map the 2D problem to a 1D problem</p></li>
+<li><p>Write out the quantum mechanical Hamiltonian operator for the harmonic oscillator.</p></li>
+<li><p>Identify and use Hermite polynomials.</p></li>
+<li><p>Identify and use the wave function solutions for the Harmonic oscillator.</p></li>
+</ol>
+</section>
+<section id="coding-concepts">
+<h2><span class="section-number">3.4.21.3. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
+<p>The following coding concepts are used in this notebook:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
+</ol>
+</section>
+<section id="statememt-of-the-problem">
+<h2><span class="section-number">3.4.21.4. </span>Statememt of the Problem<a class="headerlink" href="#statememt-of-the-problem" title="Permalink to this heading">#</a></h2>
+<p>Consider two masses, <span class="math notranslate nohighlight">\(m_1\)</span> and <span class="math notranslate nohighlight">\(m_2\)</span>, connected by a spring with force constant <span class="math notranslate nohighlight">\(k\)</span>.  The masses are allowed to oscillate under the force of this spring and at temperature <span class="math notranslate nohighlight">\(T\)</span>.  Compute the energy of this spring using both classical and quantum mechanics.</p>
+<p>This approximation can be considered as a second order Taylor series truncation of the potential energy around the minimum for a diatomic molecule.  Below I plot the energy of H<span class="math notranslate nohighlight">\(_2\)</span> as a function of internuclear separation (in black) along with the harmonic/parabolic approximation taking into account the minimum and surrounding <span class="math notranslate nohighlight">\(\sim\)</span> 12 points.</p>
+<p>From the plot below we can see that the harmonic approximation is ok at/near the minimum but quickly becomes a poor approximation for the molecular potential.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;R/$a_0$&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$E_0 (Hartree)$&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">exact</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;h2_kolos_wolniewicz.txt&quot;</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">exact</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">exact</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;H$_2$&#39;</span><span class="p">)</span>
+<span class="c1"># fit the well to a parabola</span>
+<span class="n">min_arg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">exact</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">delta</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">exact</span><span class="p">[</span><span class="n">min_arg</span><span class="o">-</span><span class="n">delta</span><span class="p">:</span><span class="n">min_arg</span><span class="o">+</span><span class="n">delta</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">exact</span><span class="p">[</span><span class="n">min_arg</span><span class="o">-</span><span class="n">delta</span><span class="p">:</span><span class="n">min_arg</span><span class="o">+</span><span class="n">delta</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="n">reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">parab</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">coef</span><span class="p">,</span><span class="n">intercept</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">coef</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">coef</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">intercept</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">exact</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">parab</span><span class="p">(</span><span class="n">exact</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">reg</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span><span class="n">reg</span><span class="o">.</span><span class="n">intercept_</span><span class="p">),</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Harmonic&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.2</span><span class="p">,</span><span class="o">-</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">define_figure</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">):</span>
-    <span class="c1"># setup plot parameters</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">ax</span>
-</pre></div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../../_images/ff142d00efdd951b564a72cd053392240467c5483d93273c3376db04640e7a22.png" src="../../_images/ff142d00efdd951b564a72cd053392240467c5483d93273c3376db04640e7a22.png" />
 </div>
 </div>
-</div>
-<section class="tex2jax_ignore mathjax_ignore" id="harmonic-oscillator">
-<h1><span class="section-number">3.4.21. </span>Harmonic Oscillator<a class="headerlink" href="#harmonic-oscillator" title="Permalink to this heading">#</a></h1>
-<p><em>Statement of the problem:</em> consider a mass <span class="math notranslate nohighlight">\(m\)</span> connected to a spring with force constant <span class="math notranslate nohighlight">\(k\)</span>.  The mass is allowed to oscillate under the force of this spring and at temperature <span class="math notranslate nohighlight">\(T\)</span>.  Compute the energy of this spring using both classical and quantum mechanics.</p>
+</section>
+<section id="mapping-to-a-1d-problem">
+<h2><span class="section-number">3.4.21.5. </span>Mapping to a 1D Problem<a class="headerlink" href="#mapping-to-a-1d-problem" title="Permalink to this heading">#</a></h2>
+<p>While this initially looks like a two (or higher) dimensional problem because the energy will depend on the positions of the two masses, it can be readily mapped to a one dimensional problem.  Certainly, we can hopefully recognize that the potential energy of the spring will depend on displacement of the spring.  In one dimension this can be written as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-453c7479-a5fb-440d-af21-b374aa9893ec">
+<span class="eqno">(3.932)<a class="headerlink" href="#equation-453c7479-a5fb-440d-af21-b374aa9893ec" title="Permalink to this equation">#</a></span>\[\begin{equation}
+V(x_2-x_1) = \frac{1}{2}k\left( (x_2-x_1) - l_0\right)^2
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> are the positions of the particles, <span class="math notranslate nohighlight">\(k\)</span> is the force constant of the spring connecting the two particles, and <span class="math notranslate nohighlight">\(l_0\)</span> is the rest position/displacment of the spring.  This is the standard Hooke potential energy for a spring.</p>
+<p>Clearly we can set <span class="math notranslate nohighlight">\(x=x_2-x+1-l_0\)</span> and get a one dimensional potential energy that just depends on the displacement from equilibrium, <span class="math notranslate nohighlight">\(x\)</span>, of the spring. The issue is that we also need to describe the kinetic energy which, one first pass, would seem to require defining velocities of both particles</p>
+<div class="amsmath math notranslate nohighlight" id="equation-db00a154-fa01-4c76-aa01-364672f4607e">
+<span class="eqno">(3.933)<a class="headerlink" href="#equation-db00a154-fa01-4c76-aa01-364672f4607e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+K(v_1,v_2) = \frac{1}{2}m_1v_1^2 + \frac{1}{2}m_2v_2^2
+\end{equation}\]</div>
+<p>To see how we can rewrite this as a one-dimensional problem, recognize that the force on particle 1 and 2 can be written as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a308aa6d-e425-4591-943c-912ab9ce9e5f">
+<span class="eqno">(3.934)<a class="headerlink" href="#equation-a308aa6d-e425-4591-943c-912ab9ce9e5f" title="Permalink to this equation">#</a></span>\[\begin{align}
+F_1 &amp;= m_1\frac{d^2x_1}{dt^2} = -k(x_2-x_1-l_0) \\
+F_2 &amp;= m_2\frac{d^2x_2}{dt^2} = k(x_2-x_1-l_0) 
+\end{align}\]</div>
+<p>where we have used <span class="math notranslate nohighlight">\(F = ma\)</span> and <span class="math notranslate nohighlight">\(F = \frac{d V}{dx}\)</span> in both equations.  If we divide both equations by their masses and then subtract one from the other we get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-dadca729-c91a-49e6-beed-ae5cce9db952">
+<span class="eqno">(3.935)<a class="headerlink" href="#equation-dadca729-c91a-49e6-beed-ae5cce9db952" title="Permalink to this equation">#</a></span>\[\begin{align}
+\frac{d^2x_1}{dt^2} - \frac{d^2x_2}{dt^2} &amp;= -\frac{k}{m_1}(x_2-x_1-l_0) - \frac{k}{m_2}(x_2-x_1-l_0) \\
+=\frac{d^2}{dt^2}(x_1-x_2) &amp;= -k \left( \frac{1}{m_1} + \frac{1}{m_2}\right)(x_2-x_1-l_0)
+\end{align}\]</div>
+<p>Now we define a reduced mass, <span class="math notranslate nohighlight">\(\mu\)</span>, with the following equation</p>
+<div class="amsmath math notranslate nohighlight" id="equation-235c287c-2a37-421e-899d-4815c95afd48">
+<span class="eqno">(3.936)<a class="headerlink" href="#equation-235c287c-2a37-421e-899d-4815c95afd48" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\frac{1}{\mu} = \frac{1}{m_1} + \frac{1}{m_2} = \frac{m_1+m_2}{m_1m_2}
+\end{equation}\]</div>
+<p>and substitute <span class="math notranslate nohighlight">\(x=x_2-x_1-l_0\)</span> to get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f756a61b-5cdd-435b-ae22-7de88ad9b215">
+<span class="eqno">(3.937)<a class="headerlink" href="#equation-f756a61b-5cdd-435b-ae22-7de88ad9b215" title="Permalink to this equation">#</a></span>\[\begin{align}
+\frac{d^2x}{dt^2} &amp;= -\frac{k}{\mu} x \\
+\Rightarrow \mu\frac{d^2x}{dt^2} &amp;= -kx
+\end{align}\]</div>
+<p>This final equation implies that the force due to a spring of potential <span class="math notranslate nohighlight">\(\frac{1}{2}kx^2\)</span> has a a mass <span class="math notranslate nohighlight">\(\mu\)</span> and acceleration dependent on its displacement coordinate <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>In summary, we can treat the harmonic oscillation of two particles as a single particle moving in a Hookean potential of a single coordinate.</p>
+</section>
 <section id="classical-mechanics">
-<h2><span class="section-number">3.4.21.1. </span>Classical Mechanics<a class="headerlink" href="#classical-mechanics" title="Permalink to this heading">#</a></h2>
-<p>This is a one dimensional problem with a mass <span class="math notranslate nohighlight">\(m\)</span> on a spring at temperature <span class="math notranslate nohighlight">\(T\)</span>.  We can express the energy of such a system using classical mechanics as:</p>
-<p><span class="math notranslate nohighlight">\(E(x) = K(x) + V(x) = \frac{1}{2}mv^2 + \frac{1}{2}kx^2\)</span></p>
+<h2><span class="section-number">3.4.21.6. </span>Classical Mechanics<a class="headerlink" href="#classical-mechanics" title="Permalink to this heading">#</a></h2>
+<p>This is a one dimensional problem with a mass <span class="math notranslate nohighlight">\(\mu\)</span> on a spring at temperature <span class="math notranslate nohighlight">\(T\)</span>.  We can express the energy of such a system using classical mechanics as:</p>
+<p><span class="math notranslate nohighlight">\(E(x,v) = K(v) + V(x) = \frac{1}{2}\mu v^2 + \frac{1}{2}kx^2\)</span></p>
+<p>The energy <span class="math notranslate nohighlight">\(E(x,v)\)</span> is a continuous quantity and thus the energy emitted or absorbed by a classical harmonic oscillator will be a continuum.</p>
 </section>
 <section id="quantum-mechanics">
-<h2><span class="section-number">3.4.21.2. </span>Quantum Mechanics<a class="headerlink" href="#quantum-mechanics" title="Permalink to this heading">#</a></h2>
-<section id="aside-operator-commutator-relation">
-<h3><span class="section-number">3.4.21.2.1. </span>Aside: Operator Commutator Relation<a class="headerlink" href="#aside-operator-commutator-relation" title="Permalink to this heading">#</a></h3>
-<p>Operators do not necessarily commute.  We define a commutator quantity between two operators as</p>
-<p><span class="math notranslate nohighlight">\([\hat{A},\hat{B}] = \hat{A}\hat{B} - \hat{B}\hat{A}\)</span>.</p>
-<p>If this quantity is zero, <span class="math notranslate nohighlight">\(\hat{A}\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\)</span> commute.  If it is nonzero, they do not commute.</p>
-<p>Example: Let <span class="math notranslate nohighlight">\(\hat{A} = \frac{d}{dx}\)</span> and <span class="math notranslate nohighlight">\(\hat{B} = x^2\)</span>.  Evaluate <span class="math notranslate nohighlight">\([\hat{A},\hat{B}]\)</span>.</p>
-</section>
-<section id="back-to-the-problem-at-hand">
-<h3><span class="section-number">3.4.21.2.2. </span>Back to the problem at hand:<a class="headerlink" href="#back-to-the-problem-at-hand" title="Permalink to this heading">#</a></h3>
+<h2><span class="section-number">3.4.21.7. </span>Quantum Mechanics<a class="headerlink" href="#quantum-mechanics" title="Permalink to this heading">#</a></h2>
 <p>Much like in the case of classical mechanics, we must define the energy of the system for quantum mechanics.  The Hamiltonian is defined as the kinetic energy operator plus the harmonic potential operator</p>
 <p><span class="math notranslate nohighlight">\(\hat{H} = \hat{K} + \hat{V} = -\frac{\hbar^2}{2\mu}\frac{d^2}{dx^2} + \frac{1}{2}kx^2 = \frac{\hat{P}^2}{2\mu} + \frac{k}{2}\hat{X}^2\)</span>.</p>
 <p>Note that we have introduced the reduced mass, <span class="math notranslate nohighlight">\(\mu\)</span>, instead of the mass, <span class="math notranslate nohighlight">\(m\)</span>.  This is to make the problem applicable to situations like a diatomic molecule in which case we must deal with the reduced mass of the molecule rather than the mass of a single particle.</p>
@@ -535,6 +617,39 @@ document.write(`
 <p><span class="math notranslate nohighlight">\(\hat{H}\psi(x) = E\psi(x)\)</span></p>
 <p><span class="math notranslate nohighlight">\(\left(\frac{\hat{P}^2}{2\mu} + \frac{k}{2}\hat{X}^2\right)\psi(x) = E \psi(x)\)</span>.</p>
 <p>We need to solve the above equation for <span class="math notranslate nohighlight">\(\psi(x)\)</span> and <span class="math notranslate nohighlight">\(E\)</span>.  This is not as easy as the Particle in a Box situation - as in we cannot just come up with functions that are solutions of the above equation.  There are at least two ways to solve this problem analytically.  This is a differential equation and different forms of these equations are solved in different ways.  In this case, there is a (sometimes referred to as elegant) operator solution that we will go through to get <span class="math notranslate nohighlight">\(\psi(x)\)</span> and <span class="math notranslate nohighlight">\(E\)</span>.</p>
+<section id="the-differential-equation-approach">
+<h3><span class="section-number">3.4.21.7.1. </span>The Differential Equation Approach<a class="headerlink" href="#the-differential-equation-approach" title="Permalink to this heading">#</a></h3>
+<p>The Schrodinger equation can be written as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-442b184b-20ee-4141-ae56-c077466d20e9">
+<span class="eqno">(3.938)<a class="headerlink" href="#equation-442b184b-20ee-4141-ae56-c077466d20e9" title="Permalink to this equation">#</a></span>\[\begin{align}
+&amp;-\frac{\hbar^2}{2\mu}\frac{d^2\psi}{dx^2} +\frac{1}{2}kx^2\psi(x) = E\psi(x) \\
+\Rightarrow &amp; \frac{d^2\psi}{dx^2} + \frac{2\mu}{\hbar^2}\left(E-\frac{1}{2}kx^2\right)\psi(x) = 0 
+\end{align}\]</div>
+<p>This differential equation can be solved by the power series solution.  I will not go through the details here but rather just present the results:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-11e73007-e631-4cf3-8135-e04dc53c8ab3">
+<span class="eqno">(3.939)<a class="headerlink" href="#equation-11e73007-e631-4cf3-8135-e04dc53c8ab3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\psi_v(x) = N_vH_v\left(\alpha^{1/2}x\right)e^{-\alpha x^2/2}
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha = \sqrt{\frac{k\mu}{\hbar^2}}\)</span>, <span class="math notranslate nohighlight">\(N_v = \frac{1}{\sqrt{2^vv!}}\left(\frac{\alpha}{\pi}\right)^{1/4}\)</span> is the normalization constant, and <span class="math notranslate nohighlight">\(H_v\left(\alpha^{1/2}x\right)\)</span> is the <span class="math notranslate nohighlight">\(v\)</span>th Hermite polynomial with argument <span class="math notranslate nohighlight">\(\alpha^{1/2}x\)</span>.  The first few Hermite polynomials are</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><span class="math notranslate nohighlight">\(H_0(x) = 1\)</span></p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(H_1(x) = 2x\)</span></p></th>
+<th class="head text-left"><p><span class="math notranslate nohighlight">\(H_2(x) = 4x^2-2\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(H_3(x) = 3x^3-12x\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(H_4(x) = 16x^4-48x^2+12\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\( H_5(x) = 32x^5-160x^3+120x\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>Hermite polynomials can be generating using the following equation</p>
+<p><span class="math notranslate nohighlight">\(H_n(x) = (-1)^ne^{x^2}\frac{d^n}{dx^n}\left(e^{-x^2}\right)\)</span></p>
+</section>
+<section id="the-ladder-operator-derivation">
+<h3><span class="section-number">3.4.21.7.2. </span>The Ladder Operator Derivation<a class="headerlink" href="#the-ladder-operator-derivation" title="Permalink to this heading">#</a></h3>
 <p>The following “derivation” will follow closely that given in the Appendix of Chapter 5 of McQuarrie “Quantum Chemistry” second edition.  We start by defining two new operators <span class="math notranslate nohighlight">\(\hat{p}\)</span> and <span class="math notranslate nohighlight">\(\hat{x}\)</span> as</p>
 <p><span class="math notranslate nohighlight">\(\hat{p} = (\mu\hbar\omega)^{-1/2}\hat{P}\)</span>,</p>
 <p><span class="math notranslate nohighlight">\(\hat{x} = (\mu\hbar\omega)^{1/2}\hat{X}\)</span></p>
@@ -586,15 +701,37 @@ document.write(`
 <p><span class="math notranslate nohighlight">\( -\frac{\mu\omega}{\hbar}x\psi_0 = \frac{d\psi_0}{dx}\)</span>.</p>
 <p>The solution to this equation is</p>
 <p><span class="math notranslate nohighlight">\(\psi_0(x) = ce^{-\mu\omega x^2/2\hbar}\)</span>.</p>
-<p>The general solution to the harmonic oscillator quantum mechanical Hamiltonian is given on page 225 of McQuarrie</p>
-<p><span class="math notranslate nohighlight">\(\psi_n(x) = N_{n}H_n(\alpha^{1/2}x)e^{-\alpha x^2/2}\)</span></p>
-<p>where</p>
-<p><span class="math notranslate nohighlight">\(N_{n} = \frac{1}{(2^nn!)^{1/2}}\left(\frac{\alpha}{\pi}\right)^{1/4}\)</span></p>
-<p>and <span class="math notranslate nohighlight">\(H_n(x)\)</span> are Hermite polynomials,</p>
-<p><span class="math notranslate nohighlight">\(H_n(x) = (-1)^ne^{x^2}\frac{d^n}{dx^n}\left(e^{-x^2}\right)\)</span>.</p>
-<div class="cell docutils container">
+<p>The remaining Hermite polynomials can be derived but we will not do so.  We refer to the general solution above for these.</p>
+</section>
+<section id="a-graphical-depiction-of-the-quantum-harmonic-ocillator">
+<h3><span class="section-number">3.4.21.7.3. </span>A Graphical Depiction of the Quantum Harmonic Ocillator<a class="headerlink" href="#a-graphical-depiction-of-the-quantum-harmonic-ocillator" title="Permalink to this heading">#</a></h3>
+<p>What do these solutions look like?  Below I plot the first eight energy levels of a quantum harmonic oscillator and the corresponding wave functions.</p>
+<p>Notice a few things from this plot:</p>
+<ol class="arabic simple">
+<li><p>The energy spacing for a harmonic oscillator are constant.</p></li>
+<li><p>The wave functions are very similar to sine functions inside the harmonic well.</p></li>
+<li><p>Increasing the vibrational quantum number by one incurs one additional node in the wave function.</p></li>
+<li><p>The wave functions can take on finite values outside of the parabola indicating the value of the potential energy at a given <span class="math notranslate nohighlight">\(x\)</span>.</p></li>
+</ol>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># let&#39;s plot the energy levels and wave functions</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="k">def</span> <span class="nf">define_figure</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">):</span>
+    <span class="c1"># setup plot parameters</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span>
 <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">hermite</span>
 <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">factorial</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
@@ -627,15 +764,12 @@ document.write(`
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_48959/2702552940.py:5: MatplotlibDeprecationWarning: The &#39;b&#39; parameter of grid() has been renamed &#39;visible&#39; since Matplotlib 3.5; support for the old name will be dropped two minor releases later.
-  ax.grid(b=True, which=&#39;major&#39;, axis=&#39;both&#39;, color=&#39;#808080&#39;, linestyle=&#39;--&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff068a09370&gt;
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f979b6c4430&gt;
-</pre></div>
-</div>
-<img alt="../../_images/52e97436f0631289c90b74d00a4a15d46f53944b6f5136d4e53538372c6e56d5.png" src="../../_images/52e97436f0631289c90b74d00a4a15d46f53944b6f5136d4e53538372c6e56d5.png" />
+<img alt="../../_images/0b16e12c90ff23db64238d523352c117acbe7d064686732ae7694ad7029cc280.png" src="../../_images/0b16e12c90ff23db64238d523352c117acbe7d064686732ae7694ad7029cc280.png" />
 </div>
 </div>
 </section>
@@ -703,10 +837,16 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-mechanics">3.4.21.1. Classical Mechanics</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics">3.4.21.2. Quantum Mechanics</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aside-operator-commutator-relation">3.4.21.2.1. Aside: Operator Commutator Relation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#back-to-the-problem-at-hand">3.4.21.2.2. Back to the problem at hand:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">3.4.21.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">3.4.21.2. Learning Goals:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">3.4.21.3. Coding Concepts:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statememt-of-the-problem">3.4.21.4. Statememt of the Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping-to-a-1d-problem">3.4.21.5. Mapping to a 1D Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classical-mechanics">3.4.21.6. Classical Mechanics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics">3.4.21.7. Quantum Mechanics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-differential-equation-approach">3.4.21.7.1. The Differential Equation Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ladder-operator-derivation">3.4.21.7.2. The Ladder Operator Derivation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-graphical-depiction-of-the-quantum-harmonic-ocillator">3.4.21.7.3. A Graphical Depiction of the Quantum Harmonic Ocillator</a></li>
 </ul>
 </li>
 </ul>
