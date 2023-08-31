@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 
 
@@ -7,7 +6,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>3.4.8. Operator Algebra &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
@@ -42,10 +41,8 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
@@ -238,14 +235,17 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="the_helium_atom.html">3.4.15. The Helium Atom</a></li>
 <li class="toctree-l3"><a class="reference internal" href="variational_method_in_quantum_mechanics.html">3.4.16. Variational Method in Quantum Mechanics</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Single_Electron_Molecule_Variational_Approach.html">3.4.17. Single Electron Molecule in the Variational Approach</a></li>
-<li class="toctree-l3"><a class="reference internal" href="harmonic_oscillator.html">3.4.18. Harmonic Oscillator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quantum_mechanics_of_vibrational_spectroscopy.html">3.4.19. Vibrational Spectroscopy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="basis_functions.html">3.4.20. Basis Functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="harmonic_oscillator_using_variational_method.html">3.4.21. Variational Solution to the Harmonic Oscillator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="morse_oscillator.html">3.4.22. The Morse Oscillator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rigid_rotator.html">3.4.23. Rigid Rotator</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rigid_rotator_using_variational_method.html">3.4.24. Rigid Rotator Variational Solution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="rigid_rotator_selection_rules.html">3.4.25. Rigid Rotator Continued…</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Improving_the_h2%2B_variational_approximation.html">3.4.18. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="H2_Variational_Minimal_Basis.html">3.4.19. The H<span class="math notranslate nohighlight">\(_2\)</span> Molecule using the Variational Method in a Minimal Basis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="H2_Configuration_Interaction.html">3.4.20. H<span class="math notranslate nohighlight">\(_2\)</span> Configuration Interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="harmonic_oscillator.html">3.4.21. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quantum_mechanics_of_vibrational_spectroscopy.html">3.4.22. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basis_functions.html">3.4.23. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="harmonic_oscillator_using_variational_method.html">3.4.24. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="morse_oscillator.html">3.4.25. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rigid_rotator.html">3.4.26. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rigid_rotator_using_variational_method.html">3.4.27. Rigid Rotator Variational Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rigid_rotator_selection_rules.html">3.4.28. Rigid Rotator Continued…</a></li>
 
 </ul>
 </li>
@@ -519,22 +519,22 @@ document.write(`
 <section id="operator-equality">
 <h2><span class="section-number">3.4.8.4. </span>Operator Equality<a class="headerlink" href="#operator-equality" title="Permalink to this heading">#</a></h2>
 <p>Two operators <span class="math notranslate nohighlight">\(\hat{A}\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\)</span> are said to be equivalent if they achieve the same result when applied to <em><strong>any</strong></em> function.  Assuming that <span class="math notranslate nohighlight">\(\hat{A}\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\)</span> depend only on a single variable <span class="math notranslate nohighlight">\(x\)</span> then if</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2c1916f-039b-4264-aa84-955b0575c6fd">
-<span class="eqno">(3.738)<a class="headerlink" href="#equation-e2c1916f-039b-4264-aa84-955b0575c6fd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7916929a-8658-427f-8d91-ab444c243dd0">
+<span class="eqno">(3.743)<a class="headerlink" href="#equation-7916929a-8658-427f-8d91-ab444c243dd0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{A}f(x) &amp;= \hat{B}f(x)
 \end{align}\]</div>
 <p>for all functions <span class="math notranslate nohighlight">\(f(x)\)</span> then <span class="math notranslate nohighlight">\(\hat{A} = \hat{B}\)</span>.</p>
 <p>It is important to note that it is not assumed that <span class="math notranslate nohighlight">\(f(x)\)</span> is an eigenfunction of <span class="math notranslate nohighlight">\(\hat{A}\)</span>.  It could be that applying <span class="math notranslate nohighlight">\(\hat{A}\)</span> to <span class="math notranslate nohighlight">\(f(x)\)</span> creates a new function <span class="math notranslate nohighlight">\(g(x)\)</span>, <span class="math notranslate nohighlight">\(\hat{A}f(x) = g(x)\)</span>.  In order for <span class="math notranslate nohighlight">\(\hat{A}\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\)</span> to be equal <span class="math notranslate nohighlight">\(\hat{B}f(x)=g(x)\)</span> as well.</p>
 <p>It is also important to note that this behavior must be consistent for any function <span class="math notranslate nohighlight">\(f(x)\)</span>.  It is possible to find a particular <span class="math notranslate nohighlight">\(f(x)\)</span> for which the result of two different operators is the same.  For example</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a8c44ede-c3af-4e34-9c1e-7018c7bbb561">
-<span class="eqno">(3.739)<a class="headerlink" href="#equation-a8c44ede-c3af-4e34-9c1e-7018c7bbb561" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-59de50ab-1d8c-4e8e-ad78-d38f68a797dc">
+<span class="eqno">(3.744)<a class="headerlink" href="#equation-59de50ab-1d8c-4e8e-ad78-d38f68a797dc" title="Permalink to this equation">#</a></span>\[\begin{align}
 f(x) &amp;= e^{-x^2} \\
 \hat{A} &amp;= \frac{d}{dx} \\
 \hat{B} &amp;= -2x
 \end{align}\]</div>
 <p>If we now apply to the two operators to <span class="math notranslate nohighlight">\(f(x)\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b30cc45a-4271-448e-9111-296a9bfc3b83">
-<span class="eqno">(3.740)<a class="headerlink" href="#equation-b30cc45a-4271-448e-9111-296a9bfc3b83" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-70522843-84b0-4067-afb9-dff9a1695204">
+<span class="eqno">(3.745)<a class="headerlink" href="#equation-70522843-84b0-4067-afb9-dff9a1695204" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{A}f(x) &amp;= \frac{d}{dx} e^{-x^2} = -2xe^{-x^2} \\
 \hat{B}f(x) &amp;= -2x e^{-x^2} 
 \end{align}\]</div>
@@ -543,22 +543,22 @@ f(x) &amp;= e^{-x^2} \\
 <section id="operator-addition">
 <h2><span class="section-number">3.4.8.5. </span>Operator Addition<a class="headerlink" href="#operator-addition" title="Permalink to this heading">#</a></h2>
 <p>Operator addition (and substraction) follows what we might consider to be <em>standard</em> rules.  That is if</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b170834f-31c2-4aaf-a9c8-a92b7e04e13f">
-<span class="eqno">(3.741)<a class="headerlink" href="#equation-b170834f-31c2-4aaf-a9c8-a92b7e04e13f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1941b8e2-d9d0-48a8-9519-d7688f9b4a31">
+<span class="eqno">(3.746)<a class="headerlink" href="#equation-1941b8e2-d9d0-48a8-9519-d7688f9b4a31" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{A}f &amp;= g \\
 \hat{B}f &amp;= h
 \end{align}\]</div>
 <p>then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c63f7afd-9890-45a8-99ad-edcfc753fddb">
-<span class="eqno">(3.742)<a class="headerlink" href="#equation-c63f7afd-9890-45a8-99ad-edcfc753fddb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-44edb975-5456-45ad-968b-f606bf07275f">
+<span class="eqno">(3.747)<a class="headerlink" href="#equation-44edb975-5456-45ad-968b-f606bf07275f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left(\hat{A} + \hat{B}\right)f = \hat{A}f + \hat{B}f = g + h
 \end{align}\]</div>
 <p>This can also be thought of as the distributive law for functions over operators.</p>
 <section id="example-operator-addition">
 <h3><span class="section-number">3.4.8.5.1. </span>Example: Operator Addition<a class="headerlink" href="#example-operator-addition" title="Permalink to this heading">#</a></h3>
 <p>Given <span class="math notranslate nohighlight">\(\hat{A} = \frac{d}{dx}\)</span> and <span class="math notranslate nohighlight">\(\hat{B} = 3x^2 -x\)</span>, determine the result of <span class="math notranslate nohighlight">\((\hat{A} + \hat{B})f(x)\)</span> for $f(x) = 3e^{x^2}.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bcdb8b5a-261c-4333-b76a-400abb8ac603">
-<span class="eqno">(3.743)<a class="headerlink" href="#equation-bcdb8b5a-261c-4333-b76a-400abb8ac603" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9b0aaecb-7382-4dbe-9f45-9dacef8258e8">
+<span class="eqno">(3.748)<a class="headerlink" href="#equation-9b0aaecb-7382-4dbe-9f45-9dacef8258e8" title="Permalink to this equation">#</a></span>\[\begin{align}
 (\hat{A} + \hat{B})f(x) &amp;= \left( \frac{d}{dx}+  3x^2 -x \right) 3e^{x^2}  \\
 &amp;= \frac{d}{dx}\left(3e^{x^2}\right) +  3x^2\left(3e^{x^2}\right) -x\left(3e^{x^2}\right) \\
 &amp;= 6xe^{x^2} +  9x^2e^{x^2} -3xe^{x^2} \\
@@ -570,35 +570,35 @@ f(x) &amp;= e^{-x^2} \\
 <section id="operator-multiplication">
 <h2><span class="section-number">3.4.8.6. </span>Operator Multiplication<a class="headerlink" href="#operator-multiplication" title="Permalink to this heading">#</a></h2>
 <p>Operator multiplication does not follow <em>standard</em> rules.  Specifically, some operators do not commute with others.  Operator multiplication, however, is extremely important for building up the set of operators pertaining to observables.  Thus, it is important to define what we mean by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cb494ff7-4ca3-4f22-a0ef-32729f70acc6">
-<span class="eqno">(3.744)<a class="headerlink" href="#equation-cb494ff7-4ca3-4f22-a0ef-32729f70acc6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0538fef9-a565-47be-8a7b-039f5fcab1b9">
+<span class="eqno">(3.749)<a class="headerlink" href="#equation-0538fef9-a565-47be-8a7b-039f5fcab1b9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{A}\hat{B}
 \end{equation}\]</div>
 <p>for generic operators <span class="math notranslate nohighlight">\(\hat{A}\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\)</span>.</p>
 <p>The operation <span class="math notranslate nohighlight">\(\hat{A}\hat{B}\)</span> means to first apply operator <span class="math notranslate nohighlight">\(\hat{B}\)</span> to a function and then apply operator <span class="math notranslate nohighlight">\(\hat{A}\)</span>.  This is perhaps more concisely written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bde32aad-998d-4d48-9671-dacc36a5c3d7">
-<span class="eqno">(3.745)<a class="headerlink" href="#equation-bde32aad-998d-4d48-9671-dacc36a5c3d7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cb345891-ab5f-4500-b84e-9c739fe9eac6">
+<span class="eqno">(3.750)<a class="headerlink" href="#equation-cb345891-ab5f-4500-b84e-9c739fe9eac6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{A}\hat{B}f(x) = \hat{A}\left[\hat{B}f(x)\right]
 \end{equation}\]</div>
 <p>Note that since operators do not commute we should typically assume that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-997bee0f-22ef-4baa-9d5a-e48c786d5ea9">
-<span class="eqno">(3.746)<a class="headerlink" href="#equation-997bee0f-22ef-4baa-9d5a-e48c786d5ea9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b066d225-d997-45b6-a719-0265203c828d">
+<span class="eqno">(3.751)<a class="headerlink" href="#equation-b066d225-d997-45b6-a719-0265203c828d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{A}\hat{B} \neq \hat{B}\hat{A}
 \end{equation}\]</div>
 <p>This implies that the order in which you apply the operator is hugely important.</p>
 <section id="example-operator-multiplication">
 <h3><span class="section-number">3.4.8.6.1. </span>Example: Operator Multiplication<a class="headerlink" href="#example-operator-multiplication" title="Permalink to this heading">#</a></h3>
 <p>Given <span class="math notranslate nohighlight">\(\hat{A} = \frac{d}{dx}\)</span> and <span class="math notranslate nohighlight">\(\hat{B} = 3x^2 -x\)</span>, determine the result of <span class="math notranslate nohighlight">\(\hat{A}\hat{B}f(x)\)</span> and <span class="math notranslate nohighlight">\(\hat{B}\hat{A}f(x)\)</span> for <span class="math notranslate nohighlight">\(f(x) = 3e^{x^2}\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-069c8493-76c7-4c44-80d5-85face6ab0db">
-<span class="eqno">(3.747)<a class="headerlink" href="#equation-069c8493-76c7-4c44-80d5-85face6ab0db" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2b848c5c-9033-49a2-801e-642aa21d344a">
+<span class="eqno">(3.752)<a class="headerlink" href="#equation-2b848c5c-9033-49a2-801e-642aa21d344a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{A}\hat{B}f(x) &amp;= \frac{d}{dx}\left[\left( 3x^2 -x \right) 3e^{x^2}\right]  \\
 &amp;= \frac{d}{dx}\left[9x^2e^{x^2} -3xe^{x^2}\right] \\
 &amp;= \frac{d}{dx}\left(9x^2e^{x^2}\right) -\frac{d}{dx}\left(3xe^{x^2}\right) \\
 &amp;= 18xe^{x^2} + 18x^3e^{x^2}  -3e^{x^2} - 6x^2e^{x^2} \\
 &amp;= \left( 6x^3 - 2x^2 + 6x -1 \right)3e^{x^2}
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-62080974-a325-4d31-8a85-d041b5799fc7">
-<span class="eqno">(3.748)<a class="headerlink" href="#equation-62080974-a325-4d31-8a85-d041b5799fc7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-957d3caf-8b1f-4483-8fae-c18a59349f6d">
+<span class="eqno">(3.753)<a class="headerlink" href="#equation-957d3caf-8b1f-4483-8fae-c18a59349f6d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{B}\hat{A}f(x) &amp;= \left( 3x^2 -x \right) \left[\frac{d}{dx}3e^{x^2}\right]  \\
 &amp;= \left( 3x^2 -x \right)\left( 6xe^{x^2}\right) \\
 &amp;= \left( 3x^3 -2x^2 \right) 3e^{x^2}
@@ -608,8 +608,8 @@ f(x) &amp;= e^{-x^2} \\
 <section id="operator-commutation">
 <h2><span class="section-number">3.4.8.7. </span>Operator Commutation<a class="headerlink" href="#operator-commutation" title="Permalink to this heading">#</a></h2>
 <p>Whether operators commute or not turns out to be quite important in quantum mechanics.  We define the <em><strong>commutator</strong></em> of two operators as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-498c8082-5e32-455f-ab6c-81eaf1864e26">
-<span class="eqno">(3.749)<a class="headerlink" href="#equation-498c8082-5e32-455f-ab6c-81eaf1864e26" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c6ab2c54-b2f8-4524-87fb-5214c3cbcfa1">
+<span class="eqno">(3.754)<a class="headerlink" href="#equation-c6ab2c54-b2f8-4524-87fb-5214c3cbcfa1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \left[\hat{A},\hat{B}\right] = \hat{A}\hat{B} - \hat{B}\hat{A}
 \end{equation}\]</div>
 <p>If this value is zero then the operators commute.  If this value is non-zero, the operators do not commute.  We determine a commutator for arbitrary function.</p>
@@ -617,8 +617,8 @@ f(x) &amp;= e^{-x^2} \\
 <h3><span class="section-number">3.4.8.7.1. </span>Example: Commutators<a class="headerlink" href="#example-commutators" title="Permalink to this heading">#</a></h3>
 <p>Estimate the commutator of <span class="math notranslate nohighlight">\(\hat{A} = \frac{d}{dx}\)</span> and <span class="math notranslate nohighlight">\(\hat{B} = 3x^2 -x\)</span>.</p>
 <p>We know that these two operators don’t commute. Let’s compute the commutator, however.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6cd8ebba-4be9-4730-8801-64e04d279255">
-<span class="eqno">(3.750)<a class="headerlink" href="#equation-6cd8ebba-4be9-4730-8801-64e04d279255" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c0670922-ed08-4657-8daa-6dd347fecb38">
+<span class="eqno">(3.755)<a class="headerlink" href="#equation-c0670922-ed08-4657-8daa-6dd347fecb38" title="Permalink to this equation">#</a></span>\[\begin{align}
 [\hat{A},\hat{B}]f(x) &amp;= [\hat{A}\hat{B} - \hat{B}\hat{A}]f(x) \\
 &amp;= \hat{A}\hat{B}f(x) - \hat{B}\hat{A}]f(x) \\
 &amp;= \frac{d}{dx}\left[\left( 3x^2 -x \right) f(x)\right] - \left( 3x^2 -x \right) \left[\frac{d}{dx}f(x)\right] \\
@@ -627,8 +627,8 @@ f(x) &amp;= e^{-x^2} \\
 &amp;=  (6x-1)f 
 \end{align}\]</div>
 <p>Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-123a4fe7-0833-49c0-b470-cd9f3715327f">
-<span class="eqno">(3.751)<a class="headerlink" href="#equation-123a4fe7-0833-49c0-b470-cd9f3715327f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cddbdfc5-f6fd-48ac-8085-0735ba7a8b16">
+<span class="eqno">(3.756)<a class="headerlink" href="#equation-cddbdfc5-f6fd-48ac-8085-0735ba7a8b16" title="Permalink to this equation">#</a></span>\[\begin{align}
 [\hat{A},\hat{B}] = 6x-1
 \end{align}\]</div>
 <p>We see that if we plug in that <span class="math notranslate nohighlight">\(f(x) = 3e^{x^2}\)</span> and substract the commutator will be the same as the difference between the two answers in the multiplication example.</p>
