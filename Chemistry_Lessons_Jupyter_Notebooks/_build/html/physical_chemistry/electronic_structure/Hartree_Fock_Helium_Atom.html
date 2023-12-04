@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 
 
@@ -6,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>3.5.1. Hartree-Fock &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
@@ -41,8 +42,10 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
@@ -506,20 +509,20 @@ document.write(`
 <section id="coulomb-and-exhange-integrals">
 <h2><span class="section-number">3.5.1.2. </span>Coulomb and Exhange Integrals<a class="headerlink" href="#coulomb-and-exhange-integrals" title="Permalink to this heading">#</a></h2>
 <p>We now want to determine the expectation value of the Hamiltonian in the antisymmetric trial wavefunction.  Let’s start by rewriting the Hamiltonian as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ff185811-5771-4347-bad4-2080ca0f9b08">
-<span class="eqno">(3.947)<a class="headerlink" href="#equation-ff185811-5771-4347-bad4-2080ca0f9b08" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4c06ac07-484e-4898-bb45-a048af9e6c60">
+<span class="eqno">(3.962)<a class="headerlink" href="#equation-4c06ac07-484e-4898-bb45-a048af9e6c60" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{H} &amp;=&amp; -\frac{1}{2}\nabla_1^2 + \frac{Z}{r_1} - \frac{1}{2}\nabla_2^2 + \frac{Z}{r_2} + \frac{1}{r_{12}} \\
  &amp;=&amp; h(1) + h(2) + \frac{1}{r_{12}},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(h(i) = -\frac{1}{2}\nabla_i^2 + \frac{Z}{r_i}\)</span> is the one electron operator for electron <span class="math notranslate nohighlight">\(i\)</span>.  Using this form of Hamiltonian, we can write the expectation value</p>
-<div class="amsmath math notranslate nohighlight" id="equation-04fee006-efd0-4c62-b2e8-97d486214eef">
-<span class="eqno">(3.948)<a class="headerlink" href="#equation-04fee006-efd0-4c62-b2e8-97d486214eef" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-22730207-2c06-4ba7-a757-3b7eafc2173a">
+<span class="eqno">(3.963)<a class="headerlink" href="#equation-22730207-2c06-4ba7-a757-3b7eafc2173a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle\Psi(1,2)| \hat{H} |\Psi(1,2)\rangle &amp;=&amp; \langle\Psi(1,2)| h(1) + h(2) + \frac{1}{r_{12}} |\Psi(1,2)\rangle\\
 &amp;=&amp; \langle\Psi(1,2)| h(1)|\Psi(1,2)\rangle  +  \langle\Psi(1,2)|h(2)|\Psi(1,2)\rangle +  \langle\Psi(1,2)|\frac{1}{r_{12}} |\Psi(1,2)\rangle
 \end{align}\]</div>
 <p>We can now evaluate these terms separately.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a995ffa2-add9-4386-8e54-7c1f611a69b1">
-<span class="eqno">(3.949)<a class="headerlink" href="#equation-a995ffa2-add9-4386-8e54-7c1f611a69b1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cbcefc13-8d59-445a-a579-409565cf72f6">
+<span class="eqno">(3.964)<a class="headerlink" href="#equation-cbcefc13-8d59-445a-a579-409565cf72f6" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle\Psi(1,2)| h(1)|\Psi(1,2)\rangle &amp;=&amp; \langle \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) | h(1) | \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) \rangle\\
 &amp;=&amp; \frac{1}{2} \langle(\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) | h(1) | (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) \rangle \\
 &amp;=&amp; \frac{1}{2} \left( \langle\chi_1(1)\chi_2(2) | h(1) | \chi_1(1)\chi_2(2) \rangle + \langle\chi_2(1)\chi_1(2) | h(1) | \chi_2(1)\chi_1(2) \rangle - \langle\chi_1(1)\chi_2(2) | h(1) | \chi_2(1)\chi_1(2) \rangle - \langle\chi_2(1)\chi_1(2) | h(1) | \chi_1(1)\chi_2(2) \rangle \right)\\
@@ -527,8 +530,8 @@ document.write(`
 \end{align}\]</div>
 <p>where the last equality holds if <span class="math notranslate nohighlight">\(\chi_1\)</span> is orthogonal to <span class="math notranslate nohighlight">\(\chi_2\)</span>.  It can be readily seen that you will get a similar result for the <span class="math notranslate nohighlight">\(h(2)\)</span> term.</p>
 <p>The two electron integral is more interesting.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cec9897d-1867-4dbe-80d0-431765c32be2">
-<span class="eqno">(3.950)<a class="headerlink" href="#equation-cec9897d-1867-4dbe-80d0-431765c32be2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cfdef441-7b39-4d09-b6b1-fc7416d4549d">
+<span class="eqno">(3.965)<a class="headerlink" href="#equation-cfdef441-7b39-4d09-b6b1-fc7416d4549d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle\Psi(1,2)| \frac{1}{r_{12}}|\Psi(1,2)\rangle &amp;=&amp; \langle \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) | \frac{1}{r_{12}} | \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) \rangle\\
 &amp;=&amp;\frac{1}{2} \left( \langle\chi_1(1)\chi_2(2) | \frac{1}{r_{12}} | \chi_1(1)\chi_2(2) \rangle + \langle\chi_2(1)\chi_1(2) | \frac{1}{r_{12}} | \chi_2(1)\chi_1(2) \rangle - \langle\chi_1(1)\chi_2(2) |\frac{1}{r_{12}} | \chi_2(1)\chi_1(2) \rangle - \langle\chi_2(1)\chi_1(2) | \frac{1}{r_{12}} | \chi_1(1)\chi_2(2) \rangle \right)\\
 &amp;=&amp; \langle\chi_1(1)\chi_2(2) | \frac{1}{r_{12}} | \chi_1(1)\chi_2(2) \rangle - \langle\chi_1(1)\chi_2(2) |\frac{1}{r_{12}} | \chi_2(1)\chi_1(2) \rangle
