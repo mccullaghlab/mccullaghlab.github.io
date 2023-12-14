@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 
 
@@ -6,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>3.1.3. Thermodynamic Properties from the Partition Function &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
@@ -41,8 +42,10 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
@@ -188,7 +191,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Heat_Work_and_Calculating_U.html">3.2.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Thermodynamic_Cycles.html">3.2.4. Thermodynamic Cycles</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Eastham_Honors.html">3.2.5. Three Member Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Eastham_Honors.html">3.2.5. Thermodynamic Cycles: Solving exam problems and other examples</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Enthalpy.html">3.2.6. Enthalpy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../thermodynamics/The_Carnot_Cycle.html">3.2.7. The Carnot Cycle</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../thermodynamics/Second_Law_of_Thermodynamics.html">3.2.8. Second Law of Thermodynamics</a></li>
@@ -509,14 +512,14 @@ document.write(`
 <section id="overview">
 <h2><span class="section-number">3.1.3.3. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>For a system with fixed number of particles, <span class="math notranslate nohighlight">\(N\)</span>, volume, <span class="math notranslate nohighlight">\(V\)</span>, and temperature <span class="math notranslate nohighlight">\(T\)</span>, the partition function is a sum of the Boltzmann factors for all possible energy levels:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-afcb71e0-6209-42e2-b8c7-53f692f88be6">
-<span class="eqno">(3.55)<a class="headerlink" href="#equation-afcb71e0-6209-42e2-b8c7-53f692f88be6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-98677417-60e0-4174-a14b-266a0460ca6b">
+<span class="eqno">(3.55)<a class="headerlink" href="#equation-98677417-60e0-4174-a14b-266a0460ca6b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q(N,V,T) = \sum_i e^{-\beta E_i}.
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta = \frac{1}{k_BT}\)</span>.</p>
 <p>Various macroscopic properties of the system can be determined from partition function, <span class="math notranslate nohighlight">\(Q(N,V,T)\)</span>.  In these notes we will show that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa54bacc-147c-45fe-9b28-a5a119b00413">
-<span class="eqno">(3.56)<a class="headerlink" href="#equation-aa54bacc-147c-45fe-9b28-a5a119b00413" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ea32553d-6f1e-4026-b39d-1bc5cd7db413">
+<span class="eqno">(3.56)<a class="headerlink" href="#equation-ea32553d-6f1e-4026-b39d-1bc5cd7db413" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle E \rangle &amp;=&amp; -\left( \frac{\partial \ln Q}{\partial \beta} \right) \\
 P &amp;=&amp; k_BT \left( \frac{\partial \ln Q}{\partial V} \right) \\
 C_V &amp;=&amp; k_B\beta^2\left( \frac{\partial^2 \ln Q}{\partial \beta^2} \right)
@@ -526,52 +529,52 @@ C_V &amp;=&amp; k_B\beta^2\left( \frac{\partial^2 \ln Q}{\partial \beta^2} \righ
 <h2><span class="section-number">3.1.3.4. </span>Internal Energy<a class="headerlink" href="#internal-energy" title="Permalink to this heading">#</a></h2>
 <p>The internal energy for a system, often referred to by the symbol <span class="math notranslate nohighlight">\(U\)</span> in classical Thermodynamics, can be determined from the partition function for a system.  The first step is to accept that the internal energy, <span class="math notranslate nohighlight">\(U\)</span>, is equivalent to the average energy of the system, <span class="math notranslate nohighlight">\(\langle E \rangle\)</span>.</p>
 <p>The average energy can be expressed as a weighted average over a given probabilty distribution in the standard way,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3f88c2d6-a95b-438e-bc32-36b421889a22">
-<span class="eqno">(3.57)<a class="headerlink" href="#equation-3f88c2d6-a95b-438e-bc32-36b421889a22" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-03f2fb03-9f78-40fd-8dfc-7f813ff57b45">
+<span class="eqno">(3.57)<a class="headerlink" href="#equation-03f2fb03-9f78-40fd-8dfc-7f813ff57b45" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle E \rangle = \sum_i E_i P_i.
 \end{equation}\]</div>
 <p>Recall that, in the context of a system with constant <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(V\)</span>, and <span class="math notranslate nohighlight">\(T\)</span>, the probability of state <span class="math notranslate nohighlight">\(i\)</span> is given as a ratio of the Boltzmann factor for that state and the partition function,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-42f6b4c4-0364-418a-8add-0718a8c04552">
-<span class="eqno">(3.58)<a class="headerlink" href="#equation-42f6b4c4-0364-418a-8add-0718a8c04552" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b9674685-99f5-41db-97d7-f5b241cde642">
+<span class="eqno">(3.58)<a class="headerlink" href="#equation-b9674685-99f5-41db-97d7-f5b241cde642" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P_i = \frac{e^{-\beta E_i}}{Q}.
 \end{equation}\]</div>
 <p>Substituting this in to the equation for <span class="math notranslate nohighlight">\(\langle E \rangle\)</span> gives</p>
-<div class="amsmath math notranslate nohighlight" id="equation-803d842e-3761-48f3-8af3-3ddc9f568a40">
-<span class="eqno">(3.59)<a class="headerlink" href="#equation-803d842e-3761-48f3-8af3-3ddc9f568a40" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bc47d4f0-9211-420b-885d-21cf4daebd75">
+<span class="eqno">(3.59)<a class="headerlink" href="#equation-bc47d4f0-9211-420b-885d-21cf4daebd75" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle E \rangle = \frac{\sum_i E_ie^{-\beta E_i}}{Q}.
 \end{equation}\]</div>
 <p>The key step in simplifying this equation is to recognize that the term <span class="math notranslate nohighlight">\(E_ie^{-\beta E_i}\)</span> looks like <span class="math notranslate nohighlight">\(xe^{\alpha x}\)</span> where the prefactor of the exponent happens to be the derivative of the argument of the exponent with respect to <span class="math notranslate nohighlight">\(\alpha\)</span>.  In terms of the energy, this means</p>
-<div class="amsmath math notranslate nohighlight" id="equation-79bc9e2b-ad94-4bd1-aa7d-c81186d2bda9">
-<span class="eqno">(3.60)<a class="headerlink" href="#equation-79bc9e2b-ad94-4bd1-aa7d-c81186d2bda9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-60c8c316-a568-428f-90f6-16f64f6a0da1">
+<span class="eqno">(3.60)<a class="headerlink" href="#equation-60c8c316-a568-428f-90f6-16f64f6a0da1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_ie^{-\beta E_i} = -\frac{\partial}{\partial \beta} \left(e^{-\beta E_i}\right).
 \end{equation}\]</div>
 <p>In this equation, the symbol <span class="math notranslate nohighlight">\(\partial\)</span> refers to the partial derivative, instead of the total derivative denoted by a straight-backed <span class="math notranslate nohighlight">\(d\)</span>.  Partial derivatives show-up when we consider derivatives of functions of more than one variable.  <span class="math notranslate nohighlight">\(Q\)</span>, for instance, we refer to as <span class="math notranslate nohighlight">\(Q(N,V,T)\)</span> meaning that it is a function of <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(T\)</span>.  This is analagous to writing a function, <span class="math notranslate nohighlight">\(f(x,y,z)\)</span>, as a function of <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(z\)</span>.  If we consider taking the derivative of <span class="math notranslate nohighlight">\(f\)</span> we must consider which variable (<span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, or <span class="math notranslate nohighlight">\(z\)</span>) to differentiate by.</p>
 <p>We now substitute the key relationshop into the average energy equation to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3c8429a6-e7bb-44d3-b51f-02b05f0a7563">
-<span class="eqno">(3.61)<a class="headerlink" href="#equation-3c8429a6-e7bb-44d3-b51f-02b05f0a7563" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-42011784-dfb6-40cf-81e1-551fd35e9a87">
+<span class="eqno">(3.61)<a class="headerlink" href="#equation-42011784-dfb6-40cf-81e1-551fd35e9a87" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle E \rangle &amp;=&amp; \frac{\sum_i E_ie^{-\beta E_i}}{Q} \\
 &amp;=&amp; \frac{\sum_i -\frac{\partial}{\partial \beta} \left(e^{-\beta E_i}\right)}{Q} \\
 &amp;=&amp; \frac{-\frac{\partial}{\partial \beta} \sum_i e^{-\beta E_i}}{Q},
 \end{eqnarray}\]</div>
 <p>where in the last step we recognize that the derivative operator can be distributed over the sum.  Now we recognized that <span class="math notranslate nohighlight">\(Q = \sum_i e^{-\beta E_i}\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0c5eeb80-2bfa-407a-bcf2-a46a259e900c">
-<span class="eqno">(3.62)<a class="headerlink" href="#equation-0c5eeb80-2bfa-407a-bcf2-a46a259e900c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ed6e4d55-23d3-47a9-8e5c-f6ded04e3ccf">
+<span class="eqno">(3.62)<a class="headerlink" href="#equation-ed6e4d55-23d3-47a9-8e5c-f6ded04e3ccf" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle E \rangle &amp;=&amp; \frac{-\frac{\partial}{\partial \beta} Q}{Q} \\
 &amp;=&amp; -\frac{1}{Q} \frac{\partial Q}{\partial \beta}.
 \end{eqnarray}\]</div>
 <p>The final step in the derivation is to recognize that <span class="math notranslate nohighlight">\(\frac{1}{Q} \frac{\partial Q}{\partial \beta} = \frac{\partial \ln Q}{\partial \beta}\)</span>.  This can be hard to recognize but it should follow if you do it in the reverse.  That is, ask</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3199a154-311c-41b5-9acd-cb35d96af696">
-<span class="eqno">(3.63)<a class="headerlink" href="#equation-3199a154-311c-41b5-9acd-cb35d96af696" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-22e5f993-d412-4a9d-b67c-f0be947b7ce4">
+<span class="eqno">(3.63)<a class="headerlink" href="#equation-22e5f993-d412-4a9d-b67c-f0be947b7ce4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\partial \ln f(x)}{\partial x} = ?
 \end{equation}\]</div>
 <p>Using the chain rule for differentiation, this becomes</p>
-<div class="amsmath math notranslate nohighlight" id="equation-064f27e8-413d-4e68-acf1-e1477a1bcbbb">
-<span class="eqno">(3.64)<a class="headerlink" href="#equation-064f27e8-413d-4e68-acf1-e1477a1bcbbb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b0675779-6478-498d-927e-e4157bb079ed">
+<span class="eqno">(3.64)<a class="headerlink" href="#equation-b0675779-6478-498d-927e-e4157bb079ed" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\partial \ln f(x)}{\partial x} = \frac{1}{f(x)} \frac{\partial f(x)}{\partial x}
 \end{equation}\]</div>
 <p>So, finally, we get that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fcb01a43-4d91-4e25-a707-c51912d20a59">
-<span class="eqno">(3.65)<a class="headerlink" href="#equation-fcb01a43-4d91-4e25-a707-c51912d20a59" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-94aebe02-30f6-4e3c-9dc8-31460d6bfc0a">
+<span class="eqno">(3.65)<a class="headerlink" href="#equation-94aebe02-30f6-4e3c-9dc8-31460d6bfc0a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle E \rangle &amp;=&amp;  -\frac{1}{Q} \frac{\partial Q}{\partial \beta} \\
 &amp;=&amp; - \frac{\partial \ln Q}{\partial \beta}.
 \end{eqnarray}\]</div>
@@ -579,34 +582,34 @@ E_ie^{-\beta E_i} = -\frac{\partial}{\partial \beta} \left(e^{-\beta E_i}\right)
 <section id="pressure">
 <h2><span class="section-number">3.1.3.5. </span>Pressure<a class="headerlink" href="#pressure" title="Permalink to this heading">#</a></h2>
 <p>To get the pressure from the partition function we will use the average energy expression derived above.  Addtionally, we will need to employ a fact from classical Thermodynamics that we haven’t yet seen.  Namely that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-417eb1e2-7e09-4939-89f1-e3381b7c13b9">
-<span class="eqno">(3.66)<a class="headerlink" href="#equation-417eb1e2-7e09-4939-89f1-e3381b7c13b9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d22ba000-85f6-4637-b656-3d23dac426c6">
+<span class="eqno">(3.66)<a class="headerlink" href="#equation-d22ba000-85f6-4637-b656-3d23dac426c6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p = -\left(\frac{\partial U}{\partial V}\right)_{N}.
 \end{equation}\]</div>
 <p>We will show why this is true in a few weeks when we discuss the interal energy from a classical Thermodynamics perspective.</p>
 <p>We start in an analogous manner as for <span class="math notranslate nohighlight">\(\langle E \rangle\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-0d48ec8e-2173-4e8a-944f-a2c3db845ccb">
-<span class="eqno">(3.67)<a class="headerlink" href="#equation-0d48ec8e-2173-4e8a-944f-a2c3db845ccb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-2f92c4bb-ec7c-4a21-b832-25654df7a4ed">
+<span class="eqno">(3.67)<a class="headerlink" href="#equation-2f92c4bb-ec7c-4a21-b832-25654df7a4ed" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p &amp;=&amp; \frac{\sum_i p_i e^{-\beta E_i}}{Q} \\
 &amp;=&amp;-\frac{\sum_i \frac{\partial E_i}{\partial V} e^{-\beta E_i}}{Q},
 \end{eqnarray}\]</div>
 <p>where I have plugged in that <span class="math notranslate nohighlight">\(p_i = -\frac{\partial E_i}{\partial V}\)</span> in the last step.</p>
 <p>We now investigate the volume derivate of the parition function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-12c8c039-960f-4d71-b005-0e020f99650d">
-<span class="eqno">(3.68)<a class="headerlink" href="#equation-12c8c039-960f-4d71-b005-0e020f99650d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-42b062bd-9dc3-40a3-9fab-8ecee18e5b5d">
+<span class="eqno">(3.68)<a class="headerlink" href="#equation-42b062bd-9dc3-40a3-9fab-8ecee18e5b5d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \frac{\partial Q}{\partial V} &amp;=&amp; \frac{\partial }{\partial V} \sum_i e^{-\beta E_i} \\
 &amp;=&amp; \sum_i \frac{\partial e^{-\beta E_i} }{\partial V}  \\
 &amp;=&amp; \sum_i \frac{\partial (-\beta E_i)}{\partial V} e^{-\beta E_i}  \\
 &amp;=&amp; -\beta \sum_i \frac{\partial  E_i}{\partial V} e^{-\beta E_i},
 \end{eqnarray}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca01e046-dffb-4c36-8c4b-7ea940676bae">
-<span class="eqno">(3.69)<a class="headerlink" href="#equation-ca01e046-dffb-4c36-8c4b-7ea940676bae" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-af07ab8f-7a55-4a29-b371-059fee0611f5">
+<span class="eqno">(3.69)<a class="headerlink" href="#equation-af07ab8f-7a55-4a29-b371-059fee0611f5" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \sum_i \frac{\partial  E_i}{\partial V} e^{-\beta E_i} = -\frac{1}{\beta}\frac{\partial Q}{\partial V}.
 \end{eqnarray}\]</div>
 <p>We can plug this result into the previous expression for <span class="math notranslate nohighlight">\(p\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7ff739f5-57cc-4e6a-a2c7-b2399b19e292">
-<span class="eqno">(3.70)<a class="headerlink" href="#equation-7ff739f5-57cc-4e6a-a2c7-b2399b19e292" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-9881a953-b0f4-4333-a34a-91f4a1c0f980">
+<span class="eqno">(3.70)<a class="headerlink" href="#equation-9881a953-b0f4-4333-a34a-91f4a1c0f980" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 p &amp;=&amp; -\frac{\sum_i \frac{\partial E_i}{\partial V} e^{-\beta E_i}}{Q} \\
 &amp;=&amp; -\frac{-\frac{1}{\beta}\frac{\partial Q}{\partial V}}{Q} \\
 &amp;=&amp; \frac{1}{\beta}\frac{\frac{\partial Q}{\partial V}}{Q} \\
@@ -616,27 +619,27 @@ p &amp;=&amp; -\frac{\sum_i \frac{\partial E_i}{\partial V} e^{-\beta E_i}}{Q} \
 <section id="heat-capacity">
 <h2><span class="section-number">3.1.3.6. </span>Heat Capacity<a class="headerlink" href="#heat-capacity" title="Permalink to this heading">#</a></h2>
 <p>The heat capacity for a system measures the amount of energy it takes to raise the system by one Kelvin (or, equivalently, one degree Celsius).  Heat capacity can be determined under constant volume condidtions, denoted <span class="math notranslate nohighlight">\(C_V\)</span>, or constant pressure conditions, denoted <span class="math notranslate nohighlight">\(C_P\)</span>.  Here, we will concern ourselves with <span class="math notranslate nohighlight">\(C_V\)</span>.  From classical Thermodynamics we know that the heat capacity at constant volume is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d2b3aa3e-0e72-49eb-8c3d-74ec0df24847">
-<span class="eqno">(3.71)<a class="headerlink" href="#equation-d2b3aa3e-0e72-49eb-8c3d-74ec0df24847" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4031e1f2-f91c-4584-aadb-b594b37ab4f9">
+<span class="eqno">(3.71)<a class="headerlink" href="#equation-4031e1f2-f91c-4584-aadb-b594b37ab4f9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 C_V = \left(\frac{\partial U}{\partial T}\right)_V.
 \end{equation}\]</div>
 <p>In order to determine this quantity from a partition function, we recognize that <span class="math notranslate nohighlight">\(U = \langle E \rangle\)</span> yielding</p>
-<div class="amsmath math notranslate nohighlight" id="equation-65e21169-214a-48ef-8507-e5f9e5b0a265">
-<span class="eqno">(3.72)<a class="headerlink" href="#equation-65e21169-214a-48ef-8507-e5f9e5b0a265" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-c7ab9468-0066-4285-925e-cfeadf7a56fa">
+<span class="eqno">(3.72)<a class="headerlink" href="#equation-c7ab9468-0066-4285-925e-cfeadf7a56fa" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 C_V &amp;=&amp; \left(\frac{\partial \langle E \rangle}{\partial T}\right)_V \\
 &amp;=&amp; \left(\frac{\partial}{\partial T} \left(- \frac{\partial \ln Q}{\partial \beta}\right)\right)_V
 \end{eqnarray}\]</div>
 <p>The difficultly here is resolving the issue of <span class="math notranslate nohighlight">\(\beta\)</span> vs <span class="math notranslate nohighlight">\(T\)</span>.  We do this by starting with the equation for <span class="math notranslate nohighlight">\(\beta\)</span> in terms of <span class="math notranslate nohighlight">\(T\)</span> and differentiating both sides</p>
-<div class="amsmath math notranslate nohighlight" id="equation-257028da-246c-48d8-9f4f-e7f9eb2120e7">
-<span class="eqno">(3.73)<a class="headerlink" href="#equation-257028da-246c-48d8-9f4f-e7f9eb2120e7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ae6fda50-fa65-4e85-9a8e-a910ef69d590">
+<span class="eqno">(3.73)<a class="headerlink" href="#equation-ae6fda50-fa65-4e85-9a8e-a910ef69d590" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \beta &amp;=&amp; \frac{1}{k_BT} \\
 \Rightarrow d\beta &amp;=&amp; - \frac{1}{k_BT^2}dT \\
 &amp;=&amp; -k_B \beta^2 dT \\
 \Rightarrow dT &amp;=&amp; -\frac{d\beta}{k_B \beta^2}
 \end{eqnarray}\]</div>
 <p>Substituting this into the above equation for <span class="math notranslate nohighlight">\(C_V\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4c2e03f1-f3eb-40a3-b9e6-28d76f61dde3">
-<span class="eqno">(3.74)<a class="headerlink" href="#equation-4c2e03f1-f3eb-40a3-b9e6-28d76f61dde3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-0daa6f4e-280d-478a-b2c8-3b00128e8d1b">
+<span class="eqno">(3.74)<a class="headerlink" href="#equation-0daa6f4e-280d-478a-b2c8-3b00128e8d1b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 C_V &amp;=&amp; -k_B \beta^2 \left(\frac{\partial}{\partial \beta} \left(- \frac{\partial \ln Q}{\partial \beta}\right)\right)_V \\
 &amp;=&amp;k_B \beta^2 \left( \frac{\partial^2 \ln Q}{\partial \beta^2}\right)_V
 \end{eqnarray}\]</div>
@@ -644,19 +647,19 @@ C_V &amp;=&amp; -k_B \beta^2 \left(\frac{\partial}{\partial \beta} \left(- \frac
 <section id="example-1-average-energy-of-a-monatomic-ideal-gas">
 <h2><span class="section-number">3.1.3.7. </span>Example 1: Average Energy of a Monatomic Ideal Gas<a class="headerlink" href="#example-1-average-energy-of-a-monatomic-ideal-gas" title="Permalink to this heading">#</a></h2>
 <p>The partition function for an ideal gas is with fixed number of particles, <span class="math notranslate nohighlight">\(N\)</span>, volume, <span class="math notranslate nohighlight">\(V\)</span>, and temperature, <span class="math notranslate nohighlight">\(T\)</span>, is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-45b58281-966f-4159-92d4-bb129b15a18f">
-<span class="eqno">(3.75)<a class="headerlink" href="#equation-45b58281-966f-4159-92d4-bb129b15a18f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-231e6804-9090-433c-94e1-5ff3273ac06e">
+<span class="eqno">(3.75)<a class="headerlink" href="#equation-231e6804-9090-433c-94e1-5ff3273ac06e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q=\frac{q^N}{N!}.
 \end{equation}\]</div>
 <p>For a monatomic gas, we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40ee8bb5-ddf4-4915-88db-284853335afb">
-<span class="eqno">(3.76)<a class="headerlink" href="#equation-40ee8bb5-ddf4-4915-88db-284853335afb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-11022a39-e489-44db-93b2-989496582f37">
+<span class="eqno">(3.76)<a class="headerlink" href="#equation-11022a39-e489-44db-93b2-989496582f37" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q=\left(\frac{2\pi mk_BT}{h^2}\right)^{\frac{3}{2}}V
 \end{equation}\]</div>
 <p>What is the average energy, <span class="math notranslate nohighlight">\(\langle E \rangle\)</span>, of a monatomic ideal gas?</p>
 <p>From the notes above, we know that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-99293fb6-3c53-428a-b0e5-dabb541c6ed3">
-<span class="eqno">(3.77)<a class="headerlink" href="#equation-99293fb6-3c53-428a-b0e5-dabb541c6ed3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d87a7a4e-244f-41b6-8890-2013a4a1e7a1">
+<span class="eqno">(3.77)<a class="headerlink" href="#equation-d87a7a4e-244f-41b6-8890-2013a4a1e7a1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle E \rangle = -\left( \frac{\partial \ln Q}{\partial \beta}\right)
 \end{equation}\]</div>
 <p>So, the strategy to solve this problem will be:</p>
@@ -668,16 +671,16 @@ q=\left(\frac{2\pi mk_BT}{h^2}\right)^{\frac{3}{2}}V
 <section id="equation-for-ln-q">
 <h3><span class="section-number">3.1.3.7.1. </span>1. Equation for <span class="math notranslate nohighlight">\(\ln Q\)</span><a class="headerlink" href="#equation-for-ln-q" title="Permalink to this heading">#</a></h3>
 <p>We start by getting an overall equation for <span class="math notranslate nohighlight">\(Q\)</span> and then taking the natural log</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2983242d-d8a0-4aa3-bc51-963d0780dacf">
-<span class="eqno">(3.78)<a class="headerlink" href="#equation-2983242d-d8a0-4aa3-bc51-963d0780dacf" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-f355e8f6-e32a-45cd-b8a2-acfbab911381">
+<span class="eqno">(3.78)<a class="headerlink" href="#equation-f355e8f6-e32a-45cd-b8a2-acfbab911381" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; \frac{q^N}{N!} \\
 &amp;=&amp;\frac{\left[ \left(\frac{2\pi mk_BT}{h^2}\right)^{\frac{3}{2}}V \right]^N}{N!} \\
 &amp;=&amp; \frac{\left[ \left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3}{2}}V \right]^N}{N!} \\
 &amp;=&amp; \frac{ \left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3N}{2}}V^N }{N!},
 \end{eqnarray}\]</div>
 <p>where I substituted that <span class="math notranslate nohighlight">\(k_BT = \frac{1}{\beta}\)</span> to get Q in terms of <span class="math notranslate nohighlight">\(\beta\)</span> and then distributed the power of <span class="math notranslate nohighlight">\(N\)</span>.  Now we take the natural log and isolate term(s) that depend on <span class="math notranslate nohighlight">\(\beta\)</span> (we will make heavy use of the rules of logarithms <span class="math notranslate nohighlight">\(\ln(A\cdot B) = \ln A + \ln B\)</span> and <span class="math notranslate nohighlight">\(\ln(A^N) = N\ln A\)</span>)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-184b5190-0c29-40a9-9713-24746cd17dd1">
-<span class="eqno">(3.79)<a class="headerlink" href="#equation-184b5190-0c29-40a9-9713-24746cd17dd1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-1ec89f02-027d-44fb-8dc2-bfe74beb7eca">
+<span class="eqno">(3.79)<a class="headerlink" href="#equation-1ec89f02-027d-44fb-8dc2-bfe74beb7eca" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \ln Q &amp;=&amp; \ln \left[\frac{\left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3N}{2}}V^N }{N!}\right] \\
 &amp;=&amp; \ln\left[ \left(\frac{2\pi m}{\beta h^2}\right)^{\frac{3N}{2}}\right] + \ln V^N - \ln N! \\
 &amp;=&amp; \frac{3N}{2}\ln \left(\frac{2\pi m}{\beta h^2}\right) + \ln V^N - \ln N! \\
@@ -688,8 +691,8 @@ Q &amp;=&amp; \frac{q^N}{N!} \\
 </section>
 <section id="differentiate-with-respect-to-beta">
 <h3><span class="section-number">3.1.3.7.2. </span>2. Differentiate with respect to <span class="math notranslate nohighlight">\(\beta\)</span><a class="headerlink" href="#differentiate-with-respect-to-beta" title="Permalink to this heading">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-0011f125-4299-4b18-bbbd-c4bc12e87136">
-<span class="eqno">(3.80)<a class="headerlink" href="#equation-0011f125-4299-4b18-bbbd-c4bc12e87136" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-db7bb7bc-85ce-4551-aae5-99e6168f7bb2">
+<span class="eqno">(3.80)<a class="headerlink" href="#equation-db7bb7bc-85ce-4551-aae5-99e6168f7bb2" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle E \rangle &amp;=&amp; - \left( \frac{\partial \ln Q}{\partial \beta}\right) \\
 &amp;=&amp; -\frac{\partial}{\partial \beta} \left[ -\frac{3N}{2}\ln\beta + \frac{3N}{2}\ln \left(\frac{2\pi m}{h^2}\right)+ \ln V^N - \ln N! \right] \\
 &amp;=&amp; \frac{3N}{2}\frac{\partial}{\partial \beta} \ln\beta \\
@@ -703,29 +706,29 @@ Q &amp;=&amp; \frac{q^N}{N!} \\
 <div class="alert alert-block alert-info">
 What is the heat capacity at constant volume, $C_V$, of a monoatomic ideal gas?
 </div><p>We will use the equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-72dbb31e-30b5-40f7-abfe-52cbb51637e4">
-<span class="eqno">(3.81)<a class="headerlink" href="#equation-72dbb31e-30b5-40f7-abfe-52cbb51637e4" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-d26aedf1-7b1c-4a2c-918a-a09dcbce3230">
+<span class="eqno">(3.81)<a class="headerlink" href="#equation-d26aedf1-7b1c-4a2c-918a-a09dcbce3230" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 C_V = k_B \beta^2 \left( \frac{\partial^2 \ln Q}{\partial \beta^2}\right)
 \end{eqnarray}\]</div>
 <p>which means we need to differentiate <span class="math notranslate nohighlight">\(\ln Q\)</span> with respect to <span class="math notranslate nohighlight">\(\beta\)</span> twice.  For a monatomic ideal gas, <span class="math notranslate nohighlight">\(\ln Q\)</span> is determined above to be:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f6578fe0-6bec-4718-9db1-069c54497ffd">
-<span class="eqno">(3.82)<a class="headerlink" href="#equation-f6578fe0-6bec-4718-9db1-069c54497ffd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-df436a41-ec27-450f-a104-d7b645d17c92">
+<span class="eqno">(3.82)<a class="headerlink" href="#equation-df436a41-ec27-450f-a104-d7b645d17c92" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \ln Q &amp;=&amp; -\frac{3N}{2}\ln\beta + \frac{3N}{2}\ln \left(\frac{2\pi m}{h^2}\right)+ \ln V^N - \ln N!
 \end{eqnarray}\]</div>
 <p>Notice that only the first term depends on <span class="math notranslate nohighlight">\(\beta\)</span>.  Now differentiate by <span class="math notranslate nohighlight">\(\beta\)</span> once:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a040d7af-780b-42a6-9c39-cfefde300c16">
-<span class="eqno">(3.83)<a class="headerlink" href="#equation-a040d7af-780b-42a6-9c39-cfefde300c16" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a9db2bc6-7d7c-4533-817d-76ab76397e47">
+<span class="eqno">(3.83)<a class="headerlink" href="#equation-a9db2bc6-7d7c-4533-817d-76ab76397e47" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial \ln Q}{\partial \beta}\right) = -\frac{3N}{2\beta}
 \end{eqnarray}\]</div>
 <p>Now differential with respect to <span class="math notranslate nohighlight">\(\beta\)</span> again:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5c788915-4ac7-43d9-8de5-548e2f1c88dc">
-<span class="eqno">(3.84)<a class="headerlink" href="#equation-5c788915-4ac7-43d9-8de5-548e2f1c88dc" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5a5e3f31-a129-4f71-85bf-90d6f5263fbd">
+<span class="eqno">(3.84)<a class="headerlink" href="#equation-5a5e3f31-a129-4f71-85bf-90d6f5263fbd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \left( \frac{\partial^2 \ln Q}{\partial \beta^2}\right) &amp;=&amp; \frac{\partial} {\partial \beta}\left(-\frac{3N}{2\beta}\right) \\
 &amp;=&amp; \frac{3N}{2\beta^2}
 \end{eqnarray}\]</div>
 <p>Now to get <span class="math notranslate nohighlight">\(C_V\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-c8e43d07-183a-466c-a710-18ca5cadc219">
-<span class="eqno">(3.85)<a class="headerlink" href="#equation-c8e43d07-183a-466c-a710-18ca5cadc219" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a44def1e-73d4-49f9-96c3-5de5049024a1">
+<span class="eqno">(3.85)<a class="headerlink" href="#equation-a44def1e-73d4-49f9-96c3-5de5049024a1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 C_V &amp;=&amp;  k_B \beta^2 \left( \frac{\partial^2 \ln Q}{\partial \beta^2}\right)\\
     &amp;=&amp; k_B\beta^2\frac{3N}{2\beta^2} \\
     &amp;=&amp; \frac{3}{2}Nk_B
