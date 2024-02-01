@@ -1,0 +1,766 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>3.3. Integration in 1D &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'math_concepts_in_physical_chemistry/integration_in_1D';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3.4. Derivatives of Multivariable Functions" href="derivatives_of_multivariable_functions.html" />
+    <link rel="prev" title="3.2. Differentiation and Critical Points" href="differentiation_and_critical_points.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../jupyter_notebook_tutorials/intro.html">1. Jupyter Notebook Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">1.1. Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">1.2. Advanced Jupyter Notebook Tutorial</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../coding_concepts/intro.html">2. Coding Concepts</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/variables.html">2.1. Variables in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/arrays_and_matrices.html">2.2. Arrays and Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/for_loops.html">2.3. for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/functions.html">2.4. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/plotting_with_matplotlib.html">2.5. Plotting with matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/numeric_integration.html">2.6. Numeric Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="intro.html">3. Math Concepts in Physical Chemistry</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="logarithms_and_exponential_functions.html">3.1. Logarithms and Exponential Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="differentiation_and_critical_points.html">3.2. Differentiation and Critical Points</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">3.3. Integration in 1D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="derivatives_of_multivariable_functions.html">3.4. Derivatives of Multivariable Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../physical_chemistry/intro.html">4. Physical Chemistry</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/intro.html">4.1. Statiscial Thermodynamics</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.html">4.1.1. Boltzmann Factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Introduction_to_Probability.html">4.1.2. Introduction to Probability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">4.1.3. Thermodynamic Properties from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">4.1.4. Partition Function for a Monatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">4.1.5. Partition Function for a Diatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">4.1.6. Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">4.1.7. Kinetic Theory of Gasses from the Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/microscopic_view_of_entropy.html">4.1.8. Microscopic View of Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">4.1.9. Equations of State from Lattice Gas Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/thermodynamics/intro.html">4.2. Thermodynamics</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/First_Law_of_Thermodynamics.html">4.2.1. The First Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Heat_Work_and_Calculating_U.html">4.2.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Thermodynamic_Cycles.html">4.2.4. Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Eastham_Honors.html">4.2.5. Thermodynamic Cycles: Solving exam problems and other examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Enthalpy.html">4.2.6. Enthalpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/The_Carnot_Cycle.html">4.2.7. The Carnot Cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Second_Law_of_Thermodynamics.html">4.2.8. Second Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">4.2.9. Heat Engine Diagrams</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Third_Law_of_Thermodynamics.html">4.2.11. The Third Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">4.2.12. First Derivative and Maxwell Relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Maxwell_Relations_Applied.html">4.2.13. Maxwell Relations Applied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Free_Energy_and_Legendre_Transforms.html">4.2.14. Free Energy and Legendre Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">4.2.15. The Pressure and Temperature Dependence of the Gibbs Energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">4.2.16. Phase Diagrams and Phase Equilibria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Chemical_Potential_from_Partition_Function.html">4.2.17. Chemical Potential from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Thermodynamics_of_Solutions.html">4.2.18. Thermodynamics of Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Ideal_and_Non_Ideal_Solutions.html">4.2.19. Ideal and Non-ideal Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Introduction_to_Chemical_Equilibrium.html">4.2.20. Chemical Equilibrium</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/kinetics/intro.html">4.3. Kinetics</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Chemical_Kinetics_and_Rate_Laws.html">4.3.1. Chemical Kinetics and Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Integrated_Rate_Laws.html">4.3.2. Integrated Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Reversible_Reactions.html">4.3.3. Reversible Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">4.3.4. Transition State Theory and Temperature Dependence of the Rate Constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Reaction_Mechanisms_Part_I.html">4.3.5. Reaction Mechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Catalysts.html">4.3.6. Catalysts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.html">4.3.7. Enzyme Kinetics: The Michaelis-Menten Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Cooperative_Binding_Kinetics.html">4.3.8. Cooperative Binding Kinetics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Competitive_Inhibition.html">4.3.9. Competitive Inhibition</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/intro.html">4.4. Quantum Mechanics</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/history_of_quantum_mechanics.html">4.4.1. The History of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/wave_particle_duality_classical_wave_equation.html">4.4.2. Wave Particle Duality and the Classical Wave Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/Schrodinger_Equation.html">4.4.3. Schrodinger Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/particle_in_a_box.html">4.4.4. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">4.4.5. The Uncertainty Principle and Applications of Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/postulates_of_quantum_mechanics.html">4.4.6. The Postulates and Formalism of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/momentum_operator.html">4.4.7. The Momentum Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/operator_algebra.html">4.4.8. Operator Algebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/particle_in_a_sphere.html">4.4.9. Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/properties_of_particle_in_a_sphere.html">4.4.10. Properties of Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/the_hydrogen_atom.html">4.4.11. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/properties_of_the_hydrogen_atom.html">4.4.12. Properties of the Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/the_hydrogen_atom_absorption_spectrum.html">4.4.13. The Hydrogen Atom Absorption Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/special_functions_in_quantum_mechanics.html">4.4.14. Special Functions in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/the_helium_atom.html">4.4.15. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">4.4.16. Variational Method in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/Single_Electron_Molecule_Variational_Approach.html">4.4.17. Single Electron Molecule in the Variational Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/Improving_the_h2%2B_variational_approximation.html">4.4.18. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">4.4.19. The H<span class="math notranslate nohighlight">\(_2\)</span> Molecule using the Variational Method in a Minimal Basis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/H2_Configuration_Interaction.html">4.4.20. H<span class="math notranslate nohighlight">\(_2\)</span> Configuration Interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/harmonic_oscillator.html">4.4.21. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">4.4.22. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/basis_functions.html">4.4.23. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/harmonic_oscillator_using_variational_method.html">4.4.24. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/morse_oscillator.html">4.4.25. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/rigid_rotator.html">4.4.26. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/rigid_rotator_using_variational_method.html">4.4.27. Rigid Rotator Variational Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/rigid_rotator_selection_rules.html">4.4.28. Rigid Rotator Continued…</a></li>
+
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/electronic_structure/intro.html">4.5. Electronic Structure</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/electronic_structure/Hartree_Fock_Helium_Atom.html">4.5.1. Hartree-Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/electronic_structure/HF_for_H2.html">4.5.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/math_concepts_in_physical_chemistry/integration_in_1D.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/math_concepts_in_physical_chemistry/integration_in_1D.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fmath_concepts_in_physical_chemistry/integration_in_1D.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/math_concepts_in_physical_chemistry/integration_in_1D.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Integration in 1D</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">3.3.1. Learning goals:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">3.3.2. Coding concepts:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integration">3.3.3. Integration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indefinite-integration">3.3.4. Indefinite integration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-common-indefinite-integrals">3.3.4.1. Some Common Indefinite Integrals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#u-substitution">3.3.4.2. <span class="math notranslate nohighlight">\(u\)</span> substitution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-by-parts">3.3.4.3. Integration by Parts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definite-integration">3.3.5. Definite Integration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tables-of-definite-integrals">3.3.5.1. Tables of Definite Integrals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-integration">3.3.5.2. Numeric integration</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="integration-in-1d">
+<h1><span class="section-number">3.3. </span>Integration in 1D<a class="headerlink" href="#integration-in-1d" title="Permalink to this heading">#</a></h1>
+<section id="learning-goals">
+<h2><span class="section-number">3.3.1. </span>Learning goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
+<p>After working through these notes, you will be able to:</p>
+<ol class="arabic simple">
+<li><p>Describe the difference between <em>definite</em> and <em>indefinite</em> integration</p></li>
+<li><p>Determine the <em>indefinite</em> integrals of common functions of one variable</p></li>
+<li><p>Determine <em>definite</em> integrals of common functions of one variable</p></li>
+</ol>
+</section>
+<section id="coding-concepts">
+<h2><span class="section-number">3.3.2. </span>Coding concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
+<p>No coding concepts are used in this notebook.</p>
+</section>
+<section id="integration">
+<h2><span class="section-number">3.3.3. </span>Integration<a class="headerlink" href="#integration" title="Permalink to this heading">#</a></h2>
+<p>Integration is the inverse operation of differentiation.  When asked “what is <span class="math notranslate nohighlight">\(\int f(x) dx\)</span>?” you can think of it like asking “what function has the derivative <span class="math notranslate nohighlight">\(f(x)\)</span>?”. Much like in differentiation, we need to learn the integral, or antiderivative, of various functions for ease of use later in Thermodynamics and Kinetics.  We will start by differentiating between <em>indefinite</em> and <em>definite</em> integration.</p>
+</section>
+<section id="indefinite-integration">
+<h2><span class="section-number">3.3.4. </span>Indefinite integration<a class="headerlink" href="#indefinite-integration" title="Permalink to this heading">#</a></h2>
+<p>Indefinite integration is equivalent to the question above.  What is the antiderivative of a function?  For example, we might write</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3b19ae46-1e59-413b-b84b-336692344423">
+<span class="eqno">(3.34)<a class="headerlink" href="#equation-3b19ae46-1e59-413b-b84b-336692344423" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int x^2dx = \frac{x^3}{3} + C,
+\end{equation}\]</div>
+<p>where this can be read as “the integral of <span class="math notranslate nohighlight">\(x^2\)</span> is <span class="math notranslate nohighlight">\(\frac{x^3}{3}\)</span> plus an arbitrary constant, <span class="math notranslate nohighlight">\(C\)</span>.”  This is an example of <em>indefinite integration</em> for which we determine the function(s) that represent the antiderivative of the integrand (<span class="math notranslate nohighlight">\(x^2\)</span>).  Note that you can substitute any real number for <span class="math notranslate nohighlight">\(C\)</span> and have a correct answer.</p>
+<p>If we look at the <em>indefinite integration</em> above in reverse, we see that the derivative of <span class="math notranslate nohighlight">\(\frac{x^3}{3}\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span> is <span class="math notranslate nohighlight">\(x^2\)</span>.  The derivative of any constant is <span class="math notranslate nohighlight">\(0\)</span> so we actually have an infinite number of functions that satisfy the <em>indefinite integration</em> above and we represent these by including <span class="math notranslate nohighlight">\(C\)</span>, the arbitrary constant.</p>
+<section id="some-common-indefinite-integrals">
+<h3><span class="section-number">3.3.4.1. </span>Some Common Indefinite Integrals<a class="headerlink" href="#some-common-indefinite-integrals" title="Permalink to this heading">#</a></h3>
+<p>Here are the <em>indefinite integrals</em> of some common 1D functions:</p>
+<p>Polynomials (with constant <span class="math notranslate nohighlight">\(A\)</span> and integer <span class="math notranslate nohighlight">\(n\neq-1\)</span>)</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1eb7075d-eb7e-4f81-828b-5b7db9753430">
+<span class="eqno">(3.35)<a class="headerlink" href="#equation-1eb7075d-eb7e-4f81-828b-5b7db9753430" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int Ax^n dx = \frac{Ax^{n+1}}{n+1} + C
+\end{equation}\]</div>
+<p>Polynomial <span class="math notranslate nohighlight">\(n=-1\)</span> (with constant <span class="math notranslate nohighlight">\(A\)</span>)</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a4d6c002-461c-45a8-8250-a168f6b774a9">
+<span class="eqno">(3.36)<a class="headerlink" href="#equation-a4d6c002-461c-45a8-8250-a168f6b774a9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int \frac{A}{x}dx = A\ln|x| + C
+\end{equation}\]</div>
+<p>Exponentials (with constants <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(m\)</span>):</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a4f630a4-c50b-443f-83b5-e71daad5f0fb">
+<span class="eqno">(3.37)<a class="headerlink" href="#equation-a4f630a4-c50b-443f-83b5-e71daad5f0fb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int Ae^{m\cdot x}dx = \frac{A}{m}e^{m\cdot x} + C
+\end{equation}\]</div>
+<p>Trig functions (constant <span class="math notranslate nohighlight">\(A\)</span>):</p>
+<div class="amsmath math notranslate nohighlight" id="equation-bbd3ab84-9a25-430d-94f5-361ae5eb6834">
+<span class="eqno">(3.38)<a class="headerlink" href="#equation-bbd3ab84-9a25-430d-94f5-361ae5eb6834" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int A\sin(x) dx = -A\cos(x) + C
+\end{equation}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-475ce623-8f09-423d-9237-42e6419a7b83">
+<span class="eqno">(3.39)<a class="headerlink" href="#equation-475ce623-8f09-423d-9237-42e6419a7b83" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int A\cos(x) dx = A\sin(x) + C
+\end{equation}\]</div>
+<p>For a more exhaustive list of indefinite integrals, see http://integral-table.com/, https://en.wikipedia.org/wiki/Lists_of_integrals, or use Wolgram alpha.</p>
+</section>
+<section id="u-substitution">
+<h3><span class="section-number">3.3.4.2. </span><span class="math notranslate nohighlight">\(u\)</span> substitution<a class="headerlink" href="#u-substitution" title="Permalink to this heading">#</a></h3>
+<p>Composite functions are more difficult to differentiate. There are a few tricks to help with this.  One example is <span class="math notranslate nohighlight">\(u\)</span> substitution.  This is basically the integral version of the chain rule and does come in handy in Thermodynamics and Kinetics.</p>
+<p>Rather than spell out the theory of <span class="math notranslate nohighlight">\(u\)</span> substitution, here is an example of using it.  Determine a closed for expression for <span class="math notranslate nohighlight">\(f(x)\)</span> where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-041a50b6-771d-4ebc-85dd-041c9355a2ee">
+<span class="eqno">(3.40)<a class="headerlink" href="#equation-041a50b6-771d-4ebc-85dd-041c9355a2ee" title="Permalink to this equation">#</a></span>\[\begin{equation}
+f(x) = \int 2x\cos(x^2)dx
+\end{equation}\]</div>
+<p>Note that we clearly have composite functions here.  We have <span class="math notranslate nohighlight">\(2x\)</span>, <span class="math notranslate nohighlight">\(\cos(x)\)</span>, and <span class="math notranslate nohighlight">\(x^2\)</span>.  This integral is also clearly not one of the ones listed above.  We are going to use <span class="math notranslate nohighlight">\(u\)</span> substitution to solve it.</p>
+<p><em><strong>A clue that <span class="math notranslate nohighlight">\(u\)</span> substitution will work is when you have to parts of the function that are related by a derivative</strong></em></p>
+<p>We see that the <span class="math notranslate nohighlight">\(x^2\)</span> and <span class="math notranslate nohighlight">\(2x\)</span> are related by a derivative.  Namely <span class="math notranslate nohighlight">\(\frac{d}{dx}x^2 = 2x\)</span>.  This means <span class="math notranslate nohighlight">\(u\)</span> substitution will likely work in this case.</p>
+<p>We start by picking one of the functions and substitute it with a new variable <span class="math notranslate nohighlight">\(u\)</span>.  We will choose</p>
+<div class="amsmath math notranslate nohighlight" id="equation-118627ec-0b42-4ea1-a83c-d529e5557131">
+<span class="eqno">(3.41)<a class="headerlink" href="#equation-118627ec-0b42-4ea1-a83c-d529e5557131" title="Permalink to this equation">#</a></span>\[\begin{equation}
+u = x^2
+\end{equation}\]</div>
+<p>because the derivative of <span class="math notranslate nohighlight">\(x^2\)</span> is <span class="math notranslate nohighlight">\(dx\)</span>.  When we substitue <span class="math notranslate nohighlight">\(u\)</span> into the integral above we are going to want to do the integration over <span class="math notranslate nohighlight">\(u\)</span>, not <span class="math notranslate nohighlight">\(x\)</span>.  Thus, we need to also substitute the differential of <span class="math notranslate nohighlight">\(u\)</span>.  To determine that, we take the differential of both sides of the equation for <span class="math notranslate nohighlight">\(u\)</span> above to yield</p>
+<div class="amsmath math notranslate nohighlight" id="equation-56506a7f-3654-40de-8e8b-6d582e1cd5c2">
+<span class="eqno">(3.42)<a class="headerlink" href="#equation-56506a7f-3654-40de-8e8b-6d582e1cd5c2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+du = 2xdx
+\end{equation}\]</div>
+<p>We now substitute both of these into the integral above to get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c6636104-9737-4454-9cce-12bd01a1b28f">
+<span class="eqno">(3.43)<a class="headerlink" href="#equation-c6636104-9737-4454-9cce-12bd01a1b28f" title="Permalink to this equation">#</a></span>\[\begin{align}
+f(x) &amp;= \int 2x\cos(x^2)dx \\
+&amp;= \int \cos(x^2)2xdx \\
+&amp;= \int \cos(u)du\\
+&amp;= \sin(u) + C\\
+&amp;= \sin(x^2) + C
+\end{align}\]</div>
+<p>where I first rearrange the integral to make clear that there is a <span class="math notranslate nohighlight">\(du=2xdx\)</span> in the integral.  I then substitute in <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(du\)</span> to get <span class="math notranslate nohighlight">\(\int \cos(u)du\)</span>.  This integral is given above as <span class="math notranslate nohighlight">\(\sin(u) + C\)</span>.  Finally, we substitute back in for <span class="math notranslate nohighlight">\(u\)</span> to make the dependence on <span class="math notranslate nohighlight">\(x\)</span> explicit once again.</p>
+<p>If we take the derivative of <span class="math notranslate nohighlight">\(\sin(x^2) + C\)</span> we need to use the chain rule but should see that we will get <span class="math notranslate nohighlight">\(2x\cos(x^2)\)</span>.</p>
+</section>
+<section id="integration-by-parts">
+<h3><span class="section-number">3.3.4.3. </span>Integration by Parts<a class="headerlink" href="#integration-by-parts" title="Permalink to this heading">#</a></h3>
+<p>The integral version of the product rule is integration by parts (sort of).  It is annoying and we won’t encounter it that much in this class so I will not go over it.</p>
+</section>
+</section>
+<section id="definite-integration">
+<h2><span class="section-number">3.3.5. </span>Definite Integration<a class="headerlink" href="#definite-integration" title="Permalink to this heading">#</a></h2>
+<p>Definite integration is comparable to indefinite integration except that there are limits placed on the integral in <em>definite integration</em>.  The result is typically a number and represents the area under the curve between the lower and upper limits.</p>
+<p><em>Definite integrals</em> are often evaluated by determining the <em>indefinite integral</em> and then determining the difference of the values of this function at the limits.  The arbitrary constant, <span class="math notranslate nohighlight">\(C\)</span>, no longer matters because it is the same at both limits and so get substracted out.</p>
+<p>Here is an example</p>
+<div class="amsmath math notranslate nohighlight" id="equation-52d29b5f-e1af-482f-8019-d27f93fa39a4">
+<span class="eqno">(3.44)<a class="headerlink" href="#equation-52d29b5f-e1af-482f-8019-d27f93fa39a4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int_{-2}^2x^2dx = ?
+\end{equation}\]</div>
+<p>To dermine this <em>definite integral</em>, we start be determining the <em>indefinite integral</em>.  We determined this above to be</p>
+<div class="amsmath math notranslate nohighlight" id="equation-63b65338-d825-4dfc-99d0-4a64936dc391">
+<span class="eqno">(3.45)<a class="headerlink" href="#equation-63b65338-d825-4dfc-99d0-4a64936dc391" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int x^2dx = \frac{x^3}{3} + C,
+\end{equation}\]</div>
+<p>We can now solve the <em>definite integral</em></p>
+<div class="amsmath math notranslate nohighlight" id="equation-51344663-f7e5-4761-a36a-fbf1ccf53022">
+<span class="eqno">(3.46)<a class="headerlink" href="#equation-51344663-f7e5-4761-a36a-fbf1ccf53022" title="Permalink to this equation">#</a></span>\[\begin{align}
+\int_{-2}^2x^2dx &amp;= \left[ \frac{x^3}{3} \right]_{-2}^2 \\
+&amp;= \frac{2^3}{3} - \frac{(-2)^3}{3} \\
+&amp;= \frac{16}{3}
+\end{align}\]</div>
+<p>The notation <span class="math notranslate nohighlight">\(\left[ \frac{x^3}{3} \right]_{-2}^2\)</span> means to take the difference of the function <span class="math notranslate nohighlight">\(\frac{x^3}{3}\)</span> evaluated at the upper (<span class="math notranslate nohighlight">\(2\)</span>) and lower (<span class="math notranslate nohighlight">\(-2\)</span>) limits.</p>
+<section id="tables-of-definite-integrals">
+<h3><span class="section-number">3.3.5.1. </span>Tables of Definite Integrals<a class="headerlink" href="#tables-of-definite-integrals" title="Permalink to this heading">#</a></h3>
+<p>There are some functions that do not have a nice <em>indefinite integral</em> but for which the <em>definite integral</em> over certain domains can be determined.  A common example is a Guassian integral over either <span class="math notranslate nohighlight">\(0&lt;x&lt;\infty\)</span> or <span class="math notranslate nohighlight">\(-\infty&lt;x&lt;\infty\)</span>.  It can be shown that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-66819c68-b7fc-4d87-8776-9634bfffc456">
+<span class="eqno">(3.47)<a class="headerlink" href="#equation-66819c68-b7fc-4d87-8776-9634bfffc456" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int_{-\infty}^{\infty}e^{-\alpha x^2} dx= \sqrt{\frac{\pi}{\alpha}} 
+\end{equation}\]</div>
+<p>We may encounter integrals like this.  It is not expected that you be able to determine these but rather you will be given a general result like those tabulated at the bottom of the wikipedia page of integrals (https://en.wikipedia.org/wiki/Lists_of_integrals).</p>
+</section>
+<section id="numeric-integration">
+<h3><span class="section-number">3.3.5.2. </span>Numeric integration<a class="headerlink" href="#numeric-integration" title="Permalink to this heading">#</a></h3>
+<p>Definite integrals can also be approximated by numeric integration.  We will not dicuss this technique but the basics are give in a <a class="reference internal" href="../coding_concepts/numeric_integration.html"><span class="doc std std-doc">different noteboook</span></a>.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./math_concepts_in_physical_chemistry"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="differentiation_and_critical_points.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">3.2. </span>Differentiation and Critical Points</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="derivatives_of_multivariable_functions.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3.4. </span>Derivatives of Multivariable Functions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">3.3.1. Learning goals:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">3.3.2. Coding concepts:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integration">3.3.3. Integration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indefinite-integration">3.3.4. Indefinite integration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#some-common-indefinite-integrals">3.3.4.1. Some Common Indefinite Integrals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#u-substitution">3.3.4.2. <span class="math notranslate nohighlight">\(u\)</span> substitution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-by-parts">3.3.4.3. Integration by Parts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definite-integration">3.3.5. Definite Integration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tables-of-definite-integrals">3.3.5.1. Tables of Definite Integrals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-integration">3.3.5.2. Numeric integration</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin McCullagh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
