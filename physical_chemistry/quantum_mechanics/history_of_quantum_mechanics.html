@@ -530,7 +530,7 @@ document.write(`
     <span class="c1"># setup plot parameters</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -574,6 +574,44 @@ document.write(`
 <p>This was perplexing to the physicists at the time and no theory was able to explain this until Max Planck made the assumption that the energy levels were discrete (rather than contiunous).  This lead to an expression for the spectral distribution function of:</p>
 <p><span class="math notranslate nohighlight">\(B(\lambda,T) = \frac{2hc^2}{\lambda^5}\frac{1}{e^{\frac{hc}{\lambda k_B T}}-1}. \tag{2}\)</span></p>
 <p>The only new term in this expression is <span class="math notranslate nohighlight">\(h\)</span> which is termed Planck’s constant.  The value of this constant was unknown at the time but was the only unknown in the above equation so could be fit to experimental data for a particular temperature.  Doing this, Planck arrived at a value of <span class="math notranslate nohighlight">\(h = 6.626 \times 10^{-34}\)</span> J<span class="math notranslate nohighlight">\(\cdot\)</span>s.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit T and h</span>
+<span class="c1"># quantum spectral distribution function</span>
+<span class="k">def</span> <span class="nf">quantumB_fit_t_H</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="p">)</span><span class="o">**</span><span class="mi">5</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="o">*</span><span class="n">kB</span><span class="o">*</span><span class="n">T</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+
+<span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e-34</span><span class="p">,</span><span class="mi">5000</span><span class="p">])</span>
+<span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">quantumB_fit_t_H</span><span class="p">,</span> <span class="n">solar</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">solar</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="mf">1E13</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="n">p0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">popt</span><span class="p">)</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="mf">6.62607015E-34</span> 
+<span class="k">def</span> <span class="nf">quantumB_fit_T</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="p">)</span><span class="o">**</span><span class="mi">5</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="o">*</span><span class="n">kB</span><span class="o">*</span><span class="n">T</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5000</span><span class="p">])</span>
+<span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">quantumB_fit_T</span><span class="p">,</span> <span class="n">solar</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">solar</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="mf">1E13</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="n">p0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">popt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="n">td</span><span class="o">/</span><span class="n">dll8n_kj4vd0zxjm0xd9m7740000gq</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_28263</span><span class="o">/</span><span class="mf">3122538737.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> 
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e-34</span><span class="p">,</span><span class="mi">5000</span><span class="p">])</span>
+<span class="ne">----&gt; </span><span class="mi">9</span> <span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">quantumB_fit_t_H</span><span class="p">,</span> <span class="n">solar</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">solar</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="mf">1E13</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="n">p0</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="nb">print</span><span class="p">(</span><span class="n">popt</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> 
+
+<span class="ne">NameError</span>: name &#39;solar&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -581,7 +619,7 @@ document.write(`
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="mf">6.626E-34</span>  <span class="c1"># J*s</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="mf">6.62607015E-34</span>  <span class="c1"># J*s</span>
 <span class="n">c</span> <span class="o">=</span> <span class="mf">3.0E8</span>      <span class="c1"># m/s</span>
 <span class="n">kB</span> <span class="o">=</span> <span class="mf">1.380E-23</span> <span class="c1"># J/K</span>
 <span class="n">nm_to_m</span> <span class="o">=</span> <span class="mf">1.0E-9</span> <span class="c1"># convert nm to m</span>
@@ -599,11 +637,11 @@ document.write(`
 <span class="c1"># initialize a figure</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">define_figure</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;$\lambda$ (nm)&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Spectral density&quot;</span><span class="p">)</span>
 <span class="c1"># make an array containing domain of wavelengths to consider</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">3000</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">4000</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">quantumB</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">5100</span><span class="p">))</span><span class="o">*</span><span class="mf">1.25</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">solar</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">solar</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="mf">1E13</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
 <span class="c1"># plot quantum result</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">quantumB</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">5100</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;quantum T=5100K&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">quantumB</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">5100</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;quantum T=5100&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">quantumB</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">4000</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;quantum T=4000K&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">quantumB</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">3000</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;quantum T=300K&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="c1"># plot classical result</span>
@@ -615,7 +653,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/6a4e3b00ae097df7f50b346ad7459dd0804f61e7216ae6c8ec90018c6291f087.png" src="../../_images/6a4e3b00ae097df7f50b346ad7459dd0804f61e7216ae6c8ec90018c6291f087.png" />
+<img alt="../../_images/bdf8447f67e38675e2b47bc1578b22e29bc55ff84696edf7b08d40055af28b2e.png" src="../../_images/bdf8447f67e38675e2b47bc1578b22e29bc55ff84696edf7b08d40055af28b2e.png" />
 </div>
 </div>
 </section>
@@ -661,7 +699,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/24e319f5e5e52471f041e3e17bb3c191d5d8c7b75a9e760b78c0933a47151ed4.png" src="../../_images/24e319f5e5e52471f041e3e17bb3c191d5d8c7b75a9e760b78c0933a47151ed4.png" />
+<img alt="../../_images/4712262ac47a60ad766e9a1879ff9d9537e18092e8e638fda9a53e1758e02201.png" src="../../_images/4712262ac47a60ad766e9a1879ff9d9537e18092e8e638fda9a53e1758e02201.png" />
 </div>
 </div>
 </section>
@@ -705,7 +743,7 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/c8d05efc9dfed8a3d7c2b3a23af766938bf77576ce75eef47fef10aa8d941d49.png" src="../../_images/c8d05efc9dfed8a3d7c2b3a23af766938bf77576ce75eef47fef10aa8d941d49.png" />
+<img alt="../../_images/5eeac8531fba894e33f773d67fda8b14a08aab455867775bee3415c0f516179c.png" src="../../_images/5eeac8531fba894e33f773d67fda8b14a08aab455867775bee3415c0f516179c.png" />
 </div>
 </div>
 </section>
@@ -714,52 +752,52 @@ document.write(`
 <p><img alt="hatom" src="../../_images/spectrumwav.gif" /></p>
 <p>When heated or subjected to electrical discharge, atoms emit radiation of characteristic frequencies.  The spectrum from each atom is unique.  These discrete emitted frequencies comprise a stick spectrum such as the one shown above.</p>
 <p>These stick spectra are clearly impossible to describe with classical mechanics.  In 1885, Johann Blamer demonstrated that a subset of the hydrogen atom spectrum (the Balmer series) could be described by the equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8fcda821-95c9-4d93-81dd-e586e6588a8c">
-<span class="eqno">(4.656)<a class="headerlink" href="#equation-8fcda821-95c9-4d93-81dd-e586e6588a8c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-62229de1-3abf-4cb2-8ae5-4c6080ee4407">
+<span class="eqno">(4.656)<a class="headerlink" href="#equation-62229de1-3abf-4cb2-8ae5-4c6080ee4407" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v = 8.2202\times10^{14}\left(1-\frac{4}{n^2}\right),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(n=3,4,5,...\)</span>.  Later, Johannes Rydberg generalized this formula to account for the entire hydrogen atom spectrum yielding the Rydberg formula</p>
-<div class="amsmath math notranslate nohighlight" id="equation-30f97be6-d187-496a-9610-cf2836ae0bca">
-<span class="eqno">(4.657)<a class="headerlink" href="#equation-30f97be6-d187-496a-9610-cf2836ae0bca" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0e5835ea-a8aa-4482-bd9f-67e110469653">
+<span class="eqno">(4.657)<a class="headerlink" href="#equation-0e5835ea-a8aa-4482-bd9f-67e110469653" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tilde{v} = R_H\left(\frac{1}{n_1^2}-\frac{1}{n_2^2}\right),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(R_H = 109677.581\)</span> cm<span class="math notranslate nohighlight">\(^{-1}\)</span> is the Rydberg constant, <span class="math notranslate nohighlight">\(n_1 = 1,2,3,...\)</span>, and <span class="math notranslate nohighlight">\(n_2 = n_1+1,n_1+2,...\)</span>.</p>
 <p>While these equations fit the hydrogen atom spectrum nicely, they do not prescribe any physics to the system.  They do not present a model of the hydrogen atom but rather a heuristic equation that fits the data.  Nonetheless, scientists were perplexed by the presence of the integers <span class="math notranslate nohighlight">\(n_1\)</span> and <span class="math notranslate nohighlight">\(n_2\)</span>.</p>
 <p>In 1911, Niels Bohr proposed a model for the hydrogen atom that was able to recapitulate the hydrogen atom spectrum.</p>
 <p>The model consists of an electron orbiting a proton in circular orbits.  The proton is considered to be fixed in space because it is so much more massive than the electron.  Bohr assumed that the electron demonstrates wavelike characteristics and that these waves must have an integer number of modes around the circular orbit.  This equates to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f059e2a5-d2e5-41aa-91e0-04fe2f8d0b64">
-<span class="eqno">(4.658)<a class="headerlink" href="#equation-f059e2a5-d2e5-41aa-91e0-04fe2f8d0b64" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8bf20627-7a0f-41ae-9d3c-abf4f63c3ce6">
+<span class="eqno">(4.658)<a class="headerlink" href="#equation-8bf20627-7a0f-41ae-9d3c-abf4f63c3ce6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 2\pi r = n\lambda_e \quad n=1,2,3,...
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\lambda_e\)</span> is the deBroglie wavelength of an electron and can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-65068556-8eac-4b35-a96b-3ba0ed833553">
-<span class="eqno">(4.659)<a class="headerlink" href="#equation-65068556-8eac-4b35-a96b-3ba0ed833553" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5add4bea-888e-4ab4-9e12-795cc1fed3fb">
+<span class="eqno">(4.659)<a class="headerlink" href="#equation-5add4bea-888e-4ab4-9e12-795cc1fed3fb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \lambda_e = \frac{h}{m_ev}.
 \end{equation}\]</div>
 <p>Plugging the deBroglie wavelength equation into the circular wave equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-75c5dd63-4256-4446-9cc0-84ba5687cf42">
-<span class="eqno">(4.660)<a class="headerlink" href="#equation-75c5dd63-4256-4446-9cc0-84ba5687cf42" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-744c107e-be05-43bc-9727-5ca750dec064">
+<span class="eqno">(4.660)<a class="headerlink" href="#equation-744c107e-be05-43bc-9727-5ca750dec064" title="Permalink to this equation">#</a></span>\[\begin{equation}
 m_evr = \frac{nh}{2\pi} = n\hbar,
 \end{equation}\]</div>
 <p>where we have introduce <span class="math notranslate nohighlight">\(\hbar = \frac{h}{2\pi}\)</span> as a short-hand because it comes up frequently in quantum mechanics. The term on the left-hand side of the last equation, <span class="math notranslate nohighlight">\(m_evr\)</span>, is the angular momentum of the electron.  Thus Bohr ‘s model demonstrates a quantization of the angular momentum of the electron.</p>
 <p>Bohr posited that for stationary states of the electron the electrostatic force between the proton and electron,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b3a5ff29-f09e-42d5-9268-3d1cfdc980a4">
-<span class="eqno">(4.661)<a class="headerlink" href="#equation-b3a5ff29-f09e-42d5-9268-3d1cfdc980a4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3c7af179-9e0c-4361-98b4-d7175ca1be1f">
+<span class="eqno">(4.661)<a class="headerlink" href="#equation-3c7af179-9e0c-4361-98b4-d7175ca1be1f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f = \frac{e^2}{4\pi\varepsilon_0r^2}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(4\pi\varepsilon_0\)</span> is present to achieve SI units, must be equal to the centrifugal force,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3d569bc9-4243-4155-8bd8-ac9775c5c0f6">
-<span class="eqno">(4.662)<a class="headerlink" href="#equation-3d569bc9-4243-4155-8bd8-ac9775c5c0f6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-70c79cc9-90c0-4066-946f-4039c38e9786">
+<span class="eqno">(4.662)<a class="headerlink" href="#equation-70c79cc9-90c0-4066-946f-4039c38e9786" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f = \frac{m_ev^2}{r}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(m_e\)</span> is the mass and <span class="math notranslate nohighlight">\(v\)</span> is the velocity of the electron.  Equating these two forces yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dc2edbf5-e648-4f4e-93b3-53f59721ba02">
-<span class="eqno">(4.663)<a class="headerlink" href="#equation-dc2edbf5-e648-4f4e-93b3-53f59721ba02" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-dd553b6c-7cb5-4eb2-94d0-46d68421f5a6">
+<span class="eqno">(4.663)<a class="headerlink" href="#equation-dd553b6c-7cb5-4eb2-94d0-46d68421f5a6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{e^2}{4\pi\varepsilon_0r^2} = \frac{m_ev^2}{r}.
 \end{equation}\]</div>
 <p>The combination of the force balance equation and the quantized angular momentum equation quantizes the values of <span class="math notranslate nohighlight">\(r\)</span>, the radius of the electron’s circular orbit, that can be taken.  To demonstrate this we solve the quantized angular momentum equation for <span class="math notranslate nohighlight">\(v\)</span> and plug the result into the force balance equation and solve for <span class="math notranslate nohighlight">\(r\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e4f82604-a686-4675-81be-ab201df651e3">
-<span class="eqno">(4.664)<a class="headerlink" href="#equation-e4f82604-a686-4675-81be-ab201df651e3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-df94a126-4cee-4c47-89ca-f377bc29ade2">
+<span class="eqno">(4.664)<a class="headerlink" href="#equation-df94a126-4cee-4c47-89ca-f377bc29ade2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{e^2}{4\pi\varepsilon_0r^2} &amp;= \frac{m_e\left( \frac{n\hbar}{m_er}\right)^2}{r} \\
 \Rightarrow \frac{e^2}{4\pi\varepsilon_0} &amp;= \frac{(n\hbar)^2}{m_er} \\
 \Rightarrow e^2m_er &amp;= 4\pi\varepsilon_0(n\hbar)^2 \\
@@ -787,17 +825,20 @@ f = \frac{m_ev^2}{r}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/21e19522ec1ae3b6d13cdcd8ffcdee63097a0afb0d3d4deba38ea78b53ccbec7.png" src="../../_images/21e19522ec1ae3b6d13cdcd8ffcdee63097a0afb0d3d4deba38ea78b53ccbec7.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fb427e7a2b0&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/d7183534ffb67138d834276a776b05f4d551334575a63a56bc45ef4d0301f0ac.png" src="../../_images/d7183534ffb67138d834276a776b05f4d551334575a63a56bc45ef4d0301f0ac.png" />
 </div>
 </div>
 <p>The energy of the system can is a sum of the Coulomb attraction between the electron and the proton and the kinetic energy of the electron:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-889a8940-c1a1-4850-b99e-be2d17a01a26">
-<span class="eqno">(4.665)<a class="headerlink" href="#equation-889a8940-c1a1-4850-b99e-be2d17a01a26" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-21b91917-bab4-45d3-b2f3-f5fa666aa546">
+<span class="eqno">(4.665)<a class="headerlink" href="#equation-21b91917-bab4-45d3-b2f3-f5fa666aa546" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E(r) = \frac{1}{2}m_ev^2 - \frac{e^2}{4\pi\varepsilon_0r}
 \end{equation}\]</div>
 <p>To determine the energy of an electron that is limited to be in the circular wavelike orbits described above, we must use the force balance relationship.  We do that by substituting <span class="math notranslate nohighlight">\(m_ev^2 = \frac{e^2}{4\pi\varepsilon_0r}\)</span> into the energy equation to yield</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f6703657-1b68-4a57-8a00-2a584bbb8f7d">
-<span class="eqno">(4.666)<a class="headerlink" href="#equation-f6703657-1b68-4a57-8a00-2a584bbb8f7d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-576cacc1-5f96-48bc-9d1c-d12545ac64a0">
+<span class="eqno">(4.666)<a class="headerlink" href="#equation-576cacc1-5f96-48bc-9d1c-d12545ac64a0" title="Permalink to this equation">#</a></span>\[\begin{align}
 E(r) &amp;= \frac{1}{2}\frac{e^2}{4\pi\varepsilon_0r} - \frac{e^2}{4\pi\varepsilon_0r} \\
     &amp;= -\frac{1}{2}\frac{e^2}{4\pi\varepsilon_0r} \\
     &amp;= -\frac{1}{2}\frac{e^2}{4\pi\varepsilon_0}\frac{e^2m_e}{4\pi\varepsilon_0(n\hbar)^2} \\
@@ -806,18 +847,18 @@ E(r) &amp;= \frac{1}{2}\frac{e^2}{4\pi\varepsilon_0r} - \frac{e^2}{4\pi\varepsil
 \end{align}\]</div>
 <p>where I plugged in the quantized values for <span class="math notranslate nohighlight">\(r\)</span> derived from the for balance relationship.</p>
 <p>Taking differences in energy between two energy levels, <span class="math notranslate nohighlight">\(n_1\)</span> and <span class="math notranslate nohighlight">\(n_2&gt;n_1\)</span>, yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-498444a5-4466-4aa2-8527-423125713b4b">
-<span class="eqno">(4.667)<a class="headerlink" href="#equation-498444a5-4466-4aa2-8527-423125713b4b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-23110b63-3db8-44b9-b866-94a1f9b0cfb2">
+<span class="eqno">(4.667)<a class="headerlink" href="#equation-23110b63-3db8-44b9-b866-94a1f9b0cfb2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta E = \frac{m_ee^4}{8\varepsilon_0^2h^2}\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right)
 \end{equation}\]</div>
 <p>Equating this to the frequency (use <span class="math notranslate nohighlight">\(E = h\nu\)</span> and <span class="math notranslate nohighlight">\(\tilde{\nu} = \frac{\nu}{c}\)</span>) of emitted light yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-03922776-1489-49d6-829d-ddcd18b3c7ff">
-<span class="eqno">(4.668)<a class="headerlink" href="#equation-03922776-1489-49d6-829d-ddcd18b3c7ff" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-29a12c22-9330-4f06-85d3-cf383eccca3f">
+<span class="eqno">(4.668)<a class="headerlink" href="#equation-29a12c22-9330-4f06-85d3-cf383eccca3f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tilde{v} = \frac{m_ee^4}{8\varepsilon_0^2ch^3}\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right)
 \end{equation}\]</div>
 <p>We see that this yields an expression for the Rydberg constant in terms of fundamental constants</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3c9f7e03-8811-4c71-a116-4bcb6cc4a7ff">
-<span class="eqno">(4.669)<a class="headerlink" href="#equation-3c9f7e03-8811-4c71-a116-4bcb6cc4a7ff" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-858a807f-b698-4bcf-83ee-22cce28c467d">
+<span class="eqno">(4.669)<a class="headerlink" href="#equation-858a807f-b698-4bcf-83ee-22cce28c467d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R_H = \frac{m_ee^4}{8\varepsilon_0^2ch^3}
 \end{equation}\]</div>
 <div class="cell tag_hide-input docutils container">
@@ -849,7 +890,7 @@ R_H = \frac{m_ee^4}{8\varepsilon_0^2ch^3}
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/35618d2c952853c8ee8ea5ec02da2290d282b07e679d325929da8731b1c642d0.png" src="../../_images/35618d2c952853c8ee8ea5ec02da2290d282b07e679d325929da8731b1c642d0.png" />
+<img alt="../../_images/8a55b5ce7bc11de49754089d43329d76069f063c979552972e0637586e7cf261.png" src="../../_images/8a55b5ce7bc11de49754089d43329d76069f063c979552972e0637586e7cf261.png" />
 </div>
 </div>
 </section>
