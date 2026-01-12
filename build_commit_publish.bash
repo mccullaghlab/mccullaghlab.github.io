@@ -1,5 +1,5 @@
 #!/bin/bash
-jupyter book build Chemistry_Lessons_Jupyter_Notebooks
+jupyter-book build Chemistry_Lessons_Jupyter_Notebooks
 # git
 git add .
 git commit -m "something"
