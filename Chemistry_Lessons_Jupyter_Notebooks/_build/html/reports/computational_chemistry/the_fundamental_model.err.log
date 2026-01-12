@@ -1,0 +1,57 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Photoelectric effect for Lithium
+h = 6.626e-1  # converted unites
+c = 3.0E8      # m/s
+
+v0 = 5.564 # E14 for Lithium
+
+# quantum spectral distribution function
+def photoelectric(x):
+    return h*x - h*v0
+
+# initialize a figure
+ax = define_figure(xlabel='$ v (10^{14}s^{-1})$',ylabel="KE$/10^{-19}$ J")
+# make an array containing domain of wavelengths to consider
+x = np.arange(5.0,15,0.1)
+plt.ylim((0.0,np.amax(photoelectric(x))*1.05))
+# plot quantum result
+ax.plot(x,photoelectric(x),label="Einstein",lw=3)
+xdata = [c/300E-9*1E-14,c/400E-9*1E-14]
+ydata = [2.935,1.280]
+ax.plot(xdata,ydata,'o',markersize=15,mfc='none',label='data')
+ax.plot()
+# make legend
+ax.legend(fontsize=20,markerscale=1.0);
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[3], line 12[0m
+[1;32m      9[0m     [38;5;28;01mreturn[39;00m h[38;5;241m*[39mx [38;5;241m-[39m h[38;5;241m*[39mv0
+[1;32m     11[0m [38;5;66;03m# initialize a figure[39;00m
+[0;32m---> 12[0m ax [38;5;241m=[39m define_figure(xlabel[38;5;241m=[39m[38;5;124m'[39m[38;5;124m$ v (10^[39m[38;5;132;01m{14}[39;00m[38;5;124ms^[39m[38;5;124m{[39m[38;5;124m-1})$[39m[38;5;124m'[39m,ylabel[38;5;241m=[39m[38;5;124m"[39m[38;5;124mKE$/10^[39m[38;5;124m{[39m[38;5;124m-19}$ J[39m[38;5;124m"[39m)
+[1;32m     13[0m [38;5;66;03m# make an array containing domain of wavelengths to consider[39;00m
+[1;32m     14[0m x [38;5;241m=[39m np[38;5;241m.[39marange([38;5;241m5.0[39m,[38;5;241m15[39m,[38;5;241m0.1[39m)
+
+[0;31mNameError[0m: name 'define_figure' is not defined
+

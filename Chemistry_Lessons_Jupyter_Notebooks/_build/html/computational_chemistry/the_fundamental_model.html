@@ -1,0 +1,888 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>5. The Fundamental Model in Computational Chemistry &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'computational_chemistry/the_fundamental_model';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis" href="../physical_chemistry/electronic_structure/HF_for_H2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../jupyter_notebook_tutorials/intro.html">1. Jupyter Notebook Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">1.1. Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">1.2. Advanced Jupyter Notebook Tutorial</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../coding_concepts/intro.html">2. Coding Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/variables.html">2.1. Variables in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/arrays_and_matrices.html">2.2. Arrays and Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/for_loops.html">2.3. for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/functions.html">2.4. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/plotting_with_matplotlib.html">2.5. Plotting with matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../coding_concepts/numeric_integration.html">2.6. Numeric Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../math_concepts_in_physical_chemistry/intro.html">3. Math Concepts in Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../math_concepts_in_physical_chemistry/logarithms_and_exponential_functions.html">3.1. Logarithms and Exponential Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math_concepts_in_physical_chemistry/differentiation_and_critical_points.html">3.2. Differentiation and Critical Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math_concepts_in_physical_chemistry/integration_in_1D.html">3.3. Integration in 1D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math_concepts_in_physical_chemistry/derivatives_of_multivariable_functions.html">3.4. Derivatives of Multivariable Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math_concepts_in_physical_chemistry/discrete_probability.html">3.5. Discrete Probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../physical_chemistry/intro.html">4. Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/introduction/intro.html">4.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/introduction/non-bonded_interactions.html">4.1.1. Non-bonded Interactions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/intro.html">4.2. Statiscial Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.html">4.2.1. Boltzmann Factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Introduction_to_Probability.html">4.2.2. Introduction to Probability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">4.2.3. Thermodynamic Properties from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">4.2.4. Partition Function for a Monatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">4.2.5. Partition Function for a Diatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">4.2.6. Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">4.2.7. Kinetic Theory of Gasses from the Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/microscopic_view_of_entropy.html">4.2.8. Microscopic View of Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">4.2.9. Equations of State from Lattice Gas Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/thermodynamics/intro.html">4.3. Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/First_Law_of_Thermodynamics.html">4.3.1. The First Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Heat_Work_and_Calculating_U.html">4.3.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Thermodynamic_Cycles.html">4.3.4. Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Eastham_Honors.html">4.3.5. Thermodynamic Cycles: Solving exam problems and other examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Enthalpy.html">4.3.6. Enthalpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/The_Carnot_Cycle.html">4.3.7. The Carnot Cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Second_Law_of_Thermodynamics.html">4.3.8. Second Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">4.3.9. Heat Engine Diagrams</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Third_Law_of_Thermodynamics.html">4.3.11. The Third Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">4.3.12. First Derivative and Maxwell Relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Maxwell_Relations_Applied.html">4.3.13. Maxwell Relations Applied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Free_Energy_and_Legendre_Transforms.html">4.3.14. Free Energy and Legendre Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">4.3.15. The Pressure and Temperature Dependence of the Gibbs Energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">4.3.16. Phase Diagrams and Phase Equilibria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Chemical_Potential_from_Partition_Function.html">4.3.17. Chemical Potential from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Thermodynamics_of_Solutions.html">4.3.18. Thermodynamics of Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Ideal_and_Non_Ideal_Solutions.html">4.3.19. Ideal and Non-ideal Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/thermodynamics/Introduction_to_Chemical_Equilibrium.html">4.3.20. Chemical Equilibrium</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/kinetics/intro.html">4.4. Kinetics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Chemical_Kinetics_and_Rate_Laws.html">4.4.1. Chemical Kinetics and Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Integrated_Rate_Laws.html">4.4.2. Integrated Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Reversible_Reactions.html">4.4.3. Reversible Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">4.4.4. Transition State Theory and Temperature Dependence of the Rate Constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Reaction_Mechanisms_Part_I.html">4.4.5. Reaction Mechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Catalysts.html">4.4.6. Catalysts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.html">4.4.7. Enzyme Kinetics: The Michaelis-Menten Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Cooperative_Binding_Kinetics.html">4.4.8. Cooperative Binding Kinetics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/kinetics/Competitive_Inhibition.html">4.4.9. Competitive Inhibition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/intro.html">4.5. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/history_of_quantum_mechanics.html">4.5.1. The History of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/wave_particle_duality_classical_wave_equation.html">4.5.2. Wave Particle Duality and the Classical Wave Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/Schrodinger_Equation.html">4.5.3. Schrodinger Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/particle_in_a_box.html">4.5.4. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">4.5.5. The Uncertainty Principle and Applications of Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/postulates_of_quantum_mechanics.html">4.5.6. The Postulates and Formalism of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/momentum_operator.html">4.5.7. The Momentum Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/operator_algebra.html">4.5.8. Operator Algebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/particle_in_a_sphere.html">4.5.9. Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/properties_of_particle_in_a_sphere.html">4.5.10. Properties of Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/the_hydrogen_atom.html">4.5.11. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/properties_of_the_hydrogen_atom.html">4.5.12. Properties of the Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/the_hydrogen_atom_absorption_spectrum.html">4.5.13. The Hydrogen Atom Absorption Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/special_functions_in_quantum_mechanics.html">4.5.14. Special Functions in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/the_helium_atom.html">4.5.15. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">4.5.16. Variational Method in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/Single_Electron_Molecule_Variational_Approach.html">4.5.17. Single Electron Molecule in the Variational Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/Improving_the_h2%2B_variational_approximation.html">4.5.18. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/h2%2B_with_polarization.html">4.5.19. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation by Including Polarization Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">4.5.20. The H<span class="math notranslate nohighlight">\(_2\)</span> Molecule using the Variational Method in a Minimal Basis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/H2_Configuration_Interaction.html">4.5.21. H<span class="math notranslate nohighlight">\(_2\)</span> Configuration Interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/harmonic_oscillator.html">4.5.22. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">4.5.23. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/basis_functions.html">4.5.24. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/harmonic_oscillator_using_variational_method.html">4.5.25. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/morse_oscillator.html">4.5.26. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/rigid_rotator.html">4.5.27. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/rigid_rotator_using_variational_method.html">4.5.28. Rigid Rotator Variational Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/quantum_mechanics/rigid_rotator_selection_rules.html">4.5.29. Rigid Rotator Continued…</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/electronic_structure/intro.html">4.6. Electronic Structure</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/electronic_structure/Hartree_Fock_Helium_Atom.html">4.6.1. Hartree-Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Computational Chemistry</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/the_fundamental_model.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/the_fundamental_model.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fcomputational_chemistry/the_fundamental_model.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/computational_chemistry/the_fundamental_model.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>The Fundamental Model in Computational Chemistry</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">5.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">5.2. Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">5.3. Coding Concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-potential-energy-surface">5.4. The Potential Energy Surface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics">5.4.1. Quantum Mechanics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#molecular-mechanics">5.4.2. Molecular Mechanics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determing-structure-s-from-energy-functions">5.5. Determing Structure(s) from Energy Functions</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># @hidden_cell</span>
+<span class="c1"># import some libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>                <span class="c1"># for vector, matrix etc data structures and manipulations</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>   <span class="c1"># for plotting</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="the-fundamental-model-in-computational-chemistry">
+<h1><span class="section-number">5. </span>The Fundamental Model in Computational Chemistry<a class="headerlink" href="#the-fundamental-model-in-computational-chemistry" title="Permalink to this heading">#</a></h1>
+<section id="motivation">
+<h2><span class="section-number">5.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<p>The goal of much of computational chemistry is to predict the properties of chemical systems from information about their chemical makeup and system properties.  Since properties of molecules depend on their structure, determining system properties boils down to determining molecular structure (or ensembles of molecular structures).  The <em><strong>fundamental model</strong></em> in computational chemistry is that the structure/ensembles of molecules depend on their potential (/free) energy surfaces.  How you define/describe the potential energy of a molecule depends on the properties you are trying to determine.  In this course we will focus on two main ways of estimating the potential energy surfaces: quantum mechanics and molecular mechanics.</p>
+</section>
+<section id="learning-objectives">
+<h2><span class="section-number">5.2. </span>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<p>After working through this notebook, you will be able to:</p>
+<ol class="arabic simple">
+<li><p>Define the fundamental model of computational chemistry</p></li>
+<li><p>Identify two methods for computing the potential energy of chemical systems</p></li>
+<li><p>Identify methods for determinging molecular structure from potential energy functions of chemical systems</p></li>
+</ol>
+</section>
+<section id="coding-concepts">
+<h2><span class="section-number">5.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
+<p>The following coding concepts are employed in this notebook:</p>
+<ol class="arabic simple">
+<li><p>Variables</p></li>
+<li><p>Functions</p></li>
+<li><p>Plotting</p></li>
+</ol>
+</section>
+<section id="the-potential-energy-surface">
+<h2><span class="section-number">5.4. </span>The Potential Energy Surface<a class="headerlink" href="#the-potential-energy-surface" title="Permalink to this heading">#</a></h2>
+<p>We use the potential energy surface picture to describe chemical processes in general chemistry.  Consider the reversible reaction</p>
+<div class="amsmath math notranslate nohighlight" id="equation-30c8e9f2-84e3-4c3c-ae9a-9f8d299b8f18">
+<span class="eqno">(5.1)<a class="headerlink" href="#equation-30c8e9f2-84e3-4c3c-ae9a-9f8d299b8f18" title="Permalink to this equation">#</a></span>\[\begin{equation}
+A(g) \rightleftharpoons B(g). 
+\end{equation}\]</div>
+<p>If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> readily interconvert but there is more <span class="math notranslate nohighlight">\(A\)</span> at equilibrium, we can represent that behavior with an energy diagram such as</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># ---------- Parameters you can tweak ----------</span>
+<span class="n">E_A</span>  <span class="o">=</span> <span class="mf">0.0</span>      <span class="c1"># energy of A</span>
+<span class="n">E_B</span>  <span class="o">=</span> <span class="mf">3.0</span>      <span class="c1"># energy of B (higher than A =&gt; endothermic)</span>
+<span class="n">E_TS</span> <span class="o">=</span> <span class="mf">4.0</span>      <span class="c1"># transition state energy</span>
+<span class="n">x_TS</span> <span class="o">=</span> <span class="mf">0.55</span>     <span class="c1"># location of TS along reaction coordinate (0..1)</span>
+<span class="c1"># --------------------------------------------</span>
+
+<span class="c1"># Build a smooth &quot;double-well-ish&quot; curve that hits A, TS, and B</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+
+<span class="c1"># Use a cubic baseline that matches endpoints plus a Gaussian bump for TS</span>
+<span class="n">baseline</span> <span class="o">=</span> <span class="n">E_A</span> <span class="o">+</span> <span class="p">(</span><span class="n">E_B</span> <span class="o">-</span> <span class="n">E_A</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># smoothstep from A to B</span>
+<span class="n">bump</span> <span class="o">=</span> <span class="p">(</span><span class="n">E_TS</span> <span class="o">-</span> <span class="p">(</span><span class="n">E_A</span> <span class="o">+</span> <span class="p">(</span><span class="n">E_B</span> <span class="o">-</span> <span class="n">E_A</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x_TS</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">x_TS</span><span class="o">**</span><span class="mi">3</span><span class="p">)))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_TS</span><span class="p">)</span><span class="o">/</span><span class="mf">0.10</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">E</span> <span class="o">=</span> <span class="n">baseline</span> <span class="o">+</span> <span class="n">bump</span>
+
+<span class="c1"># Points for annotation</span>
+<span class="n">A_pt</span>  <span class="o">=</span> <span class="p">(</span><span class="mf">0.08</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mf">0.08</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">E</span><span class="p">))</span>
+<span class="n">B_pt</span>  <span class="o">=</span> <span class="p">(</span><span class="mf">0.92</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mf">0.92</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">E</span><span class="p">))</span>
+<span class="n">TS_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+<span class="n">TS_pt</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">TS_ix</span><span class="p">],</span> <span class="n">E</span><span class="p">[</span><span class="n">TS_ix</span><span class="p">])</span>
+
+<span class="c1"># Plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Markers</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="n">A_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">TS_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">B_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+           <span class="p">[</span><span class="n">A_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">TS_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">B_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+           <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Labels for states</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">A_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">A_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.7</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">B_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">B_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">TS_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">TS_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">0.4</span><span class="p">,</span> <span class="s2">&quot;TS&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Helper function for vertical brackets</span>
+<span class="k">def</span> <span class="nf">vbracket</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">xtext_offset</span><span class="o">=</span><span class="mf">0.015</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+        <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">y0</span><span class="p">),</span>
+        <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;&lt;-&gt;&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xpos</span> <span class="o">+</span> <span class="n">xtext_offset</span><span class="p">,</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">y0</span><span class="o">+</span><span class="n">y1</span><span class="p">),</span> <span class="n">label</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+
+<span class="c1"># ΔE (endothermic): energy difference A -&gt; B</span>
+<span class="n">vbracket</span><span class="p">(</span><span class="mf">0.97</span><span class="p">,</span> <span class="n">A_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">B_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="sa">r</span><span class="s2">&quot;$\Delta E &gt; 0$&quot;</span><span class="p">)</span>
+
+<span class="c1"># Activation energy forward: A -&gt; TS</span>
+<span class="n">vbracket</span><span class="p">(</span><span class="mf">0.18</span><span class="p">,</span> <span class="n">A_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">TS_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="sa">r</span><span class="s2">&quot;$E_a$ (A$\rightarrow$B)&quot;</span><span class="p">,</span> <span class="n">xtext_offset</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+
+<span class="c1"># ΔG° positive (equilibrium favors A)</span>
+<span class="c1"># We show it qualitatively as A lower than B</span>
+<span class="c1">#ax.text(0.60, min(E)+0.6, r&quot;$\Delta G^\circ &gt; 0$  (equilibrium favors A)&quot;, fontsize=11)</span>
+
+<span class="c1"># Cosmetics</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Reaction coordinate&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Energy, $E$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Energy diagram for A ⇌ B (endothermic; A favored at equilibrium)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/99ee02436a6282a417a5ef4ca325c6d8f3a0080df2724edd78e9fe09770d91f1.png" src="../_images/99ee02436a6282a417a5ef4ca325c6d8f3a0080df2724edd78e9fe09770d91f1.png" />
+</div>
+</div>
+<p>This energy diagram represents the potential energy as a function of the reaction coordinate (RC).  The total potential energy of the system depends on many more variables than the RC but the RC is an important coordinate that connects states <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>.</p>
+<p>In general, the function <span class="math notranslate nohighlight">\(E\)</span> depends on the coordinates of, at least, all of the nuclei (atoms) and electrons of the system.  Computational chemistry is split into two main ways of approximating this function: quantum mechanics and molecular mechanics.  It should also be noted that these two methods typically address different questions.</p>
+<section id="quantum-mechanics">
+<h3><span class="section-number">5.4.1. </span>Quantum Mechanics<a class="headerlink" href="#quantum-mechanics" title="Permalink to this heading">#</a></h3>
+<p>In quantum mechanics, the energy of a system is a function of the nuclei and the electrons of a system.  Since electrons are small, their behavior is governed by quantum mechanics rather than classical mechanics.  As such, we must solve for the energy using the Schrödinger equation</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2ecfa6a0-65a4-432d-8a16-33170ac32f99">
+<span class="eqno">(5.2)<a class="headerlink" href="#equation-2ecfa6a0-65a4-432d-8a16-33170ac32f99" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{H}\Psi = E\Psi,
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{H}\)</span> is the Hamiltonian, <span class="math notranslate nohighlight">\(\Psi\)</span> is the wavefunction, and <span class="math notranslate nohighlight">\(E\)</span> is the energy of the system.  This equation typically represents a partial differential equation that depends on all of the particles comprising the system.  Solving this equation can be cumbersome and typically requires approximations that we will discuss at a later time.</p>
+<p>Many codes have been developed to solve approximations of the Schrödinger equation for chemical systems.  These codes are often referred to as electronic structure codes.  Examples include Gaussian, Qchem, GAMESS, and others.  Additionally, there are other more specifc use codes developed to do various other things within quantum mechanics that are beyond the scope of this class.</p>
+</section>
+<section id="molecular-mechanics">
+<h3><span class="section-number">5.4.2. </span>Molecular Mechanics<a class="headerlink" href="#molecular-mechanics" title="Permalink to this heading">#</a></h3>
+<p>In molecular mechanics, the energy of the system is a function of the nuclei of the systems (there are some variants that get slightly more complicated but generally this is the case).  The electrons are averaged or integrated out meaning they are dealt with directly in the energy function.  This allows one to treat the system using classical mechanics, as opposed to quantum mechanics.</p>
+<p>A common molecular mechanics model is to describe a molecule as a collection of bonds, angles and dihedral (1-2-3-4) interactions.  Additionally, each atom is ascribed a excluded volume, polarization, and point charge.  In such a model, the potential energy of the system can be defined as:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e522b2e7-25d8-45cd-84ae-1e680d90a5d9">
+<span class="eqno">(5.3)<a class="headerlink" href="#equation-e522b2e7-25d8-45cd-84ae-1e680d90a5d9" title="Permalink to this equation">#</a></span>\[\begin{align}
+E_{\text{tot}}
+&amp;= E_{\text{bond}} + E_{\text{angle}} + E_{\text{dihedral}} + E_{\text{nonbond}}
+\\[4pt]
+E_{\text{bond}}
+&amp;= \sum_{\text{bonds } ij} k_{r,ij}\,\bigl(r_{ij}-r^{0}_{ij}\bigr)^{2}
+\\[4pt]
+E_{\text{angle}}
+&amp;= \sum_{\text{angles } ijk} k_{\theta,ijk}\,\bigl(\theta_{ijk}-\theta^{0}_{ijk}\bigr)^{2}
+\\[4pt]
+E_{\text{dihedral}}
+&amp;= \sum_{\text{torsions } ijkl}\;\sum_{n}
+\frac{V_{n,ijkl}}{2}\,
+\Bigl[1+\cos\!\bigl(n\phi_{ijkl}-\gamma_{n,ijkl}\bigr)\Bigr]
+\\[4pt]
+E_{\text{nonbond}}
+&amp;= \sum_{i&lt;j}^{\text{nonbonded}}
+\left[
+4\epsilon_{ij}\left(\frac{\sigma_{ij}}{r_{ij}}\right)^{12}
+-4\epsilon_{ij}\left(\frac{\sigma_{ij}}{r_{ij}}\right)^{6}
++ \frac{q_i q_j}{4\pi\varepsilon_0\, r_{ij}}
+\right]
+\\[4pt]
+\end{align}\]</div>
+<p>This is a fairly standard form for a classical model of a molecule and in the field the specific functional form chosen as well as defining the associated parameters is called a force field.  The parameters of each term must be determined/defined to specificy a particular model of a molecule.  Other functional forms can be used but this is a typical energy function.</p>
+<p>There are a variety of force fields to describe molecules but some of the most common are Amber, CHARMM, OPLS, and gromos.  Each force field has typically been parameterized for specific systems so it is very important to make sure you are applying the force field to an appropriate system.  Codes used to apply parameters as well as calculate associate energies inlcude Amber, NAMD, CHARMM, and Gromacs.</p>
+</section>
+</section>
+<section id="determing-structure-s-from-energy-functions">
+<h2><span class="section-number">5.5. </span>Determing Structure(s) from Energy Functions<a class="headerlink" href="#determing-structure-s-from-energy-functions" title="Permalink to this heading">#</a></h2>
+<p>With an energy function defined, either using quantum mechanics or molecular mechanics, we must determine the structure or structures that are important for a particular chemical system or process.</p>
+<p>On of the most trivial ways of doing this is to <em><strong>determine the stationary points</strong></em> of the function.  Stationary points of a function are the local maxima and minima of the surface.  That is, when</p>
+<div class="amsmath math notranslate nohighlight" id="equation-caa6768e-edd4-4a84-9145-871d52d37588">
+<span class="eqno">(5.4)<a class="headerlink" href="#equation-caa6768e-edd4-4a84-9145-871d52d37588" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\frac{d E}{d \vec{R}} = 0
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\vec{R}\)</span> are the coordinates of all things being considered in the energy function (i.e. nuclei and electrons or just nuclei).  There are a variety of methods to determine the positions (<span class="math notranslate nohighlight">\(\vec{R}\)</span>) that satisfy this equation.  The simplest is to just differentiate the function <span class="math notranslate nohighlight">\(E\)</span> w.r.t. <span class="math notranslate nohighlight">\(\vec{R}\)</span> analytically, set equal to zero, and solve for <span class="math notranslate nohighlight">\(\vec{R}\)</span>.  This is not always feasible for high dimensional <span class="math notranslate nohighlight">\(\vec{R}\)</span> and/or complicated functions <span class="math notranslate nohighlight">\(E\)</span>.  There are numerical methods for determining these as well as other approximations that we may discuss as the semester goes on.  The method of determining stationary points is most commonly employed in conjunction with quantum mechanical methods (though it is also used for molecular mechanics to some degree).</p>
+<p>Another method for determining structures from an energy function is to <em><strong>sample</strong></em> from the energy function.  The most common methods to achieve sampling are Monte Carlo and Molecular Dynamics.  These methods are used to determine a set of plausible structures from the underlying energy function but they also have a variety of drawbacks and limitations that we will discuss.  Sampling many structures can be computationally demanding/expensive and thus is most typically employed with molecular mechanics (cheap) models.  This is not always the case, however, as more and more sampling is being done on quantum mechanical models.</p>
+<p>Despite the success of Planck’s model for the blackbody radiation, the idea the energy is quantized in certain situations was not generally accepted.  Around 1887, a german physicist by the name of Heinrich Hertz discovered what is now called the photoelectric effect: shining ultraviolet light at a metallic surface causes electrons to be emitted from the surface.  Two observations made during this experiment were in contrast with classical theory.  Namely that the energy of the emitted electrons is independent of the intensity of the incident light and that there is a threshold frquency of incident light below which no electrons are ejected from the surface.  These results could not be explained by classical mechanics.  Albert Einstein attempted to explain this phenomenon by first quantizing the energy levels of the electrons similar to what Planck did:</p>
+<p><span class="math notranslate nohighlight">\( E = nh\nu. \tag{3} \)</span></p>
+<p>Einstein took this one step further and suggested that the light energy emitted was also quantized packets of energy, now known as photons (Planck assumed the emitted light was a classical wave).  These suggests lead to the conclusion that the kinetic energy of emitted light will have the following form:</p>
+<p><span class="math notranslate nohighlight">\(KE = h\nu - h\nu_0. \tag{4}\)</span></p>
+<p>This result was able to explain the experiment.  The above equation demonstrates that the kinetic energy of the emitted electron will be equal to the energy (not intensity) of the incident light minus a threshold energy which is also called a work function.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Photoelectric effect for Lithium</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mf">6.626e-1</span>  <span class="c1"># converted unites</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">3.0E8</span>      <span class="c1"># m/s</span>
+
+<span class="n">v0</span> <span class="o">=</span> <span class="mf">5.564</span> <span class="c1"># E14 for Lithium</span>
+
+<span class="c1"># quantum spectral distribution function</span>
+<span class="k">def</span> <span class="nf">photoelectric</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">h</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="n">h</span><span class="o">*</span><span class="n">v0</span>
+
+<span class="c1"># initialize a figure</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">define_figure</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;$ v (10^</span><span class="si">{14}</span><span class="s1">s^{-1})$&#39;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;KE$/10^{-19}$ J&quot;</span><span class="p">)</span>
+<span class="c1"># make an array containing domain of wavelengths to consider</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">amax</span><span class="p">(</span><span class="n">photoelectric</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">*</span><span class="mf">1.05</span><span class="p">))</span>
+<span class="c1"># plot quantum result</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">photoelectric</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Einstein&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">xdata</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">/</span><span class="mf">300E-9</span><span class="o">*</span><span class="mf">1E-14</span><span class="p">,</span><span class="n">c</span><span class="o">/</span><span class="mf">400E-9</span><span class="o">*</span><span class="mf">1E-14</span><span class="p">]</span>
+<span class="n">ydata</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.935</span><span class="p">,</span><span class="mf">1.280</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span><span class="n">ydata</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="c1"># make legend</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">markerscale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">12</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="k">return</span> <span class="n">h</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="n">h</span><span class="o">*</span><span class="n">v0</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="c1"># initialize a figure</span>
+<span class="ne">---&gt; </span><span class="mi">12</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">define_figure</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;$ v (10^</span><span class="si">{14}</span><span class="s1">s^{-1})$&#39;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;KE$/10^{-19}$ J&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="c1"># make an array containing domain of wavelengths to consider</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">5.0</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;define_figure&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./computational_chemistry"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../physical_chemistry/electronic_structure/HF_for_H2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">4.6.2. </span>Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">5.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">5.2. Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">5.3. Coding Concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-potential-energy-surface">5.4. The Potential Energy Surface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantum-mechanics">5.4.1. Quantum Mechanics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#molecular-mechanics">5.4.2. Molecular Mechanics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determing-structure-s-from-energy-functions">5.5. Determing Structure(s) from Energy Functions</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin McCullagh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
