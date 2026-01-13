@@ -563,7 +563,12 @@ document.write(`
 </section>
 <section id="coding-concepts">
 <h2><span class="section-number">5.2.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
-<p>None for now.</p>
+<p>The following coding concepts are employed in this notebook:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
+<li><p><a class="reference internal" href="../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
+<li><p><span class="xref myst">Plotting with matplotlib</span></p></li>
+</ol>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="the-scientific-method">
@@ -571,6 +576,56 @@ document.write(`
 <p>Science seeks to understand and predict natural phenomena through a systematic process known as
 the scientific method. While the details of this process vary across disciplines, its essential
 components are common to all areas of science, including chemistry. The scientific method is often summarized as a sequence of observation, hypothesis formation,prediction, experimentation, and refinement.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># ---------- Figure 1: Scientific Method Flowchart ----------</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+
+<span class="n">steps</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Observation&quot;</span><span class="p">,</span> <span class="s2">&quot;Hypothesis&quot;</span><span class="p">,</span> <span class="s2">&quot;Prediction&quot;</span><span class="p">,</span> <span class="s2">&quot;Experiment&quot;</span><span class="p">,</span> <span class="s2">&quot;Refinement&quot;</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.92</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">steps</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">)</span>
+
+<span class="c1"># Draw boxes</span>
+<span class="k">for</span> <span class="n">xi</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xi</span><span class="o">-</span><span class="mf">0.085</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.12</span><span class="p">),</span> <span class="mf">0.17</span><span class="p">,</span> <span class="mf">0.24</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Arrows between boxes</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+        <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mf">0.085</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mf">0.085</span><span class="p">,</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="c1"># Iteration arrow (loop back)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">),</span>
+    <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="s2">&quot;Iteration / refinement based on agreement (or disagreement) with data&quot;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/33e6c71a2cb900cf874bc7e06614de74c1490cb62501c49875fc7efeffd0ecef.png" src="../_images/33e6c71a2cb900cf874bc7e06614de74c1490cb62501c49875fc7efeffd0ecef.png" />
+</div>
+</div>
 <section id="observation">
 <h2><span class="section-number">5.3.1. </span>Observation<a class="headerlink" href="#observation" title="Permalink to this heading">#</a></h2>
 <p>Scientific inquiry begins with observation. Observations may arise from direct measurement,
@@ -583,6 +638,49 @@ is decreased, the measured pressure increases. Repeating the measurement at diff
 reveals a consistent inverse relationship between pressure and volume under otherwise identical
 conditions.</p>
 <p>At this stage, no explanation is proposed—only the empirical relationship is noted.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="c1"># ---------- Figure 2: Ideal Gas Prediction vs. &quot;Real Gas&quot; Deviations ----------</span>
+<span class="c1"># Synthetic data: follows PV ~ constant at moderate V, deviates at small V (high density).</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+
+<span class="n">R</span> <span class="o">=</span> <span class="mf">0.082057</span>  <span class="c1"># L·atm·mol^-1·K^-1</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mf">300.0</span>     <span class="c1"># K</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mf">1.0</span>       <span class="c1"># mol</span>
+<span class="n">PV_const</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">R</span> <span class="o">*</span> <span class="n">T</span>  <span class="c1"># ideal PV</span>
+
+<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># liters</span>
+<span class="n">P_ideal</span> <span class="o">=</span> <span class="n">PV_const</span> <span class="o">/</span> <span class="n">V</span>
+
+<span class="c1"># &quot;Real gas&quot; pressures: systematic deviation at small V + small random noise</span>
+<span class="n">deviation</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.12</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">V</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span><span class="o">/</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">V</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">P_real</span> <span class="o">=</span> <span class="n">P_ideal</span> <span class="o">*</span> <span class="n">deviation</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">noise</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">P_real</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Synthetic experimental data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$V\ \mathrm{(L)}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$P\ \mathrm{(atm)}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Observed Data&quot;</span><span class="p">)</span>
+<span class="c1">#plt.legend(frameon=True)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/df6a57b5f2b15abd3bdbe1e7ebadd10edd97b214ca5aebc5529e78ed7f33a4f1.png" src="../_images/df6a57b5f2b15abd3bdbe1e7ebadd10edd97b214ca5aebc5529e78ed7f33a4f1.png" />
+</div>
+</div>
 </section>
 <section id="hypothesis">
 <h2><span class="section-number">5.3.2. </span>Hypothesis<a class="headerlink" href="#hypothesis" title="Permalink to this heading">#</a></h2>
@@ -616,6 +714,46 @@ data are analyzed to determine whether the predicted inverse relationship holds 
 the product of pressure and volume remains approximately constant.</p>
 <p>Careful experimental design is essential to ensure that the test meaningfully addresses the
 prediction.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>  <span class="c1"># liters</span>
+<span class="n">P_ideal</span> <span class="o">=</span> <span class="n">PV_const</span> <span class="o">/</span> <span class="n">V</span>
+
+<span class="c1"># &quot;Real gas&quot; pressures: systematic deviation at small V + small random noise</span>
+<span class="n">deviation</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.12</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">V</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span><span class="o">/</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">V</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">P_real</span> <span class="o">=</span> <span class="n">P_ideal</span> <span class="o">*</span> <span class="n">deviation</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">noise</span><span class="p">)</span>
+
+<span class="c1"># Plot 2A: P vs 1/V (tests linear prediction)</span>
+<span class="n">invV</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">V</span>
+<span class="n">invV_line</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">invV</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">invV</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">P_line</span> <span class="o">=</span> <span class="n">PV_const</span> <span class="o">*</span> <span class="n">invV_line</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">invV_line</span><span class="p">,</span> <span class="n">P_line</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Ideal gas prediction&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">invV</span><span class="p">,</span> <span class="n">P_real</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$1/V\ \mathrm{(L^{-1})}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$P\ \mathrm{(atm)}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Testing a Prediction: Pressure vs. Inverse Volume&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/355b82c4b7a7a79ea30d4ad28bb8322271207c397499acb87ac232cb83e19ef9.png" src="../_images/355b82c4b7a7a79ea30d4ad28bb8322271207c397499acb87ac232cb83e19ef9.png" />
+</div>
+</div>
 </section>
 <section id="refinement">
 <h2><span class="section-number">5.3.5. </span>Refinement<a class="headerlink" href="#refinement" title="Permalink to this heading">#</a></h2>
@@ -624,7 +762,7 @@ confidence in the hypothesis increases, but this does not imply that the explana
 or final. When predictions fail, the hypothesis must be revised or replaced. Refinement may
 involve adjusting assumptions, identifying missing variables, or developing a new conceptual
 framework.</p>
-<p><strong>Example.</strong> While the pressure–volume relationship holds under many conditions, deviations
+<p><strong>Example.</strong> While the pressure-volume relationship holds under many conditions, deviations
 are observed at high pressures or low temperatures. These discrepancies suggest that additional
 factors—such as the finite size of particles or interactions between them—must be considered.
 The original hypothesis is therefore refined to account for these effects, leading to improved
@@ -687,7 +825,7 @@ in practice.</p>
 <p>Computational models arise when mathematical models are combined with numerical methods and
 approximations to produce concrete predictions. Examples include density functional theory,
 molecular mechanics force fields, and molecular dynamics simulations.</p>
-<p>In computational chemistry, the term ``model’’ often refers to the entire workflow: the choice
+<p>In computational chemistry, the term “model” often refers to the entire workflow: the choice
 of physical description, the approximations made, the numerical algorithms employed, and the
 parameters used. Different computational models may yield different predictions even when
 applied to the same system.</p>
@@ -697,14 +835,14 @@ applied to the same system.</p>
 <h2><span class="section-number">5.4.3. </span>Assumptions and Approximations<a class="headerlink" href="#assumptions-and-approximations" title="Permalink to this heading">#</a></h2>
 <p>All models rely on assumptions. These assumptions determine the range of validity of the model
 and must be understood in order to interpret results correctly.</p>
-<p>In quantum chemistry, common approximations include the Born–Oppenheimer separation of nuclear
+<p>In quantum chemistry, common approximations include the Born-Oppenheimer separation of nuclear
 and electronic motion, the use of finite basis sets, and mean-field treatments of electron
 correlation. In molecular mechanics, electrons are not treated explicitly at all; instead,
 their effects are incorporated into parameterized functional forms.</p>
 <p>Approximations are not flaws but deliberate choices. A simpler model may provide clearer insight
 or allow simulations of larger systems, while a more detailed model may offer higher accuracy
-at greater computational cost. The appropriate model depends on the scientific question being
-asked.</p>
+at greater computational cost. <em><strong>The appropriate model depends on the scientific question being
+asked.</strong></em></p>
 </section>
 <section id="models-as-predictive-tools">
 <h2><span class="section-number">5.4.4. </span>Models as Predictive Tools<a class="headerlink" href="#models-as-predictive-tools" title="Permalink to this heading">#</a></h2>
