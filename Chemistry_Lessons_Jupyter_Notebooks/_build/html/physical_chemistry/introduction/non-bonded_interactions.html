@@ -290,7 +290,13 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5. Computational Chemistry</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5.1. The Fundamental Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/Models_in_the_Scientific_Method.html">5.2. What is a Model?</a></li>
+
+
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -538,9 +544,9 @@ document.write(`
 <h2><span class="section-number">4.1.1.2. </span>Coding concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="arabic simple">
-<li><p><span class="xref myst">Variables</span></p></li>
-<li><p><span class="xref myst">Functions</span></p></li>
-<li><p><span class="xref myst">Plotting with matplotlib</span></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
 </section>
 <section id="molecular-structure-and-nomenclature">
@@ -569,8 +575,8 @@ document.write(`
 <p>Dispersion interactions play an important role in the interaction between non-polar species.  This is not necessarily because the dispersion interactions are strong for non-polar species but rather because non-polar species do not display stronger interactions such as ion-ion or polar.  For example, dispersion forces play a large role in the interaction between the lipid tails in a cell membrane.  The mainly aliphatic methylene groups are not particularly polarizable but the sheer number of these interactions between the long lipid tails does yield a sizable interaction strength.</p>
 <p>Dispersion interactions also play an important role in <span class="math notranslate nohighlight">\(\pi\)</span>-stacking.  Large <span class="math notranslate nohighlight">\(\pi\)</span> systems are quite polarizable leading to a particularly strong dispersion interaction.</p>
 <p>The physics behind a dispersion interaction is induced dipole-induced dipole.  That is, if we consider an atom, molecule, or a component of a molecule to be a nucleus of positive charge with a electron cloud around it, there is a finite probability that the majority of the electron cloud will sit to one side of the nucleus. This will create a temporary dipole.  If there is a polarizable entity in the vicinity, that entity will polarize in the opposite direction to the temporary dipole stabilizing the temporary dipole and creating an attractive interaction between two polarizable electron clouds.  In the classical limit, this interaction goes as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7f0cee5b-507e-40b4-a07d-e14971adc95a">
-<span class="eqno">(4.1)<a class="headerlink" href="#equation-7f0cee5b-507e-40b4-a07d-e14971adc95a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-73642090-5cf0-4569-9a7a-db431cb80bc1">
+<span class="eqno">(4.1)<a class="headerlink" href="#equation-73642090-5cf0-4569-9a7a-db431cb80bc1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 U(r) \propto \frac{-1}{r^6},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(r\)</span> is the distance between the two polarizable clouds.  The proportionality constant will be dictated by the polarizability of the cloud.</p>
@@ -588,11 +594,11 @@ U(r) \propto \frac{-1}{r^6},
 <span class="n">eps_arene</span> <span class="o">=</span> <span class="mf">0.076</span>
 <span class="n">sigma_arene</span> <span class="o">=</span> <span class="mf">3.55</span>
 
-<span class="k">def</span> <span class="nf">u_dispersion</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">epsilon</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">u_dispersion</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">epsilon</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">epsilon</span><span class="o">*</span><span class="p">(</span><span class="n">sigma</span><span class="o">/</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">6</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>
@@ -621,8 +627,8 @@ U(r) \propto \frac{-1}{r^6},
 <p>Salt bridges in proteins are an example of ion-ion interactions.  A salt bridge is an strong interaction between the two oppositely charge side chains in a protein.  Examples include arginine-aspartate, arginine-glutamate, lysine-aspartate, and lysine-glutamate.  In these cases, the functional groups on the side chains of arginine (guanadinium) and lysine (amino) are positively charged and the functional groups on the side chains of aspartate and glutamate (both carboxylate) are negatively charged.  These are also examples of hydrogen bonding.</p>
 <p>Ion-ion interactions also occur between small inorganic ions such as sodium (Na+) and chloride (Cl-).  These aqueous ions are also fairly prevelant in cells.</p>
 <p>Two species with overall net charge will interact, in the classical limit, by a coulomb potental.  This potential is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3f8ae082-5caf-4df8-854f-9dffcb38527e">
-<span class="eqno">(4.2)<a class="headerlink" href="#equation-3f8ae082-5caf-4df8-854f-9dffcb38527e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9e91cbb5-2664-4578-aad8-53427ae1d227">
+<span class="eqno">(4.2)<a class="headerlink" href="#equation-9e91cbb5-2664-4578-aad8-53427ae1d227" title="Permalink to this equation">#</a></span>\[\begin{equation}
 U_{Coulomb}(r) = \frac{q_1q_2}{4\pi\epsilon_0r},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(q_1\)</span> is the charge of ion 1, <span class="math notranslate nohighlight">\(q_2\)</span> is the charge of ion 2, <span class="math notranslate nohighlight">\(\epsilon_0\)</span> is the permitivity of free space (a constant), and <span class="math notranslate nohighlight">\(r\)</span> is the distance between the two ions.  This can be readily plotted for two like and two oppositely charged ions.</p>
@@ -633,11 +639,11 @@ U_{Coulomb}(r) = \frac{q_1q_2}{4\pi\epsilon_0r},
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">u_coulomb</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">q1</span><span class="p">,</span><span class="n">q2</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">u_coulomb</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">q1</span><span class="p">,</span><span class="n">q2</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">q1</span><span class="o">*</span><span class="n">q2</span><span class="o">/</span><span class="n">r</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>
@@ -664,18 +670,18 @@ U_{Coulomb}(r) = \frac{q_1q_2}{4\pi\epsilon_0r},
 <h3><span class="section-number">4.1.1.4.3. </span>Polar interactions<a class="headerlink" href="#polar-interactions" title="Permalink to this heading">#</a></h3>
 <p>Polar interactions exist between polar molecules.  They are stronger and longer-ranged than dispersion interactions but weaker and shorter-ranged than ion-ion interactions.</p>
 <p>These interactions exist between side chains of polar amino acids such as threonine, serine, asparagine and glutamine.  Physcially, the interaction goes as a dipole-diple interaction which technically has a distance and angle dependence.  If we ignore the angle dependence, the interaction strength goes as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6b873a5a-c634-4584-946d-0a6b98aef1b4">
-<span class="eqno">(4.3)<a class="headerlink" href="#equation-6b873a5a-c634-4584-946d-0a6b98aef1b4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-147a88b3-9d89-40b6-aa2c-7cf9a63a5ce9">
+<span class="eqno">(4.3)<a class="headerlink" href="#equation-147a88b3-9d89-40b6-aa2c-7cf9a63a5ce9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 U_{polar}(r) \propto -\frac{1}{r^3}
 \end{equation}\]</div>
 <p>Below you can see this type of interaction as a function <span class="math notranslate nohighlight">\(r\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">u_dipole</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">u_dipole</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">r</span><span class="o">**</span><span class="mi">3</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>

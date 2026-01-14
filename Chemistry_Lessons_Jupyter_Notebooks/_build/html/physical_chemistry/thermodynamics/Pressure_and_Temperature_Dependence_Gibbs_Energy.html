@@ -290,7 +290,13 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5. Computational Chemistry</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5.1. The Fundamental Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/Models_in_the_Scientific_Method.html">5.2. What is a Model?</a></li>
+
+
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -685,20 +691,20 @@ T_{vap} &amp;=&amp; 225.46 \quad \text{K} \\
 <p>Below I will use code and numeric integration to make this plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy.integrate</span> <span class="k">as</span> <span class="nn">integrate</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">integrate</span>
 <span class="n">R</span> <span class="o">=</span> <span class="mf">8.314</span> <span class="c1"># J/K/mol</span>
 <span class="c1"># heat capacity of first solid state</span>
-<span class="k">def</span> <span class="nf">cp_s1</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cp_s1</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">R</span><span class="o">*</span><span class="mi">12</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">**</span><span class="mi">4</span><span class="o">/</span><span class="mi">5</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
 <span class="c1"># heat capacity of second solid state</span>
-<span class="k">def</span> <span class="nf">cp_s2</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cp_s2</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">R</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mf">1.663</span> <span class="o">+</span> <span class="mf">0.001112</span><span class="o">*</span><span class="n">T</span> <span class="o">-</span> <span class="mf">9.791e-4</span><span class="o">*</span><span class="n">T</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">3.740e-6</span><span class="o">*</span><span class="n">T</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
 <span class="c1"># heat capacity of liquid</span>
-<span class="k">def</span> <span class="nf">cp_l</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cp_l</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">R</span><span class="o">*</span><span class="p">(</span><span class="mf">15.935</span> <span class="o">-</span> <span class="mf">0.08677</span><span class="o">*</span><span class="n">T</span> <span class="o">+</span> <span class="mf">4.294e-4</span><span class="o">*</span><span class="n">T</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">6.276e-7</span><span class="o">*</span><span class="n">T</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
 <span class="c1"># heat capacity of gass</span>
-<span class="k">def</span> <span class="nf">cp_g</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cp_g</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">R</span><span class="o">*</span><span class="p">(</span><span class="mf">1.4970</span> <span class="o">+</span> <span class="mf">2.266e-2</span><span class="o">*</span><span class="n">T</span> <span class="o">-</span> <span class="mf">5.725e-6</span><span class="o">*</span><span class="n">T</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">int_cp_s1</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">cp_s1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;int 0 to 15&quot;</span><span class="p">,</span> <span class="n">int_cp_s1</span><span class="p">,</span> <span class="s2">&quot;J/mol&quot;</span><span class="p">)</span>
@@ -719,10 +725,10 @@ int 87.90 to 225.46 12213.373101852707 J/mol
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1">#def f(T)</span>
-<span class="k">def</span> <span class="nf">H</span><span class="p">(</span><span class="n">T_array</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">H</span><span class="p">(</span><span class="n">T_array</span><span class="p">):</span>
     <span class="n">f</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">T_array</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">T</span><span class="o">&lt;=</span><span class="mi">15</span><span class="p">:</span>
@@ -761,20 +767,20 @@ int 87.90 to 225.46 12213.373101852707 J/mol
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy.integrate</span> <span class="k">as</span> <span class="nn">integrate</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">integrate</span>
 <span class="n">R</span> <span class="o">=</span> <span class="mf">8.314</span> <span class="c1"># J/K/mol</span>
 <span class="c1"># heat capacity of first solid state</span>
-<span class="k">def</span> <span class="nf">s_s1</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">s_s1</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">cp_s1</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">T</span>
 <span class="c1"># heat capacity of second solid state</span>
-<span class="k">def</span> <span class="nf">s_s2</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">s_s2</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">cp_s2</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">T</span>
 <span class="c1"># heat capacity of liquid</span>
-<span class="k">def</span> <span class="nf">s_l</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">s_l</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">cp_l</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">T</span>
 <span class="c1"># heat capacity of gass</span>
-<span class="k">def</span> <span class="nf">s_g</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">s_g</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">cp_g</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="n">T</span>
 <span class="n">int_s_s1</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">s_s1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">15</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;int 0 to 15&quot;</span><span class="p">,</span> <span class="n">int_s_s1</span><span class="p">,</span> <span class="s2">&quot;J/mol/K&quot;</span><span class="p">)</span>
@@ -795,10 +801,10 @@ int 87.90 to 225.46 83.74783642272298 J/mol/K
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1">#def f(T)</span>
-<span class="k">def</span> <span class="nf">S</span><span class="p">(</span><span class="n">T_array</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S</span><span class="p">(</span><span class="n">T_array</span><span class="p">):</span>
     <span class="n">f</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">T_array</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">T</span><span class="o">&lt;=</span><span class="mi">15</span><span class="p">:</span>
@@ -837,10 +843,10 @@ int 87.90 to 225.46 83.74783642272298 J/mol/K
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1">#def G(T)</span>
-<span class="k">def</span> <span class="nf">G</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">G</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">H</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-</span> <span class="n">T</span><span class="o">*</span><span class="n">S</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
 
 <span class="c1"># setup plot parameters</span>

@@ -290,7 +290,13 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5. Computational Chemistry</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5.1. The Fundamental Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/Models_in_the_Scientific_Method.html">5.2. What is a Model?</a></li>
+
+
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -530,10 +536,10 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># @hidden_cell</span>
 <span class="c1"># import some libraries</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>                <span class="c1"># for vector, matrix etc data structures and manipulations</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>   <span class="c1"># for plotting</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>                <span class="c1"># for vector, matrix etc data structures and manipulations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>   <span class="c1"># for plotting</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -547,7 +553,7 @@ document.write(`
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">define_figure</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">define_figure</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;X&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;Y&quot;</span><span class="p">):</span>
     <span class="c1"># setup plot parameters</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
@@ -599,17 +605,17 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit T and h</span>
 <span class="c1"># quantum spectral distribution function</span>
-<span class="k">def</span> <span class="nf">quantumB_fit_t_H</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">quantumB_fit_t_H</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="p">)</span><span class="o">**</span><span class="mi">5</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="o">*</span><span class="n">kB</span><span class="o">*</span><span class="n">T</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">curve_fit</span>
 
 <span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e-34</span><span class="p">,</span><span class="mi">5000</span><span class="p">])</span>
 <span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">quantumB_fit_t_H</span><span class="p">,</span> <span class="n">solar</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">solar</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="mf">1E13</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="n">p0</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">popt</span><span class="p">)</span>
 
 <span class="n">h</span> <span class="o">=</span> <span class="mf">6.62607015E-34</span> 
-<span class="k">def</span> <span class="nf">quantumB_fit_T</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">quantumB_fit_T</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="p">)</span><span class="o">**</span><span class="mi">5</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="o">*</span><span class="n">kB</span><span class="o">*</span><span class="n">T</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5000</span><span class="p">])</span>
@@ -622,7 +628,7 @@ document.write(`
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">curve_fit</span>
 <span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1e-34</span><span class="p">,</span><span class="mi">5000</span><span class="p">])</span>
 <span class="ne">----&gt; </span><span class="mi">9</span> <span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">quantumB_fit_t_H</span><span class="p">,</span> <span class="n">solar</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">solar</span><span class="p">[:,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="mf">1E13</span><span class="p">,</span><span class="n">p0</span><span class="o">=</span><span class="n">p0</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="nb">print</span><span class="p">(</span><span class="n">popt</span><span class="p">)</span>
@@ -648,11 +654,11 @@ document.write(`
 <span class="n">solar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;solarspectrum_nrel.txt&quot;</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># classical spectral distribution function</span>
-<span class="k">def</span> <span class="nf">classicalB</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">classicalB</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">c</span><span class="o">*</span><span class="n">kB</span><span class="o">*</span><span class="n">T</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
 
 <span class="c1"># quantum spectral distribution function</span>
-<span class="k">def</span> <span class="nf">quantumB</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">quantumB</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="p">)</span><span class="o">**</span><span class="mi">5</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">nm_to_m</span><span class="o">*</span><span class="n">kB</span><span class="o">*</span><span class="n">T</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># initialize a figure</span>
@@ -699,7 +705,7 @@ document.write(`
 <span class="n">v0</span> <span class="o">=</span> <span class="mf">5.564</span> <span class="c1"># E14 for Lithium</span>
 
 <span class="c1"># quantum spectral distribution function</span>
-<span class="k">def</span> <span class="nf">photoelectric</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">photoelectric</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">h</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="n">h</span><span class="o">*</span><span class="n">v0</span>
 
 <span class="c1"># initialize a figure</span>
@@ -736,11 +742,11 @@ document.write(`
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># classical spectral distribution function</span>
-<span class="k">def</span> <span class="nf">classicalCv</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">classicalCv</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">T</span><span class="p">))</span>
 
 <span class="c1"># quantum spectral distribution function</span>
-<span class="k">def</span> <span class="nf">quantumCv</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">quantumCv</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">T</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">T</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 
 <span class="c1"># make an array containing domain of wavelengths to consider</span>
@@ -773,52 +779,52 @@ document.write(`
 <p><img alt="hatom" src="../../_images/spectrumwav.gif" /></p>
 <p>When heated or subjected to electrical discharge, atoms emit radiation of characteristic frequencies.  The spectrum from each atom is unique.  These discrete emitted frequencies comprise a stick spectrum such as the one shown above.</p>
 <p>These stick spectra are clearly impossible to describe with classical mechanics.  In 1885, Johann Blamer demonstrated that a subset of the hydrogen atom spectrum (the Balmer series) could be described by the equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-759d8775-1294-4248-ac8b-934304b16650">
-<span class="eqno">(4.656)<a class="headerlink" href="#equation-759d8775-1294-4248-ac8b-934304b16650" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ea5d55ff-b67e-4689-a5bf-0ebb1edd2764">
+<span class="eqno">(4.656)<a class="headerlink" href="#equation-ea5d55ff-b67e-4689-a5bf-0ebb1edd2764" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v = 8.2202\times10^{14}\left(1-\frac{4}{n^2}\right),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(n=3,4,5,...\)</span>.  Later, Johannes Rydberg generalized this formula to account for the entire hydrogen atom spectrum yielding the Rydberg formula</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ddbb792a-b43e-4faa-bdcd-23bc0f832284">
-<span class="eqno">(4.657)<a class="headerlink" href="#equation-ddbb792a-b43e-4faa-bdcd-23bc0f832284" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b4410feb-4346-4470-b354-a607a37a8544">
+<span class="eqno">(4.657)<a class="headerlink" href="#equation-b4410feb-4346-4470-b354-a607a37a8544" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tilde{v} = R_H\left(\frac{1}{n_1^2}-\frac{1}{n_2^2}\right),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(R_H = 109677.581\)</span> cm<span class="math notranslate nohighlight">\(^{-1}\)</span> is the Rydberg constant, <span class="math notranslate nohighlight">\(n_1 = 1,2,3,...\)</span>, and <span class="math notranslate nohighlight">\(n_2 = n_1+1,n_1+2,...\)</span>.</p>
 <p>While these equations fit the hydrogen atom spectrum nicely, they do not prescribe any physics to the system.  They do not present a model of the hydrogen atom but rather a heuristic equation that fits the data.  Nonetheless, scientists were perplexed by the presence of the integers <span class="math notranslate nohighlight">\(n_1\)</span> and <span class="math notranslate nohighlight">\(n_2\)</span>.</p>
 <p>In 1911, Niels Bohr proposed a model for the hydrogen atom that was able to recapitulate the hydrogen atom spectrum.</p>
 <p>The model consists of an electron orbiting a proton in circular orbits.  The proton is considered to be fixed in space because it is so much more massive than the electron.  Bohr assumed that the electron demonstrates wavelike characteristics and that these waves must have an integer number of modes around the circular orbit.  This equates to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b6d812c3-00b9-4ddb-ba73-855a10eb67c1">
-<span class="eqno">(4.658)<a class="headerlink" href="#equation-b6d812c3-00b9-4ddb-ba73-855a10eb67c1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c899c688-f092-4ad7-98f9-5042c3627c5b">
+<span class="eqno">(4.658)<a class="headerlink" href="#equation-c899c688-f092-4ad7-98f9-5042c3627c5b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 2\pi r = n\lambda_e \quad n=1,2,3,...
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\lambda_e\)</span> is the deBroglie wavelength of an electron and can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d0a82a77-e7e4-4ce1-8cef-a20244dbd679">
-<span class="eqno">(4.659)<a class="headerlink" href="#equation-d0a82a77-e7e4-4ce1-8cef-a20244dbd679" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1b80c50f-1745-4a8a-9a2f-97d874535bce">
+<span class="eqno">(4.659)<a class="headerlink" href="#equation-1b80c50f-1745-4a8a-9a2f-97d874535bce" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \lambda_e = \frac{h}{m_ev}.
 \end{equation}\]</div>
 <p>Plugging the deBroglie wavelength equation into the circular wave equation yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-500a6d70-9cb5-4374-9f4d-a92e41e962f6">
-<span class="eqno">(4.660)<a class="headerlink" href="#equation-500a6d70-9cb5-4374-9f4d-a92e41e962f6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a695dedf-cedc-4b8c-b83c-37cab9b9bff4">
+<span class="eqno">(4.660)<a class="headerlink" href="#equation-a695dedf-cedc-4b8c-b83c-37cab9b9bff4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 m_evr = \frac{nh}{2\pi} = n\hbar,
 \end{equation}\]</div>
 <p>where we have introduce <span class="math notranslate nohighlight">\(\hbar = \frac{h}{2\pi}\)</span> as a short-hand because it comes up frequently in quantum mechanics. The term on the left-hand side of the last equation, <span class="math notranslate nohighlight">\(m_evr\)</span>, is the angular momentum of the electron.  Thus Bohr ‘s model demonstrates a quantization of the angular momentum of the electron.</p>
 <p>Bohr posited that for stationary states of the electron the electrostatic force between the proton and electron,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c0e7529d-ba13-42be-871f-95a943e0b338">
-<span class="eqno">(4.661)<a class="headerlink" href="#equation-c0e7529d-ba13-42be-871f-95a943e0b338" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-84de43ca-5716-409f-90e7-c88f941dce1f">
+<span class="eqno">(4.661)<a class="headerlink" href="#equation-84de43ca-5716-409f-90e7-c88f941dce1f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f = \frac{e^2}{4\pi\varepsilon_0r^2}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(4\pi\varepsilon_0\)</span> is present to achieve SI units, must be equal to the centrifugal force,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a3f5d65e-4022-4c36-9e00-98ad6571a7a0">
-<span class="eqno">(4.662)<a class="headerlink" href="#equation-a3f5d65e-4022-4c36-9e00-98ad6571a7a0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0264ef34-e118-44f3-bc22-2e9f1ecc9bfb">
+<span class="eqno">(4.662)<a class="headerlink" href="#equation-0264ef34-e118-44f3-bc22-2e9f1ecc9bfb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f = \frac{m_ev^2}{r}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(m_e\)</span> is the mass and <span class="math notranslate nohighlight">\(v\)</span> is the velocity of the electron.  Equating these two forces yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8dd82aeb-fc92-4288-9ce2-a31abd9a1f8a">
-<span class="eqno">(4.663)<a class="headerlink" href="#equation-8dd82aeb-fc92-4288-9ce2-a31abd9a1f8a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9433dc7c-85c9-49f8-a5ff-75ee12eb1d69">
+<span class="eqno">(4.663)<a class="headerlink" href="#equation-9433dc7c-85c9-49f8-a5ff-75ee12eb1d69" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{e^2}{4\pi\varepsilon_0r^2} = \frac{m_ev^2}{r}.
 \end{equation}\]</div>
 <p>The combination of the force balance equation and the quantized angular momentum equation quantizes the values of <span class="math notranslate nohighlight">\(r\)</span>, the radius of the electron’s circular orbit, that can be taken.  To demonstrate this we solve the quantized angular momentum equation for <span class="math notranslate nohighlight">\(v\)</span> and plug the result into the force balance equation and solve for <span class="math notranslate nohighlight">\(r\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5d62e380-5ed7-4f3f-8333-299102493c89">
-<span class="eqno">(4.664)<a class="headerlink" href="#equation-5d62e380-5ed7-4f3f-8333-299102493c89" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-27a7cb16-f8e8-4b05-8c6a-74ee3904b576">
+<span class="eqno">(4.664)<a class="headerlink" href="#equation-27a7cb16-f8e8-4b05-8c6a-74ee3904b576" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{e^2}{4\pi\varepsilon_0r^2} &amp;= \frac{m_e\left( \frac{n\hbar}{m_er}\right)^2}{r} \\
 \Rightarrow \frac{e^2}{4\pi\varepsilon_0} &amp;= \frac{(n\hbar)^2}{m_er} \\
 \Rightarrow e^2m_er &amp;= 4\pi\varepsilon_0(n\hbar)^2 \\
@@ -828,7 +834,7 @@ f = \frac{m_ev^2}{r}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># classical spectral distribution function</span>
-<span class="k">def</span> <span class="nf">hydrogen_r</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">hydrogen_r</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">n</span><span class="o">*</span><span class="n">n</span>
 
 <span class="c1"># make an array containing domain of wavelengths to consider</span>
@@ -853,13 +859,13 @@ f = \frac{m_ev^2}{r}
 </div>
 </div>
 <p>The energy of the system can is a sum of the Coulomb attraction between the electron and the proton and the kinetic energy of the electron:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bb2d4e86-f4a7-4e4a-b582-6d81f68a98fa">
-<span class="eqno">(4.665)<a class="headerlink" href="#equation-bb2d4e86-f4a7-4e4a-b582-6d81f68a98fa" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8e5fd735-96c3-4b4c-8579-8bf25ccfa689">
+<span class="eqno">(4.665)<a class="headerlink" href="#equation-8e5fd735-96c3-4b4c-8579-8bf25ccfa689" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E(r) = \frac{1}{2}m_ev^2 - \frac{e^2}{4\pi\varepsilon_0r}
 \end{equation}\]</div>
 <p>To determine the energy of an electron that is limited to be in the circular wavelike orbits described above, we must use the force balance relationship.  We do that by substituting <span class="math notranslate nohighlight">\(m_ev^2 = \frac{e^2}{4\pi\varepsilon_0r}\)</span> into the energy equation to yield</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3f01b0ea-564c-4312-bd2a-3bb1a38f3a8e">
-<span class="eqno">(4.666)<a class="headerlink" href="#equation-3f01b0ea-564c-4312-bd2a-3bb1a38f3a8e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a8f708c3-060a-4f28-b18c-b13c9c5b088f">
+<span class="eqno">(4.666)<a class="headerlink" href="#equation-a8f708c3-060a-4f28-b18c-b13c9c5b088f" title="Permalink to this equation">#</a></span>\[\begin{align}
 E(r) &amp;= \frac{1}{2}\frac{e^2}{4\pi\varepsilon_0r} - \frac{e^2}{4\pi\varepsilon_0r} \\
     &amp;= -\frac{1}{2}\frac{e^2}{4\pi\varepsilon_0r} \\
     &amp;= -\frac{1}{2}\frac{e^2}{4\pi\varepsilon_0}\frac{e^2m_e}{4\pi\varepsilon_0(n\hbar)^2} \\
@@ -868,18 +874,18 @@ E(r) &amp;= \frac{1}{2}\frac{e^2}{4\pi\varepsilon_0r} - \frac{e^2}{4\pi\varepsil
 \end{align}\]</div>
 <p>where I plugged in the quantized values for <span class="math notranslate nohighlight">\(r\)</span> derived from the for balance relationship.</p>
 <p>Taking differences in energy between two energy levels, <span class="math notranslate nohighlight">\(n_1\)</span> and <span class="math notranslate nohighlight">\(n_2&gt;n_1\)</span>, yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d05bff09-f70f-488e-8581-7c2d5ed8f20c">
-<span class="eqno">(4.667)<a class="headerlink" href="#equation-d05bff09-f70f-488e-8581-7c2d5ed8f20c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9948861a-4ad9-49d9-9c71-bae72a6de371">
+<span class="eqno">(4.667)<a class="headerlink" href="#equation-9948861a-4ad9-49d9-9c71-bae72a6de371" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta E = \frac{m_ee^4}{8\varepsilon_0^2h^2}\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right)
 \end{equation}\]</div>
 <p>Equating this to the frequency (use <span class="math notranslate nohighlight">\(E = h\nu\)</span> and <span class="math notranslate nohighlight">\(\tilde{\nu} = \frac{\nu}{c}\)</span>) of emitted light yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7aafb0b5-9b90-483b-b0be-75be43cd8e95">
-<span class="eqno">(4.668)<a class="headerlink" href="#equation-7aafb0b5-9b90-483b-b0be-75be43cd8e95" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-52ae6c7f-4c1d-4cc7-bd93-7736dbaad31f">
+<span class="eqno">(4.668)<a class="headerlink" href="#equation-52ae6c7f-4c1d-4cc7-bd93-7736dbaad31f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tilde{v} = \frac{m_ee^4}{8\varepsilon_0^2ch^3}\left(\frac{1}{n_1^2} - \frac{1}{n_2^2}\right)
 \end{equation}\]</div>
 <p>We see that this yields an expression for the Rydberg constant in terms of fundamental constants</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a0f73cb3-e907-4fbb-92c7-be494c14e269">
-<span class="eqno">(4.669)<a class="headerlink" href="#equation-a0f73cb3-e907-4fbb-92c7-be494c14e269" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2cc83d95-ab03-49b7-bb4d-23247226e973">
+<span class="eqno">(4.669)<a class="headerlink" href="#equation-2cc83d95-ab03-49b7-bb4d-23247226e973" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R_H = \frac{m_ee^4}{8\varepsilon_0^2ch^3}
 \end{equation}\]</div>
 <div class="cell tag_hide-input docutils container">
@@ -890,8 +896,8 @@ R_H = \frac{m_ee^4}{8\varepsilon_0^2ch^3}
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># make an array containing domain of wavelengths to consider</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="c1"># setup plot parameters</span>

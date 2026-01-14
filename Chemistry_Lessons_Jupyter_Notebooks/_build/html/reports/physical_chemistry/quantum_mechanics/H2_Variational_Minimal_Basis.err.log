@@ -1,0 +1,121 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/anaconda3/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# H2 MO Minimal Basis
+from scipy.optimize import minimize
+from scipy import integrate
+import matplotlib.pyplot as plt
+%matplotlib inline
+import numpy as np
+
+gamma = 0.57721
+
+def J(R):
+    return np.exp(-2*R)*(1+1/R) - 1/R
+def K(R):
+    return -np.exp(-R)*(1+R)
+def S(R):
+    return np.exp(-R)*(1 + R + R*R/3)
+def S2(R):
+    return np.exp(R)*(1 - R + R*R/3)
+def E1_integrand(t):
+    return np.exp(-t)/t
+def E1(x):
+    return integrate.quad(E1_integrand,x,np.infty)[0]
+def J2(R):
+    return 1/R - np.exp(-2*R) * (1/R + 11/8 + 0.75*R + R*R/6)
+def L(R):
+    return np.exp(-R) * (R + 1/8 + 5/(16*R)) + np.exp(-3*R)*(-1/8 - 5/(16*R))
+def K2(R):
+    term_1 = -0.2 * np.exp(-2*R) * (-25/8 + 23*R/4 + 3*R*R + R**3/3)
+    term_2 = 1.2/R * (S(R)**2 * (gamma + np.log(R)) - S2(R)**2 * E1(4*R) + 2*S(R) * S2(R) * E1(2*R))
+    return term_1+term_2
+
+def E(Z,R):
+    w = Z*R
+    denom = 1+S(w)
+    prefactor = Z/denom
+    t1 = Z*(1-S(w)-2*K(w))
+    t2 = -2 + 2*J(w) + 4*K(w)
+    t3 = (5/16 + 0.5*J2(w) + K2(w) + 2*L(w))/denom
+    return prefactor*(t1+t2+t3) + 1/R
+# compute energy as function of R
+R = np.arange(0.5,8,0.001)
+E_1s_basis = np.empty(R.size)
+E_slater_basis = np.empty(R.size)
+Z_min = np.empty(R.size)
+for i, r in enumerate(R):
+    E_1s_basis[i] = E(1,r)
+    Z_min[i] = minimize(E,1.0,args=(r)).x[0]
+    E_slater_basis[i] = E(Z_min[i],r)
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+Cell [0;32mIn[1], line 45[0m
+[1;32m     43[0m Z_min [38;5;241m=[39m np[38;5;241m.[39mempty(R[38;5;241m.[39msize)
+[1;32m     44[0m [38;5;28;01mfor[39;00m i, r [38;5;129;01min[39;00m [38;5;28menumerate[39m(R):
+[0;32m---> 45[0m     E_1s_basis[i] [38;5;241m=[39m E([38;5;241m1[39m,r)
+[1;32m     46[0m     Z_min[i] [38;5;241m=[39m minimize(E,[38;5;241m1.0[39m,args[38;5;241m=[39m(r))[38;5;241m.[39mx[[38;5;241m0[39m]
+[1;32m     47[0m     E_slater_basis[i] [38;5;241m=[39m E(Z_min[i],r)
+
+Cell [0;32mIn[1], line 37[0m, in [0;36mE[0;34m(Z, R)[0m
+[1;32m     35[0m t1 [38;5;241m=[39m Z[38;5;241m*[39m([38;5;241m1[39m[38;5;241m-[39mS(w)[38;5;241m-[39m[38;5;241m2[39m[38;5;241m*[39mK(w))
+[1;32m     36[0m t2 [38;5;241m=[39m [38;5;241m-[39m[38;5;241m2[39m [38;5;241m+[39m [38;5;241m2[39m[38;5;241m*[39mJ(w) [38;5;241m+[39m [38;5;241m4[39m[38;5;241m*[39mK(w)
+[0;32m---> 37[0m t3 [38;5;241m=[39m ([38;5;241m5[39m[38;5;241m/[39m[38;5;241m16[39m [38;5;241m+[39m [38;5;241m0.5[39m[38;5;241m*[39mJ2(w) [38;5;241m+[39m K2(w) [38;5;241m+[39m [38;5;241m2[39m[38;5;241m*[39mL(w))[38;5;241m/[39mdenom
+[1;32m     38[0m [38;5;28;01mreturn[39;00m prefactor[38;5;241m*[39m(t1[38;5;241m+[39mt2[38;5;241m+[39mt3) [38;5;241m+[39m [38;5;241m1[39m[38;5;241m/[39mR
+
+Cell [0;32mIn[1], line 28[0m, in [0;36mK2[0;34m(R)[0m
+[1;32m     26[0m [38;5;28;01mdef[39;00m[38;5;250m [39m[38;5;21mK2[39m(R):
+[1;32m     27[0m     term_1 [38;5;241m=[39m [38;5;241m-[39m[38;5;241m0.2[39m [38;5;241m*[39m np[38;5;241m.[39mexp([38;5;241m-[39m[38;5;241m2[39m[38;5;241m*[39mR) [38;5;241m*[39m ([38;5;241m-[39m[38;5;241m25[39m[38;5;241m/[39m[38;5;241m8[39m [38;5;241m+[39m [38;5;241m23[39m[38;5;241m*[39mR[38;5;241m/[39m[38;5;241m4[39m [38;5;241m+[39m [38;5;241m3[39m[38;5;241m*[39mR[38;5;241m*[39mR [38;5;241m+[39m R[38;5;241m*[39m[38;5;241m*[39m[38;5;241m3[39m[38;5;241m/[39m[38;5;241m3[39m)
+[0;32m---> 28[0m     term_2 [38;5;241m=[39m [38;5;241m1.2[39m[38;5;241m/[39mR [38;5;241m*[39m (S(R)[38;5;241m*[39m[38;5;241m*[39m[38;5;241m2[39m [38;5;241m*[39m (gamma [38;5;241m+[39m np[38;5;241m.[39mlog(R)) [38;5;241m-[39m S2(R)[38;5;241m*[39m[38;5;241m*[39m[38;5;241m2[39m [38;5;241m*[39m E1([38;5;241m4[39m[38;5;241m*[39mR) [38;5;241m+[39m [38;5;241m2[39m[38;5;241m*[39mS(R) [38;5;241m*[39m S2(R) [38;5;241m*[39m E1([38;5;241m2[39m[38;5;241m*[39mR))
+[1;32m     29[0m     [38;5;28;01mreturn[39;00m term_1[38;5;241m+[39mterm_2
+
+Cell [0;32mIn[1], line 21[0m, in [0;36mE1[0;34m(x)[0m
+[1;32m     20[0m [38;5;28;01mdef[39;00m[38;5;250m [39m[38;5;21mE1[39m(x):
+[0;32m---> 21[0m     [38;5;28;01mreturn[39;00m integrate[38;5;241m.[39mquad(E1_integrand,x,np[38;5;241m.[39minfty)[[38;5;241m0[39m]
+
+File [0;32m/opt/anaconda3/lib/python3.13/site-packages/numpy/__init__.py:400[0m, in [0;36m__getattr__[0;34m(attr)[0m
+[1;32m    397[0m     [38;5;28;01mraise[39;00m [38;5;167;01mAttributeError[39;00m(__former_attrs__[attr], name[38;5;241m=[39m[38;5;28;01mNone[39;00m)
+[1;32m    399[0m [38;5;28;01mif[39;00m attr [38;5;129;01min[39;00m __expired_attributes__:
+[0;32m--> 400[0m     [38;5;28;01mraise[39;00m [38;5;167;01mAttributeError[39;00m(
+[1;32m    401[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124m`np.[39m[38;5;132;01m{[39;00mattr[38;5;132;01m}[39;00m[38;5;124m` was removed in the NumPy 2.0 release. [39m[38;5;124m"[39m
+[1;32m    402[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00m__expired_attributes__[attr][38;5;132;01m}[39;00m[38;5;124m"[39m,
+[1;32m    403[0m         name[38;5;241m=[39m[38;5;28;01mNone[39;00m
+[1;32m    404[0m     )
+[1;32m    406[0m [38;5;28;01mif[39;00m attr [38;5;241m==[39m [38;5;124m"[39m[38;5;124mchararray[39m[38;5;124m"[39m:
+[1;32m    407[0m     warnings[38;5;241m.[39mwarn(
+[1;32m    408[0m         [38;5;124m"[39m[38;5;124m`np.chararray` is deprecated and will be removed from [39m[38;5;124m"[39m
+[1;32m    409[0m         [38;5;124m"[39m[38;5;124mthe main namespace in the future. Use an array with a string [39m[38;5;124m"[39m
+[1;32m    410[0m         [38;5;124m"[39m[38;5;124mor bytes dtype instead.[39m[38;5;124m"[39m, [38;5;167;01mDeprecationWarning[39;00m, stacklevel[38;5;241m=[39m[38;5;241m2[39m)
+
+[0;31mAttributeError[0m: `np.infty` was removed in the NumPy 2.0 release. Use `np.inf` instead.
+

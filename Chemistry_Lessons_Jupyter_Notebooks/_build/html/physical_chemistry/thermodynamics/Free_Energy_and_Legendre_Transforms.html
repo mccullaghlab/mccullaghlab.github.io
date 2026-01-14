@@ -290,7 +290,13 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5. Computational Chemistry</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5.1. The Fundamental Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/Models_in_the_Scientific_Method.html">5.2. What is a Model?</a></li>
+
+
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -581,7 +587,7 @@ document.write(`
 \end{align}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mf">6.01e3</span><span class="o">/</span><span class="mf">273.15</span> <span class="o">-</span> <span class="mf">6.01e3</span><span class="o">/</span><span class="mf">278.15</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -690,21 +696,21 @@ G_{sys} \equiv&amp; H_{sys} - T_{sys}S_{sys} \\
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> notebook
 
-<span class="k">def</span> <span class="nf">x_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">x_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span>
-<span class="k">def</span> <span class="nf">s_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">s_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">a</span><span class="o">*</span><span class="n">t</span>
-<span class="k">def</span> <span class="nf">g_s</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">g_s</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">s</span><span class="o">*</span><span class="n">s</span><span class="o">/</span><span class="n">a</span><span class="o">-</span><span class="n">x_t</span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">g_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">t1</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">g_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">t1</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">s_t</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="n">t1</span><span class="p">)</span><span class="o">+</span><span class="n">x_t</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">make_legendre_transform_interactive_plot</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_legendre_transform_interactive_plot</span><span class="p">():</span>
     <span class="n">t0</span><span class="o">=</span><span class="mf">1.5</span>
     <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
@@ -747,7 +753,7 @@ G_{sys} \equiv&amp; H_{sys} - T_{sys}S_{sys} \\
     <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">g_t</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">a</span><span class="p">),</span><span class="n">x_t</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
     <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">s_t</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
     <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">g_s</span><span class="p">(</span><span class="n">s_t</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">a</span><span class="p">),</span><span class="n">a</span><span class="p">))</span>
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">t0</span> <span class="o">=</span> <span class="mf">2.5</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">t0</span> <span class="o">=</span> <span class="mf">2.5</span><span class="p">):</span>
         <span class="n">line1</span><span class="o">.</span><span class="n">set_ydata</span><span class="p">(</span><span class="n">g_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
         <span class="n">annotation1</span><span class="o">.</span><span class="n">xy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">g_t</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
         <span class="n">annotation1</span><span class="o">.</span><span class="n">set_position</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="n">x_t</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">a</span><span class="p">)))</span>
@@ -1832,21 +1838,21 @@ if (IPython.notebook.kernel !== null) {
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
-<span class="k">def</span> <span class="nf">x_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">x_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span>
-<span class="k">def</span> <span class="nf">s_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">s_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">a</span><span class="o">*</span><span class="n">t</span>
-<span class="k">def</span> <span class="nf">g_s</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">g_s</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">s</span><span class="o">*</span><span class="n">s</span><span class="o">/</span><span class="n">a</span><span class="o">-</span><span class="n">x_t</span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">g_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">t1</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">g_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">t1</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">s_t</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="n">t1</span><span class="p">)</span><span class="o">+</span><span class="n">x_t</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">make_legendre_transform_plot</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_legendre_transform_plot</span><span class="p">():</span>
     <span class="n">t0</span><span class="o">=</span><span class="mf">1.5</span>
     <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
@@ -1889,7 +1895,7 @@ if (IPython.notebook.kernel !== null) {
     <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">g_t</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">a</span><span class="p">),</span><span class="n">x_t</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
     <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">s_t</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
     <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">g_s</span><span class="p">(</span><span class="n">s_t</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">a</span><span class="p">),</span><span class="n">a</span><span class="p">))</span>
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">t0</span> <span class="o">=</span> <span class="mf">2.5</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="n">t0</span> <span class="o">=</span> <span class="mf">2.5</span><span class="p">):</span>
         <span class="n">line1</span><span class="o">.</span><span class="n">set_ydata</span><span class="p">(</span><span class="n">g_t</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
         <span class="n">annotation1</span><span class="o">.</span><span class="n">xy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">g_t</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">t0</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
         <span class="n">annotation1</span><span class="o">.</span><span class="n">set_position</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="n">x_t</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">a</span><span class="p">)))</span>
