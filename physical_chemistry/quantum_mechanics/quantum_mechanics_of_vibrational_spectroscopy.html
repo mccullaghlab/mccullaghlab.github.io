@@ -291,10 +291,15 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5.1. The Fundamental Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/Models_in_the_Scientific_Method.html">5.2. What is a Model?</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/introduction/intro.html">5.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/introduction/the_fundamental_model.html">5.1.1. The Fundamental Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.2. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week1_linux_hands_on.html">5.2.1. Week 1 Friday Hands-On: Linux Basics + Running Python (CHEM 4433/5433)</a></li>
 
-
+</ul>
+</details></li>
 </ul>
 </details></li>
 </ul>
@@ -557,14 +562,14 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets quantify this for HO wavefunctions</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">hermite</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">hermite</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">factorial</span>
 <span class="c1"># start by defining N function for analytic solution to HO wavefunctions</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">Nn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">alpha</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">Nn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">alpha</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">0.25</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">ho_psi</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">ho_psi</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">Nn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">hermite</span><span class="p">(</span><span class="n">n</span><span class="p">)(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="o">*</span><span class="n">x2</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>
 <span class="n">hbar</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -590,13 +595,13 @@ document.write(`
 &lt;1|x|2&gt; =  -1.0000000000000002
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_21233/3433706570.py:21: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_81525/3433706570.py:21: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
   print(&quot;&lt;0|x|0&gt; = &quot;, integrate.simps(psi0*x*psi0,x))
-/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_21233/3433706570.py:22: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
+/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_81525/3433706570.py:22: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
   print(&quot;&lt;0|x|1&gt; = &quot;, integrate.simps(psi0*x*psi1,x))
-/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_21233/3433706570.py:23: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
+/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_81525/3433706570.py:23: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
   print(&quot;&lt;0|x|2&gt; = &quot;, integrate.simps(psi0*x*psi2,x))
-/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_21233/3433706570.py:24: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
+/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_81525/3433706570.py:24: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
   print(&quot;&lt;1|x|2&gt; = &quot;, integrate.simps(psi1*x*psi2,x))
 </pre></div>
 </div>
