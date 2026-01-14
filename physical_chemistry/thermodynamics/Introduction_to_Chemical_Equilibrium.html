@@ -290,7 +290,13 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5. Computational Chemistry</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/the_fundamental_model.html">5.1. The Fundamental Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../computational_chemistry/Models_in_the_Scientific_Method.html">5.2. What is a Model?</a></li>
+
+
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -645,7 +651,7 @@ G(\xi) &amp;=&amp; (1-\xi)\Delta G^\circ_{f,N_2O_4} + 2\xi\Delta G^\circ_{f,NO_2
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;∆G0_rxn = &quot;</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="mf">51.258</span> <span class="o">-</span> <span class="mf">97.87</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;K_P = &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mf">51.258</span> <span class="o">-</span> <span class="mf">97.787</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">8.314</span><span class="o">/</span><span class="mi">1000</span><span class="o">*</span><span class="mf">298.15</span><span class="p">)))</span>
 </pre></div>
@@ -685,7 +691,7 @@ K_P =  0.14841197504828846
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fsolve</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">fsolve</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mf">51.258</span><span class="o">-</span><span class="mf">97.787</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">8.314</span><span class="o">/</span><span class="mi">1000</span><span class="o">*</span><span class="mf">298.15</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span>
 <span class="n">fsolve</span><span class="p">(</span><span class="n">f</span><span class="p">,[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.4</span><span class="p">])</span>
 </pre></div>
@@ -712,10 +718,10 @@ K_P =  0.14841197504828846
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define G function</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="n">R</span> <span class="o">=</span> <span class="mf">8.314</span><span class="o">/</span><span class="mi">1000</span>
 <span class="n">T</span> <span class="o">=</span> <span class="mf">298.15</span>
-<span class="k">def</span> <span class="nf">G</span><span class="p">(</span><span class="n">xi</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">G</span><span class="p">(</span><span class="n">xi</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">xi</span><span class="p">)</span><span class="o">*</span><span class="mf">97.87</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">xi</span><span class="o">*</span><span class="mf">51.258</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">xi</span><span class="p">)</span><span class="o">*</span><span class="n">R</span><span class="o">*</span><span class="n">T</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">xi</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">xi</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">xi</span><span class="o">*</span><span class="n">R</span><span class="o">*</span><span class="n">T</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">xi</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">xi</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -728,7 +734,7 @@ K_P =  0.14841197504828846
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1">#define function </span>
 <span class="c1"># setup plot parameters</span>
@@ -789,7 +795,7 @@ K_P =  0.14841197504828846
 \end{equation}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fsolve</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">fsolve</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="mf">51.258</span><span class="o">-</span><span class="mf">97.787</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mf">8.314</span><span class="o">/</span><span class="mi">1000</span><span class="o">*</span><span class="mf">298.15</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span>
 <span class="n">fsolve</span><span class="p">(</span><span class="n">f</span><span class="p">,[</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.4</span><span class="p">])</span>
 </pre></div>
