@@ -524,6 +524,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#view-a-file">5.2.1.5.3. 3.3 View a file</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-it">5.2.1.5.4. 3.4 Copy it</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#move-rename-it">5.2.1.5.5. 3.5 Move/Rename it</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delete-the-copy">5.2.1.5.6. 3.6 Delete the copy</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-python-from-the-command-line">5.2.1.6. 4. Running Python from the Command Line</a><ul class="nav section-nav flex-column">
@@ -535,7 +536,7 @@ document.write(`
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-class-assignment">5.2.2. End-of-Class Assignment</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-create-info-txt">5.2.2.1. A. Create <code class="docutils literal notranslate"><span class="pre">info.txt</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-confirm-calc-py-runs">5.2.2.2. B. Confirm <code class="docutils literal notranslate"><span class="pre">calc.py</span></code> runs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-modify-calc-py">5.2.2.2. B. Modify <code class="docutils literal notranslate"><span class="pre">calc.py</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-confirm-listing-txt-is-present">5.2.2.3. C. Confirm <code class="docutils literal notranslate"><span class="pre">listing.txt</span></code> is present</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-final-check-do-this-last">5.2.2.4. D. Final check (do this last)</a></li>
 </ul>
@@ -575,12 +576,32 @@ document.write(`
 </section>
 <section id="warm-up-where-am-i-what-s-here">
 <h2><span class="section-number">5.2.1.3. </span>1. Warm-up: Where am I? What’s here?<a class="headerlink" href="#warm-up-where-am-i-what-s-here" title="Permalink to this heading">#</a></h2>
-<p>Run each command and make sure you understand what it does.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">pwd</span>
-ls
-ls<span class="w"> </span>-l
+<p>In this section we will look at basic linux commands that allow us to determine what directory we are currently in and what the contents of that directory are.</p>
+<p>First, however, we will make sure we are logged into the cluster.  Perform the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>mmccull@pete<span class="w"> </span>mmccull<span class="o">]</span>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$HOSTNAME</span>
+login01.cluster
 </pre></div>
 </div>
+<p>The command <code class="docutils literal notranslate"><span class="pre">pwd</span></code> stands for print working directory.  The shell will print the location/address of the current directory you are in.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>mmccull@pete<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">pwd</span>
+/home/mmccull
+</pre></div>
+</div>
+<p>The command <code class="docutils literal notranslate"><span class="pre">ls</span></code> stands for list.  The shell will print the contents of the current directory.  In your case, there may be nothing there.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>mmccull@pete<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>ls
+apps<span class="w">  </span>force_files<span class="w">  </span>PYK-ZAL.zip
+</pre></div>
+</div>
+<p>If you do have something present, different files and/or directories may be colored differently.  The default coloring scheme for <code class="docutils literal notranslate"><span class="pre">ls</span></code> on this system is: directories are blue, zipped files are red, executable files are green, and normal files are black (or white depending on your shell preferences).</p>
+<p>Commands like <code class="docutils literal notranslate"><span class="pre">ls</span></code> can take options which format the output.  Command options are given after a <code class="docutils literal notranslate"><span class="pre">-</span></code> symbol.  For example, <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code> will list the contents of the directory in a table with additional information about each file/directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>mmccull@pete<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>ls<span class="w"> </span>-l
+total<span class="w"> </span><span class="m">17272</span>
+drwxr-xr-x<span class="w"> </span><span class="m">6</span><span class="w"> </span>mmccull<span class="w"> </span>clusterusers<span class="w">       </span><span class="m">10</span><span class="w"> </span>Jun<span class="w">  </span><span class="m">6</span><span class="w">  </span><span class="m">2022</span><span class="w"> </span>apps
+drwxr-xr-x<span class="w"> </span><span class="m">3</span><span class="w"> </span>mmccull<span class="w"> </span>clusterusers<span class="w">       </span><span class="m">12</span><span class="w"> </span>Oct<span class="w"> </span><span class="m">19</span><span class="w">  </span><span class="m">2023</span><span class="w"> </span>force_files
+-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>mmccull<span class="w"> </span>clusterusers<span class="w"> </span><span class="m">19030099</span><span class="w"> </span>Nov<span class="w"> </span><span class="m">12</span><span class="w">  </span><span class="m">2020</span><span class="w"> </span>PYK-ZAL.zip
+</pre></div>
+</div>
+<p>The first column of this table provides information about the file permissions.  <code class="docutils literal notranslate"><span class="pre">drwxr-xr-x</span></code> translates to: <code class="docutils literal notranslate"><span class="pre">d</span></code> indicates a directory, the next <code class="docutils literal notranslate"><span class="pre">rwx</span></code> indicates read write and excute permissions for the user, <code class="docutils literal notranslate"><span class="pre">r-x</span></code> read and execute permission for the group, and <code class="docutils literal notranslate"><span class="pre">r-x</span></code> read and execute for all.  The second column you can ignore, the third column <code class="docutils literal notranslate"><span class="pre">mmccull</span></code> is my username, <code class="docutils literal notranslate"><span class="pre">clusterusers</span></code> is my group name, the column wiht <code class="docutils literal notranslate"><span class="pre">10</span></code>, <code class="docutils literal notranslate"><span class="pre">12</span></code>, and <code class="docutils literal notranslate"><span class="pre">19030099</span></code> indicates the file size in bytes.  Thiis followed by the date and then the file/directory name.</p>
 <p><strong>Tip:</strong> If a command prints a lot, use:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-l<span class="w"> </span><span class="p">|</span><span class="w"> </span>less
 </pre></div>
@@ -589,20 +610,55 @@ ls<span class="w"> </span>-l
 </section>
 <section id="create-your-course-directory">
 <h2><span class="section-number">5.2.1.4. </span>2. Create Your Course Directory<a class="headerlink" href="#create-your-course-directory" title="Permalink to this heading">#</a></h2>
-<p>First, we will change a setting in your shell boot script</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;umask 0007&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
-<span class="nb">source</span><span class="w"> </span>~/.bashrc
+<p>We are going to create a directory in a shared group space.  We will then move to this space and perform all of today’s activities in there.</p>
+<p>First, we will change a setting in your shell boot script to setup proper priveleges for the group space files and directories.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>mmccull@pete<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;umask 0007&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>~/.bashrc
+<span class="o">[</span>mmccull@pete<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/.bashrc
 </pre></div>
 </div>
-<p>Create a directory for this course and for Week 1, then move into it:</p>
+<p>Now we are going to create the folder.  To do this I am going to make use of an environment variable <code class="docutils literal notranslate"><span class="pre">$USER</span></code>.  In <code class="docutils literal notranslate"><span class="pre">bash</span></code> shell, things with a <code class="docutils literal notranslate"><span class="pre">$</span></code> in front of them are variables.  You can store different things in variables.  Your username is stored in <code class="docutils literal notranslate"><span class="pre">$USER</span></code>.  To see this, we can use the <code class="docutils literal notranslate"><span class="pre">echo</span></code> command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>mmccull@pete<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$USER</span>
+mmccull
+</pre></div>
+</div>
+<p>Your output should be different.  Now, create a directory for this course and for Week 1, then move into it (I am going to drop the <code class="docutils literal notranslate"><span class="pre">[mmccull&#64;pete</span> <span class="pre">~]$</span></code> part of the shell prompt and just provide the commands):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>
-<span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>
+</pre></div>
+</div>
+<p>At this point, we made a folder named your username in director <code class="docutils literal notranslate"><span class="pre">/projects/tia001</span></code>.  You should still be in your home (<code class="docutils literal notranslate"><span class="pre">/home/[your</span> <span class="pre">username]</span></code>) directory.  So now we want to move from one directory to another.  The command to achieve this is <code class="docutils literal notranslate"><span class="pre">cd</span></code> which stands for change directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>
 <span class="nb">pwd</span>
 </pre></div>
 </div>
-<p>You should see a path <code class="docutils literal notranslate"><span class="pre">/projects/tia001/[your</span> <span class="pre">usernmame]</span></code>.</p>
-<p>Now create a week1 folder in this directory:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>week1
+<p>You should see a path <code class="docutils literal notranslate"><span class="pre">/projects/tia001/[your</span> <span class="pre">usernmame]</span></code>.  You can move back to your home directory by simply running <code class="docutils literal notranslate"><span class="pre">cd</span></code>.  For example, if I do all of that it looks like:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>mmccull@pete<span class="w"> </span>mmccull<span class="o">]</span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>
+<span class="o">[</span>mmccull@pete<span class="w"> </span>mmccull<span class="o">]</span>$<span class="w"> </span><span class="nb">pwd</span>
+/projects/tia001/mmccull
+<span class="o">[</span>mmccull@pete<span class="w"> </span>mmccull<span class="o">]</span>$<span class="w"> </span><span class="nb">cd</span>
+<span class="o">[</span>mmccull@pete<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">pwd</span>
+/home/mmccull
+</pre></div>
+</div>
+<p>There are a couple of important things about the command <code class="docutils literal notranslate"><span class="pre">cd</span></code>.  You can <code class="docutils literal notranslate"><span class="pre">cd</span></code> with either an absolute or a relative location.  <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code> will take you back on directory (e.g. if you are in <code class="docutils literal notranslate"><span class="pre">/projects/tia001/$USER</span></code> and you type <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code> you will go back one directory to <code class="docutils literal notranslate"><span class="pre">/projects/tia001</span></code>).  Try the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>
+<span class="nb">pwd</span>
+<span class="nb">cd</span><span class="w"> </span>..
+<span class="nb">pwd</span>
+<span class="nb">cd</span><span class="w"> </span>..
+<span class="nb">pwd</span>
+<span class="nb">cd</span><span class="w"> </span>..
+<span class="nb">pwd</span>
+<span class="nb">cd</span><span class="w"> </span>projects
+<span class="nb">pwd</span>
+<span class="nb">cd</span><span class="w"> </span>tia001
+<span class="nb">pwd</span>
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$USER</span>
+<span class="nb">pwd</span>
+</pre></div>
+</div>
+<p>Now create a week1 folder in your <code class="docutils literal notranslate"><span class="pre">/projects/tia001/$USER</span></code> folder:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>week1
 <span class="nb">cd</span><span class="w"> </span>week1
 <span class="nb">pwd</span>
 </pre></div>
@@ -622,8 +678,8 @@ ls<span class="w"> </span>-l
 <h3><span class="section-number">5.2.1.5.2. </span>3.2 Edit a file<a class="headerlink" href="#edit-a-file" title="Permalink to this heading">#</a></h3>
 <p>Use <strong>one</strong> editor below (either is fine):</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">myinfo.txt</span></code>  (beginner-friendly)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">vi</span> <span class="pre">myinfo.txt</span></code>    (powerful; you will see it often on HPC systems)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">myinfo.txt</span></code>  (beginner-friendly; https://linuxize.com/post/nano-save-and-exit/ )</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vi</span> <span class="pre">myinfo.txt</span></code>    (powerful; you will see it often on HPC systems; we will use this heavily later; https://www.cs.colostate.edu/helpdocs/vi.html)</p></li>
 </ul>
 <p>Add a single line to <code class="docutils literal notranslate"><span class="pre">myinfo.txt</span></code> (anything you want), save, and exit.</p>
 </section>
@@ -646,12 +702,28 @@ ls<span class="w"> </span>-l
 ls<span class="w"> </span>-l
 </pre></div>
 </div>
-<p><strong>Safety note:</strong> Be careful with <code class="docutils literal notranslate"><span class="pre">rm</span></code>. There is no trash bin on the command line.</p>
+</section>
+<section id="delete-the-copy">
+<h3><span class="section-number">5.2.1.5.6. </span>3.6 Delete the copy<a class="headerlink" href="#delete-the-copy" title="Permalink to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>myinfo_copy.txt
+ls<span class="w"> </span>-l
+</pre></div>
+</div>
+<p><strong>Safety note:</strong> Be careful with <code class="docutils literal notranslate"><span class="pre">rm</span></code>. There is no undoing an <code class="docutils literal notranslate"><span class="pre">rm</span></code> operation on the command line.</p>
 </section>
 </section>
 <section id="running-python-from-the-command-line">
 <h2><span class="section-number">5.2.1.6. </span>4. Running Python from the Command Line<a class="headerlink" href="#running-python-from-the-command-line" title="Permalink to this heading">#</a></h2>
-<p>Create a file called <code class="docutils literal notranslate"><span class="pre">calc.py</span></code> in <code class="docutils literal notranslate"><span class="pre">/projects/tia001/[your</span> <span class="pre">usernmame]/week1</span></code> with the following contents:</p>
+<p>Python is a commonly used coding language that we will use in this class. You create a python file with the desired lines of code and then feed it to the python program to run the code.  We will write a simple piece of code here</p>
+<p>Create a file called <code class="docutils literal notranslate"><span class="pre">calc.py</span></code> in <code class="docutils literal notranslate"><span class="pre">/projects/tia001/[your</span> <span class="pre">usernmame]/week1</span></code>.  Do this with the same text editor as before:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano<span class="w"> </span>calc.py
+</pre></div>
+</div>
+<p>OR</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vi<span class="w"> </span>calc.py
+</pre></div>
+</div>
+<p>Type (or copy and paste) the following contents into this file:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
@@ -659,7 +731,7 @@ ls<span class="w"> </span>-l
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>You can create/edit it with <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">calc.py</span></code> or <code class="docutils literal notranslate"><span class="pre">vi</span> <span class="pre">calc.py</span></code>.</p>
+<p>Save and quit (<code class="docutils literal notranslate"><span class="pre">ctrl+x;</span> <span class="pre">y</span></code> in <code class="docutils literal notranslate"><span class="pre">nano</span></code> or <code class="docutils literal notranslate"><span class="pre">:wq</span></code> in <code class="docutils literal notranslate"><span class="pre">vi</span></code>).</p>
 <p>Then run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>calc.py
 </pre></div>
@@ -675,7 +747,7 @@ ls<span class="w"> </span>-l
 </section>
 <section id="capturing-output-create-listing-txt">
 <h2><span class="section-number">5.2.1.7. </span>5. Capturing Output: Create <code class="docutils literal notranslate"><span class="pre">listing.txt</span></code><a class="headerlink" href="#capturing-output-create-listing-txt" title="Permalink to this heading">#</a></h2>
-<p>Create a file called <code class="docutils literal notranslate"><span class="pre">listing.txt</span></code> that contains:</p>
+<p>Create a file called <code class="docutils literal notranslate"><span class="pre">listing.txt</span></code> in your <code class="docutils literal notranslate"><span class="pre">week1</span></code> directory that contains:</p>
 <ol class="arabic simple">
 <li><p>The output of <code class="docutils literal notranslate"><span class="pre">pwd</span></code></p></li>
 <li><p>The output of <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code></p></li>
@@ -716,9 +788,9 @@ SHELL: &lt;output of echo $SHELL&gt;
 </pre></div>
 </div>
 </section>
-<section id="b-confirm-calc-py-runs">
-<h2><span class="section-number">5.2.2.2. </span>B. Confirm <code class="docutils literal notranslate"><span class="pre">calc.py</span></code> runs<a class="headerlink" href="#b-confirm-calc-py-runs" title="Permalink to this heading">#</a></h2>
-<p>From inside <code class="docutils literal notranslate"><span class="pre">/projects/tia001/[your</span> <span class="pre">usernmame]/week1</span></code>:</p>
+<section id="b-modify-calc-py">
+<h2><span class="section-number">5.2.2.2. </span>B. Modify <code class="docutils literal notranslate"><span class="pre">calc.py</span></code><a class="headerlink" href="#b-modify-calc-py" title="Permalink to this heading">#</a></h2>
+<p>Modify calc.py to compute the square root of 17 (<span class="math notranslate nohighlight">\(\sqrt{17}\)</span>). Confirm you get the correct answer.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>calc.py
 </pre></div>
 </div>
@@ -810,6 +882,7 @@ head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><s
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#view-a-file">5.2.1.5.3. 3.3 View a file</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-it">5.2.1.5.4. 3.4 Copy it</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#move-rename-it">5.2.1.5.5. 3.5 Move/Rename it</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delete-the-copy">5.2.1.5.6. 3.6 Delete the copy</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-python-from-the-command-line">5.2.1.6. 4. Running Python from the Command Line</a><ul class="nav section-nav flex-column">
@@ -821,7 +894,7 @@ head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><s
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-class-assignment">5.2.2. End-of-Class Assignment</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-create-info-txt">5.2.2.1. A. Create <code class="docutils literal notranslate"><span class="pre">info.txt</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-confirm-calc-py-runs">5.2.2.2. B. Confirm <code class="docutils literal notranslate"><span class="pre">calc.py</span></code> runs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#b-modify-calc-py">5.2.2.2. B. Modify <code class="docutils literal notranslate"><span class="pre">calc.py</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-confirm-listing-txt-is-present">5.2.2.3. C. Confirm <code class="docutils literal notranslate"><span class="pre">listing.txt</span></code> is present</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-final-check-do-this-last">5.2.2.4. D. Final check (do this last)</a></li>
 </ul>
