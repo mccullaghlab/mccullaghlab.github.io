@@ -1,0 +1,1127 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>5.2.1. Particle in a Box &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'computational_chemistry/quantum_mechanics/particle_in_a_box';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.3. Hands-on Activities" href="../hands_on_activities/intro.html" />
+    <link rel="prev" title="5.2. Welcome to the lessons on Quantum Mechanics" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">1. Jupyter Notebook Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">1.1. Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">1.2. Advanced Jupyter Notebook Tutorial</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../coding_concepts/intro.html">2. Coding Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/variables.html">2.1. Variables in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">2.2. Arrays and Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/for_loops.html">2.3. for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/functions.html">2.4. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">2.5. Plotting with matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/numeric_integration.html">2.6. Numeric Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/intro.html">3. Math Concepts in Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/logarithms_and_exponential_functions.html">3.1. Logarithms and Exponential Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/differentiation_and_critical_points.html">3.2. Differentiation and Critical Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/integration_in_1D.html">3.3. Integration in 1D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/derivatives_of_multivariable_functions.html">3.4. Derivatives of Multivariable Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/discrete_probability.html">3.5. Discrete Probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../physical_chemistry/intro.html">4. Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/introduction/intro.html">4.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/introduction/non-bonded_interactions.html">4.1.1. Non-bonded Interactions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/intro.html">4.2. Statiscial Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.html">4.2.1. Boltzmann Factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Introduction_to_Probability.html">4.2.2. Introduction to Probability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">4.2.3. Thermodynamic Properties from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">4.2.4. Partition Function for a Monatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">4.2.5. Partition Function for a Diatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">4.2.6. Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">4.2.7. Kinetic Theory of Gasses from the Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/microscopic_view_of_entropy.html">4.2.8. Microscopic View of Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">4.2.9. Equations of State from Lattice Gas Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/thermodynamics/intro.html">4.3. Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/First_Law_of_Thermodynamics.html">4.3.1. The First Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Heat_Work_and_Calculating_U.html">4.3.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Thermodynamic_Cycles.html">4.3.4. Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Eastham_Honors.html">4.3.5. Thermodynamic Cycles: Solving exam problems and other examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Enthalpy.html">4.3.6. Enthalpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/The_Carnot_Cycle.html">4.3.7. The Carnot Cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Second_Law_of_Thermodynamics.html">4.3.8. Second Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">4.3.9. Heat Engine Diagrams</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Third_Law_of_Thermodynamics.html">4.3.11. The Third Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">4.3.12. First Derivative and Maxwell Relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Maxwell_Relations_Applied.html">4.3.13. Maxwell Relations Applied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Free_Energy_and_Legendre_Transforms.html">4.3.14. Free Energy and Legendre Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">4.3.15. The Pressure and Temperature Dependence of the Gibbs Energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">4.3.16. Phase Diagrams and Phase Equilibria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Chemical_Potential_from_Partition_Function.html">4.3.17. Chemical Potential from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Thermodynamics_of_Solutions.html">4.3.18. Thermodynamics of Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Ideal_and_Non_Ideal_Solutions.html">4.3.19. Ideal and Non-ideal Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Introduction_to_Chemical_Equilibrium.html">4.3.20. Chemical Equilibrium</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/kinetics/intro.html">4.4. Kinetics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Chemical_Kinetics_and_Rate_Laws.html">4.4.1. Chemical Kinetics and Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Integrated_Rate_Laws.html">4.4.2. Integrated Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Reversible_Reactions.html">4.4.3. Reversible Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">4.4.4. Transition State Theory and Temperature Dependence of the Rate Constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Reaction_Mechanisms_Part_I.html">4.4.5. Reaction Mechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Catalysts.html">4.4.6. Catalysts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.html">4.4.7. Enzyme Kinetics: The Michaelis-Menten Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Cooperative_Binding_Kinetics.html">4.4.8. Cooperative Binding Kinetics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Competitive_Inhibition.html">4.4.9. Competitive Inhibition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/intro.html">4.5. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/history_of_quantum_mechanics.html">4.5.1. The History of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/wave_particle_duality_classical_wave_equation.html">4.5.2. Wave Particle Duality and the Classical Wave Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Schrodinger_Equation.html">4.5.3. Schrodinger Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/particle_in_a_box.html">4.5.4. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">4.5.5. The Uncertainty Principle and Applications of Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/postulates_of_quantum_mechanics.html">4.5.6. The Postulates and Formalism of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/momentum_operator.html">4.5.7. The Momentum Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/operator_algebra.html">4.5.8. Operator Algebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/particle_in_a_sphere.html">4.5.9. Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/properties_of_particle_in_a_sphere.html">4.5.10. Properties of Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_hydrogen_atom.html">4.5.11. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/properties_of_the_hydrogen_atom.html">4.5.12. Properties of the Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_hydrogen_atom_absorption_spectrum.html">4.5.13. The Hydrogen Atom Absorption Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/special_functions_in_quantum_mechanics.html">4.5.14. Special Functions in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_helium_atom.html">4.5.15. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">4.5.16. Variational Method in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Single_Electron_Molecule_Variational_Approach.html">4.5.17. Single Electron Molecule in the Variational Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Improving_the_h2%2B_variational_approximation.html">4.5.18. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/h2%2B_with_polarization.html">4.5.19. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation by Including Polarization Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">4.5.20. The H<span class="math notranslate nohighlight">\(_2\)</span> Molecule using the Variational Method in a Minimal Basis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/H2_Configuration_Interaction.html">4.5.21. H<span class="math notranslate nohighlight">\(_2\)</span> Configuration Interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/harmonic_oscillator.html">4.5.22. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">4.5.23. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/basis_functions.html">4.5.24. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/harmonic_oscillator_using_variational_method.html">4.5.25. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/morse_oscillator.html">4.5.26. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator.html">4.5.27. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator_using_variational_method.html">4.5.28. Rigid Rotator Variational Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator_selection_rules.html">4.5.29. Rigid Rotator Continued…</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/electronic_structure/intro.html">4.6. Electronic Structure</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/Hartree_Fock_Helium_Atom.html">4.6.1. Hartree-Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../introduction/intro.html">5.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../introduction/the_fundamental_model.html">5.1.1. The Fundamental Model</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">5.2. Quantum Mechanics</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">5.2.1. Particle in a Box</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week1_linux_hands_on.html">5.3.1. Linux Basics + Running Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
+
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/quantum_mechanics/particle_in_a_box.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/quantum_mechanics/particle_in_a_box.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fcomputational_chemistry/quantum_mechanics/particle_in_a_box.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/computational_chemistry/quantum_mechanics/particle_in_a_box.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Particle in a Box</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">5.2.1.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">5.2.1.2. Learning Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">5.2.1.3. Coding Concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-in-a-box-setting-up-the-problem">5.2.1.4. Particle in a Box: Setting up the Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-in-a-box-solution">5.2.1.5. Particle in a Box: Solution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-in-a-box-applications">5.2.1.6. Particle in a Box: Applications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilistic-intepretation-of-the-wave-function">5.2.1.7. Probabilistic Intepretation of the Wave Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wave-functions-must-be-normalized">5.2.1.7.1. Wave functions must be normalized</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probabiliity-of-observing-particle-in-finite-domain">5.2.1.7.2. Probabiliity of Observing Particle in Finite Domain</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-average-properties-from-a-wave-function">5.2.1.7.3. Computing Average Properties from a Wave Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-the-average-of-x-2-for-a-particle-in-a-box">5.2.1.7.4. Example: The average of <span class="math notranslate nohighlight">\(x^2\)</span> for a particle in a box</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-average-energy-of-particle-in-a-box">5.2.1.7.5. Example: Average Energy of Particle in a Box</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-average-momentum">5.2.1.7.6. Example: Average momentum</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="particle-in-a-box">
+<h1><span class="section-number">5.2.1. </span>Particle in a Box<a class="headerlink" href="#particle-in-a-box" title="Permalink to this heading">#</a></h1>
+<section id="motivation">
+<h2><span class="section-number">5.2.1.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<p>To demonstrate how to use the Schrodinger equation we will look at one of the simplest quantum problems: particle in a box.  This problem simply asks what are the solutions to the Shrodinger equation for a particle that is allowed to travel in one dimension in a finite domain.</p>
+</section>
+<section id="learning-goals">
+<h2><span class="section-number">5.2.1.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
+<p>After working through these notes, you will be able to:</p>
+<ol class="arabic simple">
+<li><p>Setup and solve the Schrodinger equation for a 1D particle in a finite box</p></li>
+<li><p>Normalize 1D particle in a box wave functions.</p></li>
+<li><p>Compute average values of observables from 1D particle in a box wave functions.</p></li>
+</ol>
+</section>
+<section id="coding-concepts">
+<h2><span class="section-number">5.2.1.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
+<p>The following coding concepts are used in this notebook:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../../coding_concepts/variables.html"><span class="doc std std-doc">Variables</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
+<li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
+</ol>
+</section>
+<section id="particle-in-a-box-setting-up-the-problem">
+<h2><span class="section-number">5.2.1.4. </span>Particle in a Box: Setting up the Problem<a class="headerlink" href="#particle-in-a-box-setting-up-the-problem" title="Permalink to this heading">#</a></h2>
+<p>To see the utility of the Schrodinger equation we will see what it predicts for the energy of a particle that can travel in one dimension but is restricted to a finite domain.  This can be seen as asking what the allowed energy is for a particle in a one dimensional box.  The only energy that this particle has is kinetic energy.</p>
+<p><img alt="title" src="computational_chemistry/quantum_mechanics/img/particle_in_a_box.gif" /></p>
+<p>The first step in solving this problem, as is the case for all problem involving the Schrodinger equation, is to write out the Hamiltonian.  From there, we can hopefully solve for the wave functions and the energies.  To do so we can start by writing out the classical energy and then converting the terms to quantum operators.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-b578e7cf-e1ee-4895-914a-40cf4469f600">
+<span class="eqno">(5.5)<a class="headerlink" href="#equation-b578e7cf-e1ee-4895-914a-40cf4469f600" title="Permalink to this equation">#</a></span>\[\begin{align}
+E_{classical}(x,v) &amp;= K(v) + V(x) \\
+&amp;= \frac{1}{2}mv^2
+\end{align}\]</div>
+<p>where we have used that <span class="math notranslate nohighlight">\(V(x) = 0\)</span> as is stated in the problem.  So the total energy is just equivalent to the total kinetic energy. Since this is for a single particle the classical kinetic energy is just <span class="math notranslate nohighlight">\(\frac{1}{2}mv^2\)</span>.</p>
+<p>In order to write out the Hamiltonian we can always start with</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a4c89d78-d0ea-4927-b681-80014fe24259">
+<span class="eqno">(5.6)<a class="headerlink" href="#equation-a4c89d78-d0ea-4927-b681-80014fe24259" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{H} &amp;= \hat{K} + \hat{V} \\
+&amp;= \hat{K}
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{K}\)</span> is the kinetic energy operator.  If we consult the table provided in the <span class="xref myst">Schrodinger Equation notes</span> we see that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d870c106-121e-4b9e-aac1-d1da03297c30">
+<span class="eqno">(5.7)<a class="headerlink" href="#equation-d870c106-121e-4b9e-aac1-d1da03297c30" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{K} = -\frac{\hbar^2}{2m}\left(\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial x^2} \right).
+\end{align}\]</div>
+<p>Since this problem only involves a single dimension, we can write</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7e1384f0-cbe8-420e-8e4f-334b4ab328f4">
+<span class="eqno">(5.8)<a class="headerlink" href="#equation-7e1384f0-cbe8-420e-8e4f-334b4ab328f4" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{K} = -\frac{\hbar^2}{2m}\frac{d^2}{d x^2}.
+\end{align}\]</div>
+<p>Thus, the Schrodinger equation for this problem is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ab8f6541-77f2-4c58-80de-399d249ca789">
+<span class="eqno">(5.9)<a class="headerlink" href="#equation-ab8f6541-77f2-4c58-80de-399d249ca789" title="Permalink to this equation">#</a></span>\[\begin{equation}
+-\frac{\hbar^2}{2m}\frac{d^2}{d x^2}\psi(x) = E\psi(x) \quad 0\leq x\leq a
+\end{equation}\]</div>
+<p>and the goal is to determine <span class="math notranslate nohighlight">\(\psi(x)\)</span> and <span class="math notranslate nohighlight">\(E\)</span>.</p>
+</section>
+<section id="particle-in-a-box-solution">
+<h2><span class="section-number">5.2.1.5. </span>Particle in a Box: Solution<a class="headerlink" href="#particle-in-a-box-solution" title="Permalink to this heading">#</a></h2>
+<p>We start by rewriting the Schrodinger equation for the particle in a box in the more standard differential equation form:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-bafd0983-3df9-4cce-9762-990019a50977">
+<span class="eqno">(5.10)<a class="headerlink" href="#equation-bafd0983-3df9-4cce-9762-990019a50977" title="Permalink to this equation">#</a></span>\[\begin{align}
+&amp;\frac{d^2\psi}{dx^2} = \frac{-2mE}{\hbar^2}\psi(x) \\
+\Rightarrow &amp;\frac{d^2\psi}{dx^2} + \frac{2mE}{\hbar^2}\psi(x) = 0
+\end{align}\]</div>
+<p>Additionally, we have the boundary conditions that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-985c6579-36ae-48fe-9f1f-431a94939df1">
+<span class="eqno">(5.11)<a class="headerlink" href="#equation-985c6579-36ae-48fe-9f1f-431a94939df1" title="Permalink to this equation">#</a></span>\[\begin{align}
+\psi(0) &amp;= 0 \\
+\psi(l) &amp;= 0
+\end{align}\]</div>
+<p>The idea here is that the particle can not sit inside/on the wall.  You can think of the wall as being an infinite potential at <span class="math notranslate nohighlight">\(x=0\)</span> and <span class="math notranslate nohighlight">\(x=l\)</span>.</p>
+<p>This form of differential equation and boundary conditions are exactly the problem we solved in the <span class="xref myst">Classical Wave Equation</span> notes.  The general solution is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-08f880a6-22d0-4650-afea-45f45f3135e7">
+<span class="eqno">(5.12)<a class="headerlink" href="#equation-08f880a6-22d0-4650-afea-45f45f3135e7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\psi(x) = A\cos(kx) + B\sin(kx),
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(k^2 = \frac{2mE}{\hbar^2}\)</span> in this case.</p>
+<p>Applying the boundary conditions to this general solution yields</p>
+<div class="amsmath math notranslate nohighlight" id="equation-730661dd-e204-4453-8ab5-2c34cfe4fad1">
+<span class="eqno">(5.13)<a class="headerlink" href="#equation-730661dd-e204-4453-8ab5-2c34cfe4fad1" title="Permalink to this equation">#</a></span>\[\begin{align}
+&amp;A = 0 \\
+&amp;k = \frac{n\pi}{a}
+\end{align}\]</div>
+<p>Using two expressions for <span class="math notranslate nohighlight">\(k\)</span> yields our solutions for <span class="math notranslate nohighlight">\(E\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3278593f-c077-46a2-ad8e-bd84fada848d">
+<span class="eqno">(5.14)<a class="headerlink" href="#equation-3278593f-c077-46a2-ad8e-bd84fada848d" title="Permalink to this equation">#</a></span>\[\begin{align}
+E_n = \frac{h^2n^2}{8ma^2}
+\end{align}\]</div>
+</section>
+<section id="particle-in-a-box-applications">
+<h2><span class="section-number">5.2.1.6. </span>Particle in a Box: Applications<a class="headerlink" href="#particle-in-a-box-applications" title="Permalink to this heading">#</a></h2>
+<p>Although this seems like a trivial problem, the model of a free particle in a finite box has been applied to actual physical systems with reasonable success.  One example is the <span class="math notranslate nohighlight">\(\pi\)</span> electrons in a conjugated molecule.  The free electron model for butadiene does a reasonable job at reproducing the the <span class="math notranslate nohighlight">\(\pi\rightarrow\pi^*\)</span> absorption band.</p>
+</section>
+<section id="probabilistic-intepretation-of-the-wave-function">
+<h2><span class="section-number">5.2.1.7. </span>Probabilistic Intepretation of the Wave Function<a class="headerlink" href="#probabilistic-intepretation-of-the-wave-function" title="Permalink to this heading">#</a></h2>
+<p>The wave function of a particle, such as the free particle, can be interpreted as the amplitude of the wave at that position.  This is analagous to the classical wave equation.</p>
+<p>The probability of finding a particle at position <span class="math notranslate nohighlight">\(x\)</span> is proportional to the square of the wave function.  Specifically,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-71d85bef-4f63-45d8-b728-d1ceae879abf">
+<span class="eqno">(5.15)<a class="headerlink" href="#equation-71d85bef-4f63-45d8-b728-d1ceae879abf" title="Permalink to this equation">#</a></span>\[\begin{align}
+P(x) \propto \psi^*(x)\psi(x),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\psi^*(x)\)</span> is the complex conjugate of <span class="math notranslate nohighlight">\(\psi(x)\)</span>.  Note that wave functions can be complex but, if they are not, then <span class="math notranslate nohighlight">\(\psi^*(x) = \psi(x)\)</span> and <span class="math notranslate nohighlight">\(P \propto \psi(x)^2\)</span>.</p>
+<p>This intepretation of the wave function has some interesting and useful outcomes.  Here we will only consider three of them:</p>
+<ol class="arabic simple">
+<li><p>The wave function must be normalized</p></li>
+<li><p>Probability of observing a particle in a particular domain is <span class="math notranslate nohighlight">\(\text{Prob}(x_1 \leq x \leq x_2) = \int_{x_1}^{x_2} \psi^*(x)\psi(x)dx\)</span></p></li>
+<li><p>Average properties of a particle can be computed as <span class="math notranslate nohighlight">\(&lt;A&gt; = \int \psi^*(x)\hat{A}\psi(x)dx\)</span></p></li>
+</ol>
+<section id="wave-functions-must-be-normalized">
+<h3><span class="section-number">5.2.1.7.1. </span>Wave functions must be normalized<a class="headerlink" href="#wave-functions-must-be-normalized" title="Permalink to this heading">#</a></h3>
+<p>Because the square of the wave function is related to the probability we can normalize the wave function based on</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a877379b-1328-4b0e-a4ad-d1d76e4041ed">
+<span class="eqno">(5.16)<a class="headerlink" href="#equation-a877379b-1328-4b0e-a4ad-d1d76e4041ed" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int_{-\infty}^{\infty} P(x) dx = \int_{-\infty}^{\infty} \psi^*(x)\psi(x)dx = 1
+\end{equation}\]</div>
+<p>Let’s consider what this means for the particle in a box wave functions.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7efa9d55-683f-4e2e-95b1-6ebcce785dbd">
+<span class="eqno">(5.17)<a class="headerlink" href="#equation-7efa9d55-683f-4e2e-95b1-6ebcce785dbd" title="Permalink to this equation">#</a></span>\[\begin{align}
+\psi_n(x) = B_n \sin\frac{n\pi x}{a} \\
+\psi_n^*(x) \psi_n(x)  = B_n^*B_n \sin^2\frac{n\pi x}{a}
+\end{align}\]</div>
+<p>We can determine the value for <span class="math notranslate nohighlight">\(B_n\)</span> based on the normalization condition.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6b828c3f-be53-424c-b7f4-58540d641add">
+<span class="eqno">(5.18)<a class="headerlink" href="#equation-6b828c3f-be53-424c-b7f4-58540d641add" title="Permalink to this equation">#</a></span>\[\begin{align}
+\int_0^a \psi_n^*(x) \psi_n(x)dx  = |B_n|^2 \int_0^a\sin^2\frac{n\pi x}{a}dx = 1
+\end{align}\]</div>
+<p>where we have use the domain <span class="math notranslate nohighlight">\(0\leq x \leq a\)</span> rather than <span class="math notranslate nohighlight">\(-\infty&lt; x &lt; \infty\)</span> because that is the finite domain of this particular problem.  Now let’s solve the <span class="math notranslate nohighlight">\(\sin^2\)</span> integral</p>
+<div class="amsmath math notranslate nohighlight" id="equation-4e62bba0-23e6-4a2c-9e95-3b6eece534e5">
+<span class="eqno">(5.19)<a class="headerlink" href="#equation-4e62bba0-23e6-4a2c-9e95-3b6eece534e5" title="Permalink to this equation">#</a></span>\[\begin{align}
+\int_0^a\sin^2\frac{n\pi x}{a}dx = \frac{a}{2}
+\end{align}\]</div>
+<p>Thus, we have that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-ff7d631d-3b1d-4ad4-8502-b6bd0b8eb6ad">
+<span class="eqno">(5.20)<a class="headerlink" href="#equation-ff7d631d-3b1d-4ad4-8502-b6bd0b8eb6ad" title="Permalink to this equation">#</a></span>\[\begin{align}
+B = \sqrt{\frac{2}{a}}
+\end{align}\]</div>
+<p>Finally, our normalized particle in a box wave functions are</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9f8da5d4-d7cf-4426-80f9-81e0fac75651">
+<span class="eqno">(5.21)<a class="headerlink" href="#equation-9f8da5d4-d7cf-4426-80f9-81e0fac75651" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\psi_n(x) = \sqrt{\frac{2}{a}} \sin\frac{n\pi x}{a}
+\end{equation}\]</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="k">def</span> <span class="nf">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">a</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="n">a</span><span class="p">)</span>
+<span class="c1"># make an array containing domain of wavelengths to consider</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="c1"># setup plot parameters</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x/a$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\psi(x)$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># plot quantum result</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=1&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=2&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=3&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=4&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Wavefunctions of Particle in a Box&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># make legend</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span><span class="n">markerscale</span><span class="o">=</span><span class="mf">5.0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="probabiliity-of-observing-particle-in-finite-domain">
+<h3><span class="section-number">5.2.1.7.2. </span>Probabiliity of Observing Particle in Finite Domain<a class="headerlink" href="#probabiliity-of-observing-particle-in-finite-domain" title="Permalink to this heading">#</a></h3>
+<p>Since the square of the wave function is a probability function, we can determine the probability of observing a particle in a particular domain using the relationship</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6ac237a5-c065-4f2f-b0e0-9d4017c1ab68">
+<span class="eqno">(5.22)<a class="headerlink" href="#equation-6ac237a5-c065-4f2f-b0e0-9d4017c1ab68" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\text{Prob}(x_1 \leq x \leq x_2) = \int_{x_1}^{x_2}P(x)dx = \int_{x_1}^{x_2} \psi^*(x)\psi(x)dx
+\end{equation}\]</div>
+<p>For example, compute the probability of observing the particle in a box being in the domain <span class="math notranslate nohighlight">\(\frac{a}{3} \leq x \leq \frac{2a}{3}\)</span>. We simply use the above equation and the normalized particle in a box wave function:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-36b1a161-0d5f-4544-8482-a087bfeaba58">
+<span class="eqno">(5.23)<a class="headerlink" href="#equation-36b1a161-0d5f-4544-8482-a087bfeaba58" title="Permalink to this equation">#</a></span>\[\begin{align}
+\text{Prob}(\frac{a}{3} \leq x \leq \frac{2a}{3}) = \frac{2}{a}\int_{\frac{a}{3}}^{\frac{2a}{3}} \sin^2\frac{n\pi x}{a}dx
+\end{align}\]</div>
+<p>We will use the definite integral of <span class="math notranslate nohighlight">\(\sin^2nx\)</span> from a table:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-dd74c539-fa97-4e0c-b916-72eabe3a43c4">
+<span class="eqno">(5.24)<a class="headerlink" href="#equation-dd74c539-fa97-4e0c-b916-72eabe3a43c4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int\sin^2xdx = \left[\frac{x}{2} - \frac{\sin2x}{4}\right]
+\end{equation}\]</div>
+<p>Perform <span class="math notranslate nohighlight">\(u = \frac{n\pi x}{a}\)</span>, <span class="math notranslate nohighlight">\(dx=\frac{a}{n\pi}du\)</span> substition of the integral above to get into the table form</p>
+<div class="amsmath math notranslate nohighlight" id="equation-82f7b686-453b-4167-b6bf-03e4f4fcaa67">
+<span class="eqno">(5.25)<a class="headerlink" href="#equation-82f7b686-453b-4167-b6bf-03e4f4fcaa67" title="Permalink to this equation">#</a></span>\[\begin{align}
+\text{Prob}(\frac{a}{3} \leq x \leq \frac{2a}{3}) &amp;= \frac{2}{a}\frac{a}{\pi}\frac{1}{n}\left[ \frac{u}{2} - \frac{\sin2u}{4}\right]_{\frac{n\pi}{3}}^{\frac{2n\pi}{3}} \\
+&amp;= \frac{2}{\pi n}\left[ \frac{2n\pi}{6} - \frac{\sin\frac{4n\pi}{3}}{4}  - \frac{n\pi}{6} + \frac{\sin\frac{2n\pi}{3}}{4}\right] \\
+&amp;= \frac{2}{\pi n} \left[\frac{n\pi}{6}  + \frac{\left(\sin\frac{2n\pi}{3} - \sin\frac{4n\pi}{3} \right)}{4} \right] \\
+&amp;= \frac{1}{\pi n} \left[\frac{n\pi}{3}  + \frac{\left(\sin\frac{2n\pi}{3} - \sin\frac{4n\pi}{3} \right)}{2} \right] \\
+\end{align}\]</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot probabilities</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="k">def</span> <span class="nf">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">a</span><span class="o">=</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="n">a</span><span class="p">)</span>
+<span class="c1"># make an array containing domain of wavelengths to consider</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="c1"># setup plot parameters</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x/a$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$P(x)$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># plot quantum result</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=1&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=2&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;n=3&quot;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Probabilites of Particle in a Box&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># make legend</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span><span class="n">markerscale</span><span class="o">=</span><span class="mf">5.0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># to check the probabilty of domain:</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+<span class="k">def</span> <span class="nf">prob</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+<span class="c1">#for n in range(1,6):</span>
+    <span class="c1">#print(n, np.round(quad(prob,1/3,2/3, args=(n))[0],3), np.round(1/(n*np.pi)*(n*np.pi/3 + (np.sin(2*n*np.pi/3) - np.sin(4*n*np.pi/3))/2),3))</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="computing-average-properties-from-a-wave-function">
+<h3><span class="section-number">5.2.1.7.3. </span>Computing Average Properties from a Wave Function<a class="headerlink" href="#computing-average-properties-from-a-wave-function" title="Permalink to this heading">#</a></h3>
+<p>Because of the probabilistic interpretation of the wave funtion, average properties can be computed from the wave function.  The general formula is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1fa21d25-183b-4d80-9b40-69eed0616bcc">
+<span class="eqno">(5.26)<a class="headerlink" href="#equation-1fa21d25-183b-4d80-9b40-69eed0616bcc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+&lt;A&gt; = \int \psi^*(x)\hat{A}\psi(x)dx
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{A}\)</span> is any operator.  This could be momentum, kinetic energy, etc.</p>
+<p>Let’s look at a few examples.</p>
+<ol class="arabic simple">
+<li><p>Compute the average value of <span class="math notranslate nohighlight">\(x^2\)</span> for a particle in a box</p></li>
+<li><p>Compute the average energy for a particle in a box</p></li>
+<li><p>Compute the average momentum for a particle in a box</p></li>
+</ol>
+</section>
+<section id="example-the-average-of-x-2-for-a-particle-in-a-box">
+<h3><span class="section-number">5.2.1.7.4. </span>Example: The average of <span class="math notranslate nohighlight">\(x^2\)</span> for a particle in a box<a class="headerlink" href="#example-the-average-of-x-2-for-a-particle-in-a-box" title="Permalink to this heading">#</a></h3>
+<p>To compute the average value of <span class="math notranslate nohighlight">\(x^2\)</span> we start by writing the integral expression</p>
+<div class="amsmath math notranslate nohighlight" id="equation-aacdbbd8-845c-451a-8dcd-df30986858a9">
+<span class="eqno">(5.27)<a class="headerlink" href="#equation-aacdbbd8-845c-451a-8dcd-df30986858a9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\langle x^2 \rangle = \int \psi^*(x) x^2 \psi(x)dx
+\end{equation}\]</div>
+<p>For the particle in a box, we can limit the domain, and thus the bounds of integration, to <span class="math notranslate nohighlight">\(0\leq x \leq a\)</span>.  We can also set <span class="math notranslate nohighlight">\(\psi_n(x) = \sqrt{\frac{2}{a}}\sin\frac{n\pi x}{a}\)</span>.</p>
+<p>Thus, for a particle in a 1D box of size <span class="math notranslate nohighlight">\(a\)</span> we get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-897ce096-891e-4a12-9b1d-85df2b4843ac">
+<span class="eqno">(5.28)<a class="headerlink" href="#equation-897ce096-891e-4a12-9b1d-85df2b4843ac" title="Permalink to this equation">#</a></span>\[\begin{align}
+\langle x^2 \rangle &amp;= \int_0^a \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right) x^2 \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right)dx \\
+&amp;= \frac{2}{a} \int_0^a x^2 \sin^2\frac{n\pi x}{a}dx
+\end{align}\]</div>
+<p>From an integral table we find that</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a5bbd9a1-8cea-4f56-9baf-c6246a6e9a50">
+<span class="eqno">(5.29)<a class="headerlink" href="#equation-a5bbd9a1-8cea-4f56-9baf-c6246a6e9a50" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\int x^2\sin^2\alpha xdx = \frac{x^3}{6} - \left(\frac{x^2}{4\alpha} - \frac{1}{8\alpha^3}\right)\sin2\alpha x - \frac{x\cos 2\alpha x}{4\alpha^2} + C
+\end{equation}\]</div>
+<p>We use this equation with <span class="math notranslate nohighlight">\(\alpha = \frac{n\pi}{a}\)</span> and get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1ffd0dd5-7049-47d8-a302-dd2e468b3385">
+<span class="eqno">(5.30)<a class="headerlink" href="#equation-1ffd0dd5-7049-47d8-a302-dd2e468b3385" title="Permalink to this equation">#</a></span>\[\begin{align}
+\langle x^2 \rangle &amp;= \int_0^a \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right) x^2 \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right)dx \\
+&amp;= \frac{2}{a} \int_0^a x^2 \sin^2\frac{n\pi x}{a}dx \\
+&amp;= \frac{2}{a}\left[ \frac{x^3}{6} - \left(\frac{x^2}{4\alpha} - \frac{1}{8\alpha^3}\right)\sin2\alpha x - \frac{x\cos 2\alpha x}{4\alpha^2}\right]_0^a \\
+&amp;= \frac{2}{a}\left[ \frac{a^3}{6} - \left(\frac{a^2}{4\alpha} - \frac{1}{8\alpha^3}\right)\sin2\alpha a - \frac{a\cos 2\alpha a}{4\alpha^2} \right] \\
+&amp;= \frac{2}{a}\left[ \frac{a^3}{6} - \left(\frac{a^2}{4\frac{n\pi}{a}} - \frac{1}{8\left(\frac{n\pi}{a}\right)^3}\right)\sin2\frac{n\pi}{a} a - \frac{a\cos 2\frac{n\pi}{a} a}{4\left(\frac{n\pi}{a}\right)^2} \right] \\
+&amp;= \frac{2}{a}\left[ \frac{a^3}{6} - \frac{a^3}{\left(2n\pi\right)^2} \right] \\
+&amp;=  \frac{a^2}{3} - \frac{a^2}{2\left(n\pi\right)^2} 
+\end{align}\]</div>
+<p>This result, combined with the result for <span class="math notranslate nohighlight">\(\langle x \rangle\)</span>, can be used to determine <span class="math notranslate nohighlight">\(\sigma_x\)</span>, the standard deviation of particle deviation:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-64731fb9-7e73-4c71-a940-36aab92075cf">
+<span class="eqno">(5.31)<a class="headerlink" href="#equation-64731fb9-7e73-4c71-a940-36aab92075cf" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\sigma_x = \sqrt{\langle x^2 \rangle - \langle x \rangle^2} = \frac{a}{2\pi n}\sqrt{\frac{\pi^2n^2}{3} -2}
+\end{equation}\]</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot probabilities</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="k">def</span> <span class="nf">sigmax</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># make an array containing domain of wavelengths to consider</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+<span class="c1"># setup plot parameters</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$n$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\sigma_x/a$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># plot quantum result</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">sigmax</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Standard Deviation of Particle Position&quot;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># make legend</span>
+<span class="c1">#ax.legend(fontsize=12,markerscale=5.0);</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">12</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">12</span> <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#808080&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$n$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\sigma_x/a$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/matplotlib/axes/_base.py:3268,</span> in <span class="ni">_AxesBase.grid</span><span class="nt">(self, visible, which, axis, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3266</span> <span class="n">_api</span><span class="o">.</span><span class="n">check_in_list</span><span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3267</span> <span class="k">if</span> <span class="n">axis</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">]:</span>
+<span class="ne">-&gt; </span><span class="mi">3268</span>     <span class="bp">self</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3269</span> <span class="k">if</span> <span class="n">axis</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">]:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3270</span>     <span class="bp">self</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/matplotlib/axis.py:1741,</span> in <span class="ni">Axis.grid</span><span class="nt">(self, visible, which, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1738</span> <span class="k">if</span> <span class="n">which</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">]:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1739</span>     <span class="n">gridkw</span><span class="p">[</span><span class="s1">&#39;gridOn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_major_tick_kw</span><span class="p">[</span><span class="s1">&#39;gridOn&#39;</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1740</span>                         <span class="k">if</span> <span class="n">visible</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">visible</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1741</span>     <span class="bp">self</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">gridkw</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1742</span> <span class="bp">self</span><span class="o">.</span><span class="n">stale</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/matplotlib/axis.py:984,</span> in <span class="ni">Axis.set_tick_params</span><span class="nt">(self, which, reset, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">971</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">972</span><span class="sd"> Set appearance parameters for ticks, ticklabels, and gridlines.</span>
+<span class="g g-Whitespace">    </span><span class="mi">973</span><span class="sd"> </span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">981</span><span class="sd">     gridlines.</span>
+<span class="g g-Whitespace">    </span><span class="mi">982</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">983</span> <span class="n">_api</span><span class="o">.</span><span class="n">check_in_list</span><span class="p">([</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">],</span> <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">984</span> <span class="n">kwtrans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_translate_tick_params</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">986</span> <span class="c1"># the kwargs are stored in self._major/minor_tick_kw so that any</span>
+<span class="g g-Whitespace">    </span><span class="mi">987</span> <span class="c1"># future new ticks will automatically get them</span>
+<span class="g g-Whitespace">    </span><span class="mi">988</span> <span class="k">if</span> <span class="n">reset</span><span class="p">:</span>
+
+<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/matplotlib/axis.py:1128,</span> in <span class="ni">Axis._translate_tick_params</span><span class="nt">(kw, reverse)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1126</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kw_</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1127</span>     <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed_keys</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1128</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1129</span>             <span class="s2">&quot;keyword </span><span class="si">%s</span><span class="s2"> is not recognized; valid keywords are </span><span class="si">%s</span><span class="s2">&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1130</span>             <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">allowed_keys</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">1131</span> <span class="n">kwtrans</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kw_</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1132</span> <span class="k">return</span> <span class="n">kwtrans</span>
+
+<span class="ne">ValueError</span>: keyword grid_b is not recognized; valid keywords are [&#39;size&#39;, &#39;width&#39;, &#39;color&#39;, &#39;tickdir&#39;, &#39;pad&#39;, &#39;labelsize&#39;, &#39;labelcolor&#39;, &#39;labelfontfamily&#39;, &#39;zorder&#39;, &#39;gridOn&#39;, &#39;tick1On&#39;, &#39;tick2On&#39;, &#39;label1On&#39;, &#39;label2On&#39;, &#39;length&#39;, &#39;direction&#39;, &#39;left&#39;, &#39;bottom&#39;, &#39;right&#39;, &#39;top&#39;, &#39;labelleft&#39;, &#39;labelbottom&#39;, &#39;labelright&#39;, &#39;labeltop&#39;, &#39;labelrotation&#39;, &#39;grid_agg_filter&#39;, &#39;grid_alpha&#39;, &#39;grid_animated&#39;, &#39;grid_antialiased&#39;, &#39;grid_clip_box&#39;, &#39;grid_clip_on&#39;, &#39;grid_clip_path&#39;, &#39;grid_color&#39;, &#39;grid_dash_capstyle&#39;, &#39;grid_dash_joinstyle&#39;, &#39;grid_dashes&#39;, &#39;grid_data&#39;, &#39;grid_drawstyle&#39;, &#39;grid_figure&#39;, &#39;grid_fillstyle&#39;, &#39;grid_gapcolor&#39;, &#39;grid_gid&#39;, &#39;grid_in_layout&#39;, &#39;grid_label&#39;, &#39;grid_linestyle&#39;, &#39;grid_linewidth&#39;, &#39;grid_marker&#39;, &#39;grid_markeredgecolor&#39;, &#39;grid_markeredgewidth&#39;, &#39;grid_markerfacecolor&#39;, &#39;grid_markerfacecoloralt&#39;, &#39;grid_markersize&#39;, &#39;grid_markevery&#39;, &#39;grid_mouseover&#39;, &#39;grid_path_effects&#39;, &#39;grid_picker&#39;, &#39;grid_pickradius&#39;, &#39;grid_rasterized&#39;, &#39;grid_sketch_params&#39;, &#39;grid_snap&#39;, &#39;grid_solid_capstyle&#39;, &#39;grid_solid_joinstyle&#39;, &#39;grid_transform&#39;, &#39;grid_url&#39;, &#39;grid_visible&#39;, &#39;grid_xdata&#39;, &#39;grid_ydata&#39;, &#39;grid_zorder&#39;, &#39;grid_aa&#39;, &#39;grid_c&#39;, &#39;grid_ds&#39;, &#39;grid_ls&#39;, &#39;grid_lw&#39;, &#39;grid_mec&#39;, &#39;grid_mew&#39;, &#39;grid_mfc&#39;, &#39;grid_mfcalt&#39;, &#39;grid_ms&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-average-energy-of-particle-in-a-box">
+<h3><span class="section-number">5.2.1.7.5. </span>Example: Average Energy of Particle in a Box<a class="headerlink" href="#example-average-energy-of-particle-in-a-box" title="Permalink to this heading">#</a></h3>
+<p>The average energy of the particle in a box is a special case of computing an average quantity.  We will start by writing out the standard definition of computing and average from a wavefunction</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d2167392-e6cb-4664-8d39-d43d650f63c1">
+<span class="eqno">(5.32)<a class="headerlink" href="#equation-d2167392-e6cb-4664-8d39-d43d650f63c1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\langle E \rangle = \int_0^a \psi_n^*(x)\hat{E}\psi_n(x)dx
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\hat{E}\)</span> is the total energy operator.  We know the total energy operator by another symbol, namely <span class="math notranslate nohighlight">\(\hat{E} = \hat{H}\)</span>.  We plug this into the above equation to get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-259411c8-75cf-4c59-97c4-b2bcab041d7d">
+<span class="eqno">(5.33)<a class="headerlink" href="#equation-259411c8-75cf-4c59-97c4-b2bcab041d7d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\langle E \rangle = \int_0^a \psi_n^*(x)\hat{H}\psi_n(x)dx.
+\end{equation}\]</div>
+<p>We now recognize that, for the particle in a box wavefunctions that we are discussion these were derived from the Schrodinger equation</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2a06e8ad-4409-442d-905e-9e4a2df8ec37">
+<span class="eqno">(5.34)<a class="headerlink" href="#equation-2a06e8ad-4409-442d-905e-9e4a2df8ec37" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{H}\psi_n(x)  = E_n\psi_n(x)
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(E_n\)</span> is a scalar.  Thus, for the average energy we get</p>
+<div class="amsmath math notranslate nohighlight" id="equation-2a25cb44-62f9-4a26-bb05-54a23b996d24">
+<span class="eqno">(5.35)<a class="headerlink" href="#equation-2a25cb44-62f9-4a26-bb05-54a23b996d24" title="Permalink to this equation">#</a></span>\[\begin{align}
+\langle E \rangle &amp;= \int_0^a \psi_n^*(x)\hat{H}\psi_n(x)dx \\
+&amp;=\int_0^a \psi_n^*(x)E_n\psi_n(x)dx \\
+&amp;=E_n\int_0^a \psi_n^*(x)\psi_n(x)dx \\
+&amp;= E_n
+\end{align}\]</div>
+<p>The last equality holding because the wave functions are normalized.</p>
+</section>
+<section id="example-average-momentum">
+<h3><span class="section-number">5.2.1.7.6. </span>Example: Average momentum<a class="headerlink" href="#example-average-momentum" title="Permalink to this heading">#</a></h3>
+<p>To compute the average momentum of a particle in a 1D box we start in the usual way</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c36f89d1-8e2b-45a2-9570-1106709e2975">
+<span class="eqno">(5.36)<a class="headerlink" href="#equation-c36f89d1-8e2b-45a2-9570-1106709e2975" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\langle p \rangle = \int_0^a \psi_n^*(x)\hat{p}\psi_n(x)dx
+\end{equation}\]</div>
+<p>Recall that the momentum operator in one dimension is given by</p>
+<div class="amsmath math notranslate nohighlight" id="equation-8b8b2d83-834d-41c7-a66f-7992d8a3463b">
+<span class="eqno">(5.37)<a class="headerlink" href="#equation-8b8b2d83-834d-41c7-a66f-7992d8a3463b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\hat{p}_x = -i\hbar\frac{d}{dx}
+\end{equation}\]</div>
+<p>We now substitute this into the  above equation and solve</p>
+<div class="amsmath math notranslate nohighlight" id="equation-805597e5-b892-4700-9823-ca83e6fe9691">
+<span class="eqno">(5.38)<a class="headerlink" href="#equation-805597e5-b892-4700-9823-ca83e6fe9691" title="Permalink to this equation">#</a></span>\[\begin{align}
+\langle p \rangle &amp;= \int_0^a \psi_n^*(x)\left(-i\hbar\frac{d}{dx}\right)\psi_n(x)dx \\
+&amp;= -\frac{2i\hbar}{a}\int_0^a \sin\left(\frac{n\pi x}{a}\right)\frac{d}{dx}\left(\sin\left(\frac{n\pi x}{a}\right)\right)dx \\
+&amp;= -\frac{2i\hbar}{a}\int_0^a \sin\left(\frac{n\pi x}{a}\right)\frac{n\pi}{a}\cos\left(\frac{n\pi x}{a}\right)dx \\
+&amp;= -\frac{2in\pi\hbar}{a^2}\int_0^a \sin\left(\frac{n\pi x}{a}\right)\cos\left(\frac{n\pi x}{a}\right)dx \\
+&amp;= 0
+\end{align}\]</div>
+<p>where the last equality can be found in an integral table.</p>
+<p>So the average momentum of a particle in a box is zero.  This is because it is equally probable for the particle to be moving forward and backwards.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./computational_chemistry/quantum_mechanics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5.2. </span>Welcome to the lessons on Quantum Mechanics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../hands_on_activities/intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5.3. </span>Hands-on Activities</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">5.2.1.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">5.2.1.2. Learning Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-concepts">5.2.1.3. Coding Concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-in-a-box-setting-up-the-problem">5.2.1.4. Particle in a Box: Setting up the Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-in-a-box-solution">5.2.1.5. Particle in a Box: Solution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particle-in-a-box-applications">5.2.1.6. Particle in a Box: Applications</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probabilistic-intepretation-of-the-wave-function">5.2.1.7. Probabilistic Intepretation of the Wave Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wave-functions-must-be-normalized">5.2.1.7.1. Wave functions must be normalized</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probabiliity-of-observing-particle-in-finite-domain">5.2.1.7.2. Probabiliity of Observing Particle in Finite Domain</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-average-properties-from-a-wave-function">5.2.1.7.3. Computing Average Properties from a Wave Function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-the-average-of-x-2-for-a-particle-in-a-box">5.2.1.7.4. Example: The average of <span class="math notranslate nohighlight">\(x^2\)</span> for a particle in a box</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-average-energy-of-particle-in-a-box">5.2.1.7.5. Example: Average Energy of Particle in a Box</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-average-momentum">5.2.1.7.6. Example: Average momentum</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin McCullagh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
