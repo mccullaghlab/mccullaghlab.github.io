@@ -1,0 +1,68 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/anaconda3/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# lets quantify this for HO wavefunctions
+import numpy as np
+from scipy import integrate
+from scipy.special import hermite
+from scipy.special import factorial
+# start by defining N function for analytic solution to HO wavefunctions
+def Nn(n,alpha):
+    return 1/np.sqrt(2**n*factorial(n))*(alpha/np.pi)**0.25
+def ho_psi(n,x):
+    x2 = np.power(x,2)
+    return (-1)**n*Nn(n,alpha)*hermite(n)(np.sqrt(alpha)*x)*np.exp(-alpha*x2/2.0)
+hbar = 1.0
+k = 1.0
+m = 1.0
+alpha = np.sqrt(k*m)/hbar
+x = np.arange(-20,20,0.01)
+psi0 = ho_psi(0,x)
+psi1 = ho_psi(1,x)
+psi2 = ho_psi(2,x)
+
+print("<0|x|0> = ", integrate.simps(psi0*x*psi0,x))
+print("<0|x|1> = ", integrate.simps(psi0*x*psi1,x))
+print("<0|x|2> = ", integrate.simps(psi0*x*psi2,x))
+print("<1|x|2> = ", integrate.simps(psi1*x*psi2,x))
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+Cell [0;32mIn[1], line 21[0m
+[1;32m     18[0m psi1 [38;5;241m=[39m ho_psi([38;5;241m1[39m,x)
+[1;32m     19[0m psi2 [38;5;241m=[39m ho_psi([38;5;241m2[39m,x)
+[0;32m---> 21[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124m<0|x|0> = [39m[38;5;124m"[39m, integrate[38;5;241m.[39msimps(psi0[38;5;241m*[39mx[38;5;241m*[39mpsi0,x))
+[1;32m     22[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124m<0|x|1> = [39m[38;5;124m"[39m, integrate[38;5;241m.[39msimps(psi0[38;5;241m*[39mx[38;5;241m*[39mpsi1,x))
+[1;32m     23[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124m<0|x|2> = [39m[38;5;124m"[39m, integrate[38;5;241m.[39msimps(psi0[38;5;241m*[39mx[38;5;241m*[39mpsi2,x))
+
+[0;31mAttributeError[0m: module 'scipy.integrate' has no attribute 'simps'
+
