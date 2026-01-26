@@ -1,43 +1,52 @@
 Traceback (most recent call last):
-  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+  File "/opt/anaconda3/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1305, in execute
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 1305, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/anaconda3/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
     return loop.run_until_complete(inner)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/anaconda3/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
     return future.result()
-           ^^^^^^^^^^^^^^^
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 705, in async_execute
+           ~~~~~~~~~~~~~^^
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 1058, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# inverse
-np.linalg.inv(a)
+from scipy import integrate
+def f(x):
+    return x*x
+dx = 0.01
+xInt = np.arange(0.5*dx,4,dx)
+print("Trapezoid rule:",integrate.trapz(np.power(xInt,2),x=xInt))
+print("Simpson's rule:",integrate.simps(np.power(xInt,2),x=xInt))
+print("Gaussian quadrature :",integrate.quad(f,0,4)[0])
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mLinAlgError[0m                               Traceback (most recent call last)
-Cell [0;32mIn[11], line 2[0m
-[1;32m      1[0m [38;5;66;03m# inverse[39;00m
-[0;32m----> 2[0m np[38;5;241m.[39mlinalg[38;5;241m.[39minv(a)
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+Cell [0;32mIn[5], line 6[0m
+[1;32m      4[0m dx [38;5;241m=[39m [38;5;241m0.01[39m
+[1;32m      5[0m xInt [38;5;241m=[39m np[38;5;241m.[39marange([38;5;241m0.5[39m[38;5;241m*[39mdx,[38;5;241m4[39m,dx)
+[0;32m----> 6[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mTrapezoid rule:[39m[38;5;124m"[39m,integrate[38;5;241m.[39mtrapz(np[38;5;241m.[39mpower(xInt,[38;5;241m2[39m),x[38;5;241m=[39mxInt))
+[1;32m      7[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mSimpson[39m[38;5;124m'[39m[38;5;124ms rule:[39m[38;5;124m"[39m,integrate[38;5;241m.[39msimps(np[38;5;241m.[39mpower(xInt,[38;5;241m2[39m),x[38;5;241m=[39mxInt))
+[1;32m      8[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mGaussian quadrature :[39m[38;5;124m"[39m,integrate[38;5;241m.[39mquad(f,[38;5;241m0[39m,[38;5;241m4[39m)[[38;5;241m0[39m])
 
-File [0;32m/opt/anaconda3/lib/python3.12/site-packages/numpy/linalg/linalg.py:561[0m, in [0;36minv[0;34m(a)[0m
-[1;32m    559[0m signature [38;5;241m=[39m [38;5;124m'[39m[38;5;124mD->D[39m[38;5;124m'[39m [38;5;28;01mif[39;00m isComplexType(t) [38;5;28;01melse[39;00m [38;5;124m'[39m[38;5;124md->d[39m[38;5;124m'[39m
-[1;32m    560[0m extobj [38;5;241m=[39m get_linalg_error_extobj(_raise_linalgerror_singular)
-[0;32m--> 561[0m ainv [38;5;241m=[39m _umath_linalg[38;5;241m.[39minv(a, signature[38;5;241m=[39msignature, extobj[38;5;241m=[39mextobj)
-[1;32m    562[0m [38;5;28;01mreturn[39;00m wrap(ainv[38;5;241m.[39mastype(result_t, copy[38;5;241m=[39m[38;5;28;01mFalse[39;00m))
-
-File [0;32m/opt/anaconda3/lib/python3.12/site-packages/numpy/linalg/linalg.py:112[0m, in [0;36m_raise_linalgerror_singular[0;34m(err, flag)[0m
-[1;32m    111[0m [38;5;28;01mdef[39;00m [38;5;21m_raise_linalgerror_singular[39m(err, flag):
-[0;32m--> 112[0m     [38;5;28;01mraise[39;00m LinAlgError([38;5;124m"[39m[38;5;124mSingular matrix[39m[38;5;124m"[39m)
-
-[0;31mLinAlgError[0m: Singular matrix
+[0;31mAttributeError[0m: module 'scipy.integrate' has no attribute 'trapz'
 

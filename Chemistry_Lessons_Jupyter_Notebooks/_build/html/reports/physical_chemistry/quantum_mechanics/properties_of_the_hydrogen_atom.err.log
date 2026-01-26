@@ -1,65 +1,70 @@
 Traceback (most recent call last):
-  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+  File "/opt/anaconda3/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1305, in execute
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 1305, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/anaconda3/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
     return loop.run_until_complete(inner)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/anaconda3/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
     return future.result()
-           ^^^^^^^^^^^^^^^
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 705, in async_execute
+           ~~~~~~~~~~~~~^^
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 1058, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+  File "/opt/anaconda3/lib/python3.13/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# let's plot some radial wavefunctions of the hydrogen atom
-from scipy.special import sph_harm
+import numpy as np
+from scipy import integrate
 from scipy.special import eval_genlaguerre
 from scipy.special import factorial
-from scipy import integrate
-import numpy as np
-import matplotlib.pyplot as plt
-import plotting as myplt
-%matplotlib inline
+a0 = 1.0 # radial unit of Bohr!    
+def hydrogen_atom_radial_wf(r,n,l):
+    R_prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
+    return R_prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
+def integrand(r,n1,l1,n2,l2):
+    return r*r*hydrogen_atom_radial_wf(r,n1,l1)*hydrogen_atom_radial_wf(r,n2,l2)
 
-fontsize = 16
-plt.figure(figsize=(8,6),dpi= 80, facecolor='w', edgecolor='k')
-plt.tick_params(axis='both',labelsize=fontsize)
-plt.grid(which='major', axis='both', color='#808080', linestyle='--')
-plt.title("Hydrogen Atom Radial Probability Densities",fontsize=fontsize)
-plt.ylabel(r'$r^2R^2(r)$',size=fontsize)
-plt.xlabel(r'$r$ (Bohr)',size=fontsize)
-
-# parameters for plotting
-nLimit = 3
-a0 = 1.0
-r = np.arange(0,30,0.01)
-
-for n in range(1,nLimit+1):
+for n in range(1,6):
     for l in range(n):
-        prefactor = -np.sqrt(factorial(n-l-1)/(2*n*factorial(n+l)))*(2.0/(n*a0))**(l+1.5)*np.power(r,l)*np.exp(-r/(n*a0))
-        R = prefactor*eval_genlaguerre(n-l-1,2*l+1,2*r/(n*a0))
-        label = "n=" + str(n) + " l=" + str(l)
-        plt.plot(r,np.power(R,2)*np.power(r,2),label=label, lw=2)
-plt.legend(fontsize=12)
-plt.show();
+        print(f"<R_{n}{l}|R_{n}{l}> = ",np.round(integrate.quad(integrand,0,np.infty,args=(n,l,n,l))[0],3))
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [0;32mIn[6], line 8[0m
-[1;32m      6[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[1;32m      7[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
-[0;32m----> 8[0m [38;5;28;01mimport[39;00m [38;5;21;01mplotting[39;00m [38;5;28;01mas[39;00m [38;5;21;01mmyplt[39;00m
-[1;32m      9[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mmatplotlib[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124minline[39m[38;5;124m'[39m)
-[1;32m     11[0m fontsize [38;5;241m=[39m [38;5;241m16[39m
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+Cell [0;32mIn[2], line 14[0m
+[1;32m     12[0m [38;5;28;01mfor[39;00m n [38;5;129;01min[39;00m [38;5;28mrange[39m([38;5;241m1[39m,[38;5;241m6[39m):
+[1;32m     13[0m     [38;5;28;01mfor[39;00m l [38;5;129;01min[39;00m [38;5;28mrange[39m(n):
+[0;32m---> 14[0m         [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124m<R_[39m[38;5;132;01m{[39;00mn[38;5;132;01m}[39;00m[38;5;132;01m{[39;00ml[38;5;132;01m}[39;00m[38;5;124m|R_[39m[38;5;132;01m{[39;00mn[38;5;132;01m}[39;00m[38;5;132;01m{[39;00ml[38;5;132;01m}[39;00m[38;5;124m> = [39m[38;5;124m"[39m,np[38;5;241m.[39mround(integrate[38;5;241m.[39mquad(integrand,[38;5;241m0[39m,np[38;5;241m.[39minfty,args[38;5;241m=[39m(n,l,n,l))[[38;5;241m0[39m],[38;5;241m3[39m))
 
-[0;31mModuleNotFoundError[0m: No module named 'plotting'
+File [0;32m/opt/anaconda3/lib/python3.13/site-packages/numpy/__init__.py:400[0m, in [0;36m__getattr__[0;34m(attr)[0m
+[1;32m    397[0m     [38;5;28;01mraise[39;00m [38;5;167;01mAttributeError[39;00m(__former_attrs__[attr], name[38;5;241m=[39m[38;5;28;01mNone[39;00m)
+[1;32m    399[0m [38;5;28;01mif[39;00m attr [38;5;129;01min[39;00m __expired_attributes__:
+[0;32m--> 400[0m     [38;5;28;01mraise[39;00m [38;5;167;01mAttributeError[39;00m(
+[1;32m    401[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124m`np.[39m[38;5;132;01m{[39;00mattr[38;5;132;01m}[39;00m[38;5;124m` was removed in the NumPy 2.0 release. [39m[38;5;124m"[39m
+[1;32m    402[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;132;01m{[39;00m__expired_attributes__[attr][38;5;132;01m}[39;00m[38;5;124m"[39m,
+[1;32m    403[0m         name[38;5;241m=[39m[38;5;28;01mNone[39;00m
+[1;32m    404[0m     )
+[1;32m    406[0m [38;5;28;01mif[39;00m attr [38;5;241m==[39m [38;5;124m"[39m[38;5;124mchararray[39m[38;5;124m"[39m:
+[1;32m    407[0m     warnings[38;5;241m.[39mwarn(
+[1;32m    408[0m         [38;5;124m"[39m[38;5;124m`np.chararray` is deprecated and will be removed from [39m[38;5;124m"[39m
+[1;32m    409[0m         [38;5;124m"[39m[38;5;124mthe main namespace in the future. Use an array with a string [39m[38;5;124m"[39m
+[1;32m    410[0m         [38;5;124m"[39m[38;5;124mor bytes dtype instead.[39m[38;5;124m"[39m, [38;5;167;01mDeprecationWarning[39;00m, stacklevel[38;5;241m=[39m[38;5;241m2[39m)
+
+[0;31mAttributeError[0m: `np.infty` was removed in the NumPy 2.0 release. Use `np.inf` instead.
 

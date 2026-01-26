@@ -293,10 +293,20 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/introduction/intro.html">5.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/introduction/the_fundamental_model.html">5.1.1. The Fundamental Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/introduction/Models_in_the_Scientific_Method.html">5.1.2. What is a Model?</a></li>
+
+
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.2. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week1_linux_hands_on.html">5.2.1. Linux Basics + Running Python</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week1_linux_hands_on.html">5.3.1. Linux Basics + Running Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 </ul>
 </details></li>
@@ -567,33 +577,33 @@ document.write(`
 <section id="particle-in-a-box-setting-up-the-problem">
 <h2><span class="section-number">4.5.4.4. </span>Particle in a Box: Setting up the Problem<a class="headerlink" href="#particle-in-a-box-setting-up-the-problem" title="Permalink to this heading">#</a></h2>
 <p>To see the utility of the Schrodinger equation we will see what it predicts for the energy of a particle that can travel in one dimension but is restricted to a finite domain.  This can be seen as asking what the allowed energy is for a particle in a one dimensional box.  The only energy that this particle has is kinetic energy.</p>
-<p><img alt="title" src="../../_images/particle_in_a_box.gif" /></p>
+<p><img alt="title" src="../../_images/particle_in_a_box1.gif" /></p>
 <p>The first step in solving this problem, as is the case for all problem involving the Schrodinger equation, is to write out the Hamiltonian.  From there, we can hopefully solve for the wave functions and the energies.  To do so we can start by writing out the classical energy and then converting the terms to quantum operators.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-65ee799b-302c-4d98-831c-44c6d0dff745">
-<span class="eqno">(4.717)<a class="headerlink" href="#equation-65ee799b-302c-4d98-831c-44c6d0dff745" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-134f3453-1fc4-4774-b0b8-b30fee51b823">
+<span class="eqno">(4.717)<a class="headerlink" href="#equation-134f3453-1fc4-4774-b0b8-b30fee51b823" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_{classical}(x,v) &amp;= K(v) + V(x) \\
 &amp;= \frac{1}{2}mv^2
 \end{align}\]</div>
 <p>where we have used that <span class="math notranslate nohighlight">\(V(x) = 0\)</span> as is stated in the problem.  So the total energy is just equivalent to the total kinetic energy. Since this is for a single particle the classical kinetic energy is just <span class="math notranslate nohighlight">\(\frac{1}{2}mv^2\)</span>.</p>
 <p>In order to write out the Hamiltonian we can always start with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d15f0e7b-261a-4e7b-b56c-04c86fa9b8c5">
-<span class="eqno">(4.718)<a class="headerlink" href="#equation-d15f0e7b-261a-4e7b-b56c-04c86fa9b8c5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-628a9a97-25c5-489e-8f10-3ff12ce3f56b">
+<span class="eqno">(4.718)<a class="headerlink" href="#equation-628a9a97-25c5-489e-8f10-3ff12ce3f56b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{H} &amp;= \hat{K} + \hat{V} \\
 &amp;= \hat{K}
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{K}\)</span> is the kinetic energy operator.  If we consult the table provided in the <a class="reference internal" href="Schrodinger_Equation.html"><span class="doc std std-doc">Schrodinger Equation notes</span></a> we see that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c89f6cbe-c9b7-4894-8925-0ae8129b8d27">
-<span class="eqno">(4.719)<a class="headerlink" href="#equation-c89f6cbe-c9b7-4894-8925-0ae8129b8d27" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6fe18bc0-e712-4918-9394-9a5dec7e0c91">
+<span class="eqno">(4.719)<a class="headerlink" href="#equation-6fe18bc0-e712-4918-9394-9a5dec7e0c91" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{K} = -\frac{\hbar^2}{2m}\left(\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial x^2} \right).
 \end{align}\]</div>
 <p>Since this problem only involves a single dimension, we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-929985aa-aced-41db-82bf-374d2b9aadce">
-<span class="eqno">(4.720)<a class="headerlink" href="#equation-929985aa-aced-41db-82bf-374d2b9aadce" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-64c6d7a2-1b84-493b-b7ed-168be8a8cf21">
+<span class="eqno">(4.720)<a class="headerlink" href="#equation-64c6d7a2-1b84-493b-b7ed-168be8a8cf21" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{K} = -\frac{\hbar^2}{2m}\frac{d^2}{d x^2}.
 \end{align}\]</div>
 <p>Thus, the Schrodinger equation for this problem is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9bff680e-d255-4e60-b9f2-ac1d7e4a3bc0">
-<span class="eqno">(4.721)<a class="headerlink" href="#equation-9bff680e-d255-4e60-b9f2-ac1d7e4a3bc0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-00014d33-f70d-4182-aecc-1456dd2bc99f">
+<span class="eqno">(4.721)<a class="headerlink" href="#equation-00014d33-f70d-4182-aecc-1456dd2bc99f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 -\frac{\hbar^2}{2m}\frac{d^2}{d x^2}\psi(x) = E\psi(x) \quad 0\leq x\leq a
 \end{equation}\]</div>
 <p>and the goal is to determine <span class="math notranslate nohighlight">\(\psi(x)\)</span> and <span class="math notranslate nohighlight">\(E\)</span>.</p>
@@ -601,33 +611,33 @@ E_{classical}(x,v) &amp;= K(v) + V(x) \\
 <section id="particle-in-a-box-solution">
 <h2><span class="section-number">4.5.4.5. </span>Particle in a Box: Solution<a class="headerlink" href="#particle-in-a-box-solution" title="Permalink to this heading">#</a></h2>
 <p>We start by rewriting the Schrodinger equation for the particle in a box in the more standard differential equation form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8dd4dd07-9430-4020-b638-c934b98a741d">
-<span class="eqno">(4.722)<a class="headerlink" href="#equation-8dd4dd07-9430-4020-b638-c934b98a741d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f8ca0d65-7f4d-4c33-b676-c735e92dfdbe">
+<span class="eqno">(4.722)<a class="headerlink" href="#equation-f8ca0d65-7f4d-4c33-b676-c735e92dfdbe" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;\frac{d^2\psi}{dx^2} = \frac{-2mE}{\hbar^2}\psi(x) \\
 \Rightarrow &amp;\frac{d^2\psi}{dx^2} + \frac{2mE}{\hbar^2}\psi(x) = 0
 \end{align}\]</div>
 <p>Additionally, we have the boundary conditions that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-21ab295f-0566-4935-8fcc-f64da950117c">
-<span class="eqno">(4.723)<a class="headerlink" href="#equation-21ab295f-0566-4935-8fcc-f64da950117c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ee94f1ee-8532-4d08-9efb-792f0f0af47f">
+<span class="eqno">(4.723)<a class="headerlink" href="#equation-ee94f1ee-8532-4d08-9efb-792f0f0af47f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi(0) &amp;= 0 \\
 \psi(l) &amp;= 0
 \end{align}\]</div>
 <p>The idea here is that the particle can not sit inside/on the wall.  You can think of the wall as being an infinite potential at <span class="math notranslate nohighlight">\(x=0\)</span> and <span class="math notranslate nohighlight">\(x=l\)</span>.</p>
 <p>This form of differential equation and boundary conditions are exactly the problem we solved in the <a class="reference internal" href="wave_particle_duality_classical_wave_equation.html"><span class="doc std std-doc">Classical Wave Equation</span></a> notes.  The general solution is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6309bf94-bbf9-4441-aeb6-2577b61acf02">
-<span class="eqno">(4.724)<a class="headerlink" href="#equation-6309bf94-bbf9-4441-aeb6-2577b61acf02" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e62d2e54-a734-4f9c-b1d8-3f6701c95ddf">
+<span class="eqno">(4.724)<a class="headerlink" href="#equation-e62d2e54-a734-4f9c-b1d8-3f6701c95ddf" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(x) = A\cos(kx) + B\sin(kx),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(k^2 = \frac{2mE}{\hbar^2}\)</span> in this case.</p>
 <p>Applying the boundary conditions to this general solution yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a3203b21-609e-4600-a6f2-8c5affbcb577">
-<span class="eqno">(4.725)<a class="headerlink" href="#equation-a3203b21-609e-4600-a6f2-8c5affbcb577" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-37835494-c367-4aec-b4cf-a859ee50a540">
+<span class="eqno">(4.725)<a class="headerlink" href="#equation-37835494-c367-4aec-b4cf-a859ee50a540" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;A = 0 \\
 &amp;k = \frac{n\pi}{a}
 \end{align}\]</div>
 <p>Using two expressions for <span class="math notranslate nohighlight">\(k\)</span> yields our solutions for <span class="math notranslate nohighlight">\(E\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f780a25f-2599-45a6-80c7-fa53da0ed4ab">
-<span class="eqno">(4.726)<a class="headerlink" href="#equation-f780a25f-2599-45a6-80c7-fa53da0ed4ab" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cdecd219-a865-4e4f-b34c-7b5d5434f6d5">
+<span class="eqno">(4.726)<a class="headerlink" href="#equation-cdecd219-a865-4e4f-b34c-7b5d5434f6d5" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_n = \frac{h^2n^2}{8ma^2}
 \end{align}\]</div>
 </section>
@@ -639,8 +649,8 @@ E_n = \frac{h^2n^2}{8ma^2}
 <h2><span class="section-number">4.5.4.7. </span>Probabilistic Intepretation of the Wave Function<a class="headerlink" href="#probabilistic-intepretation-of-the-wave-function" title="Permalink to this heading">#</a></h2>
 <p>The wave function of a particle, such as the free particle, can be interpreted as the amplitude of the wave at that position.  This is analagous to the classical wave equation.</p>
 <p>The probability of finding a particle at position <span class="math notranslate nohighlight">\(x\)</span> is proportional to the square of the wave function.  Specifically,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8c9e3101-5a15-4fcc-98ca-2cc1eeef921d">
-<span class="eqno">(4.727)<a class="headerlink" href="#equation-8c9e3101-5a15-4fcc-98ca-2cc1eeef921d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4e7c017d-4283-4a0c-8af4-3d548af092f9">
+<span class="eqno">(4.727)<a class="headerlink" href="#equation-4e7c017d-4283-4a0c-8af4-3d548af092f9" title="Permalink to this equation">#</a></span>\[\begin{align}
 P(x) \propto \psi^*(x)\psi(x),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\psi^*(x)\)</span> is the complex conjugate of <span class="math notranslate nohighlight">\(\psi(x)\)</span>.  Note that wave functions can be complex but, if they are not, then <span class="math notranslate nohighlight">\(\psi^*(x) = \psi(x)\)</span> and <span class="math notranslate nohighlight">\(P \propto \psi(x)^2\)</span>.</p>
@@ -653,34 +663,34 @@ P(x) \propto \psi^*(x)\psi(x),
 <section id="wave-functions-must-be-normalized">
 <h3><span class="section-number">4.5.4.7.1. </span>Wave functions must be normalized<a class="headerlink" href="#wave-functions-must-be-normalized" title="Permalink to this heading">#</a></h3>
 <p>Because the square of the wave function is related to the probability we can normalize the wave function based on</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e224c888-d2fe-43d2-be00-5e5dfc3f64eb">
-<span class="eqno">(4.728)<a class="headerlink" href="#equation-e224c888-d2fe-43d2-be00-5e5dfc3f64eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-56349167-2513-41ab-a5ff-0f6d62cef50f">
+<span class="eqno">(4.728)<a class="headerlink" href="#equation-56349167-2513-41ab-a5ff-0f6d62cef50f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^{\infty} P(x) dx = \int_{-\infty}^{\infty} \psi^*(x)\psi(x)dx = 1
 \end{equation}\]</div>
 <p>Let’s consider what this means for the particle in a box wave functions.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2cf670db-72b0-4c0b-b023-37038aaa3a5b">
-<span class="eqno">(4.729)<a class="headerlink" href="#equation-2cf670db-72b0-4c0b-b023-37038aaa3a5b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a2c9e5fe-b5db-46ee-bf09-d930b789aec3">
+<span class="eqno">(4.729)<a class="headerlink" href="#equation-a2c9e5fe-b5db-46ee-bf09-d930b789aec3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi_n(x) = B_n \sin\frac{n\pi x}{a} \\
 \psi_n^*(x) \psi_n(x)  = B_n^*B_n \sin^2\frac{n\pi x}{a}
 \end{align}\]</div>
 <p>We can determine the value for <span class="math notranslate nohighlight">\(B_n\)</span> based on the normalization condition.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dd04ff0a-42f6-4cd1-a219-903ce9ea9020">
-<span class="eqno">(4.730)<a class="headerlink" href="#equation-dd04ff0a-42f6-4cd1-a219-903ce9ea9020" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5dcff40f-3bbb-40e2-85a5-a257a405352a">
+<span class="eqno">(4.730)<a class="headerlink" href="#equation-5dcff40f-3bbb-40e2-85a5-a257a405352a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_0^a \psi_n^*(x) \psi_n(x)dx  = |B_n|^2 \int_0^a\sin^2\frac{n\pi x}{a}dx = 1
 \end{align}\]</div>
 <p>where we have use the domain <span class="math notranslate nohighlight">\(0\leq x \leq a\)</span> rather than <span class="math notranslate nohighlight">\(-\infty&lt; x &lt; \infty\)</span> because that is the finite domain of this particular problem.  Now let’s solve the <span class="math notranslate nohighlight">\(\sin^2\)</span> integral</p>
-<div class="amsmath math notranslate nohighlight" id="equation-573f7367-ffc1-4881-a5e2-f87cac92a0af">
-<span class="eqno">(4.731)<a class="headerlink" href="#equation-573f7367-ffc1-4881-a5e2-f87cac92a0af" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9282e4cd-13af-471e-ac54-e944ea70aaa4">
+<span class="eqno">(4.731)<a class="headerlink" href="#equation-9282e4cd-13af-471e-ac54-e944ea70aaa4" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_0^a\sin^2\frac{n\pi x}{a}dx = \frac{a}{2}
 \end{align}\]</div>
 <p>Thus, we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-49073c87-f333-42a6-bbec-c530f6e749f1">
-<span class="eqno">(4.732)<a class="headerlink" href="#equation-49073c87-f333-42a6-bbec-c530f6e749f1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1422f3d3-bbeb-4727-94e5-bd060d8a6c70">
+<span class="eqno">(4.732)<a class="headerlink" href="#equation-1422f3d3-bbeb-4727-94e5-bd060d8a6c70" title="Permalink to this equation">#</a></span>\[\begin{align}
 B = \sqrt{\frac{2}{a}}
 \end{align}\]</div>
 <p>Finally, our normalized particle in a box wave functions are</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d53d311c-c676-45d1-9fde-75cb3460347d">
-<span class="eqno">(4.733)<a class="headerlink" href="#equation-d53d311c-c676-45d1-9fde-75cb3460347d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1b620ea0-c126-4f94-a7d5-1acec3a73267">
+<span class="eqno">(4.733)<a class="headerlink" href="#equation-1b620ea0-c126-4f94-a7d5-1acec3a73267" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi_n(x) = \sqrt{\frac{2}{a}} \sin\frac{n\pi x}{a}
 \end{equation}\]</div>
 <div class="cell tag_hide-input docutils container">
@@ -690,10 +700,10 @@ B = \sqrt{\frac{2}{a}}
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="k">def</span> <span class="nf">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
     <span class="n">a</span><span class="o">=</span><span class="mi">1</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="n">a</span><span class="p">)</span>
 <span class="c1"># make an array containing domain of wavelengths to consider</span>
@@ -722,23 +732,23 @@ B = \sqrt{\frac{2}{a}}
 <section id="probabiliity-of-observing-particle-in-finite-domain">
 <h3><span class="section-number">4.5.4.7.2. </span>Probabiliity of Observing Particle in Finite Domain<a class="headerlink" href="#probabiliity-of-observing-particle-in-finite-domain" title="Permalink to this heading">#</a></h3>
 <p>Since the square of the wave function is a probability function, we can determine the probability of observing a particle in a particular domain using the relationship</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e7b3611b-ebf1-4bf9-a581-e0d677540c12">
-<span class="eqno">(4.734)<a class="headerlink" href="#equation-e7b3611b-ebf1-4bf9-a581-e0d677540c12" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7ef042de-e9d9-4271-95f3-10091f45b9e2">
+<span class="eqno">(4.734)<a class="headerlink" href="#equation-7ef042de-e9d9-4271-95f3-10091f45b9e2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \text{Prob}(x_1 \leq x \leq x_2) = \int_{x_1}^{x_2}P(x)dx = \int_{x_1}^{x_2} \psi^*(x)\psi(x)dx
 \end{equation}\]</div>
 <p>For example, compute the probability of observing the particle in a box being in the domain <span class="math notranslate nohighlight">\(\frac{a}{3} \leq x \leq \frac{2a}{3}\)</span>. We simply use the above equation and the normalized particle in a box wave function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2843da5e-d13d-4afd-8fdf-005c560c1131">
-<span class="eqno">(4.735)<a class="headerlink" href="#equation-2843da5e-d13d-4afd-8fdf-005c560c1131" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5d80d75a-3172-4bc0-b455-b70532417956">
+<span class="eqno">(4.735)<a class="headerlink" href="#equation-5d80d75a-3172-4bc0-b455-b70532417956" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Prob}(\frac{a}{3} \leq x \leq \frac{2a}{3}) = \frac{2}{a}\int_{\frac{a}{3}}^{\frac{2a}{3}} \sin^2\frac{n\pi x}{a}dx
 \end{align}\]</div>
 <p>We will use the definite integral of <span class="math notranslate nohighlight">\(\sin^2nx\)</span> from a table:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-13f61953-e5f6-402d-b5c4-805deebe6222">
-<span class="eqno">(4.736)<a class="headerlink" href="#equation-13f61953-e5f6-402d-b5c4-805deebe6222" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bd75c9b5-44ea-4aff-8b96-785fa3e37a1f">
+<span class="eqno">(4.736)<a class="headerlink" href="#equation-bd75c9b5-44ea-4aff-8b96-785fa3e37a1f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int\sin^2xdx = \left[\frac{x}{2} - \frac{\sin2x}{4}\right]
 \end{equation}\]</div>
 <p>Perform <span class="math notranslate nohighlight">\(u = \frac{n\pi x}{a}\)</span>, <span class="math notranslate nohighlight">\(dx=\frac{a}{n\pi}du\)</span> substition of the integral above to get into the table form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-faf8d667-4d47-4a7c-8275-e8c2c85d2469">
-<span class="eqno">(4.737)<a class="headerlink" href="#equation-faf8d667-4d47-4a7c-8275-e8c2c85d2469" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a86c67ba-55e5-4c6f-9c66-ba5fb5cf974a">
+<span class="eqno">(4.737)<a class="headerlink" href="#equation-a86c67ba-55e5-4c6f-9c66-ba5fb5cf974a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Prob}(\frac{a}{3} \leq x \leq \frac{2a}{3}) &amp;= \frac{2}{a}\frac{a}{\pi}\frac{1}{n}\left[ \frac{u}{2} - \frac{\sin2u}{4}\right]_{\frac{n\pi}{3}}^{\frac{2n\pi}{3}} \\
 &amp;= \frac{2}{\pi n}\left[ \frac{2n\pi}{6} - \frac{\sin\frac{4n\pi}{3}}{4}  - \frac{n\pi}{6} + \frac{\sin\frac{2n\pi}{3}}{4}\right] \\
 &amp;= \frac{2}{\pi n} \left[\frac{n\pi}{6}  + \frac{\left(\sin\frac{2n\pi}{3} - \sin\frac{4n\pi}{3} \right)}{4} \right] \\
@@ -752,10 +762,10 @@ B = \sqrt{\frac{2}{a}}
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot probabilities</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="k">def</span> <span class="nf">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
     <span class="n">a</span><span class="o">=</span><span class="mi">1</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">a</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="n">a</span><span class="p">)</span>
 <span class="c1"># make an array containing domain of wavelengths to consider</span>
@@ -787,8 +797,8 @@ B = \sqrt{\frac{2}{a}}
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># to check the probabilty of domain:</span>
-<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
-<span class="k">def</span> <span class="nf">prob</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">quad</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">prob</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
 <span class="c1">#for n in range(1,6):</span>
     <span class="c1">#print(n, np.round(quad(prob,1/3,2/3, args=(n))[0],3), np.round(1/(n*np.pi)*(n*np.pi/3 + (np.sin(2*n*np.pi/3) - np.sin(4*n*np.pi/3))/2),3))</span>
@@ -801,8 +811,8 @@ B = \sqrt{\frac{2}{a}}
 <section id="computing-average-properties-from-a-wave-function">
 <h3><span class="section-number">4.5.4.7.3. </span>Computing Average Properties from a Wave Function<a class="headerlink" href="#computing-average-properties-from-a-wave-function" title="Permalink to this heading">#</a></h3>
 <p>Because of the probabilistic interpretation of the wave funtion, average properties can be computed from the wave function.  The general formula is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa6f3ad7-df24-4847-9785-11044fb57d90">
-<span class="eqno">(4.738)<a class="headerlink" href="#equation-aa6f3ad7-df24-4847-9785-11044fb57d90" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-43a8e3f1-9911-4b61-9064-8c926683643e">
+<span class="eqno">(4.738)<a class="headerlink" href="#equation-43a8e3f1-9911-4b61-9064-8c926683643e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 &lt;A&gt; = \int \psi^*(x)\hat{A}\psi(x)dx
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{A}\)</span> is any operator.  This could be momentum, kinetic energy, etc.</p>
@@ -816,25 +826,25 @@ B = \sqrt{\frac{2}{a}}
 <section id="example-the-average-of-x-2-for-a-particle-in-a-box">
 <h3><span class="section-number">4.5.4.7.4. </span>Example: The average of <span class="math notranslate nohighlight">\(x^2\)</span> for a particle in a box<a class="headerlink" href="#example-the-average-of-x-2-for-a-particle-in-a-box" title="Permalink to this heading">#</a></h3>
 <p>To compute the average value of <span class="math notranslate nohighlight">\(x^2\)</span> we start by writing the integral expression</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4aaad007-6d97-4572-bfc1-527ae25cc570">
-<span class="eqno">(4.739)<a class="headerlink" href="#equation-4aaad007-6d97-4572-bfc1-527ae25cc570" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c4461f87-7dc7-4c1f-93a9-4fa1a8c567bb">
+<span class="eqno">(4.739)<a class="headerlink" href="#equation-c4461f87-7dc7-4c1f-93a9-4fa1a8c567bb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle x^2 \rangle = \int \psi^*(x) x^2 \psi(x)dx
 \end{equation}\]</div>
 <p>For the particle in a box, we can limit the domain, and thus the bounds of integration, to <span class="math notranslate nohighlight">\(0\leq x \leq a\)</span>.  We can also set <span class="math notranslate nohighlight">\(\psi_n(x) = \sqrt{\frac{2}{a}}\sin\frac{n\pi x}{a}\)</span>.</p>
 <p>Thus, for a particle in a 1D box of size <span class="math notranslate nohighlight">\(a\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ed41a93e-26d5-412d-a644-1db9b7dc1b49">
-<span class="eqno">(4.740)<a class="headerlink" href="#equation-ed41a93e-26d5-412d-a644-1db9b7dc1b49" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b74b9dd5-87c2-4891-9c9c-86cfcb84e0f7">
+<span class="eqno">(4.740)<a class="headerlink" href="#equation-b74b9dd5-87c2-4891-9c9c-86cfcb84e0f7" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle x^2 \rangle &amp;= \int_0^a \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right) x^2 \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right)dx \\
 &amp;= \frac{2}{a} \int_0^a x^2 \sin^2\frac{n\pi x}{a}dx
 \end{align}\]</div>
 <p>From an integral table we find that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c89641cd-9ae5-468e-8543-d0dda8769d84">
-<span class="eqno">(4.741)<a class="headerlink" href="#equation-c89641cd-9ae5-468e-8543-d0dda8769d84" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-38de2c1d-0ec0-4993-b273-9b0bdae055e1">
+<span class="eqno">(4.741)<a class="headerlink" href="#equation-38de2c1d-0ec0-4993-b273-9b0bdae055e1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int x^2\sin^2\alpha xdx = \frac{x^3}{6} - \left(\frac{x^2}{4\alpha} - \frac{1}{8\alpha^3}\right)\sin2\alpha x - \frac{x\cos 2\alpha x}{4\alpha^2} + C
 \end{equation}\]</div>
 <p>We use this equation with <span class="math notranslate nohighlight">\(\alpha = \frac{n\pi}{a}\)</span> and get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-07f80baf-ac23-481c-b25e-46428d1bfd60">
-<span class="eqno">(4.742)<a class="headerlink" href="#equation-07f80baf-ac23-481c-b25e-46428d1bfd60" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8f880ee8-374f-4e52-a5ee-6ee2dfda889f">
+<span class="eqno">(4.742)<a class="headerlink" href="#equation-8f880ee8-374f-4e52-a5ee-6ee2dfda889f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle x^2 \rangle &amp;= \int_0^a \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right) x^2 \sqrt{\frac{2}{a}}\sin\left(\frac{n\pi x}{a}\right)dx \\
 &amp;= \frac{2}{a} \int_0^a x^2 \sin^2\frac{n\pi x}{a}dx \\
 &amp;= \frac{2}{a}\left[ \frac{x^3}{6} - \left(\frac{x^2}{4\alpha} - \frac{1}{8\alpha^3}\right)\sin2\alpha x - \frac{x\cos 2\alpha x}{4\alpha^2}\right]_0^a \\
@@ -844,8 +854,8 @@ B = \sqrt{\frac{2}{a}}
 &amp;=  \frac{a^2}{3} - \frac{a^2}{2\left(n\pi\right)^2} 
 \end{align}\]</div>
 <p>This result, combined with the result for <span class="math notranslate nohighlight">\(\langle x \rangle\)</span>, can be used to determine <span class="math notranslate nohighlight">\(\sigma_x\)</span>, the standard deviation of particle deviation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3f376d61-0b23-4553-aebd-872795296835">
-<span class="eqno">(4.743)<a class="headerlink" href="#equation-3f376d61-0b23-4553-aebd-872795296835" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2820928f-9b80-4f3b-9658-005e3c0f13c9">
+<span class="eqno">(4.743)<a class="headerlink" href="#equation-2820928f-9b80-4f3b-9658-005e3c0f13c9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sigma_x = \sqrt{\langle x^2 \rangle - \langle x \rangle^2} = \frac{a}{2\pi n}\sqrt{\frac{\pi^2n^2}{3} -2}
 \end{equation}\]</div>
 <div class="cell tag_hide-input docutils container">
@@ -856,10 +866,10 @@ B = \sqrt{\frac{2}{a}}
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot probabilities</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="k">def</span> <span class="nf">sigmax</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sigmax</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
 <span class="c1"># make an array containing domain of wavelengths to consider</span>
 <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
@@ -889,41 +899,41 @@ B = \sqrt{\frac{2}{a}}
 <span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$n$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\sigma_x/a$&#39;</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/matplotlib/axes/_base.py:3268,</span> in <span class="ni">_AxesBase.grid</span><span class="nt">(self, visible, which, axis, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3266</span> <span class="n">_api</span><span class="o">.</span><span class="n">check_in_list</span><span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3267</span> <span class="k">if</span> <span class="n">axis</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">]:</span>
-<span class="ne">-&gt; </span><span class="mi">3268</span>     <span class="bp">self</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">3269</span> <span class="k">if</span> <span class="n">axis</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">]:</span>
-<span class="g g-Whitespace">   </span><span class="mi">3270</span>     <span class="bp">self</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nn">File /opt/anaconda3/lib/python3.13/site-packages/matplotlib/axes/_base.py:3312,</span> in <span class="ni">_AxesBase.grid</span><span class="nt">(self, visible, which, axis, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3310</span> <span class="n">_api</span><span class="o">.</span><span class="n">check_in_list</span><span class="p">([</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3311</span> <span class="k">if</span> <span class="n">axis</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">]:</span>
+<span class="ne">-&gt; </span><span class="mi">3312</span>     <span class="bp">self</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3313</span> <span class="k">if</span> <span class="n">axis</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">]:</span>
+<span class="g g-Whitespace">   </span><span class="mi">3314</span>     <span class="bp">self</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">visible</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/matplotlib/axis.py:1741,</span> in <span class="ni">Axis.grid</span><span class="nt">(self, visible, which, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1738</span> <span class="k">if</span> <span class="n">which</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">]:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1739</span>     <span class="n">gridkw</span><span class="p">[</span><span class="s1">&#39;gridOn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_major_tick_kw</span><span class="p">[</span><span class="s1">&#39;gridOn&#39;</span><span class="p">]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1740</span>                         <span class="k">if</span> <span class="n">visible</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">visible</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1741</span>     <span class="bp">self</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">gridkw</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1742</span> <span class="bp">self</span><span class="o">.</span><span class="n">stale</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="nn">File /opt/anaconda3/lib/python3.13/site-packages/matplotlib/axis.py:1746,</span> in <span class="ni">Axis.grid</span><span class="nt">(self, visible, which, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1743</span> <span class="k">if</span> <span class="n">which</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">]:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1744</span>     <span class="n">gridkw</span><span class="p">[</span><span class="s1">&#39;gridOn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_major_tick_kw</span><span class="p">[</span><span class="s1">&#39;gridOn&#39;</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1745</span>                         <span class="k">if</span> <span class="n">visible</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">visible</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1746</span>     <span class="bp">self</span><span class="o">.</span><span class="n">set_tick_params</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">gridkw</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1747</span> <span class="bp">self</span><span class="o">.</span><span class="n">stale</span> <span class="o">=</span> <span class="kc">True</span>
 
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/matplotlib/axis.py:984,</span> in <span class="ni">Axis.set_tick_params</span><span class="nt">(self, which, reset, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">971</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">972</span><span class="sd"> Set appearance parameters for ticks, ticklabels, and gridlines.</span>
-<span class="g g-Whitespace">    </span><span class="mi">973</span><span class="sd"> </span>
+<span class="nn">File /opt/anaconda3/lib/python3.13/site-packages/matplotlib/axis.py:971,</span> in <span class="ni">Axis.set_tick_params</span><span class="nt">(self, which, reset, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">958</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">959</span><span class="sd"> Set appearance parameters for ticks, ticklabels, and gridlines.</span>
+<span class="g g-Whitespace">    </span><span class="mi">960</span><span class="sd"> </span>
 <span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">981</span><span class="sd">     gridlines.</span>
-<span class="g g-Whitespace">    </span><span class="mi">982</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">983</span> <span class="n">_api</span><span class="o">.</span><span class="n">check_in_list</span><span class="p">([</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">],</span> <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">984</span> <span class="n">kwtrans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_translate_tick_params</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">986</span> <span class="c1"># the kwargs are stored in self._major/minor_tick_kw so that any</span>
-<span class="g g-Whitespace">    </span><span class="mi">987</span> <span class="c1"># future new ticks will automatically get them</span>
-<span class="g g-Whitespace">    </span><span class="mi">988</span> <span class="k">if</span> <span class="n">reset</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">968</span><span class="sd">     gridlines.</span>
+<span class="g g-Whitespace">    </span><span class="mi">969</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">970</span> <span class="n">_api</span><span class="o">.</span><span class="n">check_in_list</span><span class="p">([</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">],</span> <span class="n">which</span><span class="o">=</span><span class="n">which</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">971</span> <span class="n">kwtrans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_translate_tick_params</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">973</span> <span class="c1"># the kwargs are stored in self._major/minor_tick_kw so that any</span>
+<span class="g g-Whitespace">    </span><span class="mi">974</span> <span class="c1"># future new ticks will automatically get them</span>
+<span class="g g-Whitespace">    </span><span class="mi">975</span> <span class="k">if</span> <span class="n">reset</span><span class="p">:</span>
 
-<span class="nn">File /opt/anaconda3/lib/python3.12/site-packages/matplotlib/axis.py:1128,</span> in <span class="ni">Axis._translate_tick_params</span><span class="nt">(kw, reverse)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1126</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kw_</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1127</span>     <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed_keys</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1128</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1129</span>             <span class="s2">&quot;keyword </span><span class="si">%s</span><span class="s2"> is not recognized; valid keywords are </span><span class="si">%s</span><span class="s2">&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1130</span>             <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">allowed_keys</span><span class="p">))</span>
-<span class="g g-Whitespace">   </span><span class="mi">1131</span> <span class="n">kwtrans</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kw_</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1132</span> <span class="k">return</span> <span class="n">kwtrans</span>
+<span class="nn">File /opt/anaconda3/lib/python3.13/site-packages/matplotlib/axis.py:1120,</span> in <span class="ni">Axis._translate_tick_params</span><span class="nt">(cls, kw, reverse)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1118</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kw_</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1119</span>     <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowed_keys</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1120</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1121</span>             <span class="s2">&quot;keyword </span><span class="si">%s</span><span class="s2"> is not recognized; valid keywords are </span><span class="si">%s</span><span class="s2">&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1122</span>             <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">allowed_keys</span><span class="p">))</span>
+<span class="g g-Whitespace">   </span><span class="mi">1123</span> <span class="n">kwtrans</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kw_</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1124</span> <span class="k">return</span> <span class="n">kwtrans</span>
 
 <span class="ne">ValueError</span>: keyword grid_b is not recognized; valid keywords are [&#39;size&#39;, &#39;width&#39;, &#39;color&#39;, &#39;tickdir&#39;, &#39;pad&#39;, &#39;labelsize&#39;, &#39;labelcolor&#39;, &#39;labelfontfamily&#39;, &#39;zorder&#39;, &#39;gridOn&#39;, &#39;tick1On&#39;, &#39;tick2On&#39;, &#39;label1On&#39;, &#39;label2On&#39;, &#39;length&#39;, &#39;direction&#39;, &#39;left&#39;, &#39;bottom&#39;, &#39;right&#39;, &#39;top&#39;, &#39;labelleft&#39;, &#39;labelbottom&#39;, &#39;labelright&#39;, &#39;labeltop&#39;, &#39;labelrotation&#39;, &#39;grid_agg_filter&#39;, &#39;grid_alpha&#39;, &#39;grid_animated&#39;, &#39;grid_antialiased&#39;, &#39;grid_clip_box&#39;, &#39;grid_clip_on&#39;, &#39;grid_clip_path&#39;, &#39;grid_color&#39;, &#39;grid_dash_capstyle&#39;, &#39;grid_dash_joinstyle&#39;, &#39;grid_dashes&#39;, &#39;grid_data&#39;, &#39;grid_drawstyle&#39;, &#39;grid_figure&#39;, &#39;grid_fillstyle&#39;, &#39;grid_gapcolor&#39;, &#39;grid_gid&#39;, &#39;grid_in_layout&#39;, &#39;grid_label&#39;, &#39;grid_linestyle&#39;, &#39;grid_linewidth&#39;, &#39;grid_marker&#39;, &#39;grid_markeredgecolor&#39;, &#39;grid_markeredgewidth&#39;, &#39;grid_markerfacecolor&#39;, &#39;grid_markerfacecoloralt&#39;, &#39;grid_markersize&#39;, &#39;grid_markevery&#39;, &#39;grid_mouseover&#39;, &#39;grid_path_effects&#39;, &#39;grid_picker&#39;, &#39;grid_pickradius&#39;, &#39;grid_rasterized&#39;, &#39;grid_sketch_params&#39;, &#39;grid_snap&#39;, &#39;grid_solid_capstyle&#39;, &#39;grid_solid_joinstyle&#39;, &#39;grid_transform&#39;, &#39;grid_url&#39;, &#39;grid_visible&#39;, &#39;grid_xdata&#39;, &#39;grid_ydata&#39;, &#39;grid_zorder&#39;, &#39;grid_aa&#39;, &#39;grid_c&#39;, &#39;grid_ds&#39;, &#39;grid_ls&#39;, &#39;grid_lw&#39;, &#39;grid_mec&#39;, &#39;grid_mew&#39;, &#39;grid_mfc&#39;, &#39;grid_mfcalt&#39;, &#39;grid_ms&#39;]
 </pre></div>
@@ -934,23 +944,23 @@ B = \sqrt{\frac{2}{a}}
 <section id="example-average-energy-of-particle-in-a-box">
 <h3><span class="section-number">4.5.4.7.5. </span>Example: Average Energy of Particle in a Box<a class="headerlink" href="#example-average-energy-of-particle-in-a-box" title="Permalink to this heading">#</a></h3>
 <p>The average energy of the particle in a box is a special case of computing an average quantity.  We will start by writing out the standard definition of computing and average from a wavefunction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e60f0360-2a57-4ae7-b7e5-d7d1e2afddbb">
-<span class="eqno">(4.744)<a class="headerlink" href="#equation-e60f0360-2a57-4ae7-b7e5-d7d1e2afddbb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8c994519-9d36-4f11-89c7-bed05084280e">
+<span class="eqno">(4.744)<a class="headerlink" href="#equation-8c994519-9d36-4f11-89c7-bed05084280e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle E \rangle = \int_0^a \psi_n^*(x)\hat{E}\psi_n(x)dx
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{E}\)</span> is the total energy operator.  We know the total energy operator by another symbol, namely <span class="math notranslate nohighlight">\(\hat{E} = \hat{H}\)</span>.  We plug this into the above equation to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-04b95901-50e0-4cba-818f-8ad8264bbd86">
-<span class="eqno">(4.745)<a class="headerlink" href="#equation-04b95901-50e0-4cba-818f-8ad8264bbd86" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3cbc3eb9-e921-429d-a446-03d2846755b1">
+<span class="eqno">(4.745)<a class="headerlink" href="#equation-3cbc3eb9-e921-429d-a446-03d2846755b1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle E \rangle = \int_0^a \psi_n^*(x)\hat{H}\psi_n(x)dx.
 \end{equation}\]</div>
 <p>We now recognize that, for the particle in a box wavefunctions that we are discussion these were derived from the Schrodinger equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-81f66b25-f916-4aae-a5f0-c6ba3d5872e2">
-<span class="eqno">(4.746)<a class="headerlink" href="#equation-81f66b25-f916-4aae-a5f0-c6ba3d5872e2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-226f7d30-2214-4c32-83a3-1cbd2a7ea840">
+<span class="eqno">(4.746)<a class="headerlink" href="#equation-226f7d30-2214-4c32-83a3-1cbd2a7ea840" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H}\psi_n(x)  = E_n\psi_n(x)
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(E_n\)</span> is a scalar.  Thus, for the average energy we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e802cc87-460c-41cb-9fbf-ef9b1a6c8518">
-<span class="eqno">(4.747)<a class="headerlink" href="#equation-e802cc87-460c-41cb-9fbf-ef9b1a6c8518" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c6a30db7-d53f-49d5-a2eb-7d9b247e2295">
+<span class="eqno">(4.747)<a class="headerlink" href="#equation-c6a30db7-d53f-49d5-a2eb-7d9b247e2295" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle E \rangle &amp;= \int_0^a \psi_n^*(x)\hat{H}\psi_n(x)dx \\
 &amp;=\int_0^a \psi_n^*(x)E_n\psi_n(x)dx \\
 &amp;=E_n\int_0^a \psi_n^*(x)\psi_n(x)dx \\
@@ -961,18 +971,18 @@ B = \sqrt{\frac{2}{a}}
 <section id="example-average-momentum">
 <h3><span class="section-number">4.5.4.7.6. </span>Example: Average momentum<a class="headerlink" href="#example-average-momentum" title="Permalink to this heading">#</a></h3>
 <p>To compute the average momentum of a particle in a 1D box we start in the usual way</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c2864849-96c3-4903-96fc-2001eab0ab20">
-<span class="eqno">(4.748)<a class="headerlink" href="#equation-c2864849-96c3-4903-96fc-2001eab0ab20" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e4a5b116-8ab3-4c29-a00c-49156a1c1800">
+<span class="eqno">(4.748)<a class="headerlink" href="#equation-e4a5b116-8ab3-4c29-a00c-49156a1c1800" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle p \rangle = \int_0^a \psi_n^*(x)\hat{p}\psi_n(x)dx
 \end{equation}\]</div>
 <p>Recall that the momentum operator in one dimension is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1e979fb4-a282-4ce5-a8aa-edc129f2cdbf">
-<span class="eqno">(4.749)<a class="headerlink" href="#equation-1e979fb4-a282-4ce5-a8aa-edc129f2cdbf" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-177b5c02-682d-4ee1-9f50-e737341fbdd4">
+<span class="eqno">(4.749)<a class="headerlink" href="#equation-177b5c02-682d-4ee1-9f50-e737341fbdd4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{p}_x = -i\hbar\frac{d}{dx}
 \end{equation}\]</div>
 <p>We now substitute this into the  above equation and solve</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b6feb620-e762-4bc0-958a-f04ad164635a">
-<span class="eqno">(4.750)<a class="headerlink" href="#equation-b6feb620-e762-4bc0-958a-f04ad164635a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cb089edf-d077-47a8-bf27-af43ab349183">
+<span class="eqno">(4.750)<a class="headerlink" href="#equation-cb089edf-d077-47a8-bf27-af43ab349183" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle p \rangle &amp;= \int_0^a \psi_n^*(x)\left(-i\hbar\frac{d}{dx}\right)\psi_n(x)dx \\
 &amp;= -\frac{2i\hbar}{a}\int_0^a \sin\left(\frac{n\pi x}{a}\right)\frac{d}{dx}\left(\sin\left(\frac{n\pi x}{a}\right)\right)dx \\
 &amp;= -\frac{2i\hbar}{a}\int_0^a \sin\left(\frac{n\pi x}{a}\right)\frac{n\pi}{a}\cos\left(\frac{n\pi x}{a}\right)dx \\

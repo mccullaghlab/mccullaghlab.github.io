@@ -293,10 +293,20 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/introduction/intro.html">5.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/introduction/the_fundamental_model.html">5.1.1. The Fundamental Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/introduction/Models_in_the_Scientific_Method.html">5.1.2. What is a Model?</a></li>
+
+
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.2. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week1_linux_hands_on.html">5.2.1. Week 1 Friday Hands-On: Linux Basics + Running Python (CHEM 4433/5433)</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week1_linux_hands_on.html">5.3.1. Linux Basics + Running Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 </ul>
 </details></li>
@@ -580,8 +590,8 @@ document.write(`
 <p>Dispersion interactions play an important role in the interaction between non-polar species.  This is not necessarily because the dispersion interactions are strong for non-polar species but rather because non-polar species do not display stronger interactions such as ion-ion or polar.  For example, dispersion forces play a large role in the interaction between the lipid tails in a cell membrane.  The mainly aliphatic methylene groups are not particularly polarizable but the sheer number of these interactions between the long lipid tails does yield a sizable interaction strength.</p>
 <p>Dispersion interactions also play an important role in <span class="math notranslate nohighlight">\(\pi\)</span>-stacking.  Large <span class="math notranslate nohighlight">\(\pi\)</span> systems are quite polarizable leading to a particularly strong dispersion interaction.</p>
 <p>The physics behind a dispersion interaction is induced dipole-induced dipole.  That is, if we consider an atom, molecule, or a component of a molecule to be a nucleus of positive charge with a electron cloud around it, there is a finite probability that the majority of the electron cloud will sit to one side of the nucleus. This will create a temporary dipole.  If there is a polarizable entity in the vicinity, that entity will polarize in the opposite direction to the temporary dipole stabilizing the temporary dipole and creating an attractive interaction between two polarizable electron clouds.  In the classical limit, this interaction goes as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b650d138-0469-406e-8f1b-a8ac0135cbd4">
-<span class="eqno">(4.1)<a class="headerlink" href="#equation-b650d138-0469-406e-8f1b-a8ac0135cbd4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-cf21330c-44c5-4052-8b32-70369fb722fa">
+<span class="eqno">(4.1)<a class="headerlink" href="#equation-cf21330c-44c5-4052-8b32-70369fb722fa" title="Permalink to this equation">#</a></span>\[\begin{equation}
 U(r) \propto \frac{-1}{r^6},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(r\)</span> is the distance between the two polarizable clouds.  The proportionality constant will be dictated by the polarizability of the cloud.</p>
@@ -599,11 +609,11 @@ U(r) \propto \frac{-1}{r^6},
 <span class="n">eps_arene</span> <span class="o">=</span> <span class="mf">0.076</span>
 <span class="n">sigma_arene</span> <span class="o">=</span> <span class="mf">3.55</span>
 
-<span class="k">def</span> <span class="nf">u_dispersion</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">epsilon</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">u_dispersion</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">epsilon</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">epsilon</span><span class="o">*</span><span class="p">(</span><span class="n">sigma</span><span class="o">/</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">6</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>
@@ -632,8 +642,8 @@ U(r) \propto \frac{-1}{r^6},
 <p>Salt bridges in proteins are an example of ion-ion interactions.  A salt bridge is an strong interaction between the two oppositely charge side chains in a protein.  Examples include arginine-aspartate, arginine-glutamate, lysine-aspartate, and lysine-glutamate.  In these cases, the functional groups on the side chains of arginine (guanadinium) and lysine (amino) are positively charged and the functional groups on the side chains of aspartate and glutamate (both carboxylate) are negatively charged.  These are also examples of hydrogen bonding.</p>
 <p>Ion-ion interactions also occur between small inorganic ions such as sodium (Na+) and chloride (Cl-).  These aqueous ions are also fairly prevelant in cells.</p>
 <p>Two species with overall net charge will interact, in the classical limit, by a coulomb potental.  This potential is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f04a3a00-b254-45b8-ba12-59a370c2d43a">
-<span class="eqno">(4.2)<a class="headerlink" href="#equation-f04a3a00-b254-45b8-ba12-59a370c2d43a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-dad47518-7aa1-4f9f-91cc-dda201c8c2b8">
+<span class="eqno">(4.2)<a class="headerlink" href="#equation-dad47518-7aa1-4f9f-91cc-dda201c8c2b8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 U_{Coulomb}(r) = \frac{q_1q_2}{4\pi\epsilon_0r},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(q_1\)</span> is the charge of ion 1, <span class="math notranslate nohighlight">\(q_2\)</span> is the charge of ion 2, <span class="math notranslate nohighlight">\(\epsilon_0\)</span> is the permitivity of free space (a constant), and <span class="math notranslate nohighlight">\(r\)</span> is the distance between the two ions.  This can be readily plotted for two like and two oppositely charged ions.</p>
@@ -644,11 +654,11 @@ U_{Coulomb}(r) = \frac{q_1q_2}{4\pi\epsilon_0r},
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">u_coulomb</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">q1</span><span class="p">,</span><span class="n">q2</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">u_coulomb</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">q1</span><span class="p">,</span><span class="n">q2</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">q1</span><span class="o">*</span><span class="n">q2</span><span class="o">/</span><span class="n">r</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>
@@ -675,18 +685,18 @@ U_{Coulomb}(r) = \frac{q_1q_2}{4\pi\epsilon_0r},
 <h3><span class="section-number">4.1.1.4.3. </span>Polar interactions<a class="headerlink" href="#polar-interactions" title="Permalink to this heading">#</a></h3>
 <p>Polar interactions exist between polar molecules.  They are stronger and longer-ranged than dispersion interactions but weaker and shorter-ranged than ion-ion interactions.</p>
 <p>These interactions exist between side chains of polar amino acids such as threonine, serine, asparagine and glutamine.  Physcially, the interaction goes as a dipole-diple interaction which technically has a distance and angle dependence.  If we ignore the angle dependence, the interaction strength goes as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-16a237f4-4113-4a08-84d4-8591405dea2e">
-<span class="eqno">(4.3)<a class="headerlink" href="#equation-16a237f4-4113-4a08-84d4-8591405dea2e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f2b53556-d6a5-49a4-9fc2-4593aa1bf8e9">
+<span class="eqno">(4.3)<a class="headerlink" href="#equation-f2b53556-d6a5-49a4-9fc2-4593aa1bf8e9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 U_{polar}(r) \propto -\frac{1}{r^3}
 \end{equation}\]</div>
 <p>Below you can see this type of interaction as a function <span class="math notranslate nohighlight">\(r\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">u_dipole</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">u_dipole</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">r</span><span class="o">**</span><span class="mi">3</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>
