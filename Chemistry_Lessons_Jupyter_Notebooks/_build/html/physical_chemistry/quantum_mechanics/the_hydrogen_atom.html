@@ -308,6 +308,8 @@ const thebe_selector_output = ".output, .cell_output"
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
 </ul>
 </details></li>
 </ul>
@@ -606,8 +608,8 @@ document.write(`
 <p>for <span class="math notranslate nohighlight">\(l=0,1,2...\)</span> and <span class="math notranslate nohighlight">\(-l\leq m \leq l\)</span>.  <span class="math notranslate nohighlight">\(Y_l^{m}(\theta,\phi)\)</span> are the spherical harmonics where it is customary to write them in terms of <span class="math notranslate nohighlight">\(l\)</span> and <span class="math notranslate nohighlight">\(m\)</span> for the hydrogen atom.  This yields that</p>
 <p><span class="math notranslate nohighlight">\(\alpha = \hbar^2l(l+1)\)</span>.</p>
 <p>In these notes we will include the normalization constants of each component with the respective function.  That is we define our spherical harmonics as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-892757ed-a4ab-457a-aa6e-fe5f25712c46">
-<span class="eqno">(4.854)<a class="headerlink" href="#equation-892757ed-a4ab-457a-aa6e-fe5f25712c46" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-53a91122-d45c-4b66-a04e-d1c49c9f2981">
+<span class="eqno">(4.854)<a class="headerlink" href="#equation-53a91122-d45c-4b66-a04e-d1c49c9f2981" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Y_l^{m} = \sqrt{\frac{(2l+1)(l-|m|)!}{4\pi(l+|m|)!}}P_l^{|m|}(\cos\theta)e^{im\phi}
 \end{equation}\]</div>
 <p>Below are 3D representations of some of the spherical harmonics.</p>
@@ -660,9 +662,9 @@ Y_l^{m} = \sqrt{\frac{(2l+1)(l-|m|)!}{4\pi(l+|m|)!}}P_l^{|m|}(\cos\theta)e^{im\p
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_40902/956702328.py:15: DeprecationWarning: `scipy.special.sph_harm` is deprecated as of SciPy 1.15.0 and will be removed in SciPy 1.17.0. Please use `scipy.special.sph_harm_y` instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_45858/956702328.py:15: DeprecationWarning: `scipy.special.sph_harm` is deprecated as of SciPy 1.15.0 and will be removed in SciPy 1.17.0. Please use `scipy.special.sph_harm_y` instead.
   fcolors = sph_harm(m, l, PHI, THETA).real
-/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_40902/956702328.py:16: DeprecationWarning: `scipy.special.sph_harm` is deprecated as of SciPy 1.15.0 and will be removed in SciPy 1.17.0. Please use `scipy.special.sph_harm_y` instead.
+/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_45858/956702328.py:16: DeprecationWarning: `scipy.special.sph_harm` is deprecated as of SciPy 1.15.0 and will be removed in SciPy 1.17.0. Please use `scipy.special.sph_harm_y` instead.
   s = np.power(sph_harm(m, l, PHI, THETA).real,2)
 </pre></div>
 </div>
@@ -684,13 +686,13 @@ Y_l^{m} = \sqrt{\frac{(2l+1)(l-|m|)!}{4\pi(l+|m|)!}}P_l^{|m|}(\cos\theta)e^{im\p
 <p>The radial wavefunction solution to the equation above is given as</p>
 <p><span class="math notranslate nohighlight">\(R_{nl} = A_r r^le^{-r/na_0}L_{n+l}^{2l+1}\left( \frac{2r}{na_0}\right)\)</span>,</p>
 <p>where <span class="math notranslate nohighlight">\(L_{n+l}^{2l+1}\)</span> are the <em>associated Laguerre polynomials</em>. The <span class="math notranslate nohighlight">\(A_r\)</span> factor is the normalization factor that can be determined by requiring</p>
-<div class="amsmath math notranslate nohighlight" id="equation-31cabdcc-5b75-4d11-9630-8f312bbc9eed">
-<span class="eqno">(4.855)<a class="headerlink" href="#equation-31cabdcc-5b75-4d11-9630-8f312bbc9eed" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-69a57c62-65aa-43a3-a0f8-491546886162">
+<span class="eqno">(4.855)<a class="headerlink" href="#equation-69a57c62-65aa-43a3-a0f8-491546886162" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_0^\infty R_{nl}^*R_{nl}r^2dr = 1,
 \end{equation}\]</div>
 <p>This requirement yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7c47e1cc-d989-41f6-a2e5-3c4d71ef7032">
-<span class="eqno">(4.856)<a class="headerlink" href="#equation-7c47e1cc-d989-41f6-a2e5-3c4d71ef7032" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-53d8a001-cf15-4a5e-9b15-a55a87e099e1">
+<span class="eqno">(4.856)<a class="headerlink" href="#equation-53d8a001-cf15-4a5e-9b15-a55a87e099e1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A_r = -\left[ \frac{(n-l-1)!}{2n[(n+l)!]^3}\right]^{1/2} \left( \frac{2}{na_0}\right)^{l+3/2}
 \end{equation}\]</div>
 <p>Below we will plot these functions in terms of the  <em>generalized Laguerre polynomials</em> which requires us to replace <span class="math notranslate nohighlight">\(L_{n+l}^{2l+1}\)</span>  in the above equation with <span class="math notranslate nohighlight">\(L_{n-l-1}^{2l+1}\)</span> (this is now the generalized form) and remove a factor of <span class="math notranslate nohighlight">\((n+l)!\)</span>:</p>
@@ -779,30 +781,30 @@ A_r = -\left[ \frac{(n-l-1)!}{2n[(n+l)!]^3}\right]^{1/2} \left( \frac{2}{na_0}\r
 <p>There are two important properties of these functions that we will consider: (1) Differentiation and (2) Orthogonality.</p>
 <p><em><strong>Differentiation</strong></em></p>
 <p>The generalized Laguerre polynomials have the following property when differentiated:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bd38c74b-34a5-4cdf-98aa-4c6c9a78b97e">
-<span class="eqno">(4.857)<a class="headerlink" href="#equation-bd38c74b-34a5-4cdf-98aa-4c6c9a78b97e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b32a92df-ba20-444e-bd9c-bd64442c4a82">
+<span class="eqno">(4.857)<a class="headerlink" href="#equation-b32a92df-ba20-444e-bd9c-bd64442c4a82" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d^k}{dx^k} L_n^{(\alpha)}(x) = \begin{cases} (-1)^kL_{n-k}^{(\alpha+k)}(x)\quad\text{ if } k\leq n \\0 \qquad\qquad\qquad\text{ otherwise}\end{cases}
 \end{equation}\]</div>
 <p><em><strong>Orthogonality</strong></em></p>
 <p>The generalized Laguerre polynomials hare not orthogonal themselves but are orthogonal over <span class="math notranslate nohighlight">\([0,\infty)\)</span> with weighting function <span class="math notranslate nohighlight">\(x^\alpha e^{-x}\)</span>.  That is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1cdf6cf5-7ebb-4f37-aed6-7c99511a9d54">
-<span class="eqno">(4.858)<a class="headerlink" href="#equation-1cdf6cf5-7ebb-4f37-aed6-7c99511a9d54" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-40c9372f-877f-4c65-a478-5625ea4097c1">
+<span class="eqno">(4.858)<a class="headerlink" href="#equation-40c9372f-877f-4c65-a478-5625ea4097c1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_0^\infty x^\alpha e^{-x} L_n^{(\alpha)}(x)L_m^{(\alpha)}(x)dx = \frac{\Gamma(n+\alpha+1)}{n!}\delta_{n,m}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\Gamma\)</span> is the gamma function and <span class="math notranslate nohighlight">\(\delta_{n,m}\)</span> is defined by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-010496b0-7f96-457c-8aad-30aa2617c812">
-<span class="eqno">(4.859)<a class="headerlink" href="#equation-010496b0-7f96-457c-8aad-30aa2617c812" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0edc0ef0-e753-44de-aff7-bdb36102d2ca">
+<span class="eqno">(4.859)<a class="headerlink" href="#equation-0edc0ef0-e753-44de-aff7-bdb36102d2ca" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \delta_{n,m} = \begin{cases} 1 \quad\text{ if }n=m \\ 0 \quad\text{ otherwise}\end{cases}
 \end{equation}\]</div>
 <p>That particular orthogonality condition is not that useful for us but it can also be shown that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b3df1a98-3e57-4468-8ba6-72b9b91b880b">
-<span class="eqno">(4.860)<a class="headerlink" href="#equation-b3df1a98-3e57-4468-8ba6-72b9b91b880b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-99a8bb5b-f68b-4697-b9c1-702b00515ac6">
+<span class="eqno">(4.860)<a class="headerlink" href="#equation-99a8bb5b-f68b-4697-b9c1-702b00515ac6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_0^\infty x^{(\alpha+1)} e^{-x} L_n^{(\alpha)}(x)L_m^{(\alpha)}(x)dx = \frac{2n[(n+\frac{\alpha-1}{2})!]^3}{(n-\frac{(\alpha-1)}{2}-1)!}\delta_{n,m}
 \end{equation}\]</div>
 <p>This relationship indicates that any two hydrogen atom wave functions differing in primary quantum number <span class="math notranslate nohighlight">\(n\)</span> will be orthogonal.</p>
 <p>A related integral is also useful</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0bbff206-942a-4bc6-b674-f557a08d76f3">
-<span class="eqno">(4.861)<a class="headerlink" href="#equation-0bbff206-942a-4bc6-b674-f557a08d76f3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c2833bb4-0a88-41cf-989a-20b3808d7178">
+<span class="eqno">(4.861)<a class="headerlink" href="#equation-c2833bb4-0a88-41cf-989a-20b3808d7178" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_0^\infty x^{\alpha+1}e^{-x}\left[ L_n^{(\alpha)}(x)\right]^2dx = \frac{(n+\alpha)!}{n!}(2n+\alpha + 1)
 \end{equation}\]</div>
 </section>

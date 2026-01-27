@@ -308,6 +308,8 @@ const thebe_selector_output = ".output, .cell_output"
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
 </ul>
 </details></li>
 </ul>
@@ -589,31 +591,31 @@ document.write(`
 <section id="the-hamiltonian">
 <h2><span class="section-number">4.5.9.5. </span>The Hamiltonian<a class="headerlink" href="#the-hamiltonian" title="Permalink to this heading">#</a></h2>
 <p>We start constructing the Hamiltonian in the same way for every problem.  The Hamiltonian is always (for the sake of this class/these notes) a sum of the Kinetic Energy operator and the Potential Energy operator:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a1b432e8-ebe7-44b2-843f-42203073ca43">
-<span class="eqno">(4.799)<a class="headerlink" href="#equation-a1b432e8-ebe7-44b2-843f-42203073ca43" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5d4e66f9-e2eb-4566-a05d-f38710fa2715">
+<span class="eqno">(4.799)<a class="headerlink" href="#equation-5d4e66f9-e2eb-4566-a05d-f38710fa2715" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H} = \hat{K} + \hat{V}.
 \end{equation}\]</div>
 <p>The potential energy for this problem is zero since the particle is <em>free</em> inside the sphere and cannot go outside of the sphere.  Thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-76e3facc-860d-40d6-b806-b2e300dae564">
-<span class="eqno">(4.800)<a class="headerlink" href="#equation-76e3facc-860d-40d6-b806-b2e300dae564" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-92a0949f-8433-4233-bde8-a47ec1857657">
+<span class="eqno">(4.800)<a class="headerlink" href="#equation-92a0949f-8433-4233-bde8-a47ec1857657" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H} = \hat{K}
 \end{equation}\]</div>
 <p>The Kinetic Energy operator in three dimensions for a single particle is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-104be8fb-5caa-4890-ac10-92d9b7fe0a39">
-<span class="eqno">(4.801)<a class="headerlink" href="#equation-104be8fb-5caa-4890-ac10-92d9b7fe0a39" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-55e94db4-b562-4a87-8a65-099ab04a045c">
+<span class="eqno">(4.801)<a class="headerlink" href="#equation-55e94db4-b562-4a87-8a65-099ab04a045c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{K} = -\frac{\hbar^2}{2m}\left( \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}\right)
 \end{equation}\]</div>
 <p>We could attempt to solve this problem in Cartesian coordinates.  Solving the differential equation will yield the same initial solutions as the 3D particle in a box:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-766425ae-7988-4140-941f-bf9a66003818">
-<span class="eqno">(4.802)<a class="headerlink" href="#equation-766425ae-7988-4140-941f-bf9a66003818" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b558a655-b936-4f3e-9278-6314cc890f06">
+<span class="eqno">(4.802)<a class="headerlink" href="#equation-b558a655-b936-4f3e-9278-6314cc890f06" title="Permalink to this equation">#</a></span>\[\begin{align}
 X(x) = A\sin k_x x + B\cos k_x x \\
 Y(y) = A\sin k_y y + B\cos k_y y \\
 Z(z) = A\sin k_z z + B\cos k_z z 
 \end{align}\]</div>
 <p>where the total wavefunction is <span class="math notranslate nohighlight">\(\psi(x,y,z) = X(x)Y(y)Z(z)\)</span></p>
 <p>The issue is that applying the boundary condition that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0b8da497-69e1-41f8-9162-1584780043d8">
-<span class="eqno">(4.803)<a class="headerlink" href="#equation-0b8da497-69e1-41f8-9162-1584780043d8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-47d37a2c-6c7a-4867-a158-2dfbf7d62656">
+<span class="eqno">(4.803)<a class="headerlink" href="#equation-47d37a2c-6c7a-4867-a158-2dfbf7d62656" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(r=r_0) = 0
 \end{equation}\]</div>
 <p>is difficult in Cartesian coordinates in part because it requires a coupling of <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(z\)</span>.  Instead, we will solve the problem in spherical polar coordinates.</p>
@@ -623,77 +625,77 @@ Z(z) = A\sin k_z z + B\cos k_z z
 <p>In spherical polar coordinates, we define a point in <span class="math notranslate nohighlight">\(\mathbb{R}^3\)</span> by a distane from the origin, <span class="math notranslate nohighlight">\(r\)</span>, and two angles, <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>.</p>
 <p><img alt="title" src="../../_images/SphericalCoordinates_1201.svg" /></p>
 <p>These can be expressed in terms of Cartesian coordinates as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-86c8be5a-02ea-461f-8e5c-a67f0d9a7559">
-<span class="eqno">(4.804)<a class="headerlink" href="#equation-86c8be5a-02ea-461f-8e5c-a67f0d9a7559" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d46f6d96-711c-4dc5-b6fe-7306ae3b5396">
+<span class="eqno">(4.804)<a class="headerlink" href="#equation-d46f6d96-711c-4dc5-b6fe-7306ae3b5396" title="Permalink to this equation">#</a></span>\[\begin{align}
 r &amp;= \sqrt{x^2+ y^2 + z^2} \\
 \phi &amp;= \tan^{-1}\frac{y}{x} \\
 \theta &amp;= \cos^{-1}\frac{z}{r}
 \end{align}\]</div>
 <p>Note that the following domain limits are placed on these coordinates</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4364b40a-e8d6-4b34-bc75-565ed7750723">
-<span class="eqno">(4.805)<a class="headerlink" href="#equation-4364b40a-e8d6-4b34-bc75-565ed7750723" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a42c6a1d-9f70-4896-886c-71403e56d01d">
+<span class="eqno">(4.805)<a class="headerlink" href="#equation-a42c6a1d-9f70-4896-886c-71403e56d01d" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 \leq &amp;r &lt; \infty \\
 0 \leq &amp;\theta \leq \pi \\
 0 \leq &amp;\phi \leq 2\pi
 \end{align}\]</div>
 <p>The Cartesian coordinated in terms of their spherical counterparts are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70045857-dfb3-4465-b0a8-59d156a5dc45">
-<span class="eqno">(4.806)<a class="headerlink" href="#equation-70045857-dfb3-4465-b0a8-59d156a5dc45" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c3635cf4-c303-4506-aee9-2d974d996bfa">
+<span class="eqno">(4.806)<a class="headerlink" href="#equation-c3635cf4-c303-4506-aee9-2d974d996bfa" title="Permalink to this equation">#</a></span>\[\begin{align}
 x &amp;= r\sin\theta\cos\phi \\
 y &amp;= r\sin\theta\sin\phi \\
 z &amp;= r\cos\theta
 \end{align}\]</div>
 <p>In order to describe the particle in a sphere problem in spherical coordinates, we need to define the Hamiltonian in spherical coordinates.  This can be done with the equations above and their derivatives and second derivatives.  The derivation is long and tedious so here we present the result for the Laplacian in spherical polar coordinates:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c71a3b3d-71bd-45de-aa47-f4d2e037613d">
-<span class="eqno">(4.807)<a class="headerlink" href="#equation-c71a3b3d-71bd-45de-aa47-f4d2e037613d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8de1711a-2761-4af4-85cc-6846212ccbd1">
+<span class="eqno">(4.807)<a class="headerlink" href="#equation-8de1711a-2761-4af4-85cc-6846212ccbd1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \nabla^2_{r\theta\phi} = \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial^2\phi}
 \end{equation}\]</div>
 </section>
 <section id="separation-of-variables-in-spherical-coordinates">
 <h2><span class="section-number">4.5.9.7. </span>Separation of Variables in Spherical Coordinates<a class="headerlink" href="#separation-of-variables-in-spherical-coordinates" title="Permalink to this heading">#</a></h2>
 <p>The Schrodinger equation in spherical polar coordinates is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-34bc85a7-7679-4a9e-86d0-a0d5fd02462a">
-<span class="eqno">(4.808)<a class="headerlink" href="#equation-34bc85a7-7679-4a9e-86d0-a0d5fd02462a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-77857abe-0078-4ece-ba7a-5690f32ba239">
+<span class="eqno">(4.808)<a class="headerlink" href="#equation-77857abe-0078-4ece-ba7a-5690f32ba239" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{H}\psi(r,\theta,\phi) &amp;= E \psi(r,\theta,\phi) \\
 -\frac{\hbar^2}{2m}\nabla^2_{r\theta\phi} &amp;= E \psi(r,\theta,\phi) \\
 -\frac{\hbar^2}{2m}\left[\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right] \psi(r,\theta,\phi) &amp;= E \psi(r,\theta,\phi)
 \end{align}\]</div>
 <p>This equation does not look immediately separable.  Indeed it looks quite intimidating.  It turns out, however, that the equation is separable into <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span>, and <span class="math notranslate nohighlight">\(\phi\)</span> components. We will start by separating <span class="math notranslate nohighlight">\(r\)</span> from <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>.</p>
 <p>Multiply both sides of the above equation by <span class="math notranslate nohighlight">\(2mr^2\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8ff5e952-3c43-4497-8bf7-0e56080482eb">
-<span class="eqno">(4.809)<a class="headerlink" href="#equation-8ff5e952-3c43-4497-8bf7-0e56080482eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-24505052-4ff2-4769-ab3c-eb1d22bc6c29">
+<span class="eqno">(4.809)<a class="headerlink" href="#equation-24505052-4ff2-4769-ab3c-eb1d22bc6c29" title="Permalink to this equation">#</a></span>\[\begin{equation}
 -\hbar^2\left[\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) - \frac{\hbar^2}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\psi(r,\theta,\phi)  = 2mr^2E\psi(r,\theta,\phi)
 \end{equation}\]</div>
 <p>Rearrange (combine terms dependent on <span class="math notranslate nohighlight">\(r\)</span>) to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1944c00b-82bc-4e35-8d55-f4ae121c22b9">
-<span class="eqno">(4.810)<a class="headerlink" href="#equation-1944c00b-82bc-4e35-8d55-f4ae121c22b9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-68cdddf0-390d-4784-8728-b88167f51112">
+<span class="eqno">(4.810)<a class="headerlink" href="#equation-68cdddf0-390d-4784-8728-b88167f51112" title="Permalink to this equation">#</a></span>\[\begin{equation}
 -\hbar^2\left[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right]\psi(r,\theta,\phi) -\hbar^2\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)\psi(r,\theta,\phi) = 2mr^2E\psi(r,\theta,\phi)
 \end{equation}\]</div>
 <p>Notice that we have a sum of a term that depends on <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> and then two terms that depend only on <span class="math notranslate nohighlight">\(r\)</span>.  Thus we can posit a separation of variables such that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bba4c54c-9c11-4e1c-bf0a-b56eef1e7c47">
-<span class="eqno">(4.811)<a class="headerlink" href="#equation-bba4c54c-9c11-4e1c-bf0a-b56eef1e7c47" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5f537082-2943-413b-8b1b-5f0abff0fd19">
+<span class="eqno">(4.811)<a class="headerlink" href="#equation-5f537082-2943-413b-8b1b-5f0abff0fd19" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(r,\theta,\phi) = R(r)Y(\theta,\phi)
 \end{equation}\]</div>
 <p>Additionally, we will define the angular momentum operator (that only operates on <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>) as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-af404bba-0bda-4a28-954c-80ad769398de">
-<span class="eqno">(4.812)<a class="headerlink" href="#equation-af404bba-0bda-4a28-954c-80ad769398de" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4911cf0c-dc30-4a10-975f-1cf953fb9294">
+<span class="eqno">(4.812)<a class="headerlink" href="#equation-4911cf0c-dc30-4a10-975f-1cf953fb9294" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{L}^2 = -\hbar^2\left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right)
 \end{equation}\]</div>
 <p>Substite the above equation for <span class="math notranslate nohighlight">\(\psi\)</span> into the Schrodinger equation to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c0b39490-5910-46b0-9588-c030715784d1">
-<span class="eqno">(4.813)<a class="headerlink" href="#equation-c0b39490-5910-46b0-9588-c030715784d1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7fe0a295-6e8b-4c23-965a-28124a0c6c8b">
+<span class="eqno">(4.813)<a class="headerlink" href="#equation-7fe0a295-6e8b-4c23-965a-28124a0c6c8b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{L}^2R(r)Y(\theta,\phi) -\hbar^2 \frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)Y(\theta,\phi) &amp;= 2mr^2ER(r)Y(\theta,\phi) \\
 \Rightarrow \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E
 \end{align}\]</div>
 <p>Notice that the left-hand side depends on <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> only and the right-hand side depends on <span class="math notranslate nohighlight">\(r\)</span> only.  Thus, we must have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b9b15373-ffb9-402c-8b1b-efe36737c886">
-<span class="eqno">(4.814)<a class="headerlink" href="#equation-b9b15373-ffb9-402c-8b1b-efe36737c886" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-54993e7d-02b7-48e7-a3ec-cee2eeb1ba2c">
+<span class="eqno">(4.814)<a class="headerlink" href="#equation-54993e7d-02b7-48e7-a3ec-cee2eeb1ba2c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = \alpha,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a constant.</p>
 <p>Additionally, we must have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2782ecd1-e953-4d5b-bb4d-33e0b961ef2d">
-<span class="eqno">(4.815)<a class="headerlink" href="#equation-2782ecd1-e953-4d5b-bb4d-33e0b961ef2d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8aea5d4c-065a-4591-beff-e7192afcb0c8">
+<span class="eqno">(4.815)<a class="headerlink" href="#equation-8aea5d4c-065a-4591-beff-e7192afcb0c8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = \alpha
 \end{equation}\]</div>
 <p>We will solve these two equations separately.</p>
@@ -701,40 +703,40 @@ z &amp;= r\cos\theta
 <section id="solutions-to-theta-and-phi-equation">
 <h2><span class="section-number">4.5.9.8. </span>Solutions to <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> equation<a class="headerlink" href="#solutions-to-theta-and-phi-equation" title="Permalink to this heading">#</a></h2>
 <p>It is the goal of this section of the notes to find a solution to the differential equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d28b7e82-2fed-4773-988a-136d4508b11a">
-<span class="eqno">(4.816)<a class="headerlink" href="#equation-d28b7e82-2fed-4773-988a-136d4508b11a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-053f8583-e95d-44da-b08f-1839b7a439a4">
+<span class="eqno">(4.816)<a class="headerlink" href="#equation-053f8583-e95d-44da-b08f-1839b7a439a4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{1}{Y(\theta,\phi)}\hat{L}^2Y(\theta,\phi) = \alpha,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is a constant.</p>
 <p>This equation can be rearranged to the eigenvalue equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa3a2b71-3298-4738-809e-10230913a558">
-<span class="eqno">(4.817)<a class="headerlink" href="#equation-aa3a2b71-3298-4738-809e-10230913a558" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b6d507df-9699-4a60-a6ff-8780ab471de6">
+<span class="eqno">(4.817)<a class="headerlink" href="#equation-b6d507df-9699-4a60-a6ff-8780ab471de6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{L}^2Y(\theta,\phi) =\alpha Y(\theta,\phi)
 \end{equation}\]</div>
 <p>Now plugging back in the expanded form of <span class="math notranslate nohighlight">\(\hat{L}^2\)</span> we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3d353fe9-f979-4cf6-a5db-cb9e35a27e80">
-<span class="eqno">(4.818)<a class="headerlink" href="#equation-3d353fe9-f979-4cf6-a5db-cb9e35a27e80" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b603a80e-bed1-4efd-b9dc-8d16e17f0ae0">
+<span class="eqno">(4.818)<a class="headerlink" href="#equation-b603a80e-bed1-4efd-b9dc-8d16e17f0ae0" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\hbar^2\left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &amp;= E_{\theta,\phi}Y(\theta,\phi) \\
 \Rightarrow \left(\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{1}{\sin^2\theta}\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &amp;= \frac{-\alpha}{\hbar^2}Y(\theta,\phi)
 \end{align}\]</div>
 <p>Multiplying the above equation by <span class="math notranslate nohighlight">\(\sin^2\theta\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4cbe2f8-3f06-4e8f-910f-5cb8e38a0713">
-<span class="eqno">(4.819)<a class="headerlink" href="#equation-d4cbe2f8-3f06-4e8f-910f-5cb8e38a0713" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-04256d08-e522-4740-8821-48fce0c4ae49">
+<span class="eqno">(4.819)<a class="headerlink" href="#equation-04256d08-e522-4740-8821-48fce0c4ae49" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left(\sin\theta\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\frac{\partial^2}{\partial^2\phi}\right)Y(\theta,\phi) &amp;= \frac{-\alpha\sin^2\theta}{\hbar^2}Y(\theta,\phi)
 \end{align}\]</div>
 <p>We notice that this motivates a separation of variables into</p>
-<div class="amsmath math notranslate nohighlight" id="equation-665a6964-edde-44f9-b7e0-7d5a609a5854">
-<span class="eqno">(4.820)<a class="headerlink" href="#equation-665a6964-edde-44f9-b7e0-7d5a609a5854" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-858169a4-f361-4604-8232-c53de6426f7c">
+<span class="eqno">(4.820)<a class="headerlink" href="#equation-858169a4-f361-4604-8232-c53de6426f7c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Y(\theta,\phi) = \Theta(\theta)\Phi(\phi)
 \end{equation}\]</div>
 <p>Substituting this and <span class="math notranslate nohighlight">\(\beta = \frac{\alpha}{\hbar^2}\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4b36f8b9-d4b6-4e44-90d9-06f411102807">
-<span class="eqno">(4.821)<a class="headerlink" href="#equation-4b36f8b9-d4b6-4e44-90d9-06f411102807" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-56f3d1e9-8238-419f-9fa6-ed880b6f8314">
+<span class="eqno">(4.821)<a class="headerlink" href="#equation-56f3d1e9-8238-419f-9fa6-ed880b6f8314" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \left[\sin\theta\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)+\beta\sin^2\theta \right] \Theta(\theta)\Phi(\phi) = -\frac{\partial^2}{\partial^2\phi} \Theta(\theta)\Phi(\phi).
 \end{equation}\]</div>
 <p>Divide both sides of the equation above by <span class="math notranslate nohighlight">\(\Theta(\theta)\Phi(\phi)\)</span> and note that the operator on the right-hand side is independent of <span class="math notranslate nohighlight">\(\theta\)</span> to yield</p>
-<div class="amsmath math notranslate nohighlight" id="equation-793826da-bb37-4bb4-8a5d-d00337295517">
-<span class="eqno">(4.822)<a class="headerlink" href="#equation-793826da-bb37-4bb4-8a5d-d00337295517" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-73223aab-80b1-48fb-858d-9286ab91aa19">
+<span class="eqno">(4.822)<a class="headerlink" href="#equation-73223aab-80b1-48fb-858d-9286ab91aa19" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\sin\theta}{\Theta(\theta)}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)\Theta(\theta)+\beta\sin^2\theta = -\frac{1}{\Phi(\phi)}\frac{\partial^2}{\partial^2\phi} \Phi(\phi).
 \end{equation}\]</div>
 <p>Now the left-hand side is independent of <span class="math notranslate nohighlight">\(\phi\)</span> and the right-hand side is independent of <span class="math notranslate nohighlight">\(\theta\)</span>.  Since these two things are equal but independent of the other’s variable they must be constant.  We will define this constant as <span class="math notranslate nohighlight">\(m^2\)</span> (for reasons that will become clear later) and solve the following two equations independently</p>
@@ -937,45 +939,45 @@ Y(\theta,\phi) = \Theta(\theta)\Phi(\phi)
 <section id="solution-to-the-r-differential-equation">
 <h2><span class="section-number">4.5.9.9. </span>Solution to the <span class="math notranslate nohighlight">\(r\)</span> differential equation<a class="headerlink" href="#solution-to-the-r-differential-equation" title="Permalink to this heading">#</a></h2>
 <p>It is the goal of this section to solve the equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6ee49dce-db83-4cfc-8db4-ce32f6a57c7c">
-<span class="eqno">(4.823)<a class="headerlink" href="#equation-6ee49dce-db83-4cfc-8db4-ce32f6a57c7c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e8737747-4883-47af-b3ae-a90f5b5a18e0">
+<span class="eqno">(4.823)<a class="headerlink" href="#equation-e8737747-4883-47af-b3ae-a90f5b5a18e0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = \alpha
 \end{equation}\]</div>
 <p>The above equation is a form of the radial component of the Helmholtz equation and has the solution of the spherical Bessel functions.</p>
 <p>Plugging in what we have already determined for <span class="math notranslate nohighlight">\(\alpha\)</span> (namely <span class="math notranslate nohighlight">\(\alpha = \hbar^2\beta = \hbar^2l(l+1)\)</span>)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-76842e4b-4994-43ab-9d16-b47673012e7f">
-<span class="eqno">(4.824)<a class="headerlink" href="#equation-76842e4b-4994-43ab-9d16-b47673012e7f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a9a43d78-dc0d-406d-8758-a6f3be17e503">
+<span class="eqno">(4.824)<a class="headerlink" href="#equation-a9a43d78-dc0d-406d-8758-a6f3be17e503" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\hbar^2}{R(r)}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) + 2mr^2E = \hbar^2l(l+1)
 \end{equation}\]</div>
 <p>Multiplying through by <span class="math notranslate nohighlight">\(-\frac{R(r)}{2m}\)</span> and rearranging yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6b5701a7-c689-4f08-903e-df429f6aebc4">
-<span class="eqno">(4.825)<a class="headerlink" href="#equation-6b5701a7-c689-4f08-903e-df429f6aebc4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-29e4fee0-3c1d-4d16-9fba-76f5cd0f3f1e">
+<span class="eqno">(4.825)<a class="headerlink" href="#equation-29e4fee0-3c1d-4d16-9fba-76f5cd0f3f1e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{-\hbar^2}{2m}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r) -\frac{\hbar^2}{2m}l(l+1)R(r)= r^2ER(r)  
 \end{equation}\]</div>
 <p>We now make the substitution that <span class="math notranslate nohighlight">\(u(r) = rR(r)\)</span>.  This will allow us to simplify the above equation due to the fact that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec603699-5e38-4dc7-8ffb-d64883758a0b">
-<span class="eqno">(4.826)<a class="headerlink" href="#equation-ec603699-5e38-4dc7-8ffb-d64883758a0b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-dd609976-db33-4798-ba02-2749ec8bdbe0">
+<span class="eqno">(4.826)<a class="headerlink" href="#equation-dd609976-db33-4798-ba02-2749ec8bdbe0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d^2u}{dr^2} = 2\frac{dR}{dr} + r\frac{d^2R}{dr^2} = \frac{1}{r}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right)R(r)
 \end{equation}\]</div>
 <p>Making this substition yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-db3467a2-2175-4ac1-8e67-1c016e49ad4b">
-<span class="eqno">(4.827)<a class="headerlink" href="#equation-db3467a2-2175-4ac1-8e67-1c016e49ad4b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6b02b274-6c69-4215-b4a4-fdce66e8cbf3">
+<span class="eqno">(4.827)<a class="headerlink" href="#equation-6b02b274-6c69-4215-b4a4-fdce66e8cbf3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{-\hbar^2}{2m}r\frac{d^2u}{dr^2} -\frac{\hbar^2}{2m}l(l+1)\frac{u(r)}{r}= rEu(r)  
 \end{equation}\]</div>
 <p>Dividing through by <span class="math notranslate nohighlight">\(r\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-05a7e358-5d25-4ead-b76f-4bc765d73883">
-<span class="eqno">(4.828)<a class="headerlink" href="#equation-05a7e358-5d25-4ead-b76f-4bc765d73883" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a54b1e8a-b296-4e2a-9701-617b113e6110">
+<span class="eqno">(4.828)<a class="headerlink" href="#equation-a54b1e8a-b296-4e2a-9701-617b113e6110" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{-\hbar^2}{2m}\frac{d^2u}{dr^2} -\frac{\hbar^2}{2m}\frac{l(l+1)}{r^2}u(r)= Eu(r)  
 \end{equation}\]</div>
 <p>We note that this final expression looks like a Schrodinger equation in <span class="math notranslate nohighlight">\(r\)</span> with a potential of <span class="math notranslate nohighlight">\(-\frac{\hbar^2}{2m}\frac{l(l+1)}{r^2}\)</span>.  This potential has the effect of pushing the particle away from the origin and is thus sometimes referred to as the centrifugal potential.</p>
 <p>The solutions to this differential expression are related to the spherical Bessel functions with a general solution written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92491755-7b46-473c-af06-da3e9ad20142">
-<span class="eqno">(4.829)<a class="headerlink" href="#equation-92491755-7b46-473c-af06-da3e9ad20142" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-59dd3609-9dfb-414f-b13f-9f4b8a968015">
+<span class="eqno">(4.829)<a class="headerlink" href="#equation-59dd3609-9dfb-414f-b13f-9f4b8a968015" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u(r) = Arj_l(kr) + Bry_l(kr)
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are constants, <span class="math notranslate nohighlight">\(k=\sqrt{\frac{2mE}{\hbar^2}}\)</span> and <span class="math notranslate nohighlight">\(j_l\)</span> (spherical Bessel functions of type 1) and <span class="math notranslate nohighlight">\(y_l\)</span> (spherical Bessel functions of type 2) are defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4c6859f1-2c4d-47fb-b680-b5f6f346987d">
-<span class="eqno">(4.830)<a class="headerlink" href="#equation-4c6859f1-2c4d-47fb-b680-b5f6f346987d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-505782d4-5d00-44d3-8870-f1e6a6bcc28a">
+<span class="eqno">(4.830)<a class="headerlink" href="#equation-505782d4-5d00-44d3-8870-f1e6a6bcc28a" title="Permalink to this equation">#</a></span>\[\begin{align}
 j_l(x) &amp;= (-x)^l\left(\frac{1}{x}\frac{d}{dx}\right)^l\frac{\sin x}{x} \\
 y_l(x) &amp;= -(-x)^l\left(\frac{1}{x}\frac{d}{dx}\right)^l\frac{\cos x}{x}
 \end{align}\]</div>
@@ -1023,23 +1025,23 @@ y_l(x) &amp;= -(-x)^l\left(\frac{1}{x}\frac{d}{dx}\right)^l\frac{\cos x}{x}
 </div>
 </div>
 <p>From the above plots we observe that both <span class="math notranslate nohighlight">\(j_l\)</span> and <span class="math notranslate nohighlight">\(y_l\)</span> are single-valued and continuous over the plotted domain. Additionally, the <span class="math notranslate nohighlight">\(j_l\)</span> functions are all finite over the plotted domain.  The <span class="math notranslate nohighlight">\(y_l\)</span> functions, however, are not finite over the domain as they tend to <span class="math notranslate nohighlight">\(-\infty\)</span> as <span class="math notranslate nohighlight">\(x\rightarrow0\)</span>.  Thus, we get the solutions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40dbd7be-48d6-4802-9a90-a574fa5bb21f">
-<span class="eqno">(4.831)<a class="headerlink" href="#equation-40dbd7be-48d6-4802-9a90-a574fa5bb21f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-72f3a2f4-a3c9-428b-965d-798ceb0f39a1">
+<span class="eqno">(4.831)<a class="headerlink" href="#equation-72f3a2f4-a3c9-428b-965d-798ceb0f39a1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u(r) = Arj_l(kr)
 \end{equation}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-58eec9e4-bf51-4b01-acba-07cc771ab911">
-<span class="eqno">(4.832)<a class="headerlink" href="#equation-58eec9e4-bf51-4b01-acba-07cc771ab911" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9414593b-705d-4214-b3ac-b676e2f06f76">
+<span class="eqno">(4.832)<a class="headerlink" href="#equation-9414593b-705d-4214-b3ac-b676e2f06f76" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R_l(r) = Aj_l(kr)
 \end{equation}\]</div>
 <p>Applying the boundary condition that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8cb0e6c7-e32b-4f08-bc25-421f3cdb06d6">
-<span class="eqno">(4.833)<a class="headerlink" href="#equation-8cb0e6c7-e32b-4f08-bc25-421f3cdb06d6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b88d973b-b8d2-4e55-85aa-f16ed1247fdc">
+<span class="eqno">(4.833)<a class="headerlink" href="#equation-b88d973b-b8d2-4e55-85aa-f16ed1247fdc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R(r_0) = 0
 \end{equation}\]</div>
 <p>yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0d551835-4d19-4c18-a197-d0ad9f156967">
-<span class="eqno">(4.834)<a class="headerlink" href="#equation-0d551835-4d19-4c18-a197-d0ad9f156967" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-51a65f30-aac6-4c27-bb89-bc1650fa2383">
+<span class="eqno">(4.834)<a class="headerlink" href="#equation-51a65f30-aac6-4c27-bb89-bc1650fa2383" title="Permalink to this equation">#</a></span>\[\begin{equation}
 kr_0 = \beta_{n,l}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\beta_{n,l}\)</span> is the <span class="math notranslate nohighlight">\(n\)</span>th root (<span class="math notranslate nohighlight">\(n=1,2,3...\)</span>) of the <span class="math notranslate nohighlight">\(l\)</span>th spherical Bessel function of the first type.  There are an infinite number of zeros for each <span class="math notranslate nohighlight">\(l\)</span>.  The values of these zeros cannot, in general, be determined analytically (except for <span class="math notranslate nohighlight">\(l=0\)</span>).  Here is a table of some of the zeros</p>
@@ -1075,23 +1077,23 @@ kr_0 = \beta_{n,l}
 </table>
 </div>
 <p>From the equation <span class="math notranslate nohighlight">\(kr_0 = \beta_{n,l}\)</span> we can also get the energy using the previously stated equality <span class="math notranslate nohighlight">\(k = \sqrt{\frac{2mE}{\hbar^2}}\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-37aeeb17-7eef-47ad-9d6b-075d4536678b">
-<span class="eqno">(4.835)<a class="headerlink" href="#equation-37aeeb17-7eef-47ad-9d6b-075d4536678b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b34fce7a-0413-4c8f-a379-66eed7dac52a">
+<span class="eqno">(4.835)<a class="headerlink" href="#equation-b34fce7a-0413-4c8f-a379-66eed7dac52a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \sqrt{\frac{2mE}{\hbar^2}}r_0 &amp;= \beta_{n,l} \\
 \Rightarrow \frac{2mE}{\hbar^2} &amp;= \frac{\left(\beta_{n,l}\right)^2}{r_0^2} \\
 \Rightarrow E_{l,n} &amp;= \frac{\hbar^2\left(\beta_{n,l}\right)^2}{2mr_0^2}
 \end{align}\]</div>
 <p>Also, the radial wavefunction is now</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d97cff0f-e862-41fe-b07e-7f90f0b11b17">
-<span class="eqno">(4.836)<a class="headerlink" href="#equation-d97cff0f-e862-41fe-b07e-7f90f0b11b17" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4c1cc15f-e747-46b6-b2fb-050c495ae1b5">
+<span class="eqno">(4.836)<a class="headerlink" href="#equation-4c1cc15f-e747-46b6-b2fb-050c495ae1b5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R_{l,n}(r) = Aj_l\left(\frac{\beta_{n,l}}{r_0}r\right)
 \end{equation}\]</div>
 </section>
 <section id="combined-solution-for-the-wave-functions">
 <h2><span class="section-number">4.5.9.10. </span>Combined Solution for the wave functions<a class="headerlink" href="#combined-solution-for-the-wave-functions" title="Permalink to this heading">#</a></h2>
 <p>We can now combine our solutions for the wave functions for <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> and <span class="math notranslate nohighlight">\(r\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-754a9f1d-95dc-401f-ae5c-c07945e4a4bb">
-<span class="eqno">(4.837)<a class="headerlink" href="#equation-754a9f1d-95dc-401f-ae5c-c07945e4a4bb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1b78c17c-f53e-4980-8c8e-a8d4e8955f50">
+<span class="eqno">(4.837)<a class="headerlink" href="#equation-1b78c17c-f53e-4980-8c8e-a8d4e8955f50" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi(r,\theta,\phi) &amp;= R_{l,n}(r)Y_l^m(\theta,\phi) \\
 &amp;= Aj_l\left(\frac{\beta_{n,l}}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi}
 \end{align}\]</div>
