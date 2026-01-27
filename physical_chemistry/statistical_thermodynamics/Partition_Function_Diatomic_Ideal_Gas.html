@@ -308,6 +308,8 @@ const thebe_selector_output = ".output, .cell_output"
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
 </ul>
 </details></li>
 </ul>
@@ -578,26 +580,26 @@ document.write(`
 <section id="introduction">
 <h2><span class="section-number">4.2.5.4. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
 <p>A diatomic molecule consists of two atoms and can be either homodiatomic (two of the same atoms) or heterodiatomic (two different atoms).  The energy of a diatomic ideal gas system can still be written a sum of molecular energies since there are no inter-molecular interactions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f415c580-3b9c-43f1-accd-fc26182b9ec2">
-<span class="eqno">(4.119)<a class="headerlink" href="#equation-f415c580-3b9c-43f1-accd-fc26182b9ec2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-10c80d75-d4dd-434c-a8c2-53b866e4802b">
+<span class="eqno">(4.119)<a class="headerlink" href="#equation-10c80d75-d4dd-434c-a8c2-53b866e4802b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_j = \sum_{i=1}^N \epsilon_{i,j}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(j\)</span> denotes a specific energy level of the system and <span class="math notranslate nohighlight">\(\epsilon_{i,j}\)</span> is the energy of molecule <span class="math notranslate nohighlight">\(i\)</span> in system energy level <span class="math notranslate nohighlight">\(j\)</span>.</p>
 <p>The separation of the total energy into a sum of molecular energies allows us to write the overall partition function as a product of molecular partition functions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6a318525-9828-4ad0-987e-4b397f015f3a">
-<span class="eqno">(4.120)<a class="headerlink" href="#equation-6a318525-9828-4ad0-987e-4b397f015f3a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-faac8376-dbfc-4749-90e2-329d65acc386">
+<span class="eqno">(4.120)<a class="headerlink" href="#equation-faac8376-dbfc-4749-90e2-329d65acc386" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q = \frac{q^N}{N!},
 \end{equation}\]</div>
 <p>where we have assumed that all molecules are identical and indistinguishable.</p>
 <p>The inclusion of a second atom in the molecule of the ideal gas adds additional degrees of freedom that can absorb energy.  The molecule can absorb energy in its single vibration or in its rotational degrees of freedom.  We will approximate the energy of a diatomic ideal gas as a sum of separate terms</p>
-<div class="amsmath math notranslate nohighlight" id="equation-839eaac5-2bb5-4f22-9669-e54e572dfb27">
-<span class="eqno">(4.121)<a class="headerlink" href="#equation-839eaac5-2bb5-4f22-9669-e54e572dfb27" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b4b8a93f-e52e-4737-91ec-9c125964e2f8">
+<span class="eqno">(4.121)<a class="headerlink" href="#equation-b4b8a93f-e52e-4737-91ec-9c125964e2f8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \epsilon_{i,j} = \epsilon_{trans} + \epsilon_{elec} + \epsilon_{vib} + \epsilon_{rot},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_{trans}\)</span> is the translational energy, <span class="math notranslate nohighlight">\(\epsilon_{elec}\)</span> is the electronic energy, <span class="math notranslate nohighlight">\(\epsilon_{vib}\)</span> is the vibrational energy, and <span class="math notranslate nohighlight">\(\epsilon_{rot}\)</span> is the rotational energy.</p>
 <p>The separation of energy into a sum of terms (an approximation - but a reasonable one) allows us to separate the molecular partition function into a product of terms</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1e8c129b-9b7f-433f-900e-057092862f8e">
-<span class="eqno">(4.122)<a class="headerlink" href="#equation-1e8c129b-9b7f-433f-900e-057092862f8e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5c4e4f04-b701-48b9-ab77-33df3aed1e55">
+<span class="eqno">(4.122)<a class="headerlink" href="#equation-5c4e4f04-b701-48b9-ab77-33df3aed1e55" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q = q_{trans}q_{elec}q_{vib}q_{rot}
 \end{equation}\]</div>
 <p>We will tackle each of these terms separately.</p>
@@ -605,14 +607,14 @@ q = q_{trans}q_{elec}q_{vib}q_{rot}
 <section id="translational">
 <h2><span class="section-number">4.2.5.5. </span>Translational<a class="headerlink" href="#translational" title="Permalink to this heading">#</a></h2>
 <p>The translation energy of a diatomic ideal gas is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40c50455-006d-40af-801e-f045452bf403">
-<span class="eqno">(4.123)<a class="headerlink" href="#equation-40c50455-006d-40af-801e-f045452bf403" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-de1bbaba-2ecb-4260-9517-fa586532e567">
+<span class="eqno">(4.123)<a class="headerlink" href="#equation-de1bbaba-2ecb-4260-9517-fa586532e567" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \epsilon_{trans, n_x, n_y, n_z} = \frac{h^2}{8(m_1+m_2)a^2}\left(n_x^2 + n_y^2 + n_z^2\right),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(m_1\)</span> is the mass of atom 1, <span class="math notranslate nohighlight">\(m_2\)</span> is the mass of atom 2, <span class="math notranslate nohighlight">\(h\)</span> is Planck’s constant, <span class="math notranslate nohighlight">\(a=V^{1/3}\)</span> is the linear box length, and <span class="math notranslate nohighlight">\(n_x\)</span>, <span class="math notranslate nohighlight">\(n_y\)</span>, and <span class="math notranslate nohighlight">\(n_z\)</span> are the quantum numbers of the translational energy.</p>
 <p>We see that this equation is different from the translational energy for a monatomic particle only in the mass value.  Here, the mass is the sum of the mass of the two particles.  This does not change the overall form of the energy and thus the translational partition function will be similar to that of a monatomic particle.  We will not rederive if but will just provide it here</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cebe6249-9ff4-4a21-8c49-fc829e9dd375">
-<span class="eqno">(4.124)<a class="headerlink" href="#equation-cebe6249-9ff4-4a21-8c49-fc829e9dd375" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9b04bd80-b515-4916-86b8-2a2061b6325a">
+<span class="eqno">(4.124)<a class="headerlink" href="#equation-9b04bd80-b515-4916-86b8-2a2061b6325a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q_{trans} = \left( \frac{2\pi(m_1+m_2)k_BT}{h^2}\right)^{3/2}V
 \end{equation}\]</div>
 </section>
@@ -620,14 +622,14 @@ q_{trans} = \left( \frac{2\pi(m_1+m_2)k_BT}{h^2}\right)^{3/2}V
 <h2><span class="section-number">4.2.5.6. </span>Electronic<a class="headerlink" href="#electronic" title="Permalink to this heading">#</a></h2>
 <p>We will only consider diatomic molecules in their ground electronic state but we still need to include a finite term for the electronic energy because define the zero of energy as that of the two separated atoms.  As the particles come together, the chemical bond between them will form via sharing of electrons.  This will release energy and thus we expect the “electronic” energy of the molecule to be lower than that of the two free atoms.</p>
 <p>This equates to only considering the electronic energy to be a scalar quantity the value of which depends on the particular diatomic molecule.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-15f9e5eb-cf9f-46e2-8dc1-6fe0bc1dbaa6">
-<span class="eqno">(4.125)<a class="headerlink" href="#equation-15f9e5eb-cf9f-46e2-8dc1-6fe0bc1dbaa6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9ea132c7-eb2d-4aa9-9f8c-f105bc3eeb6d">
+<span class="eqno">(4.125)<a class="headerlink" href="#equation-9ea132c7-eb2d-4aa9-9f8c-f105bc3eeb6d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \epsilon_{elec} = -D_e 
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(D_e\)</span> is the dissociation energy of the diatomic molecule and is defined in the figure below.</p>
 <p>Since there is only a single energy to account for, the molecular electronic partition function is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-741a4a09-5537-47a3-a595-e353fe8b734a">
-<span class="eqno">(4.126)<a class="headerlink" href="#equation-741a4a09-5537-47a3-a595-e353fe8b734a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-607a2002-b9fb-4752-8119-16928c74a27e">
+<span class="eqno">(4.126)<a class="headerlink" href="#equation-607a2002-b9fb-4752-8119-16928c74a27e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q_{elec} = g_{e,g} e^{\beta D_e},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(g_{e,g}\)</span> is the degeneracy of the ground state electronic energy level.</p>
@@ -685,39 +687,39 @@ q_{elec} = g_{e,g} e^{\beta D_e},
 <section id="rotational">
 <h2><span class="section-number">4.2.5.7. </span>Rotational<a class="headerlink" href="#rotational" title="Permalink to this heading">#</a></h2>
 <p>The rotational energy of a diatomic molecule is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-43890f82-3b60-4b25-a56b-0141135c1cb1">
-<span class="eqno">(4.127)<a class="headerlink" href="#equation-43890f82-3b60-4b25-a56b-0141135c1cb1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-dda2cea0-e947-47fc-aa35-459efd86ae44">
+<span class="eqno">(4.127)<a class="headerlink" href="#equation-dda2cea0-e947-47fc-aa35-459efd86ae44" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \epsilon_J = \frac{\hbar^2 J(J+1)}{2I} \quad J=0,1,2,...
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hbar = \frac{h}{2\pi}\)</span> is called reduced Planck’s constant, <span class="math notranslate nohighlight">\(J\)</span> is the rotational quantum number and <span class="math notranslate nohighlight">\(I \)</span> is the moment of intertia of the molecule. Additionally, each rotational energy level has a degeneracy, denoted <span class="math notranslate nohighlight">\(g_J\)</span>, of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b95828bb-9229-485b-966f-3dda3c01b44e">
-<span class="eqno">(4.128)<a class="headerlink" href="#equation-b95828bb-9229-485b-966f-3dda3c01b44e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5fba331a-e807-4fa9-9ff1-04f6f6b7b60e">
+<span class="eqno">(4.128)<a class="headerlink" href="#equation-5fba331a-e807-4fa9-9ff1-04f6f6b7b60e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 g_J = 2J+1.
 \end{equation}\]</div>
 <p>From the rotational energy and the degeneracy, we can write the molecular rotational partition function as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-db1256c9-dd2d-454e-a563-c4c6c77030b9">
-<span class="eqno">(4.129)<a class="headerlink" href="#equation-db1256c9-dd2d-454e-a563-c4c6c77030b9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fe965b30-e8f9-4707-809f-23302f4d6664">
+<span class="eqno">(4.129)<a class="headerlink" href="#equation-fe965b30-e8f9-4707-809f-23302f4d6664" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q_{rot} = \sum_{J=0}^{\infty}(2J+1)e^{\frac{-\beta\hbar^2J(J+1)}{2I}}
 \end{equation}\]</div>
 <p>For convenience, we introduce a new variable, <span class="math notranslate nohighlight">\(\Theta_{rot}\)</span>, called the <em>rotational temperature</em> as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aff071a3-be1f-4f18-972f-505444660650">
-<span class="eqno">(4.130)<a class="headerlink" href="#equation-aff071a3-be1f-4f18-972f-505444660650" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2b2b5b02-28ec-465e-84af-994d6fca9afd">
+<span class="eqno">(4.130)<a class="headerlink" href="#equation-2b2b5b02-28ec-465e-84af-994d6fca9afd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Theta_{rot} = \frac{\hbar^2}{2Ik_B} = \frac{hB}{k_B},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(B=\frac{h}{8\pi^2I}\)</span>.   Using this variable simplifies the rotational p.f. to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-29aaacd9-8c4a-4d0d-bf6d-e56121be29c0">
-<span class="eqno">(4.131)<a class="headerlink" href="#equation-29aaacd9-8c4a-4d0d-bf6d-e56121be29c0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1d600239-fbf4-4fbd-a94e-487359638cba">
+<span class="eqno">(4.131)<a class="headerlink" href="#equation-1d600239-fbf4-4fbd-a94e-487359638cba" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q_{rot} = \sum_{J=0}^{\infty}(2J+1)e^{\frac{-\Theta_{rot}J(J+1)}{T}}
 \end{equation}\]</div>
 <p>To calculate this sum, we will use an integral to approximate it.  This is not as good of an approximation as for the translational p.f. because the rotational energy levels are not as closely spaced as the translational energy levels.  That said, it is still a fairly good approximation (stated without evidence).</p>
-<div class="amsmath math notranslate nohighlight" id="equation-47ea0a59-6a21-4ccf-adfd-b02048aa6995">
-<span class="eqno">(4.132)<a class="headerlink" href="#equation-47ea0a59-6a21-4ccf-adfd-b02048aa6995" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-820d8ea3-b2f9-417a-b286-a97f76e32143">
+<span class="eqno">(4.132)<a class="headerlink" href="#equation-820d8ea3-b2f9-417a-b286-a97f76e32143" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 q_{rot}(T) &amp;=&amp; \int_0^\infty(2J+1)e^{\frac{-\Theta_{rot}J(J+1)}{T}}dJ \\
 &amp;=&amp; \int_0^\infty e^{\frac{-\Theta_{rot}u}{T}}du
 \end{eqnarray}\]</div>
 <p>where I have made a <span class="math notranslate nohighlight">\(u\)</span> substitution in the last step (<span class="math notranslate nohighlight">\(u=J(J+1)\)</span> and <span class="math notranslate nohighlight">\(du=(2J+1)dJ\)</span>).  This integral can be looked up and you get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6eb28c1f-58b1-4f06-afb5-42e4fb68be13">
-<span class="eqno">(4.133)<a class="headerlink" href="#equation-6eb28c1f-58b1-4f06-afb5-42e4fb68be13" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-979cd78f-134b-432e-ba6c-9db27b8b943f">
+<span class="eqno">(4.133)<a class="headerlink" href="#equation-979cd78f-134b-432e-ba6c-9db27b8b943f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 q_{rot}(T) &amp;=&amp; \int_0^\infty e^{\frac{-\Theta_{rot}u}{T}}du \\
 &amp;=&amp; \frac{T}{\Theta_{rot}} \\
 &amp;=&amp; \frac{8\pi^2Ik_BT}{h^2}
@@ -725,25 +727,25 @@ q_{rot}(T) &amp;=&amp; \int_0^\infty e^{\frac{-\Theta_{rot}u}{T}}du \\
 <section id="example-1-compute-the-probability-of-observing-a-molecule-of-co-theta-rot-2-77-k-in-the-j-5-rotational-energy-level-at-t-300-k">
 <h3><span class="section-number">4.2.5.7.1. </span>Example 1: Compute the probability of observing a molecule of CO, <span class="math notranslate nohighlight">\(\Theta_{rot} = 2.77\)</span> K, in the <span class="math notranslate nohighlight">\(J=5\)</span> rotational energy level at <span class="math notranslate nohighlight">\(T=300\)</span> K.<a class="headerlink" href="#example-1-compute-the-probability-of-observing-a-molecule-of-co-theta-rot-2-77-k-in-the-j-5-rotational-energy-level-at-t-300-k" title="Permalink to this heading">#</a></h3>
 <p>We start by thinking about the generic probability of an event</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9a89a8e6-67a4-4993-8bcd-5a06378552ef">
-<span class="eqno">(4.134)<a class="headerlink" href="#equation-9a89a8e6-67a4-4993-8bcd-5a06378552ef" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4da2aab3-9757-42e2-96d2-dc35fb60f57d">
+<span class="eqno">(4.134)<a class="headerlink" href="#equation-4da2aab3-9757-42e2-96d2-dc35fb60f57d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(J=5) = \frac{\text{Number of states with $J=5$}}{\text{Total number of states}}
 \end{equation}\]</div>
 <p>In this case, since we are working in the Canoncial ensemble it is really</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a0467542-c836-4f93-9db3-ff13332b9ef9">
-<span class="eqno">(4.135)<a class="headerlink" href="#equation-a0467542-c836-4f93-9db3-ff13332b9ef9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-97ea663f-6fca-4bb3-a8b6-9f5fdb96e294">
+<span class="eqno">(4.135)<a class="headerlink" href="#equation-97ea663f-6fca-4bb3-a8b6-9f5fdb96e294" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(J=5) = \frac{\text{Weight of states with $J=5$}}{\text{Total weight of states}}
 \end{equation}\]</div>
 <p>The weight of a rotational states is the degeneracy weighted Boltzmann factor.  Namely,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e4a7fef3-efa5-4370-a612-1e4a811aa91c">
-<span class="eqno">(4.136)<a class="headerlink" href="#equation-e4a7fef3-efa5-4370-a612-1e4a811aa91c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-3e91bfda-7158-4260-8ee6-9e4a00ce1f1d">
+<span class="eqno">(4.136)<a class="headerlink" href="#equation-3e91bfda-7158-4260-8ee6-9e4a00ce1f1d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P(J) &amp;= \frac{(2J+1)e^{-\frac{\Theta_{rot}J(J+1)}{T}}}{\int_0^\infty (2J+1)e^{-\frac{\Theta_{rot}J(J+1)}{T}}dJ} \\
 &amp;= \frac{(2J+1)e^{-\frac{\Theta_{rot}J(J+1)}{T}}}{q_{rot}} \\
 &amp;= \frac{\Theta_{rot}(2J+1)e^{-\frac{\Theta_{rot}J(J+1)}{T}}}{T}
 \end{eqnarray}\]</div>
 <p>Now to plug-in the numbers for this specifc problem:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e09afb7c-7ee0-48d6-bbcc-ff5f3eb3238f">
-<span class="eqno">(4.137)<a class="headerlink" href="#equation-e09afb7c-7ee0-48d6-bbcc-ff5f3eb3238f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-6795b814-7e79-49b7-93f8-91944b5cba2f">
+<span class="eqno">(4.137)<a class="headerlink" href="#equation-6795b814-7e79-49b7-93f8-91944b5cba2f" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P(J=5) &amp;= \frac{2.77 \times (2\cdot5+1)e^{-\frac{2.77\times 5\cdot(5+1)}{300}}}{300} \\
 &amp;= 0.08 
 \end{eqnarray}\]</div>
@@ -765,47 +767,47 @@ P(J=5) &amp;= \frac{2.77 \times (2\cdot5+1)e^{-\frac{2.77\times 5\cdot(5+1)}{300
 <section id="vibrational">
 <h2><span class="section-number">4.2.5.8. </span>Vibrational<a class="headerlink" href="#vibrational" title="Permalink to this heading">#</a></h2>
 <p>The vibrational energy of a diatomic molecule can be approximated as a single quantum harmonic oscillator the energy for which can be expressed as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2c89892c-7f33-412f-bcee-d3f2c47ad977">
-<span class="eqno">(4.138)<a class="headerlink" href="#equation-2c89892c-7f33-412f-bcee-d3f2c47ad977" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5800d714-e10a-4b96-a572-c7c95bbb8d56">
+<span class="eqno">(4.138)<a class="headerlink" href="#equation-5800d714-e10a-4b96-a572-c7c95bbb8d56" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \epsilon_\nu = \left(v+\frac{1}{2}\right)h\nu \quad v=0,1,2,...
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\nu = \frac{\sqrt{\frac{k}{\mu}}}{2\pi}\)</span> is the vibrational frequency of the oscillator with spring force constant <span class="math notranslate nohighlight">\(k\)</span> and reduced mass <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(v\)</span> is the vibrational quantum number.  Notice that, confusingly, there is both a <span class="math notranslate nohighlight">\(v\)</span> (the quantum number) and <span class="math notranslate nohighlight">\(\nu\)</span> in the equation above.</p>
 <p>From this we get that the vibrational partition function is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e24dd318-a86f-4fa8-9982-7dbb8dc1647d">
-<span class="eqno">(4.139)<a class="headerlink" href="#equation-e24dd318-a86f-4fa8-9982-7dbb8dc1647d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-6da869a4-e18c-4255-9664-8684e520d622">
+<span class="eqno">(4.139)<a class="headerlink" href="#equation-6da869a4-e18c-4255-9664-8684e520d622" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 q_{vib}(T) &amp;=&amp; \sum_v e^{-\beta \left(v+\frac{1}{2}\right)h\nu} \\
    &amp;=&amp; e^{-\beta \frac{1}{2}h\nu} \sum_v e^{-\beta vh\nu}
 \end{eqnarray}\]</div>
 <p>Unlike the translational and rotational p.f.s, here we don’t need to approximate this sum using an integral.  Instead, we will employ the concept of a convergent geometric series</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e53d4252-b04e-44b5-84fe-d98691c5af56">
-<span class="eqno">(4.140)<a class="headerlink" href="#equation-e53d4252-b04e-44b5-84fe-d98691c5af56" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-18d23811-a32e-4561-9b4d-9fa57118f641">
+<span class="eqno">(4.140)<a class="headerlink" href="#equation-18d23811-a32e-4561-9b4d-9fa57118f641" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sum_{n=0}^\infty x^n = \frac{1}{1-x} \quad for \quad x&lt;1
 \end{equation}\]</div>
 <p>The <span class="math notranslate nohighlight">\(x\)</span> in our equation is <span class="math notranslate nohighlight">\(e^{-\beta vh\nu}\)</span> which will be strictly less than one.  Thus we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-575496b4-4aec-4b0a-8891-34c8c9ee3698">
-<span class="eqno">(4.141)<a class="headerlink" href="#equation-575496b4-4aec-4b0a-8891-34c8c9ee3698" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2a9f7f3d-fe64-4300-bcf3-d1d751bebc35">
+<span class="eqno">(4.141)<a class="headerlink" href="#equation-2a9f7f3d-fe64-4300-bcf3-d1d751bebc35" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sum_v e^{-\beta vh\nu} = \frac{1}{1-e^{-\beta h\nu}}
 \end{equation}\]</div>
 <p>Plugging this back into the equation for <span class="math notranslate nohighlight">\(q_{vib}\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-064b2a16-c43f-4f2f-b3b7-4f0f2baa8b7b">
-<span class="eqno">(4.142)<a class="headerlink" href="#equation-064b2a16-c43f-4f2f-b3b7-4f0f2baa8b7b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f9df8f40-9d45-43f9-a598-69d5e2edb6b4">
+<span class="eqno">(4.142)<a class="headerlink" href="#equation-f9df8f40-9d45-43f9-a598-69d5e2edb6b4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q_{vib}(T) = \frac{e^{-\beta \frac{1}{2}h\nu}}{1-e^{-\beta h\nu}}
 \end{equation}\]</div>
 <p>We can again ‘simplify’ this expression by introducing the concept of a vibrational temperature, <span class="math notranslate nohighlight">\(\Theta_{vib} = \frac{h\nu}{k_B}\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cc7699f1-5903-4d2e-bde0-f15bb3b5a2fa">
-<span class="eqno">(4.143)<a class="headerlink" href="#equation-cc7699f1-5903-4d2e-bde0-f15bb3b5a2fa" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d0abc833-3f48-46d1-9aa5-30577980733a">
+<span class="eqno">(4.143)<a class="headerlink" href="#equation-d0abc833-3f48-46d1-9aa5-30577980733a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q_{vib}(T) = \frac{e^{-\frac{\Theta_{vib}}{2T}}}{1-e^{-\frac{\Theta_{vib}}{T}}}
 \end{equation}\]</div>
 <section id="example-2-compute-the-probability-of-observing-a-molecule-of-co-theta-vib-3103-k-in-the-v-1-vibrational-energy-level-at-t-300-k">
 <h3><span class="section-number">4.2.5.8.1. </span>Example 2: Compute the probability of observing a molecule of CO, <span class="math notranslate nohighlight">\(\Theta_{vib} = 3103\)</span> K, in the <span class="math notranslate nohighlight">\(v=1\)</span> vibrational energy level at <span class="math notranslate nohighlight">\(T=300\)</span> K.<a class="headerlink" href="#example-2-compute-the-probability-of-observing-a-molecule-of-co-theta-vib-3103-k-in-the-v-1-vibrational-energy-level-at-t-300-k" title="Permalink to this heading">#</a></h3>
 <p>This porblem is similar to the rotation example but here we will use vibrations.  But this still boils down to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-71547307-a5c4-4bb9-84ee-7fc50f147c76">
-<span class="eqno">(4.144)<a class="headerlink" href="#equation-71547307-a5c4-4bb9-84ee-7fc50f147c76" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1aae9001-2e61-4728-a6bc-8b2a7281c0eb">
+<span class="eqno">(4.144)<a class="headerlink" href="#equation-1aae9001-2e61-4728-a6bc-8b2a7281c0eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(v=1) = \frac{\text{Weight of states with $v=1$}}{\text{Total weight of states}}
 \end{equation}\]</div>
 <p>The vibrational states are all singley degenerate so we don’t need to worry about those.  Here is the work</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e63504b2-ff2e-4632-9831-43d2274e0025">
-<span class="eqno">(4.145)<a class="headerlink" href="#equation-e63504b2-ff2e-4632-9831-43d2274e0025" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-7b37a189-cdd1-4a44-8d6a-781deaf9ed2d">
+<span class="eqno">(4.145)<a class="headerlink" href="#equation-7b37a189-cdd1-4a44-8d6a-781deaf9ed2d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P(v) =&amp; \frac{e^{-\frac{\Theta_{vib}(v+\frac{1}{2})}{T}}}{q_{vib}} \\
 =&amp;\left( 1-e^{-\frac{\Theta_{vib}}{T}}\right)\frac{e^{-\frac{\Theta_{vib}(v+\frac{1}{2})}{T}}}{e^{-\frac{\Theta_{vib}}{2T}}} \\
 =&amp; \left( 1-e^{-\frac{\Theta_{vib}}{T}}\right)\frac{e^{-\frac{\Theta_{vib}}{2T}}e^{-\frac{\Theta_{vib}v}{T}}}{e^{-\frac{\Theta_{vib}}{2T}}} \\
@@ -813,8 +815,8 @@ P(v) =&amp; \frac{e^{-\frac{\Theta_{vib}(v+\frac{1}{2})}{T}}}{q_{vib}} \\
 =&amp; e^{-\frac{\Theta_{vib}v}{T}} - e^{-\frac{\Theta_{vib}(v+1)}{T}}
 \end{eqnarray}\]</div>
 <p>For our particular problem this yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2e198714-ea66-4b81-8d3a-3b8826e2316e">
-<span class="eqno">(4.146)<a class="headerlink" href="#equation-2e198714-ea66-4b81-8d3a-3b8826e2316e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-666c3418-6865-4aa2-9adb-2b0bc05e2053">
+<span class="eqno">(4.146)<a class="headerlink" href="#equation-666c3418-6865-4aa2-9adb-2b0bc05e2053" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P(v=1) =&amp; e^{-\frac{3103}{300}} - e^{-\frac{3103\cdot2}{300}} \\
 =&amp; 3\times10^{-5}
 \end{eqnarray}\]</div>
@@ -836,8 +838,8 @@ P(v=1) =&amp; e^{-\frac{3103}{300}} - e^{-\frac{3103\cdot2}{300}} \\
 <section id="combined-partition-function">
 <h2><span class="section-number">4.2.5.9. </span>Combined Partition Function<a class="headerlink" href="#combined-partition-function" title="Permalink to this heading">#</a></h2>
 <p>The combined molecular partition function for a diatomic molecule is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-55928b64-635f-4713-bc6c-a132a73b2a2c">
-<span class="eqno">(4.147)<a class="headerlink" href="#equation-55928b64-635f-4713-bc6c-a132a73b2a2c" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-b410fbad-a134-4473-b987-e14a28213924">
+<span class="eqno">(4.147)<a class="headerlink" href="#equation-b410fbad-a134-4473-b987-e14a28213924" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 q &amp;=&amp; q_{trans}q_{elec}q_{rot}q_{vib} \\
 &amp;=&amp; \left( \frac{2\pi(m_1+m_2)k_BT}{h^2}\right)^{3/2}V\cdot g_{e,g} e^{\beta D_e}\cdot \frac{T}{\Theta_{rot}} \cdot \frac{e^{-\frac{\Theta_{vib}}{2T}}}{1-e^{-\frac{\Theta_{vib}}{T}}} 
 \end{eqnarray}\]</div>

@@ -1,0 +1,1120 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), vi, and More Jupyter/Python &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="5.3.3. Python and Jupyter Notebooks" href="week2_python_jupyter_hands_on.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">1. Jupyter Notebook Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">1.1. Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">1.2. Advanced Jupyter Notebook Tutorial</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../coding_concepts/intro.html">2. Coding Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/variables.html">2.1. Variables in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">2.2. Arrays and Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/for_loops.html">2.3. for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/functions.html">2.4. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">2.5. Plotting with matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/numeric_integration.html">2.6. Numeric Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/intro.html">3. Math Concepts in Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/logarithms_and_exponential_functions.html">3.1. Logarithms and Exponential Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/differentiation_and_critical_points.html">3.2. Differentiation and Critical Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/integration_in_1D.html">3.3. Integration in 1D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/derivatives_of_multivariable_functions.html">3.4. Derivatives of Multivariable Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/discrete_probability.html">3.5. Discrete Probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../physical_chemistry/intro.html">4. Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/introduction/intro.html">4.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/introduction/non-bonded_interactions.html">4.1.1. Non-bonded Interactions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/intro.html">4.2. Statiscial Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.html">4.2.1. Boltzmann Factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Introduction_to_Probability.html">4.2.2. Introduction to Probability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">4.2.3. Thermodynamic Properties from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">4.2.4. Partition Function for a Monatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">4.2.5. Partition Function for a Diatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">4.2.6. Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">4.2.7. Kinetic Theory of Gasses from the Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/microscopic_view_of_entropy.html">4.2.8. Microscopic View of Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">4.2.9. Equations of State from Lattice Gas Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/thermodynamics/intro.html">4.3. Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/First_Law_of_Thermodynamics.html">4.3.1. The First Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Heat_Work_and_Calculating_U.html">4.3.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Thermodynamic_Cycles.html">4.3.4. Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Eastham_Honors.html">4.3.5. Thermodynamic Cycles: Solving exam problems and other examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Enthalpy.html">4.3.6. Enthalpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/The_Carnot_Cycle.html">4.3.7. The Carnot Cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Second_Law_of_Thermodynamics.html">4.3.8. Second Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">4.3.9. Heat Engine Diagrams</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Third_Law_of_Thermodynamics.html">4.3.11. The Third Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">4.3.12. First Derivative and Maxwell Relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Maxwell_Relations_Applied.html">4.3.13. Maxwell Relations Applied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Free_Energy_and_Legendre_Transforms.html">4.3.14. Free Energy and Legendre Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">4.3.15. The Pressure and Temperature Dependence of the Gibbs Energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">4.3.16. Phase Diagrams and Phase Equilibria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Chemical_Potential_from_Partition_Function.html">4.3.17. Chemical Potential from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Thermodynamics_of_Solutions.html">4.3.18. Thermodynamics of Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Ideal_and_Non_Ideal_Solutions.html">4.3.19. Ideal and Non-ideal Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Introduction_to_Chemical_Equilibrium.html">4.3.20. Chemical Equilibrium</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/kinetics/intro.html">4.4. Kinetics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Chemical_Kinetics_and_Rate_Laws.html">4.4.1. Chemical Kinetics and Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Integrated_Rate_Laws.html">4.4.2. Integrated Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Reversible_Reactions.html">4.4.3. Reversible Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">4.4.4. Transition State Theory and Temperature Dependence of the Rate Constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Reaction_Mechanisms_Part_I.html">4.4.5. Reaction Mechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Catalysts.html">4.4.6. Catalysts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.html">4.4.7. Enzyme Kinetics: The Michaelis-Menten Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Cooperative_Binding_Kinetics.html">4.4.8. Cooperative Binding Kinetics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Competitive_Inhibition.html">4.4.9. Competitive Inhibition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/intro.html">4.5. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/history_of_quantum_mechanics.html">4.5.1. The History of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/wave_particle_duality_classical_wave_equation.html">4.5.2. Wave Particle Duality and the Classical Wave Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Schrodinger_Equation.html">4.5.3. Schrodinger Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/particle_in_a_box.html">4.5.4. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">4.5.5. The Uncertainty Principle and Applications of Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/postulates_of_quantum_mechanics.html">4.5.6. The Postulates and Formalism of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/momentum_operator.html">4.5.7. The Momentum Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/operator_algebra.html">4.5.8. Operator Algebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/particle_in_a_sphere.html">4.5.9. Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/properties_of_particle_in_a_sphere.html">4.5.10. Properties of Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_hydrogen_atom.html">4.5.11. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/properties_of_the_hydrogen_atom.html">4.5.12. Properties of the Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_hydrogen_atom_absorption_spectrum.html">4.5.13. The Hydrogen Atom Absorption Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/special_functions_in_quantum_mechanics.html">4.5.14. Special Functions in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_helium_atom.html">4.5.15. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">4.5.16. Variational Method in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Single_Electron_Molecule_Variational_Approach.html">4.5.17. Single Electron Molecule in the Variational Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Improving_the_h2%2B_variational_approximation.html">4.5.18. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/h2%2B_with_polarization.html">4.5.19. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation by Including Polarization Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">4.5.20. The H<span class="math notranslate nohighlight">\(_2\)</span> Molecule using the Variational Method in a Minimal Basis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/H2_Configuration_Interaction.html">4.5.21. H<span class="math notranslate nohighlight">\(_2\)</span> Configuration Interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/harmonic_oscillator.html">4.5.22. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">4.5.23. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/basis_functions.html">4.5.24. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/harmonic_oscillator_using_variational_method.html">4.5.25. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/morse_oscillator.html">4.5.26. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator.html">4.5.27. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator_using_variational_method.html">4.5.28. Rigid Rotator Variational Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator_selection_rules.html">4.5.29. Rigid Rotator Continued…</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/electronic_structure/intro.html">4.6. Electronic Structure</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/Hartree_Fock_Helium_Atom.html">4.6.1. Hartree-Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../introduction/intro.html">5.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../introduction/the_fundamental_model.html">5.1.1. The Fundamental Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction/Models_in_the_Scientific_Method.html">5.1.2. What is a Model?</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">5.3. Hands-on Activities</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="week1_linux_hands_on.html">5.3.1. Linux Basics + Running Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
+
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fcomputational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Week 3 Hands-On: File Transfer (scp/WinSCP), vi, and More Jupyter/Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">5.3.5.1. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">5.3.5.2. Learning Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-your-working-directory-on-pete">5.3.5.3. 0. Setup: Your Working Directory on Pete</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transferring-files-with-scp-mac-linux">5.3.5.4. 1. Transferring Files with <code class="docutils literal notranslate"><span class="pre">scp</span></code> (Mac/Linux)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-idea-scp-syntax">5.3.5.4.1. 1.1 Key idea: <code class="docutils literal notranslate"><span class="pre">scp</span></code> syntax</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-a-file-to-pete">5.3.5.4.2. 1.2 Copy a file <strong>to</strong> Pete</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-a-file-from-pete-back-to-your-local-computer">5.3.5.4.3. 1.3 Copy a file <strong>from</strong> Pete back to your local computer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-an-entire-directory-recursive">5.3.5.4.4. 1.4 Copy an entire directory (recursive)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-options">5.3.5.4.5. 1.5 Common options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-sanity-checks">5.3.5.4.6. 1.6 Quick sanity checks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#windows-users-winscp-gui-file-transfer">5.3.5.5. 2. Windows Users: WinSCP (GUI File Transfer)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-do-in-winscp">5.3.5.5.1. What to do in WinSCP</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equivalent-to-scp">5.3.5.5.2. Equivalent to <code class="docutils literal notranslate"><span class="pre">scp</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mini-task-transfer-a-file-everyone">5.3.5.6. 3. Mini-Task: Transfer a File (Everyone)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">5.3.5.6.1. Goal</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-a-local-machine">5.3.5.6.1.1. Step A (local machine)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-b-transfer">5.3.5.6.1.2. Step B (transfer)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-c-verify-on-pete">5.3.5.6.1.3. Step C (verify on Pete)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vi-crash-course-hpc-essential">5.3.5.7. 4. <code class="docutils literal notranslate"><span class="pre">vi</span></code> Crash Course (HPC Essential)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-modes-you-must-know">5.3.5.7.1. 4.1 Two modes you must know</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-survival-commands">5.3.5.7.2. 4.2 Minimal survival commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-file-on-pete">5.3.5.7.3. 4.3 Practice file on Pete</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-python-power-ups-if-time">5.3.5.8. 5. Jupyter/Python Power-Ups (If Time)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#avoid-hidden-state">5.3.5.8.1. 5.1 Avoid hidden state</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-functions-reusable-code">5.3.5.8.2. 5.2 Writing functions (reusable code)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-tiny-workflow-example">5.3.5.8.3. 5.3 A tiny workflow example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-class-assignment-due-at-end-of-session">5.3.6. End-of-Class Assignment (Due at End of Session)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-a-file-transfer-evidence">5.3.6.1. Task A (File Transfer Evidence)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-b-vi-evidence">5.3.6.2. Task B (<code class="docutils literal notranslate"><span class="pre">vi</span></code> Evidence)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-c-functions-reproducibility">5.3.6.3. Task C (Functions + Reproducibility)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrap-up-reflection-23-sentences-markdown">5.3.6.4. Wrap-up Reflection (2–3 sentences, Markdown)</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="week-3-hands-on-file-transfer-scp-winscp-vi-and-more-jupyter-python">
+<h1><span class="section-number">5.3.5. </span>Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python<a class="headerlink" href="#week-3-hands-on-file-transfer-scp-winscp-vi-and-more-jupyter-python" title="Permalink to this heading">#</a></h1>
+<hr class="docutils" />
+<section id="overview">
+<h2><span class="section-number">5.3.5.1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>Today you will practice three skills you will use repeatedly in computational chemistry workflows:</p>
+<ol class="arabic simple">
+<li><p><strong>Transferring files to/from the HPC system</strong> (<code class="docutils literal notranslate"><span class="pre">pete.hpc.okstate.edu</span></code>) using <code class="docutils literal notranslate"><span class="pre">scp</span></code> (and <strong>WinSCP</strong> for Windows users)</p></li>
+<li><p>A <strong>crash course in <code class="docutils literal notranslate"><span class="pre">vi</span></code></strong> (the editor you will see on HPC systems)</p></li>
+<li><p>A few <strong>advanced Jupyter/Python</strong> habits (functions, re-running cells safely, and simple organization)</p></li>
+</ol>
+<blockquote>
+<div><p><strong>End-of-class deliverable:</strong> a small set of files in your HPC directory plus brief evidence pasted into this notebook.</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="learning-goals">
+<h2><span class="section-number">5.3.5.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
+<p>By the end of this session, you should be able to:</p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">scp</span></code> to copy files <strong>to</strong> and <strong>from</strong> <code class="docutils literal notranslate"><span class="pre">pete.hpc.okstate.edu</span></code></p></li>
+<li><p>Explain the difference between a <em>local machine path</em> and a <em>remote path</em></p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">vi</span></code> to create and edit a text file (insert mode, save, quit, search)</p></li>
+<li><p>Write a simple Python function in a notebook and use it to compute values repeatedly</p></li>
+<li><p>Keep a notebook reproducible (restart kernel, run-all, avoid hidden state)</p></li>
+</ul>
+</section>
+<section id="setup-your-working-directory-on-pete">
+<h2><span class="section-number">5.3.5.3. </span>0. Setup: Your Working Directory on Pete<a class="headerlink" href="#setup-your-working-directory-on-pete" title="Permalink to this heading">#</a></h2>
+<p>For this activity, work in the directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/projects/tia001/<span class="nv">$USER</span>/week3
+</pre></div>
+</div>
+<p>Create it if it does not exist:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week3
+<span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week3
+<span class="nb">pwd</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">$USER</span></code> expands to your username on the HPC system.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Run these in a TERMINAL on pete (or a Jupyter terminal)
+mkdir -p /projects/tia001/$USER/weekX
+cd /projects/tia001/$USER/weekX
+pwd
+ls -la
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  Cell In[1], line 2
+    mkdir -p /projects/tia001/$USER/weekX
+                              ^
+SyntaxError: invalid syntax
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="transferring-files-with-scp-mac-linux">
+<h2><span class="section-number">5.3.5.4. </span>1. Transferring Files with <code class="docutils literal notranslate"><span class="pre">scp</span></code> (Mac/Linux)<a class="headerlink" href="#transferring-files-with-scp-mac-linux" title="Permalink to this heading">#</a></h2>
+<section id="key-idea-scp-syntax">
+<h3><span class="section-number">5.3.5.4.1. </span>1.1 Key idea: <code class="docutils literal notranslate"><span class="pre">scp</span></code> syntax<a class="headerlink" href="#key-idea-scp-syntax" title="Permalink to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>SOURCE<span class="w"> </span>DESTINATION
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Local paths look like: <code class="docutils literal notranslate"><span class="pre">./file.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">/Users/you/Documents/file.txt</span></code></p></li>
+<li><p>Remote paths look like: <code class="docutils literal notranslate"><span class="pre">username&#64;pete.hpc.okstate.edu:/path/on/pete/</span></code></p></li>
+</ul>
+</section>
+<section id="copy-a-file-to-pete">
+<h3><span class="section-number">5.3.5.4.2. </span>1.2 Copy a file <strong>to</strong> Pete<a class="headerlink" href="#copy-a-file-to-pete" title="Permalink to this heading">#</a></h3>
+<p>From your <strong>local</strong> computer terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>local_file.txt<span class="w"> </span>YOURUSERNAME@pete.hpc.okstate.edu:/projects/tia001/YOURUSERNAME/week3/
+</pre></div>
+</div>
+</section>
+<section id="copy-a-file-from-pete-back-to-your-local-computer">
+<h3><span class="section-number">5.3.5.4.3. </span>1.3 Copy a file <strong>from</strong> Pete back to your local computer<a class="headerlink" href="#copy-a-file-from-pete-back-to-your-local-computer" title="Permalink to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>YOURUSERNAME@pete.hpc.okstate.edu:/projects/tia001/YOURUSERNAME/week3/remote_file.txt<span class="w"> </span>.
+</pre></div>
+</div>
+<p>The final <code class="docutils literal notranslate"><span class="pre">.</span></code> means “copy into the current local directory”.</p>
+</section>
+<section id="copy-an-entire-directory-recursive">
+<h3><span class="section-number">5.3.5.4.4. </span>1.4 Copy an entire directory (recursive)<a class="headerlink" href="#copy-an-entire-directory-recursive" title="Permalink to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>-r<span class="w"> </span>myfolder<span class="w"> </span>YOURUSERNAME@pete.hpc.okstate.edu:/projects/tia001/YOURUSERNAME/week3/
+</pre></div>
+</div>
+</section>
+<section id="common-options">
+<h3><span class="section-number">5.3.5.4.5. </span>1.5 Common options<a class="headerlink" href="#common-options" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-r</span></code> recursive (directories)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-p</span></code> preserve timestamps</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-v</span></code> verbose (debug)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-C</span></code> compression (sometimes helpful)</p></li>
+</ul>
+</section>
+<section id="quick-sanity-checks">
+<h3><span class="section-number">5.3.5.4.6. </span>1.6 Quick sanity checks<a class="headerlink" href="#quick-sanity-checks" title="Permalink to this heading">#</a></h3>
+<p>On Pete:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-l<span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week3
+</pre></div>
+</div>
+<p>Locally:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-l
+</pre></div>
+</div>
+</section>
+</section>
+<section id="windows-users-winscp-gui-file-transfer">
+<h2><span class="section-number">5.3.5.5. </span>2. Windows Users: WinSCP (GUI File Transfer)<a class="headerlink" href="#windows-users-winscp-gui-file-transfer" title="Permalink to this heading">#</a></h2>
+<p>If you are on Windows, the easiest path is often <strong>WinSCP</strong>:</p>
+<ul class="simple">
+<li><p><strong>File protocol:</strong> SFTP (recommended)</p></li>
+<li><p><strong>Host name:</strong> <code class="docutils literal notranslate"><span class="pre">pete.hpc.okstate.edu</span></code></p></li>
+<li><p><strong>User name:</strong> your Pete username</p></li>
+<li><p><strong>Password:</strong> your Pete password (or Duo/2FA flow if required)</p></li>
+</ul>
+<section id="what-to-do-in-winscp">
+<h3><span class="section-number">5.3.5.5.1. </span>What to do in WinSCP<a class="headerlink" href="#what-to-do-in-winscp" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Connect to <code class="docutils literal notranslate"><span class="pre">pete.hpc.okstate.edu</span></code></p></li>
+<li><p>Navigate to: <code class="docutils literal notranslate"><span class="pre">/projects/tia001/&lt;your_username&gt;/week3/</span></code></p></li>
+<li><p>Drag-and-drop files between your local machine and the remote directory</p></li>
+</ol>
+</section>
+<section id="equivalent-to-scp">
+<h3><span class="section-number">5.3.5.5.2. </span>Equivalent to <code class="docutils literal notranslate"><span class="pre">scp</span></code><a class="headerlink" href="#equivalent-to-scp" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Upload: drag local → remote</p></li>
+<li><p>Download: drag remote → local</p></li>
+</ul>
+<blockquote>
+<div><p>If you prefer a terminal on Windows, you can use PowerShell with <code class="docutils literal notranslate"><span class="pre">scp</span></code> (OpenSSH), or WSL.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="mini-task-transfer-a-file-everyone">
+<h2><span class="section-number">5.3.5.6. </span>3. Mini-Task: Transfer a File (Everyone)<a class="headerlink" href="#mini-task-transfer-a-file-everyone" title="Permalink to this heading">#</a></h2>
+<section id="goal">
+<h3><span class="section-number">5.3.5.6.1. </span>Goal<a class="headerlink" href="#goal" title="Permalink to this heading">#</a></h3>
+<p>Create a small file locally, transfer it to Pete, and verify it arrived.</p>
+<section id="step-a-local-machine">
+<h4><span class="section-number">5.3.5.6.1.1. </span>Step A (local machine)<a class="headerlink" href="#step-a-local-machine" title="Permalink to this heading">#</a></h4>
+<p>Create a file called <code class="docutils literal notranslate"><span class="pre">hello_local.txt</span></code> with a short message (one line).</p>
+</section>
+<section id="step-b-transfer">
+<h4><span class="section-number">5.3.5.6.1.2. </span>Step B (transfer)<a class="headerlink" href="#step-b-transfer" title="Permalink to this heading">#</a></h4>
+<p>Use <code class="docutils literal notranslate"><span class="pre">scp</span></code> (or WinSCP) to place it into:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/projects/tia001/<span class="nv">$USER</span>/week3/
+</pre></div>
+</div>
+</section>
+<section id="step-c-verify-on-pete">
+<h4><span class="section-number">5.3.5.6.1.3. </span>Step C (verify on Pete)<a class="headerlink" href="#step-c-verify-on-pete" title="Permalink to this heading">#</a></h4>
+<p>On Pete, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week3
+ls<span class="w"> </span>-l<span class="w"> </span>hello_local.txt
+cat<span class="w"> </span>hello_local.txt
+</pre></div>
+</div>
+<blockquote>
+<div><p>You will paste the output of these verification commands into the assignment section at the end.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Run on pete after transfer:
+cd /projects/tia001/$USER/weekX
+ls -l hello_local.txt
+cat hello_local.txt
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="vi-crash-course-hpc-essential">
+<h2><span class="section-number">5.3.5.7. </span>4. <code class="docutils literal notranslate"><span class="pre">vi</span></code> Crash Course (HPC Essential)<a class="headerlink" href="#vi-crash-course-hpc-essential" title="Permalink to this heading">#</a></h2>
+<section id="two-modes-you-must-know">
+<h3><span class="section-number">5.3.5.7.1. </span>4.1 Two modes you must know<a class="headerlink" href="#two-modes-you-must-know" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Normal mode</strong>: navigation + commands (default)</p></li>
+<li><p><strong>Insert mode</strong>: typing text (press <code class="docutils literal notranslate"><span class="pre">i</span></code> to enter)</p></li>
+</ul>
+</section>
+<section id="minimal-survival-commands">
+<h3><span class="section-number">5.3.5.7.2. </span>4.2 Minimal survival commands<a class="headerlink" href="#minimal-survival-commands" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">i</span></code> : enter insert mode</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Esc</span></code> : back to normal mode</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:w</span></code> : write/save</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:q</span></code> : quit</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:wq</span></code> : save and quit</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:q!</span></code> : quit without saving</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/text</span></code> : search forward for <code class="docutils literal notranslate"><span class="pre">text</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code> : next match</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gg</span></code> : go to top of file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">G</span></code> : go to bottom</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dd</span></code> : delete a line</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">yy</span></code> : copy (yank) a line</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> : paste below</p></li>
+</ul>
+</section>
+<section id="practice-file-on-pete">
+<h3><span class="section-number">5.3.5.7.3. </span>4.3 Practice file on Pete<a class="headerlink" href="#practice-file-on-pete" title="Permalink to this heading">#</a></h3>
+<p>On Pete, create and edit:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vi<span class="w"> </span>vi_practice.txt
+</pre></div>
+</div>
+<p>Put the following (exactly except replace the <code class="docutils literal notranslate"><span class="pre">&lt;&gt;</span></code> entries with the proper text) as the first three lines, then add 2–3 additional lines of your choice:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">NAME:</span> <span class="pre">&lt;your</span> <span class="pre">name&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">USERNAME:</span> <span class="pre">&lt;your</span> <span class="pre">username&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TODAY:</span> <span class="pre">&lt;YYYY-MM-DD&gt;</span></code></p></li>
+</ol>
+<p>Save and quit.</p>
+<p>Verify:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>vi_practice.txt
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Run on pete:
+cd /projects/tia001/$USER/weekX
+vi vi_practice.txt
+
+# After saving:
+cat vi_practice.txt
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="jupyter-python-power-ups-if-time">
+<h2><span class="section-number">5.3.5.8. </span>5. Jupyter/Python Power-Ups (If Time)<a class="headerlink" href="#jupyter-python-power-ups-if-time" title="Permalink to this heading">#</a></h2>
+<section id="avoid-hidden-state">
+<h3><span class="section-number">5.3.5.8.1. </span>5.1 Avoid hidden state<a class="headerlink" href="#avoid-hidden-state" title="Permalink to this heading">#</a></h3>
+<p>A notebook can silently depend on the order you ran cells.</p>
+<p>Good habit:</p>
+<ol class="arabic simple">
+<li><p><strong>Restart kernel</strong></p></li>
+<li><p><strong>Run all cells</strong> from the top</p></li>
+</ol>
+</section>
+<section id="writing-functions-reusable-code">
+<h3><span class="section-number">5.3.5.8.2. </span>5.2 Writing functions (reusable code)<a class="headerlink" href="#writing-functions-reusable-code" title="Permalink to this heading">#</a></h3>
+<p>A function packages a calculation you can reuse many times.</p>
+<p>Example: compute <span class="math notranslate nohighlight">\(\sqrt{x^2 + 1}\)</span>.</p>
+<p>Run the cell below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute sqrt(x^2 + 1).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-tiny-workflow-example">
+<h3><span class="section-number">5.3.5.8.3. </span>5.3 A tiny workflow example<a class="headerlink" href="#a-tiny-workflow-example" title="Permalink to this heading">#</a></h3>
+<p>Compute a table of values and save it as a text file on Pete.</p>
+<p>Run the cell below (it writes <code class="docutils literal notranslate"><span class="pre">values.txt</span></code> into your current working directory).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="n">vals</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xs</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;values.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+    <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;# x  sqrt(x^2+1)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">vals</span><span class="p">:</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s2">8.3f</span><span class="si">}</span><span class="s2">  </span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s2">12.6f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wrote values.txt with&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">),</span> <span class="s2">&quot;rows&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="end-of-class-assignment-due-at-end-of-session">
+<h1><span class="section-number">5.3.6. </span>End-of-Class Assignment (Due at End of Session)<a class="headerlink" href="#end-of-class-assignment-due-at-end-of-session" title="Permalink to this heading">#</a></h1>
+<p>Complete the tasks below. Paste requested outputs into this notebook (in the cells provided).</p>
+<p>All files should be in:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/projects/tia001/<span class="nv">$USER</span>/week3
+</pre></div>
+</div>
+<section id="task-a-file-transfer-evidence">
+<h2><span class="section-number">5.3.6.1. </span>Task A (File Transfer Evidence)<a class="headerlink" href="#task-a-file-transfer-evidence" title="Permalink to this heading">#</a></h2>
+<p>Paste the output of these commands run on Pete:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week3
+ls<span class="w"> </span>-l<span class="w"> </span>hello_local.txt
+cat<span class="w"> </span>hello_local.txt
+</pre></div>
+</div>
+<p>You should see the file you created locally and transferred to Pete.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Paste Task A output here (or run in a pete terminal and paste)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="task-b-vi-evidence">
+<h2><span class="section-number">5.3.6.2. </span>Task B (<code class="docutils literal notranslate"><span class="pre">vi</span></code> Evidence)<a class="headerlink" href="#task-b-vi-evidence" title="Permalink to this heading">#</a></h2>
+<p>Paste the output of:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week3
+cat<span class="w"> </span>vi_practice.txt
+</pre></div>
+</div>
+<p>Your file must include the three required lines (NAME/USERNAME/TODAY).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Paste Task B output here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="task-c-functions-reproducibility">
+<h2><span class="section-number">5.3.6.3. </span>Task C (Functions + Reproducibility)<a class="headerlink" href="#task-c-functions-reproducibility" title="Permalink to this heading">#</a></h2>
+<p>In the code cell below:</p>
+<ol class="arabic simple">
+<li><p>Write a function <code class="docutils literal notranslate"><span class="pre">energy(n,</span> <span class="pre">L)</span></code> that returns the particle-in-a-box energy
+[
+E_n = \frac{n^2\pi^2}{2L^2}
+]
+in units where <span class="math notranslate nohighlight">\(\hbar=m=1\)</span>.</p></li>
+<li><p>Use your function to print <code class="docutils literal notranslate"><span class="pre">E_n</span></code> for <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">1..5</span></code> with <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">1.0</span></code>.</p></li>
+<li><p>Restart your kernel and <code class="docutils literal notranslate"><span class="pre">Run</span> <span class="pre">All</span></code> to confirm everything still works.</p></li>
+</ol>
+<p>(We will spot-check that your notebook runs from top to bottom.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="c1"># YOUR CODE HERE</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<span class="c1"># Print energies for n=1..5 at L=1.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="wrap-up-reflection-23-sentences-markdown">
+<h2><span class="section-number">5.3.6.4. </span>Wrap-up Reflection (2–3 sentences, Markdown)<a class="headerlink" href="#wrap-up-reflection-23-sentences-markdown" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>What part of today’s workflow felt most unfamiliar?</p></li>
+<li><p>What is one step you will use next week when running calculations?</p></li>
+</ul>
+<p>(Write your response below.)</p>
+<p><em>Write your reflection here.</em></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./computational_chemistry/hands_on_activities"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="week2_python_jupyter_hands_on.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5.3.3. </span>Python and Jupyter Notebooks</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">5.3.5.1. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">5.3.5.2. Learning Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-your-working-directory-on-pete">5.3.5.3. 0. Setup: Your Working Directory on Pete</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transferring-files-with-scp-mac-linux">5.3.5.4. 1. Transferring Files with <code class="docutils literal notranslate"><span class="pre">scp</span></code> (Mac/Linux)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-idea-scp-syntax">5.3.5.4.1. 1.1 Key idea: <code class="docutils literal notranslate"><span class="pre">scp</span></code> syntax</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-a-file-to-pete">5.3.5.4.2. 1.2 Copy a file <strong>to</strong> Pete</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-a-file-from-pete-back-to-your-local-computer">5.3.5.4.3. 1.3 Copy a file <strong>from</strong> Pete back to your local computer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#copy-an-entire-directory-recursive">5.3.5.4.4. 1.4 Copy an entire directory (recursive)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-options">5.3.5.4.5. 1.5 Common options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-sanity-checks">5.3.5.4.6. 1.6 Quick sanity checks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#windows-users-winscp-gui-file-transfer">5.3.5.5. 2. Windows Users: WinSCP (GUI File Transfer)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-to-do-in-winscp">5.3.5.5.1. What to do in WinSCP</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equivalent-to-scp">5.3.5.5.2. Equivalent to <code class="docutils literal notranslate"><span class="pre">scp</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mini-task-transfer-a-file-everyone">5.3.5.6. 3. Mini-Task: Transfer a File (Everyone)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">5.3.5.6.1. Goal</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-a-local-machine">5.3.5.6.1.1. Step A (local machine)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-b-transfer">5.3.5.6.1.2. Step B (transfer)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-c-verify-on-pete">5.3.5.6.1.3. Step C (verify on Pete)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vi-crash-course-hpc-essential">5.3.5.7. 4. <code class="docutils literal notranslate"><span class="pre">vi</span></code> Crash Course (HPC Essential)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#two-modes-you-must-know">5.3.5.7.1. 4.1 Two modes you must know</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-survival-commands">5.3.5.7.2. 4.2 Minimal survival commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-file-on-pete">5.3.5.7.3. 4.3 Practice file on Pete</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyter-python-power-ups-if-time">5.3.5.8. 5. Jupyter/Python Power-Ups (If Time)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#avoid-hidden-state">5.3.5.8.1. 5.1 Avoid hidden state</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-functions-reusable-code">5.3.5.8.2. 5.2 Writing functions (reusable code)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-tiny-workflow-example">5.3.5.8.3. 5.3 A tiny workflow example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-class-assignment-due-at-end-of-session">5.3.6. End-of-Class Assignment (Due at End of Session)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-a-file-transfer-evidence">5.3.6.1. Task A (File Transfer Evidence)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-b-vi-evidence">5.3.6.2. Task B (<code class="docutils literal notranslate"><span class="pre">vi</span></code> Evidence)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-c-functions-reproducibility">5.3.6.3. Task C (Functions + Reproducibility)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrap-up-reflection-23-sentences-markdown">5.3.6.4. Wrap-up Reflection (2–3 sentences, Markdown)</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin McCullagh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
