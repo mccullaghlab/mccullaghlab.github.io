@@ -549,13 +549,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducibility-tip">5.3.7.5.3. Reproducibility tip</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slurm-basics-the-mental-model">5.3.7.6. 5. Slurm Basics: The Mental Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slurm-basics">5.3.7.6. 5. Slurm Basics:</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#your-most-used-commands">5.3.7.6.1. Your most-used commands</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-jobs-good-for-testing">5.3.7.7. 6. Interactive Jobs (Good for Testing)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-allocate-then-run">5.3.7.7.1. A) Allocate then run</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-one-shot-run">5.3.7.7.2. B) One-shot run</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#allocate-then-run">5.3.7.7.1. Allocate then run</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-jobs-with-sbatch-a-minimal-working-example">5.3.7.8. 7. Batch Jobs with <code class="docutils literal notranslate"><span class="pre">sbatch</span></code>: A Minimal Working Example</a><ul class="nav section-nav flex-column">
@@ -635,6 +634,8 @@ Backed up (sometimes), quota-limited, good for: source code, small inputs, scrip
 <li><p><strong>Scratch (<code class="docutils literal notranslate"><span class="pre">$SCRATCH</span></code> or <code class="docutils literal notranslate"><span class="pre">/scratch/$USER/...</span></code>)</strong><br />
 <em>Fast</em> and designed for heavy I/O, good for: trajectories, temporary simulation files, large outputs.<br />
 Often <strong>not backed up</strong> and may be <strong>purged</strong> after some number of days.</p></li>
+<li><p><strong>Projects (This is somewhat specific to pete)</strong><br />
+You don’t get these automatically - but these are reasonably fast but also large longterm storage.  Large jobs should still be run on scratch and transerred to projects as need be.</p></li>
 </ul>
 <section id="quick-checks">
 <h3><span class="section-number">5.3.7.3.1. </span>Quick checks<a class="headerlink" href="#quick-checks" title="Permalink to this heading">#</a></h3>
@@ -681,7 +682,7 @@ Use Slurm (interactive or batch) so that your job lands on compute nodes.</p>
 <h3><span class="section-number">5.3.7.4.2. </span>What compute nodes exist? (Slurm partitions)<a class="headerlink" href="#what-compute-nodes-exist-slurm-partitions" title="Permalink to this heading">#</a></h3>
 <p>Slurm groups nodes into <strong>partitions</strong> (sometimes called “queues”).
 Use <code class="docutils literal notranslate"><span class="pre">sinfo</span></code> to see partitions, node states, and time limits:</p>
-<p>Write down at least <strong>two partition names</strong> you see (e.g., <code class="docutils literal notranslate"><span class="pre">short</span></code>, <code class="docutils literal notranslate"><span class="pre">long</span></code>, <code class="docutils literal notranslate"><span class="pre">gpu</span></code>, etc.).<br />
+<p>Write down at least <strong>two partition names</strong> you see (e.g., <code class="docutils literal notranslate"><span class="pre">bigmem</span></code>, <code class="docutils literal notranslate"><span class="pre">cascadelake</span></code>, <code class="docutils literal notranslate"><span class="pre">bullet</span></code>, etc.).<br />
 You will use them in the graded activity.</p>
 </section>
 </section>
@@ -711,8 +712,8 @@ A module adjusts your <code class="docutils literal notranslate"><span class="pr
 <p>That way you can reproduce runs later.</p>
 </section>
 </section>
-<section id="slurm-basics-the-mental-model">
-<h2><span class="section-number">5.3.7.6. </span>5. Slurm Basics: The Mental Model<a class="headerlink" href="#slurm-basics-the-mental-model" title="Permalink to this heading">#</a></h2>
+<section id="slurm-basics">
+<h2><span class="section-number">5.3.7.6. </span>5. Slurm Basics:<a class="headerlink" href="#slurm-basics" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p><strong>You do not “run on the cluster”</strong>; you request resources from Slurm.</p></li>
 <li><p>Slurm decides <em>where/when</em> your job runs based on availability and policies.</p></li>
@@ -745,24 +746,15 @@ A module adjusts your <code class="docutils literal notranslate"><span class="pr
 <li><p>quick visualization on compute nodes</p></li>
 </ul>
 <p>Two common patterns:</p>
-<section id="a-allocate-then-run">
-<h3><span class="section-number">5.3.7.7.1. </span>A) Allocate then run<a class="headerlink" href="#a-allocate-then-run" title="Permalink to this heading">#</a></h3>
+<section id="allocate-then-run">
+<h3><span class="section-number">5.3.7.7.1. </span>Allocate then run<a class="headerlink" href="#allocate-then-run" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">salloc</span> <span class="pre">...</span></code></p></li>
-<li><p>then <code class="docutils literal notranslate"><span class="pre">srun</span> <span class="pre">...</span></code></p></li>
-</ul>
-</section>
-<section id="b-one-shot-run">
-<h3><span class="section-number">5.3.7.7.2. </span>B) One-shot run<a class="headerlink" href="#b-one-shot-run" title="Permalink to this heading">#</a></h3>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">srun</span> <span class="pre">...</span> <span class="pre">&lt;command&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">salloc</span> <span class="pre">[job</span> <span class="pre">resource</span> <span class="pre">request]</span></code></p></li>
+<li><p>then <code class="docutils literal notranslate"><span class="pre">srun</span> <span class="pre">[command(s)]</span></code></p></li>
 </ul>
 <p>If you do an interactive allocation, remember to exit when done:</p>
-<ul class="simple">
-<li><p>type <code class="docutils literal notranslate"><span class="pre">exit</span></code> in the allocated shell, or</p></li>
-<li><p>press Ctrl-D</p></li>
-</ul>
-<p>This releases resources for others.</p>
+<p><code class="docutils literal notranslate"><span class="pre">scancel</span> <span class="pre">[job</span> <span class="pre">id]</span></code>
+This releases resources for others.</p>
 </section>
 </section>
 <section id="batch-jobs-with-sbatch-a-minimal-working-example">
@@ -779,7 +771,7 @@ A module adjusts your <code class="docutils literal notranslate"><span class="pr
 </section>
 <section id="submit-the-job">
 <h3><span class="section-number">5.3.7.8.2. </span>7.2 Submit the job<a class="headerlink" href="#submit-the-job" title="Permalink to this heading">#</a></h3>
-<p>Replace <code class="docutils literal notranslate"><span class="pre">&lt;PARTITION&gt;</span></code> in the script with a real partition name from <code class="docutils literal notranslate"><span class="pre">sinfo</span></code>, then submit:</p>
+<p>Submit the above script:</p>
 </section>
 <section id="inspect-output">
 <h3><span class="section-number">5.3.7.8.3. </span>7.3 Inspect output<a class="headerlink" href="#inspect-output" title="Permalink to this heading">#</a></h3>
@@ -864,6 +856,10 @@ sinfo<span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;%P
 <p>You may adapt <code class="docutils literal notranslate"><span class="pre">hello_slurm.slurm</span></code> from above.</p>
 <p>Submit:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch<span class="w"> </span>activity_job.slurm
+</pre></div>
+</div>
+<p>Check the status and record the jobid for later use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>squeue<span class="w"> </span>-u<span class="w"> </span><span class="nv">$USER</span>
 </pre></div>
 </div>
 <p>When it finishes, rename your output file to <code class="docutils literal notranslate"><span class="pre">activity_job.out</span></code>.</p>
@@ -985,13 +981,12 @@ sinfo<span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;%P
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducibility-tip">5.3.7.5.3. Reproducibility tip</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slurm-basics-the-mental-model">5.3.7.6. 5. Slurm Basics: The Mental Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slurm-basics">5.3.7.6. 5. Slurm Basics:</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#your-most-used-commands">5.3.7.6.1. Your most-used commands</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-jobs-good-for-testing">5.3.7.7. 6. Interactive Jobs (Good for Testing)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-allocate-then-run">5.3.7.7.1. A) Allocate then run</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-one-shot-run">5.3.7.7.2. B) One-shot run</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#allocate-then-run">5.3.7.7.1. Allocate then run</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-jobs-with-sbatch-a-minimal-working-example">5.3.7.8. 7. Batch Jobs with <code class="docutils literal notranslate"><span class="pre">sbatch</span></code>: A Minimal Working Example</a><ul class="nav section-nav flex-column">
