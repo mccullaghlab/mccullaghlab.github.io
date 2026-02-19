@@ -1,0 +1,840 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Week 6 Hands-On: WebMO (Gaussian on TIGER) &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'computational_chemistry/hands_on_activities/week6_webmo_hands_on';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">1. Jupyter Notebook Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">1.1. Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">1.2. Advanced Jupyter Notebook Tutorial</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../coding_concepts/intro.html">2. Coding Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/variables.html">2.1. Variables in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">2.2. Arrays and Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/for_loops.html">2.3. for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/functions.html">2.4. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">2.5. Plotting with matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/numeric_integration.html">2.6. Numeric Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/intro.html">3. Math Concepts in Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/logarithms_and_exponential_functions.html">3.1. Logarithms and Exponential Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/differentiation_and_critical_points.html">3.2. Differentiation and Critical Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/integration_in_1D.html">3.3. Integration in 1D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/derivatives_of_multivariable_functions.html">3.4. Derivatives of Multivariable Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/discrete_probability.html">3.5. Discrete Probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../physical_chemistry/intro.html">4. Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/introduction/intro.html">4.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/introduction/non-bonded_interactions.html">4.1.1. Non-bonded Interactions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/intro.html">4.2. Statiscial Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.html">4.2.1. Boltzmann Factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Introduction_to_Probability.html">4.2.2. Introduction to Probability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">4.2.3. Thermodynamic Properties from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">4.2.4. Partition Function for a Monatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">4.2.5. Partition Function for a Diatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">4.2.6. Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">4.2.7. Kinetic Theory of Gasses from the Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/microscopic_view_of_entropy.html">4.2.8. Microscopic View of Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">4.2.9. Equations of State from Lattice Gas Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/thermodynamics/intro.html">4.3. Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/First_Law_of_Thermodynamics.html">4.3.1. The First Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Heat_Work_and_Calculating_U.html">4.3.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Thermodynamic_Cycles.html">4.3.4. Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Eastham_Honors.html">4.3.5. Thermodynamic Cycles: Solving exam problems and other examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Enthalpy.html">4.3.6. Enthalpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/The_Carnot_Cycle.html">4.3.7. The Carnot Cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Second_Law_of_Thermodynamics.html">4.3.8. Second Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">4.3.9. Heat Engine Diagrams</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Third_Law_of_Thermodynamics.html">4.3.11. The Third Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">4.3.12. First Derivative and Maxwell Relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Maxwell_Relations_Applied.html">4.3.13. Maxwell Relations Applied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Free_Energy_and_Legendre_Transforms.html">4.3.14. Free Energy and Legendre Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">4.3.15. The Pressure and Temperature Dependence of the Gibbs Energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">4.3.16. Phase Diagrams and Phase Equilibria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Chemical_Potential_from_Partition_Function.html">4.3.17. Chemical Potential from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Thermodynamics_of_Solutions.html">4.3.18. Thermodynamics of Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Ideal_and_Non_Ideal_Solutions.html">4.3.19. Ideal and Non-ideal Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Introduction_to_Chemical_Equilibrium.html">4.3.20. Chemical Equilibrium</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/kinetics/intro.html">4.4. Kinetics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Chemical_Kinetics_and_Rate_Laws.html">4.4.1. Chemical Kinetics and Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Integrated_Rate_Laws.html">4.4.2. Integrated Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Reversible_Reactions.html">4.4.3. Reversible Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">4.4.4. Transition State Theory and Temperature Dependence of the Rate Constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Reaction_Mechanisms_Part_I.html">4.4.5. Reaction Mechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Catalysts.html">4.4.6. Catalysts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.html">4.4.7. Enzyme Kinetics: The Michaelis-Menten Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Cooperative_Binding_Kinetics.html">4.4.8. Cooperative Binding Kinetics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Competitive_Inhibition.html">4.4.9. Competitive Inhibition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/intro.html">4.5. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/history_of_quantum_mechanics.html">4.5.1. The History of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/wave_particle_duality_classical_wave_equation.html">4.5.2. Wave Particle Duality and the Classical Wave Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Schrodinger_Equation.html">4.5.3. Schrodinger Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/particle_in_a_box.html">4.5.4. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">4.5.5. The Uncertainty Principle and Applications of Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/postulates_of_quantum_mechanics.html">4.5.6. The Postulates and Formalism of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/momentum_operator.html">4.5.7. The Momentum Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/operator_algebra.html">4.5.8. Operator Algebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/particle_in_a_sphere.html">4.5.9. Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/properties_of_particle_in_a_sphere.html">4.5.10. Properties of Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_hydrogen_atom.html">4.5.11. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/properties_of_the_hydrogen_atom.html">4.5.12. Properties of the Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_hydrogen_atom_absorption_spectrum.html">4.5.13. The Hydrogen Atom Absorption Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/special_functions_in_quantum_mechanics.html">4.5.14. Special Functions in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_helium_atom.html">4.5.15. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">4.5.16. Variational Method in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Single_Electron_Molecule_Variational_Approach.html">4.5.17. Single Electron Molecule in the Variational Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Improving_the_h2%2B_variational_approximation.html">4.5.18. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/h2%2B_with_polarization.html">4.5.19. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation by Including Polarization Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">4.5.20. The H<span class="math notranslate nohighlight">\(_2\)</span> Molecule using the Variational Method in a Minimal Basis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/H2_Configuration_Interaction.html">4.5.21. H<span class="math notranslate nohighlight">\(_2\)</span> Configuration Interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/harmonic_oscillator.html">4.5.22. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">4.5.23. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/basis_functions.html">4.5.24. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/harmonic_oscillator_using_variational_method.html">4.5.25. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/morse_oscillator.html">4.5.26. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator.html">4.5.27. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator_using_variational_method.html">4.5.28. Rigid Rotator Variational Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator_selection_rules.html">4.5.29. Rigid Rotator Continued…</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/electronic_structure/intro.html">4.6. Electronic Structure</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/Hartree_Fock_Helium_Atom.html">4.6.1. Hartree-Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../introduction/intro.html">5.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../introduction/the_fundamental_model.html">5.1.1. The Fundamental Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction/Models_in_the_Scientific_Method.html">5.1.2. What is a Model?</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="week1_linux_hands_on.html">5.3.1. Linux Basics + Running Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/hands_on_activities/week6_webmo_hands_on.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/hands_on_activities/week6_webmo_hands_on.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fcomputational_chemistry/hands_on_activities/week6_webmo_hands_on.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/computational_chemistry/hands_on_activities/week6_webmo_hands_on.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Week 6 Hands-On: WebMO (Gaussian on TIGER)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Week 6 Hands-On: WebMO (Gaussian on TIGER)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tiger-webmo-access-information">TIGER / WebMO Access Information</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#access-setup">Access Setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#webmo-urls">WebMO URLs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#login-instructions">Login Instructions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">Learning Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-a-molecule-example-ethanol">1. Build a Molecule (Example: Ethanol)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-optimization-gaussian">2. Geometry Optimization (Gaussian)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frequency-calculation">3. Frequency Calculation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-submit-on-canvas">Assignment (Submit on Canvas)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverables">Deliverables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-setup-2-pts">A. Setup (2 pts)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-optimization-4-pts">B. Optimization (4 pts)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-frequency-3-pts">C. Frequency (3 pts)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-reflection-1-pt">D. Reflection (1 pt)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="week-6-hands-on-webmo-gaussian-on-tiger">
+<h1>Week 6 Hands-On: WebMO (Gaussian on TIGER)<a class="headerlink" href="#week-6-hands-on-webmo-gaussian-on-tiger" title="Permalink to this heading">#</a></h1>
+<p><strong>Course:</strong> Computational Chemistry<br />
+<strong>Activity type:</strong> Hands-on tutorial + short assignment</p>
+<hr class="docutils" />
+<section id="tiger-webmo-access-information">
+<h2>TIGER / WebMO Access Information<a class="headerlink" href="#tiger-webmo-access-information" title="Permalink to this heading">#</a></h2>
+<p>You will be using <strong>WebMO with Gaussian</strong> running on the <strong>TIGER HPC system</strong>.</p>
+<section id="access-setup">
+<h3>Access Setup<a class="headerlink" href="#access-setup" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Your TIGER access has been created.</p></li>
+<li><p>You have been added to TIGER’s <strong>Gaussian access group</strong>.</p></li>
+</ul>
+</section>
+<section id="webmo-urls">
+<h3>WebMO URLs<a class="headerlink" href="#webmo-urls" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>WebMO Pro version:</strong><br />
+https://tiger.hpc.okstate.edu/~webmopro/</p></li>
+<li><p><strong>WebMO Basic version:</strong><br />
+https://tiger.hpc.okstate.edu/~webmo/</p></li>
+</ul>
+<p>For this course, use <strong>WebMO Pro</strong> unless instructed otherwise.</p>
+</section>
+<section id="login-instructions">
+<h3>Login Instructions<a class="headerlink" href="#login-instructions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Use your <strong>short O-Key username</strong> (e.g., <code class="docutils literal notranslate"><span class="pre">martmcc</span></code>).</p></li>
+<li><p>Use your O-Key password.</p></li>
+</ul>
+<p>If you cannot log in:</p>
+<ol class="arabic simple">
+<li><p>Confirm you are using your short O-Key username (not your full email).</p></li>
+<li><p>Confirm VPN access if off campus.</p></li>
+<li><p>Contact the instructor if access problems persist.</p></li>
+</ol>
+</section>
+</section>
+<hr class="docutils" />
+<section id="learning-goals">
+<h2>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
+<p>By the end of this activity you should be able to:</p>
+<ol class="arabic simple">
+<li><p>Log into WebMO and navigate the interface.</p></li>
+<li><p>Build a molecule using the WebMO Builder.</p></li>
+<li><p>Run a Gaussian geometry optimization.</p></li>
+<li><p>Run a Gaussian frequency calculation and interpret the results.</p></li>
+<li><p>Identify whether a structure is a minimum (no imaginary frequencies).</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="build-a-molecule-example-ethanol">
+<h2>1. Build a Molecule (Example: Ethanol)<a class="headerlink" href="#build-a-molecule-example-ethanol" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Selet <code class="docutils literal notranslate"><span class="pre">Create</span> <span class="pre">New</span> <span class="pre">Job</span></code> from the <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">Job</span></code> menu
+<img alt="new_job" src="../../_images/job_manager_create_new_job_highlighted.png" /></p></li>
+<li><p>Construct ethanol (CH<span class="math notranslate nohighlight">\(_3\)</span>CH<span class="math notranslate nohighlight">\(_2\)</span>OH) using tools to add and bond carbons and oxygen.</p></li>
+<li><p>Add hydrogens automatically using the <code class="docutils literal notranslate"><span class="pre">Add</span> <span class="pre">Hydrogens</span></code> option from <code class="docutils literal notranslate"><span class="pre">Cleanup</span></code> menu
+<img alt="add_hydrogens" src="../../_images/build_molecule_add_hydrogens.png" /></p></li>
+<li><p>Perform an initial geometry optimization (to refine your handmade positioning) using the <code class="docutils literal notranslate"><span class="pre">Mechanics</span> <span class="pre">Optimize</span></code> from the <code class="docutils literal notranslate"><span class="pre">Cleanup</span></code> menu.</p></li>
+</ol>
+<p>Set:</p>
+<ul class="simple">
+<li><p>Charge = 0</p></li>
+<li><p>Multiplicity = 1</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="geometry-optimization-gaussian">
+<h2>2. Geometry Optimization (Gaussian)<a class="headerlink" href="#geometry-optimization-gaussian" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Press the right arrow on the bottom right of the molecular building screen to progress to the job options.</p></li>
+<li><p>Select <strong>Gaussian03</strong> as the engine in the next screen.
+<img alt="Gaussian03" src="../../_images/choose_computational_engine.png" /></p></li>
+<li><p>Press the right arrow on the bottom right to advance Configure Job Options.  Choose Job Type: Geometry Optimization.
+<img alt="config" src="../../_images/configure_geom_opt.png" /></p></li>
+<li><p>Method:  HF (can try others later)</p></li>
+<li><p>Basis Set: 6-31G(d).</p></li>
+<li><p>Name your job clearly (e.g., ethanol_opt_HF).</p></li>
+<li><p>Submit and monitor in Job Manager by hitting the right arrow on the bottom right of your screen.
+<img alt="monitor" src="../../_images/monitor_jobs.png" /></p></li>
+</ol>
+<p>When the job Status reads <code class="docutils literal notranslate"><span class="pre">Complete</span></code>, hit the little magnifying glass to look at the output information.
+<img alt="output" src="../../_images/geom_opt_output.png" />
+Record:</p>
+<ul class="simple">
+<li><p>Final electronic energy (Hartree).</p></li>
+<li><p>C-C and C-O bond lengths (by highlighting the atoms in the image)</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="frequency-calculation">
+<h2>3. Frequency Calculation<a class="headerlink" href="#frequency-calculation" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Start a new job from the optimized geometry by clicking the <code class="docutils literal notranslate"><span class="pre">New</span> <span class="pre">Job</span> <span class="pre">Using</span> <span class="pre">This</span> <span class="pre">Geometry</span></code> button at the bottom of the optimized geometry when viewing the output.</p></li>
+<li><p>In the new window, click the right arrow on the bottom right to choose the Computational Engine.</p></li>
+<li><p>Select <code class="docutils literal notranslate"><span class="pre">Gaussian03</span></code> again and click the right arrow on the bottom right to configure your job.</p></li>
+<li><p>In this screen select <code class="docutils literal notranslate"><span class="pre">Vibrational</span> <span class="pre">Frequencies</span></code> from the <code class="docutils literal notranslate"><span class="pre">Calculation</span></code> menu.
+<img alt="config_vib" src="../../_images/configure_frequency_calculation.png" /></p></li>
+<li><p>Use the same method and basis set as the geometry optimation (why?).</p></li>
+<li><p>Submit the job.</p></li>
+</ol>
+<p>Record:</p>
+<ul class="simple">
+<li><p>Number of imaginary frequencies.</p></li>
+<li><p>Lowest three vibrational frequencies.</p></li>
+<li><p>Does this structure correspond to a minimum? Why?</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="assignment-submit-on-canvas">
+<h1>Assignment (Submit on Canvas)<a class="headerlink" href="#assignment-submit-on-canvas" title="Permalink to this heading">#</a></h1>
+<p>Perform a geometry optimization and frequency caculation for acetone.</p>
+<section id="deliverables">
+<h2>Deliverables<a class="headerlink" href="#deliverables" title="Permalink to this heading">#</a></h2>
+<section id="a-setup-2-pts">
+<h3>A. Setup (2 pts)<a class="headerlink" href="#a-setup-2-pts" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Molecule name + screenshot</p></li>
+<li><p>Charge and multiplicity</p></li>
+</ul>
+</section>
+<section id="b-optimization-4-pts">
+<h3>B. Optimization (4 pts)<a class="headerlink" href="#b-optimization-4-pts" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Method and basis set</p></li>
+<li><p>Final energy</p></li>
+<li><p>Two geometric parameters</p></li>
+</ul>
+</section>
+<section id="c-frequency-3-pts">
+<h3>C. Frequency (3 pts)<a class="headerlink" href="#c-frequency-3-pts" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Number of imaginary frequencies</p></li>
+<li><p>Lowest three frequencies</p></li>
+<li><p>Statement about minimum</p></li>
+</ul>
+</section>
+<section id="d-reflection-1-pt">
+<h3>D. Reflection (1 pt)<a class="headerlink" href="#d-reflection-1-pt" title="Permalink to this heading">#</a></h3>
+<p>2–3 sentences: What was most confusing about WebMO?</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./computational_chemistry/hands_on_activities"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Week 6 Hands-On: WebMO (Gaussian on TIGER)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tiger-webmo-access-information">TIGER / WebMO Access Information</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#access-setup">Access Setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#webmo-urls">WebMO URLs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#login-instructions">Login Instructions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">Learning Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-a-molecule-example-ethanol">1. Build a Molecule (Example: Ethanol)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometry-optimization-gaussian">2. Geometry Optimization (Gaussian)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#frequency-calculation">3. Frequency Calculation</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment-submit-on-canvas">Assignment (Submit on Canvas)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deliverables">Deliverables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-setup-2-pts">A. Setup (2 pts)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-optimization-4-pts">B. Optimization (4 pts)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-frequency-3-pts">C. Frequency (3 pts)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-reflection-1-pt">D. Reflection (1 pt)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin McCullagh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
