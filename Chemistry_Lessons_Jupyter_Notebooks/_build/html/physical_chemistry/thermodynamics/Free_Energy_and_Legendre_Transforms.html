@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -585,21 +592,21 @@ document.write(`
 <p>1 mole of ice is placed in a room at <span class="math notranslate nohighlight">\(5^\circ\)</span> C and 1 atm pressure.  Is the melting of ice spontaneous under these conditions?  Given that <span class="math notranslate nohighlight">\(\Delta H_{fusion} = 6.01\)</span> kJ/mol for ice at <span class="math notranslate nohighlight">\(0^\circ\)</span> C, use the change in entropy to support your answer.</p>
 <p>Yes, the melting of ice under these conditions is spontaneous.  We know that because we have observed it (or something very similar).  Let’s compute the entropy of universe for this process:</p>
 <p><span class="math notranslate nohighlight">\(\Delta S_{univ} = \Delta S_{ice} + \Delta S_{room}\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-667deab0-3c96-459e-9019-7e2990485c93">
-<span class="eqno">(4.350)<a class="headerlink" href="#equation-667deab0-3c96-459e-9019-7e2990485c93" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d95e92c6-e2f6-49ac-a0f3-60368b5fb450">
+<span class="eqno">(4.350)<a class="headerlink" href="#equation-d95e92c6-e2f6-49ac-a0f3-60368b5fb450" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta S_{ice} =&amp; \frac{q_{ice}}{T_{ice}} \\
 =&amp;\frac{\Delta H_{fusion}}{T_{fusion}} \\
 =&amp; \frac{1 mol \quad 6.01 kJ/mol}{273.15K} \\
 =&amp; 0.0220 \quad kJ/K
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-b5927e7b-1b5c-4685-a9f5-4ff0be96d3ba">
-<span class="eqno">(4.351)<a class="headerlink" href="#equation-b5927e7b-1b5c-4685-a9f5-4ff0be96d3ba" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7b447518-3fcf-4eb1-88cd-8621f10bd9c4">
+<span class="eqno">(4.351)<a class="headerlink" href="#equation-7b447518-3fcf-4eb1-88cd-8621f10bd9c4" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta S_{room} =&amp; \frac{-q_{ice}}{T_{room}} \\
 =&amp;\frac{-6.01}{278.15K} \\
 =&amp;-0.0216 \quad kJ/K
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-46b80d90-ca27-419d-a36e-9354d609da65">
-<span class="eqno">(4.352)<a class="headerlink" href="#equation-46b80d90-ca27-419d-a36e-9354d609da65" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2fdc5e07-a073-45c9-bd32-ba27ec5e0ebb">
+<span class="eqno">(4.352)<a class="headerlink" href="#equation-2fdc5e07-a073-45c9-bd32-ba27ec5e0ebb" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta S_{univ} = 22.0 J/K - 21.6 J/K = 0.4 J/K &gt; 0
 \end{align}\]</div>
 <div class="cell docutils container">
@@ -623,27 +630,27 @@ document.write(`
 <p>Having to compute <span class="math notranslate nohighlight">\(\Delta S_{univ}\)</span> is cumbersome.  We would like to be able to predict spontaneity from a property of the system alone (not the surroundings).  This is what Free Energies allow us to do.</p>
 <p>It turns out that the Second Law dictates the existence of two additional state functions (<span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(G\)</span>) that can be used to predict spontaneity under certain conditions.  I will show, here, that this is the case for <span class="math notranslate nohighlight">\(A\)</span>.</p>
 <p>We start with the differential form of the internal energy:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7f8d0c16-f603-4bc6-96f4-113c46cfdb63">
-<span class="eqno">(4.353)<a class="headerlink" href="#equation-7f8d0c16-f603-4bc6-96f4-113c46cfdb63" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-51988588-042a-4613-8b70-8d062c4aa65f">
+<span class="eqno">(4.353)<a class="headerlink" href="#equation-51988588-042a-4613-8b70-8d062c4aa65f" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU_{sys} = \delta q_{sys} + \delta w_{sys}
 \end{align}\]</div>
 <p>For a system with only <span class="math notranslate nohighlight">\(PV\)</span> work and under <em><strong>constant volume</strong></em> conditions, we have <span class="math notranslate nohighlight">\(\delta w_{sys} = 0\)</span>.  Thus:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4c472c2d-40b7-4fcd-b5be-e6a74d5b9545">
-<span class="eqno">(4.354)<a class="headerlink" href="#equation-4c472c2d-40b7-4fcd-b5be-e6a74d5b9545" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9641d379-ebf9-4b32-8ef7-44bd5895f9ad">
+<span class="eqno">(4.354)<a class="headerlink" href="#equation-9641d379-ebf9-4b32-8ef7-44bd5895f9ad" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU_{sys} =&amp; \delta q_{sys} \leq T_{sys}dS_{sys}
 \end{align}\]</div>
 <p>where the last inequality is a statement of the Second Law; equality holds only for a reversible process. Subtracting <span class="math notranslate nohighlight">\(T_{sys}dS_{sys}\)</span> from both sides of the inequality yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c4816068-0bd4-42a9-961e-4c61dc178251">
-<span class="eqno">(4.355)<a class="headerlink" href="#equation-c4816068-0bd4-42a9-961e-4c61dc178251" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f736bd42-ed5f-4060-a885-0af05e53f22c">
+<span class="eqno">(4.355)<a class="headerlink" href="#equation-f736bd42-ed5f-4060-a885-0af05e53f22c" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU_{sys} - T_{sys}dS_{sys} &amp;\leq 0 
 \end{align}\]</div>
 <p>Under <em><strong>constant temperature</strong></em> conditions, we can write the left hand side of the above inequality as a single differential</p>
-<div class="amsmath math notranslate nohighlight" id="equation-82f483f2-1c2f-48b4-a52b-18ea13a4bb0c">
-<span class="eqno">(4.356)<a class="headerlink" href="#equation-82f483f2-1c2f-48b4-a52b-18ea13a4bb0c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a6b983a6-e4fe-45f5-93d8-970d1b1b1414">
+<span class="eqno">(4.356)<a class="headerlink" href="#equation-a6b983a6-e4fe-45f5-93d8-970d1b1b1414" title="Permalink to this equation">#</a></span>\[\begin{align}
 d(U_{sys}-T_{sys}S_{sys}) &amp;\leq 0
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-8a5d2bc3-dd8f-4d9a-86d3-c2ce8aa8e08a">
-<span class="eqno">(4.357)<a class="headerlink" href="#equation-8a5d2bc3-dd8f-4d9a-86d3-c2ce8aa8e08a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-809f1832-2136-4a6a-bffc-ad4f0bf056e5">
+<span class="eqno">(4.357)<a class="headerlink" href="#equation-809f1832-2136-4a6a-bffc-ad4f0bf056e5" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_{sys} \equiv U_{sys} - T_{sys}S_{sys}
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(dA_{sys} \leq 0\)</span> under constant volume and temperature conditions means that <span class="math notranslate nohighlight">\(\Delta A_{sys}&lt;0\)</span> for a spontaneous process under these conditions.</p>
@@ -651,8 +658,8 @@ A_{sys} \equiv U_{sys} - T_{sys}S_{sys}
 <section id="gibbs-free-energy">
 <h3><span class="section-number">4.3.14.3.3. </span>Gibbs Free Energy<a class="headerlink" href="#gibbs-free-energy" title="Permalink to this heading">#</a></h3>
 <p>A similar derivation can be done for constant pressure and constant temperature conditions.  You arrive at the Gibbs Free energy defined as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-87804917-0f4c-4c36-aa71-e3f587f971a0">
-<span class="eqno">(4.358)<a class="headerlink" href="#equation-87804917-0f4c-4c36-aa71-e3f587f971a0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-082ec396-48be-48b7-95d6-a1358e2cca67">
+<span class="eqno">(4.358)<a class="headerlink" href="#equation-082ec396-48be-48b7-95d6-a1358e2cca67" title="Permalink to this equation">#</a></span>\[\begin{align}
 G_{sys} \equiv&amp; H_{sys} - T_{sys}S_{sys} \\
 =&amp; A_{sys} + P_{sys}V_{sys} \\
 =&amp; U_{sys} + P_{sys}V_{sys} -  T_{sys}S_{sys}
@@ -1796,7 +1803,7 @@ if (IPython.notebook.kernel !== null) {
         mpl.mpl_figure_comm
     );
 }
-</script><div class="output text_html"><div id='469b7c4a-a9fe-43b3-8081-7ecdbde67216'></div></div><div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+</script><div class="output text_html"><div id='64071a4b-5838-4971-ab16-2c31fed04934'></div></div><div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">make_legendre_transform_interactive_plot</span><span class="p">()</span>

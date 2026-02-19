@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -574,47 +581,47 @@ document.write(`
 <section id="the-uncertainty-principle">
 <h2><span class="section-number">4.5.5.4. </span>The Uncertainty Principle<a class="headerlink" href="#the-uncertainty-principle" title="Permalink to this heading">#</a></h2>
 <p>The uncertainty principle states that, for a quatum/wave-like particle, the momentum and the position cannot both be known with complete certainty.  Mathematically, this can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1a848822-c78c-43fa-98fe-94f8b43a8e88">
-<span class="eqno">(4.751)<a class="headerlink" href="#equation-1a848822-c78c-43fa-98fe-94f8b43a8e88" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-eada0d82-1475-4da6-921b-9d469e2af488">
+<span class="eqno">(4.751)<a class="headerlink" href="#equation-eada0d82-1475-4da6-921b-9d469e2af488" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sigma_x\sigma_p \geq \frac{\hbar}{2},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\sigma_x\)</span> is the uncertainty in position and <span class="math notranslate nohighlight">\(\sigma_p\)</span> is the uncertainty in momentum.  We can derive this relationship for the particle in a box.</p>
 <p>To compute <span class="math notranslate nohighlight">\(\sigma_x\)</span>, we recognize that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e49b7fec-bee9-4ff9-8a1a-c3f41f4d71f9">
-<span class="eqno">(4.752)<a class="headerlink" href="#equation-e49b7fec-bee9-4ff9-8a1a-c3f41f4d71f9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8e9f24e3-0a16-4049-ae2b-a0ee4c7322dc">
+<span class="eqno">(4.752)<a class="headerlink" href="#equation-8e9f24e3-0a16-4049-ae2b-a0ee4c7322dc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sigma_x = \sqrt{\sigma_x^2} = \sqrt{\langle x^2\rangle - \langle x \rangle^2}
 \end{equation}\]</div>
 <p>Recall that (from the notes on <a class="reference internal" href="particle_in_a_box.html"><span class="doc std std-doc">Particle in a Box</span></a>)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-60f3208f-5def-4213-a49e-9c0c6968322c">
-<span class="eqno">(4.753)<a class="headerlink" href="#equation-60f3208f-5def-4213-a49e-9c0c6968322c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-47b778cd-24bb-44b9-bb0f-9ea5b83410b1">
+<span class="eqno">(4.753)<a class="headerlink" href="#equation-47b778cd-24bb-44b9-bb0f-9ea5b83410b1" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle x \rangle &amp;= \frac{a}{2} \\
 \langle x^2 \rangle &amp;= \frac{a^2}{3} - \frac{a^2}{2\left(n\pi\right)^2} 
 \end{align}\]</div>
 <p>Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-00cfa354-93c7-4ed0-ab02-932d1e3f1f4d">
-<span class="eqno">(4.754)<a class="headerlink" href="#equation-00cfa354-93c7-4ed0-ab02-932d1e3f1f4d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-37f05a3e-9ede-4b2b-b53f-74c5cb7bdaf1">
+<span class="eqno">(4.754)<a class="headerlink" href="#equation-37f05a3e-9ede-4b2b-b53f-74c5cb7bdaf1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sigma_x = \frac{a}{2\pi n}\sqrt{\frac{\pi^2n^2}{3} -2}
 \end{equation}\]</div>
 <p>This equation for <span class="math notranslate nohighlight">\(\sigma_x\)</span> quantifies the uncertainty in <span class="math notranslate nohighlight">\(x\)</span>.  This can be interpreted as the certainty one has in measuring the position of a particle in a box.  Notice that this quantity is proportional to <span class="math notranslate nohighlight">\(a\)</span> meaning that as you increase the size of the box you increase the uncertainty in <span class="math notranslate nohighlight">\(x\)</span>.  For a free particle, or a particle not confined in a box, you would have infinite uncertainty in position.</p>
 <p>To compute <span class="math notranslate nohighlight">\(\sigma_p\)</span>, we recognize that analagous to <span class="math notranslate nohighlight">\(\sigma_x\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-722330b3-b7a9-4653-b097-5b2761043c3f">
-<span class="eqno">(4.755)<a class="headerlink" href="#equation-722330b3-b7a9-4653-b097-5b2761043c3f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b359253f-25df-44b0-8176-5907d1844c2c">
+<span class="eqno">(4.755)<a class="headerlink" href="#equation-b359253f-25df-44b0-8176-5907d1844c2c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sigma_p = \sqrt{\sigma_p^2} = \sqrt{\langle p^2\rangle - \langle p \rangle^2}
 \end{equation}\]</div>
 <p>Again, we have estimated these in previous notes (<a class="reference internal" href="particle_in_a_box.html"><span class="doc std std-doc">Particle in a Box</span></a>) or for an excercise and got</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c68f2051-09a6-42f8-8b37-16b98004b6f7">
-<span class="eqno">(4.756)<a class="headerlink" href="#equation-c68f2051-09a6-42f8-8b37-16b98004b6f7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ff7cfe91-23d4-4f0e-baed-a62dfe06ebad">
+<span class="eqno">(4.756)<a class="headerlink" href="#equation-ff7cfe91-23d4-4f0e-baed-a62dfe06ebad" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle p \rangle &amp;= 0 \\
 \langle p^2 \rangle &amp;= \frac{n^2\pi^2\hbar^2}{a^2}
 \end{align}\]</div>
 <p>Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ee32afd7-6569-4456-9c1f-52da348e16cd">
-<span class="eqno">(4.757)<a class="headerlink" href="#equation-ee32afd7-6569-4456-9c1f-52da348e16cd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e047ecd8-5a7d-4db0-89bc-b1ba457636c7">
+<span class="eqno">(4.757)<a class="headerlink" href="#equation-e047ecd8-5a7d-4db0-89bc-b1ba457636c7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sigma_p = \frac{n\pi h}{a}
 \end{equation}\]</div>
 <p>Combined, these two results give that, for a particle in a 1D box</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3f0c96fc-576d-40c5-acf6-5059f942f82d">
-<span class="eqno">(4.758)<a class="headerlink" href="#equation-3f0c96fc-576d-40c5-acf6-5059f942f82d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-50379e3b-4d21-420c-8a33-48c536addc7b">
+<span class="eqno">(4.758)<a class="headerlink" href="#equation-50379e3b-4d21-420c-8a33-48c536addc7b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \sigma_x\sigma_p &amp;= \frac{a}{2\pi n}\sqrt{\frac{\pi^2n^2}{3} -2}\cdot \frac{n\pi \hbar}{a} \\
 &amp;= \frac{\hbar}{2} \sqrt{\frac{\pi^2n^2}{3} -2}
 \end{align}\]</div>
@@ -653,13 +660,13 @@ document.write(`
 </div>
 </div>
 <p>We see from the plot above that square root term in the uncertainty equation cannot be less than 1, thus we have</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa41fc1f-bdb0-4208-849e-26d3b28f577a">
-<span class="eqno">(4.759)<a class="headerlink" href="#equation-aa41fc1f-bdb0-4208-849e-26d3b28f577a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-23471b94-74da-45f6-9fc8-2622a6c0d5ce">
+<span class="eqno">(4.759)<a class="headerlink" href="#equation-23471b94-74da-45f6-9fc8-2622a6c0d5ce" title="Permalink to this equation">#</a></span>\[\begin{align}
 \sigma_x\sigma_p &amp;= \frac{\hbar}{2} \sqrt{\frac{\pi^2n^2}{3} -2} \geq \frac{\hbar}{2}
 \end{align}\]</div>
 <p>This is the mathematical statement of the (Heisenberg) uncertainty principle.  This equation can be rearragned to state</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a32b14da-b710-4aee-901d-5df7ca65c6f5">
-<span class="eqno">(4.760)<a class="headerlink" href="#equation-a32b14da-b710-4aee-901d-5df7ca65c6f5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0a154c61-0a3b-4b6b-8e46-710439eb014e">
+<span class="eqno">(4.760)<a class="headerlink" href="#equation-0a154c61-0a3b-4b6b-8e46-710439eb014e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \sigma_x &amp;\geq \frac{\hbar}{2\sigma_p} \\
 \sigma_p &amp;\geq \frac{\hbar}{2\sigma_x} 
 \end{align}\]</div>
@@ -678,22 +685,22 @@ document.write(`
 <h3><span class="section-number">4.5.5.5.1. </span>Example: Butadiene Absorption Spectrum<a class="headerlink" href="#example-butadiene-absorption-spectrum" title="Permalink to this heading">#</a></h3>
 <p>Butadiene (C<span class="math notranslate nohighlight">\(_4\)</span>H<span class="math notranslate nohighlight">\(_6\)</span>) is one of the simplest conjugated molecules with.  The <span class="math notranslate nohighlight">\(\pi\)</span> orbitals delocalize across the four carbon bonds.  The highest occupied molecular orbital (HOMO) is a <span class="math notranslate nohighlight">\(\pi\)</span> orbital.  The lowest unoccupied moleculary orbital (LUMO) is a <span class="math notranslate nohighlight">\(\pi^*\)</span> orbital.  When this molecule is hit with a photon of the correct energy, it will excite an electron from the HOMO to the LUMO.  This will be the lowest energy band in the electronic excitation spectrum of the molecule.  Experimentally, the lowest energy absorption band is found to be <span class="math notranslate nohighlight">\(4.61\times 10^4\)</span> cm<span class="math notranslate nohighlight">\(^{-1}\)</span>.</p>
 <p>Butadiene has 4 <span class="math notranslate nohighlight">\(\pi\)</span> electrons and the motion of these electrons can be modeled as free particles confined to the single dimension of the length of the molecule.  In this model, the energy levels allowed for the electrons are given by the 1D particle in a box energy levels</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7fad2251-f085-4476-802f-697ad4241f1d">
-<span class="eqno">(4.761)<a class="headerlink" href="#equation-7fad2251-f085-4476-802f-697ad4241f1d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ca08ba92-775d-47f4-9183-4e8eec68ba07">
+<span class="eqno">(4.761)<a class="headerlink" href="#equation-ca08ba92-775d-47f4-9183-4e8eec68ba07" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_n = \frac{h^2n^2}{8m_ea^2}
 \end{equation}\]</div>
 <p>The length of butadiene is approximately <span class="math notranslate nohighlight">\(a=578\)</span> pm.</p>
 <p>The 4 <span class="math notranslate nohighlight">\(\pi\)</span> electrons will occupy the first two (<span class="math notranslate nohighlight">\(n=1\)</span> and <span class="math notranslate nohighlight">\(n=2\)</span>) states of this motion.  This is because of the Pauli exlusion principle that states that no two electrons (fermions) can occupy the same spin orbit.  Thus, the lowest energy excitation of an electron will be from the <span class="math notranslate nohighlight">\(n=2\)</span> to the <span class="math notranslate nohighlight">\(n=3\)</span> state.  The energy of this excitation is thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-276e2634-43a4-4c2c-8a2c-b46236e8b6e8">
-<span class="eqno">(4.762)<a class="headerlink" href="#equation-276e2634-43a4-4c2c-8a2c-b46236e8b6e8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b3190955-ff3a-42f4-970a-224ddee97c70">
+<span class="eqno">(4.762)<a class="headerlink" href="#equation-b3190955-ff3a-42f4-970a-224ddee97c70" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta E &amp;= \frac{h^2}{8m_ea^2}\left(3^2-2^2\right) \\
         &amp;= \frac{5h^2}{8m_ea^2} \\
         &amp;= \frac{5\cdot(6.626\times10^{-34} \text{ J}\cdot\text{s})^2}{8(9.109\times10^{-31}\text{ kg})(578\times10^{-12}\text{ m})^2} \\
         &amp;= 9.02 \times10^{-19}\text{ J}
 \end{align}\]</div>
 <p>or</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1be0b573-4216-46ae-9032-adf60272d742">
-<span class="eqno">(4.763)<a class="headerlink" href="#equation-1be0b573-4216-46ae-9032-adf60272d742" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b8cafb96-703b-4faa-b3b0-0c4277735ce4">
+<span class="eqno">(4.763)<a class="headerlink" href="#equation-b8cafb96-703b-4faa-b3b0-0c4277735ce4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tilde{\nu} = \frac{\Delta E}{hc} = 4.54\times10^4\text{ cm}^{-1}
 \end{equation}\]</div>
 <p>This result is in reasonable agreement with the experimentally determined value of <span class="math notranslate nohighlight">\(4.61\times 10^4\)</span> cm<span class="math notranslate nohighlight">\(^{-1}\)</span>.</p>
@@ -716,8 +723,8 @@ E_n = \frac{h^2n^2}{8m_ea^2}
 <h3><span class="section-number">4.5.5.5.2. </span>Example: Porphyrin Absorption Spectrum<a class="headerlink" href="#example-porphyrin-absorption-spectrum" title="Permalink to this heading">#</a></h3>
 <p>A Porphyrin molecule is a planar conjugated molecule with 26<span class="math notranslate nohighlight">\(\pi\)</span> electron.  The molecule is appoximately square with side lengths of 1000pm.  Experimentally, the lowest energy absorption band for this molecule is determined to be <span class="math notranslate nohighlight">\(\sim 17000\)</span> cm<span class="math notranslate nohighlight">\(^{-1}\)</span>.  Show that this system can be reasonably approximated as a planar (2D) particle in a box.</p>
 <p>The energy levels for a 2D particle in a square box are</p>
-<div class="amsmath math notranslate nohighlight" id="equation-66aafd2b-8660-4117-95e2-9be1e3b4093e">
-<span class="eqno">(4.764)<a class="headerlink" href="#equation-66aafd2b-8660-4117-95e2-9be1e3b4093e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d6865684-6fac-4b7e-ad4a-5ad53ed9f9a3">
+<span class="eqno">(4.764)<a class="headerlink" href="#equation-d6865684-6fac-4b7e-ad4a-5ad53ed9f9a3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_{n_x,n_y} = \frac{h^2}{8m_ea^2} \left(n_x^2 + n_y^2 \right)
 \end{equation}\]</div>
 <p>Each of the energy levels is denoted by an ordered pair <span class="math notranslate nohighlight">\((n_x,n_y)\)</span>.  The lowest energy state is <span class="math notranslate nohighlight">\((1,1)\)</span> and the second lowest energy level is doubly degenerate with ordered pairs <span class="math notranslate nohighlight">\((1,2)\)</span> and <span class="math notranslate nohighlight">\((2,1)\)</span>.  There are 26 <span class="math notranslate nohighlight">\(\pi\)</span> electrons so the first 13 energy levels are occupied and the lowest energy excitation will be from the 13th state to the 14th state. Consider the following table</p>
@@ -762,16 +769,16 @@ E_{n_x,n_y} = \frac{h^2}{8m_ea^2} \left(n_x^2 + n_y^2 \right)
 </table>
 </div>
 <p>So the lowest energy excitation will be from the <span class="math notranslate nohighlight">\((2,4)\)</span> or <span class="math notranslate nohighlight">\((4,2)\)</span> state to the <span class="math notranslate nohighlight">\((3,4)\)</span> or <span class="math notranslate nohighlight">\((4,3)\)</span> state.  This will yield an energy difference of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6c0287a5-fd08-4464-b47f-3abfa344113c">
-<span class="eqno">(4.765)<a class="headerlink" href="#equation-6c0287a5-fd08-4464-b47f-3abfa344113c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c2dea2e4-596d-45e1-a3af-3525a53bf3a9">
+<span class="eqno">(4.765)<a class="headerlink" href="#equation-c2dea2e4-596d-45e1-a3af-3525a53bf3a9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta E &amp;= \frac{h^2}{8m_ea^2}\left(25-20\right) \\
         &amp;= \frac{5h^2}{8m_ea^2} \\
         &amp;= \frac{5\cdot(6.626\times10^{-34} \text{ J}\cdot\text{s})^2}{8(9.109\times10^{-31}\text{ kg})(1000\times10^{-12}\text{ m})^2} \\
         &amp;= 3.01 \times10^{-19}\text{ J}
 \end{align}\]</div>
 <p>Now for the wavenumber:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-573612c2-327a-471e-b151-ec4046590c68">
-<span class="eqno">(4.766)<a class="headerlink" href="#equation-573612c2-327a-471e-b151-ec4046590c68" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7f82ed1a-beb5-4486-bf96-9640f580037e">
+<span class="eqno">(4.766)<a class="headerlink" href="#equation-7f82ed1a-beb5-4486-bf96-9640f580037e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \tilde{\nu} = \frac{\Delta E}{hc} = 1.52\times10^4\text{ cm}^{-1}
 \end{equation}\]</div>
 <p>Again, this compares reasonably well to the experimentally determined value of <span class="math notranslate nohighlight">\(1.7\times10^4\)</span> cm<span class="math notranslate nohighlight">\(^{-1}\)</span>.</p>

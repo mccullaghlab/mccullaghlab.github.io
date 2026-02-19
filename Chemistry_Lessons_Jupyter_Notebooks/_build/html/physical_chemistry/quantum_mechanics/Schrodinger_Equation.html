@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -572,43 +579,43 @@ document.write(`
 <section id="schrodinger-equation-from-the-classical-wave-equation">
 <h2><span class="section-number">4.5.3.4. </span>Schrodinger Equation from the Classical Wave Equation<a class="headerlink" href="#schrodinger-equation-from-the-classical-wave-equation" title="Permalink to this heading">#</a></h2>
 <p>The Schrodinger equation is the basis for all of the quantum mechanics we will discuss in this class.  Specifically, the time independent Schrodinger equation is all we will discuss in this class.  This equation has the well known form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4ba8cc52-d5d5-49b6-a7fb-be7905bc9fcd">
-<span class="eqno">(4.707)<a class="headerlink" href="#equation-4ba8cc52-d5d5-49b6-a7fb-be7905bc9fcd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bd779315-4c9b-40e4-a378-3f3c596ba2c9">
+<span class="eqno">(4.707)<a class="headerlink" href="#equation-bd779315-4c9b-40e4-a378-3f3c596ba2c9" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H}\Psi = E\Psi
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\bar{H}\)</span> is the Hamiltonian operator, <span class="math notranslate nohighlight">\(\Psi\)</span> is the wave function, and <span class="math notranslate nohighlight">\(E\)</span> is the energy.  This equation cannot be derived from any more basic equations, rather we have to accept the Schrodinger equations as one of the postulates of quantum mechanics.</p>
 <p>The classical wave equation can be manipulated into a Schrodinger equation.  To see this, recall that the classical wave equation can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c3cfdc2e-8e9c-4dbb-9638-473c4df91c2a">
-<span class="eqno">(4.708)<a class="headerlink" href="#equation-c3cfdc2e-8e9c-4dbb-9638-473c4df91c2a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-038381c8-ddb2-4a40-a8dd-31551d0314bb">
+<span class="eqno">(4.708)<a class="headerlink" href="#equation-038381c8-ddb2-4a40-a8dd-31551d0314bb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d^2\psi(x)}{dx^2} + \frac{\omega^2}{v^2}\psi(x) = 0
 \end{equation}\]</div>
 <p>for solution</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fc2d2b73-c791-4198-9d80-8d240f0c1387">
-<span class="eqno">(4.709)<a class="headerlink" href="#equation-fc2d2b73-c791-4198-9d80-8d240f0c1387" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-714a6269-8ec5-475a-a0c9-bdc3a69c5839">
+<span class="eqno">(4.709)<a class="headerlink" href="#equation-714a6269-8ec5-475a-a0c9-bdc3a69c5839" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u(x,t) = \psi(x)\cos\omega t
 \end{equation}\]</div>
 <p>Now recall that <span class="math notranslate nohighlight">\(\omega = 2\pi\nu\)</span> and <span class="math notranslate nohighlight">\(v = \nu\lambda\)</span> meaning we can write the differential equation as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e93ae47-c835-478e-9140-ce85fc4ef7bb">
-<span class="eqno">(4.710)<a class="headerlink" href="#equation-5e93ae47-c835-478e-9140-ce85fc4ef7bb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a0abbc14-402a-4495-956e-0f8345f7069f">
+<span class="eqno">(4.710)<a class="headerlink" href="#equation-a0abbc14-402a-4495-956e-0f8345f7069f" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;\frac{d^2\psi(x)}{dx^2} + \frac{4\pi^2\nu^2}{\nu^2\lambda^2}\psi(x) = 0 \\
 &amp;= \frac{d^2\psi(x)}{dx^2} + \frac{4\pi^2}{\lambda^2}\psi(x) = 0
 \end{align}\]</div>
 <p>Now recall from the de Broglie wave equation that we can write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-669f10ed-b52e-41ba-8ccc-7b77490f0184">
-<span class="eqno">(4.711)<a class="headerlink" href="#equation-669f10ed-b52e-41ba-8ccc-7b77490f0184" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4823371b-17e9-4c40-936e-7d36d218b5d2">
+<span class="eqno">(4.711)<a class="headerlink" href="#equation-4823371b-17e9-4c40-936e-7d36d218b5d2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \lambda &amp;= \frac{h}{mv} \\
 &amp;= \frac{h}{\sqrt{2m[E-V(x)]}}
 \end{align}\]</div>
 <p>where the last equality holds because <span class="math notranslate nohighlight">\(E = K + V = \frac{1}{2}mv^2 + V\)</span>.  Plugging this relationship in for <span class="math notranslate nohighlight">\(\lambda\)</span> in the classical wave equation we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f8dc3fa8-fa53-4d48-8114-e9f2dd683e39">
-<span class="eqno">(4.712)<a class="headerlink" href="#equation-f8dc3fa8-fa53-4d48-8114-e9f2dd683e39" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-620bf4d9-9ddf-4013-a1c0-3213aa9f6872">
+<span class="eqno">(4.712)<a class="headerlink" href="#equation-620bf4d9-9ddf-4013-a1c0-3213aa9f6872" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;\frac{d^2\psi(x)}{dx^2} + \frac{4\pi^2\cdot2m[E-V(x)]}{2mh^2}\psi(x) = 0 \\
 =&amp; \frac{d^2\psi(x)}{dx^2} + \frac{2m[E-V(x)]}{\hbar^2}\psi(x) = 0 \\
 \Rightarrow &amp;  \frac{-\hbar^2}{2m}\frac{d^2\psi(x)}{dx^2}  + V(x)\psi(x) =  E\psi(x) \\
 \end{align}\]</div>
 <p>We see that this looks like the Schrodinger equation with</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0771d5a2-0d1b-4d32-bc29-52b610883b2b">
-<span class="eqno">(4.713)<a class="headerlink" href="#equation-0771d5a2-0d1b-4d32-bc29-52b610883b2b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-12fbf924-8a7f-4356-8e58-c0a8b01d85f4">
+<span class="eqno">(4.713)<a class="headerlink" href="#equation-12fbf924-8a7f-4356-8e58-c0a8b01d85f4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H} =  \frac{-\hbar^2}{2m}\frac{d^2}{dx^2}  + V(x)
 \end{equation}\]</div>
 </section>
@@ -616,18 +623,18 @@ u(x,t) = \psi(x)\cos\omega t
 <h2><span class="section-number">4.5.3.5. </span>Operators<a class="headerlink" href="#operators" title="Permalink to this heading">#</a></h2>
 <p>We see that the Hamiltonian in the Schrodinger equation is an <em>operator</em>.  Operators are symbols that describe performing a mathematical operation.  Examples of operators include derivative with respect to <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(\frac{d}{dx}\)</span>, multiply by <span class="math notranslate nohighlight">\(x\)</span>, simply denoted <span class="math notranslate nohighlight">\(x\)</span>, and integrate, denoted <span class="math notranslate nohighlight">\(\int\)</span>.</p>
 <p>We denote generic operators by characters (often capital letters) with hats over them.  For example below we define the operator <span class="math notranslate nohighlight">\(\hat{A}\)</span> as the first derivative with respect to <span class="math notranslate nohighlight">\(x\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-67b3f34e-ee96-4769-9fcf-11e1493676cb">
-<span class="eqno">(4.714)<a class="headerlink" href="#equation-67b3f34e-ee96-4769-9fcf-11e1493676cb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ed610960-d16d-4bac-9712-b18ab686713c">
+<span class="eqno">(4.714)<a class="headerlink" href="#equation-ed610960-d16d-4bac-9712-b18ab686713c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{A} = \frac{d}{dx}
 \end{equation}\]</div>
 <p>Operators by themselves are pretty useless.  The must be applied to a function. We might apply the operator <span class="math notranslate nohighlight">\(\hat{A}\)</span>, above, a generic function of one dimension:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c5143768-ece2-4ce9-a27d-66d78ca8d0b3">
-<span class="eqno">(4.715)<a class="headerlink" href="#equation-c5143768-ece2-4ce9-a27d-66d78ca8d0b3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9b22065e-690d-4250-8502-cde73b83a4ee">
+<span class="eqno">(4.715)<a class="headerlink" href="#equation-9b22065e-690d-4250-8502-cde73b83a4ee" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{A}f(x) = \frac{d}{dx}f(x) = \frac{df}{dx}
 \end{align}\]</div>
 <p>If we know the specific function, <span class="math notranslate nohighlight">\(f(x) = 2x\)</span> for example, we can determine the result of operating <span class="math notranslate nohighlight">\(\hat{A}\)</span> on <span class="math notranslate nohighlight">\(f(x)\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3eb63971-cee4-40d3-81a8-cfa27827a5c3">
-<span class="eqno">(4.716)<a class="headerlink" href="#equation-3eb63971-cee4-40d3-81a8-cfa27827a5c3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-eb5b3aec-9f78-4c39-87d6-54f7e74d1220">
+<span class="eqno">(4.716)<a class="headerlink" href="#equation-eb5b3aec-9f78-4c39-87d6-54f7e74d1220" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{A}f(x) = \frac{d2x}{dx} = 2
 \end{align}\]</div>
 <p>Operators are very important in quantum mechanics.  Specifically, applying operators to the wavefunction for a system can be used to determine physical obervables for that system.  Below is a table of classical observables and the corresponding quantum mechanical operator.</p>

@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -615,40 +622,40 @@ document.write(`
 <h3><span class="section-number">4.4.6.4.2. </span>Catalysts in a Mechanism<a class="headerlink" href="#catalysts-in-a-mechanism" title="Permalink to this heading">#</a></h3>
 <p>Catalysts show up in mechanisms first as a reactant and, later on, as a product.  This is as opposed to an intermediate that is first produced and then consumed during a mechanism.</p>
 <p>Consider the generic reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-081f8e94-7017-432a-901b-3aefb0a13b8e">
-<span class="eqno">(4.598)<a class="headerlink" href="#equation-081f8e94-7017-432a-901b-3aefb0a13b8e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3caea649-c336-4f1a-82c5-423c788bf330">
+<span class="eqno">(4.598)<a class="headerlink" href="#equation-3caea649-c336-4f1a-82c5-423c788bf330" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A \longrightarrow B
 \end{equation}\]</div>
 <p>And proposed mechanism for this process of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e7e940e4-0c10-4930-b70f-2cf082472f90">
-<span class="eqno">(4.599)<a class="headerlink" href="#equation-e7e940e4-0c10-4930-b70f-2cf082472f90" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-f273ac15-7484-4dfa-b665-d7d10587f6c6">
+<span class="eqno">(4.599)<a class="headerlink" href="#equation-f273ac15-7484-4dfa-b665-d7d10587f6c6" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 A &amp;\overset{k_1}{\Rightarrow}&amp; I \text{ (slow/rate determining)}\\
 I &amp;\overset{k_2}{\Rightarrow}&amp; B
 \end{eqnarray}\]</div>
 <p>The rate law for this mechanism can be approximated by the rate determining step and thus we have that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e54cc22f-a373-4f0e-bbe0-6643fea769d9">
-<span class="eqno">(4.600)<a class="headerlink" href="#equation-e54cc22f-a373-4f0e-bbe0-6643fea769d9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2879fbdf-3e54-4185-a696-d870b1960dfa">
+<span class="eqno">(4.600)<a class="headerlink" href="#equation-2879fbdf-3e54-4185-a696-d870b1960dfa" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v = k_1[A].
 \end{equation}\]</div>
 <p>Note that if you used a steady-state approximation you would get a similar looking rate law of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-79e9c3b6-1bb8-4817-bd8b-c0db9d5ce766">
-<span class="eqno">(4.601)<a class="headerlink" href="#equation-79e9c3b6-1bb8-4817-bd8b-c0db9d5ce766" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e3031fe1-3504-4056-a5cc-8c668bc36ef7">
+<span class="eqno">(4.601)<a class="headerlink" href="#equation-e3031fe1-3504-4056-a5cc-8c668bc36ef7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v = k_1k_2[A].
 \end{equation}\]</div>
 <p>If a catalysts is introduced into the reaction this is sometimes denoted as under or over the reaction arrow as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-13744cc7-799c-4099-bf7d-b3731a26909e">
-<span class="eqno">(4.602)<a class="headerlink" href="#equation-13744cc7-799c-4099-bf7d-b3731a26909e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7fa02abd-e3db-4df8-bb2d-58ad96512c5f">
+<span class="eqno">(4.602)<a class="headerlink" href="#equation-7fa02abd-e3db-4df8-bb2d-58ad96512c5f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A \overset{C}{\longrightarrow} B
 \end{equation}\]</div>
 <p>A catalysts, by definition, must modify the mechanism of the reaction.  Here, we might propose that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7b797413-20c3-4e6d-9677-35fd2d35f93b">
-<span class="eqno">(4.603)<a class="headerlink" href="#equation-7b797413-20c3-4e6d-9677-35fd2d35f93b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5c106289-3425-4191-a2e2-7009813d0f7e">
+<span class="eqno">(4.603)<a class="headerlink" href="#equation-5c106289-3425-4191-a2e2-7009813d0f7e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 A + C &amp;\overset{k_{1,C}}{\Rightarrow}&amp; AC \text{ (slow/rate determining)}\\
 AC &amp;\overset{k_{2,C}}{\Rightarrow}&amp; B + C
 \end{eqnarray}\]</div>
 <p>Here we see that the rate law (using the rate limiting approximation) is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-930db5fd-f643-438b-9e4d-9616318b5d94">
-<span class="eqno">(4.604)<a class="headerlink" href="#equation-930db5fd-f643-438b-9e4d-9616318b5d94" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c1447963-a7ac-4da2-bc41-dde11563f9b6">
+<span class="eqno">(4.604)<a class="headerlink" href="#equation-c1447963-a7ac-4da2-bc41-dde11563f9b6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v_C = k_{1,C}[A][C]
 \end{equation}\]</div>
 <p>There are a few things to not from this expression.  First is that the rate now depends on the concentration of the catalysts.  This make sense.  If that catalyst is binding the reactant to facilitate the formation of the product, as proposed in this mechanism, the concentration of the catalysts should affect the rate.  Also, if the catalyst does lower the activation barrier of the reaction, we would expect <span class="math notranslate nohighlight">\(k_{1,C} &gt; k_1\)</span> and thus for <span class="math notranslate nohighlight">\(v_C &gt; v\)</span>.</p>
@@ -656,38 +663,38 @@ v_C = k_{1,C}[A][C]
 <section id="lindemann-mechanism-for-unimolecular-reactions">
 <h3><span class="section-number">4.4.6.4.3. </span>Lindemann Mechanism for Unimolecular Reactions<a class="headerlink" href="#lindemann-mechanism-for-unimolecular-reactions" title="Permalink to this heading">#</a></h3>
 <p>One thing we have thus far overlooked is how unimolecular reactions actually occur.  A unimolecular step, such as an isomerization, might look like</p>
-<div class="amsmath math notranslate nohighlight" id="equation-59a72d59-247f-4d50-8aa0-b1ebbf84d12e">
-<span class="eqno">(4.605)<a class="headerlink" href="#equation-59a72d59-247f-4d50-8aa0-b1ebbf84d12e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0f402e77-7841-42b4-9966-19cb2a924492">
+<span class="eqno">(4.605)<a class="headerlink" href="#equation-0f402e77-7841-42b4-9966-19cb2a924492" title="Permalink to this equation">#</a></span>\[\begin{equation}
 CH_3NC(g) \overset{k}{\Rightarrow} CH_3CN(g)
 \end{equation}\]</div>
 <p>with corresponding rate law</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fcfc6da7-0f76-474d-a166-d9009c28fcf0">
-<span class="eqno">(4.606)<a class="headerlink" href="#equation-fcfc6da7-0f76-474d-a166-d9009c28fcf0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-340711ad-e055-4bc7-8199-8e7c5b148abb">
+<span class="eqno">(4.606)<a class="headerlink" href="#equation-340711ad-e055-4bc7-8199-8e7c5b148abb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d[CH_3NC]}{dt} = -k[CH_3NC]
 \end{equation}\]</div>
 <p>But where does the energy come from.  For a bimolecular (or higher molecularity) reaction, we can consider that only a fraction of collisions have enough kinetic energy to overcome the activation barrier.  In unimolecular reactions, there are no collisions so why do any (or not all) molecules isomerize?</p>
 <p>Lindemann proposed that unimolecular reactions actually occur after collision with another molecule/particle in the reaction vessel.  During that collision, the other molecule inparts kinetic energy to the <span class="math notranslate nohighlight">\(CH_3NC\)</span> molecule ultimately providing it with enough energy to overcome the activation energy to isomerize.  Thus, Lindemann proposed that a unimolecular elementary step actually proceeds as a two step mechanism</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3c8f0e28-75a3-47b8-9d6e-033ab9b409d3">
-<span class="eqno">(4.607)<a class="headerlink" href="#equation-3c8f0e28-75a3-47b8-9d6e-033ab9b409d3" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-fd9c7e19-08df-40e6-8c77-d85398d10c20">
+<span class="eqno">(4.607)<a class="headerlink" href="#equation-fd9c7e19-08df-40e6-8c77-d85398d10c20" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 CH_3NC(g) + M(g) &amp;\overset{k_1}{\underset{k_{-1}}{\overset{\Longrightarrow}{\Longleftarrow}}}&amp; CH_3NC(g)^* + M(g)\\
 CH_3NC(g)^* &amp;\overset{k_2}{\Longrightarrow}&amp; CH_3CN(g)
 \end{eqnarray}\]</div>
 <p>where <span class="math notranslate nohighlight">\(M\)</span> is some other molecule in the reaction vessel (it could be a reactant, product, carrier gas, or anything else) and <span class="math notranslate nohighlight">\(CH_3NC(g)^*\)</span> denotes the energized form of the molecule.</p>
 <p>Because <span class="math notranslate nohighlight">\(M\)</span> is introduced as a reactant and not consumed during the reaction, it is a version of a catalyst.  It is a bit untraditional as a catalyst because it might be another reactant molecule but it can still be considered a catalyst.</p>
 <p>The rate law stemming from this mechanism, and employing the steady-state approximation, is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6d80f89d-e61d-4b05-988d-b0f4910749be">
-<span class="eqno">(4.608)<a class="headerlink" href="#equation-6d80f89d-e61d-4b05-988d-b0f4910749be" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e687e186-c414-4ca4-b2ec-e9f4cfa84b03">
+<span class="eqno">(4.608)<a class="headerlink" href="#equation-e687e186-c414-4ca4-b2ec-e9f4cfa84b03" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = \frac{k_1k_2[M]}{k_2 + k_{-1}[M]}[A]
 \end{equation}\]</div>
 <p>At high concentration we expect <span class="math notranslate nohighlight">\(k_{-1}[M][A^*] &gt;&gt; k_2[A^*]\)</span> (because collision will be frequent) or <span class="math notranslate nohighlight">\(k_{-1}[M] &gt;&gt; k_2\)</span> simplifying the rate expression to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6fdb410a-0ce2-47c8-b8ce-821c6363c4c4">
-<span class="eqno">(4.609)<a class="headerlink" href="#equation-6fdb410a-0ce2-47c8-b8ce-821c6363c4c4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-797002cf-ada3-453d-80ee-357212535ee6">
+<span class="eqno">(4.609)<a class="headerlink" href="#equation-797002cf-ada3-453d-80ee-357212535ee6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = \frac{k_1k_2}{k_{-1}}[A]
 \end{equation}\]</div>
 <p>which is first order in <span class="math notranslate nohighlight">\([A]\)</span> and first order overall.</p>
 <p>At low concentration, we expect <span class="math notranslate nohighlight">\(k_{-1}[M][A^*] &lt;&lt; k_2[A^*]\)</span> (because collision will be infrequent) or <span class="math notranslate nohighlight">\(k_{-1}[M] &lt;&lt; k_2\)</span> simplifying the rate expression to</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e871888-c9eb-412a-925a-5eb222c08e7d">
-<span class="eqno">(4.610)<a class="headerlink" href="#equation-9e871888-c9eb-412a-925a-5eb222c08e7d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e71dd6e4-abec-415f-a56d-a5368187ab6b">
+<span class="eqno">(4.610)<a class="headerlink" href="#equation-e71dd6e4-abec-415f-a56d-a5368187ab6b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 v(t) = k_1[M][A]
 \end{equation}\]</div>
 <p>which is first order in <span class="math notranslate nohighlight">\(M\)</span> and <span class="math notranslate nohighlight">\(A\)</span> and second order overall.  This mechanism has been demonstrated to accurately capture the transition of the rate constant from first to second order as a function of concentration for reactions such as the isomerization of <span class="math notranslate nohighlight">\(CH_3CN\)</span>.</p>

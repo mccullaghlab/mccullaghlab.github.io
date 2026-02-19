@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -566,20 +573,20 @@ document.write(`
 <section id="coulomb-and-exhange-integrals">
 <h2><span class="section-number">4.6.1.2. </span>Coulomb and Exhange Integrals<a class="headerlink" href="#coulomb-and-exhange-integrals" title="Permalink to this heading">#</a></h2>
 <p>We now want to determine the expectation value of the Hamiltonian in the antisymmetric trial wavefunction.  Let’s start by rewriting the Hamiltonian as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa79ca09-e445-43bc-b0c8-f1332d49b401">
-<span class="eqno">(4.1021)<a class="headerlink" href="#equation-aa79ca09-e445-43bc-b0c8-f1332d49b401" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1c1f3de4-61a2-4a69-8881-ba7ed3739a06">
+<span class="eqno">(4.1021)<a class="headerlink" href="#equation-1c1f3de4-61a2-4a69-8881-ba7ed3739a06" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{H} &amp;=&amp; -\frac{1}{2}\nabla_1^2 + \frac{Z}{r_1} - \frac{1}{2}\nabla_2^2 + \frac{Z}{r_2} + \frac{1}{r_{12}} \\
  &amp;=&amp; h(1) + h(2) + \frac{1}{r_{12}},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(h(i) = -\frac{1}{2}\nabla_i^2 + \frac{Z}{r_i}\)</span> is the one electron operator for electron <span class="math notranslate nohighlight">\(i\)</span>.  Using this form of Hamiltonian, we can write the expectation value</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e54bb3bd-8ab4-4a30-b13c-a0d88c44a6d4">
-<span class="eqno">(4.1022)<a class="headerlink" href="#equation-e54bb3bd-8ab4-4a30-b13c-a0d88c44a6d4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4209605e-17f7-4d5e-bed1-de766441f402">
+<span class="eqno">(4.1022)<a class="headerlink" href="#equation-4209605e-17f7-4d5e-bed1-de766441f402" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle\Psi(1,2)| \hat{H} |\Psi(1,2)\rangle &amp;=&amp; \langle\Psi(1,2)| h(1) + h(2) + \frac{1}{r_{12}} |\Psi(1,2)\rangle\\
 &amp;=&amp; \langle\Psi(1,2)| h(1)|\Psi(1,2)\rangle  +  \langle\Psi(1,2)|h(2)|\Psi(1,2)\rangle +  \langle\Psi(1,2)|\frac{1}{r_{12}} |\Psi(1,2)\rangle
 \end{align}\]</div>
 <p>We can now evaluate these terms separately.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e5f5977e-3864-4e45-9965-38d61831979a">
-<span class="eqno">(4.1023)<a class="headerlink" href="#equation-e5f5977e-3864-4e45-9965-38d61831979a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a18a919b-412c-4510-bb05-53d6d1661189">
+<span class="eqno">(4.1023)<a class="headerlink" href="#equation-a18a919b-412c-4510-bb05-53d6d1661189" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle\Psi(1,2)| h(1)|\Psi(1,2)\rangle &amp;=&amp; \langle \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) | h(1) | \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) \rangle\\
 &amp;=&amp; \frac{1}{2} \langle(\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) | h(1) | (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) \rangle \\
 &amp;=&amp; \frac{1}{2} \left( \langle\chi_1(1)\chi_2(2) | h(1) | \chi_1(1)\chi_2(2) \rangle + \langle\chi_2(1)\chi_1(2) | h(1) | \chi_2(1)\chi_1(2) \rangle - \langle\chi_1(1)\chi_2(2) | h(1) | \chi_2(1)\chi_1(2) \rangle - \langle\chi_2(1)\chi_1(2) | h(1) | \chi_1(1)\chi_2(2) \rangle \right)\\
@@ -587,8 +594,8 @@ document.write(`
 \end{align}\]</div>
 <p>where the last equality holds if <span class="math notranslate nohighlight">\(\chi_1\)</span> is orthogonal to <span class="math notranslate nohighlight">\(\chi_2\)</span>.  It can be readily seen that you will get a similar result for the <span class="math notranslate nohighlight">\(h(2)\)</span> term.</p>
 <p>The two electron integral is more interesting.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-934c456f-b3e2-4049-ba27-a530f8bc766b">
-<span class="eqno">(4.1024)<a class="headerlink" href="#equation-934c456f-b3e2-4049-ba27-a530f8bc766b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b3de31ed-eec8-4b6b-a711-7a327cdf361b">
+<span class="eqno">(4.1024)<a class="headerlink" href="#equation-b3de31ed-eec8-4b6b-a711-7a327cdf361b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle\Psi(1,2)| \frac{1}{r_{12}}|\Psi(1,2)\rangle &amp;=&amp; \langle \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) | \frac{1}{r_{12}} | \frac{1}{\sqrt{2}} (\chi_1(1)\chi_2(2) - \chi_2(1) \chi_1(2)) \rangle\\
 &amp;=&amp;\frac{1}{2} \left( \langle\chi_1(1)\chi_2(2) | \frac{1}{r_{12}} | \chi_1(1)\chi_2(2) \rangle + \langle\chi_2(1)\chi_1(2) | \frac{1}{r_{12}} | \chi_2(1)\chi_1(2) \rangle - \langle\chi_1(1)\chi_2(2) |\frac{1}{r_{12}} | \chi_2(1)\chi_1(2) \rangle - \langle\chi_2(1)\chi_1(2) | \frac{1}{r_{12}} | \chi_1(1)\chi_2(2) \rangle \right)\\
 &amp;=&amp; \langle\chi_1(1)\chi_2(2) | \frac{1}{r_{12}} | \chi_1(1)\chi_2(2) \rangle - \langle\chi_1(1)\chi_2(2) |\frac{1}{r_{12}} | \chi_2(1)\chi_1(2) \rangle

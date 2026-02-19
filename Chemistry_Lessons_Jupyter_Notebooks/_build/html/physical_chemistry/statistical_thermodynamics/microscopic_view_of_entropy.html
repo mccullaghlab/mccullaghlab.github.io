@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -582,15 +589,15 @@ document.write(`
 <p>In the case of a single peg, the are a total of two paths (left and right) and one path goes to the left (thus <span class="math notranslate nohighlight">\(P_{left} = \frac{1}{2}\)</span> and one path goes to the right.</p>
 <a class="reference internal image-reference" href="../../_images/GaltonPuzzle_8Bin-Board.jpg"><img alt="../../_images/GaltonPuzzle_8Bin-Board.jpg" class="align-center" src="../../_images/GaltonPuzzle_8Bin-Board.jpg" style="width: 250px;" /></a>
 <p>If we go to the next level, there are two additional pegs followed by three bins at the bottom.  The probability of each bin is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-881a79ba-6444-4b7c-8ee2-911d5c34a17b">
-<span class="eqno">(4.179)<a class="headerlink" href="#equation-881a79ba-6444-4b7c-8ee2-911d5c34a17b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-db55e6bb-18bb-4164-9bac-d18f123f46cf">
+<span class="eqno">(4.179)<a class="headerlink" href="#equation-db55e6bb-18bb-4164-9bac-d18f123f46cf" title="Permalink to this equation">#</a></span>\[\begin{align}
 P_{left} =&amp; \frac{1}{4} \\
 P_{left} =&amp; \frac{2}{4} = \frac{1}{2} \\
 P_{left} =&amp; \frac{1}{4} 
 \end{align}\]</div>
 <p>Now, more generally, since these follow the binomal distribution, we can compute the probability of bin <span class="math notranslate nohighlight">\(i\)</span> given that there are <span class="math notranslate nohighlight">\(n\)</span> rows in the</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d0b94cce-63ce-446a-baee-7865861e8538">
-<span class="eqno">(4.180)<a class="headerlink" href="#equation-d0b94cce-63ce-446a-baee-7865861e8538" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bc24f61b-0890-414e-bf7f-aeb8642c2248">
+<span class="eqno">(4.180)<a class="headerlink" href="#equation-bc24f61b-0890-414e-bf7f-aeb8642c2248" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P^n_i = \frac{nCi}{\sum_j^n nCj}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(nCi\)</span> is said as “<span class="math notranslate nohighlight">\(n\)</span> choose <span class="math notranslate nohighlight">\(i\)</span>” and <span class="math notranslate nohighlight">\(nCi = \frac{n!}{(n-i)!i!}\)</span>.</p>
@@ -612,12 +619,12 @@ P^n_i = \frac{nCi}{\sum_j^n nCj}
 <p>The gas particles can move around but cannot overlap (finite volume).  So how many ways can we arrange them?  Currently, their motion is on a continuous space and not possible to count.  Instead, we discretize the space in some manner and say that the gas particles can occupy a single grid (or lattice) position</p>
 <a class="reference internal image-reference" href="../../_images/gas_lattice_gas.png"><img alt="../../_images/gas_lattice_gas.png" class="align-center" src="../../_images/gas_lattice_gas.png" style="width: 700px;" /></a>
 <p>Now, the number of ways of arranging the gas particles (<span class="math notranslate nohighlight">\(W\)</span> or <span class="math notranslate nohighlight">\(\Omega\)</span> in the Boltzmann equation) can be computed using the binomial coefficient</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cd4da01d-91f3-414a-ae6a-8f524afcf0d9">
-<span class="eqno">(4.181)<a class="headerlink" href="#equation-cd4da01d-91f3-414a-ae6a-8f524afcf0d9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-25ea31d4-fa29-416b-b877-1c8b9e54d59f">
+<span class="eqno">(4.181)<a class="headerlink" href="#equation-25ea31d4-fa29-416b-b877-1c8b9e54d59f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W = 16C2 = \frac{16!}{14! 2!} = 8\cdot15 = 120
 \end{equation}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-e68ec26c-ce93-43fc-ac78-abc39db38835">
-<span class="eqno">(4.182)<a class="headerlink" href="#equation-e68ec26c-ce93-43fc-ac78-abc39db38835" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2e3d150e-9934-4a50-a31c-33c4f025a14b">
+<span class="eqno">(4.182)<a class="headerlink" href="#equation-2e3d150e-9934-4a50-a31c-33c4f025a14b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S = k\ln120
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -644,8 +651,8 @@ S = k\ln120
 <section id="entropy-of-mixing-of-two-or-more-lattice-gasses">
 <h3><span class="section-number">4.2.8.6.2. </span>Entropy of Mixing of Two (or more) Lattice Gasses<a class="headerlink" href="#entropy-of-mixing-of-two-or-more-lattice-gasses" title="Permalink to this heading">#</a></h3>
 <p>Given that we can now estimate the entropy of a lattice gas in a given volume, we can compute the change in entropy upon expansion, contraction or mixing of lattice gasses.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f5355de8-cc20-470b-a95f-675b4926eaad">
-<span class="eqno">(4.183)<a class="headerlink" href="#equation-f5355de8-cc20-470b-a95f-675b4926eaad" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1c668ed2-0e7a-4a42-9a67-ab8dd9a2bb39">
+<span class="eqno">(4.183)<a class="headerlink" href="#equation-1c668ed2-0e7a-4a42-9a67-ab8dd9a2bb39" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta S = S_f - S_i = k\ln W_f - k \ln W_i = k\ln\left(\frac{W_f}{W_i}\right)
 \end{equation}\]</div>
 </section>
@@ -659,13 +666,13 @@ S = k\ln120
 <a class="reference internal image-reference" href="../../_images/gas_mix.png"><img alt="../../_images/gas_mix.png" class="align-center" src="../../_images/gas_mix.png" style="width: 500px;" /></a>
 <p>Permeable only to solid particles from Side L.</p>
 <p>We start writing the entropy of mixing as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-89182cf5-e7a4-493d-a811-7fcb7a35a3c6">
-<span class="eqno">(4.184)<a class="headerlink" href="#equation-89182cf5-e7a4-493d-a811-7fcb7a35a3c6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-677bb4fa-8182-4702-aa5b-cd13651411b8">
+<span class="eqno">(4.184)<a class="headerlink" href="#equation-677bb4fa-8182-4702-aa5b-cd13651411b8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta S = S_f - S_i = k\ln W_f - k\ln W_i = k\ln\left(\frac{W_f}{W_i}\right)
 \end{equation}\]</div>
 <p>So we need to compute <span class="math notranslate nohighlight">\(W_f\)</span> and <span class="math notranslate nohighlight">\(W_i\)</span>.  We start with <span class="math notranslate nohighlight">\(W_i\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a6e5eff1-6200-45c6-924b-16b761806cdb">
-<span class="eqno">(4.185)<a class="headerlink" href="#equation-a6e5eff1-6200-45c6-924b-16b761806cdb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7fd0d26c-24a1-4584-aa17-3d11a847e33d">
+<span class="eqno">(4.185)<a class="headerlink" href="#equation-7fd0d26c-24a1-4584-aa17-3d11a847e33d" title="Permalink to this equation">#</a></span>\[\begin{align}
 W_i =&amp; W_L \cdot W_R \\
 =&amp; 12C6 \cdot 8C4 \\
 =&amp; 924 \cdot 70 = 64680
@@ -687,23 +694,23 @@ W_i =&amp; W_L \cdot W_R \\
 </div>
 </div>
 <p>Now for <span class="math notranslate nohighlight">\(W_f\)</span>.  There are many ways to correctly think about and compute the number of ways to arrange this system.  Here, I will consider the following decomposition</p>
-<div class="amsmath math notranslate nohighlight" id="equation-69aa352b-c629-4f6d-b986-e87f496cd147">
-<span class="eqno">(4.186)<a class="headerlink" href="#equation-69aa352b-c629-4f6d-b986-e87f496cd147" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1ef68a52-c548-4a2b-b83d-34a703cc86e6">
+<span class="eqno">(4.186)<a class="headerlink" href="#equation-1ef68a52-c548-4a2b-b83d-34a703cc86e6" title="Permalink to this equation">#</a></span>\[\begin{align}
 W_f =&amp; W_{solid} \cdot W_{open} 
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(W_{open}\)</span> is the number of ways to arrange the open circles.  Since the open circles cannot diffuse across the barrier, this is identical to the initial situation.  Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-483b20ef-d626-4658-b68a-896f58131504">
-<span class="eqno">(4.187)<a class="headerlink" href="#equation-483b20ef-d626-4658-b68a-896f58131504" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8486e61f-3e2d-407e-b41e-50fd99990342">
+<span class="eqno">(4.187)<a class="headerlink" href="#equation-8486e61f-3e2d-407e-b41e-50fd99990342" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_{open} = 8C4 = 70
 \end{equation}\]</div>
 <p><span class="math notranslate nohighlight">\(W_{solid}\)</span> is only slighty more complicated.  Since the barrier is permeable to the solid particles, they can diffuse across it.  Thus, nominally, the solid circles can be in any one of the 20 lattice positions.  But, we know that the open circles are occupying four of these lattice positions, so really the solid circles have 16 lattice positions to choose from. Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-44554019-d238-4269-82fa-eaead1356c4c">
-<span class="eqno">(4.188)<a class="headerlink" href="#equation-44554019-d238-4269-82fa-eaead1356c4c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-96ab3980-d543-45bb-b4de-6beb4b97f8e1">
+<span class="eqno">(4.188)<a class="headerlink" href="#equation-96ab3980-d543-45bb-b4de-6beb4b97f8e1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_{solid} = 16C6 = 8008
 \end{equation}\]</div>
 <p>and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-119931c8-9835-465b-acf0-f696c653f8e9">
-<span class="eqno">(4.189)<a class="headerlink" href="#equation-119931c8-9835-465b-acf0-f696c653f8e9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-297e9a19-9fb9-46af-aa26-aaf55db87065">
+<span class="eqno">(4.189)<a class="headerlink" href="#equation-297e9a19-9fb9-46af-aa26-aaf55db87065" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_f = 560560
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -721,8 +728,8 @@ W_f = 560560
 </div>
 </div>
 <p>Finally, we compute <span class="math notranslate nohighlight">\(\Delta S_{mix}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c75d7ec4-85ea-43e6-821b-b21e905bf1f9">
-<span class="eqno">(4.190)<a class="headerlink" href="#equation-c75d7ec4-85ea-43e6-821b-b21e905bf1f9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c8ea2abb-7596-4e35-a2fa-d3659d1fb6f3">
+<span class="eqno">(4.190)<a class="headerlink" href="#equation-c8ea2abb-7596-4e35-a2fa-d3659d1fb6f3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta S_{mix} &amp;= k\ln\left(\frac{W_f}{W_i}\right) \\
 &amp;= k\ln\left(\frac{560560}{64680}\right)\\
 &amp;= k\ln\left(8.6666\right)\\
@@ -768,7 +775,7 @@ W_f = 560560
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1304a6120&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x12ac99fd0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/f2cd4056a62a2922845c0d068a035fdbe89b13a4ac0975981ffd1f2be08cfa93.png" src="../../_images/f2cd4056a62a2922845c0d068a035fdbe89b13a4ac0975981ffd1f2be08cfa93.png" />

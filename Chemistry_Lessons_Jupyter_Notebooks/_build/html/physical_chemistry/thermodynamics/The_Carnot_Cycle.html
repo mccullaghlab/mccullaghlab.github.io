@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -591,26 +598,26 @@ document.write(`
 <p><span class="math notranslate nohighlight">\(P = \frac{nRT}{V}\)</span></p>
 <p>The restriction of <span class="math notranslate nohighlight">\(q=0\)</span> puts restrictions on <span class="math notranslate nohighlight">\(\frac{T}{V}\)</span>.  Let’s see what this will look like.</p>
 <p>We start by writing out the differential form of the internal energy equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0ca1b26c-a81f-46fc-8a86-d5e11484f09b">
-<span class="eqno">(4.262)<a class="headerlink" href="#equation-0ca1b26c-a81f-46fc-8a86-d5e11484f09b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0a2d5e17-d62f-4e15-a842-eae950f6a13c">
+<span class="eqno">(4.262)<a class="headerlink" href="#equation-0a2d5e17-d62f-4e15-a842-eae950f6a13c" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU &amp;= \delta q + \delta w \\
 &amp;= \delta w
 \end{align}\]</div>
 <p>since no heat transfer in an adiabatic process.  We now plug in for internal energy of an ideal gas <span class="math notranslate nohighlight">\(\delta w = -PdV\)</span> (reversible):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0b11b1a8-22e6-4c58-8c9d-ed7ad514e507">
-<span class="eqno">(4.263)<a class="headerlink" href="#equation-0b11b1a8-22e6-4c58-8c9d-ed7ad514e507" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d452e49f-5e68-4050-b485-c43c2a4d40a2">
+<span class="eqno">(4.263)<a class="headerlink" href="#equation-d452e49f-5e68-4050-b485-c43c2a4d40a2" title="Permalink to this equation">#</a></span>\[\begin{align}
 dU &amp;= \delta w \\
 C_V dT &amp;= -PdV \\
 C_V dT &amp; -\frac{nRT}{V}dV
 \end{align}\]</div>
 <p>where the last line I have used the ideal gas law (equation of state).  At this juncture we can integrate both sides.  But note that we cannot assume <span class="math notranslate nohighlight">\(T\)</span> is constant because the process is <em><strong>not</strong></em> isothermal.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83fc2335-0b9c-419b-a2e3-f9cc436b1cdf">
-<span class="eqno">(4.264)<a class="headerlink" href="#equation-83fc2335-0b9c-419b-a2e3-f9cc436b1cdf" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-571a5dc8-f120-49a9-ab30-d6765376e4a8">
+<span class="eqno">(4.264)<a class="headerlink" href="#equation-571a5dc8-f120-49a9-ab30-d6765376e4a8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_{T_1}^{T_2}C_V dT &amp;= -\int_{V_1}^{V_2}\frac{nRT}{V}dV
 \end{align}\]</div>
 <p>Note that the left hand side of the previous equation is integrating over temperature and the right hand side is integrating over volume.  There is a <span class="math notranslate nohighlight">\(T\)</span> on the right hand side so we divide both sides of the equation to get it to the left hand side.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-51ed12e2-dcfb-443b-88c6-4fc19295ee68">
-<span class="eqno">(4.265)<a class="headerlink" href="#equation-51ed12e2-dcfb-443b-88c6-4fc19295ee68" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-49ab7b21-825e-4b38-9d56-3fd996680a7f">
+<span class="eqno">(4.265)<a class="headerlink" href="#equation-49ab7b21-825e-4b38-9d56-3fd996680a7f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_{T_1}^{T_2}C_V dT &amp;= -\int_{V_1}^{V_2}\frac{nRT}{V}dV \\
 \Rightarrow \int_{T_1}^{T_2}\frac{C_V}{T} dT &amp;= -\int_{V_1}^{V_2}\frac{nR}{V}dV \\
 \Rightarrow C_V\ln\left( \frac{T_2}{T_1} \right) &amp;= -nR\ln\left( \frac{V_2}{V_1} \right) \\
@@ -859,14 +866,14 @@ C_V dT &amp; -\frac{nRT}{V}dV
 <p>or, simply,</p>
 <p><span class="math notranslate nohighlight">\(\frac{V_1}{V_4} = \frac{V_2}{V_3}\)</span></p>
 <p>Now to plug back into <span class="math notranslate nohighlight">\(w_{total}\)</span> and <span class="math notranslate nohighlight">\(q_{total}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a88c186f-2c2e-470a-aaa7-eb6edc5a095b">
-<span class="eqno">(4.266)<a class="headerlink" href="#equation-a88c186f-2c2e-470a-aaa7-eb6edc5a095b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fb24bcf5-9785-4cab-87aa-8cce7583b01b">
+<span class="eqno">(4.266)<a class="headerlink" href="#equation-fb24bcf5-9785-4cab-87aa-8cce7583b01b" title="Permalink to this equation">#</a></span>\[\begin{align}
 w_{total} =&amp; nRT_2\ln\left(\frac{V_2}{V_3}\right)  + nRT_1\ln\left(\frac{V_4}{V_1}\right)\\
 &amp; = nRT_2\ln\left(\frac{V_1}{V_4}\right)  + nRT_1\ln\left(\frac{V_4}{V_1}\right)\\ 
 &amp; = nR\ln\left(\frac{V_1}{V_4}\right)\Delta T
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-e181f035-4e5e-478c-8c52-c89ce1ed7f2e">
-<span class="eqno">(4.267)<a class="headerlink" href="#equation-e181f035-4e5e-478c-8c52-c89ce1ed7f2e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0d118159-0e7d-45ee-b56e-53d490058b68">
+<span class="eqno">(4.267)<a class="headerlink" href="#equation-0d118159-0e7d-45ee-b56e-53d490058b68" title="Permalink to this equation">#</a></span>\[\begin{align}
 q_{total} =&amp; nRT_2\ln\left(\frac{V_3}{V_2}\right)  + nRT_1\ln\left(\frac{V_1}{V_4}\right) \\
  = &amp; nRT_2\ln\left(\frac{V_4}{V_1}\right)  + nRT_1\ln\left(\frac{V_1}{V_4}\right) \\
  = &amp; - nR\ln\left(\frac{V_1}{V_4}\right)\Delta T 
