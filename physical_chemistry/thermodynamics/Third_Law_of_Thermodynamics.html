@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -586,8 +593,8 @@ document.write(`
 <li><p>Compute the heat and entropy of a substance undergoing a phase change.</p></li>
 </ol>
 <p>This allows us to define absolute entropies.  These are entropies of a substance as <span class="math notranslate nohighlight">\(T\rightarrow 0\)</span> K. Namely, we can define:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dacc813a-f4e1-4bfd-811a-57837f724c87">
-<span class="eqno">(4.297)<a class="headerlink" href="#equation-dacc813a-f4e1-4bfd-811a-57837f724c87" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-62443ce5-4366-4a2b-a018-5e7ff87a46c8">
+<span class="eqno">(4.297)<a class="headerlink" href="#equation-62443ce5-4366-4a2b-a018-5e7ff87a46c8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S_T = S_0 + \int_0^T\frac{\delta q}{T}
 \end{equation}\]</div>
 </section>
@@ -598,20 +605,20 @@ S_T = S_0 + \int_0^T\frac{\delta q}{T}
 <h3><span class="section-number">4.3.11.2.1. </span>Example: Heating a solid with a constant heat capacity<a class="headerlink" href="#example-heating-a-solid-with-a-constant-heat-capacity" title="Permalink to this heading">#</a></h3>
 <p>Compute the heat, <span class="math notranslate nohighlight">\(q\)</span>, and change in entropy, <span class="math notranslate nohighlight">\(\Delta S\)</span>, to raise the temperature of a solid from <span class="math notranslate nohighlight">\(10\)</span> K to <span class="math notranslate nohighlight">\(100\)</span> K at constsant pressure given that <span class="math notranslate nohighlight">\(\bar{C}_P = 50.0\)</span> <span class="math notranslate nohighlight">\(J\)</span> <span class="math notranslate nohighlight">\(K^{-1}\)</span> <span class="math notranslate nohighlight">\(mol^{-1}\)</span>.</p>
 <p>Recall that <span class="math notranslate nohighlight">\(\Delta H = q_p\)</span>, so we need to compute the change in enthalpy at constant pressure.  We start by writing out the following differential form of enthalpy in terms of variables <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(P\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6264ecee-224f-457a-870d-c8f2852552ad">
-<span class="eqno">(4.298)<a class="headerlink" href="#equation-6264ecee-224f-457a-870d-c8f2852552ad" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-86a2d1d9-fa7d-4d51-a265-9c02485a9ad5">
+<span class="eqno">(4.298)<a class="headerlink" href="#equation-86a2d1d9-fa7d-4d51-a265-9c02485a9ad5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 dH = \left(\frac{\partial H}{\partial T}\right)_P dT + \left(\frac{\partial H}{\partial P}\right)_TdP
 \end{equation}\]</div>
 <p>Since this is a constant pressure process, <span class="math notranslate nohighlight">\(dP=0\)</span>.  Thus, we now have:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9d41dd36-aedd-4c7b-aee9-0a90b4de9155">
-<span class="eqno">(4.299)<a class="headerlink" href="#equation-9d41dd36-aedd-4c7b-aee9-0a90b4de9155" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8ee1f40f-01ea-459c-820d-74521133b5cb">
+<span class="eqno">(4.299)<a class="headerlink" href="#equation-8ee1f40f-01ea-459c-820d-74521133b5cb" title="Permalink to this equation">#</a></span>\[\begin{align}
 dH =&amp; \left(\frac{\partial H}{\partial T}\right)dT \\
 \Rightarrow \Delta H =&amp;\int_{T_1}^{T_2} \left(\frac{\partial H}{\partial T}\right)_P dT \\
 \end{align}\]</div>
 <p>Notice that the integrand, <span class="math notranslate nohighlight">\(\left(\frac{\partial H}{\partial T}\right)_P=C_P\)</span>, is the heat capacity at constant pressure.</p>
 <p>We now plug in our values from the problem:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-43febde1-7966-443f-9f08-7fb729a145a3">
-<span class="eqno">(4.300)<a class="headerlink" href="#equation-43febde1-7966-443f-9f08-7fb729a145a3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c8007f7e-0620-46df-8b3e-a1602cfd1298">
+<span class="eqno">(4.300)<a class="headerlink" href="#equation-c8007f7e-0620-46df-8b3e-a1602cfd1298" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta H =&amp;\int_{T_1}^{T_2} \left(\frac{\partial H}{\partial T}\right)_P dT \\
 =&amp; \int_{10}^{100} 50 dT \\
 =&amp; 50 \int_{10}^{100} dT \\
@@ -632,20 +639,20 @@ dH =&amp; \left(\frac{\partial H}{\partial T}\right)dT \\
 </div>
 </div>
 <p>Now for change in entropy.  Again, we start with the differential form and then we are going to integrate:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca4ca06a-19d1-48b3-9456-8aa7fdfb21ca">
-<span class="eqno">(4.301)<a class="headerlink" href="#equation-ca4ca06a-19d1-48b3-9456-8aa7fdfb21ca" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bd2f393e-d020-475e-80e1-0177fbacaaeb">
+<span class="eqno">(4.301)<a class="headerlink" href="#equation-bd2f393e-d020-475e-80e1-0177fbacaaeb" title="Permalink to this equation">#</a></span>\[\begin{align}
 dS =&amp; \frac{\delta q_{rev}}{T} \\
    =&amp; \frac{dH}{T}
 \end{align}\]</div>
 <p>where the last equality holds for heat at constant pressure.  Now we plug in <span class="math notranslate nohighlight">\(dH = C_P dT\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b0d53c3e-5f44-4451-82f1-641519cc371d">
-<span class="eqno">(4.302)<a class="headerlink" href="#equation-b0d53c3e-5f44-4451-82f1-641519cc371d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a315046c-6b17-48bc-8b5e-28d1553f7e69">
+<span class="eqno">(4.302)<a class="headerlink" href="#equation-a315046c-6b17-48bc-8b5e-28d1553f7e69" title="Permalink to this equation">#</a></span>\[\begin{align}
 dS =&amp; \frac{C_P dT}{T} \\
 \Rightarrow \Delta S =&amp; \int_{T_1}^{T_2} \frac{C_P dT}{T} = \int_{T_1}^{T_2} \frac{C_P}{T}dT
 \end{align}\]</div>
 <p>Since heat capacity in this problem is temperature independent, it can be pulled out of the integral.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bc43deed-f2a5-4f30-818c-618a7230363f">
-<span class="eqno">(4.303)<a class="headerlink" href="#equation-bc43deed-f2a5-4f30-818c-618a7230363f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3bf4e7a5-4489-4dbc-aa9c-3968f28ead77">
+<span class="eqno">(4.303)<a class="headerlink" href="#equation-3bf4e7a5-4489-4dbc-aa9c-3968f28ead77" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta S =&amp; C_P \int_{T_1}^{T_2} \frac{dT}{T} \\
 =&amp; C_P \ln\left( \frac{T_2}{T_1}\right) \\
 \approx &amp; 115 \quad J\cdot K^{-1} \cdot mol^{-1} 
@@ -667,8 +674,8 @@ dS =&amp; \frac{C_P dT}{T} \\
 <h3><span class="section-number">4.3.11.2.2. </span>Example: Heating a solid with a temperature dependent heat capacity<a class="headerlink" href="#example-heating-a-solid-with-a-temperature-dependent-heat-capacity" title="Permalink to this heading">#</a></h3>
 <p>Compute the heat, <span class="math notranslate nohighlight">\(q\)</span>, and change in entropy, <span class="math notranslate nohighlight">\(\Delta S\)</span>, to raise the temperature of a solid from <span class="math notranslate nohighlight">\(10\)</span> K to <span class="math notranslate nohighlight">\(100\)</span> K at constsant pressure given that <span class="math notranslate nohighlight">\(\bar{C}_P = 5.0\cdot T^2\)</span> <span class="math notranslate nohighlight">\(J\)</span> <span class="math notranslate nohighlight">\(K^{-1}\)</span> <span class="math notranslate nohighlight">\(mol^{-1}\)</span>.</p>
 <p>Since the heat capacity is temperature dependent, we must take that into account when doing the integral to compute <span class="math notranslate nohighlight">\(q\)</span>. Start with the integral form of <span class="math notranslate nohighlight">\(q\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-59d03d73-f203-4ecd-ac42-ca9347eec738">
-<span class="eqno">(4.304)<a class="headerlink" href="#equation-59d03d73-f203-4ecd-ac42-ca9347eec738" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b7b64229-3dec-4938-bd92-d894d87c306f">
+<span class="eqno">(4.304)<a class="headerlink" href="#equation-b7b64229-3dec-4938-bd92-d894d87c306f" title="Permalink to this equation">#</a></span>\[\begin{align}
 q_P =&amp; \int_{T_1}^{T_2} C_P dT \\
 =&amp; \int_{T_1}^{T_2} 5.0 \cdot T^2 dT \\
 =&amp; 5.0 \int_{T_1}^{T_2} T^2 dT \\
@@ -690,8 +697,8 @@ q_P =&amp; \int_{T_1}^{T_2} C_P dT \\
 </div>
 </div>
 <p>Now <span class="math notranslate nohighlight">\(\Delta S\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-da63ad0f-cf46-4afc-9079-e4d670366483">
-<span class="eqno">(4.305)<a class="headerlink" href="#equation-da63ad0f-cf46-4afc-9079-e4d670366483" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-191c1d41-7b48-4bd1-a201-b5f22113712c">
+<span class="eqno">(4.305)<a class="headerlink" href="#equation-191c1d41-7b48-4bd1-a201-b5f22113712c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta S =&amp; \int_{T_1}^{T_2} \frac{C_P dT}{T} \\
 =&amp; \int_{T_1}^{T_2} \frac{5.0\cdot T^2 dT}{T} \\
 =&amp; 5.0 \int_{T_1}^{T_2}  T dT \\
@@ -744,20 +751,20 @@ q_P =&amp; \int_{T_1}^{T_2} C_P dT \\
 </div>
 <p>The above is a plot of <span class="math notranslate nohighlight">\(C_P\)</span> as a function of <span class="math notranslate nohighlight">\(T\)</span>.  We see that there is a discontinuity at <span class="math notranslate nohighlight">\(T=100\)</span> K, the melting temperature of this substance.</p>
 <p>We start as we did before by writing down the integral form of <span class="math notranslate nohighlight">\(q\)</span> or <span class="math notranslate nohighlight">\(\Delta H\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-27ceebea-b856-4283-80c3-0a034b6dffdf">
-<span class="eqno">(4.306)<a class="headerlink" href="#equation-27ceebea-b856-4283-80c3-0a034b6dffdf" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-190f1558-2b9c-44be-bce2-1ba80f3085f2">
+<span class="eqno">(4.306)<a class="headerlink" href="#equation-190f1558-2b9c-44be-bce2-1ba80f3085f2" title="Permalink to this equation">#</a></span>\[\begin{align}
 q_P= \Delta H =&amp;\int_{T_1}^{T_2} \left(\frac{\partial H}{\partial T}\right)_P dT \\
 =&amp; \int_{T_1}^{T_2} C_P dT \\
 \end{align}\]</div>
 <p>Since the heat capacities change at the melting temperature, there is a discontinuity in the function <span class="math notranslate nohighlight">\(C_p(T)\)</span>.  In order to account for this in the above integral, we must split the integral into two parts.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1d8cbee9-daa3-4093-8195-f911695eb406">
-<span class="eqno">(4.307)<a class="headerlink" href="#equation-1d8cbee9-daa3-4093-8195-f911695eb406" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bc1afc20-404d-49e2-9ea2-15e1eef7614a">
+<span class="eqno">(4.307)<a class="headerlink" href="#equation-bc1afc20-404d-49e2-9ea2-15e1eef7614a" title="Permalink to this equation">#</a></span>\[\begin{align}
 q_P= \Delta H =&amp; \int_{T_1}^{T_2} C_P dT \\
 =&amp; \int_{90}^{100} C_{P,s} dT + \int_{100}^{110} C_{P,l} dT + \Delta H_{fusion}
 \end{align}\]</div>
 <p>Note that we have to add <span class="math notranslate nohighlight">\(\Delta H_{fusion}\)</span>.  You can essentially think of this as the integral evaluated at <span class="math notranslate nohighlight">\(T=T_{melt}\)</span>. Now, since both heat capacities are constant w.r.t. <span class="math notranslate nohighlight">\(T\)</span>, we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a4d478fc-65bf-45eb-a0d0-835bd32d5d3b">
-<span class="eqno">(4.308)<a class="headerlink" href="#equation-a4d478fc-65bf-45eb-a0d0-835bd32d5d3b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f6546bbb-00ca-45b5-bcbb-ba35b9c01320">
+<span class="eqno">(4.308)<a class="headerlink" href="#equation-f6546bbb-00ca-45b5-bcbb-ba35b9c01320" title="Permalink to this equation">#</a></span>\[\begin{align}
 q_P= \Delta H =&amp; \int_{T_1}^{T_2} C_P dT \\
 =&amp; C_{P,s}\Delta T_s + \Delta H_{fusion} + C_{P,l}\Delta T_l
 \end{align}\]</div>
@@ -785,8 +792,8 @@ q_P= \Delta H =&amp; \int_{T_1}^{T_2} C_P dT \\
 </div>
 <p>The above is a plot pf <span class="math notranslate nohighlight">\(q(T)\)</span>.  The amount of heat required to raise the temperature of the solid increases steadily from <span class="math notranslate nohighlight">\(90\)</span> K to <span class="math notranslate nohighlight">\(100\)</span> K and the slope is <span class="math notranslate nohighlight">\(C_{P,s}=30\)</span> <span class="math notranslate nohighlight">\(J/mol/K\)</span>.  The vertical increase in the amount of heat required to raise the temperature above <span class="math notranslate nohighlight">\(100\)</span> K is due to the melting of the substance at this temperature.  Melting requires an input of heat distinct from the heat capacities. The amount of heat required to raise the temperature of the liquid increases steadily from <span class="math notranslate nohighlight">\(100\)</span> K to <span class="math notranslate nohighlight">\(110\)</span> K and the slope is <span class="math notranslate nohighlight">\(C_{P,s}=15\)</span> <span class="math notranslate nohighlight">\(J/mol/K\)</span>.</p>
 <p>Now, to wrap up <span class="math notranslate nohighlight">\(q\)</span> we simply plug in our numbers.  Be careful about units!</p>
-<div class="amsmath math notranslate nohighlight" id="equation-63f17ff9-fa70-4fed-8534-9f23b17ff2ab">
-<span class="eqno">(4.309)<a class="headerlink" href="#equation-63f17ff9-fa70-4fed-8534-9f23b17ff2ab" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b0d731f9-d8e8-409c-9d7d-146d8f0ad07e">
+<span class="eqno">(4.309)<a class="headerlink" href="#equation-b0d731f9-d8e8-409c-9d7d-146d8f0ad07e" title="Permalink to this equation">#</a></span>\[\begin{align}
 q_P =&amp; C_{P,s}\Delta T_s + \Delta H_{fusion} + C_{P,l}\Delta T_l \\
 =&amp; 30\cdot(100-90) \quad J/mol \quad + 0.25 \quad kJ/mol \quad + 15\cdot(110-100) \quad J/mol \\
 =&amp; 300 \quad J/mol \quad + 250 \quad J/mol \quad + 150 \quad J/mol \\
@@ -805,8 +812,8 @@ q_P =&amp; C_{P,s}\Delta T_s + \Delta H_{fusion} + C_{P,l}\Delta T_l \\
 </div>
 </div>
 <p>What about <span class="math notranslate nohighlight">\(\Delta S\)</span>?  Again, we start with the integral form and split the integral over the discontuity:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c31d5713-ad1a-4691-baea-e30a5e54dfc5">
-<span class="eqno">(4.310)<a class="headerlink" href="#equation-c31d5713-ad1a-4691-baea-e30a5e54dfc5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-34c08c87-f5eb-4146-9c10-588d19649654">
+<span class="eqno">(4.310)<a class="headerlink" href="#equation-34c08c87-f5eb-4146-9c10-588d19649654" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta S =&amp; \int_{T_1}^{T_2} \frac{C_P}{T}dT \\
 =&amp; \int_{90}^{100} \frac{C_{P,s}}{T}dT + \frac{\Delta H_{fusion}}{T} + \int_{100}^{110} \frac{C_{P,l}}{T}dT\\
 =&amp; 30\ln\left(\frac{100}{90}\right) \quad J/mol/K \quad + \frac{250}{100} \quad J/mol/K \quad + 15\ln\left(\frac{110}{100}\right) \quad J/mol/K \\

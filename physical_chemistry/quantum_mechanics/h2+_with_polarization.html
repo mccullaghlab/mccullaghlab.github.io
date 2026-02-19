@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -598,19 +605,19 @@ document.write(`
 <section id="setting-up-the-model">
 <h2><span class="section-number">4.5.19.5. </span>Setting up the Model<a class="headerlink" href="#setting-up-the-model" title="Permalink to this heading">#</a></h2>
 <p>We consider the H<span class="math notranslate nohighlight">\(_2^+\)</span> molecule in the Born-Oppenheimer approximation with Hamiltonian:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-34c35a82-a65c-42d5-848d-e9696c2e76cd">
-<span class="eqno">(4.949)<a class="headerlink" href="#equation-34c35a82-a65c-42d5-848d-e9696c2e76cd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a5fe54cf-8b96-4278-9ee3-f6e57074432c">
+<span class="eqno">(4.949)<a class="headerlink" href="#equation-a5fe54cf-8b96-4278-9ee3-f6e57074432c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H} = -\frac{1}{2}\nabla^2 - \frac{1}{r_A} - \frac{1}{r_B} + \frac{1}{R}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(r_A\)</span> and <span class="math notranslate nohighlight">\(r_B\)</span> are the distances between the electron and nuclei <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, respectively, and <span class="math notranslate nohighlight">\(R\)</span> is the distance between the two nuclei.</p>
 <p>In order to solve for the energy and wavefunction as a function of nuclear separation distance <span class="math notranslate nohighlight">\(R\)</span>, we will consider the normalized trial wave function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cb2a7032-5d66-47bc-962c-a5038362eefb">
-<span class="eqno">(4.950)<a class="headerlink" href="#equation-cb2a7032-5d66-47bc-962c-a5038362eefb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c49f99d9-8c0f-4e41-ac12-a7d2e64644cb">
+<span class="eqno">(4.950)<a class="headerlink" href="#equation-c49f99d9-8c0f-4e41-ac12-a7d2e64644cb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi_+ = \frac{1}{\sqrt{2(1+S_{AB})}}\left( \phi_A + \phi_B \right)
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\phi_A\)</span> and <span class="math notranslate nohighlight">\(\phi_B\)</span> are the atom-centered basis functions and <span class="math notranslate nohighlight">\(S_{AB}\)</span> is the basis overlap integral defined by:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b661bf52-65fd-4327-aa76-aa90a164d06e">
-<span class="eqno">(4.951)<a class="headerlink" href="#equation-b661bf52-65fd-4327-aa76-aa90a164d06e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-913e335a-1035-4187-a30a-10ab8de73a33">
+<span class="eqno">(4.951)<a class="headerlink" href="#equation-913e335a-1035-4187-a30a-10ab8de73a33" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S_{AB} = \left\langle \phi_A \mid \phi_B\right\rangle.
 \end{equation}\]</div>
 <p>Note that thus far, the setup to the problem aligns exactly with the LCAO and Slater bases. Remember that in these notes, we will consider going beyond the minimal <span class="math notranslate nohighlight">\(1s\)</span> atomic basis by including <span class="math notranslate nohighlight">\(2p_z\)</span> functions to allow for <em>polarization</em>.</p>
@@ -618,16 +625,16 @@ S_{AB} = \left\langle \phi_A \mid \phi_B\right\rangle.
 <section id="adding-polarization">
 <h2><span class="section-number">4.5.19.6. </span>Adding Polarization<a class="headerlink" href="#adding-polarization" title="Permalink to this heading">#</a></h2>
 <p>Polarization will be added to our atomic centered basis functions in the form of a linear combination of <span class="math notranslate nohighlight">\(1s\)</span> and <span class="math notranslate nohighlight">\(2p_z\)</span> slater-type orbitals (STOs) on each nucleus. Though the <span class="math notranslate nohighlight">\(2p_z\)</span> functions we utilize also come from STOs, the term “Slater” will be used here on to denote the Slater <span class="math notranslate nohighlight">\(1s\)</span> only basis set. Thus, the normalized basis functions are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ef700f14-50ec-438e-b1b6-bc72e0723832">
-<span class="eqno">(4.952)<a class="headerlink" href="#equation-ef700f14-50ec-438e-b1b6-bc72e0723832" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-74140692-dfef-4e8a-9146-6f5ca83a3e89">
+<span class="eqno">(4.952)<a class="headerlink" href="#equation-74140692-dfef-4e8a-9146-6f5ca83a3e89" title="Permalink to this equation">#</a></span>\[\begin{align}
 \phi_A &amp;= \frac{1}{\sqrt{1+a^2}}\left(1s_A + a\cdot2p_{zA}\right) \\
 \phi_B &amp;= \frac{1}{\sqrt{1+a^2}}\left(1s_B + a\cdot2p_{zB}\right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a\)</span> is a variational paramter that controls the amount of <span class="math notranslate nohighlight">\(p\)</span> character in the molecular orbital, <span class="math notranslate nohighlight">\(1s_A\)</span> is the <span class="math notranslate nohighlight">\(1s\)</span> STO centered on nucleus <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(2p_{zA}\)</span> is the <span class="math notranslate nohighlight">\(2p_z\)</span> STO centered on nucleus <span class="math notranslate nohighlight">\(A\)</span>. Let us take a moment to discuss the addition of the <span class="math notranslate nohighlight">\(a\)</span> parameter. As is central to the variational method, this parameter will need to be optimized, in this case for many discrete values of <span class="math notranslate nohighlight">\(R\)</span>. How do you think <span class="math notranslate nohighlight">\(a\)</span> will change as <span class="math notranslate nohighlight">\(R\)</span> changes? Will <span class="math notranslate nohighlight">\(a\)</span> be highest near bonding distance, at infinite separation, or somewherre in between? We will discuss this further during the energy optimization steps, but it is good practice to consider this now.<br />
 <br />
 Next, we must define our <span class="math notranslate nohighlight">\(1s\)</span> and <span class="math notranslate nohighlight">\(2p_Z\)</span> functions. Note that the <span class="math notranslate nohighlight">\(1s\)</span> functions look very similar to what we used for the Slater basis, with one notable change (try to spot and understand that change before checking below the functions for an explanation). The normalized functional forms of these are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3073051e-28a5-4806-8a5f-43102c4700af">
-<span class="eqno">(4.953)<a class="headerlink" href="#equation-3073051e-28a5-4806-8a5f-43102c4700af" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ac39eced-df18-4475-8160-27638525b989">
+<span class="eqno">(4.953)<a class="headerlink" href="#equation-ac39eced-df18-4475-8160-27638525b989" title="Permalink to this equation">#</a></span>\[\begin{align}
 1s_A &amp;= \left( \frac{Z_1^3}{\pi}\right)^{1/2}e^{-Z_1r_A} \\
 1s_B &amp;= \left( \frac{Z_1^3}{\pi}\right)^{1/2}e^{-Z_1r_B} \\
 2p_{zA} &amp;= \left( \frac{Z_2^5}{\pi}\right)^{1/2} r_A\cos\theta_A e^{-Z_2r_A} \\
@@ -642,13 +649,13 @@ Now, we know our Hamiltonian and have described our basis set. As we did for the
 <section id="determining-the-expectation-of-the-hamiltonian">
 <h2><span class="section-number">4.5.19.7. </span>Determining the Expectation of the Hamiltonian<a class="headerlink" href="#determining-the-expectation-of-the-hamiltonian" title="Permalink to this heading">#</a></h2>
 <p>We will determine the expectation value of the Hamiltonian in this basis.  Namely:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-761cd1b1-c635-45c3-8da2-6070db5e27c1">
-<span class="eqno">(4.954)<a class="headerlink" href="#equation-761cd1b1-c635-45c3-8da2-6070db5e27c1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1a401086-e63b-4947-a7d9-03b2483cc759">
+<span class="eqno">(4.954)<a class="headerlink" href="#equation-1a401086-e63b-4947-a7d9-03b2483cc759" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_{\psi_+} = \left\langle \psi_+ \mid \hat{H} \mid \psi_+ \right\rangle
 \end{equation}\]</div>
 <p>Convince yourself that the equation above is an appropriate representation for the expectation value of the Hamiltonian (i.e. Why do we not need to consider dividing by the overlap integral?). Continuing on, we will start by just separating the terms:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ea983b87-fc0a-4bdc-8537-1a382fabce2f">
-<span class="eqno">(4.955)<a class="headerlink" href="#equation-ea983b87-fc0a-4bdc-8537-1a382fabce2f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-02dc520f-72ad-4a5c-87c8-9fc085847ad2">
+<span class="eqno">(4.955)<a class="headerlink" href="#equation-02dc520f-72ad-4a5c-87c8-9fc085847ad2" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_{\psi_+} &amp;= \frac{1}{2(1+S_{AB})}\left\langle \phi_A + \phi_B \mid \hat{H} \mid \phi_A + \phi_B \right\rangle \\
 &amp;= \frac{1}{2(1+S_{AB})}\left[ \left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle + \left\langle \phi_B \mid \hat{H} \mid \phi_B \right\rangle + \left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle + \left\langle \phi_B \mid \hat{H} \mid \phi_A \right\rangle\right] \\
 &amp;= \frac{1}{(1+S_{AB})}\left[ \left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle + \left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle \right] \\
@@ -658,8 +665,8 @@ E_{\psi_+} &amp;= \frac{1}{2(1+S_{AB})}\left\langle \phi_A + \phi_B \mid \hat{H}
 We will determine expressions for these integrals below. Like much of the work we have done so far in this course, there is no single correct starting point or approach to evaluating individual integrals. For these notes, we will break up the hamiltonian across addition. Additionally, we will start with the <span class="math notranslate nohighlight">\(S_{AB}\)</span> integral, as we will find it (or its substituents) pops up in some of the other integrations and will need to be called upon.</p>
 <section id="s-ab-z-1-z-2-a-r">
 <h3><span class="section-number">4.5.19.7.1. </span><span class="math notranslate nohighlight">\(S_{AB}(Z_1,Z_2,a,R)\)</span><a class="headerlink" href="#s-ab-z-1-z-2-a-r" title="Permalink to this heading">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-909320ec-28ef-4c49-9dbb-2a78f6e0b8fe">
-<span class="eqno">(4.956)<a class="headerlink" href="#equation-909320ec-28ef-4c49-9dbb-2a78f6e0b8fe" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-85d225e6-7225-4fb2-b6ec-f27f8b4adab8">
+<span class="eqno">(4.956)<a class="headerlink" href="#equation-85d225e6-7225-4fb2-b6ec-f27f8b4adab8" title="Permalink to this equation">#</a></span>\[\begin{align}
 S_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid 1s_B+ a\cdot2p_{zB} \right\rangle \\
  &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A  \mid 1s_B \right\rangle + a\left\langle 1s_A  \mid 2p_{zB} \right\rangle + a\left\langle 2p_{zA} \mid 1s_B \right\rangle + a^2\left\langle 2p_{zA} \mid 2p_{zB} \right\rangle\right] \\
   &amp;= \frac{1}{1+a^2}\left[ S_{1s-1s}(Z_1,R) + 2aS_{1s-2p}(Z_1,Z_2,R) + a^2S_{2p-2p}(Z_2,R)\right] 
@@ -752,54 +759,54 @@ Now, we will move on to expanding and solving <span class="math notranslate nohi
 </section>
 <section id="left-langle-phi-a-mid-hat-h-mid-phi-a-right-rangle">
 <h3><span class="section-number">4.5.19.7.2. </span><span class="math notranslate nohighlight">\(\left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle\)</span><a class="headerlink" href="#left-langle-phi-a-mid-hat-h-mid-phi-a-right-rangle" title="Permalink to this heading">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-9f843757-1bc7-4e91-b759-23e9f6fc991e">
-<span class="eqno">(4.957)<a class="headerlink" href="#equation-9f843757-1bc7-4e91-b759-23e9f6fc991e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9c47ad29-0ed7-4ed0-ba1c-91bb8acb9905">
+<span class="eqno">(4.957)<a class="headerlink" href="#equation-9c47ad29-0ed7-4ed0-ba1c-91bb8acb9905" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle &amp;= \left\langle \phi_A \mid -\frac{1}{2}\nabla^2 \mid \phi_A \right\rangle + \left\langle \phi_A \mid -\frac{1}{r_A} \mid \phi_A \right\rangle + \left\langle \phi_A \mid -\frac{1}{r_B} \mid \phi_A \right\rangle + \left\langle \phi_A \mid \frac{1}{R} \mid \phi_A \right\rangle \\
  &amp;= T_{AA}(Z_1,Z_2,a) + J_{AA}(Z_1,Z_2,a) + J_{AB}(Z_1,Z_2,a,R) + \frac{1}{R}
 \end{align}\]</div>
 <section id="t-aa-z-1-z-2-a">
 <h4><span class="section-number">4.5.19.7.2.1. </span><span class="math notranslate nohighlight">\(T_{AA}(Z_1,Z_2,a)\)</span><a class="headerlink" href="#t-aa-z-1-z-2-a" title="Permalink to this heading">#</a></h4>
-<div class="amsmath math notranslate nohighlight" id="equation-fa17a261-da1c-4c84-a627-c0e299e943e6">
-<span class="eqno">(4.958)<a class="headerlink" href="#equation-fa17a261-da1c-4c84-a627-c0e299e943e6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-53f4a129-1a3b-49e2-822f-2d68f8fc0353">
+<span class="eqno">(4.958)<a class="headerlink" href="#equation-53f4a129-1a3b-49e2-822f-2d68f8fc0353" title="Permalink to this equation">#</a></span>\[\begin{align}
 T_{AA}(Z_1,Z_2,a) &amp;= \left\langle \phi_A \mid -\frac{1}{2}\nabla^2 \mid \phi_A \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 1s_A + a\cdot2p_{zA} \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A  \mid -\frac{1}{2}\nabla^2 \mid 1s_A \right\rangle + a\left\langle 1s_A  \mid -\frac{1}{2}\nabla^2 \mid 2p_{zA} \right\rangle + a\left\langle 2p_{zA}  \mid -\frac{1}{2}\nabla^2 \mid 1s_A \right\rangle + a^2\left\langle 2p_{zA}  \mid -\frac{1}{2}\nabla^2 \mid 2p_{zA} \right\rangle\right]
 \end{align}\]</div>
 <p>We will need:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-81d162de-8753-4ef8-8e09-7f2b42a8b1d2">
-<span class="eqno">(4.959)<a class="headerlink" href="#equation-81d162de-8753-4ef8-8e09-7f2b42a8b1d2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-92ec19e1-4491-4cad-ac0f-73d829b4a9c2">
+<span class="eqno">(4.959)<a class="headerlink" href="#equation-92ec19e1-4491-4cad-ac0f-73d829b4a9c2" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\frac{1}{2}\nabla^2e^{-Z_1r_A} &amp;= \left(\frac{Z_1}{r_A} - \frac{Z_1^2}{2}\right)e^{-Z_1r_A} \\
 \left(-\frac{1}{2}\nabla^2\right) r_A\cos\theta_A e^{-Z_2r_A} &amp;=\left[2Z_2-\frac{Z_2^2r_A}{2} \right]\cos\theta_A e^{-Z_2r_A}
 \end{align}\]</div>
 <p>The otuputs (above) of operating the kinetic energy term on the <span class="math notranslate nohighlight">\(1s\)</span> and <span class="math notranslate nohighlight">\(2p_z\)</span> are useful for the following, and later on in our calculations.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fd91c52f-7ef2-4b4f-87bc-d5da1a5c6633">
-<span class="eqno">(4.960)<a class="headerlink" href="#equation-fd91c52f-7ef2-4b4f-87bc-d5da1a5c6633" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8eea94a9-cbca-4711-8a37-cbf3f79d5c51">
+<span class="eqno">(4.960)<a class="headerlink" href="#equation-8eea94a9-cbca-4711-8a37-cbf3f79d5c51" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 1s_A \mid -\frac{1}{2}\nabla^2 \mid 1s_A \right\rangle =&amp; \left( \frac{Z_1^3}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^2\sin\theta_Ae^{-Z_1r_A}\left(-\frac{1}{2}\nabla^2\right) e^{-Z_1r_A}  dr_A d\theta_A d\phi_A \\
 =&amp; \frac{Z_1^2}{2} 
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-e234d4e4-c4ca-4aa4-a375-0d569cca0e91">
-<span class="eqno">(4.961)<a class="headerlink" href="#equation-e234d4e4-c4ca-4aa4-a375-0d569cca0e91" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5a25f365-c3f1-4a21-bc61-edf356e8e0bc">
+<span class="eqno">(4.961)<a class="headerlink" href="#equation-5a25f365-c3f1-4a21-bc61-edf356e8e0bc" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 1s_A \right\rangle &amp;= \left( \frac{Z_1^{3/2}Z_2^{5/2}}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^2\sin\theta_Ar_A\cos\theta_A e^{-Z_2r_A}\left(-\frac{1}{2}\nabla^2\right) e^{-Z_1r_A}  dr_A d\theta_A d\phi_A \\
 =&amp; 0
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-e2d822b8-8c60-4cd0-ab21-b04e41cd75cb">
-<span class="eqno">(4.962)<a class="headerlink" href="#equation-e2d822b8-8c60-4cd0-ab21-b04e41cd75cb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a51b5dbc-9a56-4e18-8eed-569adf906819">
+<span class="eqno">(4.962)<a class="headerlink" href="#equation-a51b5dbc-9a56-4e18-8eed-569adf906819" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 1s_{A} \mid -\frac{1}{2}\nabla^2 \mid 2p_{zA} \right\rangle &amp;= \left( \frac{Z_1^{3/2}Z_2^{5/2}}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^2\sin\theta_A  e^{-Z_1r_A}\left(-\frac{1}{2}\nabla^2\right)  r_A\cos\theta_A e^{-Z_2r_A}dr_A d\theta_A d\phi_A \\
 &amp;= 0
 \end{align}\]</div>
 <p>Both of the above follow because:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a789302-12e3-4b85-ad35-38db3a399dea">
-<span class="eqno">(4.963)<a class="headerlink" href="#equation-5a789302-12e3-4b85-ad35-38db3a399dea" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-da4b9688-a15a-4069-bbcc-3058cfd7793c">
+<span class="eqno">(4.963)<a class="headerlink" href="#equation-da4b9688-a15a-4069-bbcc-3058cfd7793c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_0^\pi\sin\theta\cos\theta d\theta = 0
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-17ad8230-f34b-4d2d-820a-aef62af0a953">
-<span class="eqno">(4.964)<a class="headerlink" href="#equation-17ad8230-f34b-4d2d-820a-aef62af0a953" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0ee78c6f-7b9b-4985-8074-519af62d5059">
+<span class="eqno">(4.964)<a class="headerlink" href="#equation-0ee78c6f-7b9b-4985-8074-519af62d5059" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 2p_{zA} \right\rangle &amp;= \left( \frac{Z_2^5}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^3\sin\theta_A\cos^2\theta_A e^{-2Z_2r_A}  \left[2Z_2-\frac{Z_2^2r_A}{2} \right] dr_A d\theta_A d\phi_A \\
 &amp;=  \frac{Z_2^2}{2}  
 \end{align}\]</div>
 <p>Thus:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2a11301-e047-496f-b85a-77f1fc994611">
-<span class="eqno">(4.965)<a class="headerlink" href="#equation-e2a11301-e047-496f-b85a-77f1fc994611" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a24e5307-3fcf-4712-b7ce-548b1365241d">
+<span class="eqno">(4.965)<a class="headerlink" href="#equation-a24e5307-3fcf-4712-b7ce-548b1365241d" title="Permalink to this equation">#</a></span>\[\begin{align}
 T_{AA}(Z_1,Z_2,a) &amp;= \frac{Z_1^2+a^2Z_2^2}{2(1+a^2)}
 \end{align}\]</div>
 <div class="cell docutils container">
@@ -813,26 +820,26 @@ T_{AA}(Z_1,Z_2,a) &amp;= \frac{Z_1^2+a^2Z_2^2}{2(1+a^2)}
 </section>
 <section id="j-aa-z-1-z-2-a">
 <h4><span class="section-number">4.5.19.7.2.2. </span><span class="math notranslate nohighlight">\(J_{AA}(Z_1,Z_2,a)\)</span><a class="headerlink" href="#j-aa-z-1-z-2-a" title="Permalink to this heading">#</a></h4>
-<div class="amsmath math notranslate nohighlight" id="equation-598738d5-ca80-469b-b060-734785fc00d7">
-<span class="eqno">(4.966)<a class="headerlink" href="#equation-598738d5-ca80-469b-b060-734785fc00d7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8b746fc2-49c5-4f4a-b28b-ef0e368e43b8">
+<span class="eqno">(4.966)<a class="headerlink" href="#equation-8b746fc2-49c5-4f4a-b28b-ef0e368e43b8" title="Permalink to this equation">#</a></span>\[\begin{align}
 J_{AA}(Z_1,Z_2,a) &amp;= \left\langle \phi_A \mid -\frac{1}{r_A} \mid \phi_A \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid -\frac{1}{r_A} \mid 1s_A + a\cdot2p_{zA} \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A  \mid -\frac{1}{r_A} \mid 1s_A \right\rangle + a\left\langle 1s_A  \mid -\frac{1}{r_A} \mid 2p_{zA} \right\rangle + a\left\langle 2p_{zA}  \mid -\frac{1}{r_A} \mid 1s_A \right\rangle + a^2\left\langle 2p_{zA}  \mid -\frac{1}{r_A} \mid 2p_{zA} \right\rangle\right]
 \end{align}\]</div>
 <p>This middle two terms will again be zero for the same argument as the <span class="math notranslate nohighlight">\(T\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2b436f7b-3424-41f1-8e66-1d92c7c98fcf">
-<span class="eqno">(4.967)<a class="headerlink" href="#equation-2b436f7b-3424-41f1-8e66-1d92c7c98fcf" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a8a6ea4b-9ddc-4014-bc76-a0eeb6483064">
+<span class="eqno">(4.967)<a class="headerlink" href="#equation-a8a6ea4b-9ddc-4014-bc76-a0eeb6483064" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 1s_A \mid -\frac{1}{r_A} \mid 1s_A \right\rangle =&amp; \left( \frac{Z_1^3}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^2\sin\theta_Ae^{-Z_1r_A}\left(-\frac{1}{r_A}\right) e^{-Z_1r_A}  dr_A d\theta_A d\phi_A \\
 =&amp; -Z_1 
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-c6c50b21-cf73-4d68-9f1d-897e2058b38b">
-<span class="eqno">(4.968)<a class="headerlink" href="#equation-c6c50b21-cf73-4d68-9f1d-897e2058b38b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-40be5a23-1ffe-4cd9-85e3-bccc7c1fe9f8">
+<span class="eqno">(4.968)<a class="headerlink" href="#equation-40be5a23-1ffe-4cd9-85e3-bccc7c1fe9f8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 2p_{zA} \mid -\frac{1}{r_A} \mid 2p_{zA} \right\rangle &amp;= -\left( \frac{Z_2^5}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^3\sin\theta_A\cos^2\theta_A e^{-2Z_2r_A}  dr_A d\theta_A d\phi_A \\
 &amp;=  -\frac{Z_2}{2} 
 \end{align}\]</div>
 <p>Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3300034b-7f8b-4b6e-b7c3-b50cea422950">
-<span class="eqno">(4.969)<a class="headerlink" href="#equation-3300034b-7f8b-4b6e-b7c3-b50cea422950" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-43dcd1c5-0f2d-469c-b854-cfa38d89b5fb">
+<span class="eqno">(4.969)<a class="headerlink" href="#equation-43dcd1c5-0f2d-469c-b854-cfa38d89b5fb" title="Permalink to this equation">#</a></span>\[\begin{align}
 J_{AA}(Z_1,Z_2,a) &amp;=  \frac{-1}{1+a^2}\left[ Z_1  + a^2\frac{Z_2}{2}\right]
 \end{align}\]</div>
 <div class="cell docutils container">
@@ -847,8 +854,8 @@ J_{AA}(Z_1,Z_2,a) &amp;=  \frac{-1}{1+a^2}\left[ Z_1  + a^2\frac{Z_2}{2}\right]
 <section id="j-ab-z-1-z-2-a-r">
 <h4><span class="section-number">4.5.19.7.2.3. </span><span class="math notranslate nohighlight">\(J_{AB}(Z_1,Z_2,a,R)\)</span><a class="headerlink" href="#j-ab-z-1-z-2-a-r" title="Permalink to this heading">#</a></h4>
 <p><span class="math notranslate nohighlight">\(\left\langle \phi_A \mid -\frac{1}{r_B} \mid \phi_A \right\rangle\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-0d9b609a-226c-4657-a7d2-6f03fdb72456">
-<span class="eqno">(4.970)<a class="headerlink" href="#equation-0d9b609a-226c-4657-a7d2-6f03fdb72456" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-420518f8-2109-4ddb-b449-b37b2e194346">
+<span class="eqno">(4.970)<a class="headerlink" href="#equation-420518f8-2109-4ddb-b449-b37b2e194346" title="Permalink to this equation">#</a></span>\[\begin{align}
 J_{AB}(Z_1,Z_2,a,R) &amp;= \left\langle \phi_A \mid -\frac{1}{r_B} \mid \phi_A \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid -\frac{1}{r_B} \mid 1s_A + a\cdot2p_{zA} \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A  \mid -\frac{1}{r_B} \mid 1s_A \right\rangle + a\left\langle 1s_A  \mid -\frac{1}{r_B} \mid 2p_{zA} \right\rangle + a\left\langle 2p_{zA}  \mid -\frac{1}{r_B} \mid 1s_A \right\rangle + a^2\left\langle 2p_{zA}  \mid -\frac{1}{r_B} \mid 2p_{zA} \right\rangle\right] \\
@@ -942,8 +949,8 @@ Next, we will consider <span class="math notranslate nohighlight">\(\left\langle
 </section>
 <section id="left-langle-phi-a-mid-hat-h-mid-phi-b-right-rangle">
 <h3><span class="section-number">4.5.19.7.3. </span><span class="math notranslate nohighlight">\(\left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle\)</span>.<a class="headerlink" href="#left-langle-phi-a-mid-hat-h-mid-phi-b-right-rangle" title="Permalink to this heading">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-70df7fd6-9130-41da-9ab2-eeb05707a84f">
-<span class="eqno">(4.971)<a class="headerlink" href="#equation-70df7fd6-9130-41da-9ab2-eeb05707a84f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b50fd283-fb9d-4e25-afeb-2248fabe4c05">
+<span class="eqno">(4.971)<a class="headerlink" href="#equation-b50fd283-fb9d-4e25-afeb-2248fabe4c05" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle &amp;= \left\langle \phi_A \mid -\frac{1}{2}\nabla^2 \mid \phi_B \right\rangle + \left\langle \phi_A \mid -\frac{1}{r_A} \mid \phi_B \right\rangle + \left\langle \phi_A \mid -\frac{1}{r_B} \mid \phi_B \right\rangle + \left\langle \phi_A \mid \frac{1}{R} \mid \phi_B \right\rangle \\
  &amp;= T_{AB}(Z_1,Z_2,a,R) + 2K_{AB}(Z_1,Z_2,a,R)  + \frac{S(Z_1,Z_2,a,R)}{R}
 \end{align}\]</div>
@@ -951,8 +958,8 @@ Next, we will consider <span class="math notranslate nohighlight">\(\left\langle
 For this section of calculations, we will tackle <span class="math notranslate nohighlight">\(K_{AB}\)</span> first, as it will allow us to identify simplifications in the <span class="math notranslate nohighlight">\(T_{AB}\)</span> calculations.</p>
 <section id="k-ab-z-1-z-2-a-r">
 <h4><span class="section-number">4.5.19.7.3.1. </span><span class="math notranslate nohighlight">\(K_{AB}(Z_1,Z_2,a,R)\)</span><a class="headerlink" href="#k-ab-z-1-z-2-a-r" title="Permalink to this heading">#</a></h4>
-<div class="amsmath math notranslate nohighlight" id="equation-77fc2f7e-4486-4d90-a368-6dc588239454">
-<span class="eqno">(4.972)<a class="headerlink" href="#equation-77fc2f7e-4486-4d90-a368-6dc588239454" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5e4881f0-7743-49d5-88eb-7021105fa24b">
+<span class="eqno">(4.972)<a class="headerlink" href="#equation-5e4881f0-7743-49d5-88eb-7021105fa24b" title="Permalink to this equation">#</a></span>\[\begin{align}
 K_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid -\frac{1}{r_B} \mid 1s_B+ a\cdot2p_{zB} \right\rangle \\
  &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A \mid -\frac{1}{r_B} \mid 1s_B \right\rangle + a\left\langle 1s_A  \mid -\frac{1}{r_B} \mid 2p_{zB} \right\rangle + a\left\langle 2p_{zA} \mid -\frac{1}{r_B} \mid 1s_B \right\rangle + a^2\left\langle 2p_{zA} \mid -\frac{1}{r_B} \mid 2p_{zB} \right\rangle\right] \\
   &amp;= \frac{1}{1+a^2}\left[ K_{1s-1s}(Z_1,R) + aK_{2p-1s}(Z_1,Z_2,R) + aK_{1s-2p}(Z_1,Z_2,R) + a^2K_{2p-2p}(Z_2,R)\right] \\
@@ -1060,15 +1067,15 @@ Next, we will look at <span class="math notranslate nohighlight">\(T_{AB}\)</spa
 </section>
 <section id="t-ab-z1-z2-a-r">
 <h4><span class="section-number">4.5.19.7.3.2. </span><span class="math notranslate nohighlight">\(T_{AB}(Z1,Z2,a,R)\)</span><a class="headerlink" href="#t-ab-z1-z2-a-r" title="Permalink to this heading">#</a></h4>
-<div class="amsmath math notranslate nohighlight" id="equation-5022859f-ff8c-4493-a7e2-0098bbe84446">
-<span class="eqno">(4.973)<a class="headerlink" href="#equation-5022859f-ff8c-4493-a7e2-0098bbe84446" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7cabda28-6a78-4e65-9114-f40c49560f2f">
+<span class="eqno">(4.973)<a class="headerlink" href="#equation-7cabda28-6a78-4e65-9114-f40c49560f2f" title="Permalink to this equation">#</a></span>\[\begin{align}
 T_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 1s_B+ a\cdot2p_{zB} \right\rangle \\
  &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A \mid -\frac{1}{2}\nabla^2 \mid 1s_B \right\rangle + a\left\langle 1s_A  \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle + a\left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 1s_B \right\rangle + a^2\left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle\right]
 \end{align}\]</div>
 <p><br />
 We will work out the first of these to show how familiar functional forms pop out. Note specifically how we can use the operation of the kinetic energy operator on the <span class="math notranslate nohighlight">\(1s\)</span> and <span class="math notranslate nohighlight">\(2p_z\)</span> orbital functions we calculated earlier (see <span class="math notranslate nohighlight">\(T_{AA}\)</span>) to hasten this calculation and reduce it to familiar forms.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d48f08df-6720-4352-b3bc-674b8de8762b">
-<span class="eqno">(4.974)<a class="headerlink" href="#equation-d48f08df-6720-4352-b3bc-674b8de8762b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-37aadf0d-3557-4250-9a17-ab702572edba">
+<span class="eqno">(4.974)<a class="headerlink" href="#equation-37aadf0d-3557-4250-9a17-ab702572edba" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 1s_A \mid -\frac{1}{2}\nabla^2 \mid 1s_B \right\rangle &amp;= \left( \frac{Z_1^3}{\pi}\right) \int_{\text{all space}} e^{-Z_1r_A}\left(-\frac{1}{2}\nabla^2 \right) e^{-Z_1r_B}  d\vec{r} \\
 &amp;= \left( \frac{Z_1^3}{\pi}\right) \int_{\text{all space}} e^{-Z_1r_A}\left(\frac{Z_1}{r_B} - \frac{Z_1^2}{2}\right)e^{-Z_1r_B}  d\vec{r} \\
 &amp;= \left( \frac{Z_1^3}{\pi}\right) \left[ Z_1\int_{\text{all space}} \frac{e^{-Z_1(r_A+r_B)}}{r_B}d\vec{r} - \frac{Z_1^2}{2}\int_{\text{all space}} e^{-Z_1(r_A+r_B)}d\vec{r}  \right] \\
@@ -1078,24 +1085,24 @@ We will work out the first of these to show how familiar functional forms pop ou
 &amp;= -Z_1\left(K_{1s-1s}+\frac{Z_1}{2}S_{1s-1s}\right)
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(\left\langle 1s_A \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle\)</span> Takes a similar form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6107b743-23f6-4895-a4c7-1e669c92bbf6">
-<span class="eqno">(4.975)<a class="headerlink" href="#equation-6107b743-23f6-4895-a4c7-1e669c92bbf6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-293de2e1-676b-4da8-b09e-9ce9b0741a48">
+<span class="eqno">(4.975)<a class="headerlink" href="#equation-293de2e1-676b-4da8-b09e-9ce9b0741a48" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 1s_A \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle &amp;= -Z_2\left(2K_{2pz-1s} + \frac{Z_2}{2}S_{1s-2pz} \right)
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(\left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 1s_B \right\rangle\)</span> Takes a similar form as well:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb7b2604-baf6-4844-9a25-2e11e9a1c908">
-<span class="eqno">(4.976)<a class="headerlink" href="#equation-eb7b2604-baf6-4844-9a25-2e11e9a1c908" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ac30d4b5-34c2-4b3c-bbcf-0ef283ab1e5d">
+<span class="eqno">(4.976)<a class="headerlink" href="#equation-ac30d4b5-34c2-4b3c-bbcf-0ef283ab1e5d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 2p_{zA}\mid -\frac{1}{2}\nabla^2 \mid 1s_B \right\rangle &amp;= -Z_1\left( K_{1s-2pz}+\frac{Z_1}{2}S_{2pz-1s} \right)
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(\left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle\)</span> Takes a similar form as well:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4e6dd8c1-3886-4054-83ba-50689f5f05a0">
-<span class="eqno">(4.977)<a class="headerlink" href="#equation-4e6dd8c1-3886-4054-83ba-50689f5f05a0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2478c44a-e973-405f-a003-14b9feef565b">
+<span class="eqno">(4.977)<a class="headerlink" href="#equation-2478c44a-e973-405f-a003-14b9feef565b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle &amp;
 &amp;= -Z_2\left(2K_{2pz-2pz} + \frac{Z_2}{2}S_{2pz-2pz}\right)
 \end{align}\]</div>
 <p>Thus:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8fff50b7-3e9a-43d0-9715-278b98b1c5a9">
-<span class="eqno">(4.978)<a class="headerlink" href="#equation-8fff50b7-3e9a-43d0-9715-278b98b1c5a9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d6d51b2a-4422-4f0e-bc7c-c5f367837071">
+<span class="eqno">(4.978)<a class="headerlink" href="#equation-d6d51b2a-4422-4f0e-bc7c-c5f367837071" title="Permalink to this equation">#</a></span>\[\begin{align}
 T_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left[ -Z_1\left(K_{1s-1s}+\frac{Z_1}{2}S_{1s-1s}\right) -aZ_2\left(2K_{2pz-1s} + \frac{Z_2}{2}S_{1s-2pz} \right) -aZ_1\left( K_{1s-2pz}+\frac{Z_1}{2}S_{2pz-1s} \right) -a^2Z_2\left(2K_{2pz-2pz} + \frac{Z_2}{2}S_{2pz-2pz}\right)\right] \\
 &amp;= \frac{-1}{1+a^2}\left[ Z_1K_{1s-1s} + 2aZ_2K_{2pz-1s} + aZ_1K_{1s-2pz} + a^22Z_2K_{2pz-2pz} + \frac{Z_1^2}{2}S_{1s-1s} + a\frac{Z_2^2}{2}S_{1s-2pz} + a\frac{Z_1^2}{2}S_{2pz-1s}  + a^2\frac{Z_2^2}{2}S_{2pz-2pz}\right]\\
 &amp;= \frac{-1}{1+a^2}\left[ Z_1K_{1s-1s} + 2aZ_2K_{2pz-1s} + aZ_1K_{1s-2pz} + 2a^2Z_2K_{2pz-2pz} + \frac{Z_1^2}{2}S_{1s-1s} + \frac{aS_{1s-2pz}}{2} \left(Z_2^2 + Z_1^2\right) + a^2\frac{Z_2^2}{2}S_{2pz-2pz}\right]
@@ -1173,8 +1180,8 @@ T_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left[ -Z_1\left(K_{1s-1s}+\frac{Z_1}{2}
 <section id="total-energy">
 <h2><span class="section-number">4.5.19.9. </span>Total Energy<a class="headerlink" href="#total-energy" title="Permalink to this heading">#</a></h2>
 <p>Now the total energy combining all of the above is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a908c0a5-1746-40e6-9188-e57e9b00cd8c">
-<span class="eqno">(4.979)<a class="headerlink" href="#equation-a908c0a5-1746-40e6-9188-e57e9b00cd8c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-497f55ae-78a1-4b3f-8a6b-67da49212bf7">
+<span class="eqno">(4.979)<a class="headerlink" href="#equation-497f55ae-78a1-4b3f-8a6b-67da49212bf7" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_{\psi_+} &amp;=  \frac{1}{(1+S_{AB})}\left[ \left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle + \left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle \right] \\
 &amp;= \frac{T_{AA}(Z_1,Z_2,a) + J_{AA}(Z_1,Z_2,a) + J_{AB}(Z_1,Z_2,a,R) + \frac{1}{R} + T_{AB}(Z_1,Z_2,a,R) + 2K_{AB}(Z_1,Z_2,a,R)  + \frac{S(Z_1,Z_2,a,R)}{R}}{(1+S_{AB}(Z_1,Z_2,a,R))} \\
 &amp;= \frac{T_{AA}(Z_1,Z_2,a) + J_{AA}(Z_1,Z_2,a) + J_{AB}(Z_1,Z_2,a,R) + T_{AB}(Z_1,Z_2,a,R) + 2K_{AB}(Z_1,Z_2,a,R)  }{(1+S_{AB}(Z_1,Z_2,a,R))} + \frac{1}{R}

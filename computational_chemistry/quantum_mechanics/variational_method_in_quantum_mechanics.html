@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="5.3. Hands-on Activities" href="../hands_on_activities/intro.html" />
+    <link rel="next" title="5.2.3. The Hydrogen Atom" href="the_hydrogen_atom.html" />
     <link rel="prev" title="5.2.1. Particle in a Box" href="particle_in_a_box.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">5.2. Quantum Mechanics</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -807,8 +814,8 @@ S^{-1}H =  [[ 14.  -8.]
 <section id="pib-with-3-basis-functions">
 <h3><span class="section-number">5.2.2.6.1. </span>PIB with 3 basis functions<a class="headerlink" href="#pib-with-3-basis-functions" title="Permalink to this heading">#</a></h3>
 <p>How much better can we do with three basis functions?  For this example, we will consider the previous two basis functions but also add a third:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4a2cbfe6-a37e-415f-aff6-cec7c568315f">
-<span class="eqno">(5.42)<a class="headerlink" href="#equation-4a2cbfe6-a37e-415f-aff6-cec7c568315f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9f22fd0b-a16d-4038-9ac8-2128fd49965e">
+<span class="eqno">(5.42)<a class="headerlink" href="#equation-9f22fd0b-a16d-4038-9ac8-2128fd49965e" title="Permalink to this equation">#</a></span>\[\begin{align}
 f_1 &amp;= x\cdot(1-x) \\
 f_2 &amp;= x^2\cdot(1-x)^2 \\
 f_3 &amp;= x^3/cdot(1-x)^3
@@ -850,8 +857,8 @@ f_3 &amp;= x^3/cdot(1-x)^3
 </div>
 </div>
 <p>Now we need to calculate the Hamiltonian matrix.  For this, I do need to determine the integrands of each matrix element but then will again use Gaussian quadrature numerical integration to compute the value of the matrix elements.  Here are the integrands:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6d9bfade-a301-4328-ae89-72636f7bfe63">
-<span class="eqno">(5.43)<a class="headerlink" href="#equation-6d9bfade-a301-4328-ae89-72636f7bfe63" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2bffc0dc-1039-4a94-9b57-fb9f28d07a6d">
+<span class="eqno">(5.43)<a class="headerlink" href="#equation-2bffc0dc-1039-4a94-9b57-fb9f28d07a6d" title="Permalink to this equation">#</a></span>\[\begin{align}
 h_{11} &amp;= f_1\frac{-d^2}{2dx^2}f_1 = x\cdot(1-x) \\
 h_{12} &amp;= f_1\frac{-d^2}{2dx^2}f_2 = x\cdot(1-x)\cdot(-6x^2+6x-1) \\
 h_{13} &amp;= f_1\frac{-d^2}{2dx^2}f_3 = x\cdot(1-x)\cdot(15x^4-30x^3+18x^2-3x) \\
@@ -958,11 +965,11 @@ eigenvector corresponding to lowest E: [[0.68354516]
       </div>
     </a>
     <a class="right-next"
-       href="../hands_on_activities/intro.html"
+       href="the_hydrogen_atom.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">5.3. </span>Hands-on Activities</p>
+        <p class="prev-next-title"><span class="section-number">5.2.3. </span>The Hydrogen Atom</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

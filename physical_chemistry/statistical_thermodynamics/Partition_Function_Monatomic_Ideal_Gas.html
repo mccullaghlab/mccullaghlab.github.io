@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -579,14 +586,14 @@ document.write(`
 <section id="energy-of-a-monatomic-ideal-gas">
 <h2><span class="section-number">4.2.4.4. </span>Energy of a Monatomic Ideal Gas<a class="headerlink" href="#energy-of-a-monatomic-ideal-gas" title="Permalink to this heading">#</a></h2>
 <p>The energy of an ideal gas with constant number of particles, <span class="math notranslate nohighlight">\(N\)</span>, volume, <span class="math notranslate nohighlight">\(V\)</span>, and temperature, <span class="math notranslate nohighlight">\(T\)</span>, is a sum of energies of individual ideal gas particles.  A macroscopic state, <span class="math notranslate nohighlight">\(j\)</span>, is a sum of particle energies in that particular macroscopic state</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a1e84cc5-d1d9-41a5-8e7c-48fd59f20e26">
-<span class="eqno">(4.89)<a class="headerlink" href="#equation-a1e84cc5-d1d9-41a5-8e7c-48fd59f20e26" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8d4114db-12d3-4421-86fc-5e98d2e18664">
+<span class="eqno">(4.89)<a class="headerlink" href="#equation-8d4114db-12d3-4421-86fc-5e98d2e18664" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_j = \sum_{i=1}^N \epsilon_{i,j},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\epsilon_{i,j}\)</span> denotes the energy of particle <span class="math notranslate nohighlight">\(i\)</span> in macroscopic state <span class="math notranslate nohighlight">\(j\)</span>.</p>
 <p>Given that we are considering our system to be a monatomic ideal gas, only the translational energy of each particle matters.  Quantum mechanics gives this to be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e6daac24-4a13-4692-a091-d540130d45ce">
-<span class="eqno">(4.90)<a class="headerlink" href="#equation-e6daac24-4a13-4692-a091-d540130d45ce" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5be860e4-6c15-49f2-99be-b8b157d29bb5">
+<span class="eqno">(4.90)<a class="headerlink" href="#equation-5be860e4-6c15-49f2-99be-b8b157d29bb5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \epsilon_{i,j} = \frac{h^2}{8ma^2}\left(n_{x,i,j}^2+n_{y,i,j}^2+n_{z,i,j}^2\right),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(h\)</span> is Planck’s constant, <span class="math notranslate nohighlight">\(m\)</span> is the mass of the particle and <span class="math notranslate nohighlight">\(a=V^{1/3}\)</span>.  Each macroscopic state will be differentiated by a the values of <span class="math notranslate nohighlight">\(n_x, n_y, n_z\)</span> taken on for each particle, so <span class="math notranslate nohighlight">\(j\)</span> is actually a list of specific values of <span class="math notranslate nohighlight">\((n_{x,1},n_{y,1},n_{z,1},n_{x,2},..,n_{z,N})\)</span>.  All macroscopic states will be accounted for by all possible combinations of <span class="math notranslate nohighlight">\(n_x, n_y, n_z\)</span> for each particle.  Obviously, the number of possible states will thus be infinitely large.</p>
@@ -594,16 +601,16 @@ E_j = \sum_{i=1}^N \epsilon_{i,j},
 <section id="the-canonical-partition-function-of-an-ideal-gas">
 <h2><span class="section-number">4.2.4.5. </span>The Canonical Partition Function of an Ideal Gas<a class="headerlink" href="#the-canonical-partition-function-of-an-ideal-gas" title="Permalink to this heading">#</a></h2>
 <p>The canonical partition function for a monatomic ideal gas is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0ccb4086-8933-45c5-a94e-314897eb9837">
-<span class="eqno">(4.91)<a class="headerlink" href="#equation-0ccb4086-8933-45c5-a94e-314897eb9837" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-09e3b7b8-2f55-4607-a6f1-5e265c006ca9">
+<span class="eqno">(4.91)<a class="headerlink" href="#equation-09e3b7b8-2f55-4607-a6f1-5e265c006ca9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; \sum_{n_{x,1} = 1,2.., n_{y,1} = 1,2.., .., n_{z,N}=1,2..} e^{-\beta E_{n_{x,1},n_{y,1},..,n_{z,N}}} \\
 &amp;=&amp; \sum_j e^{-\beta E_j} \\
 &amp;=&amp; \sum_j e^{-\beta \sum_{i=1}^N \epsilon_{i,j}} \\
 &amp;=&amp; \sum_j e^{-\beta \epsilon_{1,j}}e^{-\beta \epsilon_{2,j}}...e^{-\beta \epsilon_{N,j}}
 \end{eqnarray}\]</div>
 <p>This can be further simplified by recognizing that the sum can be distributed over the product.  Here I will just do it but we will see an example of this later.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-81fb7f3e-1c55-4474-a65d-780cf1c3b53a">
-<span class="eqno">(4.92)<a class="headerlink" href="#equation-81fb7f3e-1c55-4474-a65d-780cf1c3b53a" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-36fb1bbe-914b-4271-8e3f-87b278088f90">
+<span class="eqno">(4.92)<a class="headerlink" href="#equation-36fb1bbe-914b-4271-8e3f-87b278088f90" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; \sum_{n_{x,1},n_{y,1},n_{z,1}} e^{-\beta \epsilon_{1,n_{x,1},n_{y,1},n_{z,1}}}\sum_{n_{x,2},n_{y,2},n_{z,2}}e^{-\beta \epsilon_{2,n_{x,1},n_{y,1},n_{z,1}}}...\sum_{n_{x,N},n_{y,N},n_{z,N}}e^{-\beta \epsilon_{N,n_{x,1},n_{y,1},n_{z,1}}} \\
  &amp;=&amp; \prod_{i=1}^N \sum_{n_{x,i},n_{y,i},n_{z,i}} e^{-\beta \epsilon_{1,n_{x,i},n_{y,i},n_{z,i}}} \\
  &amp;=&amp; \prod_{i=1}^N q_i,
@@ -615,8 +622,8 @@ Q &amp;=&amp; \sum_{n_{x,1},n_{y,1},n_{z,1}} e^{-\beta \epsilon_{1,n_{x,1},n_{y,
 <li><p>The particle index <span class="math notranslate nohighlight">\(i\)</span> is arbitrary and thus swapping two particles (e.g. particles 2 and 4) should have no affect on the final result.  This leads to an overcounting of <span class="math notranslate nohighlight">\(N!\)</span> per state.</p></li>
 </ol>
 <p>Taking these two aspects into account we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-722ccccd-938d-4a2b-9f2f-484953352110">
-<span class="eqno">(4.93)<a class="headerlink" href="#equation-722ccccd-938d-4a2b-9f2f-484953352110" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-d8fb3199-7190-43da-9349-c0611e523b35">
+<span class="eqno">(4.93)<a class="headerlink" href="#equation-d8fb3199-7190-43da-9349-c0611e523b35" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; \frac{q^N}{N!}
 \end{eqnarray}\]</div>
 </section>
@@ -630,15 +637,15 @@ Q &amp;=&amp; \frac{q^N}{N!}
 <section id="write-out-all-possible-energy-levels">
 <h3><span class="section-number">4.2.4.6.1. </span>1.  Write out all possible energy levels<a class="headerlink" href="#write-out-all-possible-energy-levels" title="Permalink to this heading">#</a></h3>
 <p>The energy of the system is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-23431406-fd82-4416-8d52-e55271471d92">
-<span class="eqno">(4.94)<a class="headerlink" href="#equation-23431406-fd82-4416-8d52-e55271471d92" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-4aa3ef55-e028-4944-82f6-bdca6a5fb8e9">
+<span class="eqno">(4.94)<a class="headerlink" href="#equation-4aa3ef55-e028-4944-82f6-bdca6a5fb8e9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 E_j &amp;=&amp; \sum_i \epsilon_{j,i} \\ 
 &amp;=&amp; \epsilon_{j,1} + \epsilon_{j,2} + \epsilon_{j,3},
 \end{eqnarray}\]</div>
 <p>where here <span class="math notranslate nohighlight">\(j\)</span> is as an ordered triplet, <span class="math notranslate nohighlight">\(j = (1,2,2)\)</span> for example, denoting the states of the three particles.</p>
 <p>Each particle can take on one of two energy levels thus yielding a total of <span class="math notranslate nohighlight">\(2^3=8\)</span> possibilities</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c8e67ec0-b7fc-47bb-b102-3b106699c950">
-<span class="eqno">(4.95)<a class="headerlink" href="#equation-c8e67ec0-b7fc-47bb-b102-3b106699c950" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ed6c3d38-40d6-43b5-b101-33460f6248af">
+<span class="eqno">(4.95)<a class="headerlink" href="#equation-ed6c3d38-40d6-43b5-b101-33460f6248af" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 E_1 = \epsilon_{1,1} + \epsilon_{1,2} + \epsilon_{1,3} &amp;=&amp; 3\epsilon_1 \\
 E_2 = \epsilon_{2,1} + \epsilon_{1,2} + \epsilon_{1,3} &amp;=&amp; 2\epsilon_1 + \epsilon_2 \\
 E_3 = \epsilon_{1,1} + \epsilon_{2,2} + \epsilon_{1,3} &amp;=&amp; 2\epsilon_1 + \epsilon_2 \\
@@ -649,8 +656,8 @@ E_7 = \epsilon_{1,1} + \epsilon_{2,2} + \epsilon_{2,3} &amp;=&amp; \epsilon_1 + 
 E_8 = \epsilon_{2,1} + \epsilon_{2,2} + \epsilon_{2,3} &amp;=&amp; 3\epsilon_2 \\
 \end{eqnarray}\]</div>
 <p>Notice, however, that there are really only four different values for the total energy.  Additionally, since the particles are indistinguishable, each of the substates of the four different energy levels are indistinguishable.  So really we have the following four system energy levels:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-419fb9d8-20a6-4e13-865e-a73a972ab97b">
-<span class="eqno">(4.96)<a class="headerlink" href="#equation-419fb9d8-20a6-4e13-865e-a73a972ab97b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-3436db9f-81a6-4d1c-bf70-ea564f909108">
+<span class="eqno">(4.96)<a class="headerlink" href="#equation-3436db9f-81a6-4d1c-bf70-ea564f909108" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 E_1 &amp;=&amp; 3\epsilon_1 \\
 E_2 &amp;=&amp; 2\epsilon_1 + \epsilon_2 \\
 E_3 &amp;=&amp; \epsilon_1 + 2\epsilon_2 \\
@@ -660,8 +667,8 @@ E_4 &amp;=&amp; 3\epsilon_2 \\
 <section id="demonstrate-q-approx-frac-q-n-n">
 <h3><span class="section-number">4.2.4.6.2. </span>2. Demonstrate <span class="math notranslate nohighlight">\(Q \approx \frac{q^N}{N!}\)</span>.<a class="headerlink" href="#demonstrate-q-approx-frac-q-n-n" title="Permalink to this heading">#</a></h3>
 <p>We have four system energy levels and can thus just write out the overall partition function for this system</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2088dd4a-462d-43f7-9214-670b17abec39">
-<span class="eqno">(4.97)<a class="headerlink" href="#equation-2088dd4a-462d-43f7-9214-670b17abec39" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-69ad0af7-541b-4a18-a5fb-878979b4df7e">
+<span class="eqno">(4.97)<a class="headerlink" href="#equation-69ad0af7-541b-4a18-a5fb-878979b4df7e" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 Q &amp;=&amp; e^{-\beta 3\epsilon_1} + e^{-\beta (2\epsilon_1 + \epsilon_2)} + e^{-\beta (\epsilon_1 + 2\epsilon_2)} + e^{-\beta 3\epsilon_2} \\
 &amp;=&amp; e^{-\beta (\epsilon_{1,1} + \epsilon_{1,2} + \epsilon_{1,3})} + \frac{1}{3}\left( e^{-\beta (\epsilon_{2,1} + \epsilon_{1,2} + \epsilon_{1,3})} + e^{-\beta (\epsilon_{1,1} + \epsilon_{2,2} + \epsilon_{1,3})} + e^{-\beta (\epsilon_{1,1} + \epsilon_{1,2} + \epsilon_{2,3})}\right) + \frac{1}{3}\left( e^{-\beta (\epsilon_{2,1} + \epsilon_{2,2} + \epsilon_{1,3})} + e^{-\beta (\epsilon_{2,1} + \epsilon_{1,2} + \epsilon_{2,3})} + e^{-\beta (\epsilon_{1,1} + \epsilon_{2,2} + \epsilon_{2,3})}\right) + e^{-\beta (\epsilon_{2,1} + \epsilon_{2,2} + \epsilon_{2,3})} \\
 &amp;=&amp; \frac{1}{3}\left(e^{-\beta \epsilon_{1,1}} + e^{-\beta \epsilon_{2,1}}\right) \left(e^{-\beta \epsilon_{1,2}} + e^{-\beta \epsilon_{2,2}}\right)\left(e^{-\beta \epsilon_{1,3}} + e^{-\beta \epsilon_{2,3}}\right) + \frac{2}{3}\left(e^{-\beta (\epsilon_{1,1} + \epsilon_{1,2} + \epsilon_{1,3})} + e^{-\beta (\epsilon_{2,1} + \epsilon_{2,2} + \epsilon_{2,3})}\right)\\
@@ -676,19 +683,19 @@ Q &amp;=&amp; e^{-\beta 3\epsilon_1} + e^{-\beta (2\epsilon_1 + \epsilon_2)} + e
 <section id="achieving-an-analytic-solution-for-the-translational-partition-function">
 <h2><span class="section-number">4.2.4.7. </span>Achieving an Analytic Solution for the Translational Partition Function<a class="headerlink" href="#achieving-an-analytic-solution-for-the-translational-partition-function" title="Permalink to this heading">#</a></h2>
 <p>So far we have demonstrated that, for an ideal gas, we have a Canonical partition function of the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7a9fc2e9-e103-453d-a8a8-e14ae79bb2ad">
-<span class="eqno">(4.98)<a class="headerlink" href="#equation-7a9fc2e9-e103-453d-a8a8-e14ae79bb2ad" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-865ec52a-3ff5-4a20-9ebe-83e7692075d4">
+<span class="eqno">(4.98)<a class="headerlink" href="#equation-865ec52a-3ff5-4a20-9ebe-83e7692075d4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q = \frac{q^N}{N!},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(q = \sum_je^{-\beta \epsilon_j}\)</span> is termed the molecular partition function with molecular energy <span class="math notranslate nohighlight">\(\epsilon_j\)</span> for molecular state <span class="math notranslate nohighlight">\(j\)</span>.  For a monatomic ideal gas only the translational energy of each particle comes into play and thus</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d0721502-02c9-4d4f-a043-4f24ed258e76">
-<span class="eqno">(4.99)<a class="headerlink" href="#equation-d0721502-02c9-4d4f-a043-4f24ed258e76" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-66e86834-6e58-4c6b-9146-bccb54643480">
+<span class="eqno">(4.99)<a class="headerlink" href="#equation-66e86834-6e58-4c6b-9146-bccb54643480" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \epsilon_{n_x,n_y,n_z} = \frac{h^2}{8ma^2}\left(n_x^2 + n_y^2 + n_z^2\right), \quad n_x,n_y,n_z=1, 2, ...
 \end{equation}\]</div>
 <p>The goal now is to plug in the energy equation into <span class="math notranslate nohighlight">\(q\)</span> and derive an analytic expression for the resulting sum (and ultimately plug this result back into the above equation for <span class="math notranslate nohighlight">\(Q\)</span>).</p>
 <p>We start by simply plugging in the energy into <span class="math notranslate nohighlight">\(q\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-984410ee-c75d-4f73-a249-5c64ab61f530">
-<span class="eqno">(4.100)<a class="headerlink" href="#equation-984410ee-c75d-4f73-a249-5c64ab61f530" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-7598ee2a-ff1f-4e36-b802-5771d6c234bd">
+<span class="eqno">(4.100)<a class="headerlink" href="#equation-7598ee2a-ff1f-4e36-b802-5771d6c234bd" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 q_{trans} &amp;=&amp; \sum_{n_x,n_y,n_z} e^{-\beta \epsilon_{n_x,n_y,n_z}} \\
 &amp;=&amp; \sum_{n_x=1}^{\infty}\sum_{n_y=1}^{\infty}\sum_{n_z=1}^{\infty} \exp\left[ \frac{-\beta h^2}{8ma^2}\left(n_x^2 + n_y^2 + n_z^2\right) \right] \\
 &amp;=&amp; \sum_{n_x=1}^{\infty}\exp\left(\frac{-\beta h^2n_x^2}{8ma^2}\right)\sum_{n_y=1}^{\infty}\exp\left(\frac{-\beta h^2n_y^2}{8ma^2}\right)\sum_{n_z=1}^{\infty} \exp\left(\frac{-\beta h^2n_z^2}{8ma^2} \right) \\
@@ -696,50 +703,50 @@ q_{trans} &amp;=&amp; \sum_{n_x,n_y,n_z} e^{-\beta \epsilon_{n_x,n_y,n_z}} \\
 \end{eqnarray}\]</div>
 <p>Where I have now labeled the molecular partition function <span class="math notranslate nohighlight">\(q_{trans}\)</span> to denote that it is for the translational component of the energy.  We now need to evaluate the sum inside the square brackets.</p>
 <p>In order to evaluate this sum we will make the approximation that the spacing of the translational energy levels is very small relative to <span class="math notranslate nohighlight">\(k_BT\)</span> and thus we can approximate the sum of quantum number <span class="math notranslate nohighlight">\(n\)</span> as an integral over continuous variable <span class="math notranslate nohighlight">\(n\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bb2221f9-7ba1-4dea-a990-db82a7daca95">
-<span class="eqno">(4.101)<a class="headerlink" href="#equation-bb2221f9-7ba1-4dea-a990-db82a7daca95" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-56e66c97-3d24-43cf-8e03-a2815a197c09">
+<span class="eqno">(4.101)<a class="headerlink" href="#equation-56e66c97-3d24-43cf-8e03-a2815a197c09" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \sum_{n=1}^{\infty}\exp\left(\frac{-\beta h^2n^2}{8ma^2}\right) \approx \int_0^{\infty} e^{\frac{-\beta h^2n^2}.{8ma^2}}dn
 \end{eqnarray}\]</div>
 <p>Recall from our section on continuous probability that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a142e69b-154f-435c-9d18-5b7a6c882b39">
-<span class="eqno">(4.102)<a class="headerlink" href="#equation-a142e69b-154f-435c-9d18-5b7a6c882b39" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-427707e7-18a0-4670-a0a7-1c178ed08e18">
+<span class="eqno">(4.102)<a class="headerlink" href="#equation-427707e7-18a0-4670-a0a7-1c178ed08e18" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int_0^\infty e^{-\alpha x^2}dx = \sqrt{\frac{\pi}{4\alpha}}
 \end{eqnarray}\]</div>
 <p>Thus we get that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c6681dec-261a-44bd-93fb-4685ed3d341d">
-<span class="eqno">(4.103)<a class="headerlink" href="#equation-c6681dec-261a-44bd-93fb-4685ed3d341d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-832ee382-6e59-4e5d-8c69-ed8928d2c6af">
+<span class="eqno">(4.103)<a class="headerlink" href="#equation-832ee382-6e59-4e5d-8c69-ed8928d2c6af" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \int_0^{\infty} e^{\frac{-\beta h^2n^2}{8ma^2}}dn &amp;=&amp; \left( \frac{8\pi m a^2}{4\beta h^2} \right)^{1/2} \\
 &amp;=&amp; \left( \frac{2\pi m k_BT}{ h^2} \right)^{1/2}a
 \end{eqnarray}\]</div>
 <p>Plugging this back into <span class="math notranslate nohighlight">\(q_{trans}\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3205aeee-3d60-4072-8b89-c684e73394f1">
-<span class="eqno">(4.104)<a class="headerlink" href="#equation-3205aeee-3d60-4072-8b89-c684e73394f1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a28ae930-4c7b-47e9-9c80-c0f49a2aa390">
+<span class="eqno">(4.104)<a class="headerlink" href="#equation-a28ae930-4c7b-47e9-9c80-c0f49a2aa390" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 q_{trans} &amp;=&amp; \left[ \left( \frac{2\pi m k_BT}{ h^2} \right)^{1/2}a \right]^3\\
 &amp;=&amp; \left( \frac{2\pi m k_BT}{ h^2} \right)^{3/2}a^3 \\
 &amp;=&amp; \left( \frac{2\pi m k_BT}{ h^2} \right)^{3/2}V
 \end{eqnarray}\]</div>
 <p>where the last equality comes from the fact that <span class="math notranslate nohighlight">\(a=V^{1/3}\)</span>.</p>
 <p>Finally, we can plug this back into the equation for <span class="math notranslate nohighlight">\(Q\)</span> to get the final expression for the partition function of a monatomic ideal gas</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0e6cbda9-bb79-4d60-959a-9d1c74c215c3">
-<span class="eqno">(4.105)<a class="headerlink" href="#equation-0e6cbda9-bb79-4d60-959a-9d1c74c215c3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-40ae8995-61b0-49d2-a1db-92b1bbb93118">
+<span class="eqno">(4.105)<a class="headerlink" href="#equation-40ae8995-61b0-49d2-a1db-92b1bbb93118" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Q = \frac{\left( \frac{2\pi m k_BT}{ h^2} \right)^{3N/2}V^N}{N!}
 \end{equation}\]</div>
 </section>
 <section id="example-1-integration-vs-summation">
 <h2><span class="section-number">4.2.4.8. </span>Example 1: Integration vs Summation<a class="headerlink" href="#example-1-integration-vs-summation" title="Permalink to this heading">#</a></h2>
 <p>Consider the following function of <span class="math notranslate nohighlight">\(n\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f4dc104b-84c5-4ab7-b847-677e6f7669ce">
-<span class="eqno">(4.106)<a class="headerlink" href="#equation-f4dc104b-84c5-4ab7-b847-677e6f7669ce" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5fc6c5e5-c7c6-43c2-8349-5ece346cc559">
+<span class="eqno">(4.106)<a class="headerlink" href="#equation-5fc6c5e5-c7c6-43c2-8349-5ece346cc559" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(n) = \exp\left( \frac{-\beta h^2n^2}{8ma^2} \right)
 \end{equation}\]</div>
 <p>Evaluate the following two functions over domain <span class="math notranslate nohighlight">\(1\times10^9 \leq n \leq 1.001\times10^9\)</span> and with <span class="math notranslate nohighlight">\(m=1\)</span> amu, <span class="math notranslate nohighlight">\(T=300\)</span> K, and <span class="math notranslate nohighlight">\(a=1\)</span> dm.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e0cbbd8-ff32-4ce0-8bdc-fc0f9f6dbade">
-<span class="eqno">(4.107)<a class="headerlink" href="#equation-9e0cbbd8-ff32-4ce0-8bdc-fc0f9f6dbade" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-63548b7a-8d32-44c7-a2b7-921f5770aa94">
+<span class="eqno">(4.107)<a class="headerlink" href="#equation-63548b7a-8d32-44c7-a2b7-921f5770aa94" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \sum_{n=1\times10^9}^{1.001\times10^9} f(n)
 \end{equation}\]</div>
 <p>and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-284f26cc-7309-4ab5-b8ab-242b9672172b">
-<span class="eqno">(4.108)<a class="headerlink" href="#equation-284f26cc-7309-4ab5-b8ab-242b9672172b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b6737666-c4e6-4df4-9d23-173a76684d95">
+<span class="eqno">(4.108)<a class="headerlink" href="#equation-b6737666-c4e6-4df4-9d23-173a76684d95" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{1\times10^9}^{1.001\times10^9} f(n)dn
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -810,52 +817,52 @@ Percent Error: 7.985945991538972e-09
 <h2><span class="section-number">4.2.4.9. </span>Example 2: Average <span class="math notranslate nohighlight">\(n\)</span><a class="headerlink" href="#example-2-average-n" title="Permalink to this heading">#</a></h2>
 <p>Consider a monatomic ideal gas particle in 1D with m = 1.66x10<span class="math notranslate nohighlight">\(^{-26}\)</span> kg, a = 1x10<span class="math notranslate nohighlight">\(^{-6}\)</span> m, and T=10 K.  What is the average value of the translational quantum number <span class="math notranslate nohighlight">\(n\)</span> assuming that it is continuous.</p>
 <p>Some relevant equations, first the translational partition function in 1D</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9ead1f3b-1aa5-44af-a3b5-6568978c0f10">
-<span class="eqno">(4.109)<a class="headerlink" href="#equation-9ead1f3b-1aa5-44af-a3b5-6568978c0f10" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3745d26c-cb6a-4f89-9b5c-0a5ce332472b">
+<span class="eqno">(4.109)<a class="headerlink" href="#equation-3745d26c-cb6a-4f89-9b5c-0a5ce332472b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 q_{}\left(a,T\right)=\left(\frac{2\pi mk_{B}T}{h^2}\right)^{\frac{1}{2}}a
 \end{equation}\]</div>
 <p>Next a potentially useful integral</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e4f60dc-8024-4265-826f-c6222cbd1788">
-<span class="eqno">(4.110)<a class="headerlink" href="#equation-9e4f60dc-8024-4265-826f-c6222cbd1788" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3a143e25-f12f-4e51-85ac-e39feba2b7a5">
+<span class="eqno">(4.110)<a class="headerlink" href="#equation-3a143e25-f12f-4e51-85ac-e39feba2b7a5" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_0^{\infty}ne^{-\alpha n^2}dn=\frac{1}{2\alpha}
 \end{equation}\]</div>
 <p>We will also need that:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec3fad80-f810-4867-8e35-37fb08bb7cc1">
-<span class="eqno">(4.111)<a class="headerlink" href="#equation-ec3fad80-f810-4867-8e35-37fb08bb7cc1" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-966449a7-877d-453b-b6c9-4852bde69589">
+<span class="eqno">(4.111)<a class="headerlink" href="#equation-966449a7-877d-453b-b6c9-4852bde69589" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 h &amp;=&amp; 6.626\times10^{-34} \quad m^2\cdot kg \cdot s^{-1}\\
 k_B &amp;=&amp; 1.381 \times10^{-23} \quad m^2\cdot kg \cdot s^{-2} \cdot K^{-1}\\
 \epsilon_n &amp;=&amp; \frac{h^2n^2}{8ma^2}
 \end{eqnarray}\]</div>
 <p>where the equation for <span class="math notranslate nohighlight">\(\epsilon_n\)</span> is the particle in a box energy for 1D.</p>
 <p>The problem asks for the average <span class="math notranslate nohighlight">\(n\)</span>, for continuous variable <span class="math notranslate nohighlight">\(n\)</span>.  This can be written as a standard weighted average</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1f5a56b4-555b-41b2-af91-0c0c9a487191">
-<span class="eqno">(4.112)<a class="headerlink" href="#equation-1f5a56b4-555b-41b2-af91-0c0c9a487191" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-92fe87af-3897-45cf-9142-6b23b0201aeb">
+<span class="eqno">(4.112)<a class="headerlink" href="#equation-92fe87af-3897-45cf-9142-6b23b0201aeb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle n \rangle = \int_0^\infty nP(n)dn,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(P(n)\)</span> is the probability density of variable <span class="math notranslate nohighlight">\(n\)</span>.  <span class="math notranslate nohighlight">\(P(n)\)</span> can be determined as the ratio of the Boltzmann factor of a particular <span class="math notranslate nohighlight">\(n\)</span> releative to the parition function, <span class="math notranslate nohighlight">\(q\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fe825741-6561-47aa-8450-d32f0b20a0b9">
-<span class="eqno">(4.113)<a class="headerlink" href="#equation-fe825741-6561-47aa-8450-d32f0b20a0b9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-a422ee43-b6fe-466f-b47d-643c2c36c194">
+<span class="eqno">(4.113)<a class="headerlink" href="#equation-a422ee43-b6fe-466f-b47d-643c2c36c194" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 P(n) &amp;=&amp; \frac{e^{-\beta \epsilon_n}}{q} \\
    &amp;=&amp; \frac{e^{-\beta \frac{h^2n^2}{8ma^2}}}{q}
 \end{eqnarray}\]</div>
 <p>Plug this equation into the integral for <span class="math notranslate nohighlight">\(\langle n \rangle\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2e963a5a-6986-4029-89c2-d14c6ae32946">
-<span class="eqno">(4.114)<a class="headerlink" href="#equation-2e963a5a-6986-4029-89c2-d14c6ae32946" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-f4c305ef-63a1-48a9-83ba-7f43edb5f9c7">
+<span class="eqno">(4.114)<a class="headerlink" href="#equation-f4c305ef-63a1-48a9-83ba-7f43edb5f9c7" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle n \rangle &amp;=&amp; \int_0^\infty nP(n)dn \\
 &amp;=&amp; \int_0^\infty n frac{e^{-\beta \frac{h^2n^2}{8ma^2}}}{q} dn \\
 &amp;=&amp; \frac{1}{q} \int_0^\infty n e^{-\beta \frac{h^2n^2}{8ma^2}} dn
 \end{eqnarray}\]</div>
 <p>Now, let <span class="math notranslate nohighlight">\(\alpha = \beta \frac{h^2}{8ma^2}\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1271128f-ea2e-4c99-ab32-9610e73b4d15">
-<span class="eqno">(4.115)<a class="headerlink" href="#equation-1271128f-ea2e-4c99-ab32-9610e73b4d15" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-762d8512-a569-4ddb-8cd6-1eded7b3be6d">
+<span class="eqno">(4.115)<a class="headerlink" href="#equation-762d8512-a569-4ddb-8cd6-1eded7b3be6d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle n \rangle &amp;=&amp; \frac{1}{q} \int_0^\infty n e^{-\alpha n^2} dn \\
 &amp;=&amp; \frac{1}{q} \frac{1}{2\alpha} \\
 &amp;=&amp; \frac{1}{q} \frac{8ma^2}{2\beta h^2} \\
 &amp;=&amp; \frac{1}{q} \frac{4ma^2k_BT}{ h^2}
 \end{eqnarray}\]</div>
 <p>Now we can either plug in numbers or put in <span class="math notranslate nohighlight">\(q\)</span> as variables, simplify and then plug in numbers.  Here I will do that latter:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-adfaa7ea-e4e4-47e8-94ce-d75268b2fcab">
-<span class="eqno">(4.116)<a class="headerlink" href="#equation-adfaa7ea-e4e4-47e8-94ce-d75268b2fcab" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-eb1724e9-33b8-4725-ab68-4c038ef0b987">
+<span class="eqno">(4.116)<a class="headerlink" href="#equation-eb1724e9-33b8-4725-ab68-4c038ef0b987" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle n \rangle &amp;=&amp; \frac{1}{q} \frac{4ma^2k_BT}{ h^2} \\
 &amp;=&amp; \left(\frac{2\pi mk_{B}T}{h^2}\right)^{\frac{-1}{2}}a^{-1} \frac{4ma^2k_BT}{ h^2} \\
 &amp;=&amp; \frac{4\sqrt{mk_BT}a}{ \sqrt{2\pi}h} \\
@@ -883,8 +890,8 @@ P(n) &amp;=&amp; \frac{e^{-\beta \epsilon_n}}{q} \\
 <h2><span class="section-number">4.2.4.10. </span>Example 3: Order of magnitude of <span class="math notranslate nohighlight">\(n\)</span><a class="headerlink" href="#example-3-order-of-magnitude-of-n" title="Permalink to this heading">#</a></h2>
 <p>Consider a monatomic ideal gas particle in 1D with m = 1.66x10<span class="math notranslate nohighlight">\(^{-26}\)</span> kg, a = 1x10<span class="math notranslate nohighlight">\(^{-6}\)</span> m, and T=10 K.  What is the order of magnitude of the typical of the translational quantum number <span class="math notranslate nohighlight">\(n\)</span> assuming that it is continuous?</p>
 <p>Additional information you will need:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2943470e-1ae5-4989-8828-1d66fc618901">
-<span class="eqno">(4.117)<a class="headerlink" href="#equation-2943470e-1ae5-4989-8828-1d66fc618901" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-bc7bb3a4-f6e4-4129-b2d6-b5adf8089aaa">
+<span class="eqno">(4.117)<a class="headerlink" href="#equation-bc7bb3a4-f6e4-4129-b2d6-b5adf8089aaa" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 h &amp;=&amp; 6.626\times10^{-34} \quad m^2\cdot kg \cdot s^{-1}\\
 k_B &amp;=&amp; 1.381 \times10^{-23} \quad m^2\cdot kg \cdot s^{-2} \cdot K^{-1}\\
 \epsilon_n &amp;=&amp; \frac{h^2n^2}{8ma^2} \\
@@ -896,8 +903,8 @@ k_B &amp;=&amp; 1.381 \times10^{-23} \quad m^2\cdot kg \cdot s^{-2} \cdot K^{-1}
 <li><p>Determine the value of <span class="math notranslate nohighlight">\(n\)</span> that corresponds to <span class="math notranslate nohighlight">\(\langle \epsilon \rangle\)</span>.</p></li>
 </ol>
 <p>We will do option 2 here.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5770e12c-080d-4e55-80d4-31ca5d3b5044">
-<span class="eqno">(4.118)<a class="headerlink" href="#equation-5770e12c-080d-4e55-80d4-31ca5d3b5044" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-ee6743e3-21c0-4676-baf1-ad14cf139bc9">
+<span class="eqno">(4.118)<a class="headerlink" href="#equation-ee6743e3-21c0-4676-baf1-ad14cf139bc9" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 \langle \epsilon_{1D} \rangle &amp;=&amp; \frac{1}{2}k_BT \\
 &amp;=&amp; \frac{h^2n_{typical}^2}{8ma^2} \\
 \Rightarrow n_{typical} &amp;=&amp; \sqrt{\frac{4ma^2k_BT}{h^2}}

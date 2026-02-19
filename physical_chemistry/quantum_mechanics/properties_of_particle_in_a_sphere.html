@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -574,25 +581,25 @@ document.write(`
 <section id="normalization">
 <h2><span class="section-number">4.5.10.4. </span>Normalization<a class="headerlink" href="#normalization" title="Permalink to this heading">#</a></h2>
 <p>Before we can compute any properties of the particle in a sphere, we need to ensure that the wave functions are normalized.  This means that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c35bf59f-df5c-4253-8cde-cbe4a7d5b0f9">
-<span class="eqno">(4.838)<a class="headerlink" href="#equation-c35bf59f-df5c-4253-8cde-cbe4a7d5b0f9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-05f85343-2381-4fba-9c60-b3fa2da4ce86">
+<span class="eqno">(4.838)<a class="headerlink" href="#equation-05f85343-2381-4fba-9c60-b3fa2da4ce86" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle \psi_{nlm}|\psi_{nlm} \rangle = 1
 \end{equation}\]</div>
 <p>Because the wave function is defined in spherical polar coordinates, this means that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1e36fd85-a5d7-40c9-a691-bf636fe95ccb">
-<span class="eqno">(4.839)<a class="headerlink" href="#equation-1e36fd85-a5d7-40c9-a691-bf636fe95ccb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-67206e1d-6108-4db1-8749-737aa46e1a08">
+<span class="eqno">(4.839)<a class="headerlink" href="#equation-67206e1d-6108-4db1-8749-737aa46e1a08" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle \psi_{nlm}|\psi_{nlm} \rangle = \int_0^{r_0}\int_0^{\pi}\int_0^{2\pi} \psi_{nlm}^*(r,\theta,\phi)\psi_{nlm}(r,\theta,\phi)r^2\sin\theta drd\theta d\phi= 1
 \end{equation}\]</div>
 <p>From <a class="reference internal" href="particle_in_a_sphere.html"><span class="doc std std-doc">previous notes</span></a> we showed that for a particle in a sphere of radius <span class="math notranslate nohighlight">\(r_0\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-da44f4b7-c782-4a1a-b2af-f6e081c60dd2">
-<span class="eqno">(4.840)<a class="headerlink" href="#equation-da44f4b7-c782-4a1a-b2af-f6e081c60dd2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3a095181-6580-4a28-8ad0-9d2634e590b2">
+<span class="eqno">(4.840)<a class="headerlink" href="#equation-3a095181-6580-4a28-8ad0-9d2634e590b2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi(r,\theta,\phi) &amp;= R_{l,n}(r)Y_l^m(\theta,\phi) \\
 &amp;= A_{nlm}j_l\left(\frac{\beta_{n,l}}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi}
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A_{nlm}\)</span> is the normalization constant the value of which may depend on quantum numbers <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(l\)</span>, and <span class="math notranslate nohighlight">\(m\)</span>, <span class="math notranslate nohighlight">\(j_l(x)\)</span> is the an <span class="math notranslate nohighlight">\(l\)</span>th order spherical Bessel function of the first type, <span class="math notranslate nohighlight">\(\beta_{n,l}\)</span> is the <span class="math notranslate nohighlight">\(n\)</span>th zero of the <span class="math notranslate nohighlight">\(l\)</span>th order spherical Bessel function of the first type, and <span class="math notranslate nohighlight">\(P_l^{|m|}(x)\)</span> are the associated Legendre polynomials.</p>
 <p>We will determine the value of <span class="math notranslate nohighlight">\(A_{nlm}\)</span> from the normalization criterion.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-63b57e33-59fb-4e19-a78e-b75dcd0165db">
-<span class="eqno">(4.841)<a class="headerlink" href="#equation-63b57e33-59fb-4e19-a78e-b75dcd0165db" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b527f872-0bee-408b-b083-c88cb7b8207a">
+<span class="eqno">(4.841)<a class="headerlink" href="#equation-b527f872-0bee-408b-b083-c88cb7b8207a" title="Permalink to this equation">#</a></span>\[\begin{align}
 1 &amp;= \int_0^{r_0}\int_0^{\pi}\int_0^{2\pi} \psi_{nlm}^*(r,\theta,\phi)\psi_{nlm}(r,\theta,\phi)r^2\sin\theta drd\theta d\phi \\
 &amp;= A_{nlm}^2\int_0^{r_0}\int_0^{\pi}\int_0^{2\pi}\left(j_l\left(\frac{\beta_{n,l}}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi}\right)^*j_l\left(\frac{\beta_{n,l}}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi} r^2\sin\theta drd\theta d\phi \\
 &amp;= A_{nlm}^2\int_0^{r_0}\int_0^{\pi}\int_0^{2\pi} j_l\left(\frac{\beta_{n,l}}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{-im\phi}j_l\left(\frac{\beta_{n,l}}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi} r^2\sin\theta drd\theta d\phi \\
@@ -602,14 +609,14 @@ document.write(`
 \end{align}\]</div>
 <p>where I have set <span class="math notranslate nohighlight">\(A_{nlm} = A_rA_\theta A_\phi\)</span>, the normalization factors for the <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span>, and <span class="math notranslate nohighlight">\(\phi\)</span> components separately.</p>
 <p>The integrals are separable into <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span>, and <span class="math notranslate nohighlight">\(\phi\)</span> and we can determine each separately.  We start with <span class="math notranslate nohighlight">\(\phi\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-33f3e35a-abae-4714-8ecb-859a1ab70639">
-<span class="eqno">(4.842)<a class="headerlink" href="#equation-33f3e35a-abae-4714-8ecb-859a1ab70639" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-40bb1d2d-dc10-4c5b-bb9a-9063f5aa17b7">
+<span class="eqno">(4.842)<a class="headerlink" href="#equation-40bb1d2d-dc10-4c5b-bb9a-9063f5aa17b7" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_0^{2\pi} d\phi &amp;= 2\pi \\
 \Rightarrow A_\phi = \sqrt{\frac{1}{2\pi}}
 \end{align}\]</div>
 <p>Now <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8fe86460-bf0f-48c1-91ca-09402c5eedb9">
-<span class="eqno">(4.843)<a class="headerlink" href="#equation-8fe86460-bf0f-48c1-91ca-09402c5eedb9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fecf2310-4466-4f09-b19e-e182d70b48eb">
+<span class="eqno">(4.843)<a class="headerlink" href="#equation-fecf2310-4466-4f09-b19e-e182d70b48eb" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_0^{\pi}\left[P_l^{|m|}(\cos\theta)\right]^2\sin\theta d\theta &amp;= -\int_{1}^{-1}\left[P_l^{|m|}(x)\right]^2dx \\
 &amp;= \int_{-1}^{1}\left[P_l^{|m|}(x)\right]^2dx \\
 &amp;= \frac{2\left(l+|m|\right)!}{\left(2l+1\right)\left(l-|m|\right)!} \\
@@ -617,19 +624,19 @@ document.write(`
 \end{align}\]</div>
 <p>Where we used <span class="math notranslate nohighlight">\(u\)</span>-substitution <span class="math notranslate nohighlight">\(x=\cos\theta\)</span> and then used the determined property of Legendre equations.</p>
 <p>Now for <span class="math notranslate nohighlight">\(r\)</span>, we start with a <span class="math notranslate nohighlight">\(u\)</span>-substitution of <span class="math notranslate nohighlight">\(x = \frac{r}{r_0}\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-acb65960-1aa3-4afe-9c55-f274e7cae4c9">
-<span class="eqno">(4.844)<a class="headerlink" href="#equation-acb65960-1aa3-4afe-9c55-f274e7cae4c9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8f21fe56-b0e0-47ae-a175-b258a56eaaa8">
+<span class="eqno">(4.844)<a class="headerlink" href="#equation-8f21fe56-b0e0-47ae-a175-b258a56eaaa8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_0^{r_0}\left[j_l\left(\frac{\beta_{n,l}}{r_0}r\right)\right]^2r^2dr &amp;= r_0^3\int_0^1x^2\left[j_l(\beta_{n,l}x)\right]^2dx \\
 &amp;= \frac{r_0^3}{2}\left[j_{l+1}(\beta_{n,l})\right]^2
 \end{align}\]</div>
 <p>where that last equality follows from the recursive property of spherical Bessel functions.  We can now solve for <span class="math notranslate nohighlight">\(A_r\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2985c98b-1efd-456d-9f97-63e0d92aaa14">
-<span class="eqno">(4.845)<a class="headerlink" href="#equation-2985c98b-1efd-456d-9f97-63e0d92aaa14" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d5141d40-166d-4729-a0d7-e34f1b1df391">
+<span class="eqno">(4.845)<a class="headerlink" href="#equation-d5141d40-166d-4729-a0d7-e34f1b1df391" title="Permalink to this equation">#</a></span>\[\begin{align}
 A_r = \sqrt{\frac{2}{r_0^3}} \frac{1}{j_{l+1}(\beta_{n,l})}
 \end{align}\]</div>
 <p>We can now combine these all back into a single normalization constant</p>
-<div class="amsmath math notranslate nohighlight" id="equation-45b836c6-8468-4c0b-b6c4-fc7e8535b8a6">
-<span class="eqno">(4.846)<a class="headerlink" href="#equation-45b836c6-8468-4c0b-b6c4-fc7e8535b8a6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e57c36b3-125e-474a-89bd-d48dd782b16c">
+<span class="eqno">(4.846)<a class="headerlink" href="#equation-e57c36b3-125e-474a-89bd-d48dd782b16c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A_{nlm} = \sqrt{\frac{\left(2l+1\right)\left(l-|m|\right)!}{2\pi r_0^3\left(l+|m|\right)!}} \frac{1}{j_{l+1}(\beta_{n,l})}
 \end{equation}\]</div>
 <p>Let’s check this quantity by numeric integration.  We start with the <span class="math notranslate nohighlight">\(\theta\)</span> component:</p>
@@ -765,8 +772,8 @@ j2(beta_31) =  0.0913252028230577
 </div>
 </div>
 <p>Everything checks out.  This means that our final, normalized wave functions are</p>
-<div class="amsmath math notranslate nohighlight" id="equation-46f0df5e-46ce-413c-b974-bba73e9e7575">
-<span class="eqno">(4.847)<a class="headerlink" href="#equation-46f0df5e-46ce-413c-b974-bba73e9e7575" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1c68b530-b096-4177-93a1-5662d910ded8">
+<span class="eqno">(4.847)<a class="headerlink" href="#equation-1c68b530-b096-4177-93a1-5662d910ded8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi(r,\theta,\phi) &amp;= \sqrt{\frac{\left(2l+1\right)\left(l-|m|\right)!}{2\pi r_0^3\left(l+|m|\right)!}} \frac{1}{j_{l+1}(\beta_{n,l})}j_l\left(\frac{\beta_{n,l}}{r_0}r\right)P_l^{|m|}(\cos\theta)e^{im\phi}
 \end{align}\]</div>
 <p>Below I will define two functions: one to compute the normalization constant and the second to compute the wave function of the particle in a sphere.</p>
@@ -787,19 +794,19 @@ j2(beta_31) =  0.0913252028230577
 <section id="particle-density">
 <h2><span class="section-number">4.5.10.5. </span>Particle Density<a class="headerlink" href="#particle-density" title="Permalink to this heading">#</a></h2>
 <p>The probability density for quantum systems is defined as the complex conjugate of the wave function times the wave function.  For a particle in a sphere this yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8fc84612-92f7-47f0-a7d0-e374345f0684">
-<span class="eqno">(4.848)<a class="headerlink" href="#equation-8fc84612-92f7-47f0-a7d0-e374345f0684" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-308761ed-90de-480b-96e3-a9ff4b86b5c7">
+<span class="eqno">(4.848)<a class="headerlink" href="#equation-308761ed-90de-480b-96e3-a9ff4b86b5c7" title="Permalink to this equation">#</a></span>\[\begin{align}
 P(r,\theta,\phi) = \psi(r,\theta,\phi)^*\psi(r,\theta,\phi)r^2\sin\theta &amp;= \frac{\left(2l+1\right)\left(l-|m|\right)!}{2\pi r_0^3\left(l+|m|\right)!} \frac{1}{j_{l+1}(\beta_{n,l})^2}j_l\left(\frac{\beta_{n,l}}{r_0}r\right)^2P_l^{|m|}(\cos\theta)^2r^2\sin\theta
 \end{align}\]</div>
 <p>Notice that we include the <span class="math notranslate nohighlight">\(r^2\sin\theta\)</span> Jacobian in our definition of the probability density.  It is because this must be included such that the integration over the probability density yields <span class="math notranslate nohighlight">\(1\)</span>.</p>
 <p>Additionally notice that the probability density is separable into <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span>, and <span class="math notranslate nohighlight">\(\phi\)</span> components which allows us to define</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f7f63dc0-51c6-4a62-ac9e-11e136b31164">
-<span class="eqno">(4.849)<a class="headerlink" href="#equation-f7f63dc0-51c6-4a62-ac9e-11e136b31164" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ca3015d1-4dcf-4dec-97bd-47dfb3965485">
+<span class="eqno">(4.849)<a class="headerlink" href="#equation-ca3015d1-4dcf-4dec-97bd-47dfb3965485" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(r,\theta,\phi) = P_r(r)P_\theta(\theta)P_\phi(\phi)
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e8b97532-a742-46b1-bbd9-2eeac88bdfcd">
-<span class="eqno">(4.850)<a class="headerlink" href="#equation-e8b97532-a742-46b1-bbd9-2eeac88bdfcd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-49b4bccb-e4dd-41c6-88a4-b01f92fbfa6e">
+<span class="eqno">(4.850)<a class="headerlink" href="#equation-49b4bccb-e4dd-41c6-88a4-b01f92fbfa6e" title="Permalink to this equation">#</a></span>\[\begin{align}
 P_r(r) &amp;= \frac{2}{r_0^3}\frac{1}{j_{l+1}(\beta_{n,l})^2} j_l\left(\frac{\beta_{n,l}}{r_0}r\right)r^2 \\
 P_\theta(\theta) &amp;= \frac{\left(2l+1\right)\left(l-|m|\right)!}{2 \left(l+|m|\right)!} P_l^{|m|}(\cos\theta)^2\sin\theta \\
 P_\phi(\phi) &amp;= \frac{1}{2\pi}
@@ -1018,8 +1025,8 @@ P_\phi(\phi) &amp;= \frac{1}{2\pi}
 <section id="average-properties">
 <h2><span class="section-number">4.5.10.6. </span>Average Properties<a class="headerlink" href="#average-properties" title="Permalink to this heading">#</a></h2>
 <p>Now that we have normalized wave functions, it will be of interest to compute properties of these systems.  These properties will be determined in the standard quantum mechanical way.  For example, the average of some property <span class="math notranslate nohighlight">\(a\)</span> is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-41ab3664-f353-4d83-8158-fd701227879f">
-<span class="eqno">(4.851)<a class="headerlink" href="#equation-41ab3664-f353-4d83-8158-fd701227879f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a4ea87ae-d046-48d1-bc4e-29f3ebebeaa5">
+<span class="eqno">(4.851)<a class="headerlink" href="#equation-a4ea87ae-d046-48d1-bc4e-29f3ebebeaa5" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle a \rangle &amp;= \langle \psi(r,\theta,\phi) | \hat{A} | \psi(r,\theta,\phi)\rangle \\
 &amp;= \int_0^{r_0}\int_0^{\pi}\int_0^{2\pi} \psi_{nlm}^*(r,\theta,\phi)\hat{A}\psi_{nlm}(r,\theta,\phi)r^2\sin\theta drd\theta d\phi
 \end{align}\]</div>
@@ -1027,14 +1034,14 @@ P_\phi(\phi) &amp;= \frac{1}{2\pi}
 <section id="average-radial-position">
 <h3><span class="section-number">4.5.10.6.1. </span>Average radial position<a class="headerlink" href="#average-radial-position" title="Permalink to this heading">#</a></h3>
 <p>The average radial position is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b53c262d-fb36-4d43-b651-64e60971e247">
-<span class="eqno">(4.852)<a class="headerlink" href="#equation-b53c262d-fb36-4d43-b651-64e60971e247" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ca5d13fe-ee17-4f02-a31b-65f4f3b9109c">
+<span class="eqno">(4.852)<a class="headerlink" href="#equation-ca5d13fe-ee17-4f02-a31b-65f4f3b9109c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle r \rangle &amp;= \langle \psi(r,\theta,\phi) | r | \psi(r,\theta,\phi)\rangle \\
 &amp;= \int_0^{r_0}\int_0^{\pi}\int_0^{2\pi} \psi_{nlm}^*(r,\theta,\phi)r\psi_{nlm}(r,\theta,\phi)r^2\sin\theta drd\theta d\phi
 \end{align}\]</div>
 <p>Recognizing that we can integrate over <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span> because the wave function is separable and the operator <span class="math notranslate nohighlight">\(r\)</span> does not affect <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>, and that these functions are independently normalized quickly yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fae11f00-76b1-43b1-bebe-b5ff71aeab30">
-<span class="eqno">(4.853)<a class="headerlink" href="#equation-fae11f00-76b1-43b1-bebe-b5ff71aeab30" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1429202f-b409-4d92-b22c-a592e5360ae6">
+<span class="eqno">(4.853)<a class="headerlink" href="#equation-1429202f-b409-4d92-b22c-a592e5360ae6" title="Permalink to this equation">#</a></span>\[\begin{align}
 \langle r \rangle &amp;= \frac{2}{r_0^3}\frac{1}{j_{l+1}(\beta_{n,l})^2}\int_0^{r_0} \left[j_l\left(\frac{\beta_{n,l}}{r_0}r\right)\right]^2r^3dr \\
 &amp;= \frac{2}{r_0^3}\frac{1}{j_{l+1}(\beta_{n,l})^2}r_0^4 \int_0^1 \left[j_l\left(\beta_{n,l}x\right)\right]^2x^3dx \\
 &amp;= \frac{2r_0}{j_{l+1}(\beta_{n,l})^2}\int_0^1 \left[j_l\left(\beta_{n,l}x\right)\right]^2x^3dx

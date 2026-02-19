@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -582,49 +589,49 @@ document.write(`
 <section id="including-variational-parameters-in-the-basis-functions">
 <h2><span class="section-number">4.5.18.5. </span>Including Variational Parameters in the Basis Functions<a class="headerlink" href="#including-variational-parameters-in-the-basis-functions" title="Permalink to this heading">#</a></h2>
 <p>In the previous notes we used a trial wave function of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5288a3f2-ccc8-4e7e-91a8-119aa146828a">
-<span class="eqno">(4.936)<a class="headerlink" href="#equation-5288a3f2-ccc8-4e7e-91a8-119aa146828a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4f9531a6-b5bc-452a-8dbd-143b8dfef434">
+<span class="eqno">(4.936)<a class="headerlink" href="#equation-4f9531a6-b5bc-452a-8dbd-143b8dfef434" title="Permalink to this equation">#</a></span>\[\begin{align}
 \phi(r_A,r_B;R) = c_11s_A(r_A) + c_21s_B(r_B)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(1s_A\)</span> denotes a hydrogen atom 1s wave function centered on nucleus <span class="math notranslate nohighlight">\(A\)</span> and is given by the function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c73465ad-2e05-483f-b6ca-80b45009380e">
-<span class="eqno">(4.937)<a class="headerlink" href="#equation-c73465ad-2e05-483f-b6ca-80b45009380e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3bf4d8e2-f849-4e4b-b71e-3a9592bfabed">
+<span class="eqno">(4.937)<a class="headerlink" href="#equation-3bf4d8e2-f849-4e4b-b71e-3a9592bfabed" title="Permalink to this equation">#</a></span>\[\begin{equation}
 1s(r) = \sqrt{\frac{1}{\pi}} e^{-r}
 \end{equation}\]</div>
 <p>In our variational example of the helium atom we introduced the idea of using the effective nuclear charge as a variational parameter.  We will do so again here.  This is a fairly general procedure and the hydrogen atom functions with nuclear charge as a variable (e.g. as <span class="math notranslate nohighlight">\(Z\)</span> or <span class="math notranslate nohighlight">\(\zeta\)</span>) are called Slater orbitals.  The Slater 1s orbital is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-143cfb73-2fae-49cb-9d06-cacc624ba113">
-<span class="eqno">(4.938)<a class="headerlink" href="#equation-143cfb73-2fae-49cb-9d06-cacc624ba113" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d7ef0734-ce9c-49c1-88e9-8e6cc528dc41">
+<span class="eqno">(4.938)<a class="headerlink" href="#equation-d7ef0734-ce9c-49c1-88e9-8e6cc528dc41" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \phi_{1s}(Z,r) = \sqrt{\frac{Z^3}{\pi}} e^{-Zr}
 \end{equation}\]</div>
 <p>We will thus propose the following wave function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-218d73ee-7664-411d-b74b-a2bcc9546795">
-<span class="eqno">(4.939)<a class="headerlink" href="#equation-218d73ee-7664-411d-b74b-a2bcc9546795" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-044ef236-8947-41e9-8f91-2724cd4c27a8">
+<span class="eqno">(4.939)<a class="headerlink" href="#equation-044ef236-8947-41e9-8f91-2724cd4c27a8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(Z,r_A,r_B;R) = c_1\phi_{1s}(Z,r_A) + c_2\phi_{1s}(Z,r_B)
 \end{equation}\]</div>
 <p>If you recall from our discussion of the variational solution in the minimal basis, there was no need to determine <span class="math notranslate nohighlight">\(c_1\)</span> and <span class="math notranslate nohighlight">\(c_2\)</span> using the variational approach since it can be argued that their magnitudes should be the same and these magnitudes can be determined by normalization.   These same arguments hold here (despite introducing the <span class="math notranslate nohighlight">\(Z\)</span> variable).  Thus, the normalized trial wave function is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4f200087-1898-4aa9-abfe-ffc7ccc2135c">
-<span class="eqno">(4.940)<a class="headerlink" href="#equation-4f200087-1898-4aa9-abfe-ffc7ccc2135c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b19365dc-1efe-45ed-8a9d-5dfc69e9682b">
+<span class="eqno">(4.940)<a class="headerlink" href="#equation-b19365dc-1efe-45ed-8a9d-5dfc69e9682b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(Z,r_A,r_B;R) = \frac{\phi_{1s}(Z,r_A) + \phi_{1s}(Z,r_B)}{\sqrt{2(1+S(Z,R))}}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(S(Z,R)\)</span> is the overlap integral between the two basis functions.  That is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ebbea384-1a8a-4bdc-b007-423780ca5aa7">
-<span class="eqno">(4.941)<a class="headerlink" href="#equation-ebbea384-1a8a-4bdc-b007-423780ca5aa7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9c3fb52a-c847-482d-8a9a-37ef29511e47">
+<span class="eqno">(4.941)<a class="headerlink" href="#equation-9c3fb52a-c847-482d-8a9a-37ef29511e47" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S(Z,R) = \left\langle \phi_{1s}(Z,r_A) | \phi_{1s}(Z,r_B) \right\rangle
 \end{equation}\]</div>
 <p>You will show for homework that this integral is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5ae97b17-3c6d-4398-b549-d5dcd867f5a8">
-<span class="eqno">(4.942)<a class="headerlink" href="#equation-5ae97b17-3c6d-4398-b549-d5dcd867f5a8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ab8cae18-e011-4a36-a7f2-56ee2bb821e3">
+<span class="eqno">(4.942)<a class="headerlink" href="#equation-ab8cae18-e011-4a36-a7f2-56ee2bb821e3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S(Z,R) = e^{-ZR}\left(1+ZR+\frac{1}{3}Z^2R^2\right)
 \end{equation}\]</div>
 <p>Using this trial wave function it can be shown that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-faaac8ac-8d80-4736-b388-7ef14576b869">
-<span class="eqno">(4.943)<a class="headerlink" href="#equation-faaac8ac-8d80-4736-b388-7ef14576b869" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d4b39e8f-46a8-48b2-ad0a-69ba5bb45ab9">
+<span class="eqno">(4.943)<a class="headerlink" href="#equation-d4b39e8f-46a8-48b2-ad0a-69ba5bb45ab9" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_\psi &amp;= \left\langle \psi(Z,r_A,r_B;R) | \hat{H} | \psi(Z,r_A,r_B;R) \right\rangle \\
 &amp;= \frac{ \frac{Z^2}{2} - Z^2\left[\frac{S(Z,R)}{2} + K(Z,R)\right]}{1+S(Z,R)} + \frac{-Z + ZJ(Z,R) + 2ZK(ZR)}{1+S(Z,R)} + \frac{Z}{KR}
 \end{align}\]</div>
 <p>Differentiating <span class="math notranslate nohighlight">\(E_\psi\)</span> w.r.t <span class="math notranslate nohighlight">\(Z\)</span>, setting to zero, and solving for <span class="math notranslate nohighlight">\(Z_{min}\)</span> yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-30528e1a-6bfb-4e47-a709-17b77efa6de7">
-<span class="eqno">(4.944)<a class="headerlink" href="#equation-30528e1a-6bfb-4e47-a709-17b77efa6de7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-834572af-6b79-4406-9d56-d439c08e3719">
+<span class="eqno">(4.944)<a class="headerlink" href="#equation-834572af-6b79-4406-9d56-d439c08e3719" title="Permalink to this equation">#</a></span>\[\begin{align}
 Z_{min} &amp;= 1.238 \\
 E_{min} &amp;= -0.58651 \text{ Hartree}
 \end{align}\]</div>
@@ -855,19 +862,19 @@ E_{min} &amp;= -0.58651 \text{ Hartree}
 <p>Regardless, it is likely the spherically symmetric behavior of a 1s orbital is not ideal to create a molecular covalent bond.  Thus, it is natural to hypothesize that basis functions that allow the breaking of the spherical symmetry and the creation of a lobe of density between the two nuclei to yield better results for the H<span class="math notranslate nohighlight">\(_2^+\)</span> variational solution.</p>
 <p>We must remember, however, that the 1s orbital is the correct solution at infinte separation.  Thus, a good basis will still allow for this behavior while becoming non-spherically symmetric as the two nuclei become close together.  We will achieve this behavior by adding a <span class="math notranslate nohighlight">\(p_z\)</span> oribtal to the 1s orbital and allow for the amount of <span class="math notranslate nohighlight">\(p_z\)</span> character to be determined at every <span class="math notranslate nohighlight">\(R\)</span> value.</p>
 <p>Our trial wave function will thus look like</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8b2ffb54-32ea-47eb-bc09-9e0039f67c25">
-<span class="eqno">(4.945)<a class="headerlink" href="#equation-8b2ffb54-32ea-47eb-bc09-9e0039f67c25" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bec44e38-6b3c-4e17-8e96-7c62571c5455">
+<span class="eqno">(4.945)<a class="headerlink" href="#equation-bec44e38-6b3c-4e17-8e96-7c62571c5455" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi(Z,r_A,r_B;R) = c_1(\phi_{1s}(Z_1,r_A) +a\phi_{2p_z}(Z_2,r_A,\theta_A))  + c_2(\phi_{1s}(Z_1,r_A) +a\phi_{2p_z}(Z_2,r_A,\theta_A))
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-84eea3ee-3556-4ee9-a675-c136140b5a26">
-<span class="eqno">(4.946)<a class="headerlink" href="#equation-84eea3ee-3556-4ee9-a675-c136140b5a26" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-706e56d1-881e-44ff-8ab0-c4fb8088b3e9">
+<span class="eqno">(4.946)<a class="headerlink" href="#equation-706e56d1-881e-44ff-8ab0-c4fb8088b3e9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \phi_{1s}(Z,r) &amp;= \sqrt{\frac{Z^3}{\pi}} e^{-Zr} \\
 \phi_{2p_z}(Z,r,\theta) &amp;= \sqrt{\frac{Z^5}{\pi}} r\cos\theta e^{-Zr} 
 \end{align}\]</div>
 <p>Notice that we can treat the effective nuclear charge for the 1s and 2p<span class="math notranslate nohighlight">\(_z\)</span> parts as separate variational parameters.  Additionally, we will treat <span class="math notranslate nohighlight">\(a\)</span>, the amount of <span class="math notranslate nohighlight">\(p_z\)</span> character in the polarized orbital, to be a variational parameter as well.  Below I plot the following polarized orbital for various values of <span class="math notranslate nohighlight">\(a\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e2dff38-7ee5-419b-8b0e-ff228df7d90d">
-<span class="eqno">(4.947)<a class="headerlink" href="#equation-9e2dff38-7ee5-419b-8b0e-ff228df7d90d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-06511f7a-fc73-4f05-a21c-4e51c1b34cbf">
+<span class="eqno">(4.947)<a class="headerlink" href="#equation-06511f7a-fc73-4f05-a21c-4e51c1b34cbf" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \phi = \phi_{1s}(Z_1,r_A) +a\phi_{2p_z}(Z_2,r_A,\theta_A)
 \end{equation}\]</div>
 <div class="cell tag_hide-input docutils container">
@@ -927,15 +934,15 @@ E_{min} &amp;= -0.58651 \text{ Hartree}
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_45652/1906438207.py:17: DeprecationWarning: `scipy.special.sph_harm` is deprecated as of SciPy 1.15.0 and will be removed in SciPy 1.17.0. Please use `scipy.special.sph_harm_y` instead.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/td/dll8n_kj4vd0zxjm0xd9m7740000gq/T/ipykernel_40701/1906438207.py:17: DeprecationWarning: `scipy.special.sph_harm` is deprecated as of SciPy 1.15.0 and will be removed in SciPy 1.17.0. Please use `scipy.special.sph_harm_y` instead.
   return Y_norm*sph_harm(m, l, phi, theta).real*R
 </pre></div>
 </div>
 </div>
 </div>
 <p>I will not solve this all the way out but it is doable.  The integrals get even messier etc but are still all solvable.  Instead I will just provide you with the results for the minimum energy and <span class="math notranslate nohighlight">\(R\)</span> value:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-00b83042-3fa2-4651-a318-0cd7039534e7">
-<span class="eqno">(4.948)<a class="headerlink" href="#equation-00b83042-3fa2-4651-a318-0cd7039534e7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a37f3a9a-008f-49de-b150-de68955cbbc7">
+<span class="eqno">(4.948)<a class="headerlink" href="#equation-a37f3a9a-008f-49de-b150-de68955cbbc7" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_{min} &amp;= -0.59907 \text{ Hartree} \\
 R_{min} &amp;= 2.00 \text{ Bohr}
 \end{align}\]</div>

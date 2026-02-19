@@ -301,6 +301,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.5. H2+ Molecular Ion with Vartiational Method</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -309,6 +312,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
 
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
 </ul>
 </details></li>
@@ -620,36 +627,36 @@ document.write(`
 <section id="mapping-to-a-1d-problem">
 <h2><span class="section-number">4.5.22.5. </span>Mapping to a 1D Problem<a class="headerlink" href="#mapping-to-a-1d-problem" title="Permalink to this heading">#</a></h2>
 <p>While this initially looks like a two (or higher) dimensional problem because the energy will depend on the positions of the two masses, it can be readily mapped to a one dimensional problem.  Certainly, we can hopefully recognize that the potential energy of the spring will depend on displacement of the spring.  In one dimension this can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4942842-b65c-4ec4-b138-ae8f2c8adc6d">
-<span class="eqno">(4.1011)<a class="headerlink" href="#equation-d4942842-b65c-4ec4-b138-ae8f2c8adc6d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8a3415b3-aa4c-4843-9939-cdd656f5e848">
+<span class="eqno">(4.1011)<a class="headerlink" href="#equation-8a3415b3-aa4c-4843-9939-cdd656f5e848" title="Permalink to this equation">#</a></span>\[\begin{equation}
 V(x_2-x_1) = \frac{1}{2}k\left( (x_2-x_1) - l_0\right)^2
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> are the positions of the particles, <span class="math notranslate nohighlight">\(k\)</span> is the force constant of the spring connecting the two particles, and <span class="math notranslate nohighlight">\(l_0\)</span> is the rest position/displacment of the spring.  This is the standard Hooke potential energy for a spring.</p>
 <p>Clearly we can set <span class="math notranslate nohighlight">\(x=x_2-x+1-l_0\)</span> and get a one dimensional potential energy that just depends on the displacement from equilibrium, <span class="math notranslate nohighlight">\(x\)</span>, of the spring. The issue is that we also need to describe the kinetic energy which, one first pass, would seem to require defining velocities of both particles</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0466beca-c332-47e4-8286-78075f4d850e">
-<span class="eqno">(4.1012)<a class="headerlink" href="#equation-0466beca-c332-47e4-8286-78075f4d850e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-48cbb617-4832-4cee-9506-7d1d12567708">
+<span class="eqno">(4.1012)<a class="headerlink" href="#equation-48cbb617-4832-4cee-9506-7d1d12567708" title="Permalink to this equation">#</a></span>\[\begin{equation}
 K(v_1,v_2) = \frac{1}{2}m_1v_1^2 + \frac{1}{2}m_2v_2^2
 \end{equation}\]</div>
 <p>To see how we can rewrite this as a one-dimensional problem, recognize that the force on particle 1 and 2 can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b4ea0df8-f755-4078-a4f4-2557809d30ba">
-<span class="eqno">(4.1013)<a class="headerlink" href="#equation-b4ea0df8-f755-4078-a4f4-2557809d30ba" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f3c86ddd-5ed6-4644-9741-34439b0143e0">
+<span class="eqno">(4.1013)<a class="headerlink" href="#equation-f3c86ddd-5ed6-4644-9741-34439b0143e0" title="Permalink to this equation">#</a></span>\[\begin{align}
 F_1 &amp;= m_1\frac{d^2x_1}{dt^2} = -k(x_2-x_1-l_0) \\
 F_2 &amp;= m_2\frac{d^2x_2}{dt^2} = k(x_2-x_1-l_0) 
 \end{align}\]</div>
 <p>where we have used <span class="math notranslate nohighlight">\(F = ma\)</span> and <span class="math notranslate nohighlight">\(F = \frac{d V}{dx}\)</span> in both equations.  If we divide both equations by their masses and then subtract one from the other we get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-426023ee-2dd7-4cd2-b005-aacc1ac0f2e1">
-<span class="eqno">(4.1014)<a class="headerlink" href="#equation-426023ee-2dd7-4cd2-b005-aacc1ac0f2e1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-707fd32e-8d9f-4fa1-85d0-08e0cd2f55ba">
+<span class="eqno">(4.1014)<a class="headerlink" href="#equation-707fd32e-8d9f-4fa1-85d0-08e0cd2f55ba" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{d^2x_1}{dt^2} - \frac{d^2x_2}{dt^2} &amp;= -\frac{k}{m_1}(x_2-x_1-l_0) - \frac{k}{m_2}(x_2-x_1-l_0) \\
 =\frac{d^2}{dt^2}(x_1-x_2) &amp;= -k \left( \frac{1}{m_1} + \frac{1}{m_2}\right)(x_2-x_1-l_0)
 \end{align}\]</div>
 <p>Now we define a reduced mass, <span class="math notranslate nohighlight">\(\mu\)</span>, with the following equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae8cc7d7-6a5a-4436-84a2-ba5620b9a57e">
-<span class="eqno">(4.1015)<a class="headerlink" href="#equation-ae8cc7d7-6a5a-4436-84a2-ba5620b9a57e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-525aed8a-9155-488e-befc-57eb88e12f7c">
+<span class="eqno">(4.1015)<a class="headerlink" href="#equation-525aed8a-9155-488e-befc-57eb88e12f7c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{1}{\mu} = \frac{1}{m_1} + \frac{1}{m_2} = \frac{m_1+m_2}{m_1m_2}
 \end{equation}\]</div>
 <p>and substitute <span class="math notranslate nohighlight">\(x=x_2-x_1-l_0\)</span> to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-32cf7752-763d-4bb6-9ab7-4bf6e0406e3b">
-<span class="eqno">(4.1016)<a class="headerlink" href="#equation-32cf7752-763d-4bb6-9ab7-4bf6e0406e3b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fd0b1e8d-b2f0-4047-9461-142122e8122a">
+<span class="eqno">(4.1016)<a class="headerlink" href="#equation-fd0b1e8d-b2f0-4047-9461-142122e8122a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{d^2x}{dt^2} &amp;= -\frac{k}{\mu} x \\
 \Rightarrow \mu\frac{d^2x}{dt^2} &amp;= -kx
 \end{align}\]</div>
@@ -674,14 +681,14 @@ F_2 &amp;= m_2\frac{d^2x_2}{dt^2} = k(x_2-x_1-l_0)
 <section id="the-differential-equation-approach">
 <h3><span class="section-number">4.5.22.7.1. </span>The Differential Equation Approach<a class="headerlink" href="#the-differential-equation-approach" title="Permalink to this heading">#</a></h3>
 <p>The Schrodinger equation can be written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57aa6d81-d88e-477b-b417-ff396a7f9d4d">
-<span class="eqno">(4.1017)<a class="headerlink" href="#equation-57aa6d81-d88e-477b-b417-ff396a7f9d4d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c18b7e1b-70d6-4e98-8701-5100b8ffcca5">
+<span class="eqno">(4.1017)<a class="headerlink" href="#equation-c18b7e1b-70d6-4e98-8701-5100b8ffcca5" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;-\frac{\hbar^2}{2\mu}\frac{d^2\psi}{dx^2} +\frac{1}{2}kx^2\psi(x) = E\psi(x) \\
 \Rightarrow &amp; \frac{d^2\psi}{dx^2} + \frac{2\mu}{\hbar^2}\left(E-\frac{1}{2}kx^2\right)\psi(x) = 0 
 \end{align}\]</div>
 <p>This differential equation can be solved by the power series solution.  I will not go through the details here but rather just present the results:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83444c0f-738d-47fb-bc0c-8184218309f1">
-<span class="eqno">(4.1018)<a class="headerlink" href="#equation-83444c0f-738d-47fb-bc0c-8184218309f1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-82140c31-e3eb-47c4-a184-5aa86cbec41c">
+<span class="eqno">(4.1018)<a class="headerlink" href="#equation-82140c31-e3eb-47c4-a184-5aa86cbec41c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi_v(x) = N_vH_v\left(\alpha^{1/2}x\right)e^{-\alpha x^2/2}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\alpha = \sqrt{\frac{k\mu}{\hbar^2}}\)</span>, <span class="math notranslate nohighlight">\(N_v = \frac{1}{\sqrt{2^vv!}}\left(\frac{\alpha}{\pi}\right)^{1/4}\)</span> is the normalization constant, and <span class="math notranslate nohighlight">\(H_v\left(\alpha^{1/2}x\right)\)</span> is the <span class="math notranslate nohighlight">\(v\)</span>th Hermite polynomial with argument <span class="math notranslate nohighlight">\(\alpha^{1/2}x\)</span>.  The first few Hermite polynomials are</p>
