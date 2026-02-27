@@ -681,21 +681,21 @@ V_{ab} = \left\langle a\left|-\frac{Z}{r}\right|b\right\rangle
 <p>Below we implement RHF-SCF using these closed forms.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">S_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">S_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">):</span>
     <span class="c1"># overlap for normalized 1s STOs</span>
     <span class="k">return</span> <span class="mf">8.0</span><span class="o">*</span><span class="p">(</span><span class="n">zeta_a</span><span class="o">*</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">zeta_a</span><span class="o">+</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">T_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">T_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">):</span>
     <span class="c1"># kinetic for normalized 1s STOs</span>
     <span class="k">return</span> <span class="mf">4.0</span><span class="o">*</span><span class="p">(</span><span class="n">zeta_a</span><span class="o">*</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mf">2.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">zeta_a</span><span class="o">+</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">V_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">V_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
     <span class="c1"># nuclear attraction for normalized 1s STOs: &lt;a| -Z/r |b&gt;</span>
     <span class="k">return</span> <span class="o">-</span><span class="mf">4.0</span><span class="o">*</span><span class="n">Z</span><span class="o">*</span><span class="p">(</span><span class="n">zeta_a</span><span class="o">*</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">zeta_a</span><span class="o">+</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">ERI_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">,</span> <span class="n">zeta_c</span><span class="p">,</span> <span class="n">zeta_d</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">ERI_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">,</span> <span class="n">zeta_c</span><span class="p">,</span> <span class="n">zeta_d</span><span class="p">):</span>
     <span class="c1"># (ab|cd) for same-center 1s STOs</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">zeta_a</span> <span class="o">+</span> <span class="n">zeta_b</span>
     <span class="n">q</span> <span class="o">=</span> <span class="n">zeta_c</span> <span class="o">+</span> <span class="n">zeta_d</span>
@@ -704,7 +704,7 @@ V_{ab} = \left\langle a\left|-\frac{Z}{r}\right|b\right\rangle
     <span class="n">pref</span> <span class="o">=</span> <span class="mf">16.0</span><span class="o">*</span><span class="p">(</span><span class="n">zeta_a</span><span class="o">*</span><span class="n">zeta_b</span><span class="o">*</span><span class="n">zeta_c</span><span class="o">*</span><span class="n">zeta_d</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span>
     <span class="k">return</span> <span class="n">pref</span> <span class="o">*</span> <span class="n">num</span> <span class="o">/</span> <span class="n">den</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">build_integrals</span><span class="p">(</span><span class="n">zetas</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">build_integrals</span><span class="p">(</span><span class="n">zetas</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
     <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">zetas</span><span class="p">)</span>
     <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
@@ -721,14 +721,14 @@ V_{ab} = \left\langle a\left|-\frac{Z}{r}\right|b\right\rangle
                     <span class="n">eri</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">ERI_sto_1s</span><span class="p">(</span><span class="n">zetas</span><span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">zetas</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">zetas</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">zetas</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">S</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">eri</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">symmetric_orthogonalization</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">symmetric_orthogonalization</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
     <span class="c1"># S^{-1/2} via eigen-decomposition</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">w</span> <span class="o">&lt;=</span> <span class="mf">1e-12</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Overlap matrix is singular/ill-conditioned.&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">U</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">w</span><span class="o">**-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">@</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">build_fock</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">eri</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">build_fock</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">eri</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
     <span class="c1"># F_{μν} = H_{μν} + Σ_{λσ} P_{λσ} [ (μν|λσ) - 1/2 (μλ|νσ) ]</span>
     <span class="n">M</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">F</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -741,7 +741,7 @@ V_{ab} = \left\langle a\left|-\frac{Z}{r}\right|b\right\rangle
             <span class="n">F</span><span class="p">[</span><span class="n">mu</span><span class="p">,</span><span class="n">nu</span><span class="p">]</span> <span class="o">+=</span> <span class="n">g</span>
     <span class="k">return</span> <span class="n">F</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">rhf_scf_helium</span><span class="p">(</span><span class="n">zetas</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">conv</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">rhf_scf_helium</span><span class="p">(</span><span class="n">zetas</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">conv</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="n">S</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">eri</span> <span class="o">=</span> <span class="n">build_integrals</span><span class="p">(</span><span class="n">zetas</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">symmetric_orthogonalization</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
 
@@ -835,9 +835,9 @@ Check normalization c^T S c = 1.000000000000
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">phi_sto_1s_r</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">zeta</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">phi_sto_1s_r</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">zeta</span><span class="p">):</span>
     <span class="c1"># normalized 1s STO value as a function of r (1s is spherically symmetric)</span>
     <span class="n">N</span> <span class="o">=</span> <span class="p">(</span><span class="n">zeta</span><span class="o">**</span><span class="mi">3</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
     <span class="k">return</span> <span class="n">N</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">zeta</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
