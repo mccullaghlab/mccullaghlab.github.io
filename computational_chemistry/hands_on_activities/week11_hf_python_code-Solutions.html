@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Week 9/10 Hands-On: Refactoring an H\(_2\) Hartree–Fock Script into a Python Class &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
@@ -29,41 +28,39 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=9b279c77" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css?v=6ad1a40c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/clipboard.min.js"></script>
-    <script src="../../_static/copybutton.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
-    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=afe5de03"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'computational_chemistry/hands_on_activities/week11_hf_python_code-Solutions';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -309,23 +306,29 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/H2%2B_Variational.html">5.2.8. H2+ Molecular Ion with a Vartiational Method</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.9. H2 Molecule with Vartiational Method</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/HF_for_H2.html">5.2.10. HF for H2 Molecule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/Basis_Sets.html">5.2.11. Basis Sets</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="intro.html">5.3. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="week1_linux_hands_on.html">5.3.1. Linux Basics + Running Python</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="week1_linux_hands_on.html">5.4.1. Linux Basics + Running Python</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="week2_python_jupyter_hands_on.html">5.3.3. Python and Jupyter Notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week2_python_jupyter_hands_on.html">5.4.3. Python and Jupyter Notebooks</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="week3_scp_vi_jupyter_powerups.html">5.3.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week3_scp_vi_jupyter_powerups.html">5.4.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="week5_hpc_slurm_modules_storage.html">5.3.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week5_hpc_slurm_modules_storage.html">5.4.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="week6_webmo_hands_on.html">5.3.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week6_webmo_hands_on.html">5.4.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="week7_advanced_webmo_sn2_pes_scan.html">5.3.11. Week 7: Advanced WebMO – PES Mapping with Coordinate Scans (SN2 Example)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week7_advanced_webmo_sn2_pes_scan.html">5.4.11. Week 7: Advanced WebMO – PES Mapping with Coordinate Scans (SN2 Example)</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="week9_webmo_molecular_orbitals.html">5.3.13. Molecular Orbitals from WebMO</a></li>
-<li class="toctree-l3"><a class="reference internal" href="week11_python_classes_and_hf_code.html">5.3.14. Python Classes and HF Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week9_webmo_molecular_orbitals.html">5.4.13. Molecular Orbitals from WebMO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Running amber on pete</a></li>
 </ul>
 </details></li>
 </ul>
@@ -580,9 +583,9 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="week-9-10-hands-on-refactoring-an-h-2-hartreefock-script-into-a-python-class">
-<h1>Week 9/10 Hands-On: Refactoring an H<span class="math notranslate nohighlight">\(_2\)</span> Hartree–Fock Script into a Python Class<a class="headerlink" href="#week-9-10-hands-on-refactoring-an-h-2-hartreefock-script-into-a-python-class" title="Permalink to this heading">#</a></h1>
+<h1>Week 9/10 Hands-On: Refactoring an H<span class="math notranslate nohighlight">\(_2\)</span> Hartree–Fock Script into a Python Class<a class="headerlink" href="#week-9-10-hands-on-refactoring-an-h-2-hartreefock-script-into-a-python-class" title="Link to this heading">#</a></h1>
 <section id="motivation">
-<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<h2>Motivation<a class="headerlink" href="#motivation" title="Link to this heading">#</a></h2>
 <p>Your earlier H<span class="math notranslate nohighlight">\(_2\)</span> Hartree–Fock notebook works, but it is written in a <strong>single-script style</strong>:</p>
 <ul class="simple">
 <li><p>system setup, integrals, matrix construction, and diagonalization are all mixed together,</p></li>
@@ -599,7 +602,7 @@ That will make it easier to:</p>
 </section>
 <hr class="docutils" />
 <section id="learning-goals">
-<h2>Learning goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
+<h2>Learning goals<a class="headerlink" href="#learning-goals" title="Link to this heading">#</a></h2>
 <p>By the end of this notebook, you should be able to:</p>
 <ul class="simple">
 <li><p>explain why the AO basis for H<span class="math notranslate nohighlight">\(_2\)</span> in STO-3G is <strong>not orthogonal</strong>,</p></li>
@@ -611,7 +614,7 @@ That will make it easier to:</p>
 </section>
 <hr class="docutils" />
 <section id="plan-for-today">
-<h2>Plan for today<a class="headerlink" href="#plan-for-today" title="Permalink to this heading">#</a></h2>
+<h2>Plan for today<a class="headerlink" href="#plan-for-today" title="Link to this heading">#</a></h2>
 <p>We will:</p>
 <ol class="arabic simple">
 <li><p>build the needed one- and two-electron integrals for a minimal H<span class="math notranslate nohighlight">\(_2\)</span> STO-3G model,</p></li>
@@ -623,7 +626,7 @@ That will make it easier to:</p>
 </ol>
 </section>
 <section id="part-1-a-toy-example-introducing-python-classes">
-<h2>Part 1. A toy example: introducing Python classes<a class="headerlink" href="#part-1-a-toy-example-introducing-python-classes" title="Permalink to this heading">#</a></h2>
+<h2>Part 1. A toy example: introducing Python classes<a class="headerlink" href="#part-1-a-toy-example-introducing-python-classes" title="Link to this heading">#</a></h2>
 <p>Before doing Hartree–Fock, let us introduce classes with a simple example.
 A class is a way to bundle together:</p>
 <ul class="simple">
@@ -633,22 +636,22 @@ A class is a way to bundle together:</p>
 <p>For a first example, consider a <code class="docutils literal notranslate"><span class="pre">Rectangle</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Rectangle</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Rectangle</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
 
-    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
 
-    <span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">perimeter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">rescale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rescale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">*=</span> <span class="n">factor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">*=</span> <span class="n">factor</span>
 
-    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rectangle(width=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="si">}</span><span class="s2">, height=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Area      = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Perimeter = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">perimeter</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -682,7 +685,7 @@ Perimeter = 15.0
 </div>
 </div>
 <section id="what-to-notice">
-<h3>What to notice<a class="headerlink" href="#what-to-notice" title="Permalink to this heading">#</a></h3>
+<h3>What to notice<a class="headerlink" href="#what-to-notice" title="Link to this heading">#</a></h3>
 <p>This class has:</p>
 <ul class="simple">
 <li><p><strong>attributes</strong>: <code class="docutils literal notranslate"><span class="pre">width</span></code>, <code class="docutils literal notranslate"><span class="pre">height</span></code></p></li>
@@ -697,7 +700,7 @@ It runs when we create the object:</p>
 </section>
 <hr class="docutils" />
 <section id="why-this-matters-for-scientific-programming">
-<h2>Why this matters for scientific programming<a class="headerlink" href="#why-this-matters-for-scientific-programming" title="Permalink to this heading">#</a></h2>
+<h2>Why this matters for scientific programming<a class="headerlink" href="#why-this-matters-for-scientific-programming" title="Link to this heading">#</a></h2>
 <p>A scientific script often starts as one long block of code.<br />
 Refactoring into a class helps because it keeps together:</p>
 <ul class="simple">
@@ -709,9 +712,9 @@ Refactoring into a class helps because it keeps together:</p>
 <p>That is exactly what we want for a Hartree–Fock code.</p>
 </section>
 <section id="part-2-creating-h2-hf-python-class">
-<h2>Part 2: Creating H2 HF Python Class<a class="headerlink" href="#part-2-creating-h2-hf-python-class" title="Permalink to this heading">#</a></h2>
+<h2>Part 2: Creating H2 HF Python Class<a class="headerlink" href="#part-2-creating-h2-hf-python-class" title="Link to this heading">#</a></h2>
 <section id="but-first-why-explicit-orthogonalization-was-not-strictly-necessary-before">
-<h3>But first: why explicit orthogonalization was not strictly necessary before<a class="headerlink" href="#but-first-why-explicit-orthogonalization-was-not-strictly-necessary-before" title="Permalink to this heading">#</a></h3>
+<h3>But first: why explicit orthogonalization was not strictly necessary before<a class="headerlink" href="#but-first-why-explicit-orthogonalization-was-not-strictly-necessary-before" title="Link to this heading">#</a></h3>
 <p>In your original notebook, the atomic-orbital basis is non-orthogonal because the two 1s-like basis functions on the two H atoms overlap, so the overlap matrix <span class="math notranslate nohighlight">\(\mathbf S\)</span> is not the identity.</p>
 <p>However, your notebook still works for two reasons:</p>
 <ol class="arabic simple">
@@ -741,7 +744,7 @@ Because \)</span>\mathbf F’<span class="math notranslate nohighlight">\( is sy
 </section>
 <hr class="docutils" />
 <section id="helper-functions-for-s-type-gaussian-integrals">
-<h2>1. Helper functions for s-type Gaussian integrals<a class="headerlink" href="#helper-functions-for-s-type-gaussian-integrals" title="Permalink to this heading">#</a></h2>
+<h2>1. Helper functions for s-type Gaussian integrals<a class="headerlink" href="#helper-functions-for-s-type-gaussian-integrals" title="Link to this heading">#</a></h2>
 <p>We will work with <strong>contracted 1s STO-3G basis functions</strong> on each hydrogen atom.<br />
 Each contracted basis function is a linear combination of three primitive Gaussian 1s functions.</p>
 <p>The formulas below are standard for <strong>s-type primitive Gaussians</strong>.</p>
@@ -756,35 +759,35 @@ Each contracted basis function is a linear combination of three primitive Gaussi
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load required libraries</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">erf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">erf</span>
 
-<span class="k">def</span> <span class="nf">boys0</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">boys0</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Boys function F0(t).&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mf">1e-12</span><span class="p">:</span>
         <span class="k">return</span> <span class="mf">1.0</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">erf</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
 
-<span class="k">def</span> <span class="nf">gaussian_product_center</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">gaussian_product_center</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">A</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span> <span class="o">/</span> <span class="n">p</span>
 
-<span class="k">def</span> <span class="nf">primitive_overlap</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">primitive_overlap</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
     <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">Rab2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span> <span class="o">-</span> <span class="n">B</span><span class="p">)</span>
     <span class="n">pref</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.75</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">beta</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.75</span>
     <span class="k">return</span> <span class="n">pref</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span><span class="p">))</span> <span class="o">**</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">beta</span> <span class="o">/</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">Rab2</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">primitive_kinetic</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">primitive_kinetic</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
     <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">Rab2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span> <span class="o">-</span> <span class="n">B</span><span class="p">)</span>
     <span class="n">reduced</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">beta</span> <span class="o">/</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="n">beta</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">reduced</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">reduced</span> <span class="o">*</span> <span class="n">Rab2</span><span class="p">)</span> <span class="o">*</span> <span class="n">primitive_overlap</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">primitive_nuclear_attraction</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">Zc</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">primitive_nuclear_attraction</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">Zc</span><span class="p">):</span>
     <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -796,7 +799,7 @@ Each contracted basis function is a linear combination of three primitive Gaussi
     <span class="n">val</span> <span class="o">=</span> <span class="n">pref</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">Zc</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">p</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">beta</span> <span class="o">/</span> <span class="n">p</span> <span class="o">*</span> <span class="n">Rab2</span><span class="p">)</span> <span class="o">*</span> <span class="n">boys0</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">Rpc2</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">val</span>
 
-<span class="k">def</span> <span class="nf">primitive_eri</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">D</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">primitive_eri</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">delta</span><span class="p">,</span> <span class="n">D</span><span class="p">):</span>
     <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
@@ -826,21 +829,21 @@ Each contracted basis function is a linear combination of three primitive Gaussi
 
     <span class="k">return</span> <span class="n">pref</span> <span class="o">*</span> <span class="n">boys0</span><span class="p">((</span><span class="n">p</span> <span class="o">*</span> <span class="n">q</span> <span class="o">/</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">q</span><span class="p">))</span> <span class="o">*</span> <span class="n">Rpq2</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">contracted_overlap</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">contracted_overlap</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
     <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">ca</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">cb</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">):</span>
             <span class="n">s</span> <span class="o">+=</span> <span class="n">ca</span> <span class="o">*</span> <span class="n">cb</span> <span class="o">*</span> <span class="n">primitive_overlap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">s</span>
 
-<span class="k">def</span> <span class="nf">contracted_kinetic</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">contracted_kinetic</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
     <span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">ca</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">cb</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">):</span>
             <span class="n">t</span> <span class="o">+=</span> <span class="n">ca</span> <span class="o">*</span> <span class="n">cb</span> <span class="o">*</span> <span class="n">primitive_kinetic</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">t</span>
 
-<span class="k">def</span> <span class="nf">contracted_nuclear_attraction</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">charges</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">contracted_nuclear_attraction</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">charges</span><span class="p">):</span>
     <span class="n">v</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">ca</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">cb</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">):</span>
@@ -848,7 +851,7 @@ Each contracted basis function is a linear combination of three primitive Gaussi
                 <span class="n">v</span> <span class="o">+=</span> <span class="n">ca</span> <span class="o">*</span> <span class="n">cb</span> <span class="o">*</span> <span class="n">primitive_nuclear_attraction</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">Zc</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">v</span>
 
-<span class="k">def</span> <span class="nf">contracted_eri</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">gammas</span><span class="p">,</span> <span class="n">ecoeffs</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">deltas</span><span class="p">,</span> <span class="n">fcoeffs</span><span class="p">,</span> <span class="n">D</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">contracted_eri</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">gammas</span><span class="p">,</span> <span class="n">ecoeffs</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">deltas</span><span class="p">,</span> <span class="n">fcoeffs</span><span class="p">,</span> <span class="n">D</span><span class="p">):</span>
     <span class="n">val</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">ca</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">b</span><span class="p">,</span> <span class="n">cb</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">betas</span><span class="p">,</span> <span class="n">dcoeffs</span><span class="p">):</span>
@@ -862,7 +865,7 @@ Each contracted basis function is a linear combination of three primitive Gaussi
 </div>
 </section>
 <section id="a-basis-class">
-<h2>2. A Basis Class<a class="headerlink" href="#a-basis-class" title="Permalink to this heading">#</a></h2>
+<h2>2. A Basis Class<a class="headerlink" href="#a-basis-class" title="Link to this heading">#</a></h2>
 <p>We will start by constructing a <code class="docutils literal notranslate"><span class="pre">Basis</span></code> class that will store all of the information necessary to define our basis functions.</p>
 <p>The main basis set we will use is called  <code class="docutils literal notranslate"><span class="pre">STO-3G</span></code> and stands for Slater-Type-Orbital approximated by Three Gaussians.  For Hydrogen, the parameters are:</p>
 <ul class="simple">
@@ -877,9 +880,9 @@ Each contracted basis function is a linear combination of three primitive Gaussi
 <p>For nuclei other than Hydrogen, the only change (for the sake of today and this code) will be to scale the alphas by a value of <span class="math notranslate nohighlight">\(\zeta^2\)</span> where <span class="math notranslate nohighlight">\(zeta=1\)</span> for hydrogen and is not one for other atoms.  The only other nucleus we will consider today is Helium which has <span class="math notranslate nohighlight">\(\zeta=1.6875\)</span> which is coded into the class below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="k">class</span> <span class="nc">Basis</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Basis</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Minimal basis-set container for H and He using STO-3G or STO-6G.</span>
 <span class="sd">    </span>
@@ -909,7 +912,7 @@ Each contracted basis function is a linear combination of three primitive Gaussi
         <span class="mi">2</span><span class="p">:</span> <span class="mf">1.6875</span><span class="p">,</span>   <span class="c1"># He</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">charges</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">basis_type</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">charges</span><span class="p">,</span> <span class="n">centers</span><span class="p">,</span> <span class="n">basis_type</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">charges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">charges</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">centers</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">basis_type</span> <span class="o">=</span> <span class="n">basis_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
@@ -938,13 +941,13 @@ Each contracted basis function is a linear combination of three primitive Gaussi
             <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">zeta</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">base_alphas</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">coeffs</span><span class="p">[</span><span class="n">atom</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_coeffs</span>
 
-    <span class="k">def</span> <span class="nf">get_atom_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom_index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_atom_basis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atom_index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the primitive exponents and coefficients for one atom.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">[</span><span class="n">atom_index</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">coeffs</span><span class="p">[</span><span class="n">atom_index</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Basis type: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">basis_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of atoms: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_atoms</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of primitives per atom: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_primitives</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1001,7 +1004,7 @@ Atom 1: Z = 1
 </div>
 </section>
 <section id="a-small-hartreefock-class-for-h-2">
-<h2>3. A small Hartree–Fock class for H<span class="math notranslate nohighlight">\(_2\)</span><a class="headerlink" href="#a-small-hartreefock-class-for-h-2" title="Permalink to this heading">#</a></h2>
+<h2>3. A small Hartree–Fock class for H<span class="math notranslate nohighlight">\(_2\)</span><a class="headerlink" href="#a-small-hartreefock-class-for-h-2" title="Link to this heading">#</a></h2>
 <p>This class will:</p>
 <ul class="simple">
 <li><p>store the molecular geometry and basis information,</p></li>
@@ -1015,10 +1018,10 @@ Atom 1: Z = 1
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The H2 RHF Class using Basis class and helper functions from above</span>
-<span class="k">class</span> <span class="nc">H2RHF</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">H2RHF</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Restricted Hartree–Fock for H2 with two electrons in a minimal STO-3G basis&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bond_length</span><span class="o">=</span><span class="mf">1.4</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bond_length</span><span class="o">=</span><span class="mf">1.4</span><span class="p">):</span>
         <span class="c1">#</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bond_length</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">bond_length</span><span class="p">)</span>  <span class="c1"># bohr</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_electrons</span> <span class="o">=</span> <span class="mi">2</span>
@@ -1051,7 +1054,7 @@ Atom 1: Z = 1
         <span class="bp">self</span><span class="o">.</span><span class="n">E_elec</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">E_total</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">build_one_electron_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_one_electron_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
         <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
         <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
@@ -1073,7 +1076,7 @@ Atom 1: Z = 1
         <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">V</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Hcore</span> <span class="o">=</span> <span class="n">T</span> <span class="o">+</span> <span class="n">V</span>
 
-    <span class="k">def</span> <span class="nf">build_two_electron_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_two_electron_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">eri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
@@ -1091,17 +1094,17 @@ Atom 1: Z = 1
                         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eri</span> <span class="o">=</span> <span class="n">eri</span>
 
-    <span class="k">def</span> <span class="nf">build_integrals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_integrals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build_one_electron_matrices</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build_two_electron_tensor</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">orthogonalizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">orthogonalizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Symmetric orthogonalization matrix X = S^(-1/2).&quot;&quot;&quot;</span>
         <span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">evecs</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">evals</span> <span class="o">**</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">@</span> <span class="n">evecs</span><span class="o">.</span><span class="n">T</span>
         <span class="k">return</span> <span class="n">X</span>
 
-    <span class="k">def</span> <span class="nf">build_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
         <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
@@ -1109,7 +1112,7 @@ Atom 1: Z = 1
                     <span class="n">P</span><span class="p">[</span><span class="n">mu</span><span class="p">,</span> <span class="n">nu</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">C</span><span class="p">[</span><span class="n">mu</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span> <span class="o">*</span> <span class="n">C</span><span class="p">[</span><span class="n">nu</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">P</span>
 
-    <span class="k">def</span> <span class="nf">build_G</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_G</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
         <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
@@ -1122,14 +1125,14 @@ Atom 1: Z = 1
                 <span class="n">G</span><span class="p">[</span><span class="n">mu</span><span class="p">,</span> <span class="n">nu</span><span class="p">]</span> <span class="o">=</span> <span class="n">total</span>
         <span class="k">return</span> <span class="n">G</span>
 
-    <span class="k">def</span> <span class="nf">electronic_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">Hcore</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">electronic_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">Hcore</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
         <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">P</span> <span class="o">*</span> <span class="p">(</span><span class="n">Hcore</span> <span class="o">+</span> <span class="n">F</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">nuclear_repulsion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nuclear_repulsion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">R12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">centers</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">charges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">charges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">R12</span>
 
-    <span class="k">def</span> <span class="nf">initial_density_from_core</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initial_density_from_core</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orthogonalizer</span><span class="p">()</span>
         <span class="n">Fp</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">Hcore</span> <span class="o">@</span> <span class="n">X</span>
         <span class="n">eps</span><span class="p">,</span> <span class="n">Cp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">Fp</span><span class="p">)</span>
@@ -1137,7 +1140,7 @@ Atom 1: Z = 1
         <span class="n">P</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_density</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">P</span>
 
-    <span class="k">def</span> <span class="nf">scf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">e_tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">d_tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">e_tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">d_tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Hcore</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">eri</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">build_integrals</span><span class="p">()</span>
 
@@ -1174,7 +1177,7 @@ Atom 1: Z = 1
 
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;SCF failed to converge within max_iter iterations.&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bond length (bohr):&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bond_length</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Overlap matrix S:&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
@@ -1194,7 +1197,7 @@ Atom 1: Z = 1
 </div>
 </section>
 <section id="run-the-class-for-h-2-at-1-4-bohr">
-<h2>3. Run the class for H<span class="math notranslate nohighlight">\(_2\)</span> at 1.4 bohr<a class="headerlink" href="#run-the-class-for-h-2-at-1-4-bohr" title="Permalink to this heading">#</a></h2>
+<h2>3. Run the class for H<span class="math notranslate nohighlight">\(_2\)</span> at 1.4 bohr<a class="headerlink" href="#run-the-class-for-h-2-at-1-4-bohr" title="Link to this heading">#</a></h2>
 <p>We now instantiate the object and run SCF.<br />
 This is already much more user-friendly than editing one large script.</p>
 <div class="cell docutils container">
@@ -1250,7 +1253,7 @@ Total energy (Eh):      -1.1167143214193094
 </div>
 </section>
 <section id="what-did-orthogonalization-buy-us">
-<h2>4. What did orthogonalization buy us?<a class="headerlink" href="#what-did-orthogonalization-buy-us" title="Permalink to this heading">#</a></h2>
+<h2>4. What did orthogonalization buy us?<a class="headerlink" href="#what-did-orthogonalization-buy-us" title="Link to this heading">#</a></h2>
 <p>The important structural improvement is that we solved the Roothaan equations in a cleaner way:</p>
 <ol class="arabic simple">
 <li><p>Build the overlap matrix <span class="math notranslate nohighlight">\(\mathbf S\)</span>.</p></li>
@@ -1279,7 +1282,7 @@ $<span class="math notranslate nohighlight">\(
 </ul>
 </section>
 <section id="check-the-overlap-matrix-explicitly">
-<h2>5. Check the overlap matrix explicitly<a class="headerlink" href="#check-the-overlap-matrix-explicitly" title="Permalink to this heading">#</a></h2>
+<h2>5. Check the overlap matrix explicitly<a class="headerlink" href="#check-the-overlap-matrix-explicitly" title="Link to this heading">#</a></h2>
 <p>Are the basis functions orthonormal (is the overlap matrix similar to the identity matrix)?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1303,7 +1306,7 @@ False
 That is exactly why orthogonalization is conceptually important, even if your earlier notebook handled it implicitly.</p>
 </section>
 <section id="a-simple-extension-scan-the-bond-length">
-<h2>6. A simple extension: scan the bond length<a class="headerlink" href="#a-simple-extension-scan-the-bond-length" title="Permalink to this heading">#</a></h2>
+<h2>6. A simple extension: scan the bond length<a class="headerlink" href="#a-simple-extension-scan-the-bond-length" title="Link to this heading">#</a></h2>
 <p>Because the code is now wrapped in a class, it is easy to repeat the calculation at multiple H–H distances.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1365,19 +1368,19 @@ That is exactly why orthogonalization is conceptually important, even if your ea
 </div>
 </section>
 <section id="short-assignment">
-<h2>8. Short assignment<a class="headerlink" href="#short-assignment" title="Permalink to this heading">#</a></h2>
+<h2>8. Short assignment<a class="headerlink" href="#short-assignment" title="Link to this heading">#</a></h2>
 <section id="part-a">
-<h3>Part A<a class="headerlink" href="#part-a" title="Permalink to this heading">#</a></h3>
+<h3>Part A<a class="headerlink" href="#part-a" title="Link to this heading">#</a></h3>
 <p>Create a <code class="docutils literal notranslate"><span class="pre">Triangle</span></code> class analgous to our <code class="docutils literal notranslate"><span class="pre">Rectangle</span></code> class that inputs the appropriate information and is able to compute the area and perimeter of the triangle.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
-<span class="k">class</span> <span class="nc">Triangle</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Triangle</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to store the unique definition of a triangle with functions to compute the area and perimeter of the triangle.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                        <span class="n">A</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">B</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Flexible triangle constructor.</span>
@@ -1452,31 +1455,31 @@ That is exactly why orthogonalization is conceptually important, even if your ea
         <span class="c1"># Final validation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">rescale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rescale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*=</span> <span class="n">factor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">*=</span> <span class="n">factor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">c</span> <span class="o">*=</span> <span class="n">factor</span>
     
-    <span class="k">def</span> <span class="nf">_law_of_cosines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">angle_deg</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_law_of_cosines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">angle_deg</span><span class="p">):</span>
         <span class="n">angle_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle_deg</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle_rad</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">&lt;=</span> <span class="n">c</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid triangle: violates triangle inequality&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">perimeter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">perimeter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span>
 
-    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">perimeter</span><span class="p">()</span> <span class="o">/</span> <span class="mi">2</span>
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">s</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Triangle(a=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, b=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, c=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">c</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)&quot;</span>
 
-    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Area      = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Perimeter = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">perimeter</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1486,7 +1489,7 @@ That is exactly why orthogonalization is conceptually important, even if your ea
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="n">t1</span> <span class="o">=</span> <span class="n">Triangle</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <span class="n">t1</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
 <span class="n">t1</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
@@ -1509,11 +1512,11 @@ Perimeter = 11.830127018922193
 </div>
 </section>
 <section id="part-b">
-<h3>Part B<a class="headerlink" href="#part-b" title="Permalink to this heading">#</a></h3>
+<h3>Part B<a class="headerlink" href="#part-b" title="Link to this heading">#</a></h3>
 <p>Modify the <code class="docutils literal notranslate"><span class="pre">H2RHF</span></code> class so that <code class="docutils literal notranslate"><span class="pre">nuclear_charges</span></code> and <code class="docutils literal notranslate"><span class="pre">basis_type</span></code> can be passed into <code class="docutils literal notranslate"><span class="pre">__init__</span></code> instead of hard-coding them.</p>
 </section>
 <section id="part-c">
-<h3>Part C<a class="headerlink" href="#part-c" title="Permalink to this heading">#</a></h3>
+<h3>Part C<a class="headerlink" href="#part-c" title="Link to this heading">#</a></h3>
 <p>Compute and <em><strong>plot</strong></em> E(R) vs R (<span class="math notranslate nohighlight">\(0.5 \leq R \leq 8\)</span> Bohr) for H<span class="math notranslate nohighlight">\(_2\)</span> in the following bases:</p>
 <ul class="simple">
 <li><p>sto-3g</p></li>
@@ -1522,14 +1525,14 @@ Perimeter = 11.830127018922193
 <p>Plot both on the same plot and label the plot accordingly.  Which has a lower energy and why?</p>
 </section>
 <section id="part-d">
-<h3>Part D<a class="headerlink" href="#part-d" title="Permalink to this heading">#</a></h3>
+<h3>Part D<a class="headerlink" href="#part-d" title="Link to this heading">#</a></h3>
 <p>Compute and <em><strong>plot</strong></em> <span class="math notranslate nohighlight">\(E(R)\)</span> vs <span class="math notranslate nohighlight">\(R\)</span> (<span class="math notranslate nohighlight">\(0.7 \leq R \leq 8\)</span> Bohr) for HeH<span class="math notranslate nohighlight">\(^+\)</span> in an sto-3g basis.  Describe any differences observed between <span class="math notranslate nohighlight">\(E(R)\)</span> for HeH<span class="math notranslate nohighlight">\(^+\)</span> and H<span class="math notranslate nohighlight">\(_2\)</span> (from above).  Why is the asymptotic behavior more correct for HeH<span class="math notranslate nohighlight">\(^+\)</span>?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">X2RHF</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">X2RHF</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Restricted Hartree–Fock for X2 with two electrons&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">charges</span><span class="p">,</span> <span class="n">basis_type</span><span class="p">,</span> <span class="n">bond_length</span><span class="o">=</span><span class="mf">1.4</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">charges</span><span class="p">,</span> <span class="n">basis_type</span><span class="p">,</span> <span class="n">bond_length</span><span class="o">=</span><span class="mf">1.4</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bond_length</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">bond_length</span><span class="p">)</span>  <span class="c1"># bohr</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_electrons</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_occ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_electrons</span> <span class="o">//</span> <span class="mi">2</span>
@@ -1560,7 +1563,7 @@ Perimeter = 11.830127018922193
         <span class="bp">self</span><span class="o">.</span><span class="n">E_elec</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">E_total</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">build_one_electron_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_one_electron_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
         <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
         <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
@@ -1582,7 +1585,7 @@ Perimeter = 11.830127018922193
         <span class="bp">self</span><span class="o">.</span><span class="n">V</span> <span class="o">=</span> <span class="n">V</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Hcore</span> <span class="o">=</span> <span class="n">T</span> <span class="o">+</span> <span class="n">V</span>
 
-    <span class="k">def</span> <span class="nf">build_two_electron_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_two_electron_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">eri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
@@ -1600,17 +1603,17 @@ Perimeter = 11.830127018922193
                         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">eri</span> <span class="o">=</span> <span class="n">eri</span>
 
-    <span class="k">def</span> <span class="nf">build_integrals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_integrals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build_one_electron_matrices</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build_two_electron_tensor</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">orthogonalizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">orthogonalizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Symmetric orthogonalization matrix X = S^(-1/2).&quot;&quot;&quot;</span>
         <span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">evecs</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">evals</span> <span class="o">**</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">@</span> <span class="n">evecs</span><span class="o">.</span><span class="n">T</span>
         <span class="k">return</span> <span class="n">X</span>
 
-    <span class="k">def</span> <span class="nf">build_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
         <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
@@ -1618,7 +1621,7 @@ Perimeter = 11.830127018922193
                     <span class="n">P</span><span class="p">[</span><span class="n">mu</span><span class="p">,</span> <span class="n">nu</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">C</span><span class="p">[</span><span class="n">mu</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span> <span class="o">*</span> <span class="n">C</span><span class="p">[</span><span class="n">nu</span><span class="p">,</span> <span class="n">m</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">P</span>
 
-    <span class="k">def</span> <span class="nf">build_G</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build_G</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
         <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">mu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">nu</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbf</span><span class="p">):</span>
@@ -1631,14 +1634,14 @@ Perimeter = 11.830127018922193
                 <span class="n">G</span><span class="p">[</span><span class="n">mu</span><span class="p">,</span> <span class="n">nu</span><span class="p">]</span> <span class="o">=</span> <span class="n">total</span>
         <span class="k">return</span> <span class="n">G</span>
 
-    <span class="k">def</span> <span class="nf">electronic_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">Hcore</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">electronic_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">Hcore</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
         <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">P</span> <span class="o">*</span> <span class="p">(</span><span class="n">Hcore</span> <span class="o">+</span> <span class="n">F</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">nuclear_repulsion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nuclear_repulsion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">R12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">centers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">centers</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">charges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">charges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">R12</span>
 
-    <span class="k">def</span> <span class="nf">initial_density_from_core</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">initial_density_from_core</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orthogonalizer</span><span class="p">()</span>
         <span class="n">Fp</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">Hcore</span> <span class="o">@</span> <span class="n">X</span>
         <span class="n">eps</span><span class="p">,</span> <span class="n">Cp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">Fp</span><span class="p">)</span>
@@ -1646,7 +1649,7 @@ Perimeter = 11.830127018922193
         <span class="n">P</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_density</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">P</span>
 
-    <span class="k">def</span> <span class="nf">scf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">e_tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">d_tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">e_tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">d_tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Hcore</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">eri</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">build_integrals</span><span class="p">()</span>
 
@@ -1683,7 +1686,7 @@ Perimeter = 11.830127018922193
 
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;SCF failed to converge within max_iter iterations.&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bond length (bohr):&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bond_length</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Overlap matrix S:&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
@@ -1718,7 +1721,7 @@ Perimeter = 11.830127018922193
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="c1"># Convert to numpy arrays (optional but useful)</span>
 <span class="n">energies_h2_sto3g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energies_h2_sto3g</span><span class="p">)</span>
 <span class="n">energies_h2_sto6g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energies_h2_sto6g</span><span class="p">)</span>
@@ -1774,7 +1777,7 @@ Perimeter = 11.830127018922193
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="c1"># Convert to numpy arrays (optional but useful)</span>
 <span class="n">energies_heh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energies_heh</span><span class="p">)</span>
 <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span>
