@@ -1,0 +1,1180 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=9b279c77" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css?v=6ad1a40c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=afe5de03"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="5.4.14. Week 11 Hands-On: Refactoring an H\(_2\) Hartree–Fock Script into a Python Class" href="week11_python_classes_and_hf_code.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">1. Jupyter Notebook Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">1.1. Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">1.2. Advanced Jupyter Notebook Tutorial</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../coding_concepts/intro.html">2. Coding Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/variables.html">2.1. Variables in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">2.2. Arrays and Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/for_loops.html">2.3. for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/functions.html">2.4. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">2.5. Plotting with matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/numeric_integration.html">2.6. Numeric Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/intro.html">3. Math Concepts in Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/logarithms_and_exponential_functions.html">3.1. Logarithms and Exponential Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/differentiation_and_critical_points.html">3.2. Differentiation and Critical Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/integration_in_1D.html">3.3. Integration in 1D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/derivatives_of_multivariable_functions.html">3.4. Derivatives of Multivariable Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/discrete_probability.html">3.5. Discrete Probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../physical_chemistry/intro.html">4. Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/introduction/intro.html">4.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/introduction/non-bonded_interactions.html">4.1.1. Non-bonded Interactions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/intro.html">4.2. Statiscial Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.html">4.2.1. Boltzmann Factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Introduction_to_Probability.html">4.2.2. Introduction to Probability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">4.2.3. Thermodynamic Properties from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">4.2.4. Partition Function for a Monatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">4.2.5. Partition Function for a Diatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">4.2.6. Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">4.2.7. Kinetic Theory of Gasses from the Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/microscopic_view_of_entropy.html">4.2.8. Microscopic View of Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">4.2.9. Equations of State from Lattice Gas Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/thermodynamics/intro.html">4.3. Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/First_Law_of_Thermodynamics.html">4.3.1. The First Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Heat_Work_and_Calculating_U.html">4.3.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Thermodynamic_Cycles.html">4.3.4. Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Eastham_Honors.html">4.3.5. Thermodynamic Cycles: Solving exam problems and other examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Enthalpy.html">4.3.6. Enthalpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/The_Carnot_Cycle.html">4.3.7. The Carnot Cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Second_Law_of_Thermodynamics.html">4.3.8. Second Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">4.3.9. Heat Engine Diagrams</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Third_Law_of_Thermodynamics.html">4.3.11. The Third Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">4.3.12. First Derivative and Maxwell Relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Maxwell_Relations_Applied.html">4.3.13. Maxwell Relations Applied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Free_Energy_and_Legendre_Transforms.html">4.3.14. Free Energy and Legendre Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">4.3.15. The Pressure and Temperature Dependence of the Gibbs Energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">4.3.16. Phase Diagrams and Phase Equilibria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Chemical_Potential_from_Partition_Function.html">4.3.17. Chemical Potential from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Thermodynamics_of_Solutions.html">4.3.18. Thermodynamics of Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Ideal_and_Non_Ideal_Solutions.html">4.3.19. Ideal and Non-ideal Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Introduction_to_Chemical_Equilibrium.html">4.3.20. Chemical Equilibrium</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/kinetics/intro.html">4.4. Kinetics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Chemical_Kinetics_and_Rate_Laws.html">4.4.1. Chemical Kinetics and Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Integrated_Rate_Laws.html">4.4.2. Integrated Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Reversible_Reactions.html">4.4.3. Reversible Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">4.4.4. Transition State Theory and Temperature Dependence of the Rate Constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Reaction_Mechanisms_Part_I.html">4.4.5. Reaction Mechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Catalysts.html">4.4.6. Catalysts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.html">4.4.7. Enzyme Kinetics: The Michaelis-Menten Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Cooperative_Binding_Kinetics.html">4.4.8. Cooperative Binding Kinetics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Competitive_Inhibition.html">4.4.9. Competitive Inhibition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/intro.html">4.5. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/history_of_quantum_mechanics.html">4.5.1. The History of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/wave_particle_duality_classical_wave_equation.html">4.5.2. Wave Particle Duality and the Classical Wave Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Schrodinger_Equation.html">4.5.3. Schrodinger Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/particle_in_a_box.html">4.5.4. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">4.5.5. The Uncertainty Principle and Applications of Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/postulates_of_quantum_mechanics.html">4.5.6. The Postulates and Formalism of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/momentum_operator.html">4.5.7. The Momentum Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/operator_algebra.html">4.5.8. Operator Algebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/particle_in_a_sphere.html">4.5.9. Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/properties_of_particle_in_a_sphere.html">4.5.10. Properties of Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_hydrogen_atom.html">4.5.11. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/properties_of_the_hydrogen_atom.html">4.5.12. Properties of the Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_hydrogen_atom_absorption_spectrum.html">4.5.13. The Hydrogen Atom Absorption Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/special_functions_in_quantum_mechanics.html">4.5.14. Special Functions in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_helium_atom.html">4.5.15. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">4.5.16. Variational Method in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Single_Electron_Molecule_Variational_Approach.html">4.5.17. Single Electron Molecule in the Variational Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Improving_the_h2%2B_variational_approximation.html">4.5.18. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/h2%2B_with_polarization.html">4.5.19. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation by Including Polarization Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">4.5.20. The H<span class="math notranslate nohighlight">\(_2\)</span> Molecule using the Variational Method in a Minimal Basis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/H2_Configuration_Interaction.html">4.5.21. H<span class="math notranslate nohighlight">\(_2\)</span> Configuration Interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/harmonic_oscillator.html">4.5.22. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">4.5.23. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/basis_functions.html">4.5.24. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/harmonic_oscillator_using_variational_method.html">4.5.25. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/morse_oscillator.html">4.5.26. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator.html">4.5.27. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator_using_variational_method.html">4.5.28. Rigid Rotator Variational Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator_selection_rules.html">4.5.29. Rigid Rotator Continued…</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/electronic_structure/intro.html">4.6. Electronic Structure</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/Hartree_Fock_Helium_Atom.html">4.6.1. Hartree-Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../introduction/intro.html">5.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../introduction/the_fundamental_model.html">5.1.1. The Fundamental Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction/Models_in_the_Scientific_Method.html">5.1.2. What is a Model?</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/Hartree_Fock_Helium_Atom.html">5.2.5. Helium Atom Motivation</a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/H2%2B_Variational.html">5.2.8. H2+ Molecular Ion with a Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.9. H2 Molecule with Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/HF_for_H2.html">5.2.10. HF for H2 Molecule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/Basis_Sets.html">5.2.11. Basis Sets</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">5.4. Hands-on Activities</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="week1_linux_hands_on.html">5.4.1. Linux Basics + Running Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week2_python_jupyter_hands_on.html">5.4.3. Python and Jupyter Notebooks</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week3_scp_vi_jupyter_powerups.html">5.4.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week5_hpc_slurm_modules_storage.html">5.4.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week6_webmo_hands_on.html">5.4.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week7_advanced_webmo_sn2_pes_scan.html">5.4.11. Week 7: Advanced WebMO – PES Mapping with Coordinate Scans (SN2 Example)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week9_webmo_molecular_orbitals.html">5.4.13. Molecular Orbitals from WebMO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">5.4.15. Running amber on pete</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fcomputational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goals">5.4.15.1. Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important-adaptation-for-pete">5.4.15.2. Important adaptation for Pete</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-your-week-12-working-directory-on-pete">5.4.15.3. Set up your Week 12 working directory on Pete</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-alanine-dipeptide-with-tleap">5.4.15.4. Build alanine dipeptide with <code class="docutils literal notranslate"><span class="pre">tleap</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-amber-md-input-files">5.4.15.5. Create AMBER MD input files</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-in-minimization-input-file">5.4.15.5.1. <code class="docutils literal notranslate"><span class="pre">min.in</span></code> - Minimization input file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heat-in-heating-input-file">5.4.15.5.2. <code class="docutils literal notranslate"><span class="pre">heat.in</span></code> - Heating input file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prod-in-production-run-input-file">5.4.15.5.3. <code class="docutils literal notranslate"><span class="pre">prod.in</span></code> - Production run input file</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-the-input-files">5.4.15.6. Review the input files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-minimization">5.4.15.7. Run minimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-minimization-output">5.4.15.8. Inspect the minimization output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-heating">5.4.15.9. Run heating</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-heating-output">5.4.15.10. Inspect the heating output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-production-md">5.4.15.11. 10. Run production MD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-production-outputs">5.4.15.12. 11. Check the production outputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-trajectory-analysis-with-cpptraj">5.4.15.13. 14. Basic trajectory analysis with <code class="docutils literal notranslate"><span class="pre">cpptraj</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-rmsd-and-the-phi-psi-time-series-in-python">5.4.15.14. 15. Plot RMSD and the <code class="docutils literal notranslate"><span class="pre">phi</span></code>/<code class="docutils literal notranslate"><span class="pre">psi</span></code> time series in Python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#short-assignment">5.4.15.15. Short assignment</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="week-12-hands-on-running-an-amber-simulation-of-alanine-dipeptide-on-pete">
+<h1><span class="section-number">5.4.15. </span>Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete<a class="headerlink" href="#week-12-hands-on-running-an-amber-simulation-of-alanine-dipeptide-on-pete" title="Link to this heading">#</a></h1>
+<p>This notebook is a <strong>Pete-adapted</strong> version of the AMBER alanine dipeptide tutorial:</p>
+<p><strong>AMBER tutorial:</strong> <em>Simple Simulation of Alanine Dipeptide</em><br />
+https://ambermd.org/tutorials/basic/tutorial0/index.php</p>
+<section id="goals">
+<h2><span class="section-number">5.4.15.1. </span>Goals<a class="headerlink" href="#goals" title="Link to this heading">#</a></h2>
+<p>By the end of this hands-on lesson, you should be able to:</p>
+<ul class="simple">
+<li><p>create a working directory for Week 12 on Pete</p></li>
+<li><p>load the AMBER environment</p></li>
+<li><p>build alanine dipeptide with <strong><code class="docutils literal notranslate"><span class="pre">tleap</span></code></strong> (not <code class="docutils literal notranslate"><span class="pre">xleap</span></code>)</p></li>
+<li><p>generate <code class="docutils literal notranslate"><span class="pre">parm7</span></code> and <code class="docutils literal notranslate"><span class="pre">rst7</span></code> files</p></li>
+<li><p>prepare AMBER input files for minimization, heating, and production</p></li>
+<li><p>run minimization and MD</p></li>
+<li><p>do a small amount of post-processing with <code class="docutils literal notranslate"><span class="pre">cpptraj</span></code></p></li>
+</ul>
+</section>
+<section id="important-adaptation-for-pete">
+<h2><span class="section-number">5.4.15.2. </span>Important adaptation for Pete<a class="headerlink" href="#important-adaptation-for-pete" title="Link to this heading">#</a></h2>
+<p>The original tutorial creates a generic <code class="docutils literal notranslate"><span class="pre">Tutorial</span></code> folder.<br />
+For this course, start in:</p>
+<p><code class="docutils literal notranslate"><span class="pre">/projects/tia001/$USER/week12</span></code></p>
+<blockquote>
+<div><p>Note: your prompt said <code class="docutils literal notranslate"><span class="pre">/projects/tia001/$SUER</span></code>, which appears to be a typo.<br />
+In the commands below I use the standard environment variable <strong><code class="docutils literal notranslate"><span class="pre">$USER</span></code></strong>.</p>
+</div></blockquote>
+</section>
+<section id="set-up-your-week-12-working-directory-on-pete">
+<h2><span class="section-number">5.4.15.3. </span>Set up your Week 12 working directory on Pete<a class="headerlink" href="#set-up-your-week-12-working-directory-on-pete" title="Link to this heading">#</a></h2>
+<p>Create a <code class="docutils literal notranslate"><span class="pre">week12</span></code> directory in our shared project space.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week12
+</pre></div>
+</div>
+<p>Move into that directory</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week12
+</pre></div>
+</div>
+<p>Load the amber module so that your shell has access to the amber executables</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>module<span class="w"> </span>load<span class="w"> </span>amber
+</pre></div>
+</div>
+<p>Check that the amber executables are available</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$AMBERHOME</span>
+which<span class="w"> </span>tleap
+</pre></div>
+</div>
+</section>
+<section id="build-alanine-dipeptide-with-tleap">
+<h2><span class="section-number">5.4.15.4. </span>Build alanine dipeptide with <code class="docutils literal notranslate"><span class="pre">tleap</span></code><a class="headerlink" href="#build-alanine-dipeptide-with-tleap" title="Link to this heading">#</a></h2>
+<p>This follows the AMBER tutorial closely:</p>
+<ol class="arabic simple">
+<li><p>load the <code class="docutils literal notranslate"><span class="pre">ff14SB</span></code> protein force field</p></li>
+<li><p>build alanine dipeptide as <code class="docutils literal notranslate"><span class="pre">ACE-ALA-NME</span></code></p></li>
+<li><p>load the TIP3P water model</p></li>
+<li><p>solvate in an octahedral box with a 8 Å buffer</p></li>
+<li><p>save <code class="docutils literal notranslate"><span class="pre">parm7</span></code> and <code class="docutils literal notranslate"><span class="pre">rst7</span></code></p></li>
+</ol>
+<p>We will do this starting <code class="docutils literal notranslate"><span class="pre">tleap</span></code> and then executing a few commands in tleap:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tleap
+</pre></div>
+</div>
+<p>You should see the following (or comparable) output</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-I: Adding /opt/amber/18/amber18/dat/leap/prep to search path.
+-I: Adding /opt/amber/18/amber18/dat/leap/lib to search path.
+-I: Adding /opt/amber/18/amber18/dat/leap/parm to search path.
+-I: Adding /opt/amber/18/amber18/dat/leap/cmd to search path.
+
+Welcome to LEaP!
+(no leaprc in search path)
+</pre></div>
+</div>
+<p>We start by source the parameters (force constants, charges, etc - called a force field) that we will use for this tutorial</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; source leaprc.protein.ff14SB
+</pre></div>
+</div>
+<p>You should see the following output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>----- Source: /opt/amber/18/amber18/dat/leap/cmd/leaprc.protein.ff14SB
+----- Source of /opt/amber/18/amber18/dat/leap/cmd/leaprc.protein.ff14SB done
+Log file: ./leap.log
+Loading parameters: /opt/amber/18/amber18/dat/leap/parm/parm10.dat
+Reading title:
+PARM99 + frcmod.ff99SB + frcmod.parmbsc0 + OL3 for RNA
+Loading parameters: /opt/amber/18/amber18/dat/leap/parm/frcmod.ff14SB
+Reading force field modification type file (frcmod)
+Reading title:
+ff14SB protein backbone and sidechain parameters
+Loading library: /opt/amber/18/amber18/dat/leap/lib/amino12.lib
+Loading library: /opt/amber/18/amber18/dat/leap/lib/aminoct12.lib
+Loading library: /opt/amber/18/amber18/dat/leap/lib/aminont12.lib
+</pre></div>
+</div>
+<p>Now create a diala object in <code class="docutils literal notranslate"><span class="pre">tleap</span></code> by using the <code class="docutils literal notranslate"><span class="pre">sequence</span></code> command to connect the <code class="docutils literal notranslate"><span class="pre">ACE</span></code> residue to an <code class="docutils literal notranslate"><span class="pre">ALA</span></code> residue to a <code class="docutils literal notranslate"><span class="pre">NME</span></code> residue.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; diala = sequence { ACE ALA NME }
+</pre></div>
+</div>
+<p>Now we will add water around our solute.  We start by loading the water parameters</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; source leaprc.water.tip3p
+</pre></div>
+</div>
+<p>Add a box of TIP3P water around the solute with a buffer of alteast 8 Angstroms on all sides of the solute.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; solvatebox diala TIP3PBOX 8.0
+</pre></div>
+</div>
+<p>Save the amber parameter/topology file (parm7) and input coordinates (rst7):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; saveamberparm diala diala_solv.parm7 diala_solv.rst7
+</pre></div>
+</div>
+<p>Save a pdb:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; savepdb diala diala_solv.pdb
+</pre></div>
+</div>
+<p>Quit tleap:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&gt; quit
+</pre></div>
+</div>
+<p>You should now have the following files in your <code class="docutils literal notranslate"><span class="pre">week12</span></code> folder:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>diala_solv.parm7  diala_solv.pdb  diala_solv.rst7  leap.log
+</pre></div>
+</div>
+<p>You can also achieve this by copying and pasting the following into the terminal directly (from your <code class="docutils literal notranslate"><span class="pre">week12</span></code> folder)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="k">bash</span>
+cd /projects/tia001/$USER/week12
+ls -lh
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bash: line 1: cd: /projects/tia001/mmccull/week12: No such file or directory
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 1184
+drwxr-xr-x@  3 mmccull  staff    96B Jan 26 21:35 <span class=" -Color -Color-Blue">anaconda_projects</span>
+drwxr-xr-x
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>@ 19 mmccull  staff   608B Feb 26 13:28 <span class=" -Color -Color-Blue">img</span>
+-rw-r--r--@  1 mmccull  staff   267B Jan 14 1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3:22 intro.md
+-rw-r--r--@  1 mmccull  staff   1.1K Jan 14 13:21 intro.md~
+-rw-r-----@  1 mmccull  st
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>aff   2.2K Apr  2 20:47 phi.dat
+-rw-r-----@  1 mmccull  staff   2.2K Apr  2 20:45 psi.dat
+-rw-r-----
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>@  1 mmccull  staff   2.2K Apr  2 20:45 rmsd.dat
+-rw-r--r--@  1 mmccull  staff   237K Mar 27 09:43 w
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>eek11_hf_python_code-Solutions.ipynb
+-rw-r--r--@  1 mmccull  staff    87K Mar 27 09:44 week11_python
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>_classes_and_hf_code.ipynb
+-rw-r--r--@  1 mmccull  staff   103K Apr  2 20:53 week12_amber_on_pete_al
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>anine_dipeptide.ipynb
+-rw-r--r--@  1 mmccull  staff    12K Jan 16 10:00 week1_linux_hands_on.ipynb
+-
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rw-r--r--@  1 mmccull  staff   7.5K Jan 13 20:40 week1_linux_hands_on.ipynb~
+-rw-r--r--@  1 mmccull 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> staff    38K Jan 22 13:55 week2_python_jupyter_hands_on.ipynb
+-rw-r--r--@  1 mmccull  staff    13K 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jan 26 21:43 week3_scp_vi_jupyter_powerups.ipynb
+-rw-r--r--@  1 mmccull  staff    20K Feb  9 21:27 w
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>eek5_hpc_slurm_modules_storage.ipynb
+-rw-r--r--@  1 mmccull  staff   6.2K Feb 26 12:10 week6_webmo_h
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ands_on.ipynb
+-rw-r--r--@  1 mmccull  staff    11K Feb 27 10:19 week7_advanced_webmo_sn2_pes_scan.ip
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ynb
+-rw-r--r--@  1 mmccull  staff    16K Mar 12 09:10 week9_webmo_molecular_orbitals.ipynb
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-amber-md-input-files">
+<h2><span class="section-number">5.4.15.5. </span>Create AMBER MD input files<a class="headerlink" href="#create-amber-md-input-files" title="Link to this heading">#</a></h2>
+<p>We will create three files:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">min.in</span></code> for minimization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">heat.in</span></code> for heating from 0 K to 300 K</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prod_short.in</span></code> for a <strong>short production run suitable for in-class activity</strong></p></li>
+</ul>
+<section id="min-in-minimization-input-file">
+<h3><span class="section-number">5.4.15.5.1. </span><code class="docutils literal notranslate"><span class="pre">min.in</span></code> - Minimization input file<a class="headerlink" href="#min-in-minimization-input-file" title="Link to this heading">#</a></h3>
+<p>The first stage of performing a molecular dynamics simulation is to make sure your starting structure has a reasonable potential energy.  To achieve this, we need to create a file called <code class="docutils literal notranslate"><span class="pre">min.in</span></code> to specify to amber that we want to do an energy minimization.  Create this file by</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vi<span class="w"> </span>min.in
+</pre></div>
+</div>
+<p>then, within vi, enter <strong>input</strong> mode by typing <code class="docutils literal notranslate"><span class="pre">i</span></code>.  Then copy and past the following information into the file (Then save and quit).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Minimize
+ &amp;cntrl
+  imin=1,
+  ntx=1,
+  irest=0,
+  maxcyc=2000,
+  ncyc=1000,
+  ntpr=100,
+  ntwx=0,
+  cut=8.0,
+ /
+</pre></div>
+</div>
+<p>To save and quit, first hit <code class="docutils literal notranslate"><span class="pre">esc</span></code> to exit input mode, then type <code class="docutils literal notranslate"><span class="pre">:wq</span></code> and hit <code class="docutils literal notranslate"><span class="pre">enter</span></code>/<code class="docutils literal notranslate"><span class="pre">return</span></code>.</p>
+<p>If you are unable to get <code class="docutils literal notranslate"><span class="pre">vi</span></code> to work properly, this can all be achieved by copying and pasting the following into a shell command line and then hitting <code class="docutils literal notranslate"><span class="pre">return</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat &gt; min.in &lt;&lt;&#39;EOF&#39;
+Minimize
+ &amp;cntrl
+  imin=1,
+  ntx=1,
+  irest=0,
+  maxcyc=2000,
+  ncyc=1000,
+  ntpr=100,
+  ntwx=0,
+  cut=8.0,
+ /
+EOF
+</pre></div>
+</div>
+<p>Make sure you have properly created a file called <code class="docutils literal notranslate"><span class="pre">min.in</span></code> in your <code class="docutils literal notranslate"><span class="pre">/projects/tia001/$USER/week12</span></code> folder.</p>
+</section>
+<section id="heat-in-heating-input-file">
+<h3><span class="section-number">5.4.15.5.2. </span><code class="docutils literal notranslate"><span class="pre">heat.in</span></code> - Heating input file<a class="headerlink" href="#heat-in-heating-input-file" title="Link to this heading">#</a></h3>
+<p>The second stage of a typical MD simulation is to heat the system.  After minimization, the system is basically at 0K, so we need to heat it to the temperature of interest.   We start by creating a <code class="docutils literal notranslate"><span class="pre">heat.in</span></code> file.  This will look similar to the <code class="docutils literal notranslate"><span class="pre">min.in</span></code> file but with important differences.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vi<span class="w"> </span>heat.in
+</pre></div>
+</div>
+<p>Within vi, enter <strong>input</strong> mode by typing <code class="docutils literal notranslate"><span class="pre">i</span></code> then paste the following</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Heat
+ &amp;cntrl
+  imin=0,
+  ntx=1,
+  irest=0,
+  nstlim=10000,
+  dt=0.002,
+  ntf=2,
+  ntc=2,
+  tempi=0.0,
+  temp0=300.0,
+  ntpr=100,
+  ntwx=100,
+  cut=8.0,
+  ntb=1,
+  ntp=0,
+  ntt=3,
+  gamma_ln=2.0,
+  nmropt=1,
+  ig=-1,
+ /
+&amp;wt type=&#39;TEMP0&#39;, istep1=0, istep2=9000, value1=0.0, value2=300.0 /
+&amp;wt type=&#39;TEMP0&#39;, istep1=9001, istep2=10000, value1=300.0, value2=300.0 /
+&amp;wt type=&#39;END&#39;
+</pre></div>
+</div>
+<p>Exit <strong>input</strong> mode by hitting the <code class="docutils literal notranslate"><span class="pre">esc</span></code> key and then typing <code class="docutils literal notranslate"><span class="pre">:wq</span></code> and hitting <code class="docutils literal notranslate"><span class="pre">return</span></code>.</p>
+<p>If you cannot get <code class="docutils literal notranslate"><span class="pre">vi</span></code> to work, you can also achieve this by putting this all in a command line and hitting <code class="docutils literal notranslate"><span class="pre">return</span></code></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cat &gt; heat.in &lt;&lt;&#39;EOF&#39;
+Heat
+ &amp;cntrl
+  imin=0,
+  ntx=1,
+  irest=0,
+  nstlim=10000,
+  dt=0.002,
+  ntf=2,
+  ntc=2,
+  tempi=0.0,
+  temp0=300.0,
+  ntpr=100,
+  ntwx=100,
+  cut=8.0,
+  ntb=1,
+  ntp=0,
+  ntt=3,
+  gamma_ln=2.0,
+  nmropt=1,
+  ig=-1,
+ /
+&amp;wt type=&#39;TEMP0&#39;, istep1=0, istep2=9000, value1=0.0, value2=300.0 /
+&amp;wt type=&#39;TEMP0&#39;, istep1=9001, istep2=10000, value1=300.0, value2=300.0 /
+&amp;wt type=&#39;END&#39; /
+EOF
+</pre></div>
+</div>
+</section>
+<section id="prod-in-production-run-input-file">
+<h3><span class="section-number">5.4.15.5.3. </span><code class="docutils literal notranslate"><span class="pre">prod.in</span></code> - Production run input file<a class="headerlink" href="#prod-in-production-run-input-file" title="Link to this heading">#</a></h3>
+<p>The next phase of MD simulation is the production (or sometimes equilibration) run.  This will generate the data we will analyze.</p>
+<p>Again, vi and put in the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vi<span class="w"> </span>prod.in
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Production
+ &amp;cntrl
+  imin=0,
+  ntx=5,
+  irest=1,
+  nstlim=50000,
+  dt=0.002,
+  ntf=2,
+  ntc=2,
+  temp0=300.0,
+  ntpr=500,
+  ntwx=500,
+  cut=8.0,
+  ntb=2,
+  ntp=1,
+  ntt=3,
+  barostat=1,
+  gamma_ln=2.0,
+  ig=-1,
+ /
+</pre></div>
+</div>
+<p>At <code class="docutils literal notranslate"><span class="pre">dt</span> <span class="pre">=</span> <span class="pre">0.002</span> <span class="pre">ps</span></code>, the run length is:</p>
+<p><code class="docutils literal notranslate"><span class="pre">time</span> <span class="pre">(ps)</span> <span class="pre">=</span> <span class="pre">nstlim</span> <span class="pre">×</span> <span class="pre">0.002</span></code></p>
+<p>So:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nstlim</span> <span class="pre">=</span> <span class="pre">50000</span></code> gives <strong>100 ps</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nstlim</span> <span class="pre">=</span> <span class="pre">5000000</span></code> gives <strong>10 ns</strong> (tutorial-scale)</p></li>
+</ul>
+</section>
+</section>
+<section id="review-the-input-files">
+<h2><span class="section-number">5.4.15.6. </span>Review the input files<a class="headerlink" href="#review-the-input-files" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week12
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;===== 01_Min.in =====&quot;</span>
+cat<span class="w"> </span>min.in
+<span class="nb">echo</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;===== 02_Heat.in =====&quot;</span>
+cat<span class="w"> </span>heat.in
+<span class="nb">echo</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;===== 03_Prod_short.in =====&quot;</span>
+cat<span class="w"> </span>prod.in
+</pre></div>
+</div>
+</section>
+<section id="run-minimization">
+<h2><span class="section-number">5.4.15.7. </span>Run minimization<a class="headerlink" href="#run-minimization" title="Link to this heading">#</a></h2>
+<p>Create the a job submit script called <code class="docutils literal notranslate"><span class="pre">min.bash</span></code> or something similar.  Put the following into the file using <code class="docutils literal notranslate"><span class="pre">vi</span></code> (or <code class="docutils literal notranslate"><span class="pre">cat</span></code> if you need to).</p>
+<p>Once you have created <code class="docutils literal notranslate"><span class="pre">min.bash</span></code> with that info, submit the job:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch<span class="w"> </span>min.bash
+</pre></div>
+</div>
+</section>
+<section id="inspect-the-minimization-output">
+<h2><span class="section-number">5.4.15.8. </span>Inspect the minimization output<a class="headerlink" href="#inspect-the-minimization-output" title="Link to this heading">#</a></h2>
+<p>You should see the energy decrease during minimization.</p>
+</section>
+<section id="run-heating">
+<h2><span class="section-number">5.4.15.9. </span>Run heating<a class="headerlink" href="#run-heating" title="Link to this heading">#</a></h2>
+<p>Create a submit script for the heating step called <code class="docutils literal notranslate"><span class="pre">heat.bash</span></code>.  This submit script reads <code class="docutils literal notranslate"><span class="pre">heat.in</span></code> and uses the output coordinates from the minimization step (<code class="docutils literal notranslate"><span class="pre">min.ncrst</span></code>).</p>
+<p>Submit the job  using the command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch<span class="w"> </span>heat.bash
+</pre></div>
+</div>
+</section>
+<section id="inspect-the-heating-output">
+<h2><span class="section-number">5.4.15.10. </span>Inspect the heating output<a class="headerlink" href="#inspect-the-heating-output" title="Link to this heading">#</a></h2>
+<p>Look for temperature increasing during the run.</p>
+</section>
+<section id="run-production-md">
+<h2><span class="section-number">5.4.15.11. </span>10. Run production MD<a class="headerlink" href="#run-production-md" title="Link to this heading">#</a></h2>
+<p>Create a job submit script called <code class="docutils literal notranslate"><span class="pre">prod.bash</span></code> that contains the following</p>
+<p>submit the job with the command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch<span class="w"> </span>prod.bash
+</pre></div>
+</div>
+</section>
+<section id="check-the-production-outputs">
+<h2><span class="section-number">5.4.15.12. </span>11. Check the production outputs<a class="headerlink" href="#check-the-production-outputs" title="Link to this heading">#</a></h2>
+</section>
+<section id="basic-trajectory-analysis-with-cpptraj">
+<h2><span class="section-number">5.4.15.13. </span>14. Basic trajectory analysis with <code class="docutils literal notranslate"><span class="pre">cpptraj</span></code><a class="headerlink" href="#basic-trajectory-analysis-with-cpptraj" title="Link to this heading">#</a></h2>
+<p>The original tutorial includes basic post-processing.<br />
+Here we will do two simple analyses:</p>
+<ol class="arabic simple">
+<li><p>RMSD relative to the first production frame</p></li>
+<li><p>backbone dihedral angles <code class="docutils literal notranslate"><span class="pre">phi</span></code> and <code class="docutils literal notranslate"><span class="pre">psi</span></code> for alanine dipeptide</p></li>
+</ol>
+<p>For alanine dipeptide, <code class="docutils literal notranslate"><span class="pre">phi</span></code>/<code class="docutils literal notranslate"><span class="pre">psi</span></code> are especially useful because they show the conformational sampling of the molecule.</p>
+</section>
+<section id="plot-rmsd-and-the-phi-psi-time-series-in-python">
+<h2><span class="section-number">5.4.15.14. </span>15. Plot RMSD and the <code class="docutils literal notranslate"><span class="pre">phi</span></code>/<code class="docutils literal notranslate"><span class="pre">psi</span></code> time series in Python<a class="headerlink" href="#plot-rmsd-and-the-phi-psi-time-series-in-python" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">work</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/projects/tia001/</span><span class="si">{</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/week12&quot;</span><span class="p">)</span>
+
+<span class="n">rmsd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;rmsd.dat&quot;</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">)</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;phi.dat&quot;</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">)</span>
+<span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;psi.dat&quot;</span><span class="p">,</span> <span class="n">comments</span><span class="o">=</span><span class="s2">&quot;#&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rmsd</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">rmsd</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Frame&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;RMSD (Å)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Alanine dipeptide production RMSD&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># plot phi psi scatter plot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">phi</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">psi</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\phi$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\psi$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Alanine dipeptide backbone dihedrals&quot;</span><span class="p">)</span>
+
+<span class="c1"># Exact domain</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+
+<span class="c1"># Remove padding</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># for tick marks</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">])</span>
+<span class="c1"># grid</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># THIS is the key fix (stronger than set_aspect alone)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_box_aspect</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/668e8e59294471b5ae9291a67ac7fcb2f05148eefe9e842e68b91c8a0e8d0a7e.png" src="../../_images/668e8e59294471b5ae9291a67ac7fcb2f05148eefe9e842e68b91c8a0e8d0a7e.png" />
+<img alt="../../_images/a7617761526599af3f752ab65e8110387e5da8edbc240b8a669365b9589da1cc.png" src="../../_images/a7617761526599af3f752ab65e8110387e5da8edbc240b8a669365b9589da1cc.png" />
+</div>
+</div>
+</section>
+<section id="short-assignment">
+<h2><span class="section-number">5.4.15.15. </span>Short assignment<a class="headerlink" href="#short-assignment" title="Link to this heading">#</a></h2>
+<p>Submit answers to the following questions in a word or pdf document to Canvas</p>
+<ol class="arabic simple">
+<li><p>What files are produced by <code class="docutils literal notranslate"><span class="pre">tleap</span></code>, and what is the role of each?</p></li>
+<li><p>What is the purpose of the minimization stage before heating?</p></li>
+<li><p>Why do we heat gradually instead of starting immediately at 300 K?</p></li>
+<li><p>How would you change <code class="docutils literal notranslate"><span class="pre">nstlim</span></code> to run a 1 ns simulation at <code class="docutils literal notranslate"><span class="pre">dt</span> <span class="pre">=</span> <span class="pre">0.002</span> <span class="pre">ps</span></code>?</p></li>
+<li><p>Make a plot of <em><strong>RMSD vs trajectory time</strong></em> for <em>your trajectory</em> and describe what you see.</p></li>
+<li><p>Make a scatter plot of <code class="docutils literal notranslate"><span class="pre">phi</span></code> and <code class="docutils literal notranslate"><span class="pre">psi</span></code>.  Based on the <code class="docutils literal notranslate"><span class="pre">phi</span></code> and <code class="docutils literal notranslate"><span class="pre">psi</span></code> plot, does alanine dipeptide appear to remain in one conformational region or sample multiple regions?</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./computational_chemistry/hands_on_activities"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="week11_python_classes_and_hf_code.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5.4.14. </span>Week 11 Hands-On: Refactoring an H<span class="math notranslate nohighlight">\(_2\)</span> Hartree–Fock Script into a Python Class</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goals">5.4.15.1. Goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important-adaptation-for-pete">5.4.15.2. Important adaptation for Pete</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-your-week-12-working-directory-on-pete">5.4.15.3. Set up your Week 12 working directory on Pete</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-alanine-dipeptide-with-tleap">5.4.15.4. Build alanine dipeptide with <code class="docutils literal notranslate"><span class="pre">tleap</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-amber-md-input-files">5.4.15.5. Create AMBER MD input files</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-in-minimization-input-file">5.4.15.5.1. <code class="docutils literal notranslate"><span class="pre">min.in</span></code> - Minimization input file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heat-in-heating-input-file">5.4.15.5.2. <code class="docutils literal notranslate"><span class="pre">heat.in</span></code> - Heating input file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prod-in-production-run-input-file">5.4.15.5.3. <code class="docutils literal notranslate"><span class="pre">prod.in</span></code> - Production run input file</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-the-input-files">5.4.15.6. Review the input files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-minimization">5.4.15.7. Run minimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-minimization-output">5.4.15.8. Inspect the minimization output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-heating">5.4.15.9. Run heating</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-heating-output">5.4.15.10. Inspect the heating output</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-production-md">5.4.15.11. 10. Run production MD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check-the-production-outputs">5.4.15.12. 11. Check the production outputs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-trajectory-analysis-with-cpptraj">5.4.15.13. 14. Basic trajectory analysis with <code class="docutils literal notranslate"><span class="pre">cpptraj</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-rmsd-and-the-phi-psi-time-series-in-python">5.4.15.14. 15. Plot RMSD and the <code class="docutils literal notranslate"><span class="pre">phi</span></code>/<code class="docutils literal notranslate"><span class="pre">psi</span></code> time series in Python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#short-assignment">5.4.15.15. Short assignment</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin McCullagh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
