@@ -1,0 +1,1261 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>5.4.17. Hands-on Lesson: Molecular Dynamics of a 3D Lennard-Jones Fluid &#8212; Chemistry Lessons with Jupyter Notebooks</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete" href="week12_amber_on_pete_alanine_dipeptide.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Chemistry Lessons with Jupyter Notebooks - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Welcome to Chemistry Lessons Using Jupyter Notebooks
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../jupyter_notebook_tutorials/intro.html">1. Jupyter Notebook Tutorials</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/basic_jupyter_notebook_tutorials.html">1.1. Jupyter Notebook Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter_notebook_tutorials/advanced_jupyter_notebook_tutorials.html">1.2. Advanced Jupyter Notebook Tutorial</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../coding_concepts/intro.html">2. Coding Concepts</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/variables.html">2.1. Variables in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/arrays_and_matrices.html">2.2. Arrays and Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/for_loops.html">2.3. for loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/functions.html">2.4. Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html">2.5. Plotting with matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../coding_concepts/numeric_integration.html">2.6. Numeric Integration</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/intro.html">3. Math Concepts in Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/logarithms_and_exponential_functions.html">3.1. Logarithms and Exponential Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/differentiation_and_critical_points.html">3.2. Differentiation and Critical Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/integration_in_1D.html">3.3. Integration in 1D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/derivatives_of_multivariable_functions.html">3.4. Derivatives of Multivariable Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../math_concepts_in_physical_chemistry/discrete_probability.html">3.5. Discrete Probability</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../physical_chemistry/intro.html">4. Physical Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/introduction/intro.html">4.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/introduction/non-bonded_interactions.html">4.1.1. Non-bonded Interactions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/intro.html">4.2. Statiscial Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Boltzmann_Factor.html">4.2.1. Boltzmann Factor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Introduction_to_Probability.html">4.2.2. Introduction to Probability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Thermodynamic_Properties_from_Partition_Function.html">4.2.3. Thermodynamic Properties from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Partition_Function_Monatomic_Ideal_Gas.html">4.2.4. Partition Function for a Monatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Partition_Function_Diatomic_Ideal_Gas.html">4.2.5. Partition Function for a Diatomic Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Classical_Monatomic_Ideal_Gas.html">4.2.6. Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Kinetic_Theory_of_Gasses_from_Classical_Ideal_Gas_Partition_Function.html">4.2.7. Kinetic Theory of Gasses from the Classical Ideal Gas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/microscopic_view_of_entropy.html">4.2.8. Microscopic View of Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_thermodynamics/Equations_of_State_From_Lattice_Gas.html">4.2.9. Equations of State from Lattice Gas Models</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/thermodynamics/intro.html">4.3. Thermodynamics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/First_Law_of_Thermodynamics.html">4.3.1. The First Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Heat_Work_and_Calculating_U.html">4.3.2. Heat Work and Calculating <span class="math notranslate nohighlight">\(\Delta U\)</span></a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Thermodynamic_Cycles.html">4.3.4. Thermodynamic Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Eastham_Honors.html">4.3.5. Thermodynamic Cycles: Solving exam problems and other examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Enthalpy.html">4.3.6. Enthalpy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/The_Carnot_Cycle.html">4.3.7. The Carnot Cycle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Second_Law_of_Thermodynamics.html">4.3.8. Second Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Heat_Engine_Diagrams_and_Microscopic_view_Entropy.html">4.3.9. Heat Engine Diagrams</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Third_Law_of_Thermodynamics.html">4.3.11. The Third Law of Thermodynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/First_Derivative_and_Maxwell_Relations_of_Thermodynamic_Energy_Functions.html">4.3.12. First Derivative and Maxwell Relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Maxwell_Relations_Applied.html">4.3.13. Maxwell Relations Applied</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Free_Energy_and_Legendre_Transforms.html">4.3.14. Free Energy and Legendre Transforms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Pressure_and_Temperature_Dependence_Gibbs_Energy.html">4.3.15. The Pressure and Temperature Dependence of the Gibbs Energy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Phase_Diagrams_and_Phase_Equilibria.html">4.3.16. Phase Diagrams and Phase Equilibria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Chemical_Potential_from_Partition_Function.html">4.3.17. Chemical Potential from the Partition Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Thermodynamics_of_Solutions.html">4.3.18. Thermodynamics of Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Ideal_and_Non_Ideal_Solutions.html">4.3.19. Ideal and Non-ideal Solutions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/thermodynamics/Introduction_to_Chemical_Equilibrium.html">4.3.20. Chemical Equilibrium</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/kinetics/intro.html">4.4. Kinetics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Chemical_Kinetics_and_Rate_Laws.html">4.4.1. Chemical Kinetics and Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Integrated_Rate_Laws.html">4.4.2. Integrated Rate Laws</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Reversible_Reactions.html">4.4.3. Reversible Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Transition_State_Theory_and_Temperature_Dependence_of_the_Rate_Constant.html">4.4.4. Transition State Theory and Temperature Dependence of the Rate Constant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Reaction_Mechanisms_Part_I.html">4.4.5. Reaction Mechanisms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Catalysts.html">4.4.6. Catalysts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Enzyme_Kinetics_Michaelis_Menten.html">4.4.7. Enzyme Kinetics: The Michaelis-Menten Mechanism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Cooperative_Binding_Kinetics.html">4.4.8. Cooperative Binding Kinetics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/kinetics/Competitive_Inhibition.html">4.4.9. Competitive Inhibition</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/intro.html">4.5. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/history_of_quantum_mechanics.html">4.5.1. The History of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/wave_particle_duality_classical_wave_equation.html">4.5.2. Wave Particle Duality and the Classical Wave Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Schrodinger_Equation.html">4.5.3. Schrodinger Equation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/particle_in_a_box.html">4.5.4. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/uncertainty_principle_and_applications_of_particle_in_a_box.html">4.5.5. The Uncertainty Principle and Applications of Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/postulates_of_quantum_mechanics.html">4.5.6. The Postulates and Formalism of Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/momentum_operator.html">4.5.7. The Momentum Operator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/operator_algebra.html">4.5.8. Operator Algebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/particle_in_a_sphere.html">4.5.9. Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/properties_of_particle_in_a_sphere.html">4.5.10. Properties of Particle in a Sphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_hydrogen_atom.html">4.5.11. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/properties_of_the_hydrogen_atom.html">4.5.12. Properties of the Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_hydrogen_atom_absorption_spectrum.html">4.5.13. The Hydrogen Atom Absorption Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/special_functions_in_quantum_mechanics.html">4.5.14. Special Functions in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/the_helium_atom.html">4.5.15. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/variational_method_in_quantum_mechanics.html">4.5.16. Variational Method in Quantum Mechanics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Single_Electron_Molecule_Variational_Approach.html">4.5.17. Single Electron Molecule in the Variational Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/Improving_the_h2%2B_variational_approximation.html">4.5.18. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/h2%2B_with_polarization.html">4.5.19. Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation by Including Polarization Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/H2_Variational_Minimal_Basis.html">4.5.20. The H<span class="math notranslate nohighlight">\(_2\)</span> Molecule using the Variational Method in a Minimal Basis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/H2_Configuration_Interaction.html">4.5.21. H<span class="math notranslate nohighlight">\(_2\)</span> Configuration Interaction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/harmonic_oscillator.html">4.5.22. Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/quantum_mechanics_of_vibrational_spectroscopy.html">4.5.23. Vibrational Spectroscopy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/basis_functions.html">4.5.24. Basis Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/harmonic_oscillator_using_variational_method.html">4.5.25. Variational Solution to the Harmonic Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/morse_oscillator.html">4.5.26. The Morse Oscillator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator.html">4.5.27. Rigid Rotator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator_using_variational_method.html">4.5.28. Rigid Rotator Variational Solution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/quantum_mechanics/rigid_rotator_selection_rules.html">4.5.29. Rigid Rotator Continued…</a></li>
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/electronic_structure/intro.html">4.6. Electronic Structure</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/Hartree_Fock_Helium_Atom.html">4.6.1. Hartree-Fock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../introduction/intro.html">5.1. Introduction</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../introduction/the_fundamental_model.html">5.1.1. The Fundamental Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../introduction/Models_in_the_Scientific_Method.html">5.1.2. What is a Model?</a></li>
+
+
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../quantum_mechanics/intro.html">5.2. Quantum Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/particle_in_a_box.html">5.2.1. Particle in a Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/variational_method_in_quantum_mechanics.html">5.2.2. Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_hydrogen_atom.html">5.2.3. The Hydrogen Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/the_helium_atom.html">5.2.4. The Helium Atom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/Hartree_Fock_Helium_Atom.html">5.2.5. Helium Atom Motivation</a></li>
+
+
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/H2%2B_Variational.html">5.2.8. H2+ Molecular Ion with a Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/H2_Variational_Minimal_Basis.html">5.2.9. H2 Molecule with Vartiational Method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/HF_for_H2.html">5.2.10. HF for H2 Molecule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quantum_mechanics/Basis_Sets.html">5.2.11. Basis Sets</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">5.4. Hands-on Activities</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="week1_linux_hands_on.html">5.4.1. Linux Basics + Running Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week2_python_jupyter_hands_on.html">5.4.3. Python and Jupyter Notebooks</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week3_scp_vi_jupyter_powerups.html">5.4.5. Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week5_hpc_slurm_modules_storage.html">5.4.7. Week 5 Hands-On: HPC Fundamentals — Slurm, Modules, and Storage</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week6_webmo_hands_on.html">5.4.9. Week 6 Hands-On: WebMO (Gaussian on TIGER)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week7_advanced_webmo_sn2_pes_scan.html">5.4.11. Week 7: Advanced WebMO – PES Mapping with Coordinate Scans (SN2 Example)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="week9_webmo_molecular_orbitals.html">5.4.13. Molecular Orbitals from WebMO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
+
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/mccullaghlab/mccullaghlab.github.io/main?urlpath=tree/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mccullaghlab/mccullaghlab.github.io/blob/main/Chemistry_Lessons_Jupyter_Notebooks/computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+<a href="https://github.com/mccullaghlab/mccullaghlab.github.io/issues/new?title=Issue%20on%20page%20%2Fcomputational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button"
+   title="Open an issue"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Hands-on Lesson: Molecular Dynamics of a 3D Lennard-Jones Fluid</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">5.4.17.1. Learning goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes">5.4.17.2. Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theory-background">5.4.17.3. Theory background</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-lennard-jones-pair-potential">5.4.17.3.1. The Lennard-Jones pair potential</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#periodic-boundary-conditions">5.4.17.3.2. Periodic boundary conditions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#radial-distribution-function">5.4.17.3.3. Radial distribution function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-displacement">5.4.17.3.4. Mean-squared displacement</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-a-simulation">5.4.17.4. Run a simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-view-the-lj-fluid-inside-the-notebook">5.4.17.5. Optional: view the LJ fluid inside the notebook</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-radial-distribution-function">5.4.17.6. Compute the radial distribution function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-g-r">5.4.17.6.1. Interpreting <span class="math notranslate nohighlight">\(g(r)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-msd">5.4.17.7. Compute the MSD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hands-on-assignment">5.4.17.8. Hands-on Assignment</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="hands-on-lesson-molecular-dynamics-of-a-3d-lennard-jones-fluid">
+<h1><span class="section-number">5.4.17. </span>Hands-on Lesson: Molecular Dynamics of a 3D Lennard-Jones Fluid<a class="headerlink" href="#hands-on-lesson-molecular-dynamics-of-a-3d-lennard-jones-fluid" title="Permalink to this heading">#</a></h1>
+<p>This notebook is designed for a computational chemistry course and can be incorporated into a Jupyter Book.<br />
+It introduces a <strong>simple molecular dynamics (MD) engine</strong> for a 3D Lennard-Jones (LJ) fluid and then uses <strong>MDAnalysis</strong> to compute two standard observables:</p>
+<ol class="arabic simple">
+<li><p>The <strong>radial distribution function</strong>, <span class="math notranslate nohighlight">\(g(r)\)</span></p></li>
+<li><p>The <strong>mean-squared displacement</strong>, <span class="math notranslate nohighlight">\(\mathrm{MSD}(t)\)</span></p></li>
+</ol>
+<p>From the long-time behavior of the MSD, we estimate the <strong>self-diffusion constant</strong>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6b6a5cb5-c818-453b-b2c3-2a72ae140ba4">
+<span class="eqno">(5.155)<a class="headerlink" href="#equation-6b6a5cb5-c818-453b-b2c3-2a72ae140ba4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+D = \frac{1}{6}\frac{d}{dt}\langle |\mathbf r(t)-\mathbf r(0)|^2\rangle.
+\end{equation}\]</div>
+<hr class="docutils" />
+<section id="learning-goals">
+<h2><span class="section-number">5.4.17.1. </span>Learning goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
+<p>By the end of this lesson, you should be able to:</p>
+<ul class="simple">
+<li><p>simulate a simple LJ fluid in three dimensions with periodic boundary conditions,</p></li>
+<li><p>control the reduced <strong>density</strong> and <strong>temperature</strong>,</p></li>
+<li><p>understand how LJ reduced units simplify the simulation,</p></li>
+<li><p>compute and interpret <span class="math notranslate nohighlight">\(g(r)\)</span>,</p></li>
+<li><p>compute the MSD and extract a diffusion constant.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="notes">
+<h2><span class="section-number">5.4.17.2. </span>Notes<a class="headerlink" href="#notes" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The MD code below is intentionally simple and optimized for <strong>clarity</strong>, not speed.</p></li>
+<li><p>All simulations are done in <strong>Lennard-Jones reduced units</strong>:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(m = 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma = 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\varepsilon = 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(k_B = 1\)</span></p></li>
+</ul>
+</li>
+<li><p>In these units:</p>
+<ul>
+<li><p>reduced temperature is <span class="math notranslate nohighlight">\(T^* = k_B T / \varepsilon\)</span>,</p></li>
+<li><p>reduced density is <span class="math notranslate nohighlight">\(\rho^* = N\sigma^3/V\)</span>,</p></li>
+<li><p>reduced time is <span class="math notranslate nohighlight">\(t^* = t\sqrt{\varepsilon/(m\sigma^2)}\)</span>.</p></li>
+</ul>
+</li>
+</ul>
+<p>You can also vary <span class="math notranslate nohighlight">\(\varepsilon\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> explicitly, but for teaching purposes it is often easiest to think in reduced units.</p>
+</section>
+<section id="theory-background">
+<h2><span class="section-number">5.4.17.3. </span>Theory background<a class="headerlink" href="#theory-background" title="Permalink to this heading">#</a></h2>
+<section id="the-lennard-jones-pair-potential">
+<h3><span class="section-number">5.4.17.3.1. </span>The Lennard-Jones pair potential<a class="headerlink" href="#the-lennard-jones-pair-potential" title="Permalink to this heading">#</a></h3>
+<p>For a pair of particles separated by distance <span class="math notranslate nohighlight">\(r\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e038dcb2-9bb8-487f-bbd0-82a8fe50c489">
+<span class="eqno">(5.156)<a class="headerlink" href="#equation-e038dcb2-9bb8-487f-bbd0-82a8fe50c489" title="Permalink to this equation">#</a></span>\[\begin{equation}
+U_\mathrm{LJ}(r) = 4\varepsilon\left[\left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^6\right].
+\end{equation}\]</div>
+<ul class="simple">
+<li><p>The <span class="math notranslate nohighlight">\(r^{-12}\)</span> term models short-range repulsion.</p></li>
+<li><p>The <span class="math notranslate nohighlight">\(r^{-6}\)</span> term models dispersion attraction.</p></li>
+</ul>
+<p>In this notebook we use a <strong>cutoff</strong> <span class="math notranslate nohighlight">\(r_c\)</span> to truncate the potential. We also use a <strong>shifted potential</strong> so that <span class="math notranslate nohighlight">\(U(r_c)=0\)</span>.</p>
+</section>
+<section id="periodic-boundary-conditions">
+<h3><span class="section-number">5.4.17.3.2. </span>Periodic boundary conditions<a class="headerlink" href="#periodic-boundary-conditions" title="Permalink to this heading">#</a></h3>
+<p>To mimic a bulk fluid, particles move inside a cubic box of side length <span class="math notranslate nohighlight">\(L\)</span>, and interactions are computed using the <strong>minimum image convention</strong>.</p>
+</section>
+<section id="radial-distribution-function">
+<h3><span class="section-number">5.4.17.3.3. </span>Radial distribution function<a class="headerlink" href="#radial-distribution-function" title="Permalink to this heading">#</a></h3>
+<p>The radial distribution function <span class="math notranslate nohighlight">\(g(r)\)</span> describes how particle density varies with distance from a reference particle. For an ideal gas, <span class="math notranslate nohighlight">\(g(r) \approx 1\)</span> at all <span class="math notranslate nohighlight">\(r\)</span> (away from finite-size effects). For a liquid, <span class="math notranslate nohighlight">\(g(r)\)</span> shows structure such as coordination shells.</p>
+</section>
+<section id="mean-squared-displacement">
+<h3><span class="section-number">5.4.17.3.4. </span>Mean-squared displacement<a class="headerlink" href="#mean-squared-displacement" title="Permalink to this heading">#</a></h3>
+<p>The MSD is defined as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f628fae0-78a5-4bc9-a15a-dbda3efc51e5">
+<span class="eqno">(5.157)<a class="headerlink" href="#equation-f628fae0-78a5-4bc9-a15a-dbda3efc51e5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\mathrm{MSD}(t) = \left\langle |\mathbf r_i(t) - \mathbf r_i(0)|^2 \right\rangle.
+\end{equation}\]</div>
+<p>At long times in 3D diffusion,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-535704f1-521d-4087-966d-6ca4f2106121">
+<span class="eqno">(5.158)<a class="headerlink" href="#equation-535704f1-521d-4087-966d-6ca4f2106121" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\mathrm{MSD}(t) \approx 6Dt.
+\end{equation}\]</div>
+<p>So the diffusion constant is obtained from the slope of the linear regime.</p>
+</section>
+</section>
+<section id="run-a-simulation">
+<h2><span class="section-number">5.4.17.4. </span>Run a simulation<a class="headerlink" href="#run-a-simulation" title="Permalink to this heading">#</a></h2>
+<p>A good starting point for a simple LJ liquid is:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">n_cells</span> <span class="pre">=</span> <span class="pre">4</span></code>  → 256 atoms</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rho</span> <span class="pre">=</span> <span class="pre">0.80</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temperature</span> <span class="pre">=</span> <span class="pre">1.00</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dt</span> <span class="pre">=</span> <span class="pre">0.005</span></code></p></li>
+<li><p>No thermostat for an NVE simulation</p></li>
+</ul>
+<p>These values usually produce a liquid-like state in reduced LJ units.</p>
+<p>Try changing:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rho</span></code> to make the fluid more dilute or more crowded,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temperature</span></code> to make the fluid more ordered or more mobile,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">epsilon</span></code> to effectively strengthen or weaken the interaction scale.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">lj_fluid_md_class</span> <span class="kn">import</span> <span class="n">LennardJonesMD</span>
+<span class="c1"># I am going to comment out the simulation run for posting purposes</span>
+<span class="c1">#sim = LennardJonesMD(</span>
+<span class="c1">#    n_cells=4,</span>
+<span class="c1">#    rho=0.8,</span>
+<span class="c1">#    temperature=1.0,</span>
+<span class="c1">#    n_steps=5000,</span>
+<span class="c1">#    dt=0.005,</span>
+<span class="c1">#    thermostat_interval=None,   # for NVE</span>
+<span class="c1">#)</span>
+
+<span class="c1">#results = sim.run()</span>
+<span class="c1"># save the object</span>
+<span class="c1">#import pickle</span>
+<span class="c1">#</span>
+<span class="c1">#with open(&quot;sim.pkl&quot;, &quot;wb&quot;) as f:</span>
+<span class="c1">#    pickle.dump(sim, f)</span>
+<span class="c1">## Writte the trajectory in pdb and xyz formats</span>
+<span class="c1">#sim.write_pdb(&quot;lj_fluid.pdb&quot;)</span>
+<span class="c1">#sim.write_trajectory(&quot;lj_fluid.xyz&quot;)     </span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load the simulation object</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;sim.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">sim</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">temperatures</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Time (reduced units)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Instantaneous temperature&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Temperature&quot;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">potential_energies</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PE&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">kinetic_energies</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;KE&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">times</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">total_energies</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Total&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Time (reduced units)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Energy&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Energy time series&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ef5124e1a08957639944ea411cc582153acceba75c5a3fe9a1dd8589f672bc0b.png" src="../../_images/ef5124e1a08957639944ea411cc582153acceba75c5a3fe9a1dd8589f672bc0b.png" />
+</div>
+</div>
+</section>
+<section id="optional-view-the-lj-fluid-inside-the-notebook">
+<h2><span class="section-number">5.4.17.5. </span>Optional: view the LJ fluid inside the notebook<a class="headerlink" href="#optional-view-the-lj-fluid-inside-the-notebook" title="Permalink to this heading">#</a></h2>
+<p>Yes — if <code class="docutils literal notranslate"><span class="pre">nglview</span></code> is installed, you can view the trajectory directly in the notebook.<br />
+A convenient workflow is:</p>
+<ol class="arabic simple">
+<li><p>write the PDB and wrapped DCD files,</p></li>
+<li><p>load them with <strong>MDAnalysis</strong>,</p></li>
+<li><p>pass the <code class="docutils literal notranslate"><span class="pre">Universe</span></code> to <code class="docutils literal notranslate"><span class="pre">nglview</span></code>.</p></li>
+</ol>
+<p>This is not required for the analysis, but it is very helpful for helping students connect the trajectory file to the particle motion.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Run this cell if you have MDAnalysis and nglview are installed.</span>
+
+<span class="kn">import</span> <span class="nn">MDAnalysis</span> <span class="k">as</span> <span class="nn">md</span>
+<span class="kn">import</span> <span class="nn">nglview</span> <span class="k">as</span> <span class="nn">nv</span>
+<span class="c1">#</span>
+<span class="n">u_view</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="s2">&quot;lj_fluid.pdb&quot;</span><span class="p">,</span> <span class="s2">&quot;lj_fluid.xyz&quot;</span><span class="p">)</span>
+<span class="n">view</span> <span class="o">=</span> <span class="n">nv</span><span class="o">.</span><span class="n">show_mdanalysis</span><span class="p">(</span><span class="n">u_view</span><span class="p">)</span>
+<span class="n">view</span><span class="o">.</span><span class="n">clear_representations</span><span class="p">()</span>
+<span class="n">view</span><span class="o">.</span><span class="n">add_spacefill</span><span class="p">(</span><span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">view</span><span class="o">.</span><span class="n">center</span><span class="p">()</span>
+<span class="n">view</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "7fdedb7351ce4136b72521ba72db45db"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "239bcb57ced34590966ffbb02e3ce3a9"}</script></div>
+</div>
+</section>
+<section id="compute-the-radial-distribution-function">
+<h2><span class="section-number">5.4.17.6. </span>Compute the radial distribution function<a class="headerlink" href="#compute-the-radial-distribution-function" title="Permalink to this heading">#</a></h2>
+<p>For a one-component fluid, the idea is:</p>
+<ul class="simple">
+<li><p>loop over saved frames,</p></li>
+<li><p>compute all unique pair distances using the minimum-image convention,</p></li>
+<li><p>bin those distances into a histogram,</p></li>
+<li><p>normalize by the ideal-gas number of neighbors expected in each spherical shell.</p></li>
+</ul>
+<p>For shell <span class="math notranslate nohighlight">\([r, r + \Delta r]\)</span>, the shell volume is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-52053d7b-bce5-4558-bdd9-fa1850a56bd0">
+<span class="eqno">(5.159)<a class="headerlink" href="#equation-52053d7b-bce5-4558-bdd9-fa1850a56bd0" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\Delta V = \frac{4\pi}{3}\left[(r+\Delta r)^3 - r^3\right].
+\end{equation}\]</div>
+<p>If the number density is <span class="math notranslate nohighlight">\(\rho = N/V\)</span>, then the ideal-gas expectation for the number of neighbors around one particle in that shell is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c7a2dedd-280e-48b1-b9b4-49e411c35791">
+<span class="eqno">(5.160)<a class="headerlink" href="#equation-c7a2dedd-280e-48b1-b9b4-49e411c35791" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\rho\, \Delta V.
+\end{equation}\]</div>
+<p>Because we count each pair only once, the proper normalization for the histogram of unique pairs is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-06c54650-1736-49fe-aca6-ef662e852bc4">
+<span class="eqno">(5.161)<a class="headerlink" href="#equation-06c54650-1736-49fe-aca6-ef662e852bc4" title="Permalink to this equation">#</a></span>\[\begin{equation}
+\frac{N\, n_\mathrm{frames}\, \rho\, \Delta V}{2}.
+\end{equation}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">radial_distribution_function</span><span class="p">(</span><span class="n">traj</span><span class="p">,</span> <span class="n">box_length</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute g(r) from a wrapped trajectory of a one-component fluid.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    traj : (n_frames, N, 3) ndarray</span>
+<span class="sd">        Wrapped coordinates.</span>
+<span class="sd">    box_length : float</span>
+<span class="sd">        Cubic box length.</span>
+<span class="sd">    r_max : float or None</span>
+<span class="sd">        Maximum distance for the RDF. If None, use box_length / 2.</span>
+<span class="sd">    n_bins : int</span>
+<span class="sd">        Number of histogram bins.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    r_centers : (n_bins,) ndarray</span>
+<span class="sd">        Bin centers.</span>
+<span class="sd">    g_r : (n_bins,) ndarray</span>
+<span class="sd">        Radial distribution function.</span>
+<span class="sd">    counts : (n_bins,) ndarray</span>
+<span class="sd">        Raw pair counts accumulated over all frames.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">traj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">traj</span><span class="p">)</span>
+    <span class="n">n_frames</span><span class="p">,</span> <span class="n">n_atoms</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">traj</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">volume</span> <span class="o">=</span> <span class="n">box_length</span><span class="o">**</span><span class="mi">3</span>
+    <span class="n">number_density</span> <span class="o">=</span> <span class="n">n_atoms</span> <span class="o">/</span> <span class="n">volume</span>
+
+    <span class="k">if</span> <span class="n">r_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">r_max</span> <span class="o">=</span> <span class="n">box_length</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">n_bins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_bins</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">traj</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_atoms</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">rij</span> <span class="o">=</span> <span class="n">frame</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">frame</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">rij</span> <span class="o">=</span> <span class="n">minimum_image</span><span class="p">(</span><span class="n">rij</span><span class="p">,</span> <span class="n">box_length</span><span class="p">)</span>
+            <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">rij</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">hist</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">edges</span><span class="p">)</span>
+            <span class="n">counts</span> <span class="o">+=</span> <span class="n">hist</span>
+
+    <span class="n">shell_volumes</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">normalization</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">n_frames</span> <span class="o">*</span> <span class="n">n_atoms</span> <span class="o">*</span> <span class="n">number_density</span> <span class="o">*</span> <span class="n">shell_volumes</span>
+
+    <span class="n">g_r</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">normalization</span>
+    <span class="n">r_centers</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="k">return</span> <span class="n">r_centers</span><span class="p">,</span> <span class="n">g_r</span><span class="p">,</span> <span class="n">counts</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r_custom</span><span class="p">,</span> <span class="n">g_custom</span><span class="p">,</span> <span class="n">counts_custom</span> <span class="o">=</span> <span class="n">radial_distribution_function</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">[</span><span class="s2">&quot;wrapped_traj&quot;</span><span class="p">],</span>
+    <span class="n">box_length</span><span class="o">=</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;box_length&quot;</span><span class="p">],</span>
+    <span class="n">r_max</span><span class="o">=</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;box_length&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">n_bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r_custom</span><span class="p">,</span> <span class="n">g_custom</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;g(r)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Radial distribution function&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">r_custom</span><span class="p">,</span> <span class="n">g_custom</span><span class="p">,</span> <span class="n">counts_custom</span> <span class="o">=</span> <span class="n">radial_distribution_function</span><span class="p">(</span>
+<span class="ne">----&gt; </span><span class="mi">2</span>     <span class="n">results</span><span class="p">[</span><span class="s2">&quot;wrapped_traj&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">box_length</span><span class="o">=</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;box_length&quot;</span><span class="p">],</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">r_max</span><span class="o">=</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;box_length&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">n_bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r_custom</span><span class="p">,</span> <span class="n">g_custom</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;results&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<p>Can also use MDAnalysis <code class="docutils literal notranslate"><span class="pre">InterRDF</span></code> to compute this</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">MDAnalysis</span> <span class="k">as</span> <span class="nn">mda</span>
+<span class="kn">from</span> <span class="nn">MDAnalysis.analysis.rdf</span> <span class="kn">import</span> <span class="n">InterRDF</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">MDAnalysis.transformations.boxdimensions</span> <span class="kn">import</span> <span class="n">set_dimensions</span>
+
+<span class="n">u</span> <span class="o">=</span> <span class="n">mda</span><span class="o">.</span><span class="n">Universe</span><span class="p">(</span><span class="s2">&quot;lj_fluid.pdb&quot;</span><span class="p">,</span> <span class="s2">&quot;lj_fluid.xyz&quot;</span><span class="p">)</span>
+<span class="c1"># Need to add box information to trajectory</span>
+<span class="n">u</span><span class="o">.</span><span class="n">trajectory</span><span class="o">.</span><span class="n">add_transformations</span><span class="p">(</span>
+    <span class="n">set_dimensions</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sim</span><span class="o">.</span><span class="n">box_length</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">box_length</span><span class="p">,</span> <span class="n">sim</span><span class="o">.</span><span class="n">box_length</span><span class="p">,</span> <span class="mf">90.0</span><span class="p">,</span> <span class="mf">90.0</span><span class="p">,</span> <span class="mf">90.0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1"># all particles</span>
+<span class="n">atoms</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">atoms</span>
+
+<span class="n">rdf</span> <span class="o">=</span> <span class="n">InterRDF</span><span class="p">(</span>
+    <span class="n">atoms</span><span class="p">,</span>
+    <span class="n">atoms</span><span class="p">,</span>
+    <span class="n">nbins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">),</span>  
+    <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;rdf&quot;</span><span class="p">,</span>
+    <span class="n">exclusion_block</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>   
+<span class="p">)</span>
+
+<span class="n">rdf</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">rdf</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">bins</span>
+<span class="n">g_r</span> <span class="o">=</span> <span class="n">rdf</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">rdf</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g_r</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;g(r)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Radial distribution function&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/daf9433bdc4344ac045d141aa74ed1e56a8cfc04f0278b4593d8286315ae3ab6.png" src="../../_images/daf9433bdc4344ac045d141aa74ed1e56a8cfc04f0278b4593d8286315ae3ab6.png" />
+</div>
+</div>
+<section id="interpreting-g-r">
+<h3><span class="section-number">5.4.17.6.1. </span>Interpreting <span class="math notranslate nohighlight">\(g(r)\)</span><a class="headerlink" href="#interpreting-g-r" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Small (r)</strong>: <span class="math notranslate nohighlight">\(g(r) \approx 0\)</span> because the repulsive core excludes close contacts.</p></li>
+<li><p><strong>First peak</strong>: most probable nearest-neighbor distance.</p></li>
+<li><p><strong>Oscillations</strong>: liquid-like short-range order.</p></li>
+<li><p><strong>Long range</strong>: <span class="math notranslate nohighlight">\(g(r) \to 1\)</span> for a homogeneous fluid.</p></li>
+</ul>
+</section>
+</section>
+<section id="compute-the-msd">
+<h2><span class="section-number">5.4.17.7. </span>Compute the MSD<a class="headerlink" href="#compute-the-msd" title="Permalink to this heading">#</a></h2>
+<p>For the MSD, the unwrapped trajectory is important because particles may cross the periodic boundaries many times during the simulation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">compute_msd</span><span class="p">(</span><span class="n">unwrapped_traj</span><span class="p">,</span> <span class="n">max_lag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the mean-squared displacement MSD(t) from an unwrapped trajectory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    unwrapped_traj : ndarray, shape (n_frames, n_particles, 3)</span>
+<span class="sd">        Particle positions as a function of time, using unwrapped coordinates.</span>
+<span class="sd">    max_lag : int or None, optional</span>
+<span class="sd">        Maximum time lag (in frames) to include. If None, uses n_frames - 1.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    lags : ndarray, shape (n_lags,)</span>
+<span class="sd">        Lag times in units of frames.</span>
+<span class="sd">    msd : ndarray, shape (n_lags,)</span>
+<span class="sd">        Mean-squared displacement for each lag.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">unwrapped_traj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">unwrapped_traj</span><span class="p">)</span>
+    <span class="n">n_frames</span><span class="p">,</span> <span class="n">n_particles</span><span class="p">,</span> <span class="n">dim</span> <span class="o">=</span> <span class="n">unwrapped_traj</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="k">if</span> <span class="n">dim</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Trajectory must have shape (n_frames, n_particles, 3).&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">max_lag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">max_lag</span> <span class="o">=</span> <span class="n">n_frames</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">max_lag</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_lag</span><span class="p">,</span> <span class="n">n_frames</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">lags</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_lag</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">msd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">max_lag</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">lag</span> <span class="ow">in</span> <span class="n">lags</span><span class="p">:</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">unwrapped_traj</span><span class="p">[</span><span class="n">lag</span><span class="p">:]</span> <span class="o">-</span> <span class="n">unwrapped_traj</span><span class="p">[:</span><span class="o">-</span><span class="n">lag</span><span class="p">]</span>
+        <span class="n">sq_disp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">disp</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># shape: (n_origins, n_particles)</span>
+        <span class="n">msd</span><span class="p">[</span><span class="n">lag</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sq_disp</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">lags</span><span class="p">,</span> <span class="n">msd</span>
+
+
+
+<span class="k">def</span> <span class="nf">estimate_diffusion_constant</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">msd</span><span class="p">,</span> <span class="n">fit_start_fraction</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">fit_end_fraction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fit the linear regime of the MSD and return the slope and diffusion constant.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    times : ndarray</span>
+<span class="sd">        Time points.</span>
+<span class="sd">    msd : ndarray</span>
+<span class="sd">        Mean-squared displacement values.</span>
+<span class="sd">    fit_start_fraction, fit_end_fraction : float</span>
+<span class="sd">        Fractions of the trajectory used for the fit.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    slope : float</span>
+<span class="sd">    diffusion_constant : float</span>
+<span class="sd">    intercept : float</span>
+<span class="sd">    mask : ndarray of bool</span>
+<span class="sd">        Mask indicating the fit region.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+    <span class="n">i0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fit_start_fraction</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">i1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fit_end_fraction</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="n">i0</span><span class="p">:</span><span class="n">i1</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">msd</span><span class="p">[</span><span class="n">i0</span><span class="p">:</span><span class="n">i1</span><span class="p">]</span>
+
+    <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">diffusion_constant</span> <span class="o">=</span> <span class="n">slope</span> <span class="o">/</span> <span class="mf">6.0</span>
+
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">mask</span><span class="p">[</span><span class="n">i0</span><span class="p">:</span><span class="n">i1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">slope</span><span class="p">,</span> <span class="n">diffusion_constant</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">mask</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lags</span><span class="p">,</span> <span class="n">msd</span> <span class="o">=</span> <span class="n">compute_msd</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;unwrapped_traj&quot;</span><span class="p">])</span>
+
+<span class="n">time</span> <span class="o">=</span> <span class="n">lags</span> <span class="o">*</span> <span class="n">sim</span><span class="o">.</span><span class="n">dt</span> <span class="o">*</span> <span class="n">sim</span><span class="o">.</span><span class="n">sample_every</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">slope</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">estimate_diffusion_constant</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">msd</span><span class="p">,</span> <span class="n">fit_start_fraction</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">fit_end_fraction</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated D =&quot;</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">[::</span><span class="mi">10</span><span class="p">],</span> <span class="n">msd</span><span class="p">[::</span><span class="mi">10</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;MSD&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">slope</span><span class="o">*</span><span class="n">time</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Linear fit&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;MSD(t)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated D = 0.02295031842610205
+</pre></div>
+</div>
+<img alt="../../_images/78ffe4ecef08430172d09a9efd99aeaad6c32b3c3fee4d014c1bfe215794e790.png" src="../../_images/78ffe4ecef08430172d09a9efd99aeaad6c32b3c3fee4d014c1bfe215794e790.png" />
+</div>
+</div>
+<p>Can also be done using MDAnlsysis <code class="docutils literal notranslate"><span class="pre">EinsteinMSD</span></code></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uncomment and run this cell to use MDAnalysis MSD/D calculation</span>
+
+<span class="c1"># import MDAnalysis as md</span>
+<span class="c1"># from MDAnalysis.analysis.msd import EinsteinMSD</span>
+
+<span class="c1"># u_msd = md.Universe(&quot;lj_topology.pdb&quot;, &quot;lj_unwrapped.dcd&quot;)</span>
+
+<span class="c1"># msd_analysis = EinsteinMSD(u_msd, select=&quot;all&quot;, msd_type=&quot;xyz&quot;, fft=False)</span>
+<span class="c1"># msd_analysis.run()</span>
+
+<span class="c1"># msd = msd_analysis.results.timeseries</span>
+<span class="c1"># times = results[&quot;times&quot;]</span>
+
+<span class="c1"># slope, D, intercept, fit_mask = estimate_diffusion_constant(</span>
+<span class="c1">#     times, msd, fit_start_fraction=0.5, fit_end_fraction=1.0</span>
+<span class="c1"># )</span>
+
+<span class="c1"># plt.figure(figsize=(6, 4))</span>
+<span class="c1"># plt.plot(times, msd, label=&quot;MSD(t)&quot;)</span>
+<span class="c1"># plt.plot(times[fit_mask], slope * times[fit_mask] + intercept, &quot;--&quot;, label=f&quot;Linear fit, D = {D:.4f}&quot;)</span>
+<span class="c1"># plt.xlabel(&quot;Time (reduced units)&quot;)</span>
+<span class="c1"># plt.ylabel(&quot;MSD&quot;)</span>
+<span class="c1"># plt.title(&quot;Mean-squared displacement&quot;)</span>
+<span class="c1"># plt.legend()</span>
+<span class="c1"># plt.tight_layout()</span>
+<span class="c1"># plt.show()</span>
+
+<span class="c1"># print(f&quot;Estimated diffusion constant D = {D:.6f} (reduced units)&quot;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="hands-on-assignment">
+<h2><span class="section-number">5.4.17.8. </span>Hands-on Assignment<a class="headerlink" href="#hands-on-assignment" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Knowledge check</strong></p>
+<ul class="simple">
+<li><p>Why does the temperature drop for the simluation run in the published version of this notebook?</p></li>
+</ul>
+</li>
+<li><p><strong>Density dependence</strong></p>
+<ul class="simple">
+<li><p>Run simultions at <code class="docutils literal notranslate"><span class="pre">rho</span> <span class="pre">=</span> <span class="pre">0.4</span></code>, <code class="docutils literal notranslate"><span class="pre">0.8</span></code>, and <code class="docutils literal notranslate"><span class="pre">1.0</span></code>.</p></li>
+<li><p>Compute and plot (all on same plot) all three <span class="math notranslate nohighlight">\(g(r)\)</span>s</p></li>
+<li><p>How do the peak heights and positions change?</p></li>
+</ul>
+</li>
+<li><p><strong>Temperature dependence</strong></p>
+<ul class="simple">
+<li><p>Compare MSD curves at <code class="docutils literal notranslate"><span class="pre">temperature</span> <span class="pre">=</span> <span class="pre">0.7</span></code>, <code class="docutils literal notranslate"><span class="pre">1.0</span></code>, and <code class="docutils literal notranslate"><span class="pre">1.5</span></code>.</p></li>
+<li><p>How does the diffusion constant change?</p></li>
+</ul>
+</li>
+<li><p><strong>Thermostat choice</strong></p>
+<ul class="simple">
+<li><p>Run with <code class="docutils literal notranslate"><span class="pre">thermostat_interval=100</span></code> and compare with NVE simulation.</p></li>
+<li><p>Does the energy remain approximately constant?</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./computational_chemistry/hands_on_activities"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="week12_amber_on_pete_alanine_dipeptide.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5.4.15. </span>Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-goals">5.4.17.1. Learning goals</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notes">5.4.17.2. Notes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theory-background">5.4.17.3. Theory background</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-lennard-jones-pair-potential">5.4.17.3.1. The Lennard-Jones pair potential</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#periodic-boundary-conditions">5.4.17.3.2. Periodic boundary conditions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#radial-distribution-function">5.4.17.3.3. Radial distribution function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-displacement">5.4.17.3.4. Mean-squared displacement</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#run-a-simulation">5.4.17.4. Run a simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optional-view-the-lj-fluid-inside-the-notebook">5.4.17.5. Optional: view the LJ fluid inside the notebook</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-radial-distribution-function">5.4.17.6. Compute the radial distribution function</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-g-r">5.4.17.6.1. Interpreting <span class="math notranslate nohighlight">\(g(r)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-msd">5.4.17.7. Compute the MSD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hands-on-assignment">5.4.17.8. Hands-on Assignment</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Martin McCullagh
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

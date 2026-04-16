@@ -1,0 +1,200 @@
+"""Simple teaching library for 3D Lennard-Jones molecular dynamics and analysis."""
+
+from __future__ import annotations
+import numpy as np
+
+def make_fcc_positions(n_cells, box_length):
+    """
+    Build an FCC lattice with 4 atoms per unit cell.
+
+    Parameters
+    ----------
+    n_cells : int
+        Number of FCC unit cells in each dimension.
+    box_length : float
+        Simulation box length.
+
+    Returns
+    -------
+    positions : (N, 3) ndarray
+        Particle positions.
+    """
+    basis = np.array([
+        [0.0, 0.0, 0.0],
+        [0.0, 0.5, 0.5],
+        [0.5, 0.0, 0.5],
+        [0.5, 0.5, 0.0],
+    ])
+    a = box_length / n_cells
+    positions = []
+    for i in range(n_cells):
+        for j in range(n_cells):
+            for k in range(n_cells):
+                cell_origin = np.array([i, j, k], dtype=float) * a
+                for b in basis:
+                    positions.append(cell_origin + a * b)
+    return np.array(positions, dtype=float)
+
+def lj_forces(positions, box_length, epsilon=1.0, sigma=1.0, r_cut=2.5, shifted=True):
+    """
+    Compute Lennard-Jones forces and potential energy using an O(N^2) algorithm.
+    """
+    n_atoms = positions.shape[0]
+    forces = np.zeros_like(positions)
+    potential = 0.0
+
+    r_cut_sigma = r_cut * sigma
+    r_cut2 = r_cut_sigma ** 2
+
+    if shifted:
+        inv_rc2 = (sigma ** 2) / r_cut2
+        inv_rc6 = inv_rc2 ** 3
+        inv_rc12 = inv_rc6 ** 2
+        u_shift = 4.0 * epsilon * (inv_rc12 - inv_rc6)
+    else:
+        u_shift = 0.0
+
+    for i in range(n_atoms - 1):
+        for j in range(i + 1, n_atoms):
+            rij = positions[j] - positions[i]
+            rij -= box_length * np.round(rij / box_length)
+            r2 = np.dot(rij, rij)
+
+            if 1e-12 < r2 < r_cut2:
+                inv_r2 = (sigma ** 2) / r2
+                inv_r6 = inv_r2 ** 3
+                inv_r12 = inv_r6 ** 2
+
+                pair_potential = 4.0 * epsilon * (inv_r12 - inv_r6) - u_shift
+                potential += pair_potential
+
+                force_scalar = 24.0 * epsilon * (2.0 * inv_r12 - inv_r6) / r2
+                fij = force_scalar * rij
+
+                forces[i] -= fij
+                forces[j] += fij
+
+    return forces, potential
+
+def run_lj_md(
+    n_cells=3,
+    rho=0.80,
+    temperature=1.0,
+    n_steps=5000,
+    dt=0.005,
+    epsilon=1.0,
+    sigma=1.0,
+    mass=1.0,
+    r_cut=2.5,
+    sample_every=10,
+    thermostat_interval=100,
+    random_seed=123,
+    shifted=True,
+):
+    """
+    Run a simple 3D LJ molecular dynamics simulation in reduced units.
+
+    Notes
+    -----
+    This uses velocity-Verlet integration and optional periodic velocity rescaling.
+    Setting thermostat_interval=None gives a simple NVE-style production run.
+    """
+    rng = np.random.default_rng(random_seed)
+
+    n_atoms = 4 * n_cells**3
+    number_density = rho / (sigma**3)
+    box_length = (n_atoms / number_density) ** (1.0 / 3.0)
+
+    positions = make_fcc_positions(n_cells, box_length)
+    velocities = rng.normal(0.0, np.sqrt(temperature / mass), size=(n_atoms, 3))
+    velocities -= velocities.mean(axis=0, keepdims=True)
+
+    kinetic = 0.5 * mass * np.sum(velocities**2)
+    current_temp = 2.0 * kinetic / (3.0 * n_atoms - 3.0)
+    velocities *= np.sqrt(temperature / current_temp)
+
+    forces, potential = lj_forces(
+        positions, box_length, epsilon=epsilon, sigma=sigma, r_cut=r_cut, shifted=shifted
+    )
+
+    wrapped_traj = []
+    unwrapped_traj = []
+    times = []
+    temperatures = []
+    kinetic_energies = []
+    potential_energies = []
+    total_energies = []
+
+    image = np.zeros_like(positions, dtype=int)
+
+    for step in range(n_steps):
+        velocities += 0.5 * dt * forces / mass
+        positions += dt * velocities
+
+        crossed = np.floor_divide(positions, box_length).astype(int)
+        image += crossed
+        positions -= crossed * box_length
+
+        new_forces, potential = lj_forces(
+            positions, box_length, epsilon=epsilon, sigma=sigma, r_cut=r_cut, shifted=shifted
+        )
+        velocities += 0.5 * dt * new_forces / mass
+        forces = new_forces
+
+        if thermostat_interval is not None and thermostat_interval > 0 and (step + 1) % thermostat_interval == 0:
+            kinetic = 0.5 * mass * np.sum(velocities**2)
+            current_temp = 2.0 * kinetic / (3.0 * n_atoms - 3.0)
+            velocities *= np.sqrt(temperature / current_temp)
+
+        kinetic = 0.5 * mass * np.sum(velocities**2)
+        current_temp = 2.0 * kinetic / (3.0 * n_atoms - 3.0)
+        total_energy = kinetic + potential
+
+        if step % sample_every == 0:
+            wrapped_traj.append(positions.copy())
+            unwrapped_traj.append(positions + image * box_length)
+            times.append(step * dt)
+            temperatures.append(current_temp)
+            kinetic_energies.append(kinetic)
+            potential_energies.append(potential)
+            total_energies.append(total_energy)
+
+    return {
+        "positions": positions,
+        "velocities": velocities,
+        "wrapped_traj": np.array(wrapped_traj),
+        "unwrapped_traj": np.array(unwrapped_traj),
+        "times": np.array(times),
+        "temperatures": np.array(temperatures),
+        "kinetic_energies": np.array(kinetic_energies),
+        "potential_energies": np.array(potential_energies),
+        "total_energies": np.array(total_energies),
+        "box_length": box_length,
+        "n_atoms": n_atoms,
+        "rho": rho,
+        "temperature_target": temperature,
+        "dt": dt,
+        "sample_every": sample_every,
+        "epsilon": epsilon,
+        "sigma": sigma,
+        "mass": mass,
+    }
+
+def write_pdb_topology(filename, positions, box_length, atom_name="Ar", resname="LJ"):
+    """
+    Write a minimal PDB file for the LJ particles.
+    """
+    with open(filename, "w") as f:
+        f.write("TITLE     LJ FLUID\n")
+        f.write(
+            f"CRYST1{box_length:9.3f}{box_length:9.3f}{box_length:9.3f}"
+            f"{90.0:7.2f}{90.0:7.2f}{90.0:7.2f} P 1           1\n"
+        )
+        for i, xyz in enumerate(positions, start=1):
+            x, y, z = xyz
+            f.write(
+                f"ATOM  {i:5d} {atom_name:<4s} {resname:>3s} A{i:4d}    "
+                f"{x:8.3f}{y:8.3f}{z:8.3f}{1.00:6.2f}{0.00:6.2f}          {atom_name[:2]:>2s}\n"
+            )
+        f.write("END\n")
+
