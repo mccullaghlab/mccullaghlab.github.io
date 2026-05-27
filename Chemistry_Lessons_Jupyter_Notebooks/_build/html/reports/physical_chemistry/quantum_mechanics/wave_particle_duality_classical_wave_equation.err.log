@@ -15,32 +15,57 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import numpy as np
+# make animated gif of first two harmonics
 import matplotlib.pyplot as plt
-%matplotlib inline
-# make an array containing domain of wavelengths to consider
-x = np.arange(0,np.pi,0.0001)
-# setup plot parameters
-fig = plt.figure(figsize=(10,5), dpi= 80, facecolor='w', edgecolor='k')
-ax = plt.subplot(111)
-ax.set_xlabel(r'$x$',size=20)
-plt.tick_params(axis='x',labelsize=20)
-plt.ylim((0.0,1.05))
-# plot quantum result
-ax.plot(x,np.sin(x),lw=3)
-plt.xlim(0,np.pi)
-# ticks
-plt.xticks([0,np.pi],[0,'l'])
-plt.yticks(ticks=None);
+def plot_classical_wave_frame(t, nu, max_n):
+    a = 1
+    # setup plot parameters
+    fig = plt.figure(figsize=(6,4), dpi= 80, facecolor='w', edgecolor='k')
+    ax = plt.subplot(111)
+    all_x = np.arange(0,a,0.01)
+    n = 1
+    partial_sum = np.sin(n*np.pi*all_x/a)*np.cos(nu*n*t/(2*a))
+    #ax.plot(all_x,partial_sum,'--',lw=2, label="n=1")
+    n = 2
+    partial_sum += np.sin(n*np.pi*all_x/a)*np.cos(nu*n*t/(2*a)+np.pi/2)
+    #ax.plot(all_x,np.sin(n*np.pi*all_x/a)*np.cos(nu*n*t/(2*a)+np.pi/2),'--',lw=2, label="n=2")   
+    ax.plot(all_x,partial_sum,'-',lw=3, label="sum")
+    plt.legend(fontsize=12)
+    ax.set_xlabel(r'$x/a$',size=20)
+    ax.get_yaxis().set_visible(False)
+    plt.ylim((-2,2))
+    plt.xlim((0.0,1.0))
+    plt.savefig(f'./img/img_{t}.png', 
+                transparent = False,  
+                facecolor = 'white'
+               )
+    plt.close()
+    
+# make gif
+import numpy as np
+import imageio
+time = np.arange(0,120)
+for t in time:
+    plot_classical_wave_frame(t,0.1,1)
+frames = []
+for t in time:
+    #image = iio.imread(f'./img/img_{t}.png')
+    image = imageio.imread(f'./img/img_{t}.png')
+    frames.append(image)
+imageio.mimsave('./img/classical_wave_three_modes_v03.gif', # output gif
+                frames,          # array of input frames
+                fps = 10)  
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [0;32mIn[2], line 1[0m
-[0;32m----> 1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
-[1;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mplt[39;00m
-[1;32m      3[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mmatplotlib[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124minline[39m[38;5;124m'[39m)
+Cell [0;32mIn[3], line 29[0m
+[1;32m     27[0m [38;5;66;03m# make gif[39;00m
+[1;32m     28[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+[0;32m---> 29[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mimageio[39;00m
+[1;32m     30[0m time [38;5;241m=[39m np[38;5;241m.[39marange([38;5;241m0[39m,[38;5;241m120[39m)
+[1;32m     31[0m [38;5;28;01mfor[39;00m t [38;5;129;01min[39;00m time:
 
-[0;31mModuleNotFoundError[0m: No module named 'numpy'
+[0;31mModuleNotFoundError[0m: No module named 'imageio'
 
