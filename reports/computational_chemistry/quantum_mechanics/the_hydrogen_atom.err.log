@@ -1,0 +1,68 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# recall what the spherical harmonics look like
+# make two plots of the same spherical harmonic
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm, colors
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+from scipy.special import sph_harm
+def plot_spherical_harmonic(m,l,theta=np.linspace(0,np.pi,100),phi=np.linspace(0,2*np.pi,100)):
+    THETA, PHI = np.meshgrid(theta, phi)
+    X = np.sin(THETA) * np.cos(PHI)
+    Y = np.sin(THETA) * np.sin(PHI)
+    Z = np.cos(THETA)
+    # Calculate the spherical harmonic Y(l,m) and normalize to [0,1]
+    fcolors = sph_harm(m, l, PHI, THETA).real
+    s = np.power(sph_harm(m, l, PHI, THETA).real,2)
+    s /= s.max()
+    fmax, fmin = fcolors.max(), fcolors.min()
+    fcolors = (fcolors - fmin)/(fmax - fmin)
+    
+
+    # Set the aspect ratio to 1 so our sphere looks spherical
+    fig = plt.figure(figsize=(24,12),dpi= 80, facecolor='w', edgecolor='k')
+    ax = fig.add_subplot(1, 2, 1, projection='3d')
+    ax.plot_surface(X, Y, Z,  rstride=1, cstride=1, facecolors=cm.seismic(fcolors))
+    ax.set_axis_off()
+    ax = fig.add_subplot(1, 2, 2, projection='3d')
+    ax.plot_surface(X*s, Y*s, Z*s,  rstride=1, cstride=1, facecolors=cm.seismic(fcolors))
+    # Turn off the axis planes
+    ax.set_axis_off()
+
+plot_spherical_harmonic(0,1)
+plot_spherical_harmonic(0,2)
+plot_spherical_harmonic(0,3)
+plot_spherical_harmonic(0,4)
+plot_spherical_harmonic(0,5)
+plt.show();
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 3[0m
+[1;32m      1[0m [38;5;66;03m# recall what the spherical harmonics look like[39;00m
+[1;32m      2[0m [38;5;66;03m# make two plots of the same spherical harmonic[39;00m
+[0;32m----> 3[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mmpl_toolkits[39;00m[38;5;21;01m.[39;00m[38;5;21;01mmplot3d[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m Axes3D
+[1;32m      4[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m cm, colors
+[1;32m      5[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+
+[0;31mModuleNotFoundError[0m: No module named 'mpl_toolkits'
+

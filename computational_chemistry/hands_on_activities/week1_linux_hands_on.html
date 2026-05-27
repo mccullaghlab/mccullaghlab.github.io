@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>5.4.1. Linux Basics + Running Python &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">5.4. Hands-on Activities</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -589,10 +595,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="linux-basics-running-python">
+  <div class="tex2jax_ignore mathjax_ignore section" id="linux-basics-running-python">
 <h1><span class="section-number">5.4.1. </span>Linux Basics + Running Python<a class="headerlink" href="#linux-basics-running-python" title="Permalink to this heading">#</a></h1>
 <p><strong>Goal:</strong> Get comfortable working on the course Linux system using core command-line tools, and run a simple Python script from the terminal.</p>
-<section id="learning-objectives">
+<div class="section" id="learning-objectives">
 <h2><span class="section-number">5.4.1.1. </span>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
 <p>By the end of today you should be able to:</p>
 <ul class="simple">
@@ -602,15 +608,15 @@ document.write(`
 <li><p>Run a Python script (<code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">script.py</span></code>)</p></li>
 <li><p>Capture command output into a file (redirection <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code>)</p></li>
 </ul>
-</section>
-<section id="login-and-setup">
+</div>
+<div class="section" id="login-and-setup">
 <h2><span class="section-number">5.4.1.2. </span>0. Login and Setup<a class="headerlink" href="#login-and-setup" title="Permalink to this heading">#</a></h2>
 <p>Log into Pete using your assigned account.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span><span class="o">[</span>your<span class="w"> </span>username<span class="o">]</span>@pete.hpc.okstate.edu
 </pre></div>
 </div>
-</section>
-<section id="warm-up-where-am-i-what-s-here">
+</div>
+<div class="section" id="warm-up-where-am-i-what-s-here">
 <h2><span class="section-number">5.4.1.3. </span>1. Warm-up: Where am I? What’s here?<a class="headerlink" href="#warm-up-where-am-i-what-s-here" title="Permalink to this heading">#</a></h2>
 <p>In this section we will look at basic linux commands that allow us to determine what directory we are currently in and what the contents of that directory are.</p>
 <p>First, however, we will make sure we are logged into the cluster.  Perform the following commands:</p>
@@ -643,8 +649,8 @@ drwxr-xr-x<span class="w"> </span><span class="m">3</span><span class="w"> </spa
 </pre></div>
 </div>
 <p>Press <code class="docutils literal notranslate"><span class="pre">q</span></code> to quit <code class="docutils literal notranslate"><span class="pre">less</span></code>.</p>
-</section>
-<section id="create-your-course-directory">
+</div>
+<div class="section" id="create-your-course-directory">
 <h2><span class="section-number">5.4.1.4. </span>2. Create Your Course Directory<a class="headerlink" href="#create-your-course-directory" title="Permalink to this heading">#</a></h2>
 <p>We are going to create a directory in a shared group space.  We will then move to this space and perform all of today’s activities in there.</p>
 <p>First, we will change a setting in your shell boot script to setup proper priveleges for the group space files and directories.</p>
@@ -700,17 +706,17 @@ mkdir<span class="w"> </span>-p<span class="w"> </span>week1
 </pre></div>
 </div>
 <p>the <code class="docutils literal notranslate"><span class="pre">pwd</span></code> command should print <code class="docutils literal notranslate"><span class="pre">/projects/tia001/[your</span> <span class="pre">usernmame]/week1</span></code>.</p>
-</section>
-<section id="files-create-copy-move-remove">
+</div>
+<div class="section" id="files-create-copy-move-remove">
 <h2><span class="section-number">5.4.1.5. </span>3. Files: Create, Copy, Move, Remove<a class="headerlink" href="#files-create-copy-move-remove" title="Permalink to this heading">#</a></h2>
-<section id="create-a-file">
+<div class="section" id="create-a-file">
 <h3><span class="section-number">5.4.1.5.1. </span>3.1 Create a file<a class="headerlink" href="#create-a-file" title="Permalink to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>touch<span class="w"> </span>myinfo.txt
 ls<span class="w"> </span>-l
 </pre></div>
 </div>
-</section>
-<section id="edit-a-file">
+</div>
+<div class="section" id="edit-a-file">
 <h3><span class="section-number">5.4.1.5.2. </span>3.2 Edit a file<a class="headerlink" href="#edit-a-file" title="Permalink to this heading">#</a></h3>
 <p>Use <strong>one</strong> editor below (either is fine):</p>
 <ul class="simple">
@@ -718,37 +724,37 @@ ls<span class="w"> </span>-l
 <li><p><code class="docutils literal notranslate"><span class="pre">vi</span> <span class="pre">myinfo.txt</span></code>    (powerful; you will see it often on HPC systems; we will use this heavily later; https://www.cs.colostate.edu/helpdocs/vi.html)</p></li>
 </ul>
 <p>Add a single line to <code class="docutils literal notranslate"><span class="pre">myinfo.txt</span></code> (anything you want), save, and exit.</p>
-</section>
-<section id="view-a-file">
+</div>
+<div class="section" id="view-a-file">
 <h3><span class="section-number">5.4.1.5.3. </span>3.3 View a file<a class="headerlink" href="#view-a-file" title="Permalink to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>myinfo.txt
 </pre></div>
 </div>
-</section>
-<section id="copy-it">
+</div>
+<div class="section" id="copy-it">
 <h3><span class="section-number">5.4.1.5.4. </span>3.4 Copy it<a class="headerlink" href="#copy-it" title="Permalink to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>myinfo.txt<span class="w"> </span>myinfo_backup.txt
 ls<span class="w"> </span>-l
 </pre></div>
 </div>
-</section>
-<section id="move-rename-it">
+</div>
+<div class="section" id="move-rename-it">
 <h3><span class="section-number">5.4.1.5.5. </span>3.5 Move/Rename it<a class="headerlink" href="#move-rename-it" title="Permalink to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv<span class="w"> </span>myinfo_backup.txt<span class="w"> </span>myinfo_copy.txt
 ls<span class="w"> </span>-l
 </pre></div>
 </div>
-</section>
-<section id="delete-the-copy">
+</div>
+<div class="section" id="delete-the-copy">
 <h3><span class="section-number">5.4.1.5.6. </span>3.6 Delete the copy<a class="headerlink" href="#delete-the-copy" title="Permalink to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>myinfo_copy.txt
 ls<span class="w"> </span>-l
 </pre></div>
 </div>
 <p><strong>Safety note:</strong> Be careful with <code class="docutils literal notranslate"><span class="pre">rm</span></code>. There is no undoing an <code class="docutils literal notranslate"><span class="pre">rm</span></code> operation on the command line.</p>
-</section>
-</section>
-<section id="running-python-from-the-command-line">
+</div>
+</div>
+<div class="section" id="running-python-from-the-command-line">
 <h2><span class="section-number">5.4.1.6. </span>4. Running Python from the Command Line<a class="headerlink" href="#running-python-from-the-command-line" title="Permalink to this heading">#</a></h2>
 <p>Python is a commonly used coding language that we will use in this class. You create a python file with the desired lines of code and then feed it to the python program to run the code.  We will write a simple piece of code here</p>
 <p>Create a file called <code class="docutils literal notranslate"><span class="pre">calc.py</span></code> in <code class="docutils literal notranslate"><span class="pre">/projects/tia001/[your</span> <span class="pre">usernmame]/week1</span></code>.  Do this with the same text editor as before:</p>
@@ -760,7 +766,7 @@ ls<span class="w"> </span>-l
 </pre></div>
 </div>
 <p>Type (or copy and paste) the following contents into this file:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">value</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -773,15 +779,15 @@ ls<span class="w"> </span>-l
 </pre></div>
 </div>
 <p>You should see a single number printed (with 6 digits after the decimal).</p>
-<section id="quick-check">
+<div class="section" id="quick-check">
 <h3><span class="section-number">5.4.1.6.1. </span>Quick check<a class="headerlink" href="#quick-check" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>What is the value of <span class="math notranslate nohighlight">\(\sqrt{10}\)</span>?</p></li>
 <li><p>Does your script output match (approximately)?</p></li>
 </ul>
-</section>
-</section>
-<section id="capturing-output-create-listing-txt">
+</div>
+</div>
+<div class="section" id="capturing-output-create-listing-txt">
 <h2><span class="section-number">5.4.1.7. </span>5. Capturing Output: Create <code class="docutils literal notranslate"><span class="pre">listing.txt</span></code><a class="headerlink" href="#capturing-output-create-listing-txt" title="Permalink to this heading">#</a></h2>
 <p>Create a file called <code class="docutils literal notranslate"><span class="pre">listing.txt</span></code> in your <code class="docutils literal notranslate"><span class="pre">week1</span></code> directory that contains:</p>
 <ol class="arabic simple">
@@ -797,9 +803,9 @@ ls<span class="w"> </span>-l<span class="w"> </span>&gt;&gt;<span class="w"> </s
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>listing.txt
 </pre></div>
 </div>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="end-of-class-assignment">
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="end-of-class-assignment">
 <h1><span class="section-number">5.4.2. </span>End-of-Class Assignment<a class="headerlink" href="#end-of-class-assignment" title="Permalink to this heading">#</a></h1>
 <p>By the end of class, your directory <strong>must</strong> contain these files:</p>
 <ul class="simple">
@@ -811,7 +817,7 @@ ls<span class="w"> </span>-l<span class="w"> </span>&gt;&gt;<span class="w"> </s
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/projects/tia001/<span class="o">[</span>your<span class="w"> </span>usernmame<span class="o">]</span>/week1
 </pre></div>
 </div>
-<section id="a-create-info-txt">
+<div class="section" id="a-create-info-txt">
 <h2><span class="section-number">5.4.2.1. </span>A. Create <code class="docutils literal notranslate"><span class="pre">info.txt</span></code><a class="headerlink" href="#a-create-info-txt" title="Permalink to this heading">#</a></h2>
 <p>Create a file <code class="docutils literal notranslate"><span class="pre">info.txt</span></code> containing <strong>exactly three lines</strong> (replace the angle-bracketed parts with your own):</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>NAME: &lt;Your Name&gt;
@@ -823,23 +829,23 @@ SHELL: &lt;output of echo $SHELL&gt;
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="nv">$SHELL</span>
 </pre></div>
 </div>
-</section>
-<section id="b-modify-calc-py">
+</div>
+<div class="section" id="b-modify-calc-py">
 <h2><span class="section-number">5.4.2.2. </span>B. Modify <code class="docutils literal notranslate"><span class="pre">calc.py</span></code><a class="headerlink" href="#b-modify-calc-py" title="Permalink to this heading">#</a></h2>
 <p>Modify calc.py to compute the square root of 17 (<span class="math notranslate nohighlight">\(\sqrt{17}\)</span>). Confirm you get the correct answer.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>calc.py
 </pre></div>
 </div>
-</section>
-<section id="c-confirm-listing-txt-is-present">
+</div>
+<div class="section" id="c-confirm-listing-txt-is-present">
 <h2><span class="section-number">5.4.2.3. </span>C. Confirm <code class="docutils literal notranslate"><span class="pre">listing.txt</span></code> is present<a class="headerlink" href="#c-confirm-listing-txt-is-present" title="Permalink to this heading">#</a></h2>
 <p>Re-generate if needed:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">pwd</span><span class="w"> </span>&gt;<span class="w"> </span>listing.txt
 ls<span class="w"> </span>-l<span class="w"> </span>&gt;&gt;<span class="w"> </span>listing.txt
 </pre></div>
 </div>
-</section>
-<section id="d-final-check-do-this-last">
+</div>
+<div class="section" id="d-final-check-do-this-last">
 <h2><span class="section-number">5.4.2.4. </span>D. Final check (do this last)<a class="headerlink" href="#d-final-check-do-this-last" title="Permalink to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week1
 ls<span class="w"> </span>-l
@@ -849,8 +855,8 @@ head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><s
 </pre></div>
 </div>
 <p>If all commands work and the files look correct, you are done.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

@@ -1,0 +1,62 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy as np
+
+THRESH = 1e-8
+
+def S_1s(Z,R):
+    w = Z*R
+    return np.exp(-w)*(1+ w + w*w/3)
+
+def S_2p(Z,R):
+    w = Z*R
+    return np.exp(-w)/15*(w**4 + 2*w**3 - 3*w**2 - 15*w - 15)
+
+def S_1s_2p(Z1,Z2,R):
+    alpha = 0.5*(Z1+Z2)*R
+    beta = 0.5*(Z2-Z1)*R
+    if abs(Z2-Z1) > THRESH:
+        I1 = 2*np.sinh(beta)/beta
+        I2 = 2/beta**2 * (np.sinh(beta)-beta*np.cosh(beta))
+        I3 = 2/beta**3 * ( (beta**2+2)*np.sinh(beta) - 2*beta*np.cosh(beta) )
+        I4 = 2/beta**4 * ( 3*(beta**2+2)*np.sinh(beta) - beta*(beta**2 + 6)*np.cosh(beta)) 
+    else:
+        I1 = 2
+        I2 = 0 
+        I3 = 2/3
+        I4 = 0
+    I5 = np.exp(-alpha)/alpha
+    I6 = I5 * (alpha+1)/alpha
+    I7 = I5 * (alpha*(alpha+2)+2)/alpha**2
+    I8 = I5 * (alpha*(alpha*(alpha+3)+6)+ 6)/alpha**3
+    return Z1**1.5*Z2**2.5*R**4/8 * (I1*I7 + I2*I8 - I3*I5 - I4*I6)
+
+def S_AB(Z1,Z2,a,R):
+    return (S_1s(Z1,R) + a**2*S_2p(Z2,R) + 2*a*S_1s_2p(Z1,Z2,R))/(1+a**2)
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 1[0m
+[0;32m----> 1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+[1;32m      3[0m THRESH [38;5;241m=[39m [38;5;241m1e-8[39m
+[1;32m      5[0m [38;5;28;01mdef[39;00m[38;5;250m [39m[38;5;21mS_1s[39m(Z,R):
+
+[0;31mModuleNotFoundError[0m: No module named 'numpy'
+

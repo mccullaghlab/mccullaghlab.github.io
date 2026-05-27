@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.3. Integration in 1D &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -574,9 +580,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="integration-in-1d">
+  <div class="tex2jax_ignore mathjax_ignore section" id="integration-in-1d">
 <h1><span class="section-number">3.3. </span>Integration in 1D<a class="headerlink" href="#integration-in-1d" title="Permalink to this heading">#</a></h1>
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.3.1. </span>Learning goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="arabic simple">
@@ -584,77 +590,77 @@ document.write(`
 <li><p>Determine the <em>indefinite</em> integrals of common functions of one variable</p></li>
 <li><p>Determine <em>definite</em> integrals of common functions of one variable</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.3.2. </span>Coding concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>No coding concepts are used in this notebook.</p>
-</section>
-<section id="integration">
+</div>
+<div class="section" id="integration">
 <h2><span class="section-number">3.3.3. </span>Integration<a class="headerlink" href="#integration" title="Permalink to this heading">#</a></h2>
 <p>Integration is the inverse operation of differentiation.  When asked “what is <span class="math notranslate nohighlight">\(\int f(x) dx\)</span>?” you can think of it like asking “what function has the derivative <span class="math notranslate nohighlight">\(f(x)\)</span>?”. Much like in differentiation, we need to learn the integral, or antiderivative, of various functions for ease of use later in Thermodynamics and Kinetics.  We will start by differentiating between <em>indefinite</em> and <em>definite</em> integration.</p>
-</section>
-<section id="indefinite-integration">
+</div>
+<div class="section" id="indefinite-integration">
 <h2><span class="section-number">3.3.4. </span>Indefinite integration<a class="headerlink" href="#indefinite-integration" title="Permalink to this heading">#</a></h2>
 <p>Indefinite integration is equivalent to the question above.  What is the antiderivative of a function?  For example, we might write</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70bed127-fbdb-4cd5-898f-67482b090c44">
-<span class="eqno">(3.34)<a class="headerlink" href="#equation-70bed127-fbdb-4cd5-898f-67482b090c44" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-316cc481-df93-4a1b-9236-8c7fc580b689">
+<span class="eqno">(3.34)<a class="headerlink" href="#equation-316cc481-df93-4a1b-9236-8c7fc580b689" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int x^2dx = \frac{x^3}{3} + C,
 \end{equation}\]</div>
 <p>where this can be read as “the integral of <span class="math notranslate nohighlight">\(x^2\)</span> is <span class="math notranslate nohighlight">\(\frac{x^3}{3}\)</span> plus an arbitrary constant, <span class="math notranslate nohighlight">\(C\)</span>.”  This is an example of <em>indefinite integration</em> for which we determine the function(s) that represent the antiderivative of the integrand (<span class="math notranslate nohighlight">\(x^2\)</span>).  Note that you can substitute any real number for <span class="math notranslate nohighlight">\(C\)</span> and have a correct answer.</p>
 <p>If we look at the <em>indefinite integration</em> above in reverse, we see that the derivative of <span class="math notranslate nohighlight">\(\frac{x^3}{3}\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span> is <span class="math notranslate nohighlight">\(x^2\)</span>.  The derivative of any constant is <span class="math notranslate nohighlight">\(0\)</span> so we actually have an infinite number of functions that satisfy the <em>indefinite integration</em> above and we represent these by including <span class="math notranslate nohighlight">\(C\)</span>, the arbitrary constant.</p>
-<section id="some-common-indefinite-integrals">
+<div class="section" id="some-common-indefinite-integrals">
 <h3><span class="section-number">3.3.4.1. </span>Some Common Indefinite Integrals<a class="headerlink" href="#some-common-indefinite-integrals" title="Permalink to this heading">#</a></h3>
 <p>Here are the <em>indefinite integrals</em> of some common 1D functions:</p>
 <p>Polynomials (with constant <span class="math notranslate nohighlight">\(A\)</span> and integer <span class="math notranslate nohighlight">\(n\neq-1\)</span>)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a0c1310d-a06c-4ca6-976e-085ca95fe28d">
-<span class="eqno">(3.35)<a class="headerlink" href="#equation-a0c1310d-a06c-4ca6-976e-085ca95fe28d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-932ac6cc-b4bf-4ac2-8746-2c50d2f8a873">
+<span class="eqno">(3.35)<a class="headerlink" href="#equation-932ac6cc-b4bf-4ac2-8746-2c50d2f8a873" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int Ax^n dx = \frac{Ax^{n+1}}{n+1} + C
 \end{equation}\]</div>
 <p>Polynomial <span class="math notranslate nohighlight">\(n=-1\)</span> (with constant <span class="math notranslate nohighlight">\(A\)</span>)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2c30c976-459c-44c6-8fcc-3a4797113e30">
-<span class="eqno">(3.36)<a class="headerlink" href="#equation-2c30c976-459c-44c6-8fcc-3a4797113e30" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-95233a45-2b60-40b5-91a8-edd4a74a66e6">
+<span class="eqno">(3.36)<a class="headerlink" href="#equation-95233a45-2b60-40b5-91a8-edd4a74a66e6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int \frac{A}{x}dx = A\ln|x| + C
 \end{equation}\]</div>
 <p>Exponentials (with constants <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(m\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4120f602-8d97-47b7-a276-7bbe0b04f740">
-<span class="eqno">(3.37)<a class="headerlink" href="#equation-4120f602-8d97-47b7-a276-7bbe0b04f740" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-46e97b1a-fcd3-4e0a-8dce-68445b9d9745">
+<span class="eqno">(3.37)<a class="headerlink" href="#equation-46e97b1a-fcd3-4e0a-8dce-68445b9d9745" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int Ae^{m\cdot x}dx = \frac{A}{m}e^{m\cdot x} + C
 \end{equation}\]</div>
 <p>Trig functions (constant <span class="math notranslate nohighlight">\(A\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70076227-e05f-4329-83d4-ed628d3cce5d">
-<span class="eqno">(3.38)<a class="headerlink" href="#equation-70076227-e05f-4329-83d4-ed628d3cce5d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2fbf3059-cdc1-4f55-9981-1cb0779619dd">
+<span class="eqno">(3.38)<a class="headerlink" href="#equation-2fbf3059-cdc1-4f55-9981-1cb0779619dd" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int A\sin(x) dx = -A\cos(x) + C
 \end{equation}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-52c2de3f-e5da-4d28-ad63-aaa52ed2df10">
-<span class="eqno">(3.39)<a class="headerlink" href="#equation-52c2de3f-e5da-4d28-ad63-aaa52ed2df10" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c9465e23-41d5-4fad-8d81-b57b958bb946">
+<span class="eqno">(3.39)<a class="headerlink" href="#equation-c9465e23-41d5-4fad-8d81-b57b958bb946" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int A\cos(x) dx = A\sin(x) + C
 \end{equation}\]</div>
 <p>For a more exhaustive list of indefinite integrals, see http://integral-table.com/, https://en.wikipedia.org/wiki/Lists_of_integrals, or use Wolgram alpha.</p>
-</section>
-<section id="u-substitution">
+</div>
+<div class="section" id="u-substitution">
 <h3><span class="section-number">3.3.4.2. </span><span class="math notranslate nohighlight">\(u\)</span> substitution<a class="headerlink" href="#u-substitution" title="Permalink to this heading">#</a></h3>
 <p>Composite functions are more difficult to differentiate. There are a few tricks to help with this.  One example is <span class="math notranslate nohighlight">\(u\)</span> substitution.  This is basically the integral version of the chain rule and does come in handy in Thermodynamics and Kinetics.</p>
 <p>Rather than spell out the theory of <span class="math notranslate nohighlight">\(u\)</span> substitution, here is an example of using it.  Determine a closed for expression for <span class="math notranslate nohighlight">\(f(x)\)</span> where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d54e8c2f-a137-4ec2-8f73-c5c4806b75b9">
-<span class="eqno">(3.40)<a class="headerlink" href="#equation-d54e8c2f-a137-4ec2-8f73-c5c4806b75b9" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8162a1b6-5f59-46e3-a3f7-572e39b125be">
+<span class="eqno">(3.40)<a class="headerlink" href="#equation-8162a1b6-5f59-46e3-a3f7-572e39b125be" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(x) = \int 2x\cos(x^2)dx
 \end{equation}\]</div>
 <p>Note that we clearly have composite functions here.  We have <span class="math notranslate nohighlight">\(2x\)</span>, <span class="math notranslate nohighlight">\(\cos(x)\)</span>, and <span class="math notranslate nohighlight">\(x^2\)</span>.  This integral is also clearly not one of the ones listed above.  We are going to use <span class="math notranslate nohighlight">\(u\)</span> substitution to solve it.</p>
 <p><em><strong>A clue that <span class="math notranslate nohighlight">\(u\)</span> substitution will work is when you have to parts of the function that are related by a derivative</strong></em></p>
 <p>We see that the <span class="math notranslate nohighlight">\(x^2\)</span> and <span class="math notranslate nohighlight">\(2x\)</span> are related by a derivative.  Namely <span class="math notranslate nohighlight">\(\frac{d}{dx}x^2 = 2x\)</span>.  This means <span class="math notranslate nohighlight">\(u\)</span> substitution will likely work in this case.</p>
 <p>We start by picking one of the functions and substitute it with a new variable <span class="math notranslate nohighlight">\(u\)</span>.  We will choose</p>
-<div class="amsmath math notranslate nohighlight" id="equation-46fa305d-a1d2-40e6-b7d8-d3122bbdb535">
-<span class="eqno">(3.41)<a class="headerlink" href="#equation-46fa305d-a1d2-40e6-b7d8-d3122bbdb535" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-baecb5d1-201f-4420-a0ee-f50c5c0333ce">
+<span class="eqno">(3.41)<a class="headerlink" href="#equation-baecb5d1-201f-4420-a0ee-f50c5c0333ce" title="Permalink to this equation">#</a></span>\[\begin{equation}
 u = x^2
 \end{equation}\]</div>
 <p>because the derivative of <span class="math notranslate nohighlight">\(x^2\)</span> is <span class="math notranslate nohighlight">\(dx\)</span>.  When we substitue <span class="math notranslate nohighlight">\(u\)</span> into the integral above we are going to want to do the integration over <span class="math notranslate nohighlight">\(u\)</span>, not <span class="math notranslate nohighlight">\(x\)</span>.  Thus, we need to also substitute the differential of <span class="math notranslate nohighlight">\(u\)</span>.  To determine that, we take the differential of both sides of the equation for <span class="math notranslate nohighlight">\(u\)</span> above to yield</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4193001e-23c4-4033-9d71-2afccd5d6aef">
-<span class="eqno">(3.42)<a class="headerlink" href="#equation-4193001e-23c4-4033-9d71-2afccd5d6aef" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-67c934a1-6588-441c-abe3-73bcde2aaa6c">
+<span class="eqno">(3.42)<a class="headerlink" href="#equation-67c934a1-6588-441c-abe3-73bcde2aaa6c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 du = 2xdx
 \end{equation}\]</div>
 <p>We now substitute both of these into the integral above to get</p>
-<div class="amsmath math notranslate nohighlight" id="equation-375d2fad-b4c8-48cb-ba4f-2028bd9c5132">
-<span class="eqno">(3.43)<a class="headerlink" href="#equation-375d2fad-b4c8-48cb-ba4f-2028bd9c5132" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-96e5060d-54f7-4fb8-ad3a-d7571dfe49ef">
+<span class="eqno">(3.43)<a class="headerlink" href="#equation-96e5060d-54f7-4fb8-ad3a-d7571dfe49ef" title="Permalink to this equation">#</a></span>\[\begin{align}
 f(x) &amp;= \int 2x\cos(x^2)dx \\
 &amp;= \int \cos(x^2)2xdx \\
 &amp;= \int \cos(u)du\\
@@ -663,49 +669,49 @@ f(x) &amp;= \int 2x\cos(x^2)dx \\
 \end{align}\]</div>
 <p>where I first rearrange the integral to make clear that there is a <span class="math notranslate nohighlight">\(du=2xdx\)</span> in the integral.  I then substitute in <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(du\)</span> to get <span class="math notranslate nohighlight">\(\int \cos(u)du\)</span>.  This integral is given above as <span class="math notranslate nohighlight">\(\sin(u) + C\)</span>.  Finally, we substitute back in for <span class="math notranslate nohighlight">\(u\)</span> to make the dependence on <span class="math notranslate nohighlight">\(x\)</span> explicit once again.</p>
 <p>If we take the derivative of <span class="math notranslate nohighlight">\(\sin(x^2) + C\)</span> we need to use the chain rule but should see that we will get <span class="math notranslate nohighlight">\(2x\cos(x^2)\)</span>.</p>
-</section>
-<section id="integration-by-parts">
+</div>
+<div class="section" id="integration-by-parts">
 <h3><span class="section-number">3.3.4.3. </span>Integration by Parts<a class="headerlink" href="#integration-by-parts" title="Permalink to this heading">#</a></h3>
 <p>The integral version of the product rule is integration by parts (sort of).  It is annoying and we won’t encounter it that much in this class so I will not go over it.</p>
-</section>
-</section>
-<section id="definite-integration">
+</div>
+</div>
+<div class="section" id="definite-integration">
 <h2><span class="section-number">3.3.5. </span>Definite Integration<a class="headerlink" href="#definite-integration" title="Permalink to this heading">#</a></h2>
 <p>Definite integration is comparable to indefinite integration except that there are limits placed on the integral in <em>definite integration</em>.  The result is typically a number and represents the area under the curve between the lower and upper limits.</p>
 <p><em>Definite integrals</em> are often evaluated by determining the <em>indefinite integral</em> and then determining the difference of the values of this function at the limits.  The arbitrary constant, <span class="math notranslate nohighlight">\(C\)</span>, no longer matters because it is the same at both limits and so get substracted out.</p>
 <p>Here is an example</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c69c1e79-715c-4caf-a706-3d1bae835052">
-<span class="eqno">(3.44)<a class="headerlink" href="#equation-c69c1e79-715c-4caf-a706-3d1bae835052" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b93986de-b2a9-44af-816b-035608dd4fef">
+<span class="eqno">(3.44)<a class="headerlink" href="#equation-b93986de-b2a9-44af-816b-035608dd4fef" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-2}^2x^2dx = ?
 \end{equation}\]</div>
 <p>To dermine this <em>definite integral</em>, we start be determining the <em>indefinite integral</em>.  We determined this above to be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-357b44fd-7125-47f6-9321-d17017d3245e">
-<span class="eqno">(3.45)<a class="headerlink" href="#equation-357b44fd-7125-47f6-9321-d17017d3245e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-32b3839e-122a-461c-82b0-c3f57e303d99">
+<span class="eqno">(3.45)<a class="headerlink" href="#equation-32b3839e-122a-461c-82b0-c3f57e303d99" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int x^2dx = \frac{x^3}{3} + C,
 \end{equation}\]</div>
 <p>We can now solve the <em>definite integral</em></p>
-<div class="amsmath math notranslate nohighlight" id="equation-504568c6-4391-4623-bdfa-232ce58d43f0">
-<span class="eqno">(3.46)<a class="headerlink" href="#equation-504568c6-4391-4623-bdfa-232ce58d43f0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0e0a7dcc-24cc-46fd-b306-9ec480d3bece">
+<span class="eqno">(3.46)<a class="headerlink" href="#equation-0e0a7dcc-24cc-46fd-b306-9ec480d3bece" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_{-2}^2x^2dx &amp;= \left[ \frac{x^3}{3} \right]_{-2}^2 \\
 &amp;= \frac{2^3}{3} - \frac{(-2)^3}{3} \\
 &amp;= \frac{16}{3}
 \end{align}\]</div>
 <p>The notation <span class="math notranslate nohighlight">\(\left[ \frac{x^3}{3} \right]_{-2}^2\)</span> means to take the difference of the function <span class="math notranslate nohighlight">\(\frac{x^3}{3}\)</span> evaluated at the upper (<span class="math notranslate nohighlight">\(2\)</span>) and lower (<span class="math notranslate nohighlight">\(-2\)</span>) limits.</p>
-<section id="tables-of-definite-integrals">
+<div class="section" id="tables-of-definite-integrals">
 <h3><span class="section-number">3.3.5.1. </span>Tables of Definite Integrals<a class="headerlink" href="#tables-of-definite-integrals" title="Permalink to this heading">#</a></h3>
 <p>There are some functions that do not have a nice <em>indefinite integral</em> but for which the <em>definite integral</em> over certain domains can be determined.  A common example is a Guassian integral over either <span class="math notranslate nohighlight">\(0&lt;x&lt;\infty\)</span> or <span class="math notranslate nohighlight">\(-\infty&lt;x&lt;\infty\)</span>.  It can be shown that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d5324c78-d8b1-40a7-8f1e-852b0dd7882b">
-<span class="eqno">(3.47)<a class="headerlink" href="#equation-d5324c78-d8b1-40a7-8f1e-852b0dd7882b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c5ee3193-c521-42d0-9436-09a283996e7f">
+<span class="eqno">(3.47)<a class="headerlink" href="#equation-c5ee3193-c521-42d0-9436-09a283996e7f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \int_{-\infty}^{\infty}e^{-\alpha x^2} dx= \sqrt{\frac{\pi}{\alpha}} 
 \end{equation}\]</div>
 <p>We may encounter integrals like this.  It is not expected that you be able to determine these but rather you will be given a general result like those tabulated at the bottom of the wikipedia page of integrals (https://en.wikipedia.org/wiki/Lists_of_integrals).</p>
-</section>
-<section id="numeric-integration">
+</div>
+<div class="section" id="numeric-integration">
 <h3><span class="section-number">3.3.5.2. </span>Numeric integration<a class="headerlink" href="#numeric-integration" title="Permalink to this heading">#</a></h3>
 <p>Definite integrals can also be approximated by numeric integration.  We will not dicuss this technique but the basics are give in a <a class="reference internal" href="../coding_concepts/numeric_integration.html"><span class="doc std std-doc">different noteboook</span></a>.</p>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

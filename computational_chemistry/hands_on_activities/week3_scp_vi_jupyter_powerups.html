@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>5.4.5. Week 3 Hands-On: File Transfer (scp/WinSCP), vi, and More Jupyter/Python &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">5.4. Hands-on Activities</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -609,10 +615,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="week-3-hands-on-file-transfer-scp-winscp-vi-and-more-jupyter-python">
+  <div class="tex2jax_ignore mathjax_ignore section" id="week-3-hands-on-file-transfer-scp-winscp-vi-and-more-jupyter-python">
 <h1><span class="section-number">5.4.5. </span>Week 3 Hands-On: File Transfer (scp/WinSCP), <code class="docutils literal notranslate"><span class="pre">vi</span></code>, and More Jupyter/Python<a class="headerlink" href="#week-3-hands-on-file-transfer-scp-winscp-vi-and-more-jupyter-python" title="Permalink to this heading">#</a></h1>
 <hr class="docutils" />
-<section id="overview">
+<div class="section" id="overview">
 <h2><span class="section-number">5.4.5.1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <p>Today you will practice three skills you will use repeatedly in computational chemistry workflows:</p>
 <ol class="arabic simple">
@@ -623,9 +629,9 @@ document.write(`
 <blockquote>
 <div><p><strong>End-of-class deliverable:</strong> a small set of files in your HPC directory plus brief evidence pasted into this notebook.</p>
 </div></blockquote>
-</section>
+</div>
 <hr class="docutils" />
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">5.4.5.2. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>By the end of this session, you should be able to:</p>
 <ul class="simple">
@@ -635,8 +641,8 @@ document.write(`
 <li><p>Write a simple Python function in a notebook and use it to compute values repeatedly</p></li>
 <li><p>Keep a notebook reproducible (restart kernel, run-all, avoid hidden state)</p></li>
 </ul>
-</section>
-<section id="setup-your-working-directory-on-pete">
+</div>
+<div class="section" id="setup-your-working-directory-on-pete">
 <h2><span class="section-number">5.4.5.3. </span>0. Setup: Your Working Directory on Pete<a class="headerlink" href="#setup-your-working-directory-on-pete" title="Permalink to this heading">#</a></h2>
 <p>For this activity, work in the directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/projects/tia001/<span class="nv">$USER</span>/week3
@@ -670,10 +676,10 @@ SyntaxError: invalid syntax
 </div>
 </div>
 </div>
-</section>
-<section id="transferring-files-with-scp-mac-linux">
+</div>
+<div class="section" id="transferring-files-with-scp-mac-linux">
 <h2><span class="section-number">5.4.5.4. </span>1. Transferring Files with <code class="docutils literal notranslate"><span class="pre">scp</span></code> (Mac/Linux)<a class="headerlink" href="#transferring-files-with-scp-mac-linux" title="Permalink to this heading">#</a></h2>
-<section id="key-idea-scp-syntax">
+<div class="section" id="key-idea-scp-syntax">
 <h3><span class="section-number">5.4.5.4.1. </span>1.1 Key idea: <code class="docutils literal notranslate"><span class="pre">scp</span></code> syntax<a class="headerlink" href="#key-idea-scp-syntax" title="Permalink to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span><span class="o">[</span>options<span class="o">]</span><span class="w"> </span>SOURCE<span class="w"> </span>DESTINATION
 </pre></div>
@@ -682,28 +688,28 @@ SyntaxError: invalid syntax
 <li><p>Local paths look like: <code class="docutils literal notranslate"><span class="pre">./file.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">/Users/you/Documents/file.txt</span></code></p></li>
 <li><p>Remote paths look like: <code class="docutils literal notranslate"><span class="pre">username&#64;pete.hpc.okstate.edu:/path/on/pete/</span></code></p></li>
 </ul>
-</section>
-<section id="copy-a-file-to-pete">
+</div>
+<div class="section" id="copy-a-file-to-pete">
 <h3><span class="section-number">5.4.5.4.2. </span>1.2 Copy a file <strong>to</strong> Pete<a class="headerlink" href="#copy-a-file-to-pete" title="Permalink to this heading">#</a></h3>
 <p>From your <strong>local</strong> computer terminal:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>local_file.txt<span class="w"> </span>YOURUSERNAME@pete.hpc.okstate.edu:/projects/tia001/YOURUSERNAME/week3/
 </pre></div>
 </div>
-</section>
-<section id="copy-a-file-from-pete-back-to-your-local-computer">
+</div>
+<div class="section" id="copy-a-file-from-pete-back-to-your-local-computer">
 <h3><span class="section-number">5.4.5.4.3. </span>1.3 Copy a file <strong>from</strong> Pete back to your local computer<a class="headerlink" href="#copy-a-file-from-pete-back-to-your-local-computer" title="Permalink to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>YOURUSERNAME@pete.hpc.okstate.edu:/projects/tia001/YOURUSERNAME/week3/remote_file.txt<span class="w"> </span>.
 </pre></div>
 </div>
 <p>The final <code class="docutils literal notranslate"><span class="pre">.</span></code> means “copy into the current local directory”.</p>
-</section>
-<section id="copy-an-entire-directory-recursive">
+</div>
+<div class="section" id="copy-an-entire-directory-recursive">
 <h3><span class="section-number">5.4.5.4.4. </span>1.4 Copy an entire directory (recursive)<a class="headerlink" href="#copy-an-entire-directory-recursive" title="Permalink to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>-r<span class="w"> </span>myfolder<span class="w"> </span>YOURUSERNAME@pete.hpc.okstate.edu:/projects/tia001/YOURUSERNAME/week3/
 </pre></div>
 </div>
-</section>
-<section id="common-options">
+</div>
+<div class="section" id="common-options">
 <h3><span class="section-number">5.4.5.4.5. </span>1.5 Common options<a class="headerlink" href="#common-options" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">-r</span></code> recursive (directories)</p></li>
@@ -711,8 +717,8 @@ SyntaxError: invalid syntax
 <li><p><code class="docutils literal notranslate"><span class="pre">-v</span></code> verbose (debug)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-C</span></code> compression (sometimes helpful)</p></li>
 </ul>
-</section>
-<section id="quick-sanity-checks">
+</div>
+<div class="section" id="quick-sanity-checks">
 <h3><span class="section-number">5.4.5.4.6. </span>1.6 Quick sanity checks<a class="headerlink" href="#quick-sanity-checks" title="Permalink to this heading">#</a></h3>
 <p>On Pete:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-l<span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week3
@@ -722,9 +728,9 @@ SyntaxError: invalid syntax
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-l
 </pre></div>
 </div>
-</section>
-</section>
-<section id="windows-users-winscp-gui-file-transfer">
+</div>
+</div>
+<div class="section" id="windows-users-winscp-gui-file-transfer">
 <h2><span class="section-number">5.4.5.5. </span>2. Windows Users: WinSCP (GUI File Transfer)<a class="headerlink" href="#windows-users-winscp-gui-file-transfer" title="Permalink to this heading">#</a></h2>
 <p>If you are on Windows, the easiest path is often <strong>WinSCP</strong>:</p>
 <ul class="simple">
@@ -733,15 +739,15 @@ SyntaxError: invalid syntax
 <li><p><strong>User name:</strong> your Pete username</p></li>
 <li><p><strong>Password:</strong> your Pete password (or Duo/2FA flow if required)</p></li>
 </ul>
-<section id="what-to-do-in-winscp">
+<div class="section" id="what-to-do-in-winscp">
 <h3><span class="section-number">5.4.5.5.1. </span>What to do in WinSCP<a class="headerlink" href="#what-to-do-in-winscp" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Connect to <code class="docutils literal notranslate"><span class="pre">pete.hpc.okstate.edu</span></code></p></li>
 <li><p>Navigate to: <code class="docutils literal notranslate"><span class="pre">/projects/tia001/&lt;your_username&gt;/week3/</span></code></p></li>
 <li><p>Drag-and-drop files between your local machine and the remote directory</p></li>
 </ol>
-</section>
-<section id="equivalent-to-scp">
+</div>
+<div class="section" id="equivalent-to-scp">
 <h3><span class="section-number">5.4.5.5.2. </span>Equivalent to <code class="docutils literal notranslate"><span class="pre">scp</span></code><a class="headerlink" href="#equivalent-to-scp" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Upload: drag local → remote</p></li>
@@ -750,25 +756,25 @@ SyntaxError: invalid syntax
 <blockquote>
 <div><p>If you prefer a terminal on Windows, you can use PowerShell with <code class="docutils literal notranslate"><span class="pre">scp</span></code> (OpenSSH), or WSL.</p>
 </div></blockquote>
-</section>
-</section>
-<section id="mini-task-transfer-a-file-everyone">
+</div>
+</div>
+<div class="section" id="mini-task-transfer-a-file-everyone">
 <h2><span class="section-number">5.4.5.6. </span>3. Mini-Task: Transfer a File (Everyone)<a class="headerlink" href="#mini-task-transfer-a-file-everyone" title="Permalink to this heading">#</a></h2>
-<section id="goal">
+<div class="section" id="goal">
 <h3><span class="section-number">5.4.5.6.1. </span>Goal<a class="headerlink" href="#goal" title="Permalink to this heading">#</a></h3>
 <p>Create a small file locally, transfer it to Pete, and verify it arrived.</p>
-<section id="step-a-local-machine">
+<div class="section" id="step-a-local-machine">
 <h4><span class="section-number">5.4.5.6.1.1. </span>Step A (local machine)<a class="headerlink" href="#step-a-local-machine" title="Permalink to this heading">#</a></h4>
 <p>Create a file called <code class="docutils literal notranslate"><span class="pre">hello_local.txt</span></code> with a short message (one line).</p>
-</section>
-<section id="step-b-transfer">
+</div>
+<div class="section" id="step-b-transfer">
 <h4><span class="section-number">5.4.5.6.1.2. </span>Step B (transfer)<a class="headerlink" href="#step-b-transfer" title="Permalink to this heading">#</a></h4>
 <p>Use <code class="docutils literal notranslate"><span class="pre">scp</span></code> (or WinSCP) to place it into:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/projects/tia001/<span class="nv">$USER</span>/week3/
 </pre></div>
 </div>
-</section>
-<section id="step-c-verify-on-pete">
+</div>
+<div class="section" id="step-c-verify-on-pete">
 <h4><span class="section-number">5.4.5.6.1.3. </span>Step C (verify on Pete)<a class="headerlink" href="#step-c-verify-on-pete" title="Permalink to this heading">#</a></h4>
 <p>On Pete, run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week3
@@ -789,19 +795,19 @@ cat hello_local.txt
 </div>
 </div>
 </div>
-</section>
-</section>
-</section>
-<section id="vi-crash-course-hpc-essential">
+</div>
+</div>
+</div>
+<div class="section" id="vi-crash-course-hpc-essential">
 <h2><span class="section-number">5.4.5.7. </span>4. <code class="docutils literal notranslate"><span class="pre">vi</span></code> Crash Course (HPC Essential)<a class="headerlink" href="#vi-crash-course-hpc-essential" title="Permalink to this heading">#</a></h2>
-<section id="two-modes-you-must-know">
+<div class="section" id="two-modes-you-must-know">
 <h3><span class="section-number">5.4.5.7.1. </span>4.1 Two modes you must know<a class="headerlink" href="#two-modes-you-must-know" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong>Normal mode</strong>: navigation + commands (default)</p></li>
 <li><p><strong>Insert mode</strong>: typing text (press <code class="docutils literal notranslate"><span class="pre">i</span></code> to enter)</p></li>
 </ul>
-</section>
-<section id="minimal-survival-commands">
+</div>
+<div class="section" id="minimal-survival-commands">
 <h3><span class="section-number">5.4.5.7.2. </span>4.2 Minimal survival commands<a class="headerlink" href="#minimal-survival-commands" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">i</span></code> : enter insert mode</p></li>
@@ -818,8 +824,8 @@ cat hello_local.txt
 <li><p><code class="docutils literal notranslate"><span class="pre">yy</span></code> : copy (yank) a line</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">p</span></code> : paste below</p></li>
 </ul>
-</section>
-<section id="practice-file-on-pete">
+</div>
+<div class="section" id="practice-file-on-pete">
 <h3><span class="section-number">5.4.5.7.3. </span>4.3 Practice file on Pete<a class="headerlink" href="#practice-file-on-pete" title="Permalink to this heading">#</a></h3>
 <p>On Pete, create and edit:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vi<span class="w"> </span>vi_practice.txt
@@ -848,11 +854,11 @@ cat vi_practice.txt
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="jupyter-python-power-ups-if-time">
+</div>
+</div>
+<div class="section" id="jupyter-python-power-ups-if-time">
 <h2><span class="section-number">5.4.5.8. </span>5. Jupyter/Python Power-Ups (If Time)<a class="headerlink" href="#jupyter-python-power-ups-if-time" title="Permalink to this heading">#</a></h2>
-<section id="avoid-hidden-state">
+<div class="section" id="avoid-hidden-state">
 <h3><span class="section-number">5.4.5.8.1. </span>5.1 Avoid hidden state<a class="headerlink" href="#avoid-hidden-state" title="Permalink to this heading">#</a></h3>
 <p>A notebook can silently depend on the order you ran cells.</p>
 <p>Good habit:</p>
@@ -860,17 +866,17 @@ cat vi_practice.txt
 <li><p><strong>Restart kernel</strong></p></li>
 <li><p><strong>Run all cells</strong> from the top</p></li>
 </ol>
-</section>
-<section id="writing-functions-reusable-code">
+</div>
+<div class="section" id="writing-functions-reusable-code">
 <h3><span class="section-number">5.4.5.8.2. </span>5.2 Writing functions (reusable code)<a class="headerlink" href="#writing-functions-reusable-code" title="Permalink to this heading">#</a></h3>
 <p>A function packages a calculation you can reuse many times.</p>
 <p>Example: compute <span class="math notranslate nohighlight">\(\sqrt{x^2 + 1}\)</span>.</p>
 <p>Run the cell below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute sqrt(x^2 + 1).&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
@@ -880,14 +886,14 @@ cat vi_practice.txt
 </div>
 </div>
 </div>
-</section>
-<section id="a-tiny-workflow-example">
+</div>
+<div class="section" id="a-tiny-workflow-example">
 <h3><span class="section-number">5.4.5.8.3. </span>5.3 A tiny workflow example<a class="headerlink" href="#a-tiny-workflow-example" title="Permalink to this heading">#</a></h3>
 <p>Compute a table of values and save it as a text file on Pete.</p>
 <p>Run the cell below (it writes <code class="docutils literal notranslate"><span class="pre">values.txt</span></code> into your current working directory).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
 <span class="n">vals</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xs</span><span class="p">]</span>
@@ -902,17 +908,17 @@ cat vi_practice.txt
 </div>
 </div>
 </div>
-</section>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="end-of-class-assignment-due-at-end-of-session">
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="end-of-class-assignment-due-at-end-of-session">
 <h1><span class="section-number">5.4.6. </span>End-of-Class Assignment (Due at End of Session)<a class="headerlink" href="#end-of-class-assignment-due-at-end-of-session" title="Permalink to this heading">#</a></h1>
 <p>Complete the tasks below. Paste requested outputs into this notebook (in the cells provided).</p>
 <p>All files should be in:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/projects/tia001/<span class="nv">$USER</span>/week3
 </pre></div>
 </div>
-<section id="task-a-file-transfer-evidence">
+<div class="section" id="task-a-file-transfer-evidence">
 <h2><span class="section-number">5.4.6.1. </span>Task A (File Transfer Evidence)<a class="headerlink" href="#task-a-file-transfer-evidence" title="Permalink to this heading">#</a></h2>
 <p>Paste the output of these commands run on Pete:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week3
@@ -928,8 +934,8 @@ cat<span class="w"> </span>hello_local.txt
 </div>
 </div>
 </div>
-</section>
-<section id="task-b-vi-evidence">
+</div>
+<div class="section" id="task-b-vi-evidence">
 <h2><span class="section-number">5.4.6.2. </span>Task B (<code class="docutils literal notranslate"><span class="pre">vi</span></code> Evidence)<a class="headerlink" href="#task-b-vi-evidence" title="Permalink to this heading">#</a></h2>
 <p>Paste the output of:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week3
@@ -944,8 +950,8 @@ cat<span class="w"> </span>vi_practice.txt
 </div>
 </div>
 </div>
-</section>
-<section id="task-c-functions-reproducibility">
+</div>
+<div class="section" id="task-c-functions-reproducibility">
 <h2><span class="section-number">5.4.6.3. </span>Task C (Functions + Reproducibility)<a class="headerlink" href="#task-c-functions-reproducibility" title="Permalink to this heading">#</a></h2>
 <p>In the code cell below:</p>
 <ol class="arabic simple">
@@ -960,9 +966,9 @@ in units where <span class="math notranslate nohighlight">\(\hbar=m=1\)</span>.<
 <p>(We will spot-check that your notebook runs from top to bottom.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
-<span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">energy</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">L</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
     <span class="c1"># YOUR CODE HERE</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
@@ -971,8 +977,8 @@ in units where <span class="math notranslate nohighlight">\(\hbar=m=1\)</span>.<
 </div>
 </div>
 </div>
-</section>
-<section id="wrap-up-reflection-23-sentences-markdown">
+</div>
+<div class="section" id="wrap-up-reflection-23-sentences-markdown">
 <h2><span class="section-number">5.4.6.4. </span>Wrap-up Reflection (2–3 sentences, Markdown)<a class="headerlink" href="#wrap-up-reflection-23-sentences-markdown" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>What part of today’s workflow felt most unfamiliar?</p></li>
@@ -980,8 +986,8 @@ in units where <span class="math notranslate nohighlight">\(\hbar=m=1\)</span>.<
 </ul>
 <p>(Write your response below.)</p>
 <p><em>Write your reflection here.</em></p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

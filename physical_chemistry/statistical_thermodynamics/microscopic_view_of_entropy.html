@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>4.2.8. Microscopic View of Entropy &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -571,13 +577,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="microscopic-view-of-entropy">
+  <div class="tex2jax_ignore mathjax_ignore section" id="microscopic-view-of-entropy">
 <h1><span class="section-number">4.2.8. </span>Microscopic View of Entropy<a class="headerlink" href="#microscopic-view-of-entropy" title="Permalink to this heading">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">4.2.8.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
 <p>In classical Thermodynamics, entropy is introduced as another state function and/or as a partial derivative of the internal energy, or as something that can be used to indicate spontaneous processes.  Here we look at a more molecular/statistical explanation of what entropy is.</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">4.2.8.2. </span>Learning goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After this class, students should be able to:</p>
 <ol class="arabic simple">
@@ -585,16 +591,16 @@ document.write(`
 <li><p>Compute entropy of a simple lattice gas</p></li>
 <li><p>Compute the entropy of mixing lattice gasses</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">4.2.8.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Functions</p></li>
 <li><p>Numpy</p></li>
 <li><p>Scipy</p></li>
 </ol>
-</section>
-<section id="example-galton-board">
+</div>
+<div class="section" id="example-galton-board">
 <h2><span class="section-number">4.2.8.4. </span>Example: Galton Board<a class="headerlink" href="#example-galton-board" title="Permalink to this heading">#</a></h2>
 <p>To see how entropy, or disorder, plays a role in determining outcome let us consider the example of a galton board.  In a Galton Board, balls are dropped from the top, through a peg board, finally landing in different bins on the bottom.  This is likely familiar to you as a gameshow style game.</p>
 <p>In the case of a Galton board, it is the gravitational potential energy difference between the top and the bottom that causes the balls to fall.  There is no difference in potential energy, however, between any of the bins at the bottom.  So why are certain bins (middle ones) favored?</p>
@@ -605,27 +611,27 @@ document.write(`
 <p>In the case of a single peg, the are a total of two paths (left and right) and one path goes to the left (thus <span class="math notranslate nohighlight">\(P_{left} = \frac{1}{2}\)</span> and one path goes to the right.</p>
 <a class="reference internal image-reference" href="../../_images/GaltonPuzzle_8Bin-Board.jpg"><img alt="../../_images/GaltonPuzzle_8Bin-Board.jpg" class="align-center" src="../../_images/GaltonPuzzle_8Bin-Board.jpg" style="width: 250px;" /></a>
 <p>If we go to the next level, there are two additional pegs followed by three bins at the bottom.  The probability of each bin is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-30d151e8-31b1-47dc-9064-fd1c5b6864f4">
-<span class="eqno">(4.179)<a class="headerlink" href="#equation-30d151e8-31b1-47dc-9064-fd1c5b6864f4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-38f62cc6-0c7e-433b-bf34-d341d244c936">
+<span class="eqno">(4.179)<a class="headerlink" href="#equation-38f62cc6-0c7e-433b-bf34-d341d244c936" title="Permalink to this equation">#</a></span>\[\begin{align}
 P_{left} =&amp; \frac{1}{4} \\
 P_{left} =&amp; \frac{2}{4} = \frac{1}{2} \\
 P_{left} =&amp; \frac{1}{4} 
 \end{align}\]</div>
 <p>Now, more generally, since these follow the binomal distribution, we can compute the probability of bin <span class="math notranslate nohighlight">\(i\)</span> given that there are <span class="math notranslate nohighlight">\(n\)</span> rows in the</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0c949dba-b179-4cd7-9f09-13f3da419dcd">
-<span class="eqno">(4.180)<a class="headerlink" href="#equation-0c949dba-b179-4cd7-9f09-13f3da419dcd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3ed454bf-b490-4e70-9007-b1cd22ccfd64">
+<span class="eqno">(4.180)<a class="headerlink" href="#equation-3ed454bf-b490-4e70-9007-b1cd22ccfd64" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P^n_i = \frac{nCi}{\sum_j^n nCj}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(nCi\)</span> is said as “<span class="math notranslate nohighlight">\(n\)</span> choose <span class="math notranslate nohighlight">\(i\)</span>” and <span class="math notranslate nohighlight">\(nCi = \frac{n!}{(n-i)!i!}\)</span>.</p>
-</section>
-<section id="entropy-and-counting">
+</div>
+<div class="section" id="entropy-and-counting">
 <h2><span class="section-number">4.2.8.5. </span>Entropy and Counting<a class="headerlink" href="#entropy-and-counting" title="Permalink to this heading">#</a></h2>
 <p>So how does this relate to entropy?  Entropy is not just the number of ways to get a certain outcome nor is it the probability of a certain outcome.   It is, however, related to these quantities via the Boltzmann equation:</p>
 <p><span class="math notranslate nohighlight">\(S = k\ln\Omega\)</span></p>
 <p>where <span class="math notranslate nohighlight">\(k\)</span> is the Boltzmann constant and <span class="math notranslate nohighlight">\(\Omega\)</span> is the number of ways of arranging the system.</p>
 <p>As a note, it is somtimes written <span class="math notranslate nohighlight">\(S=k\ln W\)</span> where <span class="math notranslate nohighlight">\(W\)</span> is substituted for <span class="math notranslate nohighlight">\(\Omega\)</span>.  There is no substantive difference between these equations.</p>
-</section>
-<section id="lattice-gas">
+</div>
+<div class="section" id="lattice-gas">
 <h2><span class="section-number">4.2.8.6. </span>Lattice Gas<a class="headerlink" href="#lattice-gas" title="Permalink to this heading">#</a></h2>
 <p>A lattice gas is a common example to see how the ideas of counting can be used to compute/estimate entropy for a molecular system.  We will uses these examples to estimate entropy of mixing, for example.  But we start by simply describing the lattice gas model.</p>
 <p>Estimate the entropy of two molecules of an excluded volume gas in a fixed volume.</p>
@@ -635,18 +641,18 @@ P^n_i = \frac{nCi}{\sum_j^n nCj}
 <p>The gas particles can move around but cannot overlap (finite volume).  So how many ways can we arrange them?  Currently, their motion is on a continuous space and not possible to count.  Instead, we discretize the space in some manner and say that the gas particles can occupy a single grid (or lattice) position</p>
 <a class="reference internal image-reference" href="../../_images/gas_lattice_gas.png"><img alt="../../_images/gas_lattice_gas.png" class="align-center" src="../../_images/gas_lattice_gas.png" style="width: 700px;" /></a>
 <p>Now, the number of ways of arranging the gas particles (<span class="math notranslate nohighlight">\(W\)</span> or <span class="math notranslate nohighlight">\(\Omega\)</span> in the Boltzmann equation) can be computed using the binomial coefficient</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9a278229-99ed-4bcd-8dcf-fd73e9ab0efa">
-<span class="eqno">(4.181)<a class="headerlink" href="#equation-9a278229-99ed-4bcd-8dcf-fd73e9ab0efa" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b37a50dc-f930-46eb-b538-6e59c9b3519a">
+<span class="eqno">(4.181)<a class="headerlink" href="#equation-b37a50dc-f930-46eb-b538-6e59c9b3519a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W = 16C2 = \frac{16!}{14! 2!} = 8\cdot15 = 120
 \end{equation}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-db4f1e5f-b6bb-4ad1-945a-785897e23811">
-<span class="eqno">(4.182)<a class="headerlink" href="#equation-db4f1e5f-b6bb-4ad1-945a-785897e23811" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9488ac49-c561-43d3-93a8-98bbf40bcf11">
+<span class="eqno">(4.182)<a class="headerlink" href="#equation-9488ac49-c561-43d3-93a8-98bbf40bcf11" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S = k\ln120
 \end{equation}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.special</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.special</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">k</span> <span class="o">=</span> <span class="mf">1.38e-23</span> <span class="c1"># this is in units of J/K</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
@@ -654,25 +660,32 @@ S = k\ln120
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.606738605039223e-23
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">scipy.special</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;scipy&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<section id="a-note-on-units-of-k-boltzmann-constant">
+<div class="section" id="a-note-on-units-of-k-boltzmann-constant">
 <h3><span class="section-number">4.2.8.6.1. </span>A Note on Units of <span class="math notranslate nohighlight">\(k\)</span> (Boltzmann constant)<a class="headerlink" href="#a-note-on-units-of-k-boltzmann-constant" title="Permalink to this heading">#</a></h3>
 <p><span class="math notranslate nohighlight">\(k = 1.38\times10^{-23}\)</span> <span class="math notranslate nohighlight">\(J/K\)</span> is a typical value and units of <span class="math notranslate nohighlight">\(k\)</span>.  Note that this is an extremely small value and that it is on the order of magnitude of a single particle/molecule.  i.e. <span class="math notranslate nohighlight">\(10^{-23}\)</span> when Avogadro’s number is <span class="math notranslate nohighlight">\(10^{23}\)</span>.</p>
 <p><span class="math notranslate nohighlight">\(k\)</span> can be thought of as the molecular value of the gas constant.  So, if you want to compute a molar quantity, i.e. <span class="math notranslate nohighlight">\(J/(K\cdot mol)\)</span>, you would use <span class="math notranslate nohighlight">\(R = 8.314\)</span> <span class="math notranslate nohighlight">\(J/(K\cdot mol)\)</span> for <span class="math notranslate nohighlight">\(k\)</span>.</p>
-</section>
-<section id="entropy-of-mixing-of-two-or-more-lattice-gasses">
+</div>
+<div class="section" id="entropy-of-mixing-of-two-or-more-lattice-gasses">
 <h3><span class="section-number">4.2.8.6.2. </span>Entropy of Mixing of Two (or more) Lattice Gasses<a class="headerlink" href="#entropy-of-mixing-of-two-or-more-lattice-gasses" title="Permalink to this heading">#</a></h3>
 <p>Given that we can now estimate the entropy of a lattice gas in a given volume, we can compute the change in entropy upon expansion, contraction or mixing of lattice gasses.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b8a57ea9-854d-4d07-9cbb-4a16506ebc62">
-<span class="eqno">(4.183)<a class="headerlink" href="#equation-b8a57ea9-854d-4d07-9cbb-4a16506ebc62" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a35a4669-3399-4ca6-bd1c-7d271006c670">
+<span class="eqno">(4.183)<a class="headerlink" href="#equation-a35a4669-3399-4ca6-bd1c-7d271006c670" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta S = S_f - S_i = k\ln W_f - k \ln W_i = k\ln\left(\frac{W_f}{W_i}\right)
 \end{equation}\]</div>
-</section>
-<section id="example">
+</div>
+<div class="section" id="example">
 <h3><span class="section-number">4.2.8.6.3. </span>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
 <p>Consider the system of two distinguishable excluded volume gasses initially separated by a barrier indicated by the dashed line.  Compute the change in entropy for the following system if the dashed line is made to be:</p>
 <ol class="arabic simple">
@@ -682,13 +695,13 @@ S = k\ln120
 <a class="reference internal image-reference" href="../../_images/gas_mix.png"><img alt="../../_images/gas_mix.png" class="align-center" src="../../_images/gas_mix.png" style="width: 500px;" /></a>
 <p>Permeable only to solid particles from Side L.</p>
 <p>We start writing the entropy of mixing as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f59b402c-10ec-4ff6-8a09-19a6c7183b1a">
-<span class="eqno">(4.184)<a class="headerlink" href="#equation-f59b402c-10ec-4ff6-8a09-19a6c7183b1a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d7a01de7-ce8f-4ed0-a1cb-7b37ee632044">
+<span class="eqno">(4.184)<a class="headerlink" href="#equation-d7a01de7-ce8f-4ed0-a1cb-7b37ee632044" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta S = S_f - S_i = k\ln W_f - k\ln W_i = k\ln\left(\frac{W_f}{W_i}\right)
 \end{equation}\]</div>
 <p>So we need to compute <span class="math notranslate nohighlight">\(W_f\)</span> and <span class="math notranslate nohighlight">\(W_i\)</span>.  We start with <span class="math notranslate nohighlight">\(W_i\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5ad3d6d4-0d42-4323-bcc0-921244ce249c">
-<span class="eqno">(4.185)<a class="headerlink" href="#equation-5ad3d6d4-0d42-4323-bcc0-921244ce249c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-846aaf33-3972-4f5f-8aac-07f8d1e12836">
+<span class="eqno">(4.185)<a class="headerlink" href="#equation-846aaf33-3972-4f5f-8aac-07f8d1e12836" title="Permalink to this equation">#</a></span>\[\begin{align}
 W_i =&amp; W_L \cdot W_R \\
 =&amp; 12C6 \cdot 8C4 \\
 =&amp; 924 \cdot 70 = 64680
@@ -710,23 +723,23 @@ W_i =&amp; W_L \cdot W_R \\
 </div>
 </div>
 <p>Now for <span class="math notranslate nohighlight">\(W_f\)</span>.  There are many ways to correctly think about and compute the number of ways to arrange this system.  Here, I will consider the following decomposition</p>
-<div class="amsmath math notranslate nohighlight" id="equation-58d7be08-9e3c-4859-9314-59f12c8de438">
-<span class="eqno">(4.186)<a class="headerlink" href="#equation-58d7be08-9e3c-4859-9314-59f12c8de438" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0279fe2b-009f-4367-aaee-9ccac618adae">
+<span class="eqno">(4.186)<a class="headerlink" href="#equation-0279fe2b-009f-4367-aaee-9ccac618adae" title="Permalink to this equation">#</a></span>\[\begin{align}
 W_f =&amp; W_{solid} \cdot W_{open} 
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(W_{open}\)</span> is the number of ways to arrange the open circles.  Since the open circles cannot diffuse across the barrier, this is identical to the initial situation.  Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4ddf07fa-a531-4624-ac34-029138a2280b">
-<span class="eqno">(4.187)<a class="headerlink" href="#equation-4ddf07fa-a531-4624-ac34-029138a2280b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9cada641-c977-473e-b73a-94203a5507bb">
+<span class="eqno">(4.187)<a class="headerlink" href="#equation-9cada641-c977-473e-b73a-94203a5507bb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_{open} = 8C4 = 70
 \end{equation}\]</div>
 <p><span class="math notranslate nohighlight">\(W_{solid}\)</span> is only slighty more complicated.  Since the barrier is permeable to the solid particles, they can diffuse across it.  Thus, nominally, the solid circles can be in any one of the 20 lattice positions.  But, we know that the open circles are occupying four of these lattice positions, so really the solid circles have 16 lattice positions to choose from. Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-56b3747c-4aaa-44e0-b9a6-ed5795f1f6cc">
-<span class="eqno">(4.188)<a class="headerlink" href="#equation-56b3747c-4aaa-44e0-b9a6-ed5795f1f6cc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-63c69451-6ab8-4878-9f00-5c282a18d27d">
+<span class="eqno">(4.188)<a class="headerlink" href="#equation-63c69451-6ab8-4878-9f00-5c282a18d27d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_{solid} = 16C6 = 8008
 \end{equation}\]</div>
 <p>and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-74ff0523-83d7-45fa-a32d-d34dada5be30">
-<span class="eqno">(4.189)<a class="headerlink" href="#equation-74ff0523-83d7-45fa-a32d-d34dada5be30" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e02382a1-9108-4024-8762-65d5b31d5465">
+<span class="eqno">(4.189)<a class="headerlink" href="#equation-e02382a1-9108-4024-8762-65d5b31d5465" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_f = 560560
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -744,8 +757,8 @@ W_f = 560560
 </div>
 </div>
 <p>Finally, we compute <span class="math notranslate nohighlight">\(\Delta S_{mix}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f950cd8f-a2ad-4827-b5cf-fae55a4c80d9">
-<span class="eqno">(4.190)<a class="headerlink" href="#equation-f950cd8f-a2ad-4827-b5cf-fae55a4c80d9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-14e7764c-a5bd-4c87-86c5-dc6a1632c264">
+<span class="eqno">(4.190)<a class="headerlink" href="#equation-14e7764c-a5bd-4c87-86c5-dc6a1632c264" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta S_{mix} &amp;= k\ln\left(\frac{W_f}{W_i}\right) \\
 &amp;= k\ln\left(\frac{560560}{64680}\right)\\
 &amp;= k\ln\left(8.6666\right)\\
@@ -754,9 +767,9 @@ W_f = 560560
 \end{align}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.special</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.special</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="n">R</span> <span class="o">=</span> <span class="mf">8.314</span><span class="o">/</span><span class="mi">1000</span><span class="o">/</span><span class="mf">4.184</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">))))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">R</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">24</span><span class="o">**</span><span class="mi">6</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">**</span><span class="mi">3</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">9</span><span class="o">**</span><span class="mi">3</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">)</span> <span class="p">))</span>
@@ -772,12 +785,12 @@ W_f = 560560
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">scipy.special</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="k">def</span> <span class="nf">ideal</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.special</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ideal</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">M</span><span class="o">**</span><span class="n">N</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">fv</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fv</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">M</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">N</span><span class="p">)</span>
 
 <span class="n">N</span><span class="o">=</span><span class="mi">4</span>
@@ -791,10 +804,10 @@ W_f = 560560
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1285ef9e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fe592af2040&gt;
 </pre></div>
 </div>
-<img alt="../../_images/773ccef9a2b4a81162730130c2ec47ce1ad6b1db92541e6577dad4467bd51ed4.png" src="../../_images/773ccef9a2b4a81162730130c2ec47ce1ad6b1db92541e6577dad4467bd51ed4.png" />
+<img alt="../../_images/a07b74e6d9041007671a7a4aea20becb58b64dae46e9aacf6ac1d18326516bc3.png" src="../../_images/a07b74e6d9041007671a7a4aea20becb58b64dae46e9aacf6ac1d18326516bc3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -855,9 +868,9 @@ W_f = 560560
 </div>
 </div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

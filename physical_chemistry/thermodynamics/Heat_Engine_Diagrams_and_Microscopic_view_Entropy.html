@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>4.3.9. Heat Engine Diagrams &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -583,29 +589,29 @@ document.write(`
                   
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">import</span> <span class="nn">plotting</span> <span class="k">as</span> <span class="nn">myplt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotting</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">myplt</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;matplotlib&#39;</span><span class="p">,</span> <span class="s1">&#39;inline&#39;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">plotting</span> <span class="k">as</span> <span class="nn">myplt</span>
 
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;plotting&#39;
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;numpy&#39;
 </pre></div>
 </div>
 </div>
 </div>
-<section class="tex2jax_ignore mathjax_ignore" id="heat-engine-diagrams">
+<div class="tex2jax_ignore mathjax_ignore section" id="heat-engine-diagrams">
 <h1><span class="section-number">4.3.9. </span>Heat Engine Diagrams<a class="headerlink" href="#heat-engine-diagrams" title="Permalink to this heading">#</a></h1>
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">4.3.9.1. </span>Learning goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After this class, students should be able to:</p>
 <ol class="arabic simple">
@@ -629,8 +635,8 @@ document.write(`
 </ol>
 <a class="reference internal image-reference" href="../../_images/Heat_Engine_Diagram_Fill_in.png"><img alt="../../_images/Heat_Engine_Diagram_Fill_in.png" class="align-center" src="../../_images/Heat_Engine_Diagram_Fill_in.png" style="width: 750px;" /></a>
 <p>Arrows are then drawn to indicate the flow of heat and work.  The direction of the arrows are what dictate whether we are looking at a <em><strong>heat engine</strong></em> or a <em><strong>refrigerator</strong></em>.</p>
-</section>
-<section id="heat-engine">
+</div>
+<div class="section" id="heat-engine">
 <h2><span class="section-number">4.3.9.2. </span>Heat Engine<a class="headerlink" href="#heat-engine" title="Permalink to this heading">#</a></h2>
 <p>In a <em><strong>heat engine</strong></em> heat flow from a hot place to a cold place and work is extracted.  On a heat engine diagram, this is indicated by three arrows:</p>
 <ol class="arabic simple">
@@ -639,8 +645,8 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(w\)</span> is the work extracted from the motor (motor is system so <span class="math notranslate nohighlight">\(w&lt;0\)</span>)</p></li>
 </ol>
 <a class="reference internal image-reference" href="../../_images/Heat_Engine_Diagram_Fill_in.png"><img alt="../../_images/Heat_Engine_Diagram_Fill_in.png" class="align-center" src="../../_images/Heat_Engine_Diagram_Fill_in.png" style="width: 750px;" /></a>
-</section>
-<section id="refrigerator">
+</div>
+<div class="section" id="refrigerator">
 <h2><span class="section-number">4.3.9.3. </span>Refrigerator<a class="headerlink" href="#refrigerator" title="Permalink to this heading">#</a></h2>
 <p>In a <em><strong>refrigerator</strong></em> work is input to move heat from a cold place to a hot place.  On a heat engine diagram, this is indicated by three arrows:</p>
 <ol class="arabic simple">
@@ -649,12 +655,12 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(q_2\)</span> or <span class="math notranslate nohighlight">\(q_h\)</span> is the heat dumped into the hot resevoir</p></li>
 </ol>
 <a class="reference internal image-reference" href="../../_images/Heat_Engine_Diagram_Fill_in.png"><img alt="../../_images/Heat_Engine_Diagram_Fill_in.png" class="align-center" src="../../_images/Heat_Engine_Diagram_Fill_in.png" style="width: 750px;" /></a>
-</section>
-<section id="relating-heat-engine-diagrams-to-pv-diagrams">
+</div>
+<div class="section" id="relating-heat-engine-diagrams-to-pv-diagrams">
 <h2><span class="section-number">4.3.9.4. </span>Relating Heat Engine Diagrams to <span class="math notranslate nohighlight">\(PV\)</span> diagrams<a class="headerlink" href="#relating-heat-engine-diagrams-to-pv-diagrams" title="Permalink to this heading">#</a></h2>
 <p>In order to relate these two things, we must determine what <span class="math notranslate nohighlight">\(q_c\)</span> and <span class="math notranslate nohighlight">\(q_h\)</span> are on a <span class="math notranslate nohighlight">\(PV\)</span> diagram.   This is most readily done for a Carnot cycle since <span class="math notranslate nohighlight">\(q=0\)</span> for the two adiabats.  Thus, the only finite <span class="math notranslate nohighlight">\(q\)</span> values are from the two isotherms</p>
-</section>
-<section id="efficiencies-of-heat-engines-and-cop-of-refrigerators">
+</div>
+<div class="section" id="efficiencies-of-heat-engines-and-cop-of-refrigerators">
 <h2><span class="section-number">4.3.9.5. </span>Efficiencies of Heat Engines and COP of Refrigerators<a class="headerlink" href="#efficiencies-of-heat-engines-and-cop-of-refrigerators" title="Permalink to this heading">#</a></h2>
 <p>For a <em><strong>heat engine</strong></em> (<span class="math notranslate nohighlight">\(w_{total}&lt;0\)</span>), the efficiency is the amount of work extracted, <span class="math notranslate nohighlight">\(w_{total}\)</span>, divided by the energy in put, <span class="math notranslate nohighlight">\(q_{in}\)</span>.</p>
 <p><span class="math notranslate nohighlight">\(\varepsilon = \frac{w_{total}}{q_{in}}\)</span></p>
@@ -664,11 +670,11 @@ document.write(`
 <p><span class="math notranslate nohighlight">\(COP = \frac{q_c}{w_{total}}\)</span></p>
 <p>This value is maximized for a Carnot refrigerator so we know that:</p>
 <p><span class="math notranslate nohighlight">\(COP \leq \frac{T_c}{T_h-T_c}\)</span></p>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="entropy-a-molecular-persepective">
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="entropy-a-molecular-persepective">
 <h1><span class="section-number">4.3.10. </span>Entropy, a Molecular Persepective<a class="headerlink" href="#entropy-a-molecular-persepective" title="Permalink to this heading">#</a></h1>
-<section id="id1">
+<div class="section" id="id1">
 <h2><span class="section-number">4.3.10.1. </span>Learning goals<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>After this class, students should be able to:</p>
 <ol class="arabic simple">
@@ -682,8 +688,8 @@ document.write(`
 <li><p>Entropy is somehow related to disorder.</p></li>
 </ol>
 <p>It is this last point that I want to focus on here.</p>
-</section>
-<section id="example-galton-board">
+</div>
+<div class="section" id="example-galton-board">
 <h2><span class="section-number">4.3.10.2. </span>Example: Galton Board<a class="headerlink" href="#example-galton-board" title="Permalink to this heading">#</a></h2>
 <p>To see how entropy, or disorder, plays a role in determining outcome let us consider the example of a galton board.  In a Galton Board, balls are dropped from the top, through a peg board, finally landing in different bins on the bottom.  This is likely familiar to you as a gameshow style game.</p>
 <p>In the case of a Galton board, it is the gravitational potential energy difference between the top and the bottom that causes the balls to fall.  There is no difference in potential energy, however, between any of the bins at the bottom.  So why are certain bins (middle ones) favored?</p>
@@ -694,27 +700,27 @@ document.write(`
 <p>In the case of a single peg, the are a total of two paths (left and right) and one path goes to the left (thus <span class="math notranslate nohighlight">\(P_{left} = \frac{1}{2}\)</span> and one path goes to the right.</p>
 <a class="reference internal image-reference" href="../../_images/GaltonPuzzle_8Bin-Board1.jpg"><img alt="../../_images/GaltonPuzzle_8Bin-Board1.jpg" class="align-center" src="../../_images/GaltonPuzzle_8Bin-Board1.jpg" style="width: 250px;" /></a>
 <p>If we go to the next level, there are two additional pegs followed by three bins at the bottom.  The probability of each bin is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6c321615-ece4-4ccf-acd0-b717b5cc7ebc">
-<span class="eqno">(4.285)<a class="headerlink" href="#equation-6c321615-ece4-4ccf-acd0-b717b5cc7ebc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-281f3cc2-8322-4235-af2d-6a6faf67b399">
+<span class="eqno">(4.285)<a class="headerlink" href="#equation-281f3cc2-8322-4235-af2d-6a6faf67b399" title="Permalink to this equation">#</a></span>\[\begin{align}
 P_{left} =&amp; \frac{1}{4} \\
 P_{left} =&amp; \frac{2}{4} = \frac{1}{2} \\
 P_{left} =&amp; \frac{1}{4} 
 \end{align}\]</div>
 <p>Now, more generally, since these follow the binomal distribution, we can compute the probability of bin <span class="math notranslate nohighlight">\(i\)</span> given that there are <span class="math notranslate nohighlight">\(n\)</span> rows in the</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ab298dd7-dd4c-4f43-9c90-f21fccd1acfb">
-<span class="eqno">(4.286)<a class="headerlink" href="#equation-ab298dd7-dd4c-4f43-9c90-f21fccd1acfb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-03b2b5b3-16af-4047-bc0a-8936dd945c70">
+<span class="eqno">(4.286)<a class="headerlink" href="#equation-03b2b5b3-16af-4047-bc0a-8936dd945c70" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P^n_i = \frac{nCi}{\sum_j^n nCj}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(nCi\)</span> is said as “<span class="math notranslate nohighlight">\(n\)</span> choose <span class="math notranslate nohighlight">\(i\)</span>” and <span class="math notranslate nohighlight">\(nCi = \frac{n!}{(n-i)!i!}\)</span>.</p>
-</section>
-<section id="entropy-and-counting">
+</div>
+<div class="section" id="entropy-and-counting">
 <h2><span class="section-number">4.3.10.3. </span>Entropy and Counting<a class="headerlink" href="#entropy-and-counting" title="Permalink to this heading">#</a></h2>
 <p>So how does this relate to entropy?  Entropy is not just the number of ways to get a certain outcome nor is it the probability of a certain outcome.   It is, however, related to these quantities via the Boltzmann equation:</p>
 <p><span class="math notranslate nohighlight">\(S = k\ln\Omega\)</span></p>
 <p>where <span class="math notranslate nohighlight">\(k\)</span> is the Boltzmann constant and <span class="math notranslate nohighlight">\(\Omega\)</span> is the number of ways of arranging the system.</p>
 <p>As a note, it is somtimes written <span class="math notranslate nohighlight">\(S=k\ln W\)</span> where <span class="math notranslate nohighlight">\(W\)</span> is substituted for <span class="math notranslate nohighlight">\(\Omega\)</span>.  There is no substantive difference between these equations.</p>
-</section>
-<section id="lattice-gas">
+</div>
+<div class="section" id="lattice-gas">
 <h2><span class="section-number">4.3.10.4. </span>Lattice Gas<a class="headerlink" href="#lattice-gas" title="Permalink to this heading">#</a></h2>
 <p>A lattice gas is a common example to see how the ideas of counting can be used to compute/estimate entropy for a molecular system.  We will uses these examples to estimate entropy of mixing, for example.  But we start by simply describing the lattice gas model.</p>
 <p>Estimate the entropy of two molecules of an excluded volume gas in a fixed volume.</p>
@@ -724,17 +730,17 @@ P^n_i = \frac{nCi}{\sum_j^n nCj}
 <p>The gas particles can move around but cannot overlap (finite volume).  So how many ways can we arrange them?  Currently, their motion is on a continuous space and not possible to count.  Instead, we discretize the space in some manner and say that the gas particles can occupy a single grid (or lattice) position</p>
 <a class="reference internal image-reference" href="../../_images/gas_lattice_gas1.png"><img alt="../../_images/gas_lattice_gas1.png" class="align-center" src="../../_images/gas_lattice_gas1.png" style="width: 700px;" /></a>
 <p>Now, the number of ways of arranging the gas particles (<span class="math notranslate nohighlight">\(W\)</span> or <span class="math notranslate nohighlight">\(\Omega\)</span> in the Boltzmann equation) can be computed using the binomial coefficient</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0a980df5-26a3-4055-b4de-83e23b5df973">
-<span class="eqno">(4.287)<a class="headerlink" href="#equation-0a980df5-26a3-4055-b4de-83e23b5df973" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-05423f03-f292-4e39-b0b2-7ee60e4a4e20">
+<span class="eqno">(4.287)<a class="headerlink" href="#equation-05423f03-f292-4e39-b0b2-7ee60e4a4e20" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W = 16C2 = \frac{16!}{14! 2!} = 8\cdot15 = 120
 \end{equation}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-5a6435f0-31e8-4e81-9341-7145b52cc5d1">
-<span class="eqno">(4.288)<a class="headerlink" href="#equation-5a6435f0-31e8-4e81-9341-7145b52cc5d1" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ad3bf53d-2a3d-4eda-82e5-6b2ab76f9c15">
+<span class="eqno">(4.288)<a class="headerlink" href="#equation-ad3bf53d-2a3d-4eda-82e5-6b2ab76f9c15" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S = k\ln120
 \end{equation}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.special</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.special</span>
 <span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -764,20 +770,20 @@ S = k\ln120
 </div>
 </div>
 </div>
-<section id="a-note-on-units-of-k-boltzmann-constant">
+<div class="section" id="a-note-on-units-of-k-boltzmann-constant">
 <h3><span class="section-number">4.3.10.4.1. </span>A Note on Units of <span class="math notranslate nohighlight">\(k\)</span> (Boltzmann constant)<a class="headerlink" href="#a-note-on-units-of-k-boltzmann-constant" title="Permalink to this heading">#</a></h3>
 <p><span class="math notranslate nohighlight">\(k = 1.38\times10^{-23}\)</span> <span class="math notranslate nohighlight">\(J/K\)</span> is a typical value and units of <span class="math notranslate nohighlight">\(k\)</span>.  Note that this is an extremely small value and that it is on the order of magnitude of a single particle/molecule.  i.e. <span class="math notranslate nohighlight">\(10^{-23}\)</span> when Avogadro’s number is <span class="math notranslate nohighlight">\(10^{23}\)</span>.</p>
 <p><span class="math notranslate nohighlight">\(k\)</span> can be thought of as the molecular value of the gas constant.  So, if you want to compute a molar quantity, i.e. <span class="math notranslate nohighlight">\(J/(K\cdot mol)\)</span>, you would use <span class="math notranslate nohighlight">\(R = 8.314\)</span> <span class="math notranslate nohighlight">\(J/(K\cdot mol)\)</span> for <span class="math notranslate nohighlight">\(k\)</span>.</p>
-</section>
-<section id="entropy-of-mixing-of-two-or-more-lattice-gasses">
+</div>
+<div class="section" id="entropy-of-mixing-of-two-or-more-lattice-gasses">
 <h3><span class="section-number">4.3.10.4.2. </span>Entropy of Mixing of Two (or more) Lattice Gasses<a class="headerlink" href="#entropy-of-mixing-of-two-or-more-lattice-gasses" title="Permalink to this heading">#</a></h3>
 <p>Given that we can now estimate the entropy of a lattice gas in a given volume, we can compute the change in entropy upon expansion, contraction or mixing of lattice gasses.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-305a0eb8-fd8b-4014-8d0c-83fd4bb47f8f">
-<span class="eqno">(4.289)<a class="headerlink" href="#equation-305a0eb8-fd8b-4014-8d0c-83fd4bb47f8f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4ab61d1b-1b93-4ec4-81df-c51d7ecd065f">
+<span class="eqno">(4.289)<a class="headerlink" href="#equation-4ab61d1b-1b93-4ec4-81df-c51d7ecd065f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta S = S_f - S_i = k\ln W_f - k \ln W_i = k\ln\left(\frac{W_f}{W_i}\right)
 \end{equation}\]</div>
-</section>
-<section id="example">
+</div>
+<div class="section" id="example">
 <h3><span class="section-number">4.3.10.4.3. </span>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
 <p>Consider the system of two distinguishable excluded volume gasses initially separated by a barrier indicated by the dashed line.  Compute the change in entropy for the following system if the dashed line is made to be:</p>
 <ol class="arabic simple">
@@ -787,13 +793,13 @@ S = k\ln120
 <a class="reference internal image-reference" href="../../_images/gas_mix1.png"><img alt="../../_images/gas_mix1.png" class="align-center" src="../../_images/gas_mix1.png" style="width: 500px;" /></a>
 <p>Permeable only to solid particles from Side L.</p>
 <p>We start writing the entropy of mixing as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-62dcd781-5a44-471f-8328-e9202ee504ea">
-<span class="eqno">(4.290)<a class="headerlink" href="#equation-62dcd781-5a44-471f-8328-e9202ee504ea" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c88eed7e-fdd3-45da-b419-88d5af04141a">
+<span class="eqno">(4.290)<a class="headerlink" href="#equation-c88eed7e-fdd3-45da-b419-88d5af04141a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \Delta S = S_f - S_i = k\ln W_f - k\ln W_i = k\ln\left(\frac{W_f}{W_i}\right)
 \end{equation}\]</div>
 <p>So we need to compute <span class="math notranslate nohighlight">\(W_f\)</span> and <span class="math notranslate nohighlight">\(W_i\)</span>.  We start with <span class="math notranslate nohighlight">\(W_i\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b2dc1a93-3e6e-4473-8886-2ea2120de0fc">
-<span class="eqno">(4.291)<a class="headerlink" href="#equation-b2dc1a93-3e6e-4473-8886-2ea2120de0fc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1da1776a-1b7e-422a-8092-29d63ac51244">
+<span class="eqno">(4.291)<a class="headerlink" href="#equation-1da1776a-1b7e-422a-8092-29d63ac51244" title="Permalink to this equation">#</a></span>\[\begin{align}
 W_i =&amp; W_L \cdot W_R \\
 =&amp; 12C6 \cdot 8C4 \\
 =&amp; 924 \cdot 70 = 64680
@@ -815,23 +821,23 @@ W_i =&amp; W_L \cdot W_R \\
 </div>
 </div>
 <p>Now for <span class="math notranslate nohighlight">\(W_f\)</span>.  There are many ways to correctly think about and compute the number of ways to arrange this system.  Here, I will consider the following decomposition</p>
-<div class="amsmath math notranslate nohighlight" id="equation-32706791-55e1-46b5-a68c-044167d946cd">
-<span class="eqno">(4.292)<a class="headerlink" href="#equation-32706791-55e1-46b5-a68c-044167d946cd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8808ee97-e39b-4236-aef0-3cbf437a1299">
+<span class="eqno">(4.292)<a class="headerlink" href="#equation-8808ee97-e39b-4236-aef0-3cbf437a1299" title="Permalink to this equation">#</a></span>\[\begin{align}
 W_f =&amp; W_{solid} \cdot W_{open} 
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(W_{open}\)</span> is the number of ways to arrange the open circles.  Since the open circles cannot diffuse across the barrier, this is identical to the initial situation.  Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4ac0383d-b0c6-41e4-af7d-60c08ea17502">
-<span class="eqno">(4.293)<a class="headerlink" href="#equation-4ac0383d-b0c6-41e4-af7d-60c08ea17502" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9dbdcbd9-2238-411d-b7a3-3b327c87de5f">
+<span class="eqno">(4.293)<a class="headerlink" href="#equation-9dbdcbd9-2238-411d-b7a3-3b327c87de5f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_{open} = 8C4 = 70
 \end{equation}\]</div>
 <p><span class="math notranslate nohighlight">\(W_{solid}\)</span> is only slighty more complicated.  Since the barrier is permeable to the solid particles, they can diffuse across it.  Thus, nominally, the solid circles can be in any one of the 20 lattice positions.  But, we know that the open circles are occupying four of these lattice positions, so really the solid circles have 16 lattice positions to choose from. Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-036f3673-6ee4-41a3-b6e8-4e9256279031">
-<span class="eqno">(4.294)<a class="headerlink" href="#equation-036f3673-6ee4-41a3-b6e8-4e9256279031" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-acb9dffc-8cb8-4dbf-a198-d4b559780881">
+<span class="eqno">(4.294)<a class="headerlink" href="#equation-acb9dffc-8cb8-4dbf-a198-d4b559780881" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_{solid} = 16C6 = 8008
 \end{equation}\]</div>
 <p>and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c05f21f6-c1f9-4a74-b63f-c4fe10c0e3c2">
-<span class="eqno">(4.295)<a class="headerlink" href="#equation-c05f21f6-c1f9-4a74-b63f-c4fe10c0e3c2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f5a5d962-f6b6-4506-aa49-d1d28556ae77">
+<span class="eqno">(4.295)<a class="headerlink" href="#equation-f5a5d962-f6b6-4506-aa49-d1d28556ae77" title="Permalink to this equation">#</a></span>\[\begin{equation}
 W_f = 560560
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -849,8 +855,8 @@ W_f = 560560
 </div>
 </div>
 <p>Finally, we compute <span class="math notranslate nohighlight">\(\Delta S_{mix}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-078eb857-3d8b-4484-8f7d-8c6686ba555c">
-<span class="eqno">(4.296)<a class="headerlink" href="#equation-078eb857-3d8b-4484-8f7d-8c6686ba555c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ef118356-cfa1-473e-b2eb-9940c59b131a">
+<span class="eqno">(4.296)<a class="headerlink" href="#equation-ef118356-cfa1-473e-b2eb-9940c59b131a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Delta S_{mix} &amp;= k\ln\left(\frac{W_f}{W_i}\right) \\
 &amp;= k\ln\left(\frac{560560}{64680}\right)\\
 &amp;= k\ln\left(8.6666\right)\\
@@ -873,9 +879,9 @@ W_f = 560560
 </div>
 </div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

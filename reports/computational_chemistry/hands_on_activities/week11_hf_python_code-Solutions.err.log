@@ -1,72 +1,133 @@
 Traceback (most recent call last):
-  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
     executenb(
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1305, in execute
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1305, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/anaconda3/lib/python3.12/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
     return loop.run_until_complete(inner)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/anaconda3/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
     return future.result()
-           ^^^^^^^^^^^^^^^
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 705, in async_execute
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1058, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/opt/anaconda3/lib/python3.12/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# compute energy as a function of bond length
-bond_lengths = np.linspace(0.5, 8.0, 62)
-energies = []
-# loop over R values and compute energies
-for R in bond_lengths:
-    mol = H2RHF(bond_length=R)
-    energies.append(mol.scf(verbose=False))
+# load required libraries
+import math
+import numpy as np
+from scipy.special import erf
 
-# Convert to numpy array
-energies = np.array(energies)
+def boys0(t):
+    """Boys function F0(t)."""
+    if t < 1e-12:
+        return 1.0
+    return 0.5 * math.sqrt(math.pi / t) * erf(math.sqrt(t))
 
-#plot 
-fontsize = 12
-plt.figure(figsize=(5, 5))
+def gaussian_product_center(alpha, A, beta, B):
+    p = alpha + beta
+    return (alpha * A + beta * B) / p
 
-plt.plot(bond_lengths, energies, linewidth=2, label='H$_2$ (STO-3G)')
+def primitive_overlap(alpha, A, beta, B):
+    A = np.asarray(A, dtype=float)
+    B = np.asarray(B, dtype=float)
+    Rab2 = np.dot(A - B, A - B)
+    pref = (2 * alpha / np.pi) ** 0.75 * (2 * beta / np.pi) ** 0.75
+    return pref * (np.pi / (alpha + beta)) ** 1.5 * np.exp(-alpha * beta / (alpha + beta) * Rab2)
 
-plt.xlabel('Bond Length R (bohr)', fontsize=fontsize)
-plt.ylabel('Energy (Hartree)', fontsize=fontsize)
+def primitive_kinetic(alpha, A, beta, B):
+    A = np.asarray(A, dtype=float)
+    B = np.asarray(B, dtype=float)
+    Rab2 = np.dot(A - B, A - B)
+    reduced = alpha * beta / (alpha + beta)
+    return reduced * (3 - 2 * reduced * Rab2) * primitive_overlap(alpha, A, beta, B)
 
-plt.title('E(R) for H2 RHF/STO-3G', fontsize=fontsize)
+def primitive_nuclear_attraction(alpha, A, beta, B, C, Zc):
+    A = np.asarray(A, dtype=float)
+    B = np.asarray(B, dtype=float)
+    C = np.asarray(C, dtype=float)
+    Rab2 = np.dot(A - B, A - B)
+    p = alpha + beta
+    P = gaussian_product_center(alpha, A, beta, B)
+    Rpc2 = np.dot(P - C, P - C)
+    pref = (2 * alpha / np.pi) ** 0.75 * (2 * beta / np.pi) ** 0.75
+    val = pref * (-Zc) * (2 * np.pi / p) * np.exp(-alpha * beta / p * Rab2) * boys0(p * Rpc2)
+    return val
 
-plt.legend(fontsize=fontsize-1)
-plt.grid(True, linestyle=':', linewidth=0.8)
+def primitive_eri(alpha, A, beta, B, gamma, C, delta, D):
+    A = np.asarray(A, dtype=float)
+    B = np.asarray(B, dtype=float)
+    C = np.asarray(C, dtype=float)
+    D = np.asarray(D, dtype=float)
 
-plt.tick_params(labelsize=fontsize)
+    p = alpha + beta
+    q = gamma + delta
 
-# Tight axis limits (no excess whitespace)
-plt.xlim(bond_lengths.min(), bond_lengths.max())
+    P = gaussian_product_center(alpha, A, beta, B)
+    Q = gaussian_product_center(gamma, C, delta, D)
 
-# Optional: tighten y-limits to data range with small padding
-ymin = energies.min()
-ymax = energies.max(),
-padding = 0.02 * (ymax - ymin)
-plt.ylim(ymin - padding, ymax + padding)
+    Rab2 = np.dot(A - B, A - B)
+    Rcd2 = np.dot(C - D, C - D)
+    Rpq2 = np.dot(P - Q, P - Q)
 
-plt.tight_layout()
-plt.show()
+    pref_norm = (
+        (2 * alpha / np.pi) ** 0.75
+        * (2 * beta / np.pi) ** 0.75
+        * (2 * gamma / np.pi) ** 0.75
+        * (2 * delta / np.pi) ** 0.75
+    )
+
+    pref = pref_norm
+    pref *= (2 * np.pi ** 2.5) / (p * q * np.sqrt(p + q))
+    pref *= np.exp(-alpha * beta / p * Rab2)
+    pref *= np.exp(-gamma * delta / q * Rcd2)
+
+    return pref * boys0((p * q / (p + q)) * Rpq2)
+
+def contracted_overlap(alphas, coeffs, A, betas, dcoeffs, B):
+    s = 0.0
+    for a, ca in zip(alphas, coeffs):
+        for b, cb in zip(betas, dcoeffs):
+            s += ca * cb * primitive_overlap(a, A, b, B)
+    return s
+
+def contracted_kinetic(alphas, coeffs, A, betas, dcoeffs, B):
+    t = 0.0
+    for a, ca in zip(alphas, coeffs):
+        for b, cb in zip(betas, dcoeffs):
+            t += ca * cb * primitive_kinetic(a, A, b, B)
+    return t
+
+def contracted_nuclear_attraction(alphas, coeffs, A, betas, dcoeffs, B, centers, charges):
+    v = 0.0
+    for a, ca in zip(alphas, coeffs):
+        for b, cb in zip(betas, dcoeffs):
+            for C, Zc in zip(centers, charges):
+                v += ca * cb * primitive_nuclear_attraction(a, A, b, B, C, Zc)
+    return v
+
+def contracted_eri(alphas, coeffs, A, betas, dcoeffs, B, gammas, ecoeffs, C, deltas, fcoeffs, D):
+    val = 0.0
+    for a, ca in zip(alphas, coeffs):
+        for b, cb in zip(betas, dcoeffs):
+            for g, cg in zip(gammas, ecoeffs):
+                for d, cd in zip(deltas, fcoeffs):
+                    val += ca * cb * cg * cd * primitive_eri(a, A, b, B, g, C, d, D)
+    return val
+
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-Cell [0;32mIn[10], line 14[0m
-[1;32m     12[0m [38;5;66;03m#plot [39;00m
-[1;32m     13[0m fontsize [38;5;241m=[39m [38;5;241m12[39m
-[0;32m---> 14[0m plt[38;5;241m.[39mfigure(figsize[38;5;241m=[39m([38;5;241m5[39m, [38;5;241m5[39m))
-[1;32m     16[0m plt[38;5;241m.[39mplot(bond_lengths, energies, linewidth[38;5;241m=[39m[38;5;241m2[39m, label[38;5;241m=[39m[38;5;124m'[39m[38;5;124mH$_2$ (STO-3G)[39m[38;5;124m'[39m)
-[1;32m     18[0m plt[38;5;241m.[39mxlabel([38;5;124m'[39m[38;5;124mBond Length R (bohr)[39m[38;5;124m'[39m, fontsize[38;5;241m=[39mfontsize)
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[3], line 3[0m
+[1;32m      1[0m [38;5;66;03m# load required libraries[39;00m
+[1;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmath[39;00m
+[0;32m----> 3[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+[1;32m      4[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mscipy[39;00m[38;5;21;01m.[39;00m[38;5;21;01mspecial[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m erf
+[1;32m      6[0m [38;5;28;01mdef[39;00m[38;5;250m [39m[38;5;21mboys0[39m(t):
 
-[0;31mNameError[0m: name 'plt' is not defined
+[0;31mModuleNotFoundError[0m: No module named 'numpy'
 

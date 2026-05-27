@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hartree–Fock for the Helium Atom (RHF) — general form + worked STO example &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -571,7 +577,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="hartreefock-for-the-helium-atom-rhf-general-form-worked-sto-example">
+  <div class="tex2jax_ignore mathjax_ignore section" id="hartreefock-for-the-helium-atom-rhf-general-form-worked-sto-example">
 <h1>Hartree–Fock for the Helium Atom (RHF) — general form + worked STO example<a class="headerlink" href="#hartreefock-for-the-helium-atom-rhf-general-form-worked-sto-example" title="Permalink to this heading">#</a></h1>
 <p>These notes finish the missing “general Hartree–Fock solution” for the helium atom and end with a worked <strong>restricted Hartree–Fock (RHF)</strong> example in a <strong>2-function Slater-type orbital (STO-1s) basis</strong>.</p>
 <p>We consider the Born–Oppenheimer electronic Hamiltonian (atomic units) for a nucleus of charge (Z) at the origin:
@@ -579,7 +585,7 @@ document.write(`
 \hat H = \sum_{i=1}^{2}\left(-\frac{1}{2}\nabla_i^2 - \frac{Z}{r_i}\right) + \frac{1}{r_{12}}.
 ]</p>
 <p>Helium corresponds to (Z=2).</p>
-<section id="rhf-ansatz-for-a-two-electron-closed-shell-atom">
+<div class="section" id="rhf-ansatz-for-a-two-electron-closed-shell-atom">
 <h2>1. RHF ansatz for a two-electron closed-shell atom<a class="headerlink" href="#rhf-ansatz-for-a-two-electron-closed-shell-atom" title="Permalink to this heading">#</a></h2>
 <p>For He in its ground state, we use a <em>closed-shell</em> (restricted) Slater determinant built from one spatial orbital (\psi(\mathbf r)) occupied by two electrons with opposite spin:
 [
@@ -589,14 +595,14 @@ document.write(`
 and
 [
 \Psi(\mathbf x_1,\mathbf x_2) = \frac{1}{\sqrt{2}}</p>
-<div class="amsmath math notranslate nohighlight" id="equation-208e038d-9d43-45b9-b12f-d225e933b7e5">
-<span class="eqno">()<a class="headerlink" href="#equation-208e038d-9d43-45b9-b12f-d225e933b7e5" title="Permalink to this equation">#</a></span>\[\begin{vmatrix}
+<div class="amsmath math notranslate nohighlight" id="equation-c90eb456-9c8f-4177-b732-0759f4ad6680">
+<span class="eqno">()<a class="headerlink" href="#equation-c90eb456-9c8f-4177-b732-0759f4ad6680" title="Permalink to this equation">#</a></span>\[\begin{vmatrix}
 \chi_1(\mathbf x_1) &amp; \chi_1(\mathbf x_2)\\
 \chi_2(\mathbf x_1) &amp; \chi_2(\mathbf x_2)
 \end{vmatrix}\]</div>
 <p>]</p>
 <p>This automatically enforces antisymmetry under exchange of the two electrons.</p>
-<section id="energy-in-rhf-form">
+<div class="section" id="energy-in-rhf-form">
 <h3>Energy in RHF form<a class="headerlink" href="#energy-in-rhf-form" title="Permalink to this heading">#</a></h3>
 <p>Define the one-electron operator
 [
@@ -611,13 +617,13 @@ where the Coulomb (Hartree) self-repulsion is
 J[\psi] = \iint \frac{|\psi(\mathbf r_1)|^2|\psi(\mathbf r_2)|^2}{r_{12}},d\mathbf r_1,d\mathbf r_2.
 ]</p>
 <p>There is <strong>no exchange term</strong> in the <em>total energy</em> for helium’s closed-shell determinant because the two electrons have opposite spin (the exchange contribution cancels for opposite-spin pairs).</p>
-</section>
-</section>
-<section id="roothaan-form-basis-expansion-and-scf-equation">
+</div>
+</div>
+<div class="section" id="roothaan-form-basis-expansion-and-scf-equation">
 <h2>2. Roothaan form (basis expansion) and SCF equation<a class="headerlink" href="#roothaan-form-basis-expansion-and-scf-equation" title="Permalink to this heading">#</a></h2>
 <p>Expand the spatial orbital in a finite basis <span class="math notranslate nohighlight">\(\{\phi_\mu\}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2978d58e-f4d5-4feb-b627-69491394c5da">
-<span class="eqno">()<a class="headerlink" href="#equation-2978d58e-f4d5-4feb-b627-69491394c5da" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-714b954c-fdd3-45ce-8e59-cf597b6a44a9">
+<span class="eqno">()<a class="headerlink" href="#equation-714b954c-fdd3-45ce-8e59-cf597b6a44a9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \psi(\mathbf r)=\sum_{\mu=1}^{M} c_\mu\,\phi_\mu(\mathbf r).
 \end{align}\]</div>
 <p>Define matrices/tensors:</p>
@@ -626,68 +632,68 @@ J[\psi] = \iint \frac{|\psi(\mathbf r_1)|^2|\psi(\mathbf r_2)|^2}{r_{12}},d\math
 <li><p>Core Hamiltonian: <span class="math notranslate nohighlight">\(H_{\mu\nu}=\langle \phi_\mu|h|\phi_\nu\rangle\)</span></p></li>
 <li><p>Two-electron repulsion integrals:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-f2d6fbce-38ab-4655-9164-74cfaac2d95b">
-<span class="eqno">()<a class="headerlink" href="#equation-f2d6fbce-38ab-4655-9164-74cfaac2d95b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d115ea49-31d0-435e-b801-80ba04a2370e">
+<span class="eqno">()<a class="headerlink" href="#equation-d115ea49-31d0-435e-b801-80ba04a2370e" title="Permalink to this equation">#</a></span>\[\begin{align}
 (\mu\nu|\lambda\sigma)=\iint \frac{\phi_\mu(\mathbf r_1)\phi_\nu(\mathbf r_1)\phi_\lambda(\mathbf r_2)\phi_\sigma(\mathbf r_2)}{r_{12}}\,
 d\mathbf r_1\,d\mathbf r_2.
 \end{align}\]</div>
 <p>For RHF, define the (closed-shell) density matrix</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d35ac58f-a70c-4947-808b-d4bbd1e9915a">
-<span class="eqno">()<a class="headerlink" href="#equation-d35ac58f-a70c-4947-808b-d4bbd1e9915a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-54e26ada-2fd2-4d35-a71c-ab6f50e43d66">
+<span class="eqno">()<a class="headerlink" href="#equation-54e26ada-2fd2-4d35-a71c-ab6f50e43d66" title="Permalink to this equation">#</a></span>\[\begin{align}
 P_{\lambda\sigma} = 2 c_\lambda c_\sigma.
 \end{align}\]</div>
 <p>The Fock matrix is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-adc175a7-ccea-4869-bd20-d1d2b058eb90">
-<span class="eqno">()<a class="headerlink" href="#equation-adc175a7-ccea-4869-bd20-d1d2b058eb90" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e6f77df2-ed31-4c38-9147-d5c389798997">
+<span class="eqno">()<a class="headerlink" href="#equation-e6f77df2-ed31-4c38-9147-d5c389798997" title="Permalink to this equation">#</a></span>\[\begin{align}
 F_{\mu\nu} = H_{\mu\nu} + \sum_{\lambda\sigma} P_{\lambda\sigma}
 \left[ (\mu\nu|\lambda\sigma) - \frac12(\mu\lambda|\nu\sigma)\right].
 \end{align}\]</div>
 <p>The <strong>Roothaan–Hall</strong> equations are the generalized eigenvalue problem</p>
-<div class="amsmath math notranslate nohighlight" id="equation-854fae29-a0a7-4f90-9b82-f367f7705174">
-<span class="eqno">()<a class="headerlink" href="#equation-854fae29-a0a7-4f90-9b82-f367f7705174" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7aa03f37-5be2-4475-ab4b-403c8e42c08d">
+<span class="eqno">()<a class="headerlink" href="#equation-7aa03f37-5be2-4475-ab4b-403c8e42c08d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \boxed{\,F\mathbf c = \varepsilon\, S\mathbf c\,}
 \end{align}\]</div>
 <p>which must be solved <strong>self-consistently</strong> because (F) depends on (\mathbf c) through (P).</p>
-</section>
-<section id="worked-example-two-1s-sto-basis-functions-on-the-nucleus">
+</div>
+<div class="section" id="worked-example-two-1s-sto-basis-functions-on-the-nucleus">
 <h2>3. Worked example: two 1s STO basis functions on the nucleus<a class="headerlink" href="#worked-example-two-1s-sto-basis-functions-on-the-nucleus" title="Permalink to this heading">#</a></h2>
 <p>We use <strong>normalized 1s Slater-type orbitals</strong> (STOs)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c07d7681-5408-4418-aa62-02628058abfb">
-<span class="eqno">()<a class="headerlink" href="#equation-c07d7681-5408-4418-aa62-02628058abfb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ee2ffd93-24ef-49dd-aa4f-bf70277b9398">
+<span class="eqno">()<a class="headerlink" href="#equation-ee2ffd93-24ef-49dd-aa4f-bf70277b9398" title="Permalink to this equation">#</a></span>\[\begin{align}
 \phi(\mathbf r;\zeta) = \left(\frac{\zeta^3}{\pi}\right)^{1/2}e^{-\zeta r}.
 \end{align}\]</div>
 <p>We choose a 2-function basis:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d89effd6-bb1a-488e-ac25-90185ff8ef4a">
-<span class="eqno">()<a class="headerlink" href="#equation-d89effd6-bb1a-488e-ac25-90185ff8ef4a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-365b00a2-9a54-4e82-815a-4f4976fff03b">
+<span class="eqno">()<a class="headerlink" href="#equation-365b00a2-9a54-4e82-815a-4f4976fff03b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \phi_1(\mathbf r)=\phi(\mathbf r;\zeta_1),\qquad \phi_2(\mathbf r)=\phi(\mathbf r;\zeta_2).
 \end{align}\]</div>
-<section id="analytic-integrals-for-same-center-1s-stos">
+<div class="section" id="analytic-integrals-for-same-center-1s-stos">
 <h3>Analytic integrals for same-center 1s STOs<a class="headerlink" href="#analytic-integrals-for-same-center-1s-stos" title="Permalink to this heading">#</a></h3>
 <p>Let <span class="math notranslate nohighlight">\(a,b,c,d\)</span> index 1s STOs with exponents <span class="math notranslate nohighlight">\(\zeta_a,\zeta_b,\zeta_c,\zeta_d\)</span>, and define</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0ebbef87-93fd-42c3-aab7-be9f76fd12e0">
-<span class="eqno">()<a class="headerlink" href="#equation-0ebbef87-93fd-42c3-aab7-be9f76fd12e0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-31d731f1-29a1-40f7-8693-6ac9f269fedd">
+<span class="eqno">()<a class="headerlink" href="#equation-31d731f1-29a1-40f7-8693-6ac9f269fedd" title="Permalink to this equation">#</a></span>\[\begin{align}
 p = \zeta_a+\zeta_b,\qquad q=\zeta_c+\zeta_d.
 \end{align}\]</div>
 <p><strong>Overlap</strong></p>
-<div class="amsmath math notranslate nohighlight" id="equation-52ac8515-6faa-4e03-a241-ab14a2da6017">
-<span class="eqno">()<a class="headerlink" href="#equation-52ac8515-6faa-4e03-a241-ab14a2da6017" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c2283bcb-c46e-4c7a-bcc3-c41233184755">
+<span class="eqno">()<a class="headerlink" href="#equation-c2283bcb-c46e-4c7a-bcc3-c41233184755" title="Permalink to this equation">#</a></span>\[\begin{align}
 S_{ab} = \langle a|b\rangle = \frac{8(\zeta_a\zeta_b)^{3/2}}{(\zeta_a+\zeta_b)^3}.
 \end{align}\]</div>
 <p><strong>Kinetic</strong></p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4eb2e8b-da44-425f-aa5e-18144134d9fa">
-<span class="eqno">()<a class="headerlink" href="#equation-d4eb2e8b-da44-425f-aa5e-18144134d9fa" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2bc1f35a-4870-4821-8638-03664395d083">
+<span class="eqno">()<a class="headerlink" href="#equation-2bc1f35a-4870-4821-8638-03664395d083" title="Permalink to this equation">#</a></span>\[\begin{align}
 T_{ab}=\left\langle a\left|-\frac12\nabla^2\right|b\right\rangle
 = \frac{4(\zeta_a\zeta_b)^{5/2}}{(\zeta_a+\zeta_b)^3}.
 \end{align}\]</div>
 <p><strong>Nuclear attraction</strong></p>
-<div class="amsmath math notranslate nohighlight" id="equation-79c0ec1e-6ed3-4b3c-82b1-18f479d6ed9d">
-<span class="eqno">()<a class="headerlink" href="#equation-79c0ec1e-6ed3-4b3c-82b1-18f479d6ed9d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7c567edd-4f58-476b-b97a-c8ba2eba5979">
+<span class="eqno">()<a class="headerlink" href="#equation-7c567edd-4f58-476b-b97a-c8ba2eba5979" title="Permalink to this equation">#</a></span>\[\begin{align}
 V_{ab} = \left\langle a\left|-\frac{Z}{r}\right|b\right\rangle
 = -\frac{4Z(\zeta_a\zeta_b)^{3/2}}{(\zeta_a+\zeta_b)^2}.
 \end{align}\]</div>
 <p><strong>Two-electron repulsion</strong></p>
-<div class="amsmath math notranslate nohighlight" id="equation-036e2c7b-d57b-446c-8f66-8d0e78ad262c">
-<span class="eqno">()<a class="headerlink" href="#equation-036e2c7b-d57b-446c-8f66-8d0e78ad262c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-439f5ef1-accf-486a-b60d-fbb34a5026af">
+<span class="eqno">()<a class="headerlink" href="#equation-439f5ef1-accf-486a-b60d-fbb34a5026af" title="Permalink to this equation">#</a></span>\[\begin{align}
 (ab|cd)
 = 16(\zeta_a\zeta_b\zeta_c\zeta_d)^{3/2}\,
 \frac{p^2+3pq+q^2}{p^2 q^2 (p+q)^3}.
@@ -695,21 +701,21 @@ V_{ab} = \left\langle a\left|-\frac{Z}{r}\right|b\right\rangle
 <p>Below we implement RHF-SCF using these closed forms.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="k">def</span> <span class="nf">S_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">):</span>
     <span class="c1"># overlap for normalized 1s STOs</span>
     <span class="k">return</span> <span class="mf">8.0</span><span class="o">*</span><span class="p">(</span><span class="n">zeta_a</span><span class="o">*</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">zeta_a</span><span class="o">+</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
 
-<span class="k">def</span> <span class="nf">T_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">T_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">):</span>
     <span class="c1"># kinetic for normalized 1s STOs</span>
     <span class="k">return</span> <span class="mf">4.0</span><span class="o">*</span><span class="p">(</span><span class="n">zeta_a</span><span class="o">*</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mf">2.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">zeta_a</span><span class="o">+</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
 
-<span class="k">def</span> <span class="nf">V_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">V_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
     <span class="c1"># nuclear attraction for normalized 1s STOs: &lt;a| -Z/r |b&gt;</span>
     <span class="k">return</span> <span class="o">-</span><span class="mf">4.0</span><span class="o">*</span><span class="n">Z</span><span class="o">*</span><span class="p">(</span><span class="n">zeta_a</span><span class="o">*</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">zeta_a</span><span class="o">+</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
 
-<span class="k">def</span> <span class="nf">ERI_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">,</span> <span class="n">zeta_c</span><span class="p">,</span> <span class="n">zeta_d</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ERI_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">,</span> <span class="n">zeta_c</span><span class="p">,</span> <span class="n">zeta_d</span><span class="p">):</span>
     <span class="c1"># (ab|cd) for same-center 1s STOs</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">zeta_a</span> <span class="o">+</span> <span class="n">zeta_b</span>
     <span class="n">q</span> <span class="o">=</span> <span class="n">zeta_c</span> <span class="o">+</span> <span class="n">zeta_d</span>
@@ -718,7 +724,7 @@ V_{ab} = \left\langle a\left|-\frac{Z}{r}\right|b\right\rangle
     <span class="n">pref</span> <span class="o">=</span> <span class="mf">16.0</span><span class="o">*</span><span class="p">(</span><span class="n">zeta_a</span><span class="o">*</span><span class="n">zeta_b</span><span class="o">*</span><span class="n">zeta_c</span><span class="o">*</span><span class="n">zeta_d</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span>
     <span class="k">return</span> <span class="n">pref</span> <span class="o">*</span> <span class="n">num</span> <span class="o">/</span> <span class="n">den</span>
 
-<span class="k">def</span> <span class="nf">build_integrals</span><span class="p">(</span><span class="n">zetas</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_integrals</span><span class="p">(</span><span class="n">zetas</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
     <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">zetas</span><span class="p">)</span>
     <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">))</span>
@@ -735,14 +741,14 @@ V_{ab} = \left\langle a\left|-\frac{Z}{r}\right|b\right\rangle
                     <span class="n">eri</span><span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">ERI_sto_1s</span><span class="p">(</span><span class="n">zetas</span><span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">zetas</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">zetas</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">zetas</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">S</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">eri</span>
 
-<span class="k">def</span> <span class="nf">symmetric_orthogonalization</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">symmetric_orthogonalization</span><span class="p">(</span><span class="n">S</span><span class="p">):</span>
     <span class="c1"># S^{-1/2} via eigen-decomposition</span>
     <span class="n">w</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">w</span> <span class="o">&lt;=</span> <span class="mf">1e-12</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Overlap matrix is singular/ill-conditioned.&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">U</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">w</span><span class="o">**-</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">@</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span>
 
-<span class="k">def</span> <span class="nf">build_fock</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">eri</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_fock</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">eri</span><span class="p">,</span> <span class="n">P</span><span class="p">):</span>
     <span class="c1"># F_{μν} = H_{μν} + Σ_{λσ} P_{λσ} [ (μν|λσ) - 1/2 (μλ|νσ) ]</span>
     <span class="n">M</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">F</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -755,7 +761,7 @@ V_{ab} = \left\langle a\left|-\frac{Z}{r}\right|b\right\rangle
             <span class="n">F</span><span class="p">[</span><span class="n">mu</span><span class="p">,</span><span class="n">nu</span><span class="p">]</span> <span class="o">+=</span> <span class="n">g</span>
     <span class="k">return</span> <span class="n">F</span>
 
-<span class="k">def</span> <span class="nf">rhf_scf_helium</span><span class="p">(</span><span class="n">zetas</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">conv</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rhf_scf_helium</span><span class="p">(</span><span class="n">zetas</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">conv</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="n">S</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">eri</span> <span class="o">=</span> <span class="n">build_integrals</span><span class="p">(</span><span class="n">zetas</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">symmetric_orthogonalization</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
 
@@ -790,6 +796,19 @@ V_{ab} = \left\langle a\left|-\frac{Z}{r}\right|b\right\rangle
         <span class="n">P</span> <span class="o">=</span> <span class="n">P_new</span>
 
     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;SCF did not converge within max_iter.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="k">def</span><span class="w"> </span><span class="nf">S_sto_1s</span><span class="p">(</span><span class="n">zeta_a</span><span class="p">,</span> <span class="n">zeta_b</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="c1"># overlap for normalized 1s STOs</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">return</span> <span class="mf">8.0</span><span class="o">*</span><span class="p">(</span><span class="n">zeta_a</span><span class="o">*</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mf">1.5</span> <span class="o">/</span> <span class="p">(</span><span class="n">zeta_a</span><span class="o">+</span><span class="n">zeta_b</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;numpy&#39;
 </pre></div>
 </div>
 </div>
@@ -834,9 +853,9 @@ Check normalization c^T S c = 1.000000000000
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="plot-the-resulting-rhf-orbital-and-radial-probability">
+</div>
+</div>
+<div class="section" id="plot-the-resulting-rhf-orbital-and-radial-probability">
 <h2>4. Plot the resulting RHF orbital and radial probability<a class="headerlink" href="#plot-the-resulting-rhf-orbital-and-radial-probability" title="Permalink to this heading">#</a></h2>
 <p>The normalized spatial orbital is
 [
@@ -849,9 +868,9 @@ Check normalization c^T S c = 1.000000000000
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="k">def</span> <span class="nf">phi_sto_1s_r</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">zeta</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">phi_sto_1s_r</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">zeta</span><span class="p">):</span>
     <span class="c1"># normalized 1s STO value as a function of r (1s is spherically symmetric)</span>
     <span class="n">N</span> <span class="o">=</span> <span class="p">(</span><span class="n">zeta</span><span class="o">**</span><span class="mi">3</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
     <span class="k">return</span> <span class="n">N</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">zeta</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
@@ -878,13 +897,9 @@ Check normalization c^T S c = 1.000000000000
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../../_images/bbea2752209b1dfdae9620e0f97f5a9b8930923f43e683090c6bc007a3f7e49a.png" src="../../_images/bbea2752209b1dfdae9620e0f97f5a9b8930923f43e683090c6bc007a3f7e49a.png" />
-<img alt="../../_images/a0b8647621acf56269269fec74a377c7e11f9f0e2a5c6934c0d71e0af89e63e3.png" src="../../_images/a0b8647621acf56269269fec74a377c7e11f9f0e2a5c6934c0d71e0af89e63e3.png" />
 </div>
 </div>
-</section>
-<section id="things-to-try">
+<div class="section" id="things-to-try">
 <h2>5. Things to try<a class="headerlink" href="#things-to-try" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><strong>Change the exponents</strong> (\zeta_1,\zeta_2) and see how the RHF energy changes.</p></li>
@@ -896,8 +911,8 @@ Check normalization c^T S c = 1.000000000000
 <li><p>Exact nonrelativistic ground-state energy of He: (\approx -2.9037) Hartree.</p></li>
 <li><p>RHF limit energy is higher (less negative) because Hartree–Fock neglects electron correlation.</p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

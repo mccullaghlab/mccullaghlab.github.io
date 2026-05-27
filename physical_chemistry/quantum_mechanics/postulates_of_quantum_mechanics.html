@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>4.5.6. The Postulates and Formalism of Quantum Mechanics &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -562,9 +568,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="the-postulates-and-formalism-of-quantum-mechanics">
+  <div class="tex2jax_ignore mathjax_ignore section" id="the-postulates-and-formalism-of-quantum-mechanics">
 <h1><span class="section-number">4.5.6. </span>The Postulates and Formalism of Quantum Mechanics<a class="headerlink" href="#the-postulates-and-formalism-of-quantum-mechanics" title="Permalink to this heading">#</a></h1>
-<section id="postulates">
+<div class="section" id="postulates">
 <h2><span class="section-number">4.5.6.1. </span>Postulates<a class="headerlink" href="#postulates" title="Permalink to this heading">#</a></h2>
 <p><em><strong>Postulate 1:</strong></em> The state of a quantum-mechanical system is completely specified by a function <span class="math notranslate nohighlight">\(\Psi (\mathbf{r},t)\)</span> that depends on the coordinates of the particle and on time.  This function, called the wavefunction, has the important property that <span class="math notranslate nohighlight">\(\Psi^*(\mathbf{r},t)\Psi(\mathbf{r},t)dxdydz\)</span> is the probability that the particle lies in the volume element <span class="math notranslate nohighlight">\(dxdydz\)</span> located at <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>.</p>
 <p>The above postulate is written for a single particle system.  The same holds for a system of many particles.  In this case we write <span class="math notranslate nohighlight">\(\mathbf{r} = (\mathbf{r_1},\mathbf{r_1},...,\mathbf{r_N}) = ((x_1,y_1,z_1),(x_2,y_2,z_2),...,(x_N,y_N,z_N))\)</span> for an <span class="math notranslate nohighlight">\(N\)</span> particle system.  Note this also mean that we must integrate over each <span class="math notranslate nohighlight">\(x_i\)</span>, <span class="math notranslate nohighlight">\(y_i\)</span> and <span class="math notranslate nohighlight">\(z_i\)</span>.  We abbreviate this by writing <span class="math notranslate nohighlight">\(d\tau\)</span> to denote integration over all degrees of freedom of all particles.  So for an <span class="math notranslate nohighlight">\(N\)</span> particle system we can write that <span class="math notranslate nohighlight">\(\Psi^*(\mathbf{r},t)\Psi(\mathbf{r},t)d\tau\)</span> denotes the probability of finding the <span class="math notranslate nohighlight">\(N\)</span> particles in the hyper volume element <span class="math notranslate nohighlight">\(d\tau\)</span> located at <span class="math notranslate nohighlight">\(\mathbf{r}\)</span> at time t.</p>
@@ -609,8 +615,8 @@ document.write(`
 <p><span class="math notranslate nohighlight">\( = \frac{30\hbar^2}{ma^5}\left[ \frac{a^3}{2} - \frac{a^3}{3} \right] \)</span></p>
 <p><span class="math notranslate nohighlight">\( = \frac{30\hbar^2}{ma^5}\left[ \frac{a^3}{6}\right] \)</span></p>
 <p><span class="math notranslate nohighlight">\( = \frac{5\hbar^2}{ma^2} \)</span></p>
-</section>
-<section id="formalism">
+</div>
+<div class="section" id="formalism">
 <h2><span class="section-number">4.5.6.2. </span>Formalism<a class="headerlink" href="#formalism" title="Permalink to this heading">#</a></h2>
 <p><em><strong>Schrodinger Equation</strong></em></p>
 <p>The Schrodinger equation is simply the application of the Hamiltonian operator to the wave function of the system.  The eigenvalues of the Hamiltonian are the energy levels of the system.  The Hamiltonian operator is special in the same way the energy function of a classical system is a special observable. The Schrodinger equation is commonly written as:</p>
@@ -635,8 +641,8 @@ document.write(`
 <p><span class="math notranslate nohighlight">\(\int_{-\infty}^{\infty} \psi(\mathbf{r})^*\psi(\mathbf{r}) d\tau \leftrightarrow \langle\psi|\psi\rangle = 1\)</span>.</p>
 <p>Similarly, if we want to compute the average value of operator, <span class="math notranslate nohighlight">\(\hat{A}\)</span>, we have:</p>
 <p><span class="math notranslate nohighlight">\(\langle a \rangle = \int_{-\infty}^{\infty} \psi(\mathbf{r})^*\hat{A}\psi(\mathbf{r}) d\tau = \langle\psi|\hat{A}|\psi\rangle\)</span>.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

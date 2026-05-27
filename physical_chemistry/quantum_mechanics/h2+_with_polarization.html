@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>4.5.19. Improving the H\(_2^+\) Variational Approximation by Including Polarization Functions &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -590,17 +596,17 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="improving-the-h-2-variational-approximation-by-including-polarization-functions">
+  <div class="tex2jax_ignore mathjax_ignore section" id="improving-the-h-2-variational-approximation-by-including-polarization-functions">
 <h1><span class="section-number">4.5.19. </span>Improving the H<span class="math notranslate nohighlight">\(_2^+\)</span> Variational Approximation by Including Polarization Functions<a class="headerlink" href="#improving-the-h-2-variational-approximation-by-including-polarization-functions" title="Permalink to this heading">#</a></h1>
-<section id="authorship">
+<div class="section" id="authorship">
 <h2><span class="section-number">4.5.19.1. </span>Authorship:<a class="headerlink" href="#authorship" title="Permalink to this heading">#</a></h2>
 <p>This notebook was written and contributed by <strong>Micah Miles</strong> in 2025 as part of his honors contract for Physical Chemistry II.</p>
-</section>
-<section id="motivation">
+</div>
+<div class="section" id="motivation">
 <h2><span class="section-number">4.5.19.2. </span>Motivation:<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
 <p>Both the <a class="reference internal" href="Single_Electron_Molecule_Variational_Approach.html"><span class="doc std std-doc">linear combination of atomic orbital</span></a> (LCAO), and <a class="reference internal" href="Improving_the_h2%2B_variational_approximation.html"><span class="doc std std-doc">Slater orbital descriptions</span></a> of the H<span class="math notranslate nohighlight">\(_2^+\)</span> molecule give reasonable approximations of bond formation. However, these models lack quantitative accuracy and some of the intuitive qualitative character describing how orbitals might change near bond distance. The Slater type orbital modifies the LCAO basis by improving the existing exponential function representative of the Hydrogen 1s orbital. In these notes, we will improve upon that basis by adding a function which allows for dileniation of the orbitals from strict spherical structure (polarization functions).</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">4.5.19.3. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="arabic simple">
@@ -608,8 +614,8 @@ document.write(`
 <li><p>Describe how the addition of Slater 2p<span class="math notranslate nohighlight">\(_z\)</span> orbitals allows us to get an improved variational result for the H<span class="math notranslate nohighlight">\(_2^+\)</span> molecule as compared to only utilizing hydrogen-atom or Slater 1s orbitals.</p></li>
 <li><p>Describe what it means to include polarization functions in atomic orbitals, and how optimizing the polarized basis set provides insight to the structure of a real chemical bond.</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">4.5.19.4. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="arabic simple">
@@ -617,40 +623,40 @@ document.write(`
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</section>
-<section id="setting-up-the-model">
+</div>
+<div class="section" id="setting-up-the-model">
 <h2><span class="section-number">4.5.19.5. </span>Setting up the Model<a class="headerlink" href="#setting-up-the-model" title="Permalink to this heading">#</a></h2>
 <p>We consider the H<span class="math notranslate nohighlight">\(_2^+\)</span> molecule in the Born-Oppenheimer approximation with Hamiltonian:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa302281-493c-4a9a-9d66-94ec47368775">
-<span class="eqno">(4.949)<a class="headerlink" href="#equation-aa302281-493c-4a9a-9d66-94ec47368775" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3d1dbae0-1d01-4a74-aacd-7068558dac4e">
+<span class="eqno">(4.949)<a class="headerlink" href="#equation-3d1dbae0-1d01-4a74-aacd-7068558dac4e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H} = -\frac{1}{2}\nabla^2 - \frac{1}{r_A} - \frac{1}{r_B} + \frac{1}{R}
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(r_A\)</span> and <span class="math notranslate nohighlight">\(r_B\)</span> are the distances between the electron and nuclei <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, respectively, and <span class="math notranslate nohighlight">\(R\)</span> is the distance between the two nuclei.</p>
 <p>In order to solve for the energy and wavefunction as a function of nuclear separation distance <span class="math notranslate nohighlight">\(R\)</span>, we will consider the normalized trial wave function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2304e928-35f7-4724-b66d-a80660cf2a42">
-<span class="eqno">(4.950)<a class="headerlink" href="#equation-2304e928-35f7-4724-b66d-a80660cf2a42" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f4a72f41-7e41-42e2-9872-f772b1f894ef">
+<span class="eqno">(4.950)<a class="headerlink" href="#equation-f4a72f41-7e41-42e2-9872-f772b1f894ef" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \psi_+ = \frac{1}{\sqrt{2(1+S_{AB})}}\left( \phi_A + \phi_B \right)
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\phi_A\)</span> and <span class="math notranslate nohighlight">\(\phi_B\)</span> are the atom-centered basis functions and <span class="math notranslate nohighlight">\(S_{AB}\)</span> is the basis overlap integral defined by:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7e65b27f-b17e-47ce-9016-c44248934b38">
-<span class="eqno">(4.951)<a class="headerlink" href="#equation-7e65b27f-b17e-47ce-9016-c44248934b38" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7a3791b2-c806-44af-b237-ecf5821b3a55">
+<span class="eqno">(4.951)<a class="headerlink" href="#equation-7a3791b2-c806-44af-b237-ecf5821b3a55" title="Permalink to this equation">#</a></span>\[\begin{equation}
 S_{AB} = \left\langle \phi_A \mid \phi_B\right\rangle.
 \end{equation}\]</div>
 <p>Note that thus far, the setup to the problem aligns exactly with the LCAO and Slater bases. Remember that in these notes, we will consider going beyond the minimal <span class="math notranslate nohighlight">\(1s\)</span> atomic basis by including <span class="math notranslate nohighlight">\(2p_z\)</span> functions to allow for <em>polarization</em>.</p>
-</section>
-<section id="adding-polarization">
+</div>
+<div class="section" id="adding-polarization">
 <h2><span class="section-number">4.5.19.6. </span>Adding Polarization<a class="headerlink" href="#adding-polarization" title="Permalink to this heading">#</a></h2>
 <p>Polarization will be added to our atomic centered basis functions in the form of a linear combination of <span class="math notranslate nohighlight">\(1s\)</span> and <span class="math notranslate nohighlight">\(2p_z\)</span> slater-type orbitals (STOs) on each nucleus. Though the <span class="math notranslate nohighlight">\(2p_z\)</span> functions we utilize also come from STOs, the term “Slater” will be used here on to denote the Slater <span class="math notranslate nohighlight">\(1s\)</span> only basis set. Thus, the normalized basis functions are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d00a2623-3e7a-4e7f-9268-36d17f9bcec0">
-<span class="eqno">(4.952)<a class="headerlink" href="#equation-d00a2623-3e7a-4e7f-9268-36d17f9bcec0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-85206b0b-1728-488e-b87a-766227f9733a">
+<span class="eqno">(4.952)<a class="headerlink" href="#equation-85206b0b-1728-488e-b87a-766227f9733a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \phi_A &amp;= \frac{1}{\sqrt{1+a^2}}\left(1s_A + a\cdot2p_{zA}\right) \\
 \phi_B &amp;= \frac{1}{\sqrt{1+a^2}}\left(1s_B + a\cdot2p_{zB}\right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a\)</span> is a variational paramter that controls the amount of <span class="math notranslate nohighlight">\(p\)</span> character in the molecular orbital, <span class="math notranslate nohighlight">\(1s_A\)</span> is the <span class="math notranslate nohighlight">\(1s\)</span> STO centered on nucleus <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(2p_{zA}\)</span> is the <span class="math notranslate nohighlight">\(2p_z\)</span> STO centered on nucleus <span class="math notranslate nohighlight">\(A\)</span>. Let us take a moment to discuss the addition of the <span class="math notranslate nohighlight">\(a\)</span> parameter. As is central to the variational method, this parameter will need to be optimized, in this case for many discrete values of <span class="math notranslate nohighlight">\(R\)</span>. How do you think <span class="math notranslate nohighlight">\(a\)</span> will change as <span class="math notranslate nohighlight">\(R\)</span> changes? Will <span class="math notranslate nohighlight">\(a\)</span> be highest near bonding distance, at infinite separation, or somewherre in between? We will discuss this further during the energy optimization steps, but it is good practice to consider this now.<br />
 <br />
 Next, we must define our <span class="math notranslate nohighlight">\(1s\)</span> and <span class="math notranslate nohighlight">\(2p_Z\)</span> functions. Note that the <span class="math notranslate nohighlight">\(1s\)</span> functions look very similar to what we used for the Slater basis, with one notable change (try to spot and understand that change before checking below the functions for an explanation). The normalized functional forms of these are:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6a525f2d-c417-47ec-b04b-ec5558b6a166">
-<span class="eqno">(4.953)<a class="headerlink" href="#equation-6a525f2d-c417-47ec-b04b-ec5558b6a166" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-01b0ec68-0db4-4bc5-b646-ca0869e8963f">
+<span class="eqno">(4.953)<a class="headerlink" href="#equation-01b0ec68-0db4-4bc5-b646-ca0869e8963f" title="Permalink to this equation">#</a></span>\[\begin{align}
 1s_A &amp;= \left( \frac{Z_1^3}{\pi}\right)^{1/2}e^{-Z_1r_A} \\
 1s_B &amp;= \left( \frac{Z_1^3}{\pi}\right)^{1/2}e^{-Z_1r_B} \\
 2p_{zA} &amp;= \left( \frac{Z_2^5}{\pi}\right)^{1/2} r_A\cos\theta_A e^{-Z_2r_A} \\
@@ -661,17 +667,17 @@ Next, we must define our <span class="math notranslate nohighlight">\(1s\)</span
 Another new feature of our basis set is the inclusion of theta (<span class="math notranslate nohighlight">\(\theta\)</span>) as a variable for our p-orbital representatives. This <span class="math notranslate nohighlight">\(\theta\)</span> is effectively the same as that which we used to characterize the Hydrogen atom in spherical polar coordinates. It is measured from the positive z-axis to the xy-plane, and takes on values from Zero to <span class="math notranslate nohighlight">\(\pi\)</span>. <br />
 <br />
 Now, we know our Hamiltonian and have described our basis set. As we did for the LCAO and Slater bases, We will start by determining an equation for the energy in terms of integrals, such as <span class="math notranslate nohighlight">\(S_{AB}\)</span>.  We will determine specific functional forms of those integrals in subsequent subsections.</p>
-</section>
-<section id="determining-the-expectation-of-the-hamiltonian">
+</div>
+<div class="section" id="determining-the-expectation-of-the-hamiltonian">
 <h2><span class="section-number">4.5.19.7. </span>Determining the Expectation of the Hamiltonian<a class="headerlink" href="#determining-the-expectation-of-the-hamiltonian" title="Permalink to this heading">#</a></h2>
 <p>We will determine the expectation value of the Hamiltonian in this basis.  Namely:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c9970a98-cda9-4e3e-8d6b-6fc05c607ad5">
-<span class="eqno">(4.954)<a class="headerlink" href="#equation-c9970a98-cda9-4e3e-8d6b-6fc05c607ad5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2fa50206-937c-4292-9857-16a2ccae27e0">
+<span class="eqno">(4.954)<a class="headerlink" href="#equation-2fa50206-937c-4292-9857-16a2ccae27e0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_{\psi_+} = \left\langle \psi_+ \mid \hat{H} \mid \psi_+ \right\rangle
 \end{equation}\]</div>
 <p>Convince yourself that the equation above is an appropriate representation for the expectation value of the Hamiltonian (i.e. Why do we not need to consider dividing by the overlap integral?). Continuing on, we will start by just separating the terms:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0f8e9510-b783-4ba8-a86a-09a77871c6dc">
-<span class="eqno">(4.955)<a class="headerlink" href="#equation-0f8e9510-b783-4ba8-a86a-09a77871c6dc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7fc6da01-30d8-44fe-a928-9e83024b656c">
+<span class="eqno">(4.955)<a class="headerlink" href="#equation-7fc6da01-30d8-44fe-a928-9e83024b656c" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_{\psi_+} &amp;= \frac{1}{2(1+S_{AB})}\left\langle \phi_A + \phi_B \mid \hat{H} \mid \phi_A + \phi_B \right\rangle \\
 &amp;= \frac{1}{2(1+S_{AB})}\left[ \left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle + \left\langle \phi_B \mid \hat{H} \mid \phi_B \right\rangle + \left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle + \left\langle \phi_B \mid \hat{H} \mid \phi_A \right\rangle\right] \\
 &amp;= \frac{1}{(1+S_{AB})}\left[ \left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle + \left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle \right] \\
@@ -679,10 +685,10 @@ E_{\psi_+} &amp;= \frac{1}{2(1+S_{AB})}\left\langle \phi_A + \phi_B \mid \hat{H}
 <p>Consider how the Hermitian nature of our model, and real-valued basis set contribute to the manipulations made above (i.e. What if we did not use a Hermitian operator, or included functions with imaginary components?). <br />
 <br />
 We will determine expressions for these integrals below. Like much of the work we have done so far in this course, there is no single correct starting point or approach to evaluating individual integrals. For these notes, we will break up the hamiltonian across addition. Additionally, we will start with the <span class="math notranslate nohighlight">\(S_{AB}\)</span> integral, as we will find it (or its substituents) pops up in some of the other integrations and will need to be called upon.</p>
-<section id="s-ab-z-1-z-2-a-r">
+<div class="section" id="s-ab-z-1-z-2-a-r">
 <h3><span class="section-number">4.5.19.7.1. </span><span class="math notranslate nohighlight">\(S_{AB}(Z_1,Z_2,a,R)\)</span><a class="headerlink" href="#s-ab-z-1-z-2-a-r" title="Permalink to this heading">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-8c105fd1-a17a-4df6-99c2-66a34e9b3d39">
-<span class="eqno">(4.956)<a class="headerlink" href="#equation-8c105fd1-a17a-4df6-99c2-66a34e9b3d39" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-49564112-165a-4fff-8577-c7e72eefd713">
+<span class="eqno">(4.956)<a class="headerlink" href="#equation-49564112-165a-4fff-8577-c7e72eefd713" title="Permalink to this equation">#</a></span>\[\begin{align}
 S_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid 1s_B+ a\cdot2p_{zB} \right\rangle \\
  &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A  \mid 1s_B \right\rangle + a\left\langle 1s_A  \mid 2p_{zB} \right\rangle + a\left\langle 2p_{zA} \mid 1s_B \right\rangle + a^2\left\langle 2p_{zA} \mid 2p_{zB} \right\rangle\right] \\
   &amp;= \frac{1}{1+a^2}\left[ S_{1s-1s}(Z_1,R) + 2aS_{1s-2p}(Z_1,Z_2,R) + a^2S_{2p-2p}(Z_2,R)\right] 
@@ -695,19 +701,19 @@ S_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid 1
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">THRESH</span> <span class="o">=</span> <span class="mf">1e-8</span>
 
-<span class="k">def</span> <span class="nf">S_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="n">w</span><span class="o">*</span><span class="n">w</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">S_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">/</span><span class="mi">15</span><span class="o">*</span><span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">15</span><span class="o">*</span><span class="n">w</span> <span class="o">-</span> <span class="mi">15</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">+</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z2</span><span class="o">-</span><span class="n">Z1</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Z2</span><span class="o">-</span><span class="n">Z1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">THRESH</span><span class="p">:</span>
@@ -726,12 +732,24 @@ S_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid 1
     <span class="n">I8</span> <span class="o">=</span> <span class="n">I5</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="mi">6</span><span class="p">)</span><span class="o">+</span> <span class="mi">6</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">3</span>
     <span class="k">return</span> <span class="n">Z1</span><span class="o">**</span><span class="mf">1.5</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mf">2.5</span><span class="o">*</span><span class="n">R</span><span class="o">**</span><span class="mi">4</span><span class="o">/</span><span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="n">I1</span><span class="o">*</span><span class="n">I7</span> <span class="o">+</span> <span class="n">I2</span><span class="o">*</span><span class="n">I8</span> <span class="o">-</span> <span class="n">I3</span><span class="o">*</span><span class="n">I5</span> <span class="o">-</span> <span class="n">I4</span><span class="o">*</span><span class="n">I6</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">S_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">S_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">S_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </details>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">THRESH</span> <span class="o">=</span> <span class="mf">1e-8</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="k">def</span><span class="w"> </span><span class="nf">S_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;numpy&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <p>We have discussed in class before how checking your functions along the way while doing such involved and numerous integrations can be useful to ensure you are not baking incorrect functions into your code from the beginning. Below, we plot each of our individual <span class="math notranslate nohighlight">\(S\)</span>-type functions, and the combined <span class="math notranslate nohighlight">\(S_{AB}\)</span> function with a chosen <span class="math notranslate nohighlight">\(a\)</span> value.</p>
 <div class="cell tag_hide-input docutils container">
@@ -741,7 +759,7 @@ S_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid 1
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -764,7 +782,7 @@ S_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid 1
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/4979eaed20ae4d3dca4f8fea5366ac83d3083029bc1a1d51ee4301452d36773d.png" src="../../_images/4979eaed20ae4d3dca4f8fea5366ac83d3083029bc1a1d51ee4301452d36773d.png" />
+<img alt="../../_images/1f3263ac9de6a092133e6f1f2fccdc03446dc2edc83a9531aadd41d3a387c0a5.png" src="../../_images/1f3263ac9de6a092133e6f1f2fccdc03446dc2edc83a9531aadd41d3a387c0a5.png" />
 </div>
 </div>
 <p>After plotting, everything seems in order, and several characteristics help us to corroborate. First, we expect all overlap functions to approach zero as <span class="math notranslate nohighlight">\(R\)</span> approaches infinity. From our previous experience with <span class="math notranslate nohighlight">\(1s\)</span> orbitals, we expect the <span class="math notranslate nohighlight">\(1s\)</span> overlap to approach one as <span class="math notranslate nohighlight">\(R\)</span> approaches zero. One feature that may not be as readily understood is the <span class="math notranslate nohighlight">\(2p_Z\)</span> overlap behavior. Since p-orbitals have parity (positive and negative, or bonding and anti-bonding lobes), and we aim to simulate bonding, the lobes of opposite parity will overlap at <span class="math notranslate nohighlight">\(R=0\)</span>, leading to a value of <span class="math notranslate nohighlight">\(-1\)</span>.<br />
@@ -772,106 +790,106 @@ S_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid 1
 This plot also gives us some initial physical insight to how this model improves upon the LCAO and Slater basis. Note that the overall overlap increases faster than for the Slater overlap as R decreases from infinity, signaling stronger interactions at larger nuclear separation. <br />
 <br />
 Now, we will move on to expanding and solving <span class="math notranslate nohighlight">\(\left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle\)</span>.</p>
-</section>
-<section id="left-langle-phi-a-mid-hat-h-mid-phi-a-right-rangle">
+</div>
+<div class="section" id="left-langle-phi-a-mid-hat-h-mid-phi-a-right-rangle">
 <h3><span class="section-number">4.5.19.7.2. </span><span class="math notranslate nohighlight">\(\left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle\)</span><a class="headerlink" href="#left-langle-phi-a-mid-hat-h-mid-phi-a-right-rangle" title="Permalink to this heading">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-d8690010-1f4a-4d04-89fd-e02aa11644db">
-<span class="eqno">(4.957)<a class="headerlink" href="#equation-d8690010-1f4a-4d04-89fd-e02aa11644db" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f1edd4f6-bdcb-4018-abf4-87f16dfb2893">
+<span class="eqno">(4.957)<a class="headerlink" href="#equation-f1edd4f6-bdcb-4018-abf4-87f16dfb2893" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle &amp;= \left\langle \phi_A \mid -\frac{1}{2}\nabla^2 \mid \phi_A \right\rangle + \left\langle \phi_A \mid -\frac{1}{r_A} \mid \phi_A \right\rangle + \left\langle \phi_A \mid -\frac{1}{r_B} \mid \phi_A \right\rangle + \left\langle \phi_A \mid \frac{1}{R} \mid \phi_A \right\rangle \\
  &amp;= T_{AA}(Z_1,Z_2,a) + J_{AA}(Z_1,Z_2,a) + J_{AB}(Z_1,Z_2,a,R) + \frac{1}{R}
 \end{align}\]</div>
-<section id="t-aa-z-1-z-2-a">
+<div class="section" id="t-aa-z-1-z-2-a">
 <h4><span class="section-number">4.5.19.7.2.1. </span><span class="math notranslate nohighlight">\(T_{AA}(Z_1,Z_2,a)\)</span><a class="headerlink" href="#t-aa-z-1-z-2-a" title="Permalink to this heading">#</a></h4>
-<div class="amsmath math notranslate nohighlight" id="equation-ecb4fd67-9bfa-46ec-b634-4364498f80c1">
-<span class="eqno">(4.958)<a class="headerlink" href="#equation-ecb4fd67-9bfa-46ec-b634-4364498f80c1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c9ad6ad9-c265-40a2-976e-95639a2fcde4">
+<span class="eqno">(4.958)<a class="headerlink" href="#equation-c9ad6ad9-c265-40a2-976e-95639a2fcde4" title="Permalink to this equation">#</a></span>\[\begin{align}
 T_{AA}(Z_1,Z_2,a) &amp;= \left\langle \phi_A \mid -\frac{1}{2}\nabla^2 \mid \phi_A \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 1s_A + a\cdot2p_{zA} \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A  \mid -\frac{1}{2}\nabla^2 \mid 1s_A \right\rangle + a\left\langle 1s_A  \mid -\frac{1}{2}\nabla^2 \mid 2p_{zA} \right\rangle + a\left\langle 2p_{zA}  \mid -\frac{1}{2}\nabla^2 \mid 1s_A \right\rangle + a^2\left\langle 2p_{zA}  \mid -\frac{1}{2}\nabla^2 \mid 2p_{zA} \right\rangle\right]
 \end{align}\]</div>
 <p>We will need:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6a8fcb93-f823-424d-be77-a9e29e8f0ed7">
-<span class="eqno">(4.959)<a class="headerlink" href="#equation-6a8fcb93-f823-424d-be77-a9e29e8f0ed7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e36849e2-ed97-4dc5-93e1-9aecc720c86f">
+<span class="eqno">(4.959)<a class="headerlink" href="#equation-e36849e2-ed97-4dc5-93e1-9aecc720c86f" title="Permalink to this equation">#</a></span>\[\begin{align}
 -\frac{1}{2}\nabla^2e^{-Z_1r_A} &amp;= \left(\frac{Z_1}{r_A} - \frac{Z_1^2}{2}\right)e^{-Z_1r_A} \\
 \left(-\frac{1}{2}\nabla^2\right) r_A\cos\theta_A e^{-Z_2r_A} &amp;=\left[2Z_2-\frac{Z_2^2r_A}{2} \right]\cos\theta_A e^{-Z_2r_A}
 \end{align}\]</div>
 <p>The otuputs (above) of operating the kinetic energy term on the <span class="math notranslate nohighlight">\(1s\)</span> and <span class="math notranslate nohighlight">\(2p_z\)</span> are useful for the following, and later on in our calculations.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-76658adc-5b94-448c-9967-fc0b644d564a">
-<span class="eqno">(4.960)<a class="headerlink" href="#equation-76658adc-5b94-448c-9967-fc0b644d564a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-04b7d94c-b98f-4996-9e3d-0ff819d2b990">
+<span class="eqno">(4.960)<a class="headerlink" href="#equation-04b7d94c-b98f-4996-9e3d-0ff819d2b990" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 1s_A \mid -\frac{1}{2}\nabla^2 \mid 1s_A \right\rangle =&amp; \left( \frac{Z_1^3}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^2\sin\theta_Ae^{-Z_1r_A}\left(-\frac{1}{2}\nabla^2\right) e^{-Z_1r_A}  dr_A d\theta_A d\phi_A \\
 =&amp; \frac{Z_1^2}{2} 
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-9508c43f-8c3d-42fb-8e0d-fd8675a094fc">
-<span class="eqno">(4.961)<a class="headerlink" href="#equation-9508c43f-8c3d-42fb-8e0d-fd8675a094fc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-61985480-7183-484e-a52b-85094e6be8d7">
+<span class="eqno">(4.961)<a class="headerlink" href="#equation-61985480-7183-484e-a52b-85094e6be8d7" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 1s_A \right\rangle &amp;= \left( \frac{Z_1^{3/2}Z_2^{5/2}}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^2\sin\theta_Ar_A\cos\theta_A e^{-Z_2r_A}\left(-\frac{1}{2}\nabla^2\right) e^{-Z_1r_A}  dr_A d\theta_A d\phi_A \\
 =&amp; 0
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-483c1f24-bbdc-4a3e-820d-d733caeb4f8d">
-<span class="eqno">(4.962)<a class="headerlink" href="#equation-483c1f24-bbdc-4a3e-820d-d733caeb4f8d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-421aee4f-2857-4502-a4f2-a1ba85f8054c">
+<span class="eqno">(4.962)<a class="headerlink" href="#equation-421aee4f-2857-4502-a4f2-a1ba85f8054c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 1s_{A} \mid -\frac{1}{2}\nabla^2 \mid 2p_{zA} \right\rangle &amp;= \left( \frac{Z_1^{3/2}Z_2^{5/2}}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^2\sin\theta_A  e^{-Z_1r_A}\left(-\frac{1}{2}\nabla^2\right)  r_A\cos\theta_A e^{-Z_2r_A}dr_A d\theta_A d\phi_A \\
 &amp;= 0
 \end{align}\]</div>
 <p>Both of the above follow because:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2e87acd0-3c8a-4543-9125-8c93cc98eca2">
-<span class="eqno">(4.963)<a class="headerlink" href="#equation-2e87acd0-3c8a-4543-9125-8c93cc98eca2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-75b8811a-b043-4a6f-b616-961bdfdc8346">
+<span class="eqno">(4.963)<a class="headerlink" href="#equation-75b8811a-b043-4a6f-b616-961bdfdc8346" title="Permalink to this equation">#</a></span>\[\begin{align}
 \int_0^\pi\sin\theta\cos\theta d\theta = 0
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-a523aebf-5a4d-459a-8580-719b43197fc6">
-<span class="eqno">(4.964)<a class="headerlink" href="#equation-a523aebf-5a4d-459a-8580-719b43197fc6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a09af7fb-12d9-4867-8892-648ca807cb61">
+<span class="eqno">(4.964)<a class="headerlink" href="#equation-a09af7fb-12d9-4867-8892-648ca807cb61" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 2p_{zA} \right\rangle &amp;= \left( \frac{Z_2^5}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^3\sin\theta_A\cos^2\theta_A e^{-2Z_2r_A}  \left[2Z_2-\frac{Z_2^2r_A}{2} \right] dr_A d\theta_A d\phi_A \\
 &amp;=  \frac{Z_2^2}{2}  
 \end{align}\]</div>
 <p>Thus:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-45b08d8a-7f22-4973-b493-4620d4a7d59a">
-<span class="eqno">(4.965)<a class="headerlink" href="#equation-45b08d8a-7f22-4973-b493-4620d4a7d59a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b8e1234b-5bb2-42eb-9fa6-0ecc3b07e8f2">
+<span class="eqno">(4.965)<a class="headerlink" href="#equation-b8e1234b-5bb2-42eb-9fa6-0ecc3b07e8f2" title="Permalink to this equation">#</a></span>\[\begin{align}
 T_{AA}(Z_1,Z_2,a) &amp;= \frac{Z_1^2+a^2Z_2^2}{2(1+a^2)}
 \end{align}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">T_AA</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">T_AA</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">Z1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">Z2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="j-aa-z-1-z-2-a">
+</div>
+<div class="section" id="j-aa-z-1-z-2-a">
 <h4><span class="section-number">4.5.19.7.2.2. </span><span class="math notranslate nohighlight">\(J_{AA}(Z_1,Z_2,a)\)</span><a class="headerlink" href="#j-aa-z-1-z-2-a" title="Permalink to this heading">#</a></h4>
-<div class="amsmath math notranslate nohighlight" id="equation-8816507d-b6d0-400a-9165-347cc92f75a4">
-<span class="eqno">(4.966)<a class="headerlink" href="#equation-8816507d-b6d0-400a-9165-347cc92f75a4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dde02939-6780-45c8-bf5c-4a9533063e93">
+<span class="eqno">(4.966)<a class="headerlink" href="#equation-dde02939-6780-45c8-bf5c-4a9533063e93" title="Permalink to this equation">#</a></span>\[\begin{align}
 J_{AA}(Z_1,Z_2,a) &amp;= \left\langle \phi_A \mid -\frac{1}{r_A} \mid \phi_A \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid -\frac{1}{r_A} \mid 1s_A + a\cdot2p_{zA} \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A  \mid -\frac{1}{r_A} \mid 1s_A \right\rangle + a\left\langle 1s_A  \mid -\frac{1}{r_A} \mid 2p_{zA} \right\rangle + a\left\langle 2p_{zA}  \mid -\frac{1}{r_A} \mid 1s_A \right\rangle + a^2\left\langle 2p_{zA}  \mid -\frac{1}{r_A} \mid 2p_{zA} \right\rangle\right]
 \end{align}\]</div>
 <p>This middle two terms will again be zero for the same argument as the <span class="math notranslate nohighlight">\(T\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c1808099-8fde-4645-ad99-995ad70d7c6a">
-<span class="eqno">(4.967)<a class="headerlink" href="#equation-c1808099-8fde-4645-ad99-995ad70d7c6a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-88efe43c-e541-4146-a88d-8c46084b6ea1">
+<span class="eqno">(4.967)<a class="headerlink" href="#equation-88efe43c-e541-4146-a88d-8c46084b6ea1" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 1s_A \mid -\frac{1}{r_A} \mid 1s_A \right\rangle =&amp; \left( \frac{Z_1^3}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^2\sin\theta_Ae^{-Z_1r_A}\left(-\frac{1}{r_A}\right) e^{-Z_1r_A}  dr_A d\theta_A d\phi_A \\
 =&amp; -Z_1 
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-d7fd0379-726a-4d8f-a433-743241681ad8">
-<span class="eqno">(4.968)<a class="headerlink" href="#equation-d7fd0379-726a-4d8f-a433-743241681ad8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6689d623-dee9-4380-9ba3-968b14ee8128">
+<span class="eqno">(4.968)<a class="headerlink" href="#equation-6689d623-dee9-4380-9ba3-968b14ee8128" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 2p_{zA} \mid -\frac{1}{r_A} \mid 2p_{zA} \right\rangle &amp;= -\left( \frac{Z_2^5}{\pi}\right) \int_0^\infty\int_0^{2\pi}\int_0^\pi r_A^3\sin\theta_A\cos^2\theta_A e^{-2Z_2r_A}  dr_A d\theta_A d\phi_A \\
 &amp;=  -\frac{Z_2}{2} 
 \end{align}\]</div>
 <p>Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f3c7b56f-7c1b-46fa-acd8-f373273ff7e3">
-<span class="eqno">(4.969)<a class="headerlink" href="#equation-f3c7b56f-7c1b-46fa-acd8-f373273ff7e3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1620494c-0fb4-496b-9320-a30d8e324180">
+<span class="eqno">(4.969)<a class="headerlink" href="#equation-1620494c-0fb4-496b-9320-a30d8e324180" title="Permalink to this equation">#</a></span>\[\begin{align}
 J_{AA}(Z_1,Z_2,a) &amp;=  \frac{-1}{1+a^2}\left[ Z_1  + a^2\frac{Z_2}{2}\right]
 \end{align}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">J_AA</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">J_AA</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">Z1</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Z2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="j-ab-z-1-z-2-a-r">
+</div>
+<div class="section" id="j-ab-z-1-z-2-a-r">
 <h4><span class="section-number">4.5.19.7.2.3. </span><span class="math notranslate nohighlight">\(J_{AB}(Z_1,Z_2,a,R)\)</span><a class="headerlink" href="#j-ab-z-1-z-2-a-r" title="Permalink to this heading">#</a></h4>
 <p><span class="math notranslate nohighlight">\(\left\langle \phi_A \mid -\frac{1}{r_B} \mid \phi_A \right\rangle\)</span></p>
-<div class="amsmath math notranslate nohighlight" id="equation-222172e3-433c-4625-ab82-c6230f8f5727">
-<span class="eqno">(4.970)<a class="headerlink" href="#equation-222172e3-433c-4625-ab82-c6230f8f5727" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cfb7c1c4-6e3b-4a30-8da6-68dceae20da2">
+<span class="eqno">(4.970)<a class="headerlink" href="#equation-cfb7c1c4-6e3b-4a30-8da6-68dceae20da2" title="Permalink to this equation">#</a></span>\[\begin{align}
 J_{AB}(Z_1,Z_2,a,R) &amp;= \left\langle \phi_A \mid -\frac{1}{r_B} \mid \phi_A \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid -\frac{1}{r_B} \mid 1s_A + a\cdot2p_{zA} \right\rangle \\
 &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A  \mid -\frac{1}{r_B} \mid 1s_A \right\rangle + a\left\langle 1s_A  \mid -\frac{1}{r_B} \mid 2p_{zA} \right\rangle + a\left\langle 2p_{zA}  \mid -\frac{1}{r_B} \mid 1s_A \right\rangle + a^2\left\langle 2p_{zA}  \mid -\frac{1}{r_B} \mid 2p_{zA} \right\rangle\right] \\
@@ -887,13 +905,13 @@ Note that from <span class="math notranslate nohighlight">\(J_{AB}\)</span>, we 
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="k">def</span> <span class="nf">J_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">J_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="k">return</span> <span class="n">Z</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">w</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">J_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">J_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="n">I1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="n">w</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
     <span class="n">I2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="n">w</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
@@ -905,7 +923,7 @@ Note that from <span class="math notranslate nohighlight">\(J_{AB}\)</span>, we 
     <span class="n">I8</span> <span class="o">=</span> <span class="n">I5</span><span class="o">/</span><span class="n">w</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">w</span> <span class="o">+</span> <span class="mi">6</span><span class="p">)</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">Z</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">4</span><span class="o">/</span><span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="n">I5</span><span class="o">*</span><span class="n">I2</span> <span class="o">+</span> <span class="p">(</span><span class="n">I1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">I3</span><span class="p">)</span><span class="o">*</span><span class="n">I6</span> <span class="o">+</span> <span class="n">I7</span><span class="o">*</span><span class="p">(</span><span class="n">I4</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">I2</span><span class="p">)</span> <span class="o">+</span> <span class="n">I3</span><span class="o">*</span><span class="n">I8</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">J_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">J_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">+</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="n">I1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span>
     <span class="n">I2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">-</span><span class="n">alpha</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
@@ -915,7 +933,7 @@ Note that from <span class="math notranslate nohighlight">\(J_{AB}\)</span>, we 
     <span class="n">I6</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">3</span>
     <span class="k">return</span> <span class="o">-</span><span class="mf">0.25</span><span class="o">*</span><span class="n">Z1</span><span class="o">**</span><span class="mf">1.5</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mf">2.5</span><span class="o">*</span><span class="n">R</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">I2</span><span class="o">*</span><span class="n">I4</span> <span class="o">+</span> <span class="p">(</span><span class="n">I1</span><span class="o">+</span><span class="n">I3</span><span class="p">)</span><span class="o">*</span><span class="n">I5</span> <span class="o">+</span> <span class="n">I2</span><span class="o">*</span><span class="n">I6</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">J_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">J_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">J_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">J_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">J_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -930,7 +948,7 @@ Note that from <span class="math notranslate nohighlight">\(J_{AB}\)</span>, we 
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mf">0.001</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -955,27 +973,27 @@ Note that from <span class="math notranslate nohighlight">\(J_{AB}\)</span>, we 
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/c8ab54ee0d0c42b660194e23435c136ace37019d44c4461b87dd2dcb295dac4d.png" src="../../_images/c8ab54ee0d0c42b660194e23435c136ace37019d44c4461b87dd2dcb295dac4d.png" />
+<img alt="../../_images/188bdefbfcf49b6fcd947f4331f30604b8eb034eb8514393534852d4d088d76f.png" src="../../_images/188bdefbfcf49b6fcd947f4331f30604b8eb034eb8514393534852d4d088d76f.png" />
 </div>
 </div>
 <p>Here, we see that each function seems to approach zero at infinite separation, intuitive since coulombic interactions decay exponentially as separation distance increases. Near zero, each function approaches a finite value. <br />
 <br />
 Next, we will consider <span class="math notranslate nohighlight">\(\left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle\)</span>.</p>
-</section>
-</section>
-<section id="left-langle-phi-a-mid-hat-h-mid-phi-b-right-rangle">
+</div>
+</div>
+<div class="section" id="left-langle-phi-a-mid-hat-h-mid-phi-b-right-rangle">
 <h3><span class="section-number">4.5.19.7.3. </span><span class="math notranslate nohighlight">\(\left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle\)</span>.<a class="headerlink" href="#left-langle-phi-a-mid-hat-h-mid-phi-b-right-rangle" title="Permalink to this heading">#</a></h3>
-<div class="amsmath math notranslate nohighlight" id="equation-2b31fe4b-1633-491c-bf6c-08a6a965e774">
-<span class="eqno">(4.971)<a class="headerlink" href="#equation-2b31fe4b-1633-491c-bf6c-08a6a965e774" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5f293501-2a05-4541-926d-0f8d20ef0dad">
+<span class="eqno">(4.971)<a class="headerlink" href="#equation-5f293501-2a05-4541-926d-0f8d20ef0dad" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle &amp;= \left\langle \phi_A \mid -\frac{1}{2}\nabla^2 \mid \phi_B \right\rangle + \left\langle \phi_A \mid -\frac{1}{r_A} \mid \phi_B \right\rangle + \left\langle \phi_A \mid -\frac{1}{r_B} \mid \phi_B \right\rangle + \left\langle \phi_A \mid \frac{1}{R} \mid \phi_B \right\rangle \\
  &amp;= T_{AB}(Z_1,Z_2,a,R) + 2K_{AB}(Z_1,Z_2,a,R)  + \frac{S(Z_1,Z_2,a,R)}{R}
 \end{align}\]</div>
 <p><br />
 For this section of calculations, we will tackle <span class="math notranslate nohighlight">\(K_{AB}\)</span> first, as it will allow us to identify simplifications in the <span class="math notranslate nohighlight">\(T_{AB}\)</span> calculations.</p>
-<section id="k-ab-z-1-z-2-a-r">
+<div class="section" id="k-ab-z-1-z-2-a-r">
 <h4><span class="section-number">4.5.19.7.3.1. </span><span class="math notranslate nohighlight">\(K_{AB}(Z_1,Z_2,a,R)\)</span><a class="headerlink" href="#k-ab-z-1-z-2-a-r" title="Permalink to this heading">#</a></h4>
-<div class="amsmath math notranslate nohighlight" id="equation-08f1e58c-98c2-49f9-b24f-e81af20480d3">
-<span class="eqno">(4.972)<a class="headerlink" href="#equation-08f1e58c-98c2-49f9-b24f-e81af20480d3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c7e5622d-95e9-4648-ace9-c325e2dfc47b">
+<span class="eqno">(4.972)<a class="headerlink" href="#equation-c7e5622d-95e9-4648-ace9-c325e2dfc47b" title="Permalink to this equation">#</a></span>\[\begin{align}
 K_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid -\frac{1}{r_B} \mid 1s_B+ a\cdot2p_{zB} \right\rangle \\
  &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A \mid -\frac{1}{r_B} \mid 1s_B \right\rangle + a\left\langle 1s_A  \mid -\frac{1}{r_B} \mid 2p_{zB} \right\rangle + a\left\langle 2p_{zA} \mid -\frac{1}{r_B} \mid 1s_B \right\rangle + a^2\left\langle 2p_{zA} \mid -\frac{1}{r_B} \mid 2p_{zB} \right\rangle\right] \\
   &amp;= \frac{1}{1+a^2}\left[ K_{1s-1s}(Z_1,R) + aK_{2p-1s}(Z_1,Z_2,R) + aK_{1s-2p}(Z_1,Z_2,R) + a^2K_{2p-2p}(Z_2,R)\right] \\
@@ -990,19 +1008,19 @@ Note that the exchange functions (<span class="math notranslate nohighlight">\(K
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="n">THRESH</span><span class="o">=</span><span class="mf">1e-8</span>
-<span class="k">def</span> <span class="nf">K_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">Z</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">w</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">K_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="n">I1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">w</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">w</span><span class="p">)</span>
     <span class="n">I2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">3</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">w</span> <span class="o">+</span> <span class="mi">6</span><span class="p">)</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">Z</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">4</span><span class="o">/</span><span class="mi">8</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">I1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">I2</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">K_2p_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_2p_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">+</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">-</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Z1</span><span class="o">-</span><span class="n">Z2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">THRESH</span><span class="p">:</span>
@@ -1018,7 +1036,7 @@ Note that the exchange functions (<span class="math notranslate nohighlight">\(K
     <span class="n">I6</span> <span class="o">=</span> <span class="n">I4</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span>
     <span class="k">return</span> <span class="o">-</span><span class="mf">0.25</span><span class="o">*</span><span class="n">Z1</span><span class="o">**</span><span class="mf">1.5</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mf">2.5</span><span class="o">*</span><span class="n">R</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span> <span class="n">I5</span><span class="o">*</span><span class="p">(</span><span class="n">I1</span><span class="o">+</span><span class="n">I3</span><span class="p">)</span> <span class="o">-</span> <span class="n">I2</span><span class="o">*</span><span class="p">(</span><span class="n">I4</span><span class="o">+</span><span class="n">I6</span><span class="p">)</span> <span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">K_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">+</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">-</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Z1</span><span class="o">-</span><span class="n">Z2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">THRESH</span><span class="p">:</span>
@@ -1034,7 +1052,7 @@ Note that the exchange functions (<span class="math notranslate nohighlight">\(K
     <span class="n">I6</span> <span class="o">=</span> <span class="n">I4</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span>
     <span class="k">return</span> <span class="o">-</span><span class="mf">0.25</span><span class="o">*</span><span class="n">Z1</span><span class="o">**</span><span class="mf">1.5</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mf">2.5</span><span class="o">*</span><span class="n">R</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span> <span class="n">I5</span><span class="o">*</span><span class="p">(</span><span class="n">I1</span><span class="o">-</span><span class="n">I3</span><span class="p">)</span> <span class="o">+</span> <span class="n">I2</span><span class="o">*</span><span class="p">(</span><span class="n">I4</span><span class="o">-</span><span class="n">I6</span><span class="p">)</span> <span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">K_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">K_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">K_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">K_2p_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">K_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1049,7 +1067,7 @@ Note that the exchange functions (<span class="math notranslate nohighlight">\(K
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -1074,24 +1092,24 @@ Note that the exchange functions (<span class="math notranslate nohighlight">\(K
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/048db273e9461c289d49a4bc9cc52c5a17992359f63572bc9175c35ba3e10958.png" src="../../_images/048db273e9461c289d49a4bc9cc52c5a17992359f63572bc9175c35ba3e10958.png" />
+<img alt="../../_images/093d93c20abe9718e9f2f781dfaea693a3a0a11aa911f8762349d9fe927d5043.png" src="../../_images/093d93c20abe9718e9f2f781dfaea693a3a0a11aa911f8762349d9fe927d5043.png" />
 </div>
 </div>
 <p>After plotting, everything seems in order given that each exchange function approaches a finite value at bonding distance, and zero at infinite separation. <br />
 <br />
 Next, we will look at <span class="math notranslate nohighlight">\(T_{AB}\)</span>, which will call upon the <span class="math notranslate nohighlight">\(K\)</span> function we have established, so it is good we already checked them and nested them in our code.</p>
-</section>
-<section id="t-ab-z1-z2-a-r">
+</div>
+<div class="section" id="t-ab-z1-z2-a-r">
 <h4><span class="section-number">4.5.19.7.3.2. </span><span class="math notranslate nohighlight">\(T_{AB}(Z1,Z2,a,R)\)</span><a class="headerlink" href="#t-ab-z1-z2-a-r" title="Permalink to this heading">#</a></h4>
-<div class="amsmath math notranslate nohighlight" id="equation-86ad9260-7883-4da4-b1ed-b40937f01dc5">
-<span class="eqno">(4.973)<a class="headerlink" href="#equation-86ad9260-7883-4da4-b1ed-b40937f01dc5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c452a9eb-951d-4a67-b4f7-b3f639582bff">
+<span class="eqno">(4.973)<a class="headerlink" href="#equation-c452a9eb-951d-4a67-b4f7-b3f639582bff" title="Permalink to this equation">#</a></span>\[\begin{align}
 T_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left\langle 1s_A + a\cdot2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 1s_B+ a\cdot2p_{zB} \right\rangle \\
  &amp;= \frac{1}{1+a^2}\left[ \left\langle 1s_A \mid -\frac{1}{2}\nabla^2 \mid 1s_B \right\rangle + a\left\langle 1s_A  \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle + a\left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 1s_B \right\rangle + a^2\left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle\right]
 \end{align}\]</div>
 <p><br />
 We will work out the first of these to show how familiar functional forms pop out. Note specifically how we can use the operation of the kinetic energy operator on the <span class="math notranslate nohighlight">\(1s\)</span> and <span class="math notranslate nohighlight">\(2p_z\)</span> orbital functions we calculated earlier (see <span class="math notranslate nohighlight">\(T_{AA}\)</span>) to hasten this calculation and reduce it to familiar forms.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e76d856d-88a8-49a0-a939-cd4d7d0850e1">
-<span class="eqno">(4.974)<a class="headerlink" href="#equation-e76d856d-88a8-49a0-a939-cd4d7d0850e1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aaf99631-a243-42d7-8eea-fe1d20a0eb32">
+<span class="eqno">(4.974)<a class="headerlink" href="#equation-aaf99631-a243-42d7-8eea-fe1d20a0eb32" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 1s_A \mid -\frac{1}{2}\nabla^2 \mid 1s_B \right\rangle &amp;= \left( \frac{Z_1^3}{\pi}\right) \int_{\text{all space}} e^{-Z_1r_A}\left(-\frac{1}{2}\nabla^2 \right) e^{-Z_1r_B}  d\vec{r} \\
 &amp;= \left( \frac{Z_1^3}{\pi}\right) \int_{\text{all space}} e^{-Z_1r_A}\left(\frac{Z_1}{r_B} - \frac{Z_1^2}{2}\right)e^{-Z_1r_B}  d\vec{r} \\
 &amp;= \left( \frac{Z_1^3}{\pi}\right) \left[ Z_1\int_{\text{all space}} \frac{e^{-Z_1(r_A+r_B)}}{r_B}d\vec{r} - \frac{Z_1^2}{2}\int_{\text{all space}} e^{-Z_1(r_A+r_B)}d\vec{r}  \right] \\
@@ -1101,31 +1119,31 @@ We will work out the first of these to show how familiar functional forms pop ou
 &amp;= -Z_1\left(K_{1s-1s}+\frac{Z_1}{2}S_{1s-1s}\right)
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(\left\langle 1s_A \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle\)</span> Takes a similar form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3e7be10c-990f-41e2-b2b2-84f207f01956">
-<span class="eqno">(4.975)<a class="headerlink" href="#equation-3e7be10c-990f-41e2-b2b2-84f207f01956" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c26e2a74-0ca9-474c-b21a-898fc1bdfcac">
+<span class="eqno">(4.975)<a class="headerlink" href="#equation-c26e2a74-0ca9-474c-b21a-898fc1bdfcac" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 1s_A \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle &amp;= -Z_2\left(2K_{2pz-1s} + \frac{Z_2}{2}S_{1s-2pz} \right)
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(\left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 1s_B \right\rangle\)</span> Takes a similar form as well:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-37edd6ed-1d09-4d7b-804b-cbfe97142e99">
-<span class="eqno">(4.976)<a class="headerlink" href="#equation-37edd6ed-1d09-4d7b-804b-cbfe97142e99" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fb2669bc-a11e-4c19-a676-9bd6f09fbeb2">
+<span class="eqno">(4.976)<a class="headerlink" href="#equation-fb2669bc-a11e-4c19-a676-9bd6f09fbeb2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 2p_{zA}\mid -\frac{1}{2}\nabla^2 \mid 1s_B \right\rangle &amp;= -Z_1\left( K_{1s-2pz}+\frac{Z_1}{2}S_{2pz-1s} \right)
 \end{align}\]</div>
 <p><span class="math notranslate nohighlight">\(\left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle\)</span> Takes a similar form as well:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-51fddd41-79b7-4613-8546-89caca627ca0">
-<span class="eqno">(4.977)<a class="headerlink" href="#equation-51fddd41-79b7-4613-8546-89caca627ca0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5544fb2d-3512-411c-9efc-ca8fc8a45f53">
+<span class="eqno">(4.977)<a class="headerlink" href="#equation-5544fb2d-3512-411c-9efc-ca8fc8a45f53" title="Permalink to this equation">#</a></span>\[\begin{align}
 \left\langle 2p_{zA} \mid -\frac{1}{2}\nabla^2 \mid 2p_{zB} \right\rangle &amp;
 &amp;= -Z_2\left(2K_{2pz-2pz} + \frac{Z_2}{2}S_{2pz-2pz}\right)
 \end{align}\]</div>
 <p>Thus:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e1b46577-0146-4877-868f-6c8578ab9b5c">
-<span class="eqno">(4.978)<a class="headerlink" href="#equation-e1b46577-0146-4877-868f-6c8578ab9b5c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-609a5a09-ff45-4b8b-97cd-bd158cbececa">
+<span class="eqno">(4.978)<a class="headerlink" href="#equation-609a5a09-ff45-4b8b-97cd-bd158cbececa" title="Permalink to this equation">#</a></span>\[\begin{align}
 T_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left[ -Z_1\left(K_{1s-1s}+\frac{Z_1}{2}S_{1s-1s}\right) -aZ_2\left(2K_{2pz-1s} + \frac{Z_2}{2}S_{1s-2pz} \right) -aZ_1\left( K_{1s-2pz}+\frac{Z_1}{2}S_{2pz-1s} \right) -a^2Z_2\left(2K_{2pz-2pz} + \frac{Z_2}{2}S_{2pz-2pz}\right)\right] \\
 &amp;= \frac{-1}{1+a^2}\left[ Z_1K_{1s-1s} + 2aZ_2K_{2pz-1s} + aZ_1K_{1s-2pz} + a^22Z_2K_{2pz-2pz} + \frac{Z_1^2}{2}S_{1s-1s} + a\frac{Z_2^2}{2}S_{1s-2pz} + a\frac{Z_1^2}{2}S_{2pz-1s}  + a^2\frac{Z_2^2}{2}S_{2pz-2pz}\right]\\
 &amp;= \frac{-1}{1+a^2}\left[ Z_1K_{1s-1s} + 2aZ_2K_{2pz-1s} + aZ_1K_{1s-2pz} + 2a^2Z_2K_{2pz-2pz} + \frac{Z_1^2}{2}S_{1s-1s} + \frac{aS_{1s-2pz}}{2} \left(Z_2^2 + Z_1^2\right) + a^2\frac{Z_2^2}{2}S_{2pz-2pz}\right]
 \end{align}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">T_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">T_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">prefactor</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">kterms</span> <span class="o">=</span> <span class="n">Z1</span><span class="o">*</span><span class="n">K_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Z2</span><span class="o">*</span><span class="n">K_2p_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">Z1</span><span class="o">*</span><span class="n">K_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Z2</span><span class="o">*</span><span class="n">K_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
     <span class="n">sterms</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span> <span class="n">Z1</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">S_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">Z2</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">Z1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">S_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="p">)</span>
@@ -1134,17 +1152,17 @@ T_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left[ -Z_1\left(K_{1s-1s}+\frac{Z_1}{2}
 </div>
 </div>
 </div>
-</section>
-</section>
-</section>
-<section id="overlap-coulomb-and-exchange-functions">
+</div>
+</div>
+</div>
+<div class="section" id="overlap-coulomb-and-exchange-functions">
 <h2><span class="section-number">4.5.19.8. </span>Overlap, Coulomb, and Exchange Functions<a class="headerlink" href="#overlap-coulomb-and-exchange-functions" title="Permalink to this heading">#</a></h2>
 <p>Before we get into compiling the total energy function, you have been promised a table outlining the functional forms of our <span class="math notranslate nohighlight">\(S\)</span>, <span class="math notranslate nohighlight">\(J\)</span>, and <span class="math notranslate nohighlight">\(K\)</span>, integrals/functions.</p>
-<div class="pst-scrollable-table-container"><table class="table">
+<div class="pst-scrollable-table-container"><table class="colwidths-auto table">
 <thead>
-<tr class="row-odd"><th class="head text-left"><p>Function</p></th>
-<th class="head text-left"><p>Integral</p></th>
-<th class="head text-left"><p>Solution in H<span class="math notranslate nohighlight">\(_2^+\)</span> Polarized Basis</p></th>
+<tr class="row-odd"><th class="text-left head"><p>Function</p></th>
+<th class="text-left head"><p>Integral</p></th>
+<th class="text-left head"><p>Solution in H<span class="math notranslate nohighlight">\(_2^+\)</span> Polarized Basis</p></th>
 </tr>
 </thead>
 <tbody>
@@ -1192,12 +1210,12 @@ T_{AB}(Z1,Z2,a,R) &amp;= \frac{1}{1+a^2}\left[ -Z_1\left(K_{1s-1s}+\frac{Z_1}{2}
 </table>
 </div>
 <p>Where values for all I, L, M, N, O, and P functions can be found in the Appendix at the end of this section.</p>
-</section>
-<section id="total-energy">
+</div>
+<div class="section" id="total-energy">
 <h2><span class="section-number">4.5.19.9. </span>Total Energy<a class="headerlink" href="#total-energy" title="Permalink to this heading">#</a></h2>
 <p>Now the total energy combining all of the above is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7482459a-1ffb-4ea3-ba9d-6521661269a4">
-<span class="eqno">(4.979)<a class="headerlink" href="#equation-7482459a-1ffb-4ea3-ba9d-6521661269a4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7f1d87be-64d1-4caa-ba70-ddd0942cad92">
+<span class="eqno">(4.979)<a class="headerlink" href="#equation-7f1d87be-64d1-4caa-ba70-ddd0942cad92" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_{\psi_+} &amp;=  \frac{1}{(1+S_{AB})}\left[ \left\langle \phi_A \mid \hat{H} \mid \phi_A \right\rangle + \left\langle \phi_A \mid \hat{H} \mid \phi_B \right\rangle \right] \\
 &amp;= \frac{T_{AA}(Z_1,Z_2,a) + J_{AA}(Z_1,Z_2,a) + J_{AB}(Z_1,Z_2,a,R) + \frac{1}{R} + T_{AB}(Z_1,Z_2,a,R) + 2K_{AB}(Z_1,Z_2,a,R)  + \frac{S(Z_1,Z_2,a,R)}{R}}{(1+S_{AB}(Z_1,Z_2,a,R))} \\
 &amp;= \frac{T_{AA}(Z_1,Z_2,a) + J_{AA}(Z_1,Z_2,a) + J_{AB}(Z_1,Z_2,a,R) + T_{AB}(Z_1,Z_2,a,R) + 2K_{AB}(Z_1,Z_2,a,R)  }{(1+S_{AB}(Z_1,Z_2,a,R))} + \frac{1}{R}
@@ -1209,7 +1227,7 @@ And there you have it! Since we have already defined the functions called on by 
 The first plot we will make to visualize our results simply assigns all of our variational parameters a discrete value, then plots the energy as a function of <span class="math notranslate nohighlight">\(R\)</span>. For reference, <span class="math notranslate nohighlight">\(Z_1=1.0\)</span> and <span class="math notranslate nohighlight">\(Z_2=0.5\)</span> for each depicted choice of <span class="math notranslate nohighlight">\(a\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">E_1s_2p</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">E_1s_2p</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">Z1</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">Z2</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -1249,7 +1267,7 @@ The first plot we will make to visualize our results simply assigns all of our v
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/f607ecb1df4fa0705c3471b365e27303978e8bdd60b2b51ffb49aa3e97c574b9.png" src="../../_images/f607ecb1df4fa0705c3471b365e27303978e8bdd60b2b51ffb49aa3e97c574b9.png" />
+<img alt="../../_images/61760b0a0b6db14821d0de42aef687fa409f0ca998008d59dc737c1485675ec4.png" src="../../_images/61760b0a0b6db14821d0de42aef687fa409f0ca998008d59dc737c1485675ec4.png" />
 </div>
 </div>
 <p>Compare this plot to those produced for the LCAO and Slater bases, do any of the plotted curves look familiar (hint: look closely at the blue curve for <span class="math notranslate nohighlight">\(a=0\)</span>, and remember the <span class="math notranslate nohighlight">\(Z\)</span> values we set)?</p>
@@ -1261,7 +1279,7 @@ The first plot we will make to visualize our results simply assigns all of our v
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span>
 <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -1285,7 +1303,7 @@ The first plot we will make to visualize our results simply assigns all of our v
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/87eeaed04095656e8e18851314b320257b163fa7325b029feac8a6eed8ff4c2a.png" src="../../_images/87eeaed04095656e8e18851314b320257b163fa7325b029feac8a6eed8ff4c2a.png" />
+<img alt="../../_images/40eeaa878b83240d9bdc4b1c6b552e9467b9828b356b5c33560bf0eeccf8628b.png" src="../../_images/40eeaa878b83240d9bdc4b1c6b552e9467b9828b356b5c33560bf0eeccf8628b.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -1295,8 +1313,8 @@ The first plot we will make to visualize our results simply assigns all of our v
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
-<span class="k">def</span> <span class="nf">E_1s_2p_to_minimize</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">E_1s_2p_to_minimize</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
     <span class="n">Z1</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">Z2</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -1356,12 +1374,12 @@ As mentioned in the basis set enumeration, we expect <span class="math notransla
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/31c05e99a80f65437ceb6a2075e903305c7d5604cddaea0305c8acc54b3b0a61.png" src="../../_images/31c05e99a80f65437ceb6a2075e903305c7d5604cddaea0305c8acc54b3b0a61.png" />
+<img alt="../../_images/e7bd6a10d3951519ff2b027021cc71c9eb10586a4a51471f15e3e922be87f780.png" src="../../_images/e7bd6a10d3951519ff2b027021cc71c9eb10586a4a51471f15e3e922be87f780.png" />
 </div>
 </div>
 <p>Our expectations hold true! It is very apparent, especially for the important range for energy considerations, that <span class="math notranslate nohighlight">\(Z_{1min}\)</span> and <span class="math notranslate nohighlight">\(Z_{2 min}\)</span> take differing values, which means it was worthwhile after all to note them as separate variational parameters. Additionally, <span class="math notranslate nohighlight">\(a_{min}\)</span> increases significantly near bond distance, and falls to zero as the nuclei reach infinite separation. The observed relationship between <span class="math notranslate nohighlight">\(a\)</span> (recall, this is our parameter to weight p-orbital contribution) and nuclear separation is intuitive given what we know thus far about the polarization function contribution. Specifically, the LCAO and Slater bases already do an excellent job approximating the system’s behavior at infinite separation (recall, infinite separation gives one hydrogen atom which can be modeled very well by Slater, and one hydrogen ion which does not contribute energetically to our model). Thus, polarization functions are unnecessary at infinite separation, and <span class="math notranslate nohighlight">\(a\)</span> should (and upon calculation, does) fall to zero. Conversely, the central idea of adding polarization functions is to account for something we were missing near bond distance when modeling using LCAO and SLater. Since we see that the polarization basis provides a better energy estimate, it makes sense that <span class="math notranslate nohighlight">\(a\)</span> should take on non-zero values near bond distance.</p>
-</section>
-<section id="combining-the-code">
+</div>
+<div class="section" id="combining-the-code">
 <h2><span class="section-number">4.5.19.10. </span>Combining the Code<a class="headerlink" href="#combining-the-code" title="Permalink to this heading">#</a></h2>
 <p>As mentioned earlier, the final code cell for the energy function developed for the polarized basis set seems uncharacteristically simple on its own. Below you can find the code for all of the functions we have defined so far, nested together such that only that cell needs to be run to call upon any or all of them. <br />
 <br />
@@ -1385,34 +1403,34 @@ A few important notes about the all-in-one code cell:</p>
 <span class="c1">#At the bottom of this cell, you can input any/all plot codes from the plotting code cell to visualize the values of each function at given R values.#</span>
 
 <span class="c1">#Start with importing a bunch of libraries just in case specific lines below do not call them#</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span><span class="p">,</span> <span class="n">colors</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">sph_harm</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">eval_genlaguerre</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">lpmv</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">cm</span><span class="p">,</span> <span class="n">colors</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">sph_harm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">eval_genlaguerre</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">lpmv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorial</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span>
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">root</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span>
 
 
 <span class="c1">#Start with &lt;PsiA|H|PsiA&gt; = T_AA + J_AA + J_AB + 1/R#</span>
 <span class="c1">#write a note without changing the code</span>
-<span class="k">def</span> <span class="nf">T_AA</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">):</span> <span class="c1">#Was KE_AA#</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">T_AA</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">):</span> <span class="c1">#Was KE_AA#</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">Z1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">Z2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
 
-<span class="k">def</span> <span class="nf">J_AA</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">J_AA</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">Z1</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Z2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1">#Need to nest functions for J_AB = &lt;PsiA|-1/rB|PsiA&gt;#</span>
 
-<span class="k">def</span> <span class="nf">J_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">J_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="k">return</span> <span class="n">Z</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">w</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">J_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">J_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="n">I1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="n">w</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
     <span class="n">I2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="n">w</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
@@ -1424,7 +1442,7 @@ A few important notes about the all-in-one code cell:</p>
     <span class="n">I8</span> <span class="o">=</span> <span class="n">I5</span><span class="o">/</span><span class="n">w</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">w</span> <span class="o">+</span> <span class="mi">6</span><span class="p">)</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">Z</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">4</span><span class="o">/</span><span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="n">I5</span><span class="o">*</span><span class="n">I2</span> <span class="o">+</span> <span class="p">(</span><span class="n">I1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">I3</span><span class="p">)</span><span class="o">*</span><span class="n">I6</span> <span class="o">+</span> <span class="n">I7</span><span class="o">*</span><span class="p">(</span><span class="n">I4</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">I2</span><span class="p">)</span> <span class="o">+</span> <span class="n">I3</span><span class="o">*</span><span class="n">I8</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">J_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">J_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">+</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="n">I1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span>
     <span class="n">I2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sinh</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">-</span><span class="n">alpha</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cosh</span><span class="p">(</span><span class="n">alpha</span><span class="p">))</span>
@@ -1434,14 +1452,14 @@ A few important notes about the all-in-one code cell:</p>
     <span class="n">I6</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">3</span>
     <span class="k">return</span> <span class="o">-</span><span class="mf">0.25</span><span class="o">*</span><span class="n">Z1</span><span class="o">**</span><span class="mf">1.5</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mf">2.5</span><span class="o">*</span><span class="n">R</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">I2</span><span class="o">*</span><span class="n">I4</span> <span class="o">+</span> <span class="p">(</span><span class="n">I1</span><span class="o">+</span><span class="n">I3</span><span class="p">)</span><span class="o">*</span><span class="n">I5</span> <span class="o">+</span> <span class="n">I2</span><span class="o">*</span><span class="n">I6</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">J_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">J_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">J_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">J_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">J_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1">#Done with function nesting for &lt;PsiA|H|PsiA&gt;, will call these functions at the end#</span>
 
 <span class="c1">#Now, work on &lt;PsiA|H|PsiB&gt; = T_AB + 2*K_AB + S_AB/R#</span>
 
-<span class="k">def</span> <span class="nf">T_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span> <span class="c1">#Was KE_AB#</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">T_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span> <span class="c1">#Was KE_AB#</span>
     <span class="n">prefactor</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">kterms</span> <span class="o">=</span> <span class="n">Z1</span><span class="o">*</span><span class="n">K_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Z2</span><span class="o">*</span><span class="n">K_2p_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">Z1</span><span class="o">*</span><span class="n">K_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Z2</span><span class="o">*</span><span class="n">K_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span>
     <span class="n">sterms</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span> <span class="n">Z1</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">S_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">Z2</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">Z1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">S_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="p">)</span>
@@ -1450,17 +1468,17 @@ A few important notes about the all-in-one code cell:</p>
 <span class="c1">#Need to nest functions for K_AB#</span>
 
 <span class="n">THRESH</span><span class="o">=</span><span class="mf">1e-8</span>
-<span class="k">def</span> <span class="nf">K_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">Z</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">w</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">K_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="n">I1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">w</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">w</span><span class="o">*</span><span class="n">w</span><span class="p">)</span>
     <span class="n">I2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">3</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">w</span> <span class="o">+</span> <span class="mi">6</span><span class="p">)</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">Z</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">4</span><span class="o">/</span><span class="mi">8</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">I1</span> <span class="o">-</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">I2</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">K_2p_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_2p_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">+</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">-</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Z1</span><span class="o">-</span><span class="n">Z2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">THRESH</span><span class="p">:</span>
@@ -1476,7 +1494,7 @@ A few important notes about the all-in-one code cell:</p>
     <span class="n">I6</span> <span class="o">=</span> <span class="n">I4</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span>
     <span class="k">return</span> <span class="o">-</span><span class="mf">0.25</span><span class="o">*</span><span class="n">Z1</span><span class="o">**</span><span class="mf">1.5</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mf">2.5</span><span class="o">*</span><span class="n">R</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span> <span class="n">I5</span><span class="o">*</span><span class="p">(</span><span class="n">I1</span><span class="o">+</span><span class="n">I3</span><span class="p">)</span> <span class="o">-</span> <span class="n">I2</span><span class="o">*</span><span class="p">(</span><span class="n">I4</span><span class="o">+</span><span class="n">I6</span><span class="p">)</span> <span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">K_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">+</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">-</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Z1</span><span class="o">-</span><span class="n">Z2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">THRESH</span><span class="p">:</span>
@@ -1492,7 +1510,7 @@ A few important notes about the all-in-one code cell:</p>
     <span class="n">I6</span> <span class="o">=</span> <span class="n">I4</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span>
     <span class="k">return</span> <span class="o">-</span><span class="mf">0.25</span><span class="o">*</span><span class="n">Z1</span><span class="o">**</span><span class="mf">1.5</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mf">2.5</span><span class="o">*</span><span class="n">R</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span> <span class="n">I5</span><span class="o">*</span><span class="p">(</span><span class="n">I1</span><span class="o">-</span><span class="n">I3</span><span class="p">)</span> <span class="o">+</span> <span class="n">I2</span><span class="o">*</span><span class="p">(</span><span class="n">I4</span><span class="o">-</span><span class="n">I6</span><span class="p">)</span> <span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">K_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">K_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">K_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">K_2p_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">K_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1">#Done with function nesting for &lt;PsiA|H|PsiB&gt;, will call these functions at the end#</span>
@@ -1501,15 +1519,15 @@ A few important notes about the all-in-one code cell:</p>
 
 <span class="n">THRESH</span> <span class="o">=</span> <span class="mf">1e-8</span>
 
-<span class="k">def</span> <span class="nf">S_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="n">w</span><span class="o">*</span><span class="n">w</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">S_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">/</span><span class="mi">15</span><span class="o">*</span><span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">15</span><span class="o">*</span><span class="n">w</span> <span class="o">-</span> <span class="mi">15</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">+</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z2</span><span class="o">-</span><span class="n">Z1</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Z2</span><span class="o">-</span><span class="n">Z1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">THRESH</span><span class="p">:</span>
@@ -1528,14 +1546,14 @@ A few important notes about the all-in-one code cell:</p>
     <span class="n">I8</span> <span class="o">=</span> <span class="n">I5</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="mi">6</span><span class="p">)</span><span class="o">+</span> <span class="mi">6</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">3</span>
     <span class="k">return</span> <span class="n">Z1</span><span class="o">**</span><span class="mf">1.5</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mf">2.5</span><span class="o">*</span><span class="n">R</span><span class="o">**</span><span class="mi">4</span><span class="o">/</span><span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="n">I1</span><span class="o">*</span><span class="n">I7</span> <span class="o">+</span> <span class="n">I2</span><span class="o">*</span><span class="n">I8</span> <span class="o">-</span> <span class="n">I3</span><span class="o">*</span><span class="n">I5</span> <span class="o">-</span> <span class="n">I4</span><span class="o">*</span><span class="n">I6</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">S_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">S_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">S_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1">#Done with nesting functions for &lt;PsiA|PsiB&gt;, will call these functions in the end#</span>
 
 <span class="c1">#Time to call our nested functions and combine them to define the energy function, E_1s_2p#</span>
 
-<span class="k">def</span> <span class="nf">E_1s_2p</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">E_1s_2p</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">Z1</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">Z2</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -1543,7 +1561,7 @@ A few important notes about the all-in-one code cell:</p>
 
 <span class="c1">#Done with defining our energy function, now let&#39;s minimize#</span>
 
-<span class="k">def</span> <span class="nf">E_1s_2p_to_minimize</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">E_1s_2p_to_minimize</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
     <span class="n">Z1</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">Z2</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -1559,13 +1577,13 @@ A few important notes about the all-in-one code cell:</p>
 
 <span class="c1">#Now, input functions for the other basis sets we have tried so we can compare to the polarization consideration#</span>
 
-<span class="k">def</span> <span class="nf">J</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">J</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">R</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="n">R</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">R</span>
-<span class="k">def</span> <span class="nf">K</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">R</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">R</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">S</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">R</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span> <span class="n">R</span> <span class="o">+</span> <span class="n">R</span><span class="o">*</span><span class="n">R</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">E</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">E</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">T</span> <span class="o">=</span> <span class="n">Z</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="n">Z</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">K</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">))</span>
     <span class="n">T</span> <span class="o">/=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">S</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">))</span>
     <span class="n">V</span> <span class="o">=</span> <span class="o">-</span><span class="n">Z</span> <span class="o">+</span> <span class="n">Z</span><span class="o">*</span><span class="n">J</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">Z</span><span class="o">*</span><span class="n">K</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">)</span>
@@ -1592,13 +1610,25 @@ A few important notes about the all-in-one code cell:</p>
 	 Emin =  -0.5976
 </pre></div>
 </div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">195</span>
+<span class="g g-Whitespace">    </span><span class="mi">192</span>     <span class="n">V</span> <span class="o">+=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">R</span>
+<span class="g g-Whitespace">    </span><span class="mi">193</span>     <span class="k">return</span> <span class="n">T</span> <span class="o">+</span> <span class="n">V</span>
+<span class="ne">--&gt; </span><span class="mi">195</span> <span class="n">E_1s_opt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">196</span> <span class="n">Z_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">197</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+
+<span class="ne">NameError</span>: name &#39;R&#39; is not defined
+</pre></div>
 </div>
 </div>
-</section>
-<section id="graphed-comparisons-of-polarization-to-lcao-and-slater-bases">
+</div>
+</div>
+<div class="section" id="graphed-comparisons-of-polarization-to-lcao-and-slater-bases">
 <h2><span class="section-number">4.5.19.11. </span>Graphed comparisons of Polarization to LCAO and Slater bases<a class="headerlink" href="#graphed-comparisons-of-polarization-to-lcao-and-slater-bases" title="Permalink to this heading">#</a></h2>
 <p>While comparing the expected bond distances and minimum energy values between bases is a useful endeavor, we can gleam additional insight by plotting the energy curves for each basis set and visually comparing. To do so, we will call upon older code which will allow us to define the LCAO and Slater energy functions alongside the newly-developed polarization function.</p>
-<section id="energy-plots">
+<div class="section" id="energy-plots">
 <h3><span class="section-number">4.5.19.11.1. </span>Energy Plots<a class="headerlink" href="#energy-plots" title="Permalink to this heading">#</a></h3>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
@@ -1607,13 +1637,13 @@ A few important notes about the all-in-one code cell:</p>
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">J</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">J</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">R</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="o">/</span><span class="n">R</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="n">R</span>
-<span class="k">def</span> <span class="nf">K</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">K</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">R</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">R</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">S</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">R</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span> <span class="n">R</span> <span class="o">+</span> <span class="n">R</span><span class="o">*</span><span class="n">R</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">E</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">E</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">T</span> <span class="o">=</span> <span class="n">Z</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="n">Z</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">S</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="n">K</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">))</span>
     <span class="n">T</span> <span class="o">/=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">S</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">))</span>
     <span class="n">V</span> <span class="o">=</span> <span class="o">-</span><span class="n">Z</span> <span class="o">+</span> <span class="n">Z</span><span class="o">*</span><span class="n">J</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">Z</span><span class="o">*</span><span class="n">K</span><span class="p">(</span><span class="n">Z</span><span class="o">*</span><span class="n">R</span><span class="p">)</span>
@@ -1630,6 +1660,20 @@ A few important notes about the all-in-one code cell:</p>
 </div>
 </div>
 </details>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">15</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">V</span> <span class="o">+=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">R</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="k">return</span> <span class="n">T</span> <span class="o">+</span> <span class="n">V</span>
+<span class="ne">---&gt; </span><span class="mi">15</span> <span class="n">E_1s_opt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">Z_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">R</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+
+<span class="ne">NameError</span>: name &#39;R&#39; is not defined
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
@@ -1638,7 +1682,7 @@ A few important notes about the all-in-one code cell:</p>
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span>
 <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -1655,12 +1699,15 @@ A few important notes about the all-in-one code cell:</p>
 </div>
 </div>
 </details>
+<div class="cell_output docutils container">
+<img alt="../../_images/4ab41ed167946dc046cabddd3ab531ad6203601f4b7424582b81a76871b9040d.png" src="../../_images/4ab41ed167946dc046cabddd3ab531ad6203601f4b7424582b81a76871b9040d.png" />
+</div>
 </div>
 <p>This is our final, and overall most important plot concerning the energy functions of the basis sets we have worked through. Note the features we have already described: lower minimum energy and bond distance. From these features, we can readily establish that the polarization model is a better approximation of the real physical nature of molecular bonding. The other major feature of this plot is how the energy of the polarized model delineates from the -0.5 Hartree expected of the <span class="math notranslate nohighlight">\(H^+\)</span> <span class="math notranslate nohighlight">\(+\)</span> <span class="math notranslate nohighlight">\(H\)</span> system at a larger nuclear separation than either the LCAO or Slater, which largely track together until much closer to the estimated bond distance. This feature indicates more significant interactions between nuclei at larger separation, and is introduced by the ability of the polarized basis set to account for non-spherically symmetric orbital densities which “stretch” from one nucleus towards the other. In the LCAO or Slater bases, this “stretching” could only be achieved by increasing the diffusivity of the overall orbital outside of reasonable limits. <br />
 <br />
 To visualize the discussion of orbitals, let us take a look at the wavefunctions of <span class="math notranslate nohighlight">\(1s\)</span>, <span class="math notranslate nohighlight">\(2p_z\)</span> and the combined <span class="math notranslate nohighlight">\(1s-2p_z\)</span> developed for this model. Then, we will plot orbital densities for the LCAO, Slater, and Polarized basis sets.</p>
-</section>
-<section id="orbital-densities">
+</div>
+<div class="section" id="orbital-densities">
 <h3><span class="section-number">4.5.19.11.2. </span>Orbital Densities<a class="headerlink" href="#orbital-densities" title="Permalink to this heading">#</a></h3>
 <p>First, we wil define our wavefunctions and visualize them by plotting each individual (<span class="math notranslate nohighlight">\(1s\)</span> and <span class="math notranslate nohighlight">\(2p_z\)</span>) and the overall polarized wavefunction.</p>
 <div class="cell tag_hide-input docutils container">
@@ -1673,17 +1720,17 @@ To visualize the discussion of orbitals, let us take a look at the wavefunctions
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#That is all the code for our energy minimization, now let&#39;s move on to the wavefunction and orbital density code#</span>
 
 <span class="c1">#Start with importing a bunch of libraries just in case specific lines below do not call them#</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span><span class="p">,</span> <span class="n">colors</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">sph_harm</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">eval_genlaguerre</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">lpmv</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">cm</span><span class="p">,</span> <span class="n">colors</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">sph_harm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">eval_genlaguerre</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">lpmv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorial</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">root</span>
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">root</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span>
 
 <span class="c1">#Start with defining the wavefunction with the polarized basis set#</span>
 
@@ -1691,15 +1738,15 @@ To visualize the discussion of orbitals, let us take a look at the wavefunctions
 
 <span class="n">THRESH</span> <span class="o">=</span> <span class="mf">1e-8</span>
 
-<span class="k">def</span> <span class="nf">S_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span> <span class="n">w</span> <span class="o">+</span> <span class="n">w</span><span class="o">*</span><span class="n">w</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">S_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_2p</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">Z</span><span class="o">*</span><span class="n">R</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">)</span><span class="o">/</span><span class="mi">15</span><span class="o">*</span><span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">15</span><span class="o">*</span><span class="n">w</span> <span class="o">-</span> <span class="mi">15</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z1</span><span class="o">+</span><span class="n">Z2</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">Z2</span><span class="o">-</span><span class="n">Z1</span><span class="p">)</span><span class="o">*</span><span class="n">R</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">Z2</span><span class="o">-</span><span class="n">Z1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">THRESH</span><span class="p">:</span>
@@ -1718,18 +1765,18 @@ To visualize the discussion of orbitals, let us take a look at the wavefunctions
     <span class="n">I8</span> <span class="o">=</span> <span class="n">I5</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="mi">6</span><span class="p">)</span><span class="o">+</span> <span class="mi">6</span><span class="p">)</span><span class="o">/</span><span class="n">alpha</span><span class="o">**</span><span class="mi">3</span>
     <span class="k">return</span> <span class="n">Z1</span><span class="o">**</span><span class="mf">1.5</span><span class="o">*</span><span class="n">Z2</span><span class="o">**</span><span class="mf">2.5</span><span class="o">*</span><span class="n">R</span><span class="o">**</span><span class="mi">4</span><span class="o">/</span><span class="mi">8</span> <span class="o">*</span> <span class="p">(</span><span class="n">I1</span><span class="o">*</span><span class="n">I7</span> <span class="o">+</span> <span class="n">I2</span><span class="o">*</span><span class="n">I8</span> <span class="o">-</span> <span class="n">I3</span><span class="o">*</span><span class="n">I5</span> <span class="o">-</span> <span class="n">I4</span><span class="o">*</span><span class="n">I6</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">S_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">S_1s</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">S_2p</span><span class="p">(</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">S_1s_2p</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">R</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
 
 <span class="c1">#First are the 1s and 2pz functions#</span>
-<span class="k">def</span> <span class="nf">phi_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">phi_1s</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Z</span><span class="o">**</span><span class="mi">3</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Z</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">phi_2pz</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">cos_theta</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">phi_2pz</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">cos_theta</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Z</span><span class="o">**</span><span class="mi">5</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">r</span><span class="o">*</span><span class="n">cos_theta</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Z</span><span class="o">*</span><span class="n">r</span><span class="p">)</span>
 
 <span class="c1">#</span>
-<span class="k">def</span> <span class="nf">h2_plus_polarized_psi2</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h2_plus_polarized_psi2</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
     <span class="c1">#</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
     <span class="c1"># position of nuclei are along z-axis equidistant from the origin</span>
@@ -1753,7 +1800,7 @@ To visualize the discussion of orbitals, let us take a look at the wavefunctions
     <span class="n">psi2</span> <span class="o">/=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">S_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">psi2</span> 
 
-<span class="k">def</span> <span class="nf">h2_plus_polarized_psi</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h2_plus_polarized_psi</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
     <span class="c1">#</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
     <span class="c1"># position of nuclei are along z-axis equidistant from the origin</span>
@@ -1776,7 +1823,7 @@ To visualize the discussion of orbitals, let us take a look at the wavefunctions
     <span class="n">psi</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">S_AB</span><span class="p">(</span><span class="n">Z1</span><span class="p">,</span><span class="n">Z2</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">R</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">psi</span>
 
-<span class="k">def</span> <span class="nf">plot_polarized_psi2</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">ax_obj</span><span class="p">,</span> <span class="n">vrange</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_polarized_psi2</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">ax_obj</span><span class="p">,</span> <span class="n">vrange</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">1200</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">600</span><span class="p">)</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
@@ -1807,7 +1854,7 @@ To visualize the discussion of orbitals, let us take a look at the wavefunctions
     <span class="k">return</span> <span class="n">c</span>
 
 
-<span class="k">def</span> <span class="nf">plot_polarized_log_psi2</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">ax_obj</span><span class="p">,</span> <span class="n">vrange</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_polarized_log_psi2</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">ax_obj</span><span class="p">,</span> <span class="n">vrange</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">1200</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">600</span><span class="p">)</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
@@ -1838,7 +1885,7 @@ To visualize the discussion of orbitals, let us take a look at the wavefunctions
     <span class="n">ax_obj</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">c</span>
 
-<span class="k">def</span> <span class="nf">plot_polarized_psi</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">ax_obj</span><span class="p">,</span> <span class="n">vrange</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_polarized_psi</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">ax_obj</span><span class="p">,</span> <span class="n">vrange</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">1200</span><span class="p">)</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">600</span><span class="p">)</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">Z</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
@@ -1908,8 +1955,7 @@ To visualize the discussion of orbitals, let us take a look at the wavefunctions
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/2608fbfbb6147bc9086d76fe47a352383223cdfdc7e8cc14d7af1bdb005678bd.png" src="../../_images/2608fbfbb6147bc9086d76fe47a352383223cdfdc7e8cc14d7af1bdb005678bd.png" />
-<img alt="../../_images/57fa07da7a159466dc3db70ae6d6e085d70aaabfda17cd1f20bb57f50934b671.png" src="../../_images/57fa07da7a159466dc3db70ae6d6e085d70aaabfda17cd1f20bb57f50934b671.png" />
+<img alt="../../_images/0f1ec36a5dc86131c56ae1df8657a54ac91e9039339f334d01123b717f7ee3a6.png" src="../../_images/0f1ec36a5dc86131c56ae1df8657a54ac91e9039339f334d01123b717f7ee3a6.png" />
 </div>
 </div>
 <p>In this figure, the plots on the left show the combined wavefunction, the middle show the <span class="math notranslate nohighlight">\(1s\)</span>, and right show the <span class="math notranslate nohighlight">\(2p_z\)</span>. Notice here that the <span class="math notranslate nohighlight">\(1s\)</span> wavefunction is the primary contributor to the overall wavefunction, especially far from bond distance (what parameter(s) and optimized values corroborate this finding?). As we approach bond distance, the p-character increases, as we see an increase in saturation of the extra-nuclear lobes. Keep in mind the complex character of the overall wavefunction for our discussion of the orbital densities (next). Additionally, notice the shape of the red portion of the p-orbital wavefunction (remember that p-orbitals have lobes of differing parity, here denoted by the red and blue portions of the graph, separated by a node depicted in white), and how it compresses horizontally and stretches vertically as the nuclei approach bond distance.<br />
@@ -1942,13 +1988,13 @@ For our discussion of orbital densities, we will plot them on a negative log sca
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/71a14573ce657787652e1f4277874c8f6ec3eea4e6ebcff92820a866b15a080e.png" src="../../_images/71a14573ce657787652e1f4277874c8f6ec3eea4e6ebcff92820a866b15a080e.png" />
+<img alt="../../_images/d96c05240b02a6ee56a861ccb6faba6e5764bede30356f7eed33fb24899307ed.png" src="../../_images/d96c05240b02a6ee56a861ccb6faba6e5764bede30356f7eed33fb24899307ed.png" />
 </div>
 </div>
 <p>In this figure, the left-hand set of plots depicts the polarized <span class="math notranslate nohighlight">\(H_2^+\)</span> model, the middle set depicts the Slater model, and the right set depicts the LCAO model (how could you have determined this from only the labels above each individual plot?). Note the characteristics we discussed from the wavefunction plots: the non-spherical distribution of density in the polarized set contrasted against the spherical symmetry of the LCAO and Slater, as well as the vertical stretching of density between nuclei. In three dimensions, the vertical stretching would appear more like a disc of electron density centered about a point directly between the nuclei. Since we have established that the polarized set gives a better energy and bond distance estimation for <span class="math notranslate nohighlight">\(H_2^+\)</span>, the model necessarily provides a better representative of the overall physical representation of a molecular bond. The structure depicted in the Polarized basis set plots may not be as intuitive as expected, given our previous experience with representations of p-orbitals and bonding. However, this visual representation can give us insight to how we might best adjust our understanding of orbital and bonding structures. The next task will be to model the <span class="math notranslate nohighlight">\(H_2\)</span> non-ionic molecule. Take some time considering how this model might apply to that system (though the polarized set will not be covered for <span class="math notranslate nohighlight">\(H_2\)</span> in this class). Would you expect applying polarization to the system without electron deficiency to be more or less representative of the physical reality than when applied to <span class="math notranslate nohighlight">\(H_2^+\)</span>?</p>
-</section>
-</section>
-<section id="appendix">
+</div>
+</div>
+<div class="section" id="appendix">
 <h2><span class="section-number">4.5.19.12. </span>4.5.19.8 Appendix<a class="headerlink" href="#appendix" title="Permalink to this heading">#</a></h2>
 <p>Functional forms for all I, L, M, N, and O functions from the S, J, and K function table.<br />
 <br />
@@ -2001,8 +2047,8 @@ Any:<br />
 <br />
 <span class="math notranslate nohighlight">\(\alpha = 0.5(Z_1+Z_2)R\)</span><br />
 <span class="math notranslate nohighlight">\(\beta = 0.5(Z_2-Z_1)R\)</span></p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

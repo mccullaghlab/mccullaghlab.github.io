@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>4.5.16. Variational Method in Quantum Mechanics &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -569,13 +575,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="variational-method-in-quantum-mechanics">
+  <div class="tex2jax_ignore mathjax_ignore section" id="variational-method-in-quantum-mechanics">
 <h1><span class="section-number">4.5.16. </span>Variational Method in Quantum Mechanics<a class="headerlink" href="#variational-method-in-quantum-mechanics" title="Permalink to this heading">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">4.5.16.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
 <p>The variational method is a powerful method that can be used to determine upper bounds and approximations for ground state energies of numerous quantum mechanical problems.  The variational method is used heavily in electronic structure theories such as Hartree Fock.</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">4.5.16.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="arabic simple">
@@ -583,8 +589,8 @@ document.write(`
 <li><p>Write out the general matrix equation of the variational method for linear variational parameters</p></li>
 <li><p>Solve the particle in a 1D box using the variational method and a prescribed basis</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">4.5.16.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="arabic simple">
@@ -592,8 +598,8 @@ document.write(`
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</section>
-<section id="definition-and-derivation-of-the-variational-method">
+</div>
+<div class="section" id="definition-and-derivation-of-the-variational-method">
 <h2><span class="section-number">4.5.16.4. </span>Definition and Derivation of the Variational Method<a class="headerlink" href="#definition-and-derivation-of-the-variational-method" title="Permalink to this heading">#</a></h2>
 <p>The variational principle applied to the Schrodinger equation results in that if</p>
 <p><span class="math notranslate nohighlight">\(\hat{H}\psi_0 = E_0\psi_0\)</span></p>
@@ -617,8 +623,8 @@ document.write(`
 <p>or</p>
 <p><span class="math notranslate nohighlight">\(E_\phi \geq E_0\)</span></p>
 <p>where equality only holds for <span class="math notranslate nohighlight">\(\phi = \psi_0\)</span>.</p>
-</section>
-<section id="the-varitiational-method-in-practice">
+</div>
+<div class="section" id="the-varitiational-method-in-practice">
 <h2><span class="section-number">4.5.16.5. </span>The Varitiational Method In practice<a class="headerlink" href="#the-varitiational-method-in-practice" title="Permalink to this heading">#</a></h2>
 <p>How does this help us in practice?  In a typical QM problem, we are attempting to solve for the wavefunction(s) and energy(ies) for a given Hamiltonian.  If the Hamiltonian is such that solving the problem exactly is too challenging (e.g. any two or more electron problem) we can expand the wavefunction in a basis and attempt to solve the problem that way.  We start with</p>
 <p><span class="math notranslate nohighlight">\(\psi \approx \phi = \sum_n^N c_nf_n\)</span>.</p>
@@ -658,8 +664,8 @@ document.write(`
 <p>If we now left multiply both sides of the above equation by <span class="math notranslate nohighlight">\(\mathbf{S}^{-1}\)</span> we see that we have an eigenvalue-eigenvector problem</p>
 <p><span class="math notranslate nohighlight">\(\mathbf{S}^{-1}\mathbf{H}\mathbf{c} = E\mathbf{I}\mathbf{c}\)</span>.</p>
 <p>Thus the minimum energies are the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{S}^{-1}\mathbf{H}\)</span> and the variational parameters that minimize the energies are the eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{S}^{-1}\mathbf{H}\)</span>.</p>
-</section>
-<section id="example-particle-in-a-box">
+</div>
+<div class="section" id="example-particle-in-a-box">
 <h2><span class="section-number">4.5.16.6. </span>Example: Particle in a Box<a class="headerlink" href="#example-particle-in-a-box" title="Permalink to this heading">#</a></h2>
 <p>Let’s consider a free particle in 1D bounded to <span class="math notranslate nohighlight">\(0\leq x\leq a\)</span>.  The Hamiltonian for such a system is simply the kinetic energy operator</p>
 <p><span class="math notranslate nohighlight">\(\hat{H} = -\frac{\hbar^2}{2m}\frac{d^2}{dx^2}\)</span>.</p>
@@ -700,7 +706,7 @@ document.write(`
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># to code this up we are going to set a=1</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">hbar</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">m</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -717,9 +723,15 @@ document.write(`
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Eigenvalues: [ 4.93487481 51.06512519]
-First eigenvector: [[-0.66168489]
- [-0.74978204]]
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># to code this up we are going to set a=1</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">hbar</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;numpy&#39;
 </pre></div>
 </div>
 </div>
@@ -785,8 +797,8 @@ S^{-1}H =  [[ 14.  -8.]
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot wavefunction</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># x values</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
@@ -827,24 +839,24 @@ S^{-1}H =  [[ 14.  -8.]
 <img alt="../../_images/1df2a338a404da06656c969eb1b8f579b649811fc3cf4d98b6841fe22e1ee088.png" src="../../_images/1df2a338a404da06656c969eb1b8f579b649811fc3cf4d98b6841fe22e1ee088.png" />
 </div>
 </div>
-<section id="pib-with-3-basis-functions">
+<div class="section" id="pib-with-3-basis-functions">
 <h3><span class="section-number">4.5.16.6.1. </span>PIB with 3 basis functions<a class="headerlink" href="#pib-with-3-basis-functions" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="k">def</span> <span class="nf">f11</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f11</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
-<span class="k">def</span> <span class="nf">f12</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> 
+<span class="k">def</span><span class="w"> </span><span class="nf">f12</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> 
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
-<span class="k">def</span> <span class="nf">f13</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f13</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
-<span class="k">def</span> <span class="nf">f23</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f23</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">5</span>
-<span class="k">def</span> <span class="nf">f22</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f22</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">4</span>
-<span class="k">def</span> <span class="nf">f33</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f33</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">6</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">6</span>
-<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">quad</span>
 <span class="n">S11</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">f11</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">S12</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">f12</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">S13</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">f13</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -866,22 +878,22 @@ S^{-1}H =  [[ 14.  -8.]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="k">def</span> <span class="nf">h11</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h11</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> 
-<span class="k">def</span> <span class="nf">h12</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> 
+<span class="k">def</span><span class="w"> </span><span class="nf">h12</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> 
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">h21</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> 
+<span class="k">def</span><span class="w"> </span><span class="nf">h21</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> 
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
-<span class="k">def</span> <span class="nf">h13</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h13</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">15</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span><span class="o">-</span><span class="mi">30</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="o">+</span><span class="mi">18</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">h23</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h23</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">15</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span><span class="o">-</span><span class="mi">30</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="o">+</span><span class="mi">18</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">h22</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h22</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">h33</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h33</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="mi">15</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">4</span><span class="o">-</span><span class="mi">30</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="o">+</span><span class="mi">18</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">quad</span>
 <span class="n">H11</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">h11</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">H12</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">h12</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">H13</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">h13</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -919,9 +931,9 @@ eigenvector corresponding to lowest E: [[0.68354516]
 </div>
 </div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

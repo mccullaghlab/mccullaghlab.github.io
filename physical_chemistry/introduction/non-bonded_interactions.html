@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>4.1.1. Non-bonded Interactions &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -569,9 +575,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="non-bonded-interactions">
+  <div class="tex2jax_ignore mathjax_ignore section" id="non-bonded-interactions">
 <h1><span class="section-number">4.1.1. </span>Non-bonded Interactions<a class="headerlink" href="#non-bonded-interactions" title="Permalink to this heading">#</a></h1>
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">4.1.1.1. </span>Learning goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After working through this notebook, you will be able to:</p>
 <ol class="arabic simple">
@@ -579,8 +585,8 @@ document.write(`
 <li><p>Identify and describe six non-bonded interactions</p></li>
 <li><p>Use and plot the 1d potential for dispersion, ion-ion, and polar non-bonded interactions</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">4.1.1.2. </span>Coding concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="arabic simple">
@@ -588,16 +594,16 @@ document.write(`
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</section>
-<section id="molecular-structure-and-nomenclature">
+</div>
+<div class="section" id="molecular-structure-and-nomenclature">
 <h2><span class="section-number">4.1.1.3. </span>Molecular Structure and Nomenclature<a class="headerlink" href="#molecular-structure-and-nomenclature" title="Permalink to this heading">#</a></h2>
 <p>Before discussing type of non-bonded interactions, we must define some terms so that we are all on the same page.</p>
 <p><em><strong>Molecules</strong></em> are composed of atoms.  Some of the atoms in a molecule are held together by chemical bonds.  Chemical bonds can be either covalent (sharing electrons) or ionic (electrons transfer) in nature.  In either case, these bonds are typically very strong, requiring significant energy to break them.</p>
 <p><em><strong>Ions</strong></em> are atoms or molecules with a nonzero net charge.  If the atom or molecule has excess electrons, it is overall negatively charged and is called an anion.  If the atom or molecule has excess protons, it is overall positively charged and is called a cation.</p>
 <p><em><strong>Polar bonds</strong></em> are covalent bonds between atoms of fairly different electronegativity.  In these cases, while the electrons are still shared between the two atoms to form a covalent bond, they are slightly more attracted to one atom than another.  This leads to a partial postive charge on one atom and a partial negative charge on another atom, or a dipole.  Some <em>examples of polar bonds</em> include O-H, N-H, C-O, and C=O.  Some examples of <em>non-polar bonds</em> include C-C, C-H, N-N, and H-H.</p>
 <p><em><strong>Polar molecules</strong></em> are molecules with a <em>net</em> dipole moment.  This requires that there be either polar or ionic bonds in the molecule.  But having polar bonds does not imply the molecule will be polar.  CO<span class="math notranslate nohighlight">\(_2\)</span> is an example of a molecule that is non-polar but contains polar bonds. Water and ammonia are examples of polar molecules.</p>
-</section>
-<section id="types-of-non-bonded-interactions">
+</div>
+<div class="section" id="types-of-non-bonded-interactions">
 <h2><span class="section-number">4.1.1.4. </span>Types of Non-bonded Interactions<a class="headerlink" href="#types-of-non-bonded-interactions" title="Permalink to this heading">#</a></h2>
 <p>The structure and function of biomolecules are strongly affected by nonbonded, or non-covalent, interactions.  Covalent bonds are formed between two atoms that share electrons.  Interactions between non-bonded atoms are referred to as non-bonded interactions.</p>
 <p>Non-bonded interactions can be divided into six types:</p>
@@ -609,14 +615,14 @@ document.write(`
 <li><p><em><strong>Hydrophobic</strong></em>.  These “interactions” exist between non-polar species solvated in water.  An interaction is termed hyrdophobic if the strength of interaction increases in the aqueous phase as compared to the gas phase.</p></li>
 <li><p><em><strong>Excluded Volume</strong></em>.  This interaction occurs between all species.  It is the interaction that prevents two atoms from overlapping in space.</p></li>
 </ol>
-<section id="dispersion-interactions">
+<div class="section" id="dispersion-interactions">
 <h3><span class="section-number">4.1.1.4.1. </span>Dispersion interactions<a class="headerlink" href="#dispersion-interactions" title="Permalink to this heading">#</a></h3>
 <p>Dispersion interactions are strictly attractive interactions that occur between all molecules.  They are particularly strong for polarizable molecules.</p>
 <p>Dispersion interactions play an important role in the interaction between non-polar species.  This is not necessarily because the dispersion interactions are strong for non-polar species but rather because non-polar species do not display stronger interactions such as ion-ion or polar.  For example, dispersion forces play a large role in the interaction between the lipid tails in a cell membrane.  The mainly aliphatic methylene groups are not particularly polarizable but the sheer number of these interactions between the long lipid tails does yield a sizable interaction strength.</p>
 <p>Dispersion interactions also play an important role in <span class="math notranslate nohighlight">\(\pi\)</span>-stacking.  Large <span class="math notranslate nohighlight">\(\pi\)</span> systems are quite polarizable leading to a particularly strong dispersion interaction.</p>
 <p>The physics behind a dispersion interaction is induced dipole-induced dipole.  That is, if we consider an atom, molecule, or a component of a molecule to be a nucleus of positive charge with a electron cloud around it, there is a finite probability that the majority of the electron cloud will sit to one side of the nucleus. This will create a temporary dipole.  If there is a polarizable entity in the vicinity, that entity will polarize in the opposite direction to the temporary dipole stabilizing the temporary dipole and creating an attractive interaction between two polarizable electron clouds.  In the classical limit, this interaction goes as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5689f519-b9a0-4330-8d8a-1301750eb2fb">
-<span class="eqno">(4.1)<a class="headerlink" href="#equation-5689f519-b9a0-4330-8d8a-1301750eb2fb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2df85531-bdeb-4434-bd7a-68779b8a6f40">
+<span class="eqno">(4.1)<a class="headerlink" href="#equation-2df85531-bdeb-4434-bd7a-68779b8a6f40" title="Permalink to this equation">#</a></span>\[\begin{equation}
 U(r) \propto \frac{-1}{r^6},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(r\)</span> is the distance between the two polarizable clouds.  The proportionality constant will be dictated by the polarizability of the cloud.</p>
@@ -634,11 +640,11 @@ U(r) \propto \frac{-1}{r^6},
 <span class="n">eps_arene</span> <span class="o">=</span> <span class="mf">0.076</span>
 <span class="n">sigma_arene</span> <span class="o">=</span> <span class="mf">3.55</span>
 
-<span class="k">def</span> <span class="nf">u_dispersion</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">epsilon</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">u_dispersion</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">epsilon</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">epsilon</span><span class="o">*</span><span class="p">(</span><span class="n">sigma</span><span class="o">/</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">6</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>
@@ -660,15 +666,15 @@ U(r) \propto \frac{-1}{r^6},
 <img alt="../../_images/cf4d392377bc3f34975977f419c48ff5c7cca65b7d32564ab76940ff21f7631f.png" src="../../_images/cf4d392377bc3f34975977f419c48ff5c7cca65b7d32564ab76940ff21f7631f.png" />
 </div>
 </div>
-</section>
-<section id="ion-ion-interactions">
+</div>
+<div class="section" id="ion-ion-interactions">
 <h3><span class="section-number">4.1.1.4.2. </span>Ion-ion interactions<a class="headerlink" href="#ion-ion-interactions" title="Permalink to this heading">#</a></h3>
 <p>Ion-ion or charge-charge interactions happen between two moieties each of which has an overall charge.  These interactions are typically strong and long-ranged and can be both attractive and replusive.  Opposite charges attract while like charges repel.  These types of interactions are typically well solvated by polar solvents such as water but still contribute significantly to molecular structure and reactivity.</p>
 <p>Salt bridges in proteins are an example of ion-ion interactions.  A salt bridge is an strong interaction between the two oppositely charge side chains in a protein.  Examples include arginine-aspartate, arginine-glutamate, lysine-aspartate, and lysine-glutamate.  In these cases, the functional groups on the side chains of arginine (guanadinium) and lysine (amino) are positively charged and the functional groups on the side chains of aspartate and glutamate (both carboxylate) are negatively charged.  These are also examples of hydrogen bonding.</p>
 <p>Ion-ion interactions also occur between small inorganic ions such as sodium (Na+) and chloride (Cl-).  These aqueous ions are also fairly prevelant in cells.</p>
 <p>Two species with overall net charge will interact, in the classical limit, by a coulomb potental.  This potential is given as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a0454fde-bd83-4cb6-aea0-ecba58957e9a">
-<span class="eqno">(4.2)<a class="headerlink" href="#equation-a0454fde-bd83-4cb6-aea0-ecba58957e9a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c32f9d29-a06e-4867-aa50-92a6a0ebcdcb">
+<span class="eqno">(4.2)<a class="headerlink" href="#equation-c32f9d29-a06e-4867-aa50-92a6a0ebcdcb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 U_{Coulomb}(r) = \frac{q_1q_2}{4\pi\epsilon_0r},
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(q_1\)</span> is the charge of ion 1, <span class="math notranslate nohighlight">\(q_2\)</span> is the charge of ion 2, <span class="math notranslate nohighlight">\(\epsilon_0\)</span> is the permitivity of free space (a constant), and <span class="math notranslate nohighlight">\(r\)</span> is the distance between the two ions.  This can be readily plotted for two like and two oppositely charged ions.</p>
@@ -679,11 +685,11 @@ U_{Coulomb}(r) = \frac{q_1q_2}{4\pi\epsilon_0r},
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">u_coulomb</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">q1</span><span class="p">,</span><span class="n">q2</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">u_coulomb</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">q1</span><span class="p">,</span><span class="n">q2</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">q1</span><span class="o">*</span><span class="n">q2</span><span class="o">/</span><span class="n">r</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>
@@ -705,23 +711,23 @@ U_{Coulomb}(r) = \frac{q_1q_2}{4\pi\epsilon_0r},
 <img alt="../../_images/52c928c1ff9c955cb3afa6284d711d42fb7d29436f24f07ededff1547f3a3da0.png" src="../../_images/52c928c1ff9c955cb3afa6284d711d42fb7d29436f24f07ededff1547f3a3da0.png" />
 </div>
 </div>
-</section>
-<section id="polar-interactions">
+</div>
+<div class="section" id="polar-interactions">
 <h3><span class="section-number">4.1.1.4.3. </span>Polar interactions<a class="headerlink" href="#polar-interactions" title="Permalink to this heading">#</a></h3>
 <p>Polar interactions exist between polar molecules.  They are stronger and longer-ranged than dispersion interactions but weaker and shorter-ranged than ion-ion interactions.</p>
 <p>These interactions exist between side chains of polar amino acids such as threonine, serine, asparagine and glutamine.  Physcially, the interaction goes as a dipole-diple interaction which technically has a distance and angle dependence.  If we ignore the angle dependence, the interaction strength goes as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a38ed6f4-e153-40e4-ab38-b37256f60110">
-<span class="eqno">(4.3)<a class="headerlink" href="#equation-a38ed6f4-e153-40e4-ab38-b37256f60110" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e653e75b-f98b-436f-9cd8-7f03c2fdfdf6">
+<span class="eqno">(4.3)<a class="headerlink" href="#equation-e653e75b-f98b-436f-9cd8-7f03c2fdfdf6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 U_{polar}(r) \propto -\frac{1}{r^3}
 \end{equation}\]</div>
 <p>Below you can see this type of interaction as a function <span class="math notranslate nohighlight">\(r\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">u_dipole</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">u_dipole</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
     <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">r</span><span class="o">**</span><span class="mi">3</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>
@@ -740,9 +746,9 @@ U_{polar}(r) \propto -\frac{1}{r^3}
 <img alt="../../_images/eb43a7a47f440aa96ae114f5b816c5ba8449f46e2ae7ab02bd6e1c7d794053dd.png" src="../../_images/eb43a7a47f440aa96ae114f5b816c5ba8449f46e2ae7ab02bd6e1c7d794053dd.png" />
 </div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

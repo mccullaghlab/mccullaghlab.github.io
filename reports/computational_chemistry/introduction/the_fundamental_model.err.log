@@ -1,0 +1,96 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ---------- Parameters you can tweak ----------
+E_A  = 0.0      # energy of A
+E_B  = 3.0      # energy of B (higher than A => endothermic)
+E_TS = 4.0      # transition state energy
+x_TS = 0.55     # location of TS along reaction coordinate (0..1)
+# --------------------------------------------
+
+# Build a smooth "double-well-ish" curve that hits A, TS, and B
+x = np.linspace(0, 1, 600)
+
+# Use a cubic baseline that matches endpoints plus a Gaussian bump for TS
+baseline = E_A + (E_B - E_A) * (3*x**2 - 2*x**3)  # smoothstep from A to B
+bump = (E_TS - (E_A + (E_B - E_A) * (3*x_TS**2 - 2*x_TS**3))) * np.exp(-((x - x_TS)/0.10)**2)
+E = baseline + bump
+
+# Points for annotation
+A_pt  = (0.08, np.interp(0.08, x, E))
+B_pt  = (0.92, np.interp(0.92, x, E))
+TS_ix = np.argmax(E)
+TS_pt = (x[TS_ix], E[TS_ix])
+
+# Plot
+fig, ax = plt.subplots(figsize=(5, 3.5), dpi=150)
+ax.plot(x, E, linewidth=3)
+
+# Markers
+ax.scatter([A_pt[0], TS_pt[0], B_pt[0]],
+           [A_pt[1], TS_pt[1], B_pt[1]],
+           s=60, zorder=3)
+
+# Labels for states
+ax.text(A_pt[0]-0.03, A_pt[1]-0.7, "A", fontsize=13, weight="bold")
+ax.text(B_pt[0]+0.01, B_pt[1]-0.1, "B", fontsize=13, weight="bold")
+ax.text(TS_pt[0]-0.02, TS_pt[1]+0.4, "TS", fontsize=12)
+
+# Helper function for vertical brackets
+def vbracket(xpos, y0, y1, label, xtext_offset=0.015):
+    ax.annotate(
+        "", xy=(xpos, y1), xytext=(xpos, y0),
+        arrowprops=dict(arrowstyle="<->", lw=1.8)
+    )
+    ax.text(xpos + xtext_offset, 0.5*(y0+y1), label, va="center", fontsize=11)
+
+# ΔE (endothermic): energy difference A -> B
+vbracket(0.97, A_pt[1], B_pt[1], r"$\Delta E > 0$")
+
+# Activation energy forward: A -> TS
+vbracket(0.18, A_pt[1], TS_pt[1], r"$E_a$ (A$\rightarrow$B)", xtext_offset=0.02)
+
+# ΔG° positive (equilibrium favors A)
+# We show it qualitatively as A lower than B
+#ax.text(0.60, min(E)+0.6, r"$\Delta G^\circ > 0$  (equilibrium favors A)", fontsize=11)
+
+# Cosmetics
+ax.set_xlabel("Reaction coordinate", fontsize=12)
+ax.set_ylabel("Energy, $E$", fontsize=12)
+ax.set_title("Energy diagram for A ⇌ B (endothermic; A favored at equilibrium)", fontsize=13)
+
+ax.set_xticks([])
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+ax.margins(x=0.02, y=0.15)
+
+plt.show();
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 1[0m
+[0;32m----> 1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+[1;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mplt[39;00m
+[1;32m      4[0m [38;5;66;03m# ---------- Parameters you can tweak ----------[39;00m
+
+[0;31mModuleNotFoundError[0m: No module named 'numpy'
+

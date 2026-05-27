@@ -1,0 +1,84 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+import numpy as np
+import matplotlib.pyplot as plt
+
+def rdf_from_coordinates(frames, box_length, r_max=None, n_bins=100):
+    '''
+    Compute a simple radial distribution function g(r) for a pure liquid.
+
+    Parameters
+    ----------
+    frames : ndarray, shape (n_frames, n_atoms, 3)
+        Cartesian coordinates.
+    box_length : float
+        Cubic box length.
+    r_max : float or None
+        Maximum radius. If None, uses box_length / 2.
+    n_bins : int
+        Number of histogram bins.
+
+    Returns
+    -------
+    r : ndarray
+        Bin centers.
+    g_r : ndarray
+        Radial distribution function.
+    '''
+    frames = np.asarray(frames)
+    n_frames, n_atoms, _ = frames.shape
+    volume = box_length**3
+    rho = n_atoms / volume
+
+    if r_max is None:
+        r_max = box_length / 2.0
+
+    edges = np.linspace(0.0, r_max, n_bins + 1)
+    counts = np.zeros(n_bins, dtype=float)
+
+    for frame in frames:
+        for i in range(n_atoms - 1):
+            rij = frame[i+1:] - frame[i]
+            # minimum image convention for cubic box
+            rij -= box_length * np.round(rij / box_length)
+            dists = np.linalg.norm(rij, axis=1)
+            hist, _ = np.histogram(dists, bins=edges)
+            counts += 2.0 * hist  # count i-j and j-i
+
+    dr = edges[1] - edges[0]
+    r = 0.5 * (edges[:-1] + edges[1:])
+    shell_volumes = 4.0 * np.pi * r**2 * dr
+
+    # Average counts per frame and per particle
+    avg_counts = counts / n_frames
+    g_r = avg_counts / (n_atoms * rho * shell_volumes)
+
+    return r, g_r
+
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 1[0m
+[0;32m----> 1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+[1;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mplt[39;00m
+[1;32m      4[0m [38;5;28;01mdef[39;00m[38;5;250m [39m[38;5;21mrdf_from_coordinates[39m(frames, box_length, r_max[38;5;241m=[39m[38;5;28;01mNone[39;00m, n_bins[38;5;241m=[39m[38;5;241m100[39m):
+
+[0;31mModuleNotFoundError[0m: No module named 'numpy'
+

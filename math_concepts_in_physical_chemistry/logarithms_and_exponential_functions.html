@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.1. Logarithms and Exponential Functions &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -574,9 +580,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="logarithms-and-exponential-functions">
+  <div class="tex2jax_ignore mathjax_ignore section" id="logarithms-and-exponential-functions">
 <h1><span class="section-number">3.1. </span>Logarithms and Exponential Functions<a class="headerlink" href="#logarithms-and-exponential-functions" title="Permalink to this heading">#</a></h1>
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.1.1. </span>Learning goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="arabic simple">
@@ -587,8 +593,8 @@ document.write(`
 <li><p>Plot logarithmic functions</p></li>
 <li><p>Manipulate logarithmic functions</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.1.2. </span>Coding concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="arabic simple">
@@ -596,21 +602,21 @@ document.write(`
 <li><p><a class="reference internal" href="../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</section>
-<section id="exponential-functions">
+</div>
+<div class="section" id="exponential-functions">
 <h2><span class="section-number">3.1.3. </span>Exponential Functions<a class="headerlink" href="#exponential-functions" title="Permalink to this heading">#</a></h2>
 <p>Exponential functions show up regularly in various areas of physical chemistry.  Being comfortable manipulating and evaluating these types of functions is important.  We start by evaluating and plotting exponential functions followed by revisiting the rules of algebraically manipulating these functions.</p>
 <p>First, a definition, the exponential function is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-552ee9bc-6d79-4440-90cf-2dda9a4b1eb6">
-<span class="eqno">(3.1)<a class="headerlink" href="#equation-552ee9bc-6d79-4440-90cf-2dda9a4b1eb6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-005920a5-8a62-412f-9dc4-bf765efc2a21">
+<span class="eqno">(3.1)<a class="headerlink" href="#equation-005920a5-8a62-412f-9dc4-bf765efc2a21" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(x) = e^x.
 \end{equation}\]</div>
 <p>This function takes the independent variable, <span class="math notranslate nohighlight">\(x\)</span>, and raises <span class="math notranslate nohighlight">\(e\)</span> to this value to determine the dependent value, <span class="math notranslate nohighlight">\(f(x)\)</span>.</p>
-<section id="evaluating-exponential-functions">
+<div class="section" id="evaluating-exponential-functions">
 <h3><span class="section-number">3.1.3.1. </span>Evaluating Exponential Functions<a class="headerlink" href="#evaluating-exponential-functions" title="Permalink to this heading">#</a></h3>
 <p>Exponential functions are readily evaluated on any calculator or computer.  For example, we might define</p>
-<div class="amsmath math notranslate nohighlight" id="equation-24db0954-f5d8-4a03-806d-8fe238c09114">
-<span class="eqno">(3.2)<a class="headerlink" href="#equation-24db0954-f5d8-4a03-806d-8fe238c09114" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9465478b-9643-4e85-a57f-4051265a351a">
+<span class="eqno">(3.2)<a class="headerlink" href="#equation-9465478b-9643-4e85-a57f-4051265a351a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(x) = 2\cdot e^{3\cdot x}
 \end{equation}\]</div>
 <p>and ask, what is <span class="math notranslate nohighlight">\(f(1.5)\)</span>?</p>
@@ -618,9 +624,9 @@ f(x) = 2\cdot e^{3\cdot x}
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import numpy library</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="c1"># define the function</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
 <span class="c1"># print the specific value</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="mf">1.5</span><span class="p">))</span>
@@ -634,20 +640,20 @@ f(x) = 2\cdot e^{3\cdot x}
 </div>
 </div>
 <p>We can create more complicated exponential functions and evaluate their values at various <span class="math notranslate nohighlight">\(x\)</span> values.  Here are some examples followed by the code to evaluate them.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d07041be-14e9-4930-9646-e2222a003f3d">
-<span class="eqno">(3.3)<a class="headerlink" href="#equation-d07041be-14e9-4930-9646-e2222a003f3d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-82bd6bbb-a6fa-4818-81ce-ef19dfac4a41">
+<span class="eqno">(3.3)<a class="headerlink" href="#equation-82bd6bbb-a6fa-4818-81ce-ef19dfac4a41" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 f(x) &amp;=&amp; 1.2e^{2x+1}\text{, } f(3.2) = ? \\
 g(x) &amp;=&amp; 45.0e^{-1.5x}\text{, } g(-2.0) = ? \\
 h(x) &amp;=&amp; 12.1e^{-23x+2}\text{, } h(0.01) = ? 
 \end{eqnarray}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">1.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">45</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">12.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">23</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f(3.2)=&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="mf">3.2</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;g(-2.0)=&quot;</span><span class="p">,</span> <span class="n">g</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">))</span>
@@ -663,13 +669,13 @@ h(0.01)= 71.03732567272948
 </div>
 </div>
 </div>
-</section>
-<section id="plotting-exponential-functions">
+</div>
+<div class="section" id="plotting-exponential-functions">
 <h3><span class="section-number">3.1.3.2. </span>Plotting Exponential Functions<a class="headerlink" href="#plotting-exponential-functions" title="Permalink to this heading">#</a></h3>
 <p>Exponential functions can be evaluated over the full domain of <span class="math notranslate nohighlight">\(x\)</span>.  If the largest power of <span class="math notranslate nohighlight">\(x\)</span> is positive then we will see exponential growth (the function will go to infinity as <span class="math notranslate nohighlight">\(x\)</span> goes to infinity) and if the largest power of <span class="math notranslate nohighlight">\(x\)</span> is negative then we will see exponential decay (the function will go to zero as <span class="math notranslate nohighlight">\(x\)</span> goes to infinity).  We will plot one of each.</p>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>
@@ -694,78 +700,78 @@ h(0.01)= 71.03732567272948
 <img alt="../_images/77620628f13a2adc90558d0eb0576c9aa02cb3190c37987d80355cdaec4b79dc.png" src="../_images/77620628f13a2adc90558d0eb0576c9aa02cb3190c37987d80355cdaec4b79dc.png" />
 </div>
 </div>
-</section>
-<section id="manipulating-exponential-functions">
+</div>
+<div class="section" id="manipulating-exponential-functions">
 <h3><span class="section-number">3.1.3.3. </span>Manipulating Exponential Functions<a class="headerlink" href="#manipulating-exponential-functions" title="Permalink to this heading">#</a></h3>
 <p>Exponential functions can be manipulated in various ways.  Here are two common manipulations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aceb8a3c-d9dd-4b2d-94a9-3b5f1c84a75f">
-<span class="eqno">(3.4)<a class="headerlink" href="#equation-aceb8a3c-d9dd-4b2d-94a9-3b5f1c84a75f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8706099e-3cd0-4496-bc53-882688f598e3">
+<span class="eqno">(3.4)<a class="headerlink" href="#equation-8706099e-3cd0-4496-bc53-882688f598e3" title="Permalink to this equation">#</a></span>\[\begin{align}
 e^{x+y} &amp;= e^xe^y \\
 e^{x\cdot y} &amp;= \left(e^x\right)^y = \left(e^y\right)^x
 \end{align}\]</div>
 <p>Here is an example problem that uses both</p>
 <p><strong>Example:</strong> Show that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-84f1b4bc-8e58-464e-baf8-120a8021b956">
-<span class="eqno">(3.5)<a class="headerlink" href="#equation-84f1b4bc-8e58-464e-baf8-120a8021b956" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ff602b9a-8084-4d40-af58-ff62cee5c8fe">
+<span class="eqno">(3.5)<a class="headerlink" href="#equation-ff602b9a-8084-4d40-af58-ff62cee5c8fe" title="Permalink to this equation">#</a></span>\[\begin{equation}
 e^{x^2}e^{2x}e = \left( e^{(x+1)}\right)^{(x+1)}
 \end{equation}\]</div>
 <p>We start by using the reverse of the first <em>rule</em> above to combine everything into a single exponential</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5daf51b4-68ba-49d8-ac2b-3f68824285c2">
-<span class="eqno">(3.6)<a class="headerlink" href="#equation-5daf51b4-68ba-49d8-ac2b-3f68824285c2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c1565daf-4b95-4256-995b-5026b0146fa4">
+<span class="eqno">(3.6)<a class="headerlink" href="#equation-c1565daf-4b95-4256-995b-5026b0146fa4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 e^{x^2}e^{2x}e = e^{x^2+2x+1}
 \end{equation}\]</div>
 <p>Now recognize that the quadratic function in the exponent is a perfect square so can be further simplified</p>
-<div class="amsmath math notranslate nohighlight" id="equation-89ae7ed6-8917-4efc-a68b-844c00fb1915">
-<span class="eqno">(3.7)<a class="headerlink" href="#equation-89ae7ed6-8917-4efc-a68b-844c00fb1915" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-50ecc5c7-e199-4b57-a067-078aa4157d55">
+<span class="eqno">(3.7)<a class="headerlink" href="#equation-50ecc5c7-e199-4b57-a067-078aa4157d55" title="Permalink to this equation">#</a></span>\[\begin{equation}
 e^{x^2+2x+1} = e^{(x+1)(x+1)} = \left( e^{(x+1)}\right)^{(x+1)}
 \end{equation}\]</div>
 <p>We also have that natural log and exponential functions are inverse functions which means that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1d053c72-914f-4cd0-affb-45b7ffcd0aae">
-<span class="eqno">(3.8)<a class="headerlink" href="#equation-1d053c72-914f-4cd0-affb-45b7ffcd0aae" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-28427349-72ce-42a7-a943-c8a992b5f2d1">
+<span class="eqno">(3.8)<a class="headerlink" href="#equation-28427349-72ce-42a7-a943-c8a992b5f2d1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 e^{\ln(x)} = x
 \end{equation}\]</div>
-</section>
-</section>
-<section id="logarithmic-functions">
+</div>
+</div>
+<div class="section" id="logarithmic-functions">
 <h2><span class="section-number">3.1.4. </span>Logarithmic Functions<a class="headerlink" href="#logarithmic-functions" title="Permalink to this heading">#</a></h2>
 <p>Log functions are the inverse of exponential and/or power functions.  These also come up frequently in physical chemistry and thus we must be able to evaluate, plot, and manipulate them.</p>
 <p>An example logarthmic function is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f532fc04-a393-4c8b-8b1f-95470d3f054b">
-<span class="eqno">(3.9)<a class="headerlink" href="#equation-f532fc04-a393-4c8b-8b1f-95470d3f054b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c4891fae-43f5-4e70-b825-d18215a30222">
+<span class="eqno">(3.9)<a class="headerlink" href="#equation-c4891fae-43f5-4e70-b825-d18215a30222" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(x) = \ln(x),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\ln\)</span> stands for natural log or log base <span class="math notranslate nohighlight">\(e\)</span>.  We most commonly encounter natural logarithms so will not discuss other bases or change of bases in these notes but it is important to remember that these things exist.</p>
 <p>It is also very important to consider the domain of logarithmic functions.  The function <span class="math notranslate nohighlight">\(f(x)=\ln(x)\)</span> is only defined when <span class="math notranslate nohighlight">\(x\)</span> is greater than 0.  That is, the function <span class="math notranslate nohighlight">\(f(x)=\ln(x)\)</span> is defined for <span class="math notranslate nohighlight">\(x&gt;0\)</span>.</p>
-<section id="evaluating-logarithmic-functions">
+<div class="section" id="evaluating-logarithmic-functions">
 <h3><span class="section-number">3.1.4.1. </span>Evaluating Logarithmic Functions<a class="headerlink" href="#evaluating-logarithmic-functions" title="Permalink to this heading">#</a></h3>
 <p>Generally, we will use computers/calculators to evaluate logarithmic functions.  For the function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1c0ab5f0-97bf-42fa-8fb2-3c0f8aafcbfd">
-<span class="eqno">(3.10)<a class="headerlink" href="#equation-1c0ab5f0-97bf-42fa-8fb2-3c0f8aafcbfd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e5f00a29-f558-41e6-a67e-486303d76792">
+<span class="eqno">(3.10)<a class="headerlink" href="#equation-e5f00a29-f558-41e6-a67e-486303d76792" title="Permalink to this equation">#</a></span>\[\begin{equation}
 f(x) = \ln(x)
 \end{equation}\]</div>
 <p>there are some important things to remember, however:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ccb46254-72f9-44cc-9878-7e6f2b053a1b">
-<span class="eqno">(3.11)<a class="headerlink" href="#equation-ccb46254-72f9-44cc-9878-7e6f2b053a1b" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5815762d-2b7b-44f9-9501-ab6a15adb534">
+<span class="eqno">(3.11)<a class="headerlink" href="#equation-5815762d-2b7b-44f9-9501-ab6a15adb534" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 f(1) &amp;=&amp; \ln(1) = 0 \\
 f(0&lt;x&lt;1) &amp;&lt;&amp; 0 \\
 f(x\ge1) &amp;&gt;&amp; 0
 \end{eqnarray}\]</div>
 <p>Otherwise, evaluating logarthmic function is just a matter of entering it into your calculator.  Here are some examples and the code to evaluate them.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c4c5dc1c-a1db-411f-8189-bdded441d51d">
-<span class="eqno">(3.12)<a class="headerlink" href="#equation-c4c5dc1c-a1db-411f-8189-bdded441d51d" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-7152f634-4ebf-4c40-bbfc-fc7fd3b47440">
+<span class="eqno">(3.12)<a class="headerlink" href="#equation-7152f634-4ebf-4c40-bbfc-fc7fd3b47440" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 f(x) &amp;=&amp; 1.2\ln\left(2x+1\right)\text{, } f(3.2) = ? \\
 g(x) &amp;=&amp; 45.0\ln\left(-1.5x\right)\text{, } g(-2.0) = ? \\
 h(x) &amp;=&amp; 12.1\ln\left(-23x+2\right)\text{, } h(-0.01) = ? 
 \end{eqnarray}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="c1"># Note: np.log is the natural log</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">1.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">45</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">12.1</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="o">-</span><span class="mi">23</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;f(3.2)=&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="mf">3.2</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;g(-2.0)=&quot;</span><span class="p">,</span> <span class="n">g</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">))</span>
@@ -781,13 +787,13 @@ h(0.01)= 9.704219184211532
 </div>
 </div>
 </div>
-</section>
-<section id="plotting-logarithmic-functions">
+</div>
+<div class="section" id="plotting-logarithmic-functions">
 <h3><span class="section-number">3.1.4.2. </span>Plotting Logarithmic Functions<a class="headerlink" href="#plotting-logarithmic-functions" title="Permalink to this heading">#</a></h3>
 <p>It is important to be able to plot these functions over their finite domains.  Recall that the domain of a log function is determined by making the argument of the log greater than zero.  You cannot take the log of zero or a negative number.</p>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># setup plot </span>
 <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span>
@@ -812,30 +818,30 @@ h(0.01)= 9.704219184211532
 <img alt="../_images/92122ff43d1d3d58a6ea4eea73f9a5cec0e11b784c0f1e884458fda7dc5c62ed.png" src="../_images/92122ff43d1d3d58a6ea4eea73f9a5cec0e11b784c0f1e884458fda7dc5c62ed.png" />
 </div>
 </div>
-</section>
-<section id="manipulating-logarithmic-functions-rules-of-logarithms">
+</div>
+<div class="section" id="manipulating-logarithmic-functions-rules-of-logarithms">
 <h3><span class="section-number">3.1.4.3. </span>Manipulating Logarithmic Functions (Rules of Logarithms)<a class="headerlink" href="#manipulating-logarithmic-functions-rules-of-logarithms" title="Permalink to this heading">#</a></h3>
 <p>There are some important rules of logarithms that we should keep in mind:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-984de791-5a7d-4a8c-b2cd-b943c768bc2a">
-<span class="eqno">(3.13)<a class="headerlink" href="#equation-984de791-5a7d-4a8c-b2cd-b943c768bc2a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fd35c8a0-cdaf-49e0-996c-2dcb02f89d78">
+<span class="eqno">(3.13)<a class="headerlink" href="#equation-fd35c8a0-cdaf-49e0-996c-2dcb02f89d78" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln(x\cdot y) = \ln(x) + \ln(y)
 \end{equation}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-43a99ab6-8169-476f-915f-5672ce20762a">
-<span class="eqno">(3.14)<a class="headerlink" href="#equation-43a99ab6-8169-476f-915f-5672ce20762a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4d310b6d-e612-4823-b9cd-5787c166af65">
+<span class="eqno">(3.14)<a class="headerlink" href="#equation-4d310b6d-e612-4823-b9cd-5787c166af65" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln\left( \frac{x}{y} \right) = \ln(x) - \ln(y)
 \end{equation}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-a2fd578d-c18e-49c7-a0e1-90f507ca6ecc">
-<span class="eqno">(3.15)<a class="headerlink" href="#equation-a2fd578d-c18e-49c7-a0e1-90f507ca6ecc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0eec6ba2-d922-440e-a89c-b23dd54d44df">
+<span class="eqno">(3.15)<a class="headerlink" href="#equation-0eec6ba2-d922-440e-a89c-b23dd54d44df" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln\left( x^y \right) = y\ln(x)
 \end{equation}\]</div>
 <p>And finally the fact that exponential and logarithmic functions are inverses yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f4108a9c-53d8-43ad-9129-f7dd43f6e4f5">
-<span class="eqno">(3.16)<a class="headerlink" href="#equation-f4108a9c-53d8-43ad-9129-f7dd43f6e4f5" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-aaf5a5c9-4d47-4bc1-9133-8027cf147192">
+<span class="eqno">(3.16)<a class="headerlink" href="#equation-aaf5a5c9-4d47-4bc1-9133-8027cf147192" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \ln{e^x} = x
 \end{equation}\]</div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

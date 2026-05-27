@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>4.5.28. Rigid Rotator Variational Solution &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -567,22 +573,22 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="rigid-rotator-variational-solution">
+  <div class="tex2jax_ignore mathjax_ignore section" id="rigid-rotator-variational-solution">
 <h1><span class="section-number">4.5.28. </span>Rigid Rotator Variational Solution<a class="headerlink" href="#rigid-rotator-variational-solution" title="Permalink to this heading">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">4.5.28.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
 <p>We will see how we can solve the rigid rotator (or particle <em>on</em> a sphere) using the variational method.</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">4.5.28.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">4.5.28.3. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="background">
+</div>
+<div class="section" id="background">
 <h2><span class="section-number">4.5.28.4. </span>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="phi">
+</div>
+<div class="section" id="phi">
 <h2><span class="section-number">4.5.28.5. </span><span class="math notranslate nohighlight">\(\Phi\)</span>:<a class="headerlink" href="#phi" title="Permalink to this heading">#</a></h2>
 <p>For <span class="math notranslate nohighlight">\(\phi\)</span> we simply use the analytic solution</p>
 <p><span class="math notranslate nohighlight">\(-m^2 \Phi(\phi)= \frac{\partial^2}{\partial^2\phi} \Phi(\phi)\)</span></p>
@@ -593,8 +599,8 @@ document.write(`
 <p>Thus we can write</p>
 <p><span class="math notranslate nohighlight">\(\Phi(\phi) = Ae^{im\phi} \quad m=0,\pm 1, \pm 2, ...\)</span>.</p>
 <p>Normalization yields <span class="math notranslate nohighlight">\(A=\frac{1}{\sqrt{2\pi}}\)</span>.</p>
-</section>
-<section id="theta">
+</div>
+<div class="section" id="theta">
 <h2><span class="section-number">4.5.28.6. </span><span class="math notranslate nohighlight">\(\Theta\)</span>:<a class="headerlink" href="#theta" title="Permalink to this heading">#</a></h2>
 <p>We start with the side of the equation with <span class="math notranslate nohighlight">\(\theta\)</span> dependence equal to <span class="math notranslate nohighlight">\(m^2\)</span>:</p>
 <p><span class="math notranslate nohighlight">\(m^2 = \frac{\sin\theta}{\Theta(\theta)}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)\Theta(\theta)+\beta\sin^2\theta\)</span>.</p>
@@ -607,17 +613,17 @@ document.write(`
 <p>We now recognize that <span class="math notranslate nohighlight">\(m = 0, \pm 1, \pm 2,  ...\)</span> as dictated by the solutions above for <span class="math notranslate nohighlight">\(\phi\)</span>.  Thus we know something about <span class="math notranslate nohighlight">\(m\)</span> but nothing about <span class="math notranslate nohighlight">\(\beta\)</span>.  We will solve this for <span class="math notranslate nohighlight">\(m=0\)</span> and leave any other solution for excercise.</p>
 <p><span class="math notranslate nohighlight">\(\Rightarrow  \beta\Theta(\theta) =-\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right)\Theta(\theta)\)</span></p>
 <p>This is an eigenvalue equation that we can apply the variational principle to.  We must now devise a basis set that is defined over domain <span class="math notranslate nohighlight">\(0 &lt; \theta &lt; \pi\)</span> and the derivative of the functions must be zero at the boundaries (why?).</p>
-</section>
-<section id="cos-i-theta-basis">
+</div>
+<div class="section" id="cos-i-theta-basis">
 <h2><span class="section-number">4.5.28.7. </span><span class="math notranslate nohighlight">\(\cos(i\theta)\)</span> basis<a class="headerlink" href="#cos-i-theta-basis" title="Permalink to this heading">#</a></h2>
 <p>We will use the general basis functions</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6bccda10-e88f-45dd-b1d8-d515374a0a1a">
-<span class="eqno">(4.1019)<a class="headerlink" href="#equation-6bccda10-e88f-45dd-b1d8-d515374a0a1a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-db56d74b-7e25-466a-a87a-b4c6c0179538">
+<span class="eqno">(4.1019)<a class="headerlink" href="#equation-db56d74b-7e25-466a-a87a-b4c6c0179538" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P_i(\theta) = \cos(i\theta)
 \end{equation}\]</div>
 <p>Thus the trial wave function will be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2ce4bd0f-48ea-498f-b643-6a65d98ffa31">
-<span class="eqno">(4.1020)<a class="headerlink" href="#equation-2ce4bd0f-48ea-498f-b643-6a65d98ffa31" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5314d915-308d-4f31-b016-9c9423b44f0f">
+<span class="eqno">(4.1020)<a class="headerlink" href="#equation-5314d915-308d-4f31-b016-9c9423b44f0f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \phi_t(\theta) = \sum_{i=1}^N c_i\cos(i\theta)
 \end{equation}\]</div>
 <p>and, in practice, this summation will be truncated at finite <span class="math notranslate nohighlight">\(N\)</span>.  We will start by using <span class="math notranslate nohighlight">\(N=2\)</span>.</p>
@@ -630,7 +636,7 @@ P_i(\theta) = \cos(i\theta)
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cos basis function in theta</span>
-<span class="k">def</span> <span class="nf">theta_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">theta_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
 <span class="n">thetaVals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
@@ -645,7 +651,7 @@ P_i(\theta) = \cos(i\theta)
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">def</span> <span class="nf">theta_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">def</span><span class="w"> </span><span class="nf">theta_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">thetaVals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
@@ -664,8 +670,8 @@ P_i(\theta) = \cos(i\theta)
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># code to perform Variational principle solution to expansion of wavefunctions in a gaussian basis to K+V Hamiltonian in 1D</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">hbar</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">r0</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -674,14 +680,14 @@ P_i(\theta) = \cos(i\theta)
 <span class="n">Hconst</span> <span class="o">=</span> <span class="mf">1.0</span>
 
 <span class="c1"># overlap integrand</span>
-<span class="k">def</span> <span class="nf">overlap_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">basis_function</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">overlap_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">basis_function</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">basis_function</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 <span class="c1"># S integrand</span>
-<span class="k">def</span> <span class="nf">S_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">basis_function</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">S_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">basis_function</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">basis_function</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="n">basis_function</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 
 <span class="c1"># variational principle basis set solution for KE plus V (typically harmonic) - basis functions are guassians</span>
-<span class="k">def</span> <span class="nf">basis_rigid_rotator</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">basis_function</span><span class="p">,</span><span class="n">H_integrand</span><span class="p">,</span><span class="n">thetaVals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">basis_rigid_rotator</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">basis_function</span><span class="p">,</span><span class="n">H_integrand</span><span class="p">,</span><span class="n">thetaVals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)):</span>
     <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>   <span class="c1"># basis function overlap matrix</span>
     <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>   <span class="c1"># Hamiltonian matrix, Hij = &lt;Si|H|Sj&gt;</span>
     
@@ -726,12 +732,12 @@ P_i(\theta) = \cos(i\theta)
     <span class="k">return</span> <span class="n">E</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">thetaVals</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">H</span>
 
 <span class="c1"># plot of some of the Legendre polynomials and variational wavefunctions</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">lpmv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">lpmv</span>
 <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">]</span>
-<span class="k">def</span> <span class="nf">plot_rigid_rotator_wavefunctions</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">maxL</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">maxM</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_rigid_rotator_wavefunctions</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">maxL</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">maxM</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -748,7 +754,7 @@ P_i(\theta) = \cos(i\theta)
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span>
     
-<span class="k">def</span> <span class="nf">plot_rigid_rotator_densities</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">maxL</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">maxM</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_rigid_rotator_densities</span><span class="p">(</span><span class="n">psi</span><span class="p">,</span><span class="n">theta</span><span class="p">,</span><span class="n">maxL</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">maxM</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">),</span><span class="n">dpi</span><span class="o">=</span> <span class="mi">80</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -775,10 +781,10 @@ P_i(\theta) = \cos(i\theta)
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cos basis function in theta</span>
-<span class="k">def</span> <span class="nf">cos_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cos_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
 <span class="c1"># H integrand</span>
-<span class="k">def</span> <span class="nf">cos_basis_H_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cos_basis_H_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span> <span class="o">+</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span> <span class="p">)</span>
 <span class="n">E</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">H</span> <span class="o">=</span> <span class="n">basis_rigid_rotator</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">cos_basis</span><span class="p">,</span><span class="n">cos_basis_H_integrand</span><span class="p">,</span><span class="n">thetaVals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mf">0.01</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Energies:&quot;</span><span class="p">,</span> <span class="n">E</span><span class="p">)</span>
@@ -800,10 +806,10 @@ Energies: [0. 2.]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cos basis function in theta</span>
-<span class="k">def</span> <span class="nf">cos_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cos_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
 <span class="c1"># H integrand</span>
-<span class="k">def</span> <span class="nf">cos_basis_H_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cos_basis_H_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span> <span class="o">+</span> <span class="n">j</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">j</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span> <span class="p">)</span>
 
 <span class="n">E</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">H</span> <span class="o">=</span> <span class="n">basis_rigid_rotator</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="n">cos_basis</span><span class="p">,</span><span class="n">cos_basis_H_integrand</span><span class="p">,</span><span class="n">thetaVals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mf">0.01</span><span class="p">))</span>
@@ -887,7 +893,7 @@ Energies: [0. 2.]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cos basis function in theta</span>
-<span class="k">def</span> <span class="nf">cos_pow_i_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cos_pow_i_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="n">i</span>
 <span class="n">thetaVals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
@@ -907,7 +913,7 @@ Energies: [0. 2.]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># H integrand</span>
-<span class="k">def</span> <span class="nf">cos_pow_i_H_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cos_pow_i_H_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
     <span class="n">cosTheta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
     <span class="n">sinTheta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">j</span><span class="o">*</span><span class="p">(</span> <span class="mi">2</span><span class="o">*</span><span class="n">sinTheta</span><span class="o">*</span><span class="n">cosTheta</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">sinTheta</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="n">cosTheta</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span>
@@ -942,7 +948,7 @@ Energies: [0. 2.]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># polynomial basis functions in theta</span>
-<span class="k">def</span> <span class="nf">poly_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">poly_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">theta</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 <span class="n">thetaVals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
@@ -962,7 +968,7 @@ Energies: [0. 2.]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># H integrand</span>
-<span class="k">def</span> <span class="nf">poly_H_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">poly_H_integrand</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span>
     <span class="n">thetaMpi</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">j</span><span class="o">*</span><span class="n">theta</span><span class="o">**</span><span class="n">i</span><span class="o">*</span><span class="n">thetaMpi</span><span class="o">**</span><span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">theta</span><span class="o">**</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">thetaMpi</span><span class="o">**</span><span class="n">j</span> <span class="o">+</span> <span class="n">theta</span><span class="o">**</span><span class="n">j</span><span class="o">*</span><span class="n">thetaMpi</span><span class="o">**</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">j</span><span class="o">*</span><span class="n">theta</span><span class="o">**</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">thetaMpi</span><span class="o">**</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">theta</span><span class="o">**</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">thetaMpi</span><span class="o">**</span><span class="n">j</span><span class="o">+</span><span class="n">theta</span><span class="o">**</span><span class="n">j</span><span class="o">*</span><span class="n">thetaMpi</span><span class="o">**</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">2</span><span class="p">))))</span>
 
@@ -988,7 +994,7 @@ S^{-1}H =  [[0.         6.94611009]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># polynomial basis functions in theta</span>
-<span class="k">def</span> <span class="nf">cos_poly_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cos_poly_basis</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">theta</span><span class="o">*</span><span class="p">(</span><span class="n">theta</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">theta</span><span class="p">)</span>
 <span class="n">thetaVals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
@@ -1005,8 +1011,8 @@ S^{-1}H =  [[0.         6.94611009]
 <img alt="../../_images/3864d7a7b9081b7fc3016bbc1d3a43fed1875ada21f37c760455c02cee2c8b64.png" src="../../_images/3864d7a7b9081b7fc3016bbc1d3a43fed1875ada21f37c760455c02cee2c8b64.png" />
 </div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

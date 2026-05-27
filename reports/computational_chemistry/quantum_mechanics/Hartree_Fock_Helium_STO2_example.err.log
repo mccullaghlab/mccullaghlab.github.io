@@ -1,0 +1,127 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+
+import numpy as np
+
+def S_sto_1s(zeta_a, zeta_b):
+    # overlap for normalized 1s STOs
+    return 8.0*(zeta_a*zeta_b)**1.5 / (zeta_a+zeta_b)**3
+
+def T_sto_1s(zeta_a, zeta_b):
+    # kinetic for normalized 1s STOs
+    return 4.0*(zeta_a*zeta_b)**2.5 / (zeta_a+zeta_b)**3
+
+def V_sto_1s(zeta_a, zeta_b, Z):
+    # nuclear attraction for normalized 1s STOs: <a| -Z/r |b>
+    return -4.0*Z*(zeta_a*zeta_b)**1.5 / (zeta_a+zeta_b)**2
+
+def ERI_sto_1s(zeta_a, zeta_b, zeta_c, zeta_d):
+    # (ab|cd) for same-center 1s STOs
+    p = zeta_a + zeta_b
+    q = zeta_c + zeta_d
+    num = (p**2 + 3*p*q + q**2)
+    den = (p**2 * q**2 * (p+q)**3)
+    pref = 16.0*(zeta_a*zeta_b*zeta_c*zeta_d)**1.5
+    return pref * num / den
+
+def build_integrals(zetas, Z):
+    M = len(zetas)
+    S = np.zeros((M,M))
+    H = np.zeros((M,M))
+    eri = np.zeros((M,M,M,M))
+    for a in range(M):
+        for b in range(M):
+            za, zb = zetas[a], zetas[b]
+            S[a,b] = S_sto_1s(za, zb)
+            H[a,b] = T_sto_1s(za, zb) + V_sto_1s(za, zb, Z)
+    for a in range(M):
+        for b in range(M):
+            for c in range(M):
+                for d in range(M):
+                    eri[a,b,c,d] = ERI_sto_1s(zetas[a], zetas[b], zetas[c], zetas[d])
+    return S, H, eri
+
+def symmetric_orthogonalization(S):
+    # S^{-1/2} via eigen-decomposition
+    w, U = np.linalg.eigh(S)
+    if np.any(w <= 1e-12):
+        raise ValueError("Overlap matrix is singular/ill-conditioned.")
+    return U @ np.diag(w**-0.5) @ U.T
+
+def build_fock(H, eri, P):
+    # F_{μν} = H_{μν} + Σ_{λσ} P_{λσ} [ (μν|λσ) - 1/2 (μλ|νσ) ]
+    M = H.shape[0]
+    F = H.copy()
+    for mu in range(M):
+        for nu in range(M):
+            g = 0.0
+            for lam in range(M):
+                for sig in range(M):
+                    g += P[lam, sig] * (eri[mu,nu,lam,sig] - 0.5*eri[mu,lam,nu,sig])
+            F[mu,nu] += g
+    return F
+
+def rhf_scf_helium(zetas, Z=2.0, max_iter=100, conv=1e-10, verbose=True):
+    S, H, eri = build_integrals(zetas, Z)
+    X = symmetric_orthogonalization(S)
+
+    # initial guess from the core Hamiltonian (H)
+    Fp = X.T @ H @ X
+    eps, Cp = np.linalg.eigh(Fp)
+    C = X @ Cp
+    c = C[:, 0:1]            # lowest-energy MO
+    P = 2.0*(c @ c.T)        # closed-shell density
+
+    E_old = None
+    for it in range(1, max_iter+1):
+        F = build_fock(H, eri, P)
+        Fp = X.T @ F @ X
+        eps, Cp = np.linalg.eigh(Fp)
+        C = X @ Cp
+        c = C[:, 0:1]
+        P_new = 2.0*(c @ c.T)
+
+        # RHF total energy (no nuclear repulsion for an atom):
+        # E = 1/2 * sum_{μν} P_{μν} (H_{μν} + F_{μν})
+        E = 0.5*np.sum(P_new*(H + F))
+
+        dP = np.linalg.norm(P_new - P)
+        if verbose:
+            print(f"iter {it:2d}: E = {E:+.12f}  ||dP|| = {dP:.3e}")
+
+        if E_old is not None and abs(E - E_old) < conv and dP < 1e-8:
+            return E, eps[0], c.flatten(), S, H, eri, F
+
+        E_old = E
+        P = P_new
+
+    raise RuntimeError("SCF did not converge within max_iter.")
+
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 1[0m
+[0;32m----> 1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mnumpy[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mnp[39;00m
+[1;32m      3[0m [38;5;28;01mdef[39;00m[38;5;250m [39m[38;5;21mS_sto_1s[39m(zeta_a, zeta_b):
+[1;32m      4[0m     [38;5;66;03m# overlap for normalized 1s STOs[39;00m
+[1;32m      5[0m     [38;5;28;01mreturn[39;00m [38;5;241m8.0[39m[38;5;241m*[39m(zeta_a[38;5;241m*[39mzeta_b)[38;5;241m*[39m[38;5;241m*[39m[38;5;241m1.5[39m [38;5;241m/[39m (zeta_a[38;5;241m+[39mzeta_b)[38;5;241m*[39m[38;5;241m*[39m[38;5;241m3[39m
+
+[0;31mModuleNotFoundError[0m: No module named 'numpy'
+
