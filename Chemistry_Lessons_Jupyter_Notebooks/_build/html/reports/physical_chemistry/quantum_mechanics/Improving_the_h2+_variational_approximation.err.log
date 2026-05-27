@@ -1,0 +1,68 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/envs/jbook015/lib/python3.10/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from scipy.optimize import minimize
+import matplotlib.pyplot as plt
+%matplotlib inline
+import numpy as np
+
+def J(R):
+    return np.exp(-2*R)*(1+1/R) - 1/R
+def K(R):
+    return -np.exp(-R)*(1+R)
+def S(R):
+    return np.exp(-R)*(1+ R + R*R/3)
+def E(Z,R):
+    T = Z**2/2-Z**2*(S(Z*R)/2 + K(Z*R))
+    T /= (1+S(Z*R))
+    V = -Z + Z*J(Z*R) + 2*Z*K(Z*R)
+    V /= (1+S(Z*R))
+    V += 1.0/R
+    return T + V
+
+R = np.arange(1,8,0.001)
+plt.figure(figsize=(8,6),dpi= 80, facecolor='w', edgecolor='k')
+plt.tick_params(axis='both',labelsize=20)
+plt.grid( which='major', axis='both', color='#808080', linestyle='--')
+E_1s_basis = np.empty(R.size)
+E_slater_basis = np.empty(R.size)
+Z_min = np.empty(R.size)
+for i, r in enumerate(R):
+    E_1s_basis[i] = E(1,r)
+    Z_min[i] = minimize(E,1.0,args=(r)).x[0]
+    E_slater_basis[i] = E(Z_min[i],r)
+plt.plot(R,E_1s_basis,lw=4, label=r'E - 1s basis')
+plt.plot(R,E_slater_basis,lw=4, label=r'E - Slater basis')
+plt.xlabel(r'R/$a_0$',fontsize=20)
+plt.ylabel(r'$E_0 (Hartree)$',fontsize=20)
+#plt.ylim(-0.6,-0.2)
+plt.legend(fontsize=20)
+plt.title(r'Variational Solution to the H$_2^+$ Molecule in Slater Basis',fontsize=16)
+plt.tight_layout()
+plt.show();
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[1], line 1[0m
+[0;32m----> 1[0m [38;5;28;01mfrom[39;00m[38;5;250m [39m[38;5;21;01mscipy[39;00m[38;5;21;01m.[39;00m[38;5;21;01moptimize[39;00m[38;5;250m [39m[38;5;28;01mimport[39;00m minimize
+[1;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mplt[39;00m
+[1;32m      3[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mmatplotlib[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124minline[39m[38;5;124m'[39m)
+
+[0;31mModuleNotFoundError[0m: No module named 'scipy'
+

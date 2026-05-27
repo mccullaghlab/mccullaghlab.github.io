@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3.5. Discrete Probability &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -578,9 +584,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="discrete-probability">
+  <div class="tex2jax_ignore mathjax_ignore section" id="discrete-probability">
 <h1><span class="section-number">3.5. </span>Discrete Probability<a class="headerlink" href="#discrete-probability" title="Permalink to this heading">#</a></h1>
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">3.5.1. </span>Learning goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="arabic simple">
@@ -589,25 +595,25 @@ document.write(`
 <li><p>Compute conditional probabilities of discrete events.</p></li>
 <li><p>Use the choose function to compute the number of possible outcomes for discrete events</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">3.5.2. </span>Coding concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>No coding concepts are used in this notebook.</p>
-</section>
-<section id="discrete-probability-of-single-events">
+</div>
+<div class="section" id="discrete-probability-of-single-events">
 <h2><span class="section-number">3.5.3. </span>Discrete Probability of Single Events<a class="headerlink" href="#discrete-probability-of-single-events" title="Permalink to this heading">#</a></h2>
 <p>Rolling a six sided die has six possible outcomes.  Rolling a 4, for example, is an outcome of this type of discrete event.  Here, we focus on compute the probability of such events.</p>
 <p>The probability of rolling a 4 with a six sided die is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a5c4ac3d-912f-4072-a1ab-5a9f761ef5ab">
-<span class="eqno">(3.59)<a class="headerlink" href="#equation-a5c4ac3d-912f-4072-a1ab-5a9f761ef5ab" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-70600f03-25f5-461d-8525-9815b5ea296a">
+<span class="eqno">(3.59)<a class="headerlink" href="#equation-70600f03-25f5-461d-8525-9815b5ea296a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P = \frac{1}{6} = \frac{\text{# way of getting a 4}}{\text{total # of possible outcomes}}
 \end{equation}\]</div>
 <p>In general, the probability of a discrete event <span class="math notranslate nohighlight">\(A\)</span> can be determined by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5aecba7c-13e1-493f-a0e4-feb1f77b4367">
-<span class="eqno">(3.60)<a class="headerlink" href="#equation-5aecba7c-13e1-493f-a0e4-feb1f77b4367" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ee962dc7-20fc-42a8-8a70-ada78e33069a">
+<span class="eqno">(3.60)<a class="headerlink" href="#equation-ee962dc7-20fc-42a8-8a70-ada78e33069a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P = \frac{\text{# way of getting $A$}}{\text{total # of possible outcomes}}
 \end{equation}\]</div>
-<section id="example-computing-probabilities-of-discrete-events">
+<div class="section" id="example-computing-probabilities-of-discrete-events">
 <h3><span class="section-number">3.5.3.1. </span>Example: Computing Probabilities of Discrete Events<a class="headerlink" href="#example-computing-probabilities-of-discrete-events" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>What is the probability of rolling a <span class="math notranslate nohighlight">\(4\)</span> with an <span class="math notranslate nohighlight">\(8\)</span>-sided die?</p></li>
@@ -615,23 +621,23 @@ P = \frac{\text{# way of getting $A$}}{\text{total # of possible outcomes}}
 <li><p>What is the probability of drawing a white marble from a bucket with 20 red, 30 white, and 50 blue marbles?</p></li>
 <li><p>What is the probability of getting heads when flipping a (fair) coin?</p></li>
 </ol>
-</section>
-</section>
-<section id="discrete-probability-of-multiple-outcomes-in-a-single-event-or">
+</div>
+</div>
+<div class="section" id="discrete-probability-of-multiple-outcomes-in-a-single-event-or">
 <h2><span class="section-number">3.5.4. </span>Discrete Probability of Multiple Outcomes in a Single Event (<em><strong>OR</strong></em>)<a class="headerlink" href="#discrete-probability-of-multiple-outcomes-in-a-single-event-or" title="Permalink to this heading">#</a></h2>
 <p>In certain cases we might be interested in the probability of multiple outcomes.  For example, you might ask</p>
 <p>“What is the probability of drawing a white <em><strong>OR</strong></em> a red marble from a bucket with 20 red, 30 white, and 50 blue marbles?”</p>
 <p>In this case, we are considering picking one marble from the bucket and asking what is the probability that this marble is either white <em><strong>OR</strong></em> red.  Since the drawing of a white marble is mutually exclusive from the drawing of a red marble, the probability of one <em><strong>OR</strong></em> the other is the sum of the independent probabilities:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-60812c4c-6cde-4250-b823-c57cb280b034">
-<span class="eqno">(3.61)<a class="headerlink" href="#equation-60812c4c-6cde-4250-b823-c57cb280b034" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a96e9a8c-9487-4ade-b784-22beafc0ed34">
+<span class="eqno">(3.61)<a class="headerlink" href="#equation-a96e9a8c-9487-4ade-b784-22beafc0ed34" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(W \text{ or } R) = P(W) + P(R) = \frac{30}{100} + \frac{20}{100} = \frac{1}{2}
 \end{equation}\]</div>
 <p>The equation above only generalizes for independent events.</p>
-<section id="independent-events">
+<div class="section" id="independent-events">
 <h3><span class="section-number">3.5.4.1. </span>Independent Events<a class="headerlink" href="#independent-events" title="Permalink to this heading">#</a></h3>
 <p>The probability of <span class="math notranslate nohighlight">\(A\)</span> or <span class="math notranslate nohighlight">\(B\)</span> where <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are <em><strong>independent events</strong></em> is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-367b67f6-15ab-4132-b652-091b375024bf">
-<span class="eqno">(3.62)<a class="headerlink" href="#equation-367b67f6-15ab-4132-b652-091b375024bf" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a705c33b-f470-4f40-a575-412e12c0744c">
+<span class="eqno">(3.62)<a class="headerlink" href="#equation-a705c33b-f470-4f40-a575-412e12c0744c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(A \text{ or } B) = P(A) + P(B)
 \end{equation}\]</div>
 <p>Examples of independent events <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>:</p>
@@ -639,12 +645,12 @@ P(A \text{ or } B) = P(A) + P(B)
 <li><p><span class="math notranslate nohighlight">\(A =\)</span> heads, <span class="math notranslate nohighlight">\(B =\)</span>  tails for a single coin flip</p></li>
 <li><p><span class="math notranslate nohighlight">\(A =\)</span> 6, <span class="math notranslate nohighlight">\(B = \)</span> 2 for a single roll of dice</p></li>
 </ol>
-</section>
-<section id="dependent-events">
+</div>
+<div class="section" id="dependent-events">
 <h3><span class="section-number">3.5.4.2. </span>Dependent Events<a class="headerlink" href="#dependent-events" title="Permalink to this heading">#</a></h3>
 <p>The probability of <span class="math notranslate nohighlight">\(A\)</span> or <span class="math notranslate nohighlight">\(B\)</span> where <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are <em><strong>dependent events</strong></em> is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2081e110-f5dc-4a00-ae94-3b307a29e804">
-<span class="eqno">(3.63)<a class="headerlink" href="#equation-2081e110-f5dc-4a00-ae94-3b307a29e804" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2cf18c69-9eab-421b-b8aa-b6bb8b0fb11e">
+<span class="eqno">(3.63)<a class="headerlink" href="#equation-2cf18c69-9eab-421b-b8aa-b6bb8b0fb11e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(A \text{ or } B) = P(A) + P(B) - P(A \text{ and } B)
 \end{equation}\]</div>
 <p>Examples of dependent events <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>:</p>
@@ -652,34 +658,34 @@ P(A \text{ or } B) = P(A) + P(B) - P(A \text{ and } B)
 <li><p><span class="math notranslate nohighlight">\(A =\)</span> drawing a spade, <span class="math notranslate nohighlight">\(B =\)</span>  drawing a Jack for a single card draw</p></li>
 <li><p><span class="math notranslate nohighlight">\(A = \)</span> rolling a 2, <span class="math notranslate nohighlight">\(B = \)</span> rolling an even number for a single dice roll</p></li>
 </ol>
-</section>
-</section>
-<section id="probability-of-multiple-outcomes-for-multiple-events-and">
+</div>
+</div>
+<div class="section" id="probability-of-multiple-outcomes-for-multiple-events-and">
 <h2><span class="section-number">3.5.5. </span>Probability of Multiple Outcomes for Multiple Events (AND)<a class="headerlink" href="#probability-of-multiple-outcomes-for-multiple-events-and" title="Permalink to this heading">#</a></h2>
 <p>What if we consider problems like what is the probability that I get two tails in a row from flipping a fair coin.  This is the <em><strong>AND</strong></em> rule and requires that we multiply probabilities:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c1c1ed2e-598e-433b-b0df-a4e716fed3dc">
-<span class="eqno">(3.64)<a class="headerlink" href="#equation-c1c1ed2e-598e-433b-b0df-a4e716fed3dc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9a728a93-c354-4b43-825f-57258884bc89">
+<span class="eqno">(3.64)<a class="headerlink" href="#equation-9a728a93-c354-4b43-825f-57258884bc89" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(T,T) = P(T)\cdot P(T) = \frac{1}{2}\cdot\frac{1}{2} = \frac{1}{4}
 \end{equation}\]</div>
 <p>We can check this by considering all possible outcomes.  Here is a list of all possible outcomes:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-812f0d21-192e-40db-b7cc-92d89b63b7c6">
-<span class="eqno">(3.65)<a class="headerlink" href="#equation-812f0d21-192e-40db-b7cc-92d89b63b7c6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f17dd841-0078-492f-8c2f-a7473ff82ef6">
+<span class="eqno">(3.65)<a class="headerlink" href="#equation-f17dd841-0078-492f-8c2f-a7473ff82ef6" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;T, T \\
 &amp;T, H \\
 &amp;H, T \\
 &amp;H, H
 \end{align}\]</div>
 <p>From this, we see that there are four possible outcomes of flipping two-sided coin twice.  Of these, there are only one outcome that has both tails.  Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-39ef853f-7708-43c0-8d57-6546ea9bdcc2">
-<span class="eqno">(3.66)<a class="headerlink" href="#equation-39ef853f-7708-43c0-8d57-6546ea9bdcc2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2446e0b0-05fd-453d-a0c6-2db5a0f0a63a">
+<span class="eqno">(3.66)<a class="headerlink" href="#equation-2446e0b0-05fd-453d-a0c6-2db5a0f0a63a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{\text{# ways of getting two tails in a row}}{\text{total # of possible outcomes}} = \frac{1}{4}
 \end{equation}\]</div>
 <p>Generally, we multiply probability of events to find the probability of these two events happening.  However, this only holds for <em><strong>independent</strong></em> events.  For dependent events, such as drawing of cards without replacment, we introduce conditional probabilities.</p>
-<section id="id1">
+<div class="section" id="id1">
 <h3><span class="section-number">3.5.5.1. </span>Independent Events<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
 <p>The probability of <em><strong>independent</strong></em> events <span class="math notranslate nohighlight">\(A\)</span> <em><strong>AND</strong></em> <span class="math notranslate nohighlight">\(B\)</span> is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7f2b9dd7-970c-41bf-b8ef-90462d965178">
-<span class="eqno">(3.67)<a class="headerlink" href="#equation-7f2b9dd7-970c-41bf-b8ef-90462d965178" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-571a6444-e54e-4bc6-968d-04f5931a1bd6">
+<span class="eqno">(3.67)<a class="headerlink" href="#equation-571a6444-e54e-4bc6-968d-04f5931a1bd6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(A \text{ and } B) = P(A)P(B),
 \end{equation}\]</div>
 <p>Examples include:</p>
@@ -687,12 +693,12 @@ P(A \text{ and } B) = P(A)P(B),
 <li><p>Rolling two 2s in a row</p></li>
 <li><p>Flipping a heads and then a tails</p></li>
 </ol>
-</section>
-<section id="id2">
+</div>
+<div class="section" id="id2">
 <h3><span class="section-number">3.5.5.2. </span>Dependent Events<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <p>The probability of <em><strong>dependent</strong></em> events <span class="math notranslate nohighlight">\(A\)</span> <em><strong>AND</strong></em> <span class="math notranslate nohighlight">\(B\)</span> is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a855f1ed-ff48-4718-8ec8-319a455cd152">
-<span class="eqno">(3.68)<a class="headerlink" href="#equation-a855f1ed-ff48-4718-8ec8-319a455cd152" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-614c9371-ee86-4bb0-9895-f87039094bb8">
+<span class="eqno">(3.68)<a class="headerlink" href="#equation-614c9371-ee86-4bb0-9895-f87039094bb8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(A \text{ and } B) = P(A)P(B|A),
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(P(B|A)\)</span> is the “probability of <span class="math notranslate nohighlight">\(B\)</span> <em>given</em> <span class="math notranslate nohighlight">\(A\)</span>”, or the conditional probability of <span class="math notranslate nohighlight">\(B\)</span> and <span class="math notranslate nohighlight">\(A\)</span>.</p>
@@ -701,33 +707,33 @@ P(A \text{ and } B) = P(A)P(B|A),
 <li><p>Drawing, without replacement, a heart and a spade.</p></li>
 <li><p>Drawing, without replacment, two red cards in a row.</p></li>
 </ol>
-</section>
-</section>
-<section id="conditional-probability-of-events">
+</div>
+</div>
+<div class="section" id="conditional-probability-of-events">
 <h2><span class="section-number">3.5.6. </span>Conditional Probability of Events<a class="headerlink" href="#conditional-probability-of-events" title="Permalink to this heading">#</a></h2>
 <p>Conditional probabilities are the measure of something given other, prior, information.  For example, you might ask “what is the probability that I draw a Jack given that I draw a spade?”  This probability is written as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7df1bd4b-f4ca-4229-bac3-23d98f014f29">
-<span class="eqno">(3.69)<a class="headerlink" href="#equation-7df1bd4b-f4ca-4229-bac3-23d98f014f29" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-18c28e69-e753-4794-9a6b-4455c7b95ebc">
+<span class="eqno">(3.69)<a class="headerlink" href="#equation-18c28e69-e753-4794-9a6b-4455c7b95ebc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(J|\spadesuit) = \frac{1}{13}
 \end{equation}\]</div>
 <p>This is best compute by counting (or calculating) a total number of the outcome and the total possible.  Most probabilities can be cast as conditional.  For example, the probability of a drawing a heart from a standard deck can be stated as “What is the probablity that I draw a heart given that I have a 52 card deck, 13 of which are hearts?”</p>
 <p>Conditional probabilities are important in probability theory and also are important in statistical Thermodynamics.</p>
-</section>
-<section id="binomial-coefficients">
+</div>
+<div class="section" id="binomial-coefficients">
 <h2><span class="section-number">3.5.7. </span>Binomial Coefficients<a class="headerlink" href="#binomial-coefficients" title="Permalink to this heading">#</a></h2>
 <p>One of the hardest things in discrete probability is counting the total number of possible outcomes.  For example, if I ask what is the probability of getting a royal flush when dealt five cards, we must determine (1) the number of five card hands that are royal flushes and (2) the total possible number of five card hands.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-053bc91d-72eb-47a3-8bb5-b87751781ca6">
-<span class="eqno">(3.70)<a class="headerlink" href="#equation-053bc91d-72eb-47a3-8bb5-b87751781ca6" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-7db93a0a-03f7-4316-918e-fa280c3921cc">
+<span class="eqno">(3.70)<a class="headerlink" href="#equation-7db93a0a-03f7-4316-918e-fa280c3921cc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 P(\text{royal flush}) = \frac{\text{# royal flush hands}}{\text{total number of five card hands}}
 \end{equation}\]</div>
 <p>To count the total number of five card hands, it is useful to introduce the concept of binomial coefficients.  These coefficients are useful in statistical mechanics as well.  The number of five card hands is given by</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70635c59-c82a-4b75-95ce-e8653a281f1d">
-<span class="eqno">(3.71)<a class="headerlink" href="#equation-70635c59-c82a-4b75-95ce-e8653a281f1d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-613b22da-9ab9-4383-ad9d-459dabeefd4f">
+<span class="eqno">(3.71)<a class="headerlink" href="#equation-613b22da-9ab9-4383-ad9d-459dabeefd4f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 52C5 = \frac{52!}{5!47!} = 2598960
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(C\)</span> stands for the choose function and <span class="math notranslate nohighlight">\(!\)</span> stands for the factorial operation.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

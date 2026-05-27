@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2.6. Numeric Integration &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -567,14 +573,14 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="numeric-integration">
+  <div class="tex2jax_ignore mathjax_ignore section" id="numeric-integration">
 <h1><span class="section-number">2.6. </span>Numeric Integration<a class="headerlink" href="#numeric-integration" title="Permalink to this heading">#</a></h1>
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">2.6.1. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="integration">
+</div>
+<div class="section" id="integration">
 <h2><span class="section-number">2.6.2. </span>Integration<a class="headerlink" href="#integration" title="Permalink to this heading">#</a></h2>
-<section id="indefinite-integration">
+<div class="section" id="indefinite-integration">
 <h3><span class="section-number">2.6.2.1. </span>Indefinite integration<a class="headerlink" href="#indefinite-integration" title="Permalink to this heading">#</a></h3>
 <p>Consider <span class="math notranslate nohighlight">\(f(x) = \int x^2 dx\)</span>, can we write <span class="math notranslate nohighlight">\(f(x)\)</span> in a different way?  Sure, if we know the antiderivative of the integrand we can write out f(x) as the indefinite integral.  Namely, <span class="math notranslate nohighlight">\(f(x) = \int x^2 dx = \frac{x^3}{3} + C\)</span> for arbitrary constant <span class="math notranslate nohighlight">\(C\)</span>.</p>
 <p>What are the indefinite integrals of the following</p>
@@ -585,8 +591,8 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\int \frac{1}{x} dx\)</span></p></li>
 </ol>
 <p>Coding does not help with indefinite integration.  These need to be derived analytically.  Some common indefinite integrals are tabulated here: http://integral-table.com/.</p>
-</section>
-<section id="definite-integration">
+</div>
+<div class="section" id="definite-integration">
 <h3><span class="section-number">2.6.2.2. </span>Definite integration<a class="headerlink" href="#definite-integration" title="Permalink to this heading">#</a></h3>
 <p>Definite integration is when we want to evaluate the integral of a function (integrand) over a finite domain.  E.g. <span class="math notranslate nohighlight">\(\int_0^4 x^2dx\)</span>.  If the domain is static (i.e. <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(4\)</span> instead of <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(y\)</span>) and integration is performed over all variables in the integrand, then the result of a definite integral will be a number (as opposed to a function of x in the case of indefinite integrals).  This may all sound esoteric so let’s consider some examples.</p>
 <ol class="arabic">
@@ -618,14 +624,14 @@ document.write(`
 </div>
 </div>
 </div>
-</section>
-<section id="numeric-definite-integration">
+</div>
+<div class="section" id="numeric-definite-integration">
 <h3><span class="section-number">2.6.2.3. </span>Numeric Definite Integration<a class="headerlink" href="#numeric-definite-integration" title="Permalink to this heading">#</a></h3>
 <p>Numeric integration can only be used for definite integrals.  It is a way of approximating the analytic solution and good approaches to this will converge to that solution in certain limits.  The most common example of this is rectangular integration (or the midpoint rule).  For this method, we approximate the area under a curve as the sum of the areas of abutting rectangles that are the height of the function at the midpoint of the rectangle.  These rectangles are of a specified width and the value of the summation converges to the real solution as the width of the rectangles decrease.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
@@ -679,8 +685,8 @@ document.write(`
 <p>There are a vareity of other, more accurate, numerical integration techniques including the trapezoid rule, Simpson’s rule and Gaussian quadrature. We will not go into these in detail.  Instead we will use scipy packages for these.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
 <span class="n">dx</span> <span class="o">=</span> <span class="mf">0.01</span>
 <span class="n">xInt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.5</span><span class="o">*</span><span class="n">dx</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">dx</span><span class="p">)</span>
@@ -698,9 +704,9 @@ Gaussian quadrature : 21.333333333333336
 </div>
 </div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

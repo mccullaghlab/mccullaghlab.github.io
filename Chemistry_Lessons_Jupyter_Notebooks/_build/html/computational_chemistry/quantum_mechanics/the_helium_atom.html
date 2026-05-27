@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>5.2.4. The Helium Atom &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -567,13 +573,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="the-helium-atom">
+  <div class="tex2jax_ignore mathjax_ignore section" id="the-helium-atom">
 <h1><span class="section-number">5.2.4. </span>The Helium Atom<a class="headerlink" href="#the-helium-atom" title="Permalink to this heading">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">5.2.4.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
 <p>We have determined the energies and wave functions of the hydrogen atom and hydrogen-like ions.  In these notes, we will determine the energies and wave functions for the helium atom (a multi-electron atom).</p>
-</section>
-<section id="learning-goals">
+</div>
+<div class="section" id="learning-goals">
 <h2><span class="section-number">5.2.4.2. </span>Learning Goals:<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>After working through these notes, you will be able to:</p>
 <ol class="arabic simple">
@@ -582,8 +588,8 @@ document.write(`
 <li><p>Use the variational method to solve for the approximate energy of the helium atom.</p></li>
 <li><p>Use the variational method to solve for the approximate ground-state wave function of the helium atom.</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">5.2.4.3. </span>Coding Concepts:<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>The following coding concepts are used in this notebook:</p>
 <ol class="arabic simple">
@@ -591,8 +597,8 @@ document.write(`
 <li><p><a class="reference internal" href="../../coding_concepts/functions.html"><span class="doc std std-doc">Functions</span></a></p></li>
 <li><p><a class="reference internal" href="../../coding_concepts/plotting_with_matplotlib.html"><span class="doc std std-doc">Plotting with matplotlib</span></a></p></li>
 </ol>
-</section>
-<section id="the-model-of-the-helium-atom">
+</div>
+<div class="section" id="the-model-of-the-helium-atom">
 <h2><span class="section-number">5.2.4.4. </span>The Model of the Helium Atom<a class="headerlink" href="#the-model-of-the-helium-atom" title="Permalink to this heading">#</a></h2>
 <p>The helium atom is composed of a two electrons, two protons and two neutrons.  If these particles were classical, the interaction energy would be the Coulombic attraction between electron and the nuclei as well as the Coulombic repulsion between the two electrons (assuming the protons and neutrons reside at a single stationary point):</p>
 <p><span class="math notranslate nohighlight">\(V(\vec{r_1},\vec{r_2}) = -\frac{2e^2}{4\pi\epsilon_0|\vec{r_1}|}-\frac{2e^2}{4\pi\epsilon_0|\vec{r_2}|} + \frac{e^2}{4\pi\epsilon_0|\vec{r_1}-\vec{r_2}|}\)</span>,</p>
@@ -605,8 +611,8 @@ document.write(`
 <p><span class="math notranslate nohighlight">\( = \hat{H}^{Z=2}_H(\vec{r_1}) + \hat{H}^{Z=2}_H(\vec{r_2}) + \frac{1}{r_{12}}\)</span>,</p>
 <p>where <span class="math notranslate nohighlight">\(\hat{H}^{Z=2}_H(\vec{r_i})\)</span> is the Hydrogen-like Hamiltonian for particle <span class="math notranslate nohighlight">\(i\)</span> with a nuclear charge of 2<span class="math notranslate nohighlight">\(e\)</span> and <span class="math notranslate nohighlight">\(r_{12} = |\vec{r_1}-\vec{r_2}|\)</span> .</p>
 <p>The Schrodinger equation for the Helium atom cannot be solved analytically.  We will show how to approximate the ground-state energy using first-order perturbation theory and the variational approach.</p>
-</section>
-<section id="first-order-perturbation-theory">
+</div>
+<div class="section" id="first-order-perturbation-theory">
 <h2><span class="section-number">5.2.4.5. </span>First-order Perturbation Theory<a class="headerlink" href="#first-order-perturbation-theory" title="Permalink to this heading">#</a></h2>
 <p>To apply first-order perturbation theory we must divide the Hamiltonian into a zeroth-order Hamiltonian plus a perturbation.  Here we treat the electron-electron repulsion as the perturbation (not a great approximation as we will see)</p>
 <p><span class="math notranslate nohighlight">\(\hat{H}(\vec{r_1},\vec{r_2}) = \hat{H}^0 + \hat{H}^1\)</span>,</p>
@@ -623,24 +629,24 @@ document.write(`
 <p>can be determined by analogy to the hydrogen atom wave functions.  The zeroth order energy is then a sum of hydrogen-like energies</p>
 <p><span class="math notranslate nohighlight">\(E^0 = -\frac{Z^2}{2} - \frac{Z^2}{2} = -Z^2 = -4\)</span> Hartree.</p>
 <p>First order perturbation theory dictates that</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ce0bf91f-f4f6-4d70-aabd-923822d44f38">
-<span class="eqno">(5.52)<a class="headerlink" href="#equation-ce0bf91f-f4f6-4d70-aabd-923822d44f38" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-5eec4048-67d4-4415-ad86-3d0e8dca9f71">
+<span class="eqno">(5.52)<a class="headerlink" href="#equation-5eec4048-67d4-4415-ad86-3d0e8dca9f71" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 E^1 &amp;=&amp; \langle \psi^0 (\vec{r_1},\vec{r_2})| \frac{1}{r_{12}} | \psi^0 (\vec{r_1},\vec{r_2})\rangle 
 \end{eqnarray}\]</div>
 <p>This integral is quite a pain to evaluate but works out to be</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b3821087-aee1-4f51-be46-b8682c1523fb">
-<span class="eqno">(5.53)<a class="headerlink" href="#equation-b3821087-aee1-4f51-be46-b8682c1523fb" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
+<div class="amsmath math notranslate nohighlight" id="equation-e111ab5e-d668-4d0f-a76a-ff94647f9a17">
+<span class="eqno">(5.53)<a class="headerlink" href="#equation-e111ab5e-d668-4d0f-a76a-ff94647f9a17" title="Permalink to this equation">#</a></span>\[\begin{eqnarray}
 E^1 &amp;=&amp; \langle \phi_{1s}^{Z}(\vec{r_1})\phi_{1s}^{Z}(\vec{r_2})| \frac{1}{r_{12}} | \phi_{1s}^{Z}(\vec{r_1})\phi_{1s}^{Z}(\vec{r_2})\rangle \\
 &amp;=&amp; \frac{5}{8}Z \\
 &amp;=&amp; \frac{5}{4}
 \end{eqnarray}\]</div>
 <p>Finally, we get the total energy of the helium atom by adding <span class="math notranslate nohighlight">\(E^0\)</span> and <span class="math notranslate nohighlight">\(E^1\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1067890e-25e8-4f8b-b470-fe0639ad6aa3">
-<span class="eqno">(5.54)<a class="headerlink" href="#equation-1067890e-25e8-4f8b-b470-fe0639ad6aa3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a7218d4e-2181-4e7b-8247-c707518fd4ce">
+<span class="eqno">(5.54)<a class="headerlink" href="#equation-a7218d4e-2181-4e7b-8247-c707518fd4ce" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_{pt} = -Z^2 + \frac{5}{8}Z = -2.75 \text{ Hartree}
 \end{equation}\]</div>
-</section>
-<section id="variational-approach">
+</div>
+<div class="section" id="variational-approach">
 <h2><span class="section-number">5.2.4.6. </span>Variational Approach<a class="headerlink" href="#variational-approach" title="Permalink to this heading">#</a></h2>
 <p>The variational principle applied to the Schrodinger equation yields that if</p>
 <p><span class="math notranslate nohighlight">\(\hat{H}\psi_0 = E_0\psi_0\)</span></p>
@@ -669,12 +675,12 @@ A single 1s orbital with this effective nuclear charge is plotted below as a fun
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># let&#39;s plot some radial wavefunctions of the hydrogen atom</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">sph_harm</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">eval_genlaguerre</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">factorial</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">sph_harm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">eval_genlaguerre</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
 <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span>
@@ -711,28 +717,28 @@ A single 1s orbital with this effective nuclear charge is plotted below as a fun
 <img alt="../../_images/620133b84280b2d70eea2b1cf0037b54cdf86f83eb23c737f8fd1cb50028e49d.png" src="../../_images/620133b84280b2d70eea2b1cf0037b54cdf86f83eb23c737f8fd1cb50028e49d.png" />
 </div>
 </div>
-</section>
-<section id="comparison-of-the-two-methods">
+</div>
+<div class="section" id="comparison-of-the-two-methods">
 <h2><span class="section-number">5.2.4.7. </span>Comparison of the Two Methods<a class="headerlink" href="#comparison-of-the-two-methods" title="Permalink to this heading">#</a></h2>
 <p>Perturbation theory yields a ground-state energy for the helium atom as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fb298b2c-57a0-4492-9449-c48b91386a9f">
-<span class="eqno">(5.55)<a class="headerlink" href="#equation-fb298b2c-57a0-4492-9449-c48b91386a9f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-af99a852-b83b-4025-aca5-181eebd67898">
+<span class="eqno">(5.55)<a class="headerlink" href="#equation-af99a852-b83b-4025-aca5-181eebd67898" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_{pt} = -Z^2 + \frac{5}{8}Z = -2.75 \text{ Hartree}
 \end{equation}\]</div>
 <p>The variational method (with the specific basis functions that we chose) yields</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3bda5273-73d9-4716-8f57-8a9e51eff645">
-<span class="eqno">(5.56)<a class="headerlink" href="#equation-3bda5273-73d9-4716-8f57-8a9e51eff645" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-bb9a70d1-105a-4cef-aa2d-ba502b8190f4">
+<span class="eqno">(5.56)<a class="headerlink" href="#equation-bb9a70d1-105a-4cef-aa2d-ba502b8190f4" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_{vt} = -2.8477 \text{ Hartree}
 \end{equation}\]</div>
 <p>These can be compared to the experimental value of</p>
-<div class="amsmath math notranslate nohighlight" id="equation-94470a6b-8712-4d24-9a28-62766116351b">
-<span class="eqno">(5.57)<a class="headerlink" href="#equation-94470a6b-8712-4d24-9a28-62766116351b" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-a613225b-86ef-47ce-bb9b-c0af95626249">
+<span class="eqno">(5.57)<a class="headerlink" href="#equation-a613225b-86ef-47ce-bb9b-c0af95626249" title="Permalink to this equation">#</a></span>\[\begin{equation}
 E_{exp} = -2.9033\text{ Hartree}
 \end{equation}\]</div>
 <p>From this comparison we see that the variational solution yields a value closer to experiment that perturbation theory.  This shouldn’t be all that surprising since the assumption that the perturbation is small is not a good one.</p>
 <p>As a final, practical, point of comparison, the variational approach yields approximate wave functions and this is something that is not (easily) achievable with perturbation theory.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

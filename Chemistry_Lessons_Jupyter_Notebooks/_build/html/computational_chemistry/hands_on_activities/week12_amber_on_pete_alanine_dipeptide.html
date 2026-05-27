@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -67,6 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.4.17. Hands-on Lesson: Molecular Dynamics of a 3D Lennard-Jones Fluid" href="lj_fluid_mdanalysis_lesson.html" />
     <link rel="prev" title="5.4.14. Week 11 Hands-On: Refactoring an H\(_2\) Hartree–Fock Script into a Python Class" href="week11_python_classes_and_hf_code.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -287,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -313,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">5.4. Hands-on Activities</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -332,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -585,13 +592,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="week-12-hands-on-running-an-amber-simulation-of-alanine-dipeptide-on-pete">
+  <div class="tex2jax_ignore mathjax_ignore section" id="week-12-hands-on-running-an-amber-simulation-of-alanine-dipeptide-on-pete">
 <h1><span class="section-number">5.4.15. </span>Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete<a class="headerlink" href="#week-12-hands-on-running-an-amber-simulation-of-alanine-dipeptide-on-pete" title="Permalink to this heading">#</a></h1>
 <p>This notebook is a <strong>Pete-adapted</strong> version of the AMBER alanine dipeptide tutorial:</p>
 <p><strong>AMBER tutorial:</strong> <em>Simple Simulation of Alanine Dipeptide</em><br />
 https://ambermd.org/tutorials/basic/tutorial0/index.php</p>
 <p><img alt="ADP" src="../../_images/alanine_dipeptide.png" /></p>
-<section id="goals">
+<div class="section" id="goals">
 <h2><span class="section-number">5.4.15.1. </span>Goals<a class="headerlink" href="#goals" title="Permalink to this heading">#</a></h2>
 <p>By the end of this hands-on lesson, you should be able to:</p>
 <ul class="simple">
@@ -603,8 +610,8 @@ https://ambermd.org/tutorials/basic/tutorial0/index.php</p>
 <li><p>run minimization and MD</p></li>
 <li><p>do a small amount of post-processing with <code class="docutils literal notranslate"><span class="pre">cpptraj</span></code></p></li>
 </ul>
-</section>
-<section id="important-adaptation-for-pete">
+</div>
+<div class="section" id="important-adaptation-for-pete">
 <h2><span class="section-number">5.4.15.2. </span>Important adaptation for Pete<a class="headerlink" href="#important-adaptation-for-pete" title="Permalink to this heading">#</a></h2>
 <p>The original tutorial creates a generic <code class="docutils literal notranslate"><span class="pre">Tutorial</span></code> folder.<br />
 For this course, start in:</p>
@@ -613,8 +620,8 @@ For this course, start in:</p>
 <div><p>Note: your prompt said <code class="docutils literal notranslate"><span class="pre">/projects/tia001/$SUER</span></code>, which appears to be a typo.<br />
 In the commands below I use the standard environment variable <strong><code class="docutils literal notranslate"><span class="pre">$USER</span></code></strong>.</p>
 </div></blockquote>
-</section>
-<section id="set-up-your-week-12-working-directory-on-pete">
+</div>
+<div class="section" id="set-up-your-week-12-working-directory-on-pete">
 <h2><span class="section-number">5.4.15.3. </span>Set up your Week 12 working directory on Pete<a class="headerlink" href="#set-up-your-week-12-working-directory-on-pete" title="Permalink to this heading">#</a></h2>
 <p>Create a <code class="docutils literal notranslate"><span class="pre">week12</span></code> directory in our shared project space.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>-p<span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week12
@@ -633,8 +640,8 @@ In the commands below I use the standard environment variable <strong><code clas
 which<span class="w"> </span>tleap
 </pre></div>
 </div>
-</section>
-<section id="build-alanine-dipeptide-with-tleap">
+</div>
+<div class="section" id="build-alanine-dipeptide-with-tleap">
 <h2><span class="section-number">5.4.15.4. </span>Build alanine dipeptide with <code class="docutils literal notranslate"><span class="pre">tleap</span></code><a class="headerlink" href="#build-alanine-dipeptide-with-tleap" title="Permalink to this heading">#</a></h2>
 <p>This follows the AMBER tutorial closely:</p>
 <ol class="arabic simple">
@@ -727,8 +734,8 @@ cat<span class="w"> </span>build_diala.in
 tleap<span class="w"> </span>-f<span class="w"> </span>build_diala.in
 </pre></div>
 </div>
-</section>
-<section id="create-amber-md-input-files">
+</div>
+<div class="section" id="create-amber-md-input-files">
 <h2><span class="section-number">5.4.15.5. </span>Create AMBER MD input files<a class="headerlink" href="#create-amber-md-input-files" title="Permalink to this heading">#</a></h2>
 <p>We will create three files:</p>
 <ul class="simple">
@@ -736,7 +743,7 @@ tleap<span class="w"> </span>-f<span class="w"> </span>build_diala.in
 <li><p><code class="docutils literal notranslate"><span class="pre">heat.in</span></code> for heating from 0 K to 300 K</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">prod_short.in</span></code> for a <strong>short production run suitable for in-class activity</strong></p></li>
 </ul>
-<section id="min-in-minimization-input-file">
+<div class="section" id="min-in-minimization-input-file">
 <h3><span class="section-number">5.4.15.5.1. </span><code class="docutils literal notranslate"><span class="pre">min.in</span></code> - Minimization input file<a class="headerlink" href="#min-in-minimization-input-file" title="Permalink to this heading">#</a></h3>
 <p>The first stage of performing a molecular dynamics simulation is to make sure your starting structure has a reasonable potential energy.  To achieve this, we need to create a file called <code class="docutils literal notranslate"><span class="pre">min.in</span></code> to specify to amber that we want to do an energy minimization.  Create this file by</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vi<span class="w"> </span>min.in
@@ -774,8 +781,8 @@ tleap<span class="w"> </span>-f<span class="w"> </span>build_diala.in
 </pre></div>
 </div>
 <p>Make sure you have properly created a file called <code class="docutils literal notranslate"><span class="pre">min.in</span></code> in your <code class="docutils literal notranslate"><span class="pre">/projects/tia001/$USER/week12</span></code> folder.</p>
-</section>
-<section id="heat-in-heating-input-file">
+</div>
+<div class="section" id="heat-in-heating-input-file">
 <h3><span class="section-number">5.4.15.5.2. </span><code class="docutils literal notranslate"><span class="pre">heat.in</span></code> - Heating input file<a class="headerlink" href="#heat-in-heating-input-file" title="Permalink to this heading">#</a></h3>
 <p>The second stage of a typical MD simulation is to heat the system.  After minimization, the system is basically at 0K, so we need to heat it to the temperature of interest.   We start by creating a <code class="docutils literal notranslate"><span class="pre">heat.in</span></code> file.  This will look similar to the <code class="docutils literal notranslate"><span class="pre">min.in</span></code> file but with important differences.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vi<span class="w"> </span>heat.in
@@ -838,8 +845,8 @@ tleap<span class="w"> </span>-f<span class="w"> </span>build_diala.in
 <span class="n">EOF</span>
 </pre></div>
 </div>
-</section>
-<section id="prod-in-production-run-input-file">
+</div>
+<div class="section" id="prod-in-production-run-input-file">
 <h3><span class="section-number">5.4.15.5.3. </span><code class="docutils literal notranslate"><span class="pre">prod.in</span></code> - Production run input file<a class="headerlink" href="#prod-in-production-run-input-file" title="Permalink to this heading">#</a></h3>
 <p>The next phase of MD simulation is the production (or sometimes equilibration) run.  This will generate the data we will analyze.</p>
 <p>Again, vi and put in the following:</p>
@@ -875,9 +882,9 @@ tleap<span class="w"> </span>-f<span class="w"> </span>build_diala.in
 <li><p><code class="docutils literal notranslate"><span class="pre">nstlim</span> <span class="pre">=</span> <span class="pre">50000</span></code> gives <strong>100 ps</strong></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">nstlim</span> <span class="pre">=</span> <span class="pre">5000000</span></code> gives <strong>10 ns</strong> (tutorial-scale)</p></li>
 </ul>
-</section>
-</section>
-<section id="review-the-input-files">
+</div>
+</div>
+<div class="section" id="review-the-input-files">
 <h2><span class="section-number">5.4.15.6. </span>Review the input files<a class="headerlink" href="#review-the-input-files" title="Permalink to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/projects/tia001/<span class="nv">$USER</span>/week12
 
@@ -891,8 +898,8 @@ cat<span class="w"> </span>heat.in
 cat<span class="w"> </span>prod.in
 </pre></div>
 </div>
-</section>
-<section id="run-minimization">
+</div>
+<div class="section" id="run-minimization">
 <h2><span class="section-number">5.4.15.7. </span>Run minimization<a class="headerlink" href="#run-minimization" title="Permalink to this heading">#</a></h2>
 <p>Create the a job submit script called <code class="docutils literal notranslate"><span class="pre">min.bash</span></code> or something similar.  Put the following into the file using <code class="docutils literal notranslate"><span class="pre">vi</span></code> (or <code class="docutils literal notranslate"><span class="pre">cat</span></code> if you need to).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
@@ -912,16 +919,16 @@ cat<span class="w"> </span>prod.in
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch<span class="w"> </span>min.bash
 </pre></div>
 </div>
-</section>
-<section id="inspect-the-minimization-output">
+</div>
+<div class="section" id="inspect-the-minimization-output">
 <h2><span class="section-number">5.4.15.8. </span>Inspect the minimization output<a class="headerlink" href="#inspect-the-minimization-output" title="Permalink to this heading">#</a></h2>
 <p>You should see the energy decrease during minimization.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Last 40 lines of min.out:&quot;</span>
 tail<span class="w"> </span>-n<span class="w"> </span><span class="m">40</span><span class="w"> </span>min.out
 </pre></div>
 </div>
-</section>
-<section id="run-heating">
+</div>
+<div class="section" id="run-heating">
 <h2><span class="section-number">5.4.15.9. </span>Run heating<a class="headerlink" href="#run-heating" title="Permalink to this heading">#</a></h2>
 <p>Create a submit script for the heating step called <code class="docutils literal notranslate"><span class="pre">heat.bash</span></code>.  This submit script reads <code class="docutils literal notranslate"><span class="pre">heat.in</span></code> and uses the output coordinates from the minimization step (<code class="docutils literal notranslate"><span class="pre">min.ncrst</span></code>).</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
@@ -948,8 +955,8 @@ tail<span class="w"> </span>-n<span class="w"> </span><span class="m">40</span><
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch<span class="w"> </span>heat.bash
 </pre></div>
 </div>
-</section>
-<section id="inspect-the-heating-output">
+</div>
+<div class="section" id="inspect-the-heating-output">
 <h2><span class="section-number">5.4.15.10. </span>Inspect the heating output<a class="headerlink" href="#inspect-the-heating-output" title="Permalink to this heading">#</a></h2>
 <p>Look for temperature increasing during the run.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grep<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;NSTEP&quot;</span><span class="w"> </span>heat.out<span class="w"> </span><span class="p">|</span><span class="w"> </span>head
@@ -957,8 +964,8 @@ tail<span class="w"> </span>-n<span class="w"> </span><span class="m">40</span><
 tail<span class="w"> </span>-n<span class="w"> </span><span class="m">60</span><span class="w"> </span>heat.out
 </pre></div>
 </div>
-</section>
-<section id="run-production-md">
+</div>
+<div class="section" id="run-production-md">
 <h2><span class="section-number">5.4.15.11. </span>Run production MD<a class="headerlink" href="#run-production-md" title="Permalink to this heading">#</a></h2>
 <p>Create a job submit script called <code class="docutils literal notranslate"><span class="pre">prod.bash</span></code> that contains the following</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
@@ -985,14 +992,14 @@ tail<span class="w"> </span>-n<span class="w"> </span><span class="m">60</span><
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sbatch<span class="w"> </span>prod.bash
 </pre></div>
 </div>
-</section>
-<section id="check-the-production-outputs">
+</div>
+<div class="section" id="check-the-production-outputs">
 <h2><span class="section-number">5.4.15.12. </span>Check the production outputs<a class="headerlink" href="#check-the-production-outputs" title="Permalink to this heading">#</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>prod.*
 </pre></div>
 </div>
-</section>
-<section id="basic-trajectory-analysis-with-cpptraj">
+</div>
+<div class="section" id="basic-trajectory-analysis-with-cpptraj">
 <h2><span class="section-number">5.4.15.13. </span>Basic trajectory analysis with <code class="docutils literal notranslate"><span class="pre">cpptraj</span></code><a class="headerlink" href="#basic-trajectory-analysis-with-cpptraj" title="Permalink to this heading">#</a></h2>
 <p>The original tutorial includes basic post-processing.<br />
 Here we will do two simple analyses:</p>
@@ -1026,16 +1033,16 @@ cpptraj<span class="w"> </span>-i<span class="w"> </span>cpptraj_rmsd.in
 cpptraj<span class="w"> </span>-i<span class="w"> </span>cpptraj_phipsi.in
 </pre></div>
 </div>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="plot-rmsd-and-the-phi-psi-time-series-in-python">
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="plot-rmsd-and-the-phi-psi-time-series-in-python">
 <h1><span class="section-number">5.4.16. </span>Plot RMSD and the <code class="docutils literal notranslate"><span class="pre">phi</span></code>/<code class="docutils literal notranslate"><span class="pre">psi</span></code> time series in Python<a class="headerlink" href="#plot-rmsd-and-the-phi-psi-time-series-in-python" title="Permalink to this heading">#</a></h1>
 <p>You will need to transfer <code class="docutils literal notranslate"><span class="pre">rmsd.dat</span></code>, <code class="docutils literal notranslate"><span class="pre">phi.dat</span></code> and <code class="docutils literal notranslate"><span class="pre">psi.dat</span></code> to your local machine (laptop/desktop) and put in the folder containing this jupyter notebook in order to run the following plotting code.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="n">work</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/projects/tia001/</span><span class="si">{</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/week12&quot;</span><span class="p">)</span>
 
@@ -1084,7 +1091,7 @@ cpptraj<span class="w"> </span>-i<span class="w"> </span>cpptraj_phipsi.in
 <img alt="../../_images/e899d0a11a616cc72adf088591423d87448829ab9150464ac13263fc81987d3c.png" src="../../_images/e899d0a11a616cc72adf088591423d87448829ab9150464ac13263fc81987d3c.png" />
 </div>
 </div>
-<section id="short-assignment">
+<div class="section" id="short-assignment">
 <h2><span class="section-number">5.4.16.1. </span>Short assignment<a class="headerlink" href="#short-assignment" title="Permalink to this heading">#</a></h2>
 <p>Submit answers to the following questions in a word or pdf document to Canvas</p>
 <ol class="arabic simple">
@@ -1095,8 +1102,8 @@ cpptraj<span class="w"> </span>-i<span class="w"> </span>cpptraj_phipsi.in
 <li><p>Make a plot of <em><strong>RMSD vs trajectory time</strong></em> for <em>your trajectory</em> and describe what you see.</p></li>
 <li><p>Make a scatter plot of <code class="docutils literal notranslate"><span class="pre">phi</span></code> and <code class="docutils literal notranslate"><span class="pre">psi</span></code>.  Based on the <code class="docutils literal notranslate"><span class="pre">phi</span></code> and <code class="docutils literal notranslate"><span class="pre">psi</span></code> plot, does alanine dipeptide appear to remain in one conformational region or sample multiple regions?</p></li>
 </ol>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1136,6 +1143,15 @@ cpptraj<span class="w"> </span>-i<span class="w"> </span>cpptraj_phipsi.in
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title"><span class="section-number">5.4.14. </span>Week 11 Hands-On: Refactoring an H<span class="math notranslate nohighlight">\(_2\)</span> Hartree–Fock Script into a Python Class</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="lj_fluid_mdanalysis_lesson.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5.4.17. </span>Hands-on Lesson: Molecular Dynamics of a 3D Lennard-Jones Fluid</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>

@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>5.4.11. Week 7: Advanced WebMO – PES Mapping with Coordinate Scans (SN2 Example) &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -335,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -604,10 +608,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="week-7-advanced-webmo-pes-mapping-with-coordinate-scans-sn2-example">
+  <div class="tex2jax_ignore mathjax_ignore section" id="week-7-advanced-webmo-pes-mapping-with-coordinate-scans-sn2-example">
 <h1><span class="section-number">5.4.11. </span>Week 7: Advanced WebMO – PES Mapping with Coordinate Scans (SN2 Example)<a class="headerlink" href="#week-7-advanced-webmo-pes-mapping-with-coordinate-scans-sn2-example" title="Permalink to this heading">#</a></h1>
 <hr class="docutils" />
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">5.4.11.1. </span>Learning Goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>By the end of this activity, you should be able to:</p>
 <ol class="arabic simple">
@@ -617,9 +621,9 @@ document.write(`
 <li><p>Interpret energy profiles in terms of minima, barriers, and chemical reactivity.</p></li>
 <li><p>Distinguish between <strong>rigid</strong> and <strong>relaxed</strong> scans.</p></li>
 </ol>
-</section>
+</div>
 <hr class="docutils" />
-<section id="background">
+<div class="section" id="background">
 <h2><span class="section-number">5.4.11.2. </span>Background<a class="headerlink" href="#background" title="Permalink to this heading">#</a></h2>
 <p>A <strong>potential energy surface (PES)</strong> describes how the energy of a molecular system changes as a function of nuclear coordinates. For a reaction, the PES connects:</p>
 <ul class="simple">
@@ -627,14 +631,14 @@ document.write(`
 </ul>
 <p>The <strong>activation energy</strong> is the energy difference between the reactant (or reactant complex) and the transition state.</p>
 <p>In this activity, we will explore a classic <strong>SN<span class="math notranslate nohighlight">\(_2\)</span> reaction</strong>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aec0eac3-bf2e-4f4a-8a87-cc83be22d807">
-<span class="eqno">(5.154)<a class="headerlink" href="#equation-aec0eac3-bf2e-4f4a-8a87-cc83be22d807" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d4ba5c0f-6fc0-4fec-b145-d0e608dabdc0">
+<span class="eqno">(5.154)<a class="headerlink" href="#equation-d4ba5c0f-6fc0-4fec-b145-d0e608dabdc0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \mathrm{Cl^- + CH_3Cl \rightarrow CH_3Cl + Cl^-}
 \end{align}\]</div>
 <p>Yes — it’s symmetric (same nucleophile/leaving group), which makes it a clean model system for learning how to build and interpret energy profiles.</p>
-</section>
+</div>
 <hr class="docutils" />
-<section id="webmo-setup-notes">
+<div class="section" id="webmo-setup-notes">
 <h2><span class="section-number">5.4.11.3. </span>WebMO Setup Notes<a class="headerlink" href="#webmo-setup-notes" title="Permalink to this heading">#</a></h2>
 <ul>
 <li><p><strong>WebMO Pro version:</strong></p>
@@ -651,11 +655,11 @@ document.write(`
 <li><p><strong>SCF Done / Total electronic energy</strong> (Hartree)</p></li>
 <li><p><strong>Zero-point correction</strong> (Hartree), reported in the frequency job output</p></li>
 </ul>
-</section>
+</div>
 <hr class="docutils" />
-<section id="part-1-reactants-separate-optimizations-ch3cl-and-cl">
+<div class="section" id="part-1-reactants-separate-optimizations-ch3cl-and-cl">
 <h2><span class="section-number">5.4.11.4. </span>Part 1: Reactants – Separate Optimizations (CH3Cl and Cl⁻)<a class="headerlink" href="#part-1-reactants-separate-optimizations-ch3cl-and-cl" title="Permalink to this heading">#</a></h2>
-<section id="goal">
+<div class="section" id="goal">
 <h3><span class="section-number">5.4.11.4.1. </span>Goal<a class="headerlink" href="#goal" title="Permalink to this heading">#</a></h3>
 <p>Before building the SN2 complex, you will compute the <strong>optimized geometry</strong>, <strong>electronic energy</strong>, and <strong>ZPE correction</strong> for each reactant <strong>separately</strong>:</p>
 <ul class="simple">
@@ -663,11 +667,11 @@ document.write(`
 <li><p>Chloride anion, <strong>Cl⁻</strong></p></li>
 </ul>
 <p>These values will be used later to estimate reaction and activation energetics.</p>
-</section>
+</div>
 <hr class="docutils" />
-<section id="part-1a-optimize-ch3cl-and-compute-zpe">
+<div class="section" id="part-1a-optimize-ch3cl-and-compute-zpe">
 <h3><span class="section-number">5.4.11.4.2. </span>Part 1A: Optimize CH₃Cl and Compute ZPE<a class="headerlink" href="#part-1a-optimize-ch3cl-and-compute-zpe" title="Permalink to this heading">#</a></h3>
-<section id="step-1-build-ch3cl">
+<div class="section" id="step-1-build-ch3cl">
 <h4><span class="section-number">5.4.11.4.2.1. </span>Step 1: Build CH₃Cl<a class="headerlink" href="#step-1-build-ch3cl" title="Permalink to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p>Open WebMO.</p></li>
@@ -675,8 +679,8 @@ document.write(`
 <li><p>Check the structure and connectivity.</p></li>
 <li><p>Set <strong>total charge = 0</strong> and <strong>multiplicity = 1</strong>.</p></li>
 </ol>
-</section>
-<section id="step-2-geometry-optimization-frequency-calculation">
+</div>
+<div class="section" id="step-2-geometry-optimization-frequency-calculation">
 <h4><span class="section-number">5.4.11.4.2.2. </span>Step 2: Geometry Optimization + Frequency Calculation<a class="headerlink" href="#step-2-geometry-optimization-frequency-calculation" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Job Type: <strong>Optimize + Vib Freq</strong></p></li>
@@ -692,19 +696,19 @@ document.write(`
 <blockquote>
 <div><p>In Gaussian output, ZPE is typically reported as a <strong>“Zero-point correction”</strong> (Hartree). Record that value.</p>
 </div></blockquote>
-</section>
-</section>
+</div>
+</div>
 <hr class="docutils" />
-<section id="part-1b-compute-energy-of-cl">
+<div class="section" id="part-1b-compute-energy-of-cl">
 <h3><span class="section-number">5.4.11.4.3. </span>Part 1B: Compute Energy of Cl⁻<a class="headerlink" href="#part-1b-compute-energy-of-cl" title="Permalink to this heading">#</a></h3>
-<section id="step-1-build-cl">
+<div class="section" id="step-1-build-cl">
 <h4><span class="section-number">5.4.11.4.3.1. </span>Step 1: Build Cl⁻<a class="headerlink" href="#step-1-build-cl" title="Permalink to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p>Create a single chlorine atom.</p></li>
 <li><p>Set <strong>total charge = −1</strong> and <strong>multiplicity = 1</strong>.</p></li>
 </ol>
-</section>
-<section id="step-2-energy-of-cl">
+</div>
+<div class="section" id="step-2-energy-of-cl">
 <h4><span class="section-number">5.4.11.4.3.2. </span>Step 2: Energy of Cl⁻<a class="headerlink" href="#step-2-energy-of-cl" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
 <li><p>Job Type: <strong>Molecular Energy</strong> (aka single point or single SCF optimization)</p></li>
@@ -717,32 +721,32 @@ document.write(`
 <blockquote>
 <div><p>Reminder: A monatomic species has no vibrational modes, so ZPE is <strong>0.0</strong> (or reported differently).</p>
 </div></blockquote>
-</section>
-</section>
+</div>
+</div>
 <hr class="docutils" />
-<section id="checkpoint-required">
+<div class="section" id="checkpoint-required">
 <h3><span class="section-number">5.4.11.4.4. </span>Checkpoint (Required)<a class="headerlink" href="#checkpoint-required" title="Permalink to this heading">#</a></h3>
 <p>Before moving on, you should have these four values recorded:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(E_\mathrm{opt}(\mathrm{CH_3Cl})\)</span> and <span class="math notranslate nohighlight">\(\mathrm{ZPE}(\mathrm{CH_3Cl})\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(E_\mathrm{opt}(\mathrm{Cl^-})\)</span></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 <hr class="docutils" />
-<section id="part-2-rigid-coordinate-scan-internal-coordinate-scan">
+<div class="section" id="part-2-rigid-coordinate-scan-internal-coordinate-scan">
 <h2><span class="section-number">5.4.11.5. </span>Part 2: Rigid Coordinate Scan (Internal Coordinate Scan)<a class="headerlink" href="#part-2-rigid-coordinate-scan-internal-coordinate-scan" title="Permalink to this heading">#</a></h2>
-<section id="id1">
+<div class="section" id="id1">
 <h3><span class="section-number">5.4.11.5.1. </span>Goal<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
 <p>Map out an approximate PES of Cl - CH<span class="math notranslate nohighlight">\(_3\)</span>Cl replacement</p>
-</section>
-<section id="step-1-choose-your-starting-structure">
+</div>
+<div class="section" id="step-1-choose-your-starting-structure">
 <h3><span class="section-number">5.4.11.5.2. </span>Step 1: Choose Your Starting Structure<a class="headerlink" href="#step-1-choose-your-starting-structure" title="Permalink to this heading">#</a></h3>
 <p>Use the <strong>optimized reactant complex</strong> from Part 2A as the starting point.</p>
 <p>Add a Cl atom opposite the other Cl atom and colinear with the C-Cl bond</p>
 <p><img alt="scan" src="../../_images/C-Cl_scan_setup.png" /></p>
-</section>
-<section id="step-2-set-up-a-rigid-scan">
+</div>
+<div class="section" id="step-2-set-up-a-rigid-scan">
 <h3><span class="section-number">5.4.11.5.3. </span>Step 2: Set Up a Rigid Scan<a class="headerlink" href="#step-2-set-up-a-rigid-scan" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Using the select (arrow) tool.  Select the newly added Cl and the C atoms.  They should be highlighted as in the image above.</p></li>
@@ -763,8 +767,8 @@ document.write(`
 <blockquote>
 <div><p>NOTE: This job will take a few minutes.  It took 3:26 for mine to complete.</p>
 </div></blockquote>
-</section>
-<section id="step-3-run-and-extract-data">
+</div>
+<div class="section" id="step-3-run-and-extract-data">
 <h3><span class="section-number">5.4.11.5.4. </span>Step 3: Run and Extract Data<a class="headerlink" href="#step-3-run-and-extract-data" title="Permalink to this heading">#</a></h3>
 <p>Once the job is complete, hit the magnifying glass to look at the output.</p>
 <p>Look for the <code class="docutils literal notranslate"><span class="pre">Coordinate</span> <span class="pre">Scan</span></code> ouput information.<br />
@@ -779,21 +783,21 @@ document.write(`
 <li><p>A table of (distance, energy) values</p></li>
 <li><p>Identify the <strong>highest-energy</strong> point along the scan</p></li>
 </ul>
-</section>
-<section id="interpretation-questions">
+</div>
+<div class="section" id="interpretation-questions">
 <h3><span class="section-number">5.4.11.5.5. </span>Interpretation Questions<a class="headerlink" href="#interpretation-questions" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Where is the energy <strong>lowest</strong> along your scan?</p></li>
 <li><p>Where is the energy <strong>highest</strong>?</p></li>
 <li><p>What does the maximum correspond to chemically?</p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 <hr class="docutils" />
-<section id="part-3-optimizing-the-transition-state">
+<div class="section" id="part-3-optimizing-the-transition-state">
 <h2><span class="section-number">5.4.11.6. </span>Part 3: Optimizing the Transition State<a class="headerlink" href="#part-3-optimizing-the-transition-state" title="Permalink to this heading">#</a></h2>
 <p>Now we will determine the actual transition state and record the energy and ZPE.</p>
-<section id="part-3a-build-and-optimize-the-transition-state-aka-activated-complex">
+<div class="section" id="part-3a-build-and-optimize-the-transition-state-aka-activated-complex">
 <h3><span class="section-number">5.4.11.6.1. </span>Part 3A: Build and Optimize the <strong>Transition State</strong> (aka activated complex)<a class="headerlink" href="#part-3a-build-and-optimize-the-transition-state-aka-activated-complex" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Find the geometry from your scan that is closest to the maximum energy</p></li>
@@ -819,47 +823,47 @@ document.write(`
 <blockquote>
 <div><p>Tip: This step is very sensitive to the starting geometry.  Ideally, the Chlorine atoms are equidistant from the Carbon atom and the hydrogen atoms are in plane with the carbon atom.</p>
 </div></blockquote>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 <hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="assignment-10-points">
+<div class="tex2jax_ignore mathjax_ignore section" id="assignment-10-points">
 <h1><span class="section-number">5.4.12. </span>Assignment (10 points)<a class="headerlink" href="#assignment-10-points" title="Permalink to this heading">#</a></h1>
 <p>Your assignment is to do the same thing but this time for the reaction F<span class="math notranslate nohighlight">\(^-\)</span> + CH<span class="math notranslate nohighlight">\(_3\)</span>F <span class="math notranslate nohighlight">\(\rightarrow\)</span> F<span class="math notranslate nohighlight">\(^-\)</span> + CH<span class="math notranslate nohighlight">\(_3\)</span>F.</p>
-<section id="part-a-reactants-and-products-with-zpe-where-appropriate-2-pts">
+<div class="section" id="part-a-reactants-and-products-with-zpe-where-appropriate-2-pts">
 <h2><span class="section-number">5.4.12.1. </span>Part A: Reactants and Products with ZPE where appropriate  (2 pts)<a class="headerlink" href="#part-a-reactants-and-products-with-zpe-where-appropriate-2-pts" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><strong>CH₃F:</strong> Report <span class="math notranslate nohighlight">\(E_\mathrm{opt}(\mathrm{CH_3F})\)</span>, <span class="math notranslate nohighlight">\(\mathrm{ZPE}(\mathrm{CH_3F})\)</span>, and the C-F bond distance. (1.5 pts)</p></li>
 <li><p><strong>F⁻:</strong> Report <span class="math notranslate nohighlight">\(E_\mathrm{opt}(\mathrm{F^-})\)</span>  (0.5 pts)</p></li>
 </ol>
-</section>
+</div>
 <hr class="docutils" />
-<section id="part-b-scan-pes-2-pts">
+<div class="section" id="part-b-scan-pes-2-pts">
 <h2><span class="section-number">5.4.12.2. </span>Part B: Scan PES (2 pts)<a class="headerlink" href="#part-b-scan-pes-2-pts" title="Permalink to this heading">#</a></h2>
 <p>Scan the addition of <span class="math notranslate nohighlight">\(F^-\)</span> to CH<span class="math notranslate nohighlight">\(3\)</span>F  (scan at least from 3.0 to the native bond C-F bond distance in CH<span class="math notranslate nohighlight">\(_3\)</span>F)</p>
 <ol class="arabic simple">
 <li><p>Provide a <strong>plot</strong> of energy vs <span class="math notranslate nohighlight">\(r(\mathrm{C{-}F_{in}})\)</span>. (1 pts)</p></li>
 <li><p>Identify the approximate <strong>transition state</strong> (highest energy point) and explain what structure it corresponds to. (1 pts)</p></li>
 </ol>
-</section>
+</div>
 <hr class="docutils" />
-<section id="part-c-optimize-ts-2-pts">
+<div class="section" id="part-c-optimize-ts-2-pts">
 <h2><span class="section-number">5.4.12.3. </span>Part C: Optimize TS (2 pts)<a class="headerlink" href="#part-c-optimize-ts-2-pts" title="Permalink to this heading">#</a></h2>
 <p>Take the structure closest to the barrier from Part B and perform a geometry optimization and frequency calculation to identify true TS.</p>
 <ol class="arabic simple">
 <li><p><strong>F-CH₃-F⁻:</strong> Report <span class="math notranslate nohighlight">\(E_\mathrm{opt}(\mathrm{F-CH_3-F^-})\)</span>, <span class="math notranslate nohighlight">\(\mathrm{ZPE}(\mathrm{F-CH_3-F^-})\)</span>, the value of the imaginary frequency, and the C-F bond distances.  (2 pts)</p></li>
 </ol>
-</section>
+</div>
 <hr class="docutils" />
-<section id="part-d-concepts-4-pts">
+<div class="section" id="part-d-concepts-4-pts">
 <h2><span class="section-number">5.4.12.4. </span>Part D: Concepts (4 pts)<a class="headerlink" href="#part-d-concepts-4-pts" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Determine ∆U for this reaction. Describe what ∆U of the reaction means and why the value you got makes sense.(2 pts)</p></li>
 <li><p>Determine Ea, the activation energy, for this reaction. Describe what Ea of this reaction represents.(2 pts)</p></li>
 </ol>
-</section>
+</div>
 <hr class="docutils" />
-<section id="submission">
+<div class="section" id="submission">
 <h2><span class="section-number">5.4.12.5. </span>Submission<a class="headerlink" href="#submission" title="Permalink to this heading">#</a></h2>
 <p>Submit a short PDF (or similar) that includes:</p>
 <ul class="simple">
@@ -869,8 +873,8 @@ document.write(`
 <li><p>Screenshots of key WebMO results (optimized structures + scan output)</p></li>
 </ul>
 <hr class="docutils" />
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

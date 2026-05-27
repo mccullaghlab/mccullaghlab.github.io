@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>4.5.23. Vibrational Spectroscopy &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../computational_chemistry/intro.html">5. Computational Chemistry</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../../computational_chemistry/hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -563,7 +569,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="vibrational-spectroscopy">
+  <div class="tex2jax_ignore mathjax_ignore section" id="vibrational-spectroscopy">
 <h1><span class="section-number">4.5.23. </span>Vibrational Spectroscopy<a class="headerlink" href="#vibrational-spectroscopy" title="Permalink to this heading">#</a></h1>
 <p>In order to probe the vibrations of a molecule using experiment, we must shine a light on the molecule.  Light produces an electromagnetic field, <span class="math notranslate nohighlight">\(\mathbf{E}\)</span>, which can be approximatly written as</p>
 <p><span class="math notranslate nohighlight">\(\mathbf{E} = \mathbf{E}_0 cos2\pi\nu t\)</span>,</p>
@@ -573,7 +579,7 @@ document.write(`
 <p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the dipole moment of the molecule.  The complete Hamiltonian for the system is then</p>
 <p><span class="math notranslate nohighlight">\(\hat{H} = \hat{H}^{(0)} + \hat{H}^{(1)}\)</span>,</p>
 <p>where <span class="math notranslate nohighlight">\(\hat{H}^{(0)}\)</span> is the Hamiltonian of the isolated molecule.   This Hamiltonian has explicit time dependence so we cannot solve the stationary state Schrodinger equation.  This problem can be solved using <em>time-dependent perturbation theory</em> but we will not do so now.  Instead we will use some of the results from this solution.</p>
-<section id="transition-dipole-moment">
+<div class="section" id="transition-dipole-moment">
 <h2><span class="section-number">4.5.23.1. </span>Transition dipole moment<a class="headerlink" href="#transition-dipole-moment" title="Permalink to this heading">#</a></h2>
 <p>Time-dependent perturbation theory on the above Hamiltonian leads to defining what is called the <em>transition dipole moment</em> for a molecule.  This is defined as</p>
 <p><span class="math notranslate nohighlight">\(\langle \nu | \mu_z | \nu'\rangle = \int_{-\infty}^{\infty} \psi_\nu(x)\mu_z(x)\psi_{\nu'}(x)dx\)</span>,</p>
@@ -590,21 +596,21 @@ document.write(`
 <p>If we plug this relationship into the integral above we get</p>
 <p><span class="math notranslate nohighlight">\(\langle \nu | \mu_z | \nu'\rangle =  \left( \frac{d\mu}{dx}\right)_0 \langle \nu |x| \nu'\rangle = \frac{N_\nu N_{\nu'}}{\alpha}\left( \frac{d\mu}{dx}\right)_0\int_{-\infty}^{\infty} H_{\nu'}(\xi)\left[\nu H_{\nu-1}(\xi) + \frac{1}{2}H_{\nu+1}(\xi)\right]e^{-\xi^2}d\xi\)</span>,</p>
 <p>where we have made the substition <span class="math notranslate nohighlight">\(\xi = \alpha^{1/2}x\)</span>.  Observe that the above equation is nonzero except when <span class="math notranslate nohighlight">\(\nu' = \nu \pm 1\)</span>.  This demonstrates the selection rule for a harmonic oscillator.</p>
-</section>
-<section id="selection-rules">
+</div>
+<div class="section" id="selection-rules">
 <h2><span class="section-number">4.5.23.2. </span>Selection Rules<a class="headerlink" href="#selection-rules" title="Permalink to this heading">#</a></h2>
 <p><span class="math notranslate nohighlight">\(\Delta \nu = \pm 1\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets quantify this for HO wavefunctions</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">hermite</span>
-<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">hermite</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorial</span>
 <span class="c1"># start by defining N function for analytic solution to HO wavefunctions</span>
-<span class="k">def</span> <span class="nf">Nn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">alpha</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">Nn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">alpha</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="n">alpha</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mf">0.25</span>
-<span class="k">def</span> <span class="nf">ho_psi</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ho_psi</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
     <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="n">n</span><span class="o">*</span><span class="n">Nn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">hermite</span><span class="p">(</span><span class="n">n</span><span class="p">)(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">alpha</span><span class="o">*</span><span class="n">x2</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span>
 <span class="n">hbar</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -624,26 +630,21 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;0|x|0&gt; =  5.551115123125783e-17
-&lt;0|x|1&gt; =  -0.7071067811865476
-&lt;0|x|2&gt; =  -2.7755575615628914e-17
-&lt;1|x|2&gt; =  -1.0000000000000002
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_76691/3433706570.py:21: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
-  print(&quot;&lt;0|x|0&gt; = &quot;, integrate.simps(psi0*x*psi0,x))
-/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_76691/3433706570.py:22: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
-  print(&quot;&lt;0|x|1&gt; = &quot;, integrate.simps(psi0*x*psi1,x))
-/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_76691/3433706570.py:23: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
-  print(&quot;&lt;0|x|2&gt; = &quot;, integrate.simps(psi0*x*psi2,x))
-/var/folders/t8/kw0bwdw15_g0pj38_ntzjgyc0000gp/T/ipykernel_76691/3433706570.py:24: DeprecationWarning: &#39;scipy.integrate.simps&#39; is deprecated in favour of &#39;scipy.integrate.simpson&#39; and will be removed in SciPy 1.14.0
-  print(&quot;&lt;1|x|2&gt; = &quot;, integrate.simps(psi1*x*psi2,x))
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># lets quantify this for HO wavefunctions</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">hermite</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;numpy&#39;
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="normal-modes">
+</div>
+<div class="section" id="normal-modes">
 <h2><span class="section-number">4.5.23.3. </span>Normal Modes<a class="headerlink" href="#normal-modes" title="Permalink to this heading">#</a></h2>
 <p>In a polyatomic molecule we can write out each bond as a harmonic oscillator.  This leads to an energy function</p>
 <p><span class="math notranslate nohighlight">\(\hat{H}(\mathbf{R}) = 0.5 \sum_{i=1}^N k_ix_i^2\)</span>,</p>
@@ -672,13 +673,13 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0.70710678  0.70710678]
  [-0.70710678  0.70710678]]
-[3. 1.]
+[ 3.  1.]
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

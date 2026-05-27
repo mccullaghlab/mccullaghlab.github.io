@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>5.3.3. Computing Molecular Properties from MD Simulations &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -335,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -613,7 +617,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="computing-molecular-properties-from-md-simulations">
+  <div class="tex2jax_ignore mathjax_ignore section" id="computing-molecular-properties-from-md-simulations">
 <h1><span class="section-number">5.3.3. </span>Computing Molecular Properties from MD Simulations<a class="headerlink" href="#computing-molecular-properties-from-md-simulations" title="Permalink to this heading">#</a></h1>
 <p>These notes introduce a unifying way to think about molecular properties computed from molecular dynamics (MD) simulations:</p>
 <ol class="arabic simple">
@@ -630,7 +634,7 @@ document.write(`
 </li>
 </ol>
 <p>The key message is that most properties computed from MD are just <strong>expectation values</strong> of suitable functions of the molecular coordinates.</p>
-<section id="learning-goals">
+<div class="section" id="learning-goals">
 <h2><span class="section-number">5.3.3.1. </span>Learning goals<a class="headerlink" href="#learning-goals" title="Permalink to this heading">#</a></h2>
 <p>By the end of these notes, you should be able to:</p>
 <ul class="simple">
@@ -640,66 +644,66 @@ document.write(`
 <li><p>compute <span class="math notranslate nohighlight">\(R_g\)</span>, RMSD, and MSD from Cartesian coordinates,</p></li>
 <li><p>recognize practical issues such as finite sampling, equilibration, and correlated data.</p></li>
 </ul>
-</section>
-<section id="general-theory-expectation-values">
+</div>
+<div class="section" id="general-theory-expectation-values">
 <h2><span class="section-number">5.3.3.2. </span>General theory: expectation values<a class="headerlink" href="#general-theory-expectation-values" title="Permalink to this heading">#</a></h2>
 <p>Let <span class="math notranslate nohighlight">\(x\)</span> denote a molecular configuration. In classical statistical mechanics, <span class="math notranslate nohighlight">\(x\)</span> typically contains all particle positions and momenta.<br />
 An observable <span class="math notranslate nohighlight">\(A(x)\)</span> is any quantity that can be evaluated for a given configuration.</p>
 <p>The equilibrium expectation value is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-652d17ba-c537-419d-863f-c755d711c6eb">
-<span class="eqno">(5.125)<a class="headerlink" href="#equation-652d17ba-c537-419d-863f-c755d711c6eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-33702e03-94e8-4e87-968e-def058ed54eb">
+<span class="eqno">(5.125)<a class="headerlink" href="#equation-33702e03-94e8-4e87-968e-def058ed54eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle A \rangle = \int A(x)\, p(x)\, dx,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p(x)\)</span> is the normalized probability density over phase space.</p>
 <p>For many structural observables, the momenta can be integrated out, so we work only with coordinates <span class="math notranslate nohighlight">\(\mathbf{R}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-650c8a9c-ead5-4670-a4cc-ae4d80bcc0ba">
-<span class="eqno">(5.126)<a class="headerlink" href="#equation-650c8a9c-ead5-4670-a4cc-ae4d80bcc0ba" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-103272ba-059a-41d7-aedf-b477186e6651">
+<span class="eqno">(5.126)<a class="headerlink" href="#equation-103272ba-059a-41d7-aedf-b477186e6651" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle A \rangle = \int A(\mathbf{R})\, p(\mathbf{R})\, d\mathbf{R}.
 \end{equation}\]</div>
-<section id="canonical-ensemble">
+<div class="section" id="canonical-ensemble">
 <h3><span class="section-number">5.3.3.2.1. </span>Canonical ensemble<a class="headerlink" href="#canonical-ensemble" title="Permalink to this heading">#</a></h3>
 <p>In the <span class="math notranslate nohighlight">\(NVT\)</span> ensemble,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a060e77e-a7b9-424c-8396-bf3875c14ab3">
-<span class="eqno">(5.127)<a class="headerlink" href="#equation-a060e77e-a7b9-424c-8396-bf3875c14ab3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9e75d134-a810-436c-ad22-199ef226f86f">
+<span class="eqno">(5.127)<a class="headerlink" href="#equation-9e75d134-a810-436c-ad22-199ef226f86f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p(\mathbf{R}) = \frac{e^{-\beta U(\mathbf{R})}}{Z_\mathrm{conf}},
 \qquad
 \beta = \frac{1}{k_B T},
 \end{equation}\]</div>
 <p>with configurational partition function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dc9f0562-c7e0-4020-8676-ac13e1eb8369">
-<span class="eqno">(5.128)<a class="headerlink" href="#equation-dc9f0562-c7e0-4020-8676-ac13e1eb8369" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-fc7ded36-2377-4496-be4b-5f8023c58144">
+<span class="eqno">(5.128)<a class="headerlink" href="#equation-fc7ded36-2377-4496-be4b-5f8023c58144" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Z_\mathrm{conf} = \int e^{-\beta U(\mathbf{R})}\, d\mathbf{R}.
 \end{equation}\]</div>
 <p>Therefore,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d2d9605a-7c7d-436d-9f10-550a9108cf94">
-<span class="eqno">(5.129)<a class="headerlink" href="#equation-d2d9605a-7c7d-436d-9f10-550a9108cf94" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9136613d-91e8-4e11-a804-e38690f92a64">
+<span class="eqno">(5.129)<a class="headerlink" href="#equation-9136613d-91e8-4e11-a804-e38690f92a64" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle A \rangle =
 \frac{\int A(\mathbf{R}) e^{-\beta U(\mathbf{R})}\, d\mathbf{R}}
 {\int e^{-\beta U(\mathbf{R})}\, d\mathbf{R}}.
 \end{equation}\]</div>
 <p>This is a <strong>weighted average</strong>, where lower-energy configurations receive larger Boltzmann weights.</p>
-</section>
-</section>
-<section id="from-weighted-integrals-to-monte-carlo-sampling">
+</div>
+</div>
+<div class="section" id="from-weighted-integrals-to-monte-carlo-sampling">
 <h2><span class="section-number">5.3.3.3. </span>From weighted integrals to Monte Carlo sampling<a class="headerlink" href="#from-weighted-integrals-to-monte-carlo-sampling" title="Permalink to this heading">#</a></h2>
 <p>Suppose we draw configurations <span class="math notranslate nohighlight">\(\mathbf{R}^{(1)}, \mathbf{R}^{(2)}, \dots, \mathbf{R}^{(N)}\)</span> from the target distribution <span class="math notranslate nohighlight">\(p(\mathbf{R})\)</span>.
 Then the expectation value can be approximated by the sample mean</p>
-<div class="amsmath math notranslate nohighlight" id="equation-14cbef92-c037-40e0-a449-a73b65abc7b2">
-<span class="eqno">(5.130)<a class="headerlink" href="#equation-14cbef92-c037-40e0-a449-a73b65abc7b2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-57a88669-e7a4-4a3a-82ea-6eec94951101">
+<span class="eqno">(5.130)<a class="headerlink" href="#equation-57a88669-e7a4-4a3a-82ea-6eec94951101" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle A \rangle \approx \frac{1}{N}\sum_{n=1}^{N} A\!\left(\mathbf{R}^{(n)}\right).
 \end{equation}\]</div>
 <p>This is the basic Monte Carlo estimator.</p>
-<section id="why-this-applies-to-md">
+<div class="section" id="why-this-applies-to-md">
 <h3><span class="section-number">5.3.3.3.1. </span>Why this applies to MD<a class="headerlink" href="#why-this-applies-to-md" title="Permalink to this heading">#</a></h3>
 <p>An MD trajectory is not generated by independent random draws, but under equilibrium conditions and adequate sampling, the trajectory visits configurations with the correct ensemble probabilities.<br />
 Then the time average along the trajectory approximates the ensemble average:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2b531130-dcac-4bb5-9a64-98358d5ab02c">
-<span class="eqno">(5.131)<a class="headerlink" href="#equation-2b531130-dcac-4bb5-9a64-98358d5ab02c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-310fe629-370f-4116-b88e-7e7fb5a33d88">
+<span class="eqno">(5.131)<a class="headerlink" href="#equation-310fe629-370f-4116-b88e-7e7fb5a33d88" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle A \rangle \approx \frac{1}{N}\sum_{n=1}^{N} A_n,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(A_n = A(\mathbf{R}^{(n)})\)</span> is the observable evaluated on frame <span class="math notranslate nohighlight">\(n\)</span>.</p>
-</section>
-<section id="important-caveat-correlated-samples">
+</div>
+<div class="section" id="important-caveat-correlated-samples">
 <h3><span class="section-number">5.3.3.3.2. </span>Important caveat: correlated samples<a class="headerlink" href="#important-caveat-correlated-samples" title="Permalink to this heading">#</a></h3>
 <p>Consecutive MD frames are typically correlated.<br />
 That means the estimator is still reasonable, but the <strong>effective number of independent samples</strong> is smaller than the total number of saved frames.</p>
@@ -709,30 +713,30 @@ That means the estimator is still reasonable, but the <strong>effective number o
 <li><p>save frames far enough apart if storage is a concern,</p></li>
 <li><p>estimate uncertainties with block averaging or autocorrelation analysis.</p></li>
 </ul>
-</section>
-</section>
-<section id="a-discrete-weighted-average-viewpoint">
+</div>
+</div>
+<div class="section" id="a-discrete-weighted-average-viewpoint">
 <h2><span class="section-number">5.3.3.4. </span>A discrete weighted-average viewpoint<a class="headerlink" href="#a-discrete-weighted-average-viewpoint" title="Permalink to this heading">#</a></h2>
 <p>Sometimes it is useful to imagine configuration space partitioned into bins or microstates labeled by <span class="math notranslate nohighlight">\(i\)</span> with probabilities <span class="math notranslate nohighlight">\(p_i\)</span>.
 Then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40419e2d-a73c-4dad-af36-55977d3c7f9e">
-<span class="eqno">(5.132)<a class="headerlink" href="#equation-40419e2d-a73c-4dad-af36-55977d3c7f9e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-246eae1b-3382-4884-84c7-181055617645">
+<span class="eqno">(5.132)<a class="headerlink" href="#equation-246eae1b-3382-4884-84c7-181055617645" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle A \rangle = \sum_i A_i p_i.
 \end{equation}\]</div>
 <p>If we sample from the distribution, and state <span class="math notranslate nohighlight">\(i\)</span> appears <span class="math notranslate nohighlight">\(n_i\)</span> times in <span class="math notranslate nohighlight">\(N\)</span> samples, then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e60c343d-2113-4593-8028-9b5d309e7479">
-<span class="eqno">(5.133)<a class="headerlink" href="#equation-e60c343d-2113-4593-8028-9b5d309e7479" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-97b8236b-e9b8-4fa8-ae5e-f09a4fdda6f6">
+<span class="eqno">(5.133)<a class="headerlink" href="#equation-97b8236b-e9b8-4fa8-ae5e-f09a4fdda6f6" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p_i \approx \frac{n_i}{N},
 \end{equation}\]</div>
 <p>so</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a39c1df4-a4ab-441c-8b73-a7ef745ab96f">
-<span class="eqno">(5.134)<a class="headerlink" href="#equation-a39c1df4-a4ab-441c-8b73-a7ef745ab96f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8a317e12-5321-4e34-8364-172b681d5e98">
+<span class="eqno">(5.134)<a class="headerlink" href="#equation-8a317e12-5321-4e34-8364-172b681d5e98" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle A \rangle \approx \sum_i A_i \frac{n_i}{N}
 = \frac{1}{N}\sum_{n=1}^{N} A_n.
 \end{equation}\]</div>
 <p>This is often the most intuitive bridge between statistical mechanics and trajectory analysis.</p>
-</section>
-<section id="generic-workflow-for-computing-a-property-from-md">
+</div>
+<div class="section" id="generic-workflow-for-computing-a-property-from-md">
 <h2><span class="section-number">5.3.3.5. </span>Generic workflow for computing a property from MD<a class="headerlink" href="#generic-workflow-for-computing-a-property-from-md" title="Permalink to this heading">#</a></h2>
 <p>For almost any structural property:</p>
 <ol class="arabic simple">
@@ -750,13 +754,13 @@ p_i \approx \frac{n_i}{N},
 </pre></div>
 </div>
 <p>The rest of these notes shows how this general idea becomes concrete for several important observables.</p>
-</section>
-<section id="example-1-radial-distribution-function-g-r-for-a-pure-liquid">
+</div>
+<div class="section" id="example-1-radial-distribution-function-g-r-for-a-pure-liquid">
 <h2><span class="section-number">5.3.3.6. </span>Example 1: radial distribution function <span class="math notranslate nohighlight">\(g(r)\)</span> for a pure liquid<a class="headerlink" href="#example-1-radial-distribution-function-g-r-for-a-pure-liquid" title="Permalink to this heading">#</a></h2>
 <p>The radial distribution function describes how particle density varies as a function of distance from a reference particle.</p>
 <p>For a homogeneous isotropic liquid,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-88298dac-a9f4-4eb9-bdea-fe44cc636034">
-<span class="eqno">(5.135)<a class="headerlink" href="#equation-88298dac-a9f4-4eb9-bdea-fe44cc636034" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d1b25f3e-c0d7-47c1-a679-ff3b616211c7">
+<span class="eqno">(5.135)<a class="headerlink" href="#equation-d1b25f3e-c0d7-47c1-a679-ff3b616211c7" title="Permalink to this equation">#</a></span>\[\begin{equation}
 g(r) = \frac{1}{4\pi r^2 \rho}
 \left\langle
 \frac{1}{N}
@@ -770,19 +774,19 @@ g(r) = \frac{1}{4\pi r^2 \rho}
 <li><p><span class="math notranslate nohighlight">\(r_{ij}\)</span> is the distance between particles <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span>,</p></li>
 <li><p><span class="math notranslate nohighlight">\(\rho = N/V\)</span> is the number density.</p></li>
 </ul>
-<section id="interpretation">
+<div class="section" id="interpretation">
 <h3><span class="section-number">5.3.3.6.1. </span>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(g(r) = 1\)</span> means particles are distributed as in an ideal gas at the same density.</p></li>
 <li><p><span class="math notranslate nohighlight">\(g(r) &gt; 1\)</span> means enhanced probability of finding neighbors at distance <span class="math notranslate nohighlight">\(r\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(g(r) &lt; 1\)</span> means depleted probability.</p></li>
 </ul>
-</section>
-<section id="histogram-form">
+</div>
+<div class="section" id="histogram-form">
 <h3><span class="section-number">5.3.3.6.2. </span>Histogram form<a class="headerlink" href="#histogram-form" title="Permalink to this heading">#</a></h3>
 <p>In practice, the delta function is replaced by a histogram bin of width <span class="math notranslate nohighlight">\(\Delta r\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fdb8e508-1cbf-4807-80b7-896c3b5cef1a">
-<span class="eqno">(5.136)<a class="headerlink" href="#equation-fdb8e508-1cbf-4807-80b7-896c3b5cef1a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b10806bf-9157-4f10-a4de-6fb7e72ca566">
+<span class="eqno">(5.136)<a class="headerlink" href="#equation-b10806bf-9157-4f10-a4de-6fb7e72ca566" title="Permalink to this equation">#</a></span>\[\begin{equation}
 g(r_k) \approx
 \frac{\langle n_k \rangle}
 {N \, 4\pi r_k^2 \Delta r \, \rho},
@@ -791,10 +795,10 @@ g(r_k) \approx
 <p>So <span class="math notranslate nohighlight">\(g(r)\)</span> is an expectation value of a shell-counting observable, followed by normalization by the shell volume.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="k">def</span> <span class="nf">rdf_from_coordinates</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">box_length</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rdf_from_coordinates</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">box_length</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Compute a simple radial distribution function g(r) for a pure liquid.</span>
 
@@ -848,9 +852,21 @@ g(r_k) \approx
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="k">def</span><span class="w"> </span><span class="nf">rdf_from_coordinates</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">box_length</span><span class="p">,</span> <span class="n">r_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;numpy&#39;
+</pre></div>
 </div>
-</section>
-<section id="notes-on-g-r">
+</div>
+</div>
+</div>
+<div class="section" id="notes-on-g-r">
 <h3><span class="section-number">5.3.3.6.3. </span>Notes on <span class="math notranslate nohighlight">\(g(r)\)</span><a class="headerlink" href="#notes-on-g-r" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>For liquids, the first peak often corresponds to the first solvation shell.</p></li>
@@ -858,28 +874,28 @@ g(r_k) \approx
 <li><p>In mixtures, one often computes partial RDFs such as <span class="math notranslate nohighlight">\(g_{AB}(r)\)</span>.</p></li>
 <li><p>Proper treatment of periodic boundary conditions is essential.</p></li>
 </ul>
-</section>
-</section>
-<section id="example-2-radius-of-gyration-r-g">
+</div>
+</div>
+<div class="section" id="example-2-radius-of-gyration-r-g">
 <h2><span class="section-number">5.3.3.7. </span>Example 2: radius of gyration <span class="math notranslate nohighlight">\(R_g\)</span><a class="headerlink" href="#example-2-radius-of-gyration-r-g" title="Permalink to this heading">#</a></h2>
 <p>The radius of gyration measures how spread out a set of atoms is around its center of mass.</p>
 <p>For atoms with masses <span class="math notranslate nohighlight">\(m_i\)</span> at positions <span class="math notranslate nohighlight">\(\mathbf{r}_i\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf389c56-9561-4212-a110-9a191478b3f3">
-<span class="eqno">(5.137)<a class="headerlink" href="#equation-bf389c56-9561-4212-a110-9a191478b3f3" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-815bd561-2f65-4b39-9011-2c1ba0f25ff1">
+<span class="eqno">(5.137)<a class="headerlink" href="#equation-815bd561-2f65-4b39-9011-2c1ba0f25ff1" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R_g^2 = \frac{\sum_i m_i \left| \mathbf{r}_i - \mathbf{r}_{\mathrm{COM}} \right|^2}
 {\sum_i m_i},
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83e1e44d-88b0-4f5f-b756-f8dd56de9164">
-<span class="eqno">(5.138)<a class="headerlink" href="#equation-83e1e44d-88b0-4f5f-b756-f8dd56de9164" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-881fe509-983a-49ff-912d-22add0f9a840">
+<span class="eqno">(5.138)<a class="headerlink" href="#equation-881fe509-983a-49ff-912d-22add0f9a840" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathbf{r}_{\mathrm{COM}} = \frac{\sum_i m_i \mathbf{r}_i}{\sum_i m_i}.
 \end{equation}\]</div>
 <p>Thus,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fb6d8658-3fd3-4885-9937-5c25435ab3fc">
-<span class="eqno">(5.139)<a class="headerlink" href="#equation-fb6d8658-3fd3-4885-9937-5c25435ab3fc" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-66afa96c-ecbc-4eb7-a902-ea5c27baf8bc">
+<span class="eqno">(5.139)<a class="headerlink" href="#equation-66afa96c-ecbc-4eb7-a902-ea5c27baf8bc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R_g = \sqrt{R_g^2}.
 \end{equation}\]</div>
-<section id="why-it-matters">
+<div class="section" id="why-it-matters">
 <h3><span class="section-number">5.3.3.7.1. </span>Why it matters<a class="headerlink" href="#why-it-matters" title="Permalink to this heading">#</a></h3>
 <p><span class="math notranslate nohighlight">\(R_g\)</span> is widely used for:</p>
 <ul class="simple">
@@ -889,13 +905,13 @@ R_g = \sqrt{R_g^2}.
 <li><p>comparing expanded and collapsed ensembles.</p></li>
 </ul>
 <p>To compute the average compactness of a molecule from MD, evaluate <span class="math notranslate nohighlight">\(R_g\)</span> on each frame and average:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0fb4030d-e1bd-45cc-aa9b-6839ea1e18c7">
-<span class="eqno">(5.140)<a class="headerlink" href="#equation-0fb4030d-e1bd-45cc-aa9b-6839ea1e18c7" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f675691e-0298-4c14-a99d-39f2748a841c">
+<span class="eqno">(5.140)<a class="headerlink" href="#equation-f675691e-0298-4c14-a99d-39f2748a841c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle R_g \rangle \approx \frac{1}{N}\sum_{n=1}^{N} R_g^{(n)}.
 \end{equation}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">radius_of_gyration</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">masses</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">radius_of_gyration</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">masses</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Compute radius of gyration for a single frame.</span>
 
@@ -917,20 +933,20 @@ R_g = \sqrt{R_g^2}.
     <span class="n">rg2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">masses</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">coords</span> <span class="o">-</span> <span class="n">com</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">total_mass</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rg2</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">trajectory_rg</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">masses</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">trajectory_rg</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">masses</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">radius_of_gyration</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">masses</span><span class="o">=</span><span class="n">masses</span><span class="p">)</span> <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">frames</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="example-3-root-mean-square-deviation-rmsd">
+</div>
+</div>
+<div class="section" id="example-3-root-mean-square-deviation-rmsd">
 <h2><span class="section-number">5.3.3.8. </span>Example 3: root-mean-square deviation (RMSD)<a class="headerlink" href="#example-3-root-mean-square-deviation-rmsd" title="Permalink to this heading">#</a></h2>
 <p>RMSD measures similarity to a reference structure.</p>
 <p>For a frame with coordinates <span class="math notranslate nohighlight">\(\mathbf{r}_i\)</span> and reference coordinates <span class="math notranslate nohighlight">\(\mathbf{r}_i^\mathrm{ref}\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3a20fc03-9ffe-426e-961e-fd9cbdd25824">
-<span class="eqno">(5.141)<a class="headerlink" href="#equation-3a20fc03-9ffe-426e-961e-fd9cbdd25824" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-034e465a-10e6-435b-b249-44f5317818f3">
+<span class="eqno">(5.141)<a class="headerlink" href="#equation-034e465a-10e6-435b-b249-44f5317818f3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathrm{RMSD} =
 \sqrt{
 \frac{1}{N}
@@ -942,7 +958,7 @@ R_g = \sqrt{R_g^2}.
 \end{equation}\]</div>
 <p>Usually, one first <strong>aligns</strong> the current structure to the reference to remove rigid-body translation and rotation.<br />
 Otherwise the RMSD would reflect overall motion rather than structural change.</p>
-<section id="what-rmsd-is-useful-for">
+<div class="section" id="what-rmsd-is-useful-for">
 <h3><span class="section-number">5.3.3.8.1. </span>What RMSD is useful for<a class="headerlink" href="#what-rmsd-is-useful-for" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p>monitoring equilibration,</p></li>
@@ -952,7 +968,7 @@ Otherwise the RMSD would reflect overall motion rather than structural change.</
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kabsch_align</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">kabsch_align</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Align P onto Q using the Kabsch algorithm.</span>
 <span class="sd">    Returns aligned copy of P.</span>
@@ -971,7 +987,7 @@ Otherwise the RMSD would reflect overall motion rather than structural change.</
     <span class="n">P_aligned</span> <span class="o">=</span> <span class="n">Pc</span> <span class="o">@</span> <span class="n">U</span>
     <span class="k">return</span> <span class="n">P_aligned</span><span class="p">,</span> <span class="n">Qc</span>
 
-<span class="k">def</span> <span class="nf">rmsd</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rmsd</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    RMSD between coordinate sets P and Q.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -985,18 +1001,18 @@ Otherwise the RMSD would reflect overall motion rather than structural change.</
 
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">P_use</span> <span class="o">-</span> <span class="n">Q_use</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
 
-<span class="k">def</span> <span class="nf">trajectory_rmsd</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">trajectory_rmsd</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">rmsd</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="n">align</span><span class="p">)</span> <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">frames</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="rmsd-versus-fluctuations">
+</div>
+<div class="section" id="rmsd-versus-fluctuations">
 <h3><span class="section-number">5.3.3.8.2. </span>RMSD versus fluctuations<a class="headerlink" href="#rmsd-versus-fluctuations" title="Permalink to this heading">#</a></h3>
 <p>A related quantity is the root-mean-square fluctuation (RMSF), which is computed <strong>per atom or per residue</strong>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1027206b-18c1-49d4-b5c6-8bc3cc73661d">
-<span class="eqno">(5.142)<a class="headerlink" href="#equation-1027206b-18c1-49d4-b5c6-8bc3cc73661d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ec568117-2dc2-4845-89f0-998257e979fb">
+<span class="eqno">(5.142)<a class="headerlink" href="#equation-ec568117-2dc2-4845-89f0-998257e979fb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathrm{RMSF}_i =
 \sqrt{
 \left\langle
@@ -1007,13 +1023,13 @@ Otherwise the RMSD would reflect overall motion rather than structural change.</
 }.
 \end{equation}\]</div>
 <p>RMSF tells us which parts of a molecule are flexible; RMSD tells us how far an entire structure is from a reference.</p>
-</section>
-</section>
-<section id="example-4-mean-squared-displacement-msd-and-diffusion">
+</div>
+</div>
+<div class="section" id="example-4-mean-squared-displacement-msd-and-diffusion">
 <h2><span class="section-number">5.3.3.9. </span>Example 4: mean-squared displacement (MSD) and diffusion<a class="headerlink" href="#example-4-mean-squared-displacement-msd-and-diffusion" title="Permalink to this heading">#</a></h2>
 <p>A very useful dynamical observable is the mean-squared displacement:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ad1170c5-9773-4e29-8cd5-cd20e17b926d">
-<span class="eqno">(5.143)<a class="headerlink" href="#equation-ad1170c5-9773-4e29-8cd5-cd20e17b926d" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-0651bd5c-dd6b-4184-a1d2-dc7831b3ee0f">
+<span class="eqno">(5.143)<a class="headerlink" href="#equation-0651bd5c-dd6b-4184-a1d2-dc7831b3ee0f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathrm{MSD}(t) =
 \left\langle
 \left|
@@ -1023,18 +1039,18 @@ Otherwise the RMSD would reflect overall motion rather than structural change.</
 \end{equation}\]</div>
 <p>The average is over particles and time origins.</p>
 <p>For diffusive motion in three dimensions,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9f61d968-48f9-40d7-bddb-f1be4f78cfbd">
-<span class="eqno">(5.144)<a class="headerlink" href="#equation-9f61d968-48f9-40d7-bddb-f1be4f78cfbd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b019375b-7806-4d12-84e0-bb9869c58413">
+<span class="eqno">(5.144)<a class="headerlink" href="#equation-b019375b-7806-4d12-84e0-bb9869c58413" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \mathrm{MSD}(t) \approx 6Dt
 \end{equation}\]</div>
 <p>at long times, where <span class="math notranslate nohighlight">\(D\)</span> is the self-diffusion coefficient.</p>
-<section id="why-include-msd">
+<div class="section" id="why-include-msd">
 <h3><span class="section-number">5.3.3.9.1. </span>Why include MSD?<a class="headerlink" href="#why-include-msd" title="Permalink to this heading">#</a></h3>
 <p>Unlike <span class="math notranslate nohighlight">\(R_g\)</span> and RMSD, MSD is explicitly time-dependent.<br />
 It is a good example of how the expectation-value idea extends naturally to <strong>time-correlation-type observables</strong>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mean_squared_displacement</span><span class="p">(</span><span class="n">frames</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">mean_squared_displacement</span><span class="p">(</span><span class="n">frames</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Compute a simple MSD(t) averaged over atoms and time origins.</span>
 
@@ -1063,38 +1079,38 @@ It is a good example of how the expectation-value idea extends naturally to <str
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="other-useful-observables">
+</div>
+</div>
+<div class="section" id="other-useful-observables">
 <h2><span class="section-number">5.3.3.10. </span>Other useful observables<a class="headerlink" href="#other-useful-observables" title="Permalink to this heading">#</a></h2>
 <p>Here are several additional properties that fit the same framework.</p>
-<section id="end-to-end-distance">
+<div class="section" id="end-to-end-distance">
 <h3><span class="section-number">5.3.3.10.1. </span>End-to-end distance<a class="headerlink" href="#end-to-end-distance" title="Permalink to this heading">#</a></h3>
 <p>For a polymer or peptide,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec54c23f-884a-444d-a18f-c4448056ae67">
-<span class="eqno">(5.145)<a class="headerlink" href="#equation-ec54c23f-884a-444d-a18f-c4448056ae67" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c5baedac-fda5-439a-be93-75dd544e8228">
+<span class="eqno">(5.145)<a class="headerlink" href="#equation-c5baedac-fda5-439a-be93-75dd544e8228" title="Permalink to this equation">#</a></span>\[\begin{equation}
 R_{ee} = \left| \mathbf{r}_{\mathrm{end}} - \mathbf{r}_{\mathrm{start}} \right|.
 \end{equation}\]</div>
 <p>Useful for flexible chains and folding.</p>
-</section>
-<section id="potential-energy">
+</div>
+<div class="section" id="potential-energy">
 <h3><span class="section-number">5.3.3.10.2. </span>Potential energy<a class="headerlink" href="#potential-energy" title="Permalink to this heading">#</a></h3>
 <p>If the trajectory stores <span class="math notranslate nohighlight">\(U(\mathbf{R})\)</span>, then</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dde63b4d-9dce-4488-b618-02458a41fd64">
-<span class="eqno">(5.146)<a class="headerlink" href="#equation-dde63b4d-9dce-4488-b618-02458a41fd64" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d99fb488-1d9c-4ffe-aee5-1276584cfd7f">
+<span class="eqno">(5.146)<a class="headerlink" href="#equation-d99fb488-1d9c-4ffe-aee5-1276584cfd7f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle U \rangle \approx \frac{1}{N}\sum_n U_n.
 \end{equation}\]</div>
-</section>
-<section id="angle-or-dihedral-distributions">
+</div>
+<div class="section" id="angle-or-dihedral-distributions">
 <h3><span class="section-number">5.3.3.10.3. </span>Angle or dihedral distributions<a class="headerlink" href="#angle-or-dihedral-distributions" title="Permalink to this heading">#</a></h3>
 <p>Choose an observable such as <span class="math notranslate nohighlight">\(\phi(\mathbf{R})\)</span> and build a histogram over frames.<br />
 This gives a probability density for torsional motion.</p>
-</section>
-<section id="hydrogen-bond-occupancy">
+</div>
+<div class="section" id="hydrogen-bond-occupancy">
 <h3><span class="section-number">5.3.3.10.4. </span>Hydrogen-bond occupancy<a class="headerlink" href="#hydrogen-bond-occupancy" title="Permalink to this heading">#</a></h3>
 <p>Define an indicator function</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6ea6e9b5-ef23-4973-a2db-dd21b1c6c7ac">
-<span class="eqno">(5.147)<a class="headerlink" href="#equation-6ea6e9b5-ef23-4973-a2db-dd21b1c6c7ac" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1bf8f54e-5f26-4fac-a42c-e283dcca42bc">
+<span class="eqno">(5.147)<a class="headerlink" href="#equation-1bf8f54e-5f26-4fac-a42c-e283dcca42bc" title="Permalink to this equation">#</a></span>\[\begin{equation}
 h(\mathbf{R}) =
 \begin{cases}
 1 &amp; \text{if a hydrogen bond is present} \\
@@ -1102,25 +1118,25 @@ h(\mathbf{R}) =
 \end{cases}
 \end{equation}\]</div>
 <p>Then the average occupancy is simply</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d7bd807c-d60a-4a92-9fa7-acf7fbf72e03">
-<span class="eqno">(5.148)<a class="headerlink" href="#equation-d7bd807c-d60a-4a92-9fa7-acf7fbf72e03" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-00687d8a-b7a7-4e83-8da2-2ce1dc69afac">
+<span class="eqno">(5.148)<a class="headerlink" href="#equation-00687d8a-b7a7-4e83-8da2-2ce1dc69afac" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle h \rangle \approx \frac{1}{N}\sum_n h_n.
 \end{equation}\]</div>
 <p>This is a nice example where the property is literally an average of zeros and ones.</p>
-</section>
-</section>
-<section id="uncertainty-equilibration-and-convergence">
+</div>
+</div>
+<div class="section" id="uncertainty-equilibration-and-convergence">
 <h2><span class="section-number">5.3.3.11. </span>Uncertainty, equilibration, and convergence<a class="headerlink" href="#uncertainty-equilibration-and-convergence" title="Permalink to this heading">#</a></h2>
 <p>Even if the formula is simple, trustworthy estimates require care.</p>
-<section id="equilibration">
+<div class="section" id="equilibration">
 <h3><span class="section-number">5.3.3.11.1. </span>Equilibration<a class="headerlink" href="#equilibration" title="Permalink to this heading">#</a></h3>
 <p>Do not average over initial frames that are still relaxing toward equilibrium.</p>
-</section>
-<section id="correlation">
+</div>
+<div class="section" id="correlation">
 <h3><span class="section-number">5.3.3.11.2. </span>Correlation<a class="headerlink" href="#correlation" title="Permalink to this heading">#</a></h3>
 <p>Saved frames are often correlated, especially for slow collective motions.</p>
-</section>
-<section id="convergence-checks">
+</div>
+<div class="section" id="convergence-checks">
 <h3><span class="section-number">5.3.3.11.3. </span>Convergence checks<a class="headerlink" href="#convergence-checks" title="Permalink to this heading">#</a></h3>
 <p>Useful diagnostics include:</p>
 <ul class="simple">
@@ -1132,7 +1148,7 @@ h(\mathbf{R}) =
 <p>A property estimate is only as good as the region of configuration space the trajectory has actually sampled.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">block_average</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">block_size</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">block_average</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">block_size</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Simple block averaging utility for correlated data.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -1150,9 +1166,9 @@ h(\mathbf{R}) =
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="a-tiny-synthetic-example">
+</div>
+</div>
+<div class="section" id="a-tiny-synthetic-example">
 <h2><span class="section-number">5.3.3.12. </span>A tiny synthetic example<a class="headerlink" href="#a-tiny-synthetic-example" title="Permalink to this heading">#</a></h2>
 <p>The next few cells build a toy trajectory and compute several observables.<br />
 This is not meant to represent a realistic molecular system; it is just a compact way to show the workflow.</p>
@@ -1187,12 +1203,6 @@ This is not meant to represent a realistic molecular system; it is just a compac
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Average Rg   = 4.315
-Average RMSD = 0.234
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1205,9 +1215,6 @@ Average RMSD = 0.234
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/92d305722a96cdb60fd905dfd373be5564122443635686084b0acc685f8e5c47.png" src="../../_images/92d305722a96cdb60fd905dfd373be5564122443635686084b0acc685f8e5c47.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1222,9 +1229,6 @@ Average RMSD = 0.234
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../../_images/4a12a07fe9218040bb819b195ce972ec86d564d85970383fedd638091fe3d0d5.png" src="../../_images/4a12a07fe9218040bb819b195ce972ec86d564d85970383fedd638091fe3d0d5.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1238,12 +1242,9 @@ Average RMSD = 0.234
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../../_images/2c4a2c3d5160c157b8720ef047f836ffe55ca406955813508cd622df124f7c30.png" src="../../_images/2c4a2c3d5160c157b8720ef047f836ffe55ca406955813508cd622df124f7c30.png" />
 </div>
 </div>
-</section>
-<section id="example-using-a-real-md-trajectory-with-mdanalysis">
+<div class="section" id="example-using-a-real-md-trajectory-with-mdanalysis">
 <h2><span class="section-number">5.3.3.13. </span>Example using a real MD trajectory with MDAnalysis<a class="headerlink" href="#example-using-a-real-md-trajectory-with-mdanalysis" title="Permalink to this heading">#</a></h2>
 <p>If you have a topology file and trajectory, a common workflow is to use <code class="docutils literal notranslate"><span class="pre">MDAnalysis</span></code>.</p>
 <blockquote>
@@ -1282,17 +1283,17 @@ It may require you to install <code class="docutils literal notranslate"><span c
 </div>
 </div>
 </div>
-</section>
-<section id="summary">
+</div>
+<div class="section" id="summary">
 <h2><span class="section-number">5.3.3.14. </span>Summary<a class="headerlink" href="#summary" title="Permalink to this heading">#</a></h2>
 <p>The central idea is simple:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-caec43b0-29af-4a40-9edd-4277fa25e8ff">
-<span class="eqno">(5.149)<a class="headerlink" href="#equation-caec43b0-29af-4a40-9edd-4277fa25e8ff" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e01c061a-0487-47a0-86e5-865c149f4be8">
+<span class="eqno">(5.149)<a class="headerlink" href="#equation-e01c061a-0487-47a0-86e5-865c149f4be8" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \langle A \rangle = \int A(\mathbf{R}) p(\mathbf{R})\, d\mathbf{R}
 \approx \frac{1}{N}\sum_{n=1}^{N} A(\mathbf{R}^{(n)}).
 \end{equation}\]</div>
 <p>That is, a molecular property is an expectation value, and an MD trajectory provides the sampled configurations needed to approximate it.</p>
-<section id="main-examples-in-these-notes">
+<div class="section" id="main-examples-in-these-notes">
 <h3><span class="section-number">5.3.3.14.1. </span>Main examples in these notes<a class="headerlink" href="#main-examples-in-these-notes" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
 <li><p><strong><span class="math notranslate nohighlight">\(g(r)\)</span></strong>: histogram-based estimate of pair-distance probabilities, normalized by shell volume and density.</p></li>
@@ -1300,8 +1301,8 @@ It may require you to install <code class="docutils literal notranslate"><span c
 <li><p><strong>RMSD</strong>: deviation from a reference structure after alignment.</p></li>
 <li><p><strong>MSD</strong>: time-dependent displacement used to estimate diffusion.</p></li>
 </ul>
-</section>
-<section id="recommended-conceptual-takeaway">
+</div>
+<div class="section" id="recommended-conceptual-takeaway">
 <h3><span class="section-number">5.3.3.14.2. </span>Recommended conceptual takeaway<a class="headerlink" href="#recommended-conceptual-takeaway" title="Permalink to this heading">#</a></h3>
 <p>Different MD observables may look unrelated, but computationally they all follow the same pattern:</p>
 <ul class="simple">
@@ -1310,9 +1311,9 @@ It may require you to install <code class="docutils literal notranslate"><span c
 <li><p>average or histogram the results,</p></li>
 <li><p>interpret the result in physical terms.</p></li>
 </ul>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {

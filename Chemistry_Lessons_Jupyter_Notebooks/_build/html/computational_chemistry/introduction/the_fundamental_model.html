@@ -7,8 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>5.1.1. The Fundamental Model in Computational Chemistry &#8212; Chemistry Lessons with Jupyter Notebooks</title>
   
   
@@ -288,6 +287,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/electronic_structure/HF_for_H2.html">4.6.2. Hartree-Fock Code for the H2 Molecule in a Minimal STO-3G basis</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/intro.html">4.7. Statiscial Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../physical_chemistry/statistical_mechanics/Motivation_Thermo_Review.html">4.7.1. Motivation and Review of Thermodynamics</a></li>
+</ul>
+</details></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">5. Computational Chemistry</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -314,6 +317,8 @@ const thebe_selector_output = ".output, .cell_output"
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../molecular_mechanics/intro.html">5.3. Molecular Mechanics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_mechanics_basics.html">5.3.1. Molecular Mechanics Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/molecular_dynamics.html">5.3.2. Molecular Dynamics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../molecular_mechanics/properties_from_molecular_dynamics.html">5.3.3. Molecular Properties from MD</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../hands_on_activities/intro.html">5.4. Hands-on Activities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -333,6 +338,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week11_python_classes_and_hf_code.html">5.4.14. Python Classes and HF Code</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/week12_amber_on_pete_alanine_dipeptide.html">5.4.15. Week 12 Hands-On: Running an AMBER Simulation of Alanine Dipeptide on Pete</a></li>
 
+<li class="toctree-l3"><a class="reference internal" href="../hands_on_activities/lj_fluid_mdanalysis_lesson.html">5.4.17. Computing g(r) and MSD(t) from an MD Simulation</a></li>
 </ul>
 </details></li>
 </ul>
@@ -569,13 +575,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="the-fundamental-model-in-computational-chemistry">
+  <div class="tex2jax_ignore mathjax_ignore section" id="the-fundamental-model-in-computational-chemistry">
 <h1><span class="section-number">5.1.1. </span>The Fundamental Model in Computational Chemistry<a class="headerlink" href="#the-fundamental-model-in-computational-chemistry" title="Permalink to this heading">#</a></h1>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><span class="section-number">5.1.1.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
 <p>The goal of much of computational chemistry is to predict the properties of chemical systems from information about their chemical makeup and system properties.  Since properties of molecules depend on their structure, determining system properties boils down to determining molecular structure (or ensembles of molecular structures).  The <em><strong>fundamental model</strong></em> in computational chemistry is that the structure/ensembles of molecules depend on their potential (/free) energy surfaces.  How you define/describe the potential energy of a molecule depends on the properties you are trying to determine.  In this course we will focus on two main ways of estimating the potential energy surfaces: quantum mechanics and molecular mechanics.</p>
-</section>
-<section id="learning-objectives">
+</div>
+<div class="section" id="learning-objectives">
 <h2><span class="section-number">5.1.1.2. </span>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
 <p>After working through this notebook, you will be able to:</p>
 <ol class="arabic simple">
@@ -583,8 +589,8 @@ document.write(`
 <li><p>Identify two methods for computing the potential energy of chemical systems</p></li>
 <li><p>Identify methods for determinging molecular structure from potential energy functions of chemical systems</p></li>
 </ol>
-</section>
-<section id="coding-concepts">
+</div>
+<div class="section" id="coding-concepts">
 <h2><span class="section-number">5.1.1.3. </span>Coding Concepts<a class="headerlink" href="#coding-concepts" title="Permalink to this heading">#</a></h2>
 <p>The following coding concepts are employed in this notebook:</p>
 <ol class="arabic simple">
@@ -592,12 +598,12 @@ document.write(`
 <li><p><span class="xref myst">Functions</span></p></li>
 <li><p><span class="xref myst">Plotting with matplotlib</span></p></li>
 </ol>
-</section>
-<section id="the-potential-energy-surface">
+</div>
+<div class="section" id="the-potential-energy-surface">
 <h2><span class="section-number">5.1.1.4. </span>The Potential Energy Surface<a class="headerlink" href="#the-potential-energy-surface" title="Permalink to this heading">#</a></h2>
 <p>We use the potential energy surface picture to describe chemical processes in general chemistry.  Consider the reversible reaction</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a3616036-35c2-46c5-998e-66b9a465e18e">
-<span class="eqno">(5.1)<a class="headerlink" href="#equation-a3616036-35c2-46c5-998e-66b9a465e18e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c58dc000-7761-4772-97b9-325c337db08b">
+<span class="eqno">(5.1)<a class="headerlink" href="#equation-c58dc000-7761-4772-97b9-325c337db08b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 A(g) \rightleftharpoons B(g). 
 \end{equation}\]</div>
 <p>If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> readily interconvert but there is more <span class="math notranslate nohighlight">\(A\)</span> at equilibrium, we can represent that behavior with an energy diagram such as</p>
@@ -608,8 +614,8 @@ A(g) \rightleftharpoons B(g).
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># ---------- Parameters you can tweak ----------</span>
 <span class="n">E_A</span>  <span class="o">=</span> <span class="mf">0.0</span>      <span class="c1"># energy of A</span>
@@ -647,7 +653,7 @@ A(g) \rightleftharpoons B(g).
 <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">TS_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">TS_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mf">0.4</span><span class="p">,</span> <span class="s2">&quot;TS&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 
 <span class="c1"># Helper function for vertical brackets</span>
-<span class="k">def</span> <span class="nf">vbracket</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">xtext_offset</span><span class="o">=</span><span class="mf">0.015</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">vbracket</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">xtext_offset</span><span class="o">=</span><span class="mf">0.015</span><span class="p">):</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
         <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">y1</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">y0</span><span class="p">),</span>
         <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;&lt;-&gt;&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.8</span><span class="p">)</span>
@@ -680,27 +686,36 @@ A(g) \rightleftharpoons B(g).
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../../_images/99ee02436a6282a417a5ef4ca325c6d8f3a0080df2724edd78e9fe09770d91f1.png" src="../../_images/99ee02436a6282a417a5ef4ca325c6d8f3a0080df2724edd78e9fe09770d91f1.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># ---------- Parameters you can tweak ----------</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;numpy&#39;
+</pre></div>
+</div>
 </div>
 </div>
 <p>This energy diagram represents the potential energy as a function of the reaction coordinate (RC).  The total potential energy of the system depends on many more variables than the RC but the RC is an important coordinate that connects states <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>.</p>
 <p>In general, the function <span class="math notranslate nohighlight">\(E\)</span> depends on the coordinates of, at least, all of the nuclei (atoms) and electrons of the system.  Computational chemistry is split into two main ways of approximating this function: quantum mechanics and molecular mechanics.  It should also be noted that these two methods typically address different questions.</p>
-<section id="quantum-mechanics">
+<div class="section" id="quantum-mechanics">
 <h3><span class="section-number">5.1.1.4.1. </span>Quantum Mechanics<a class="headerlink" href="#quantum-mechanics" title="Permalink to this heading">#</a></h3>
 <p>In quantum mechanics, the energy of a system is a function of the nuclei and the electrons of a system.  Since electrons are small, their behavior is governed by quantum mechanics rather than classical mechanics.  As such, we must solve for the energy using the Schrödinger equation</p>
-<div class="amsmath math notranslate nohighlight" id="equation-22619e06-73d7-4043-829c-81ecdf932a62">
-<span class="eqno">(5.2)<a class="headerlink" href="#equation-22619e06-73d7-4043-829c-81ecdf932a62" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-ae05d247-55b2-4ac6-af91-e4e73f1b6262">
+<span class="eqno">(5.2)<a class="headerlink" href="#equation-ae05d247-55b2-4ac6-af91-e4e73f1b6262" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{H}\Psi = E\Psi,
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{H}\)</span> is the Hamiltonian, <span class="math notranslate nohighlight">\(\Psi\)</span> is the wavefunction, and <span class="math notranslate nohighlight">\(E\)</span> is the energy of the system.  This equation typically represents a partial differential equation that depends on all of the particles comprising the system.  Solving this equation can be cumbersome and typically requires approximations that we will discuss at a later time.</p>
 <p>Many codes have been developed to solve approximations of the Schrödinger equation for chemical systems.  These codes are often referred to as electronic structure codes.  Examples include Gaussian, Qchem, GAMESS, and others.  Additionally, there are other more specifc use codes developed to do various other things within quantum mechanics that are beyond the scope of this class.</p>
-</section>
-<section id="molecular-mechanics">
+</div>
+<div class="section" id="molecular-mechanics">
 <h3><span class="section-number">5.1.1.4.2. </span>Molecular Mechanics<a class="headerlink" href="#molecular-mechanics" title="Permalink to this heading">#</a></h3>
 <p>In molecular mechanics, the energy of the system is a function of the nuclei of the systems (there are some variants that get slightly more complicated but generally this is the case).  The electrons are averaged or integrated out meaning they are dealt with directly in the energy function.  This allows one to treat the system using classical mechanics, as opposed to quantum mechanics.</p>
 <p>A common molecular mechanics model is to describe a molecule as a collection of bonds, angles and dihedral (1-2-3-4) interactions.  Additionally, each atom is ascribed a excluded volume, polarization, and point charge.  In such a model, the potential energy of the system can be defined as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b2ec7398-4a8d-492e-af6a-7bd78233e1b0">
-<span class="eqno">(5.3)<a class="headerlink" href="#equation-b2ec7398-4a8d-492e-af6a-7bd78233e1b0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4365cfc0-6450-4d6d-9e4c-85225dc542ae">
+<span class="eqno">(5.3)<a class="headerlink" href="#equation-4365cfc0-6450-4d6d-9e4c-85225dc542ae" title="Permalink to this equation">#</a></span>\[\begin{align}
 E_{\text{tot}}
 &amp;= E_{\text{bond}} + E_{\text{angle}} + E_{\text{dihedral}} + E_{\text{nonbond}}
 \\[4pt]
@@ -726,20 +741,20 @@ E_{\text{nonbond}}
 \end{align}\]</div>
 <p>This is a fairly standard form for a classical model of a molecule and in the field the specific functional form chosen as well as defining the associated parameters is called a force field.  The parameters of each term must be determined/defined to specificy a particular model of a molecule.  Other functional forms can be used but this is a typical energy function.</p>
 <p>There are a variety of force fields to describe molecules but some of the most common are Amber, CHARMM, OPLS, and gromos.  Each force field has typically been parameterized for specific systems so it is very important to make sure you are applying the force field to an appropriate system.  Codes used to apply parameters as well as calculate associate energies inlcude Amber, NAMD, CHARMM, and Gromacs.</p>
-</section>
-</section>
-<section id="determing-structure-s-from-energy-functions">
+</div>
+</div>
+<div class="section" id="determing-structure-s-from-energy-functions">
 <h2><span class="section-number">5.1.1.5. </span>Determing Structure(s) from Energy Functions<a class="headerlink" href="#determing-structure-s-from-energy-functions" title="Permalink to this heading">#</a></h2>
 <p>With an energy function defined, either using quantum mechanics or molecular mechanics, we must determine the structure or structures that are important for a particular chemical system or process.</p>
 <p>On of the most trivial ways of doing this is to <em><strong>determine the stationary points</strong></em> of the function.  Stationary points of a function are the local maxima and minima of the surface.  That is, when</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7c5c0134-5ee8-4ae3-a3e6-c785fb25b89c">
-<span class="eqno">(5.4)<a class="headerlink" href="#equation-7c5c0134-5ee8-4ae3-a3e6-c785fb25b89c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-71385c7d-16c9-4170-b754-86e0211d7dd0">
+<span class="eqno">(5.4)<a class="headerlink" href="#equation-71385c7d-16c9-4170-b754-86e0211d7dd0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \frac{d E}{d \vec{R}} = 0
 \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\vec{R}\)</span> are the coordinates of all things being considered in the energy function (i.e. nuclei and electrons or just nuclei).  There are a variety of methods to determine the positions (<span class="math notranslate nohighlight">\(\vec{R}\)</span>) that satisfy this equation.  The simplest is to just differentiate the function <span class="math notranslate nohighlight">\(E\)</span> w.r.t. <span class="math notranslate nohighlight">\(\vec{R}\)</span> analytically, set equal to zero, and solve for <span class="math notranslate nohighlight">\(\vec{R}\)</span>.  This is not always feasible for high dimensional <span class="math notranslate nohighlight">\(\vec{R}\)</span> and/or complicated functions <span class="math notranslate nohighlight">\(E\)</span>.  There are numerical methods for determining these as well as other approximations that we may discuss as the semester goes on.  The method of determining stationary points is most commonly employed in conjunction with quantum mechanical methods (though it is also used for molecular mechanics to some degree).</p>
 <p>Another method for determining structures from an energy function is to <em><strong>sample</strong></em> from the energy function.  The most common methods to achieve sampling are Monte Carlo and Molecular Dynamics.  These methods are used to determine a set of plausible structures from the underlying energy function but they also have a variety of drawbacks and limitations that we will discuss.  Sampling many structures can be computationally demanding/expensive and thus is most typically employed with molecular mechanics (cheap) models.  This is not always the case, however, as more and more sampling is being done on quantum mechanical models.</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
